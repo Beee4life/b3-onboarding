@@ -1,0 +1,26 @@
+.tml-profile .wp-pwd {
+	text-align: right;
+}
+
+.tml-profile .wp-pwd .dashicons {
+	font-size: 1em;
+	line-height: 1;
+	height: 1em;
+	width: 1em;
+	vertical-align: middle;
+}
+
+.tml-profile #pass-strength-result {
+	margin: 0.5em 0;
+}
+
+.no-js .hide-if-no-js,
+.js .hide-if-js {
+	display: none;
+}
+
+@media screen and (min-width: 768px) {
+	.tml-profile .tml-submit-wrap input {
+		width: auto;
+	}
+}
