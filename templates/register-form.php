@@ -12,7 +12,8 @@
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <form id="b3-register-form" class="b3__form b3__form--register" action="<?php echo wp_registration_url(); ?>" method="post">
+    <form id="b3-register-form" class="b3__form b3__form--register" action="" method="post">
+        <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
         <div class="b3__form-element b3__form-element--register">
             <label class="b3__form-label" for="user_login"><?php _e( 'User name', 'b3-login' ); ?> <strong>*</strong></label>
             <input type="text" name="user_login" id="user_login" class="b3__form--input">
@@ -24,6 +25,10 @@
 
         <?php if ( is_multisite() ) { ?>
             <?php // @TODO: add fields for Multisite ?>
+            <div class="b3__form-element b3__form-element--register">
+                <label class="b3__form-label" for="pass1"><?php _e( 'Desired (sub) domain', 'b3-login' ); ?></label>
+                <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3__form--input" placeholder="customdomain        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" />
+            </div>
         <?php } ?>
         
         <?php if ( $show_custom_passwords == true ) { ?>
