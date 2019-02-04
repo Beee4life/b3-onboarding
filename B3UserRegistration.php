@@ -850,32 +850,32 @@
              */
             public function b3_register_settings_fields() {
                 // Create settings fields for the two keys used by reCAPTCHA
-                register_setting( 'general', 'sd-login-recaptcha-site-key' );
-                register_setting( 'general', 'sd-login-recaptcha-secret-key' );
+                register_setting( 'general', 'b3-login-recaptcha-site-key' );
+                register_setting( 'general', 'b3-login-recaptcha-secret-key' );
 
                 add_settings_field(
-                    'sd-login-recaptcha-site-key',
-                    '<label for="sd-login-recaptcha-site-key">' . __( 'reCAPTCHA site key' , 'sd-login' ) . '</label>',
+                    'b3-login-recaptcha-site-key',
+                    '<label for="b3-login-recaptcha-site-key">' . __( 'reCAPTCHA site key' , 'b3-login' ) . '</label>',
                     array( $this, 'render_recaptcha_site_key_field' ),
                     'general'
                 );
 
                 add_settings_field(
-                    'sd-login-recaptcha-secret-key',
-                    '<label for="sd-login-recaptcha-secret-key">' . __( 'reCAPTCHA secret key' , 'sd-login' ) . '</label>',
+                    'b3-login-recaptcha-secret-key',
+                    '<label for="b3-login-recaptcha-secret-key">' . __( 'reCAPTCHA secret key' , 'b3-login' ) . '</label>',
                     array( $this, 'render_recaptcha_secret_key_field' ),
                     'general'
                 );
             }
 
             public function render_recaptcha_site_key_field() {
-                $value = get_option( 'sd-login-recaptcha-site-key', '' );
-                echo '<input type="text" id="sd-login-recaptcha-site-key" name="sd-login-recaptcha-site-key" value="' . esc_attr( $value ) . '" />';
+                $value = get_option( 'b3-login-recaptcha-site-key', '' );
+                echo '<input type="text" id="b3-login-recaptcha-site-key" name="b3-login-recaptcha-site-key" value="' . esc_attr( $value ) . '" />';
             }
 
             public function render_recaptcha_secret_key_field() {
-                $value = get_option( 'sd-login-recaptcha-secret-key', '' );
-                echo '<input type="text" id="sd-login-recaptcha-secret-key" name="sd-login-recaptcha-secret-key" value="' . esc_attr( $value ) . '" />';
+                $value = get_option( 'b3-login-recaptcha-secret-key', '' );
+                echo '<input type="text" id="b3-login-recaptcha-secret-key" name="b3-login-recaptcha-secret-key" value="' . esc_attr( $value ) . '" />';
             }
 
         }
