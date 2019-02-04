@@ -1,0 +1,12 @@
+.tml-profile #pass-strength-result {
+    margin: 0.5em 0;
+}
+
+.no-js .hide-if-no-js,
+.js .hide-if-js {
+    display: none;
+}
+
+.b3__form-element {
+    margin-bottom: 2em;
+}
