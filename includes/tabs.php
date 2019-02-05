@@ -48,30 +48,30 @@
         // get stored pages
         $b3_pages = array(
             array(
-                'id' => 'account',
-                'label' => __( 'Account', 'b3-user-register' ),
-                'page_id' => get_option( 'b3_account' ),
+                'id' => 'register',
+                'label' => __( 'Register', 'b3-user-register' ),
+                'page_id' => get_option( 'b3_register_id' ),
             ),
             array(
                 'id' => 'login',
                 'label' => __( 'Login', 'b3-user-register' ),
-                'page_id' => get_option( 'b3_login' ),
-            ),
-            array(
-                'id' => 'register',
-                'label' => __( 'Register', 'b3-user-register' ),
-                'page_id' => get_option( 'b3_register' ),
+                'page_id' => get_option( 'b3_login_id' ),
             ),
             array(
                 'id' => 'forgotpass',
                 'label' => __( 'Forgot password', 'b3-user-register' ),
-                'page_id' => get_option( 'b3_forgotpass' ),
+                'page_id' => get_option( 'b3_forgotpass_id' ),
             ),
             array(
                 'id' => 'resetpass',
                 'label' => __( 'Reset password', 'b3-user-register' ),
-                'page_id' => get_option( 'b3_resetpass' ),
+                'page_id' => get_option( 'b3_resetpass_id' ),
             ),
+            // array(
+            //     'id' => 'account',
+            //     'label' => __( 'Account', 'b3-user-register' ),
+            //     'page_id' => get_option( 'b3_account' ),
+            // ),
         );
         
         // get all pages
@@ -84,30 +84,28 @@
         ob_start();
         ?>
         <h2>Pages</h2>
+        <p>XXX</p>
+        <form name="" class="" method="post" action="">
+            <input type="hidden" name="b3_pages_nonce" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>">
+            <?php foreach( $b3_pages as $page ) { ?>
+                <div class="b3__select-page">
+                    <div class="b3__select-page__label">
+                        <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo $page[ 'label' ]; ?></label>
+                    </div>
+    
+                    <div class="b3__select-page__selector">
+                        <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
+                            <option value=""> <?php _e( "Select a page", "b3-user-regiser" ); ?></option>
+                            <?php foreach( $all_pages as $active_page ) { ?>
+                                <option value="<?php echo $active_page->ID; ?>"<?php echo ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>> <?php echo $active_page->post_title; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+            <?php } ?>
+            <input type="submit" class="button button-primary" name="" value="<?php _e( 'Submit', 'b3-user-register' ); ?>">
+        </form>
         <?php
-        
-        foreach( $b3_pages as $page ) {
-            ?>
-            <div class="b3__select-page">
-                <div class="b3__select-page__label">
-                    <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo $page[ 'label' ]; ?></label>
-                </div>
-
-                <div class="b3__select-page__selector">
-                    
-                    <select name="b3_<?php echo $page[ 'id' ]; ?>" id="b3_<?php echo $page[ 'id' ]; ?>">
-                        <option value=""> <?php _e( 'Select a page', 'b3-user-regiser' ); ?></option>
-                        <?php foreach( $all_pages as $active_page ) { ?>
-                            <option value="<?php echo $active_page->ID; ?>"<?php echo ( $active_page->ID == $page[ 'id' ] ) ? : false; ?>> <?php echo $active_page->post_title; ?></option>
-                        <?php } ?>
-                    </select>
-                    <?php echo $page[ 'page_id' ]; ?>
-                </div>
-                
-            </div>
-            <?php
-        }
-        
         $result = ob_get_clean();
         
         return $result;
