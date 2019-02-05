@@ -141,6 +141,7 @@
         <h2>
             <?php esc_html_e( 'Settings', 'b3-onboarding' ); ?>
         </h2>
+        
         <p>
             <?php esc_html_e( 'Here you can set some global settings for the plugin.', 'b3-onboarding' ); ?>
         </p>
