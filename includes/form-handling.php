@@ -116,12 +116,12 @@
     // Admin settings
     
     function b3_settings_form_handling() {
-        
+    
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            $redirect_url = admin_url( 'admin.php?page=b3-onboarding-settings' );
             if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
+                $redirect_url = admin_url( 'admin.php?page=b3-onboarding' );
                 if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
-                    // @TODO: add error
+                    // @TODO: add error ?
                 } else {
         
                     $loopable_ids = [
@@ -139,14 +139,46 @@
                         }
                     }
                 }
+    
+                wp_redirect( $redirect_url );
+                exit;
+
+            } elseif ( isset( $_POST[ 'b3_settings_nonce' ] ) ) {
+    
+                if ( ! wp_verify_nonce( $_POST[ "b3_settings_nonce" ], 'b3-settings-nonce' ) ) {
+                    // @TODO: add error ?
+                } else {
+
+                    // Custom passwords
+                    if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) ) {
+                        update_option( 'b3_custom_passwords', '1', true );
+                    } else {
+                        delete_option( 'b3_custom_passwords' );
+                    }
+                    
+                    // Dashboard widget
+                    if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) ) {
+                        update_option( 'b3_dashboard_widget', '1', true );
+                    } else {
+                        delete_option( 'b3_dashboard_widget' );
+                    }
+                    
+                    // Sidebar widget
+                    if ( isset( $_POST[ 'b3_activate_sidebar_widget' ] ) ) {
+                        update_option( 'b3_sidebar_widget', '1', true );
+                    } else {
+                        delete_option( 'b3_sidebar_widget' );
+                    }
+                
+                    // Sidebar widget
+                    if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) ) {
+                        update_option( 'b3_recaptcha', '1', true );
+                    } else {
+                        delete_option( 'b3_recaptcha' );
+                    }
+                
+                }
             }
-            if ( isset( $_POST[ 'b3_settings_nonce' ] ) ) {
-                echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
-            }
-        
-            wp_redirect( $redirect_url );
-            exit;
-        
         }
     }
     add_action( 'admin_init', 'b3_settings_form_handling' );

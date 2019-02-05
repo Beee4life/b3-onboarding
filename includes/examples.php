@@ -6,7 +6,7 @@
     function b3_hidden_fields_registration_form() {
     
         $hidden_fields = '';
-        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields', [] );
+        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             foreach( $hidden_field_values as $key => $value ) {
                 $hidden_fields .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';

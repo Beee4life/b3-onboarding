@@ -97,12 +97,12 @@
      */
     function replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
         // Create new message
-        $msg  = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
-        $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
-        $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
-        $msg .= __( 'To reset your password, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
+        $msg  = esc_html__( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
+        $msg .= sprintf( esc_html__( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
+        $msg .= esc_html__( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
+        $msg .= esc_html__( 'To reset your password, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
         $msg .= site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n\r\n";
-        $msg .= __( 'Thanks!', 'b3-onboarding' ) . "\r\n";
+        $msg .= esc_html__( 'Thanks!', 'b3-onboarding' ) . "\r\n";
         
         return $msg;
     }

@@ -1,6 +1,6 @@
 # B3 Onboarding plugin
 
-This plugin focusses on how to 'onboard' (in other words register/add) users to your site.
+This plugin focusses on how to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
 You can easily customise a lot of things, if you know your way around [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks). Right now we focus mostly on technique, to make this plugin as customisable as possible. A proper user interface for the less techy will follow later.
 
@@ -47,6 +47,8 @@ All stored options are removed (unless option to not remove data is selected) an
   * recaptcha
 * styled according to [BEM](https://en.bem.info) technology
 * add custom fields through hooks
+* WPML ready
+* Multisite ready
 
 
 <a name="hooks"></a>
@@ -61,7 +63,7 @@ All stored options are removed (unless option to not remove data is selected) an
 <a name="filters"></a>
 ### Filters
 
-- b3_filter_hidden_fields
+* b3_filter_hidden_fields_values
 
 #### Example 
 
@@ -73,7 +75,7 @@ function b3_my_hidden_fields() {
         'key2' => 'value2',
     ];
 }
-add_filter( 'b3_filter_hidden_fields', 'b3_my_hidden_fields' );
+add_filter( 'b3_filter_hidden_fields_values', 'b3_my_hidden_fields' );
 ```
 
 <a name="roadmap"></a>
@@ -83,11 +85,6 @@ These are the things we have planned to add.
 * integration with Mailchimp
 * multi page registration forms
 
-
-What problems does this plugin solve ?
+#### What problems does this plugin solve ?
 
 No part is obligated. You can use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want.
-
-### Features
-- WPML ready
-- Multisite ready

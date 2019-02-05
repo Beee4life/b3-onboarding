@@ -1,3 +1,6 @@
+.b3__admin {
+}
+
 .b3__tabs {
     background: white;
     margin-top: 2em;
@@ -71,4 +74,9 @@
 
 .b3__select-page__selector {
     min-width: 250px;
+}
+
+.b3__widget--dashboard ul {
+    list-style:   disc;
+    padding-left: 17px;
 }

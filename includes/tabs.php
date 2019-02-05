@@ -39,10 +39,10 @@
         ob_start();
         ?>
         <h2>
-            <?php _e( 'Main', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Main', 'b3-onboarding' ); ?>
         </h2>
         <p>
-            <?php _e( 'Bla bla bla', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Bla bla bla', 'b3-onboarding' ); ?>
         </p>
         <?php
         echo dummy_content();
@@ -57,27 +57,27 @@
         $b3_pages = array(
             array(
                 'id' => 'register',
-                'label' => __( 'Register', 'b3-onboarding' ),
+                'label' => esc_html__( 'Register', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_register_id' ),
             ),
             array(
                 'id' => 'login',
-                'label' => __( 'Login', 'b3-onboarding' ),
+                'label' => esc_html__( 'Login', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_login_id' ),
             ),
             array(
                 'id' => 'forgotpass',
-                'label' => __( 'Forgot password', 'b3-onboarding' ),
+                'label' => esc_html__( 'Forgot password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_forgotpass_id' ),
             ),
             array(
                 'id' => 'resetpass',
-                'label' => __( 'Reset password', 'b3-onboarding' ),
+                'label' => esc_html__( 'Reset password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_resetpass_id' ),
             ),
             // array(
             //     'id' => 'account',
-            //     'label' => __( 'Account', 'b3-onboarding' ),
+            //     'label' => esc_html__( 'Account', 'b3-onboarding' ),
             //     'page_id' => get_option( 'b3_account' ),
             // ),
         );
@@ -92,11 +92,13 @@
         ob_start();
         ?>
         <h2>
-            <?php _e( 'Pages', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Pages', 'b3-onboarding' ); ?>
         </h2>
+        
         <p>
-            <?php _e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( "Here you can set which pages are assigned for the various 'actions'.", "b3-onboarding" ); ?>
         </p>
+        
         <form name="" class="" method="post" action="">
             <input type="hidden" name="b3_pages_nonce" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>">
             <?php foreach( $b3_pages as $page ) { ?>
@@ -107,15 +109,19 @@
     
                     <div class="b3__select-page__selector">
                         <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
-                            <option value=""> <?php _e( "Select a page", "b3-user-regiser" ); ?></option>
+                            <option value=""> <?php esc_html_e( "Select a page", "b3-user-regiser" ); ?></option>
                             <?php foreach( $all_pages as $active_page ) { ?>
-                                <option value="<?php echo $active_page->ID; ?>"<?php echo ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>> <?php echo $active_page->post_title; ?></option>
+                                <?php
+                                    error_log( $page[ 'page_id' ] );
+                                    $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false;
+                                ?>
+                                <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
                             <?php } ?>
                         </select>
                     </div>
                 </div>
             <?php } ?>
-            <input type="submit" class="button button-primary" name="" value="<?php _e( 'Submit', 'b3-onboarding' ); ?>">
+            <input type="submit" class="button button-primary" name="" value="<?php esc_html_e( 'Submit', 'b3-onboarding' ); ?>">
         </form>
         <?php
         $result = ob_get_clean();
@@ -124,42 +130,51 @@
     }
     
     function b3_render_settings_tab() {
-        
+    
+        $custom_passwords = get_option( 'b3_custom_passwords' );
+        $dashboard_widget = get_option( 'b3_dashboard_widget' );
+        $sidebar_widget   = get_option( 'b3_sidebar_widget' );
+        $recaptcha        = get_option( 'b3_recaptcha' );
+        $privacy          = get_option( 'b3_privacy' );
         ob_start();
         ?>
         <h2>
-            <?php _e( 'Settings', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Settings', 'b3-onboarding' ); ?>
         </h2>
 
         <p>
-            <?php _e( 'Here you can set some global settings for the plugin.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can set some global settings for the plugin.', 'b3-onboarding' ); ?>
         </p>
 
         <form name="" class="" action="" method="post">
             <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
 
             <h3>
-                <?php _e( 'Custom passwords', 'b3-onboarding' ); ?>
+                <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
             </h3>
             <div>
-                <label for="b3-activate-custom-passwords" class="screen-reader-text"><?php _e( 'Custom passwords', 'b3-onboarding' ); ?></label>
-                <input type="checkbox" id="b3-activate-custom-passwords" name="b3-activate-custom-passwords" value="<?php _e( '1', 'b3-login' ); ?>" /> <?php _e( 'Activate custom passwords', 'b3-onboarding' ); ?>
+                <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php if ( $custom_passwords ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Activate custom passwords', 'b3-onboarding' ); ?>
             </div>
 
             <h3>
-                <?php _e( 'Activate dashboard widget', 'b3-onboarding' ); ?>
+                <label for="b3_activate_dashboard_widget"><?php esc_html_e( 'Activate dashboard widget', 'b3-onboarding' ); ?></label>
             </h3>
             <div>
-                <label for="b3-activate-dashboard-widget" class="screen-reader-text"><?php _e( 'Activate dashboard widget', 'b3-onboarding' ); ?></label>
-                <input type="checkbox" id="b3-activate-dashboard-widget" name="b3-activate-dashboard-widget" value="<?php _e( '1', 'b3-login' ); ?>" /> <?php _e( 'Activate dashboard widget', 'b3-onboarding' ); ?>
+                <input type="checkbox" id="b3_activate_dashboard_widget" name="b3_activate_dashboard_widget" value="1" <?php if ( $dashboard_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Activate dashboard widget', 'b3-onboarding' ); ?>
             </div>
 
             <h3>
-                <?php _e( 'Activate sidebar widget', 'b3-onboarding' ); ?>
+                <label for="b3_activate_sidebar_widget"><?php esc_html_e( 'Activate sidebar widget', 'b3-onboarding' ); ?></label>
             </h3>
             <div>
-                <label for="b3-activate-sidebar-widget" class="screen-reader-text"><?php _e( 'Activate sidebar widget', 'b3-onboarding' ); ?></label>
-                <input type="checkbox" id="b3-activate-sidebar-widget" name="b3-activate-sidebar-widget" value="<?php _e( '1', 'b3-login' ); ?>" /> <?php _e( 'Activate sidebar widget', 'b3-onboarding' ); ?>
+                <input type="checkbox" id="b3_activate_sidebar_widget" name="b3_activate_sidebar_widget" value="1" <?php if ( $sidebar_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Activate sidebar widget', 'b3-onboarding' ); ?>
+            </div>
+
+            <h3>
+                <label for="b3_activate_recaptcha"><?php esc_html_e( 'Activate reCAPTCHA', 'b3-onboarding' ); ?></label>
+            </h3>
+            <div>
+                <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Activate reCAPTCHA', 'b3-onboarding' ); ?>
             </div>
 
             <br />
@@ -178,11 +193,11 @@
         $secret_key = get_option( 'b3-login-recaptcha-site-key' );
         ?>
         <h2>
-            <?php _e( 'Recaptcha', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
         </h2>
     
         <p>
-            <?php _e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
         </p>
 
         <form name="" class="" action="" method="post">
@@ -194,13 +209,13 @@
 
             <h3>Public key</h3>
             <div>
-                <label for="b3-login-recaptcha-site-key" class="screen-reader-text">Site key</label>
+                <label for="b3-login-recaptcha-site-key">Site key</label>
                 <input type="text" id="b3-login-recaptcha-site-key" name="b3-login-recaptcha-site-key" value="<?php echo $site_key; ?>" />
             </div>
 
             <h3>Private key</h3>
             <div>
-                <label for="b3-login-recaptcha-secret-key" class="screen-reader-text">Private key</label>
+                <label for="b3-login-recaptcha-secret-key">Private key</label>
                 <input type="text" id="b3-login-recaptcha-secret-key" name="b3-login-recaptcha-secret-key" value="<?php echo $secret_key; ?>" />
             </div>
 
@@ -219,7 +234,7 @@
         ob_start();
         ?>
         <h2>
-            <?php _e( 'Add ons', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Add ons', 'b3-onboarding' ); ?>
         </h2>
         
         <p>
@@ -251,7 +266,7 @@
         // get active plugins
         ?>
         <h2>
-            <?php _e( 'Debug info', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Debug info', 'b3-onboarding' ); ?>
         </h2>
 
         <h3>Server info</h3>

@@ -7,29 +7,29 @@
         // Information needed for creating the plugin's pages
         $page_definitions = array(
             // 'account' => array(
-            //     'title' => __( 'Your Account', 'b3-onboarding' ),
+            //     'title' => esc_html__( 'Your Account', 'b3-onboarding' ),
             //     'content' => '[account]',
             //     'meta' => 'b3_account'
             // ),
             'forgot-password' => array(
-                'title'   => __( 'Forgot password', 'b3-onboarding' ),
+                'title'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
                 'content' => '[forgotpass-form]',
-                'meta'    => 'forgotpass'
+                'meta'    => 'b3_forgotpass_id'
             ),
             'login'           => array(
-                'title'   => __( 'Log In', 'b3-onboarding' ),
+                'title'   => esc_html__( 'Log In', 'b3-onboarding' ),
                 'content' => '[login-form]',
-                'meta'    => 'login'
+                'meta'    => 'b3_login_id'
             ),
             'register'        => array(
-                'title'   => __( 'Register', 'b3-onboarding' ),
+                'title'   => esc_html__( 'Register', 'b3-onboarding' ),
                 'content' => '[register-form]',
-                'meta'    => 'register'
+                'meta'    => 'b3_register_id'
             ),
             'reset-password'  => array(
-                'title'   => __( 'Reset password', 'b3-onboarding' ),
+                'title'   => esc_html__( 'Reset password', 'b3-onboarding' ),
                 'content' => '[resetpass-form]',
-                'meta'    => 'resetpass'
+                'meta'    => 'b3_resetpass_id'
             ),
         );
         
@@ -51,10 +51,8 @@
                     false
                 );
                 
-                if ( is_int( $result ) ) {
-                    update_option( 'b3_' . $page[ 'meta' ], $result, true );
-                } elseif ( is_wp_error( $result) ) {
-                    // @TODO: notify user ?
+                if ( ! is_wp_error( $result) ) {
+                    update_option( $page[ 'meta' ], $result, true );
                 }
             }
         }

@@ -6,21 +6,20 @@
     function b3_user_register_settings() {
         
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html( __( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-login' ) ) );
+            wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-login' ) );
         }
         ?>
 
-        <div class="wrap">
+        <div class="b3__admin">
 
             <h1><?php _e( 'Onboarding settings', 'b3-onboarding' ); ?></h1>
 
             <div class="b3__tabs">
                 <?php
-                    $show_recaptcha = get_option( 'b3_recaptcha' );
                     if ( isset( $_GET[ 'tab' ] ) ) {
                         $default_tab = $_GET[ 'tab' ];
                     } else {
-                        $default_tab = 'pages';
+                        $default_tab = 'settings';
                     }
 
                     $tabs        = array(
@@ -51,17 +50,23 @@
                     //         'icon'    => 'plus',
                     //     );
                     // }
-                    // $tabs[] = array(
-                    //     'id'      => 'recaptcha',
-                    //     'title'   => 'Recaptcha',
-                    //     'content' => b3_render_tab_content( 'recaptcha' ),
-                    // );
-                    $tabs[] = array(
-                        'id'      => 'debug',
-                        'title'   => 'Debug info',
-                        'content' => b3_render_tab_content( 'debug' ),
-                        'icon'    => 'shield',
-                    );
+                    
+                    if ( get_option( 'b3_recaptcha' ) ) {
+                        $tabs[] = array(
+                            'id'      => 'recaptcha',
+                            'title'   => 'Recaptcha',
+                            'content' => b3_render_tab_content( 'recaptcha' ),
+                        );
+                    }
+                    
+                    if ( current_user_can( 'manage_options' ) ) {
+                        $tabs[] = array(
+                            'id'      => 'debug',
+                            'title'   => 'Debug info',
+                            'content' => b3_render_tab_content( 'debug' ),
+                            'icon'    => 'shield',
+                        );
+                    }
                 ?>
                 <div class="b3__tab-header">
                     <?php foreach ( $tabs as $tab ) { ?>
@@ -88,5 +93,5 @@
 
             </div>
 
-        </div><!-- end .wrap -->
+        </div>
     <?php }
