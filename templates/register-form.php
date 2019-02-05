@@ -65,6 +65,14 @@
             <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $attributes ); } ?>
         <?php } ?>
 
+        <?php if ( $show_privacy != true ) { ?>
+            <div class="b3__form-element b3__form-element--register">
+                <label>
+                    <input name="b3_privacy" type="checkbox" id="b3_privacy" value="accept"> <?php _e( 'Accept privacy settings', 'b3-user-register' ); ?>
+                </label>
+            </div>
+        <?php } ?>
+
         <?php if ( $show_custom_passwords != true ) { ?>
             <div class="b3__form-element b3__form-element--register">
                 <?php if ( $send_password_by_mail == true ) { ?>
