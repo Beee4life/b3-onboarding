@@ -16,8 +16,9 @@
 
             <div class="b3__tabs">
                 <?php
-                    if ( isset( $_GET[ 'tab' ] ) && ! empty( $_GET[ 'tab' ] ) ) {
-                        $default_tab = 'addon';
+                    $show_recaptcha = get_option( 'b3_recaptcha' );
+                    if ( isset( $_GET[ 'tab' ] ) ) {
+                        $default_tab = $_GET[ 'tab' ];
                     } else {
                         $default_tab = 'pages';
                     }
@@ -27,40 +28,46 @@
                             'id'      => 'main',
                             'title'   => 'Main',
                             'content' => b3_render_tab_content( 'main' ),
-                            'icon'    => 'main',
+                            'icon'    => 'admin-site',
                         ),
                         array(
                             'id'      => 'pages',
                             'title'   => 'Pages',
                             'content' => b3_render_tab_content( 'pages' ),
+                            'icon'    => 'admin-page',
                         ),
                         array(
                             'id'      => 'settings',
                             'title'   => 'Settings',
                             'content' => b3_render_tab_content( 'settings' ),
+                            'icon'    => 'admin-generic',
                         ),
-                        array(
-                            'id'      => 'addon',
-                            'title'   => 'Addon',
-                            'content' => b3_render_tab_content( 'addons' ),
-                        ),
-                        // array(
-                        //     'id'      => 'recaptcha',
-                        //     'title'   => 'Recaptcha',
-                        //     'content' => b3_render_tab_content( 'recaptcha' ),
-                        // ),
-                        array(
-                            'id'      => 'debug',
-                            'title'   => 'Debug info',
-                            'content' => b3_render_tab_content( 'debug' ),
-                        ),
+                    );
+                    // if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
+                    //     $tabs[] = array(
+                    //         'id'      => 'addon',
+                    //         'title'   => 'Addon',
+                    //         'content' => b3_render_tab_content( 'addons' ),
+                    //         'icon'    => 'plus',
+                    //     );
+                    // }
+                    // $tabs[] = array(
+                    //     'id'      => 'recaptcha',
+                    //     'title'   => 'Recaptcha',
+                    //     'content' => b3_render_tab_content( 'recaptcha' ),
+                    // );
+                    $tabs[] = array(
+                        'id'      => 'debug',
+                        'title'   => 'Debug info',
+                        'content' => b3_render_tab_content( 'debug' ),
+                        'icon'    => 'shield',
                     );
                 ?>
                 <div class="b3__tab-header">
                     <?php foreach ( $tabs as $tab ) { ?>
                         <button class="b3__tab-button<?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
                             <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
-                                <i class="dashicons dashicons-groups"></i>
+                                <i class="dashicons dashicons-<?php echo $tab[ 'icon' ]; ?>"></i>
                             <?php } ?>
                             <?php echo $tab[ 'title' ]; ?>
                         </button>

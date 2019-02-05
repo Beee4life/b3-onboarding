@@ -21,11 +21,12 @@
     padding:          14px 16px;
     transition:       0.3s;
 }
+
 .b3__tab-header .dashicons {
-    font-size: 15px;
+    font-size:    15px;
     margin-right: 5px;
-    width: 10px;
-    height: 10px;
+    width:        10px;
+    height:       10px;
 }
 
 /* Change background color of buttons on hover */
@@ -41,9 +42,13 @@
 /* Style the tab content */
 .b3__tab-content {
     display:    none;
-    padding:    6px 12px;
+    padding:    1.5em;
     border:     1px solid #ccc;
     border-top: none;
+}
+
+.b3__tab-content h2 {
+    margin: 0 0 1.5em 0;
 }
 
 .b3__tab-content ul {
@@ -59,8 +64,9 @@
 }
 
 .b3__select-page__label {
+    font-weight:  bold;
     margin-right: 1em;
-    min-width: 250px;
+    min-width:    250px;
 }
 
 .b3__select-page__selector {

@@ -1,18 +1,21 @@
 # B3 User Registration plugin
 
-This is the Wordpress plugin, with which you can 'override' TinyMCE's WYSIWYG and text editor.
+This plugin focusses on how to 'onboard' (in other words register/add) users to your site.
 
-The settings for this plugin can be found under Settings > Editor settings.
+You can easily customise a lot of things, if you know your way around [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks). Right now we focus mostly on technique, to make this plugin as customisable as possible. A proper user interface for the less techy will follow later.
+
 
 ## Contents
 
 - [Activation](#activate)
 - [Deactivation](#deactivate)
 - [Uninstall](#uninstall)
+- [Features](#features)
 - [Hooks](#hooks)
 - [Filters](#filters)
 - [Shortcodes](#shortcodes)
 - [Notes](#notes)
+- [Roadmap](#roadmap)
 - [Source(s)](#sources)
 
 <a name="activate"></a>
@@ -30,14 +33,30 @@ Nothing yet... but all settings will be removed and it leaves all custom data 'u
 
 All stored options are removed (unless option to not remove data is selected) and the plugin is removed.
 
+<a name="features"></a>
+### Features
+
+* custom forms
+  * register
+  * login
+  * forgot password
+  * reset password
+* options
+  * custom passwords by user
+  * send password by mail
+  * recaptcha
+* styled according to [BEM](https://en.bem.info) technology
+* add custom fields through hooks
+
+
 <a name="hooks"></a>
 ### Hooks
 
-- b3_add_custom_fields_registration
-- b3_after_recaptcha_{form_type}
-- b3_after_registration_form
-- b3_before_recaptcha_{form_type}
-- b3_before_submit_registration_form
+* b3_add_custom_fields_registration
+* b3_after_recaptcha_{form_type}
+* b3_after_registration_form
+* b3_before_recaptcha_{form_type}
+* b3_before_submit_registration_form
 
 <a name="filters"></a>
 ### Filters
@@ -57,10 +76,18 @@ function b3_my_hidden_fields() {
 add_filter( 'b3_filter_hidden_fields', 'b3_my_hidden_fields' );
 ```
 
+<a name="roadmap"></a>
+### Roadmap
+These are the things we have planned to add.
+* integration with Salesforce
+* integration with Mailchimp
+* multi page registration forms
+
+
 What problems does this plugin solve ?
 
 No part is obligated. You can use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want.
 
 ### Features
-- All elements are styled according to [BEM](http://en.bem.info)
-- Add any field you want through hooks
+- WPML ready
+- Multisite ready

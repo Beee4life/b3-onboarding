@@ -38,7 +38,12 @@
         
         ob_start();
         ?>
-        <h2>Main</h2>
+        <h2>
+            <?php _e( 'Main', 'b3-onboarding' ); ?>
+        </h2>
+        <p>
+            <?php _e( 'Bla bla bla', 'b3-onboarding' ); ?>
+        </p>
         <?php
         echo dummy_content();
         $result = ob_get_clean();
@@ -86,8 +91,12 @@
         
         ob_start();
         ?>
-        <h2>Pages</h2>
-        <p>XXX</p>
+        <h2>
+            <?php _e( 'Pages', 'b3-onboarding' ); ?>
+        </h2>
+        <p>
+            <?php _e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
+        </p>
         <form name="" class="" method="post" action="">
             <input type="hidden" name="b3_pages_nonce" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>">
             <?php foreach( $b3_pages as $page ) { ?>
@@ -118,18 +127,39 @@
         
         ob_start();
         ?>
-        <h2>Settings</h2>
-        <form name="" class="" action="" method="post">
-            <p>
-                Bla Bla Bla
-            </p>
+        <h2>
+            <?php _e( 'Settings', 'b3-onboarding' ); ?>
+        </h2>
 
+        <p>
+            <?php _e( 'Here you can set some global settings for the plugin.', 'b3-onboarding' ); ?>
+        </p>
+
+        <form name="" class="" action="" method="post">
             <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
 
-            <h3>Custom passwords</h3>
+            <h3>
+                <?php _e( 'Custom passwords', 'b3-onboarding' ); ?>
+            </h3>
             <div>
-                <label for="b3-login-custom-passwords" class="screen-reader-text">Custom passwords</label>
-                <input type="checkbox" id="b3-login-custom-passwords" name="b3-login-custom-passwords" value="<?php _e( '1', 'b3-login' ); ?>" /> Activate custom passwords
+                <label for="b3-activate-custom-passwords" class="screen-reader-text"><?php _e( 'Custom passwords', 'b3-onboarding' ); ?></label>
+                <input type="checkbox" id="b3-activate-custom-passwords" name="b3-activate-custom-passwords" value="<?php _e( '1', 'b3-login' ); ?>" /> <?php _e( 'Activate custom passwords', 'b3-onboarding' ); ?>
+            </div>
+
+            <h3>
+                <?php _e( 'Activate dashboard widget', 'b3-onboarding' ); ?>
+            </h3>
+            <div>
+                <label for="b3-activate-dashboard-widget" class="screen-reader-text"><?php _e( 'Activate dashboard widget', 'b3-onboarding' ); ?></label>
+                <input type="checkbox" id="b3-activate-dashboard-widget" name="b3-activate-dashboard-widget" value="<?php _e( '1', 'b3-login' ); ?>" /> <?php _e( 'Activate dashboard widget', 'b3-onboarding' ); ?>
+            </div>
+
+            <h3>
+                <?php _e( 'Activate sidebar widget', 'b3-onboarding' ); ?>
+            </h3>
+            <div>
+                <label for="b3-activate-sidebar-widget" class="screen-reader-text"><?php _e( 'Activate sidebar widget', 'b3-onboarding' ); ?></label>
+                <input type="checkbox" id="b3-activate-sidebar-widget" name="b3-activate-sidebar-widget" value="<?php _e( '1', 'b3-login' ); ?>" /> <?php _e( 'Activate sidebar widget', 'b3-onboarding' ); ?>
             </div>
 
             <br />
@@ -147,7 +177,13 @@
         $site_key   = get_option( 'b3-login-recaptcha-site-key' );
         $secret_key = get_option( 'b3-login-recaptcha-site-key' );
         ?>
-        <h2>Recaptcha</h2>
+        <h2>
+            <?php _e( 'Recaptcha', 'b3-onboarding' ); ?>
+        </h2>
+    
+        <p>
+            <?php _e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
+        </p>
 
         <form name="" class="" action="" method="post">
             <p>
@@ -182,7 +218,9 @@
     
         ob_start();
         ?>
-        <h2>Add ons</h2>
+        <h2>
+            <?php _e( 'Add ons', 'b3-onboarding' ); ?>
+        </h2>
         
         <p>
             We don't have any add-ons yet... but we do understand there might be a need for them.
@@ -208,21 +246,24 @@
     
         ob_start();
         
-        // get OS
-        // get ip
         // get wp version
         // get theme
         // get active plugins
         ?>
-        <h2>Debug info</h2>
+        <h2>
+            <?php _e( 'Debug info', 'b3-onboarding' ); ?>
+        </h2>
+
+        <h3>Server info</h3>
         <p>Operating system: <?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?></p>
         <p>PHP : <?php echo phpversion(); ?></p>
         <p>Server IP: <?php echo $_SERVER[ 'SERVER_ADDR' ]; ?></p>
         <p>Scheme: <?php echo $_SERVER[ 'REQUEST_SCHEME' ]; ?></p>
-
         <p>Home path: <?php echo get_home_path(); ?></p>
+
+        <h3>WP info</h3>
+        <p>WP version: <?php echo get_bloginfo( 'version' ); ?></p>
         <p>Home url: <?php echo get_home_url(); ?></p>
-        
         <p>Admin email: <?php echo get_bloginfo( 'admin_email' ); ?></p>
         <p>Blog public: <?php echo get_option( 'blog_public' ); ?></p>
         <p>Users can register: <?php echo get_option( 'users_can_register' ); ?></p>
@@ -231,10 +272,34 @@
         <p>Text direction: <?php echo get_bloginfo( 'text_direction' ); ?></p>
         <p>Language: <?php echo get_bloginfo( 'language' ); ?></p>
         
+        <h3>WP info</h3>
         <p>Current theme: <?php echo get_option( 'current_theme' ); ?></p>
         <p>Stylesheet: <?php echo get_option( 'stylesheet' ); ?></p>
         <p>Template: <?php echo get_option( 'template' ); ?></p>
 
+        <h3>Active plugins</h3>
+        <ul>
+            <?php
+                $plugins = get_plugins();
+                foreach( $plugins as $key => $value ) {
+                    if ( is_plugin_active( $key ) ) {
+                        echo '<li>' . $value[ 'Name' ] . '</li>';
+                    }
+                }
+            ?>
+        </ul>
+
+        <h3>Inactive plugins</h3>
+        <ul>
+            <?php
+                $plugins = get_plugins();
+                foreach( $plugins as $key => $value ) {
+                    if ( ! is_plugin_active( $key ) ) {
+                        echo '<li>' . $value[ 'Name' ] . '</li>';
+                    }
+                }
+            ?>
+        </ul>
         <?php if ( class_exists( 'SitePress' ) ) { ?>
             <p>WPLANG: <?php echo get_option( 'WPLANG' ); ?></p>
             <p>WPML Version: <?php echo get_option( 'WPML_Plugin_verion' ); ?></p>

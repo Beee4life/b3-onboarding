@@ -697,6 +697,6 @@
         }
 
         // Initialize the plugin
-        $b3_registration_plugin = new B3Onboarding();
+        $b3_onboarding_plugin = new B3Onboarding();
 
     endif; // class_exists check

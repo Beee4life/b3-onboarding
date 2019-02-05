@@ -117,24 +117,31 @@
     
     function b3_settings_form_handling() {
         
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_pages_nonce' ] ) ) {
+        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             $redirect_url = admin_url( 'admin.php?page=b3-onboarding-settings' );
-            if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
-                // @TODO: add error
-            } else {
-                
-                $loopable_ids = [
-                    'b3_account_id',
-                    'b3_forgotpass_id',
-                    'b3_login_id',
-                    'b3_register_id',
-                    'b3_resetpass_id',
-                ];
-                foreach( $loopable_ids as $page ) {
-                    if ( ! empty( $_POST[ $page ] ) ) {
-                        update_option( $page, $_POST[ $page ], true );
+            if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
+                if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
+                    // @TODO: add error
+                } else {
+        
+                    $loopable_ids = [
+                        'b3_account_id',
+                        'b3_forgotpass_id',
+                        'b3_login_id',
+                        'b3_register_id',
+                        'b3_resetpass_id',
+                    ];
+                    foreach( $loopable_ids as $page ) {
+                        if ( ! empty( $_POST[ $page ] ) ) {
+                            update_option( $page, $_POST[ $page ], true );
+                        } else {
+                            delete_option( $page );
+                        }
                     }
                 }
+            }
+            if ( isset( $_POST[ 'b3_settings_nonce' ] ) ) {
+                echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
             }
         
             wp_redirect( $redirect_url );
