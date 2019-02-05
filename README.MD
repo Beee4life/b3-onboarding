@@ -1,3 +1,7 @@
-What problems does this plugin solve ?
+# B3 User Registration plugin
 
-No part is obligated. You can use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want.
+This plugin focuses on how to 'onboard' (in other words register/add) users to your site.
+
+You can easily customise a lot of things, if you know your way around [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks). Right now we focus mostly on technique, to make this plugin as customisable as possible. A proper user interface for the less techy will follow later.
+
+### Coming soon
