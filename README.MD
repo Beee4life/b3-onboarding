@@ -1,4 +1,4 @@
-# B3 User Registration plugin
+# B3 Onboarding plugin
 
 This plugin focuses on how to 'onboard' (in other words register/add) users to your site.
 
