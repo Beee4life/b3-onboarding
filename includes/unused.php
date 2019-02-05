@@ -13,7 +13,7 @@
             }
             
             // The rest are redirected to the login page
-            $login_url = home_url( 'login-test' );
+            $login_url = home_url( 'login' );
             if ( ! empty( $redirect_to ) ) {
                 $login_url = add_query_arg( 'redirect_to', $redirect_to, $login_url );
             }
@@ -72,7 +72,7 @@
             if ( is_wp_error( $user ) ) {
                 $error_codes = join( ',', $user->get_error_codes() );
                 
-                $login_url = home_url( 'login-test' );
+                $login_url = home_url( 'login' );
                 $login_url = add_query_arg( 'login', $error_codes, $login_url );
                 
                 wp_redirect( $login_url );
@@ -112,7 +112,7 @@
      * Redirect to custom login page after the user has been logged out.
      */
     function redirect_after_logout() {
-        $redirect_url = home_url( 'login-test?logged_out=true' );
+        $redirect_url = home_url( 'login?logged_out=true' );
         wp_safe_redirect( $redirect_url );
         exit;
     }
@@ -145,9 +145,9 @@
             $user = check_password_reset_key( $_REQUEST['key'], $_REQUEST['login'] );
             if ( ! $user || is_wp_error( $user ) ) {
                 if ( $user && $user->get_error_code() === 'expired_key' ) {
-                    wp_redirect( home_url( 'login-test?login=expiredkey' ) );
+                    wp_redirect( home_url( 'login?login=expiredkey' ) );
                 } else {
-                    wp_redirect( home_url( 'login-test?login=invalidkey' ) );
+                    wp_redirect( home_url( 'login?login=invalidkey' ) );
                 }
                 exit;
             }
@@ -200,7 +200,7 @@
                 $last_name  = sanitize_text_field( $_POST[ 'last_name' ] );
     
                 $result = '';
-                $result = $this->xregister_user( $user_login, $user_email, $misc = array() );
+                // $result = $this->xregister_user( $user_login, $user_email, $misc = array() );
                 
                 if ( is_wp_error( $result ) ) {
                     // Parse errors into a string and append as parameter to redirect
@@ -208,7 +208,7 @@
                     $redirect_url = add_query_arg( 'register-errors', $errors, $redirect_url );
                 } else {
                     // Success, redirect to login page.
-                    $redirect_url = home_url( 'login-test' );
+                    $redirect_url = home_url( 'login' );
                     $redirect_url = add_query_arg( 'registered', $email, $redirect_url );
                 }
             }
@@ -231,7 +231,7 @@
                 $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
             } else {
                 // Email sent
-                $redirect_url = home_url( 'login-test' );
+                $redirect_url = home_url( 'login' );
                 $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
             }
             
@@ -253,9 +253,9 @@
             
             if ( ! $user || is_wp_error( $user ) ) {
                 if ( $user && $user->get_error_code() === 'expired_key' ) {
-                    wp_redirect( home_url( 'login-test?login=expiredkey' ) );
+                    wp_redirect( home_url( 'login?login=expiredkey' ) );
                 } else {
-                    wp_redirect( home_url( 'login-test?login=invalidkey' ) );
+                    wp_redirect( home_url( 'login?login=invalidkey' ) );
                 }
                 exit;
             }
@@ -287,7 +287,7 @@
                 
                 // Parameter checks OK, reset password
                 reset_password( $user, $_POST['pass1'] );
-                wp_redirect( home_url( 'login-test?password=changed' ) );
+                wp_redirect( home_url( 'login?password=changed' ) );
             } else {
                 echo "Invalid request.";
             }
@@ -301,8 +301,9 @@
      * request is valid.
      *
      * @return bool True if the CAPTCHA is OK, otherwise false.
+     * is private function
      */
-    private function verify_recaptcha() {
+    function verify_recaptcha() {
         // This field is set by the recaptcha widget if check is successful
         if ( isset ( $_POST['g-recaptcha-response'] ) ) {
             $captcha_response = $_POST['g-recaptcha-response'];

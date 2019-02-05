@@ -2,12 +2,13 @@
     $show_custom_passwords = get_option( 'b3_custom_passwords' );
     $show_recaptcha        = get_option( 'b3_recaptcha' );
     $show_first_last_name  = get_option( 'b3_first_last_name' );
+    $send_password_by_mail = get_option( 'b3_send_pass_mail' );
 ?>
 <div id="b3-register" class="b3">
     <?php if ( $attributes[ 'show_title' ] ) { ?>
         <h3><?php _e( 'Register', 'b3-user-register' ); ?></h3>
     <?php } ?>
-    <?php //echo '<pre>'; var_dump($attributes[ 'errors' ]); echo '</pre>'; exit; ?>
+
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
             <p>
@@ -20,16 +21,16 @@
 
     <form id="b3-register-form" class="b3__form b3__form--register" action="" method="post">
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
-        <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
+        <?php if ( function_exists( 'b3_hidden_fields_registration_form' ) ) { b3_hidden_fields_registration_form(); } ?>
 
         <div class="b3__form-element b3__form-element--register">
             <label class="b3__form-label" for="b3_user_login"><?php _e( 'User name', 'b3-user-register' ); ?> <strong>*</strong></label>
-            <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" required>
+            <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" value="xxx" required>
         </div>
 
         <div class="b3__form-element b3__form-element--register">
             <label class="b3__form-label" for="b3_user_email"><?php _e( 'Email', 'b3-user-register' ); ?> <strong>*</strong></label>
-            <input type="text" name="b3_user_email" id="b3_user_email" class="b3__form--input" required>
+            <input type="text" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="info@xxx.com" required>
         </div>
 
         <?php if ( is_multisite() ) { ?>
@@ -42,15 +43,7 @@
         
         <?php // this function is not in use yet ?>
         <?php if ( $show_custom_passwords == true ) { ?>
-            <div class="b3__form-element b3__form-element--register">
-                <label class="b3__form-label" for="pass1"><?php _e( 'Password', 'b3-user-register' ); ?></label>
-                <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3__form--input" />
-            </div>
-    
-            <div class="b3__form-element b3__form-element--register">
-                <label class="b3__form-label" for="pass2"><?php _e( 'Confirm Password', 'b3-user-register' ); ?></label>
-                <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3__form--input" />
-            </div>
+            <?php if ( function_exists( 'b3_show_password_fields' ) ) { b3_show_password_fields(); } ?>
         <?php } ?>
     
         <?php // this function is not in use yet ?>
@@ -69,16 +62,16 @@
     
         <?php // this function is not in use yet ?>
         <?php if ( $show_recaptcha == true && $attributes[ 'recaptcha_site_key' ] ) { ?>
-            <?php do_action( 'b3_add_captcha_registration' ); ?>
-            <div class="recaptcha-container">
-                <div class="g-recaptcha" data-sitekey="<?php echo $attributes[ 'recaptcha_site_key' ]; ?>"></div>
-            </div>
-            <p></p>
+            <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $attributes ); } ?>
         <?php } ?>
 
         <?php if ( $show_custom_passwords != true ) { ?>
             <div class="b3__form-element b3__form-element--register">
-                <?php _e( 'Note: Your password will be generated automatically and sent to your email address.', 'b3-user-register' ); ?>
+                <?php if ( $send_password_by_mail == true ) { ?>
+                    <?php _e( 'Note: Your password will be generated automatically and sent to your email address.', 'b3-user-register' ); ?>
+                <?php } else { ?>
+                    <?php _e( 'Note: You can set your own password after registering.', 'b3-user-register' ); ?>
+                <?php } ?>
             </div>
         <?php } ?>
     
@@ -91,4 +84,5 @@
     </form>
 
     <?php do_action( 'b3_after_registration_form' ); ?>
+    
 </div>

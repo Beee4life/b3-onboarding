@@ -16,8 +16,19 @@
         echo $hidden_fields;
         
     }
-    add_action( 'b3_add_hidden_fields_registration', 'b3_hidden_fields_registration_form' );
 
+    
+    function b3_add_captcha_registration( $attributes, $form_type = 'register' ) {
+    
+        do_action( 'b3_before_recaptcha_' . $form_type );
+        ?>
+        <div class="recaptcha-container">
+            <div class="g-recaptcha" data-sitekey="<?php echo $attributes[ 'recaptcha_site_key' ]; ?>"></div>
+        </div>
+        <p></p>
+        <?php
+        do_action( 'b3_after_recaptcha_' );
+    }
 
     /**
      * Hook to output any custom fields/info

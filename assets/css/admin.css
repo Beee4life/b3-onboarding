@@ -1,0 +1,62 @@
+.b3__tabs {
+    background: white;
+    margin-top: 2em;
+    max-width:  60%;
+}
+
+/* Style the tab header */
+.b3__tab-header {
+    overflow:         hidden;
+    border:           1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.b3__tab-header button {
+    background-color: inherit;
+    float:            left;
+    border:           none;
+    outline:          none;
+    cursor:           pointer;
+    padding:          14px 16px;
+    transition:       0.3s;
+}
+
+/* Change background color of buttons on hover */
+.b3__tab-header button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.b3__tab-header button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.b3__tab-content {
+    display:    none;
+    padding:    6px 12px;
+    border:     1px solid #ccc;
+    border-top: none;
+}
+
+.b3__tab-content ul {
+    list-style:   disc;
+    padding-left: 1.5em;
+}
+
+.b3__select-page {
+    width:         100%;
+    margin-bottom: 1em;
+    display:       flex;
+    flex-flow:     row nowrap;
+}
+
+.b3__select-page__label {
+    margin-right: 1em;
+    min-width: 250px;
+}
+
+.b3__select-page__selector {
+    min-width: 250px;
+}
