@@ -7,27 +7,27 @@
         // Information needed for creating the plugin's pages
         $page_definitions = array(
             // 'account' => array(
-            //     'title' => __( 'Your Account', 'b3-user-register' ),
+            //     'title' => __( 'Your Account', 'b3-onboarding' ),
             //     'content' => '[account]',
             //     'meta' => 'b3_account'
             // ),
             'forgot-password' => array(
-                'title'   => __( 'Forgot password', 'b3-user-register' ),
+                'title'   => __( 'Forgot password', 'b3-onboarding' ),
                 'content' => '[forgotpass-form]',
                 'meta'    => 'forgotpass'
             ),
             'login'           => array(
-                'title'   => __( 'Log In', 'b3-user-register' ),
+                'title'   => __( 'Log In', 'b3-onboarding' ),
                 'content' => '[login-form]',
                 'meta'    => 'login'
             ),
             'register'        => array(
-                'title'   => __( 'Register', 'b3-user-register' ),
+                'title'   => __( 'Register', 'b3-onboarding' ),
                 'content' => '[register-form]',
                 'meta'    => 'register'
             ),
             'reset-password'  => array(
-                'title'   => __( 'Reset password', 'b3-user-register' ),
+                'title'   => __( 'Reset password', 'b3-onboarding' ),
                 'content' => '[resetpass-form]',
                 'meta'    => 'resetpass'
             ),

@@ -1,13 +1,13 @@
 <?php
     /*
-    Plugin Name: B3 - Custom user registration/login
+    Plugin Name: B3 - User onboarding
     Version: 0.0.1
     Tags: user, management, registration, login, forgot password, reset password, account
     Plugin URI: http://www.berrplasman.com
     Description: This plugin handles the registration/login process
     Author: Beee
     Author URI: http://berryplasman.com
-    Text-domain: b3-user-register
+    Text-domain: b3-onboarding
 
     Source: https://code.tutsplus.com/tutorials/build-a-custom-wordpress-user-flow-part-1-replace-the-login-page--cms-23627
 
@@ -27,9 +27,9 @@
         exit; // Exit if accessed directly
     }
 
-    if ( ! class_exists( 'B3UserRegistration' ) ) :
+    if ( ! class_exists( 'B3Onboarding' ) ) :
 
-        class B3UserRegistration {
+        class B3Onboarding {
 
             /**
              * Initializes the plugin.
@@ -58,6 +58,8 @@
                 // add_action( 'wp_print_footer_scripts',               array( $this, 'add_captcha_js_to_footer' ) );
 
                 add_filter( 'display_post_states',                   array( $this, 'b3_add_post_state' ), 10, 2 );
+
+                add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
 
                 add_shortcode( 'register-form',                 array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'login-form',                    array( $this, 'b3_render_login_form' ) );
@@ -95,7 +97,7 @@
              */
             public function b3_enqueue_scripts_frontend() {
                 wp_enqueue_style( 'b3-main', plugins_url( 'assets/css/style.css', __FILE__ ) );
-                // wp_enqueue_script( 'b3-user-register-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
+                // wp_enqueue_script( 'b3-onboarding-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
             }
     
     
@@ -112,7 +114,7 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                add_menu_page( 'B3 User Registration', 'B3 Registration', 'manage_options', 'b3-user-register-settings', 'b3_user_register_settings' );
+                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding-settings', 'b3_user_register_settings' );
                 include( 'includes/admin-page.php' ); // content for the settings page
             }
     
@@ -124,7 +126,6 @@
     
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user' ] ) ) {
-                        error_log('hit register');
                         $redirect_url = home_url( 'register' );
                         if ( ! wp_verify_nonce( $_POST[ "b3_register_user" ], 'b3-register-user' ) ) {
                         } else {
@@ -205,6 +206,21 @@
     
     
             /**
+             * Add settings tlink to plugin page
+             * @param $links
+             *
+             * @return mixed
+             */
+            public function b3_settings_link( $links ) {
+                $settings_link = '<a href="admin.php?page=b3-onboarding-settings">' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a>';
+                $add_on_link   = '<a href="admin.php?page=b3-onboarding-settings&tab=addon">' . esc_html__( 'Add-ons', 'b3-onboarding' ) . '</a>';
+                array_unshift( $links, $settings_link, $add_on_link );
+        
+                return $links;
+            }
+    
+    
+            /**
              * Redirects the user to the correct page depending on whether he / she
              * is an admin or not.
              *
@@ -242,7 +258,7 @@
              *
              */
             public function b3_add_page_notice() {
-                echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the profile edit page. Do not edit the title or slug of this page!', 'b3-user-register' ) . '</p></div>';
+                echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the profile edit page. Do not edit the title or slug of this page!', 'b3-onboarding' ) . '</p></div>';
             }
 
             
@@ -258,68 +274,68 @@
 
                     // Login errors
                     case 'empty_username':
-                        return __( 'Enter a user name', 'b3-user-register' );
+                        return __( 'Enter a user name', 'b3-onboarding' );
 
                     case 'empty_password':
-                        return __( 'You need to enter a password to login.', 'b3-user-register' );
+                        return __( 'You need to enter a password to login.', 'b3-onboarding' );
 
                     case 'invalid_username':
                         return __(
                             "We don't have any users with that email address. Maybe you used a different one when signing up?",
-                            'b3-user-register'
+                            'b3-onboarding'
                         );
 
                     case 'incorrect_password':
                         $err = __(
                             "The password you entered wasn't quite right. <a href='%s'>Did you forget your password</a>?",
-                            'b3-user-register'
+                            'b3-onboarding'
                         );
                         return sprintf( $err, wp_lostpassword_url() );
 
                     // Registration errors
                     case 'username_exists':
-                        return __( 'This username address is already in use.', 'b3-user-register' );
+                        return __( 'This username address is already in use.', 'b3-onboarding' );
 
                     case 'email':
-                        return __( 'The email address you entered is not valid.', 'b3-user-register' );
+                        return __( 'The email address you entered is not valid.', 'b3-onboarding' );
 
                     case 'email_exists':
-                        return __( 'An account exists with this email address.', 'b3-user-register' );
+                        return __( 'An account exists with this email address.', 'b3-onboarding' );
 
                     case 'closed':
-                        return __( 'Registering new users is currently not allowed.', 'b3-user-register' );
+                        return __( 'Registering new users is currently not allowed.', 'b3-onboarding' );
 
                     case 'captcha':
-                        return __( 'The Google reCAPTCHA check failed. Are you a robot?', 'b3-user-register' );
+                        return __( 'The Google reCAPTCHA check failed. Are you a robot?', 'b3-onboarding' );
 
                     // Lost password
                     case 'invalid_email':
                     case 'invalidcombo':
-                        return __( 'There are no users registered with this email address.', 'b3-user-register' );
+                        return __( 'There are no users registered with this email address.', 'b3-onboarding' );
 
                     // Reset password
                     case 'expiredkey':
                     case 'invalidkey':
-                        return __( 'The password reset link you used is not valid anymore.', 'b3-user-register' );
+                        return __( 'The password reset link you used is not valid anymore.', 'b3-onboarding' );
 
                     case 'password_reset_mismatch':
-                        return __( "The two passwords you entered don't match.", 'b3-user-register' );
+                        return __( "The two passwords you entered don't match.", 'b3-onboarding' );
 
                     case 'password_reset_empty':
-                        return __( "Sorry, we don't accept empty passwords.", 'b3-user-register' );
+                        return __( "Sorry, we don't accept empty passwords.", 'b3-onboarding' );
 
                     // Multisite
                     case 'domain_exists':
-                        return __( "Sorry, this subdomain has already been taken.", 'b3-user-register' );
+                        return __( "Sorry, this subdomain has already been taken.", 'b3-onboarding' );
 
                     case 'user_registered':
-                        return __( "You have successfully registered. Please check your email for an activation link.", 'b3-user-register' );
+                        return __( "You have successfully registered. Please check your email for an activation link.", 'b3-onboarding' );
 
                     default:
                         break;
                 }
 
-                return __( 'An unknown error occurred. Please try again later.', 'b3-user-register' );
+                return __( 'An unknown error occurred. Please try again later.', 'b3-onboarding' );
             }
 
 
@@ -422,33 +438,33 @@
              */
             public function b3_register_settings_fields() {
                 // Create settings fields for the two keys used by reCAPTCHA
-                register_setting( 'general', 'b3-user-register-recaptcha-site-key' );
-                register_setting( 'general', 'b3-user-register-recaptcha-secret-key' );
+                register_setting( 'general', 'b3-onboarding-recaptcha-site-key' );
+                register_setting( 'general', 'b3-onboarding-recaptcha-secret-key' );
         
                 ## add to site settings (general)
                 // add_settings_field(
-                //     'b3-user-register-recaptcha-site-key',
-                //     '<label for="b3-user-register-recaptcha-site-key">' . __( 'reCAPTCHA site key' , 'b3-user-register' ) . '</label>',
+                //     'b3-onboarding-recaptcha-site-key',
+                //     '<label for="b3-onboarding-recaptcha-site-key">' . __( 'reCAPTCHA site key' , 'b3-onboarding' ) . '</label>',
                 //     array( $this, 'render_recaptcha_site_key_field' ),
                 //     'general'
                 // );
         
                 // add_settings_field(
-                //     'b3-user-register-recaptcha-secret-key',
-                //     '<label for="b3-user-register-recaptcha-secret-key">' . __( 'reCAPTCHA secret key' , 'b3-user-register' ) . '</label>',
+                //     'b3-onboarding-recaptcha-secret-key',
+                //     '<label for="b3-onboarding-recaptcha-secret-key">' . __( 'reCAPTCHA secret key' , 'b3-onboarding' ) . '</label>',
                 //     array( $this, 'render_recaptcha_secret_key_field' ),
                 //     'general'
                 // );
             }
     
             public function render_recaptcha_site_key_field() {
-                $value = get_option( 'b3-user-register-recaptcha-site-key', '' );
-                echo '<input type="text" id="b3-user-register-recaptcha-site-key" name="b3-user-register-recaptcha-site-key" value="' . esc_attr( $value ) . '" />';
+                $value = get_option( 'b3-onboarding-recaptcha-site-key', '' );
+                echo '<input type="text" id="b3-onboarding-recaptcha-site-key" name="b3-onboarding-recaptcha-site-key" value="' . esc_attr( $value ) . '" />';
             }
     
             public function render_recaptcha_secret_key_field() {
-                $value = get_option( 'b3-user-register-recaptcha-secret-key', '' );
-                echo '<input type="text" id="b3-user-register-recaptcha-secret-key" name="b3-user-register-recaptcha-secret-key" value="' . esc_attr( $value ) . '" />';
+                $value = get_option( 'b3-onboarding-recaptcha-secret-key', '' );
+                echo '<input type="text" id="b3-onboarding-recaptcha-secret-key" name="b3-onboarding-recaptcha-secret-key" value="' . esc_attr( $value ) . '" />';
             }
     
             
@@ -473,12 +489,12 @@
         
                 // @TODO: IF
                 // Retrieve recaptcha key
-                $attributes[ 'recaptcha_site_key' ] = get_option( 'b3-user-register-recaptcha-site-key', null );
+                $attributes[ 'recaptcha_site_key' ] = get_option( 'b3-onboarding-recaptcha-site-key', null );
         
                 if ( is_user_logged_in() ) {
-                    return __( 'You are already signed in.', 'b3-user-register' );
+                    return __( 'You are already signed in.', 'b3-onboarding' );
                     // } elseif ( ! get_option( 'users_can_register' ) ) {
-                    //     return __( 'Registering new users is currently not allowed.', 'b3-user-register' );
+                    //     return __( 'Registering new users is currently not allowed.', 'b3-onboarding' );
                 } else {
             
                     // Retrieve possible errors from request parameters
@@ -516,7 +532,7 @@
                 $show_title = $attributes['show_title'];
         
                 if ( is_user_logged_in() ) {
-                    return __( 'You are already signed in.', 'b3-user-register' );
+                    return __( 'You are already signed in.', 'b3-onboarding' );
                 }
         
                 // Pass the redirect parameter to the WordPress login functionality: by default,
@@ -580,7 +596,7 @@
                 }
     
                 if ( is_user_logged_in() ) {
-                    return __( 'You are already logged in.', 'b3-user-register' );
+                    return __( 'You are already logged in.', 'b3-onboarding' );
                 } else {
                     return $this->get_template_html( $attributes[ 'template' ], $attributes );
                 }
@@ -604,7 +620,7 @@
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    return __( 'You are already signed in.', 'b3-user-register' );
+                    return __( 'You are already signed in.', 'b3-onboarding' );
                 } else {
                     if ( isset( $_REQUEST['login'] ) && isset( $_REQUEST['key'] ) ) {
                         $attributes['login'] = $_REQUEST['login'];
@@ -623,7 +639,7 @@
     
                         return $this->get_template_html( $attributes[ 'template' ], $attributes );
                     } else {
-                        return __( 'Invalid password reset link.', 'b3-user-register' );
+                        return __( 'Invalid password reset link.', 'b3-onboarding' );
                     }
                 }
             }
@@ -681,6 +697,6 @@
         }
 
         // Initialize the plugin
-        $b3_registration_plugin = new B3UserRegistration();
+        $b3_registration_plugin = new B3Onboarding();
 
     endif; // class_exists check

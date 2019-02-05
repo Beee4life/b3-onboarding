@@ -118,7 +118,7 @@
     function b3_settings_form_handling() {
         
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_pages_nonce' ] ) ) {
-            $redirect_url = admin_url( 'admin.php?page=b3-user-register-settings' );
+            $redirect_url = admin_url( 'admin.php?page=b3-onboarding-settings' );
             if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
                 // @TODO: add error
             } else {

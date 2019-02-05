@@ -97,12 +97,12 @@
      */
     function replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
         // Create new message
-        $msg  = __( 'Hello!', 'b3-user-register' ) . "\r\n\r\n";
-        $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-user-register' ), $user_login ) . "\r\n\r\n";
-        $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-user-register' ) . "\r\n\r\n";
-        $msg .= __( 'To reset your password, visit the following address:', 'b3-user-register' ) . "\r\n\r\n";
+        $msg  = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
+        $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
+        $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
+        $msg .= __( 'To reset your password, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
         $msg .= site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n\r\n";
-        $msg .= __( 'Thanks!', 'b3-user-register' ) . "\r\n";
+        $msg .= __( 'Thanks!', 'b3-onboarding' ) . "\r\n";
         
         return $msg;
     }
@@ -316,7 +316,7 @@
             'https://www.google.com/recaptcha/api/siteverify',
             array(
                 'body' => array(
-                    'secret' => get_option( 'b3-user-register-recaptcha-secret-key' ),
+                    'secret' => get_option( 'b3-onboarding-recaptcha-secret-key' ),
                     'response' => $captcha_response
                 )
             )

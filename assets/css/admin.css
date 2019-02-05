@@ -12,7 +12,7 @@
 }
 
 /* Style the buttons that are used to open the tab content */
-.b3__tab-header button {
+.b3__tab-header .b3__tab-button {
     background-color: inherit;
     float:            left;
     border:           none;
@@ -20,6 +20,12 @@
     cursor:           pointer;
     padding:          14px 16px;
     transition:       0.3s;
+}
+.b3__tab-header .dashicons {
+    font-size: 15px;
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
 }
 
 /* Change background color of buttons on hover */

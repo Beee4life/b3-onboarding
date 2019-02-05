@@ -12,17 +12,22 @@
 
         <div class="wrap">
 
-            <h1>Login settings</h1>
+            <h1><?php _e( 'Onboarding settings', 'b3-onboarding' ); ?></h1>
 
             <div class="b3__tabs">
-                <?php $default_tab = 'pages'; ?>
                 <?php
-                    $default_tab = 'pages';
+                    if ( isset( $_GET[ 'tab' ] ) && ! empty( $_GET[ 'tab' ] ) ) {
+                        $default_tab = 'addon';
+                    } else {
+                        $default_tab = 'pages';
+                    }
+
                     $tabs        = array(
                         array(
                             'id'      => 'main',
                             'title'   => 'Main',
                             'content' => b3_render_tab_content( 'main' ),
+                            'icon'    => 'main',
                         ),
                         array(
                             'id'      => 'pages',
@@ -33,6 +38,11 @@
                             'id'      => 'settings',
                             'title'   => 'Settings',
                             'content' => b3_render_tab_content( 'settings' ),
+                        ),
+                        array(
+                            'id'      => 'addon',
+                            'title'   => 'Addon',
+                            'content' => b3_render_tab_content( 'addons' ),
                         ),
                         // array(
                         //     'id'      => 'recaptcha',
@@ -49,6 +59,9 @@
                 <div class="b3__tab-header">
                     <?php foreach ( $tabs as $tab ) { ?>
                         <button class="b3__tab-button<?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
+                            <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
+                                <i class="dashicons dashicons-groups"></i>
+                            <?php } ?>
                             <?php echo $tab[ 'title' ]; ?>
                         </button>
                     <?php } ?>

@@ -23,6 +23,9 @@
             case 'recaptcha':
                 $content = b3_render_recaptcha_tab();
                 break;
+            case 'addons':
+                $content = b3_render_addons_tab();
+                break;
             case 'debug':
                 $content = b3_render_debug_tab();
                 break;
@@ -49,27 +52,27 @@
         $b3_pages = array(
             array(
                 'id' => 'register',
-                'label' => __( 'Register', 'b3-user-register' ),
+                'label' => __( 'Register', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_register_id' ),
             ),
             array(
                 'id' => 'login',
-                'label' => __( 'Login', 'b3-user-register' ),
+                'label' => __( 'Login', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_login_id' ),
             ),
             array(
                 'id' => 'forgotpass',
-                'label' => __( 'Forgot password', 'b3-user-register' ),
+                'label' => __( 'Forgot password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_forgotpass_id' ),
             ),
             array(
                 'id' => 'resetpass',
-                'label' => __( 'Reset password', 'b3-user-register' ),
+                'label' => __( 'Reset password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_resetpass_id' ),
             ),
             // array(
             //     'id' => 'account',
-            //     'label' => __( 'Account', 'b3-user-register' ),
+            //     'label' => __( 'Account', 'b3-onboarding' ),
             //     'page_id' => get_option( 'b3_account' ),
             // ),
         );
@@ -103,7 +106,7 @@
                     </div>
                 </div>
             <?php } ?>
-            <input type="submit" class="button button-primary" name="" value="<?php _e( 'Submit', 'b3-user-register' ); ?>">
+            <input type="submit" class="button button-primary" name="" value="<?php _e( 'Submit', 'b3-onboarding' ); ?>">
         </form>
         <?php
         $result = ob_get_clean();
@@ -174,6 +177,32 @@
         
         return $result;
     }
+    
+    function b3_render_addons_tab() {
+    
+        ob_start();
+        ?>
+        <h2>Add ons</h2>
+        
+        <p>
+            We don't have any add-ons yet... but we do understand there might be a need for them.
+            <br />
+            We'll look into creating an add-on for the ones below soon.
+        </p>
+        
+        <ul>
+            <li>Salesforce</li>
+            <li>Mailchimp</li>
+        </ul>
+        
+    
+        <?php
+        $result = ob_get_clean();
+    
+        return $result;
+
+    }
+    
     
     function b3_render_debug_tab() {
     

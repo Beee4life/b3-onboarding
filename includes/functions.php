@@ -8,12 +8,12 @@
         ob_start();
         ?>
         <div class="b3__form-element b3__form-element--register">
-            <label class="b3__form-label" for="pass1"><?php _e( 'Password', 'b3-user-register' ); ?></label>
+            <label class="b3__form-label" for="pass1"><?php _e( 'Password', 'b3-onboarding' ); ?></label>
             <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3__form--input" />
         </div>
         
         <div class="b3__form-element b3__form-element--register">
-            <label class="b3__form-label" for="pass2"><?php _e( 'Confirm Password', 'b3-user-register' ); ?></label>
+            <label class="b3__form-label" for="pass2"><?php _e( 'Confirm Password', 'b3-onboarding' ); ?></label>
             <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3__form--input" />
         </div>
         <?php
