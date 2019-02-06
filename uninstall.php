@@ -23,4 +23,9 @@
             delete_option( $action );
         }
         
+        $roles = array(
+            'b3_activation',
+            'b3_approval',
+        );
+        
     }
