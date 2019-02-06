@@ -1,8 +1,9 @@
 <?php
-    $show_custom_passwords = get_option( 'b3_custom_passwords' );
-    $show_recaptcha        = get_option( 'b3_recaptcha' );
-    $show_first_last_name  = get_option( 'b3_first_last_name' );
     $send_password_by_mail = get_option( 'b3_send_pass_mail' );
+    $show_custom_passwords = get_option( 'b3_custom_passwords' );
+    $show_first_last_name  = get_option( 'b3_first_last_name' );
+    $show_privacy          = get_option( 'b3_privacy' );
+    $show_recaptcha        = get_option( 'b3_recaptcha' );
 ?>
 <div id="b3-register" class="b3">
     <?php if ( $attributes[ 'show_title' ] ) { ?>
@@ -11,7 +12,7 @@
 
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
-            <p>
+            <p class="b3__message">
                 <?php echo $error; ?>
             </p>
         <?php } ?>

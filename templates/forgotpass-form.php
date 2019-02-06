@@ -3,7 +3,7 @@
 <div id="b3-forgotpass" class="b3">
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) : ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) : ?>
-            <p>
+            <p class="b3__message">
                 <?php echo $error; ?>
             </p>
         <?php endforeach; ?>

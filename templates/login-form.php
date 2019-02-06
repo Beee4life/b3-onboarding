@@ -4,13 +4,15 @@
 ?>
 <div id="b3-login" class="b3">
     <?php if ( $attributes[ 'show_title' ] ) : ?>
-        <h2><?php _e( 'Sign In', 'b3-user-register' ); ?></h2>
+        <h2>
+            <?php _e( 'Sign In', 'b3-user-register' ); ?>
+        </h2>
     <?php endif; ?>
 
     <!-- Show errors if there are any -->
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) : ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) : ?>
-            <p class="login-error">
+            <p class="b3__message">
                 <?php echo $error; ?>
             </p>
         <?php endforeach; ?>
