@@ -1,0 +1,15 @@
+{
+  "name": "Beee4life/b3-onboarding",
+  "description": "Manage the onboarding of a user",
+  "homepage": "https://github.com/Beee4life/b3-onboarding",
+  "type": "composer-plugin",
+  "authors": [
+    {
+      "name": "Berry Plasman",
+      "email": "info@berryplasman.com"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.5"
+  }
+}
