@@ -239,12 +239,28 @@
         <p>
             <?php esc_html_e( 'Here you can will be able to set the various emails.', 'b3-onboarding' ); ?>
         </p>
+
+        <ul>
+            <li>Welcome new user</li>
+            <li>New user (admin)</li>
+            <li>Send password to user</li>
+            <li>Reset password</li>
+            <li>Password changed</li>
+        </ul>
         
-        <p>
-            <strong>
-                TBC
-            </strong>
-        </p>
+        <?php if ( ! is_multisite() ) { ?>
+            <h3>
+                <?php esc_html_e( 'Multisite', 'b3-onboarding' ); ?>
+            </h3>
+            
+            <ul>
+                <li>Visitor signed up for site</li>
+                <li>User registered site</li>
+                <li>User deleted site</li>
+            </ul>
+        <?php } ?>
+        
+        
 
         <?php
         $result = ob_get_clean();
