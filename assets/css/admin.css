@@ -1,20 +1,19 @@
 .b3__admin {
 }
 
+/* TABS */
 .b3__tabs {
     background: white;
     margin-top: 2em;
     max-width:  60%;
 }
 
-/* Style the tab header */
 .b3__tab-header {
     overflow:         hidden;
     border:           1px solid #ccc;
     background-color: #f1f1f1;
 }
 
-/* Style the buttons that are used to open the tab content */
 .b3__tab-header .b3__tab-button {
     background-color: inherit;
     float:            left;
@@ -32,17 +31,14 @@
     height:       10px;
 }
 
-/* Change background color of buttons on hover */
 .b3__tab-header button:hover {
     background-color: #ddd;
 }
 
-/* Create an active/current tablink class */
 .b3__tab-header button.active {
     background-color: #ccc;
 }
 
-/* Style the tab content */
 .b3__tab-content {
     display:    none;
     padding:    1.5em;
@@ -57,6 +53,11 @@
 .b3__tab-content ul {
     list-style:   disc;
     padding-left: 1.5em;
+}
+
+.b3__message {
+    border:  1px dashed black;
+    padding: 5px 10px;
 }
 
 .b3__select-page {
@@ -79,4 +80,38 @@
 .b3__widget--dashboard ul {
     list-style:   disc;
     padding-left: 17px;
+}
+
+.b3__settings-field {
+    margin-bottom: 1em;
+}
+
+.b3__settings-label {
+    font-weight:   bold;
+    font-size:     1.25em;
+    margin-bottom: 0.5em;
+}
+
+.b3__settings-input {
+}
+
+.b3__settings-input--text input[type="text"] {
+    width: 300px;
+}
+
+.b3 input[type="text"],
+.b3 input[type="password"],
+.b3 input[type="checkbox"],
+.b3 input[type="email"],
+.b3 input[type="text"],
+.b3 input[type="url"],
+.b3 select,
+.b3 textarea {
+}
+
+.b3 textarea,
+.b3 input,
+.b3 select {
+    font-size: 14px;
+    padding:   6px 10px;
 }

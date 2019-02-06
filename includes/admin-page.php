@@ -10,7 +10,7 @@
         }
         ?>
 
-        <div class="b3__admin">
+        <div class="b3 b3__admin">
 
             <h1><?php _e( 'Onboarding settings', 'b3-onboarding' ); ?></h1>
 
@@ -19,25 +19,25 @@
                     if ( isset( $_GET[ 'tab' ] ) ) {
                         $default_tab = $_GET[ 'tab' ];
                     } else {
-                        $default_tab = 'settings';
+                        $default_tab = 'recaptcha';
                     }
 
                     $tabs        = array(
                         array(
                             'id'      => 'main',
-                            'title'   => 'Main',
+                            'title'   => esc_html__( 'Main', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'main' ),
                             'icon'    => 'admin-site',
                         ),
                         array(
                             'id'      => 'pages',
-                            'title'   => 'Pages',
+                            'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'pages' ),
                             'icon'    => 'admin-page',
                         ),
                         array(
                             'id'      => 'settings',
-                            'title'   => 'Settings',
+                            'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'settings' ),
                             'icon'    => 'admin-generic',
                         ),
@@ -45,24 +45,34 @@
                     // if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
                     //     $tabs[] = array(
                     //         'id'      => 'addon',
-                    //         'title'   => 'Addon',
+                    //         'title'   => esc_html__( 'Addon', 'b3-onboarding' ),
                     //         'content' => b3_render_tab_content( 'addons' ),
                     //         'icon'    => 'plus',
                     //     );
                     // }
                     
+                    if ( get_option( 'b3_custom_emails' ) ) {
+                        $tabs[] = array(
+                            'id'      => 'emails',
+                            'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
+                            'content' => b3_render_tab_content( 'emails' ),
+                            'icon'    => 'email',
+                        );
+                    }
+                    
                     if ( get_option( 'b3_recaptcha' ) ) {
                         $tabs[] = array(
                             'id'      => 'recaptcha',
-                            'title'   => 'Recaptcha',
+                            'title'   => esc_html__( 'Recaptcha', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'recaptcha' ),
+                            'icon'    => 'star-filled',
                         );
                     }
                     
                     if ( current_user_can( 'manage_options' ) ) {
                         $tabs[] = array(
                             'id'      => 'debug',
-                            'title'   => 'Debug info',
+                            'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'debug' ),
                             'icon'    => 'shield',
                         );

@@ -89,10 +89,23 @@
                 b3_create_initial_pages();
                 
                 $this->b3_set_default_settings();
+    
+                /**
+                 * Independent
+                 */
+                $aw_activation = get_role( 'b3_activation' );
+                if ( ! $aw_activation ) {
+                    add_role( 'b3_activation', __( 'Awaiting activation' ), [] );
+                }
+                $aw_approval = get_role( 'b3_approval' );
+                if ( ! $aw_approval ) {
+                    add_role( 'b3_approval', __( 'Awaiting approval' ), [] );
+                }
+    
             }
     
     
-            private function b3_set_default_settings() {
+            public function b3_set_default_settings() {
                 update_option( 'b3_dashboard_widget', 1 );
                 update_option( 'b3_sidebar_widget', 1 );
             }
@@ -128,7 +141,7 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings' );
+                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', '', '3' );
             }
         
         
@@ -361,6 +374,9 @@
                     case 'user_registered':
                         return esc_html__( "You have successfully registered. Please check your email for an activation link.", 'b3-onboarding' );
                 
+                    case 'settings_saved':
+                        return esc_html__( "Settings saved", 'b3-onboarding' );
+                
                     default:
                         break;
                 }
@@ -378,7 +394,7 @@
              *
              * @return int|WP_Error
              */
-            private function b3_register_user( $user_login, $user_email, $meta = array() ) {
+            protected function b3_register_user( $user_login, $user_email, $meta = array() ) {
                 $errors = new WP_Error();
             
                 if ( username_exists( $user_login ) ) {

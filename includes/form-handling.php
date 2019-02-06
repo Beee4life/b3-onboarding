@@ -54,7 +54,6 @@
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             
             if ( isset( $_REQUEST[ 'rp_key' ] ) && isset( $_REQUEST[ 'rp_login' ] ) ) {
-                error_log('hit reset pass');
                 
                 $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
                 $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
@@ -63,9 +62,9 @@
                 
                 if ( ! $user || is_wp_error( $user ) ) {
                     if ( $user && $user->get_error_code() === 'expired_key' ) {
-                        wp_redirect( home_url( 'login/?login=expiredkey' ) );
+                        wp_redirect( home_url( 'login/?login=expiredkey' ) ); // @TODO: make dynamic/filterable
                     } else {
-                        wp_redirect( home_url( 'login/?login=invalidkey' ) );
+                        wp_redirect( home_url( 'login/?login=invalidkey' ) ); // @TODO: make dynamic/filterable
                     }
                     exit;
                 }
@@ -119,7 +118,7 @@
     
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
-                $redirect_url = admin_url( 'admin.php?page=b3-onboarding' );
+                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=pages' );
                 if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
                     // @TODO: add error ?
                 } else {
@@ -138,6 +137,8 @@
                             delete_option( $page );
                         }
                     }
+    
+                    $redirect_url = add_query_arg( 'success', 'pages_saved', $redirect_url );
                 }
     
                 wp_redirect( $redirect_url );
@@ -145,8 +146,10 @@
 
             } elseif ( isset( $_POST[ 'b3_settings_nonce' ] ) ) {
     
+                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=settings' );
+                
                 if ( ! wp_verify_nonce( $_POST[ "b3_settings_nonce" ], 'b3-settings-nonce' ) ) {
-                    // @TODO: add error ?
+                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
 
                     // Custom passwords
@@ -170,14 +173,33 @@
                         delete_option( 'b3_sidebar_widget' );
                     }
                 
-                    // Sidebar widget
+                    // reCAPTCHA
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) ) {
                         update_option( 'b3_recaptcha', '1', true );
                     } else {
                         delete_option( 'b3_recaptcha' );
                     }
                 
+                    // Privacy
+                    if ( isset( $_POST[ 'b3_activate_privacy' ] ) ) {
+                        update_option( 'b3_privacy', '1', true );
+                    } else {
+                        delete_option( 'b3_privacy' );
+                    }
+                
+                    // reCAPTCHA
+                    if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
+                        update_option( 'b3_custom_emails', '1', true );
+                    } else {
+                        delete_option( 'b3_custom_emails' );
+                    }
+    
+                    $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
+    
                 }
+    
+                wp_redirect( $redirect_url );
+                exit;
             }
         }
     }
