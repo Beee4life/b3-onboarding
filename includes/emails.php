@@ -15,18 +15,18 @@
     function b3_basic_settings_field( $box = false ) {
     
         ob_start();
-        if ( ( isset( $box[ 'id' ] ) && ! empty( $box[ 'id' ] ) ) && ( isset( $box[ 'title' ] ) && ! empty( $box[ 'title' ] )) ) {
+        if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] )) ) {
             ?>
             <div class="metabox-handler">
                 <div class="postbox" id="">
                     <div class="handlediv" title="">
                         <i class="dashicons dashicons-plus"></i>
                     </div>
-                    <div class="b3__foldout--header foldout__toggle">
+                    <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'email_settings' == $box[ 'id' ] ) ? ' open' : false; ?>">
                         <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
                     </div>
                     
-                    <div class="b3__inside foldout__content hidden">
+                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'email_settings' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'email_settings' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
                         ##TABCONTENT##
                     </div>
                 </div>

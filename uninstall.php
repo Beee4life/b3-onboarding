@@ -8,24 +8,17 @@
     // If preserve settings is false
     if ( false == get_option( 'b3_preserve_settings' ) ) {
         
-        $actions = array(
-            'b3_account_id',
-            'b3_custom_passwords',
-            'b3_dashboard_widget',
-            'b3_forgotpass_id',
-            'b3_login_id',
-            'b3_register_id',
-            'b3_resetpass_id',
-            'b3_sidebar_widget',
-        );
-        
-        foreach ( $actions as $action ) {
-            delete_option( $action );
+        $meta_keys = b3_get_all_custom_meta_keys();
+        foreach ( $meta_keys as $key ) {
+            delete_option( $key );
         }
         
         $roles = array(
             'b3_activation',
             'b3_approval',
         );
+        foreach( $roles as $role ) {
+            remove_role( $role );
+        }
         
     }

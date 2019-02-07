@@ -21,44 +21,82 @@
         echo $results;
     }
 
-    function dummy_content() {
+    function b3_get_all_custom_meta_keys() {
+    
+        $meta_keys = [
+            'b3_account_id',
+            // 'b3_custom_emails',
+            // 'b3_custom_passwords',
+            'b3_dashboard_widget',
+            'b3_forgotpass_id',
+            // 'b3_html_emails',
+            'b3_login_id',
+            // 'b3_mail_sending_method',
+            // 'b3_add_br_html_email',
+            'b3_notification_sender_name',
+            'b3_notification_sender_email',
+            'b3_register_id',
+            'b3_resetpass_id',
+            'b3_sidebar_widget',
+        ];
         
-        ob_start();
-        ?>
-        <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</p>
-
-        <p>Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass.</p>
-        <?php
-        $result = ob_get_clean();
-        
-        return $result;
+        return $meta_keys;
     }
+
+    function b3_get_email_boxes( $send_password_mail ) {
     
-    
-    /**
-     * Filter lost password URL
-     *
-     * @param $lostpassword_url
-     * @param $redirect
-     *
-     * @return false|mixed|string
-     */
-    function b3_lost_password_page_url( $lostpassword_url, $redirect ) {
+        $email_boxes = [];
         
-        $lost_password_page_id = get_option( 'b3_forgotpass_id' );
-        if ( false != $lost_password_page_id ) {
-            $lost_pass_url = get_permalink( $lost_password_page_id );
-            if ( class_exists( 'SitePress' ) ) {
-                $lost_pass_url = apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true );
-            }
-            if ( false != $redirect ) {
-                return $lost_pass_url . '?redirect_to=' . $redirect;
-            }
+        $default_boxes1 = [
+            [
+                'id'    => 'email_settings',
+                'title' => esc_html__( 'Email Settings', 'b3-onboarding' ),
+            ],
+            // [
+            //     'id'    => 'welcome_email_user',
+            //     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+            // ],
+            // [
+            //     'id'    => 'new_user_admin',
+            //     'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+            // ],
+        ];
+        if ( true == $send_password_mail ) {
+            $default_boxes1[] = [
+                'id'    => 'send_password_mail',
+                'title' => esc_html__( 'Send password by email', 'b3-onboarding' ),
+            ];
+        }
+        $default_boxes2 = [
+            // [
+            //     'id'    => 'forgot_password',
+            //     'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
+            // ],
+            // [
+            //     'id'    => 'password_changed',
+            //     'title' => esc_html__( 'Reset password email', 'b3-onboarding' ),
+            // ],
+        ];
+        $email_boxes = array_merge( $default_boxes1, $default_boxes2 );
     
-            return $lost_pass_url;
-    
+        if ( is_multisite() ) {
+            $multisite_boxes = [
+                [
+                    'id'    => 'email_settings',
+                    'title' => esc_html__( 'Email Settings', 'b3-onboarding' ),
+                ],
+                [
+                    'id'    => 'welcome_email_user',
+                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+                ],
+                [
+                    'id'    => 'new_user_admin',
+                    'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+                ],
+            ];
+            $email_boxes = array_merge( $email_boxes, $multisite_boxes );
         }
         
-        return $lostpassword_url;
+        return $email_boxes;
+    
     }
-    add_filter( 'lostpassword_url', 'b3_lost_password_page_url', 10, 2 );

@@ -5,7 +5,7 @@
 <div id="b3-login" class="b3">
     <?php if ( $attributes[ 'show_title' ] ) : ?>
         <h2>
-            <?php _e( 'Sign In', 'b3-user-register' ); ?>
+            <?php _e( 'Log In', 'b3-user-register' ); ?>
         </h2>
     <?php endif; ?>
 
@@ -68,7 +68,7 @@
     <!-- Show message if user just reset password -->
     <?php if ( $attributes[ 'password_updated' ] ) : ?>
         <p class="login-info">
-            <?php esc_html_e( 'Your password has been changed. You can sign in now.', 'b3-user-register' ); ?>
+            <?php esc_html_e( 'Your password has been changed. You can login now.', 'b3-user-register' ); ?>
         </p>
     <?php endif; ?>
     
@@ -76,7 +76,7 @@
         wp_login_form(
             array(
                 'label_username' => esc_html__( 'Email', 'b3-user-register' ),
-                'label_log_in'   => esc_html__( 'Login', 'b3-user-register' ),
+                'label_log_in'   => esc_html__( 'Log In', 'b3-user-register' ),
                 'redirect'       => $attributes[ 'redirect' ],
             ) );
     ?>

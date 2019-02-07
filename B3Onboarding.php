@@ -6,7 +6,7 @@
     Plugin URI: http://www.berrplasman.com
     Description: This plugin handles the registration/login process
     Author: Beee
-    Author URI: http://berryplasman.com
+    Author URI: http://www.berryplasman.com
     Text-domain: b3-onboarding
 
     Source: https://code.tutsplus.com/tutorials/build-a-custom-wordpress-user-flow-part-1-replace-the-login-page--cms-23627
@@ -48,10 +48,13 @@
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
                     'version' => '0.0.1',
                 );
-            
+    
+                // set text domain
+                load_plugin_textdomain( 'b3-onboarding', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    
                 // actions
                 register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
-                // register_deactivation_hook( __FILE__,   array( $this, 'plugin_deactivation' ) );
+                register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
             
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
@@ -63,19 +66,26 @@
                 // add_action( 'wp_print_footer_scripts',               array( $this, 'add_captcha_js_to_footer' ) );
             
                 add_filter( 'display_post_states',                  array( $this, 'b3_add_post_state' ), 10, 2 );
-            
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
-            
+    
+                add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
+                add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
+                add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
+                add_filter( 'wp_mail_charset',                      array( $this, 'b3_email_charset' ) );
+    
+    
                 add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
                 // add_shortcode( 'account-page',                  array( $this, 'b3_render_account_page' ) );
             
+                include( 'includes/constants.php' );
                 include( 'includes/do-stuff.php' );
                 include( 'includes/dashboard-widget.php' );
                 include( 'includes/emails.php' );
                 include( 'includes/examples.php' );
+                include( 'includes/filters.php' );
                 include( 'includes/form-handling.php' );
                 include( 'includes/functions.php' );
                 include( 'includes/tabs.php' );
@@ -107,15 +117,38 @@
     
     
             public function b3_set_default_settings() {
-                update_option( 'b3_dashboard_widget', 1 );
-                update_option( 'b3_sidebar_widget', 1 );
+
+                // update_option( 'b3_add_br_html_email','0' );
+                // update_option( 'b3_custom_emails','0' );
+                // update_option( 'b3_custom_passwords','0' );
+                // update_option( 'b3_dashboard_widget','1' );
+                // update_option( 'b3_html_emails','0' );
+                // update_option( 'b3_mail_sending_method','wpmail' );
+                update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
+                update_option( 'b3_notification_sender_name',get_bloginfo( 'name' ) );
+                // update_option( 'b3_sidebar_widget','1' );
+    
             }
     
             /*
              * Do stuff upon plugin activation
              */
-            public function plugin_deactivation() {
-                // @TODO: remove settings
+            public function b3_plugin_deactivation() {
+                
+                // remove settings is for testing
+    
+                $meta_keys = b3_get_all_custom_meta_keys();
+                foreach ( $meta_keys as $key ) {
+                    delete_option( $key );
+                }
+    
+                $roles = array(
+                    'b3_activation',
+                    'b3_approval',
+                );
+                foreach( $roles as $role ) {
+                    remove_role( $role );
+                }
             }
         
         
@@ -124,6 +157,7 @@
              */
             public function b3_enqueue_scripts_frontend() {
                 wp_enqueue_style( 'b3-main', plugins_url( 'assets/css/style.css', __FILE__ ) );
+                wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
             }
         
         
@@ -132,8 +166,8 @@
              */
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3-admin', plugins_url( 'assets/css/admin.css', __FILE__ ) );
-                wp_enqueue_script( 'b3-tabs', plugins_url( 'assets/js/tabs.js', __FILE__ ), array( 'jquery' ) );
-                wp_enqueue_script( 'b3-onboarding-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
+                // wp_enqueue_script( 'b3-tabs', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ) );
+                wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ) );
             }
         
         
@@ -225,24 +259,30 @@
              * @return array
              */
             public function b3_add_post_state( $post_states, $post ) {
-                if ( $post->post_name == 'account' ) {
+                
+                if ( defined( 'B3_ACCOUNT' ) && $post->ID == B3_ACCOUNT ) {
                     $post_states[] = 'B3: Account';
-                } elseif ( $post->post_name == 'register' ) {
+                }
+                if ( defined( 'B3_REGISTER' ) && $post->ID == B3_REGISTER ) {
                     $post_states[] = 'B3: Register';
-                } elseif ( $post->post_name == 'login' ) {
+                }
+                if ( defined( 'B3_LOGIN' ) && $post->ID == B3_LOGIN ) {
                     $post_states[] = 'B3: Login';
-                } elseif ( $post->post_name == 'forgot-password' ) {
+                }
+                if ( defined( 'B3_FORGOTPASS' ) && $post->ID == B3_FORGOTPASS ) {
                     $post_states[] = 'B3: Forgot password';
-                } elseif ( $post->post_name == 'reset-password' ) {
+                }
+                if ( defined( 'B3_RESETPASS' ) && $post->ID == B3_RESETPASS ) {
                     $post_states[] = 'B3: Reset password';
                 }
+                
             
                 return $post_states;
             }
         
         
             /**
-             * Add settings tlink to plugin page
+             * Add settings link to plugin page
              *
              * @param $links
              *
@@ -256,8 +296,72 @@
             
                 return $links;
             }
+    
+    
+            /**
+             * For filter 'wp_mail_from', returns a proper from-address when sending e-mails
+             *
+             * @param   string $original_email_address
+             * @return  string
+             */
+            public function b3_email_from( $original_email_address ) {
+                // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
+                $from_email = get_option( 'b3_notification_sender_name' );
+                if ( $from_email ) {
+                    return $from_email;
+                }
         
-        
+                return $original_email_address;
+            }
+    
+    
+            /**
+             * For filter 'wp_mail_from_name', returns a proper from-name when sending e-mails
+             *
+             * @param   string $original_email_from
+             * @return  string
+             */
+            public function b3_email_from_name( $original_from_name ) {
+                
+                $sender_name = get_option( 'b3_notification_sender_name' );
+                if ( $sender_name ) {
+                    return $sender_name;
+                }
+                
+                return $original_from_name;
+            }
+    
+    
+            /**
+             * For filter 'wp_mail_content_type', overrides content-type
+             *
+             * @return  string
+             */
+            public function b3_email_content_type() {
+                $html_emails = get_option( 'b3_notification_sender_name' );
+                if ( $html_emails ) {
+                    return 'text/html';
+                }
+                
+                return 'text/plain';
+            }
+    
+    
+            /**
+             * For filter 'wp_mail_charset', overrides char-set
+             *
+             * @return  string
+             */
+            public function b3_email_charset() {
+                $char_set = get_option( 'b3_email_charset' );
+                if ( $char_set ) {
+                    return $char_set;
+                }
+
+                return 'UTF-8';
+            }
+            
+            
             /**
              * Redirects the user to the correct page depending on whether he / she
              * is an admin or not.
@@ -273,7 +377,7 @@
                         wp_redirect( admin_url() );
                     }
                 } else {
-                    wp_redirect( home_url( 'member-account' ) );
+                    wp_redirect( home_url() );
                 }
             }
         
@@ -282,7 +386,7 @@
              *
              */
             public function b3_add_post_notice() {
-                if ( isset( $_GET[ 'post' ] ) && ! empty( $_GET[ 'post' ] ) ) {
+                if ( ! empty( $_GET[ 'post' ] ) ) {
                     $post = get_post( $_GET[ 'post' ] );
                     if ( 'page' == $post->post_type && 'account' == $post->post_name ) {
                         /* Add a notice to the edit page */
@@ -307,7 +411,7 @@
              *
              */
             public function b3_add_page_notice() {
-                echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the profile edit page. Do not edit the title or slug of this page!', 'b3-onboarding' ) . '</p></div>';
+                echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the profile edit page. Do not edit the slug of this page!', 'b3-onboarding' ) . '</p></div>';
             }
         
         
