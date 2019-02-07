@@ -46,8 +46,30 @@
     border-top: none;
 }
 
-.b3__tab-content h2 {
+.b3__tab-content h2,
+.b3__tab-content h3 {
     margin: 0 0 1.5em 0;
+}
+
+.b3__foldout--header {
+    background:      #F8F8F8;
+    display:         flex;
+    flex-flow:       row nowrap;
+    justify-content: space-between;
+}
+
+.b3 .handlediv {
+    background:     #F8F8F8;
+    text-align:     center;
+    vertical-align: middle;
+    padding-top:    10px;
+    box-sizing:     border-box;
+}
+
+.b3__expand {
+    text-align: right;
+    width:      20px;
+    background: pink;
 }
 
 .b3__tab-content ul {
@@ -55,11 +77,22 @@
     padding-left: 1.5em;
 }
 
+.b3__table {
+    width: 100%;
+}
+
+.b3 table.b3__table th,
+.b3 table.b3__table td {
+    text-align:     left;
+    vertical-align: middle;
+}
+
 .b3__message {
     border:  1px dashed black;
     padding: 5px 10px;
 }
 
+/* Pages pages */
 .b3__select-page {
     width:         100%;
     margin-bottom: 1em;
@@ -77,11 +110,13 @@
     min-width: 250px;
 }
 
+/* Dashboard widget */
 .b3__widget--dashboard ul {
     list-style:   disc;
     padding-left: 17px;
 }
 
+/* Settings page */
 .b3__settings-field {
     margin-bottom: 1em;
 }
@@ -96,9 +131,44 @@
 }
 
 .b3__settings-input--text input[type="text"] {
-    width: 300px;
+    /*width: 300px;*/
 }
 
+/* Emails page */
+.b3 table.b3__table--emails th {
+    padding-top: 0.5em;
+    width:       250px;
+}
+
+.b3 table.b3__table--emails th,
+.b3 table.b3__table--emails td {
+    padding-top: 2em;
+}
+
+.b3 table.b3__table--emails tr:first-child th,
+.b3 table.b3__table--emails tr:first-child td {
+    padding-top: 0;
+}
+
+.b3 table.b3__table--emails th.align-top {
+    vertical-align: top;
+}
+
+.b3 table.b3__table--emails tr.b3__description-row th,
+.b3 table.b3__table--emails tr.b3__description-row td {
+    padding-top: 0;
+}
+
+.b3__input--description {
+    font-style: italic;
+    margin-top: 0.5em;
+}
+
+.b3__inside {
+    padding: 1em 12px 12px 12px;
+}
+
+/* Form styling */
 .b3 input[type="text"],
 .b3 input[type="password"],
 .b3 input[type="checkbox"],
@@ -109,9 +179,35 @@
 .b3 textarea {
 }
 
+.b3 input[type="text"],
+.b3 input[type="password"],
+.b3 input[type="email"],
+.b3 input[type="text"],
+.b3 input[type="url"],
+.b3 textarea {
+    width: 100%;
+}
+
 .b3 textarea,
 .b3 input,
 .b3 select {
     font-size: 14px;
     padding:   6px 10px;
+}
+
+
+/* Because load-styles.php is not loaded */
+.metabox-handler .b3__foldout--header,
+.metabox-handler > h3,
+.metabox-handler .stuffbox > h3,
+.metabox-handler h2.hndle,
+.metabox-handler h3.hndle {
+    font-size:   14px;
+    padding:     8px 12px;
+    margin:      0;
+    line-height: 1.4;
+}
+
+.hidden {
+    display: none;
 }

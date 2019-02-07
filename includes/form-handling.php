@@ -8,7 +8,6 @@
         
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_forgot_pass' ] ) ) {
-                error_log('hit forgot pass');
                 $redirect_url = home_url( 'forgot-password' );
                 if ( ! wp_verify_nonce( $_POST[ 'b3_forgot_pass' ], 'b3-forgot-pass' ) ) {
                     // @TODO: add error
@@ -200,6 +199,19 @@
     
                 wp_redirect( $redirect_url );
                 exit;
+                
+            } elseif ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
+    
+                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=emails' );
+
+                if ( ! wp_verify_nonce( $_POST[ "b3_emails_nonce" ], 'b3-emails-nonce' ) ) {
+                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
+                } else {
+                }
+        
+                wp_redirect( $redirect_url );
+                exit;
+    
             }
         }
     }

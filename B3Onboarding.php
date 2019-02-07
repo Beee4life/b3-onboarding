@@ -74,6 +74,7 @@
             
                 include( 'includes/do-stuff.php' );
                 include( 'includes/dashboard-widget.php' );
+                include( 'includes/emails.php' );
                 include( 'includes/examples.php' );
                 include( 'includes/form-handling.php' );
                 include( 'includes/functions.php' );
@@ -123,7 +124,6 @@
              */
             public function b3_enqueue_scripts_frontend() {
                 wp_enqueue_style( 'b3-main', plugins_url( 'assets/css/style.css', __FILE__ ) );
-                // wp_enqueue_script( 'b3-onboarding-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
             }
         
         
@@ -133,6 +133,7 @@
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3-admin', plugins_url( 'assets/css/admin.css', __FILE__ ) );
                 wp_enqueue_script( 'b3-tabs', plugins_url( 'assets/js/tabs.js', __FILE__ ), array( 'jquery' ) );
+                wp_enqueue_script( 'b3-onboarding-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
             }
         
         

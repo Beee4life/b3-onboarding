@@ -108,30 +108,24 @@
             <?php esc_html_e( "Here you can set which pages are assigned for the various 'actions'.", "b3-onboarding" ); ?>
         </p>
         
-        <form name="" class="" method="post" action="">
-            <input type="hidden" name="b3_pages_nonce" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>">
-            <?php foreach( $b3_pages as $page ) { ?>
-                <div class="b3__select-page">
-                    <div class="b3__select-page__label">
-                        <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo $page[ 'label' ]; ?></label>
-                    </div>
-    
-                    <div class="b3__select-page__selector">
-                        <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
-                            <option value=""> <?php esc_html_e( "Select a page", "b3-user-regiser" ); ?></option>
-                            <?php foreach( $all_pages as $active_page ) { ?>
-                                <?php
-                                    error_log( $page[ 'page_id' ] );
-                                    $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false;
-                                ?>
-                                <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
+        <?php foreach( $b3_pages as $page ) { ?>
+            <div class="b3__select-page">
+                <div class="b3__select-page__label">
+                    <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo $page[ 'label' ]; ?></label>
                 </div>
-            <?php } ?>
-            <input type="submit" class="button button-primary" name="" value="<?php esc_html_e( 'Submit', 'b3-onboarding' ); ?>">
-        </form>
+
+                <div class="b3__select-page__selector">
+                    <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
+                        <option value=""> <?php esc_html_e( "Select a page", "b3-user-regiser" ); ?></option>
+                        <?php foreach( $all_pages as $active_page ) { ?>
+                            <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
+                            <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+        <?php } ?>
+        <input type="submit" class="button button-primary" name="" value="<?php esc_html_e( 'Submit', 'b3-onboarding' ); ?>">
         <?php
         $result = ob_get_clean();
         
@@ -229,6 +223,58 @@
     }
     
     function b3_render_emails_tab() {
+    
+        $send_password_mail = get_option( 'b3_custom_emails' );
+        
+        $default_boxes1 = [
+            [
+                'id'    => 'email_settings',
+                'title' => esc_html__( 'Email Settings', 'b3-onboarding' ),
+            ],
+            [
+                'id'    => 'welcome_email_user',
+                'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+            ],
+            [
+                'id'    => 'new_user_admin',
+                'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+            ],
+        ];
+        if ( true == $send_password_mail ) {
+            $default_boxes1[] = [
+                'id'    => 'send_password_mail',
+                'title' => esc_html__( 'Send password by email', 'b3-onboarding' ),
+            ];
+        }
+        $default_boxes2 = [
+            [
+                'id'    => 'forgot_password',
+                'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
+            ],
+            [
+                'id'    => 'password_changed',
+                'title' => esc_html__( 'Reset password email', 'b3-onboarding' ),
+            ],
+        ];
+        $email_boxes = array_merge( $default_boxes1, $default_boxes2 );
+        
+        if ( ! is_multisite() ) {
+            $multisite_boxes = [
+                [
+                    'id'    => 'email_settings',
+                    'title' => esc_html__( 'Email Settings', 'b3-onboarding' ),
+                ],
+                [
+                    'id'    => 'welcome_email_user',
+                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+                ],
+                [
+                    'id'    => 'new_user_admin',
+                    'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+                ],
+            ];
+            $email_boxes = array_merge( $email_boxes, $multisite_boxes );
+        }
         
         ob_start();
         ?>
@@ -239,28 +285,13 @@
         <p>
             <?php esc_html_e( 'Here you can will be able to set the various emails.', 'b3-onboarding' ); ?>
         </p>
-
-        <ul>
-            <li>Welcome new user</li>
-            <li>New user (admin)</li>
-            <li>Send password to user</li>
-            <li>Reset password</li>
-            <li>Password changed</li>
-        </ul>
         
-        <?php if ( ! is_multisite() ) { ?>
-            <h3>
-                <?php esc_html_e( 'Multisite', 'b3-onboarding' ); ?>
-            </h3>
-            
-            <ul>
-                <li>Visitor signed up for site</li>
-                <li>User registered site</li>
-                <li>User deleted site</li>
-            </ul>
-        <?php } ?>
-        
-        
+        <form action="" method="" name="">
+            <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
+            <?php foreach( $email_boxes as $box ) { ?>
+                <?php echo b3_render_settings_field( $box ); ?>
+            <?php } ?>
+        </form>
 
         <?php
         $result = ob_get_clean();
