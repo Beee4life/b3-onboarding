@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - User onboarding\n"
-"POT-Creation-Date: 2019-02-07 20:24+0100\n"
+"POT-Creation-Date: 2019-02-08 00:12+0100\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -22,113 +22,113 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: languages\n"
 
-#: B3Onboarding.php:108
+#: B3Onboarding.php:109
 msgid "Awaiting activation"
 msgstr ""
 
-#: B3Onboarding.php:112
+#: B3Onboarding.php:113
 msgid "Awaiting approval"
 msgstr ""
 
-#: B3Onboarding.php:277 includes/admin-page.php:40 includes/tabs.php:150
+#: B3Onboarding.php:295 includes/admin-page.php:28 includes/tabs.php:48
 #: templates/account-page.php:84
 msgid "Settings"
 msgstr ""
 
-#: B3Onboarding.php:279
+#: B3Onboarding.php:297 includes/tabs.php:292
 msgid "Add-ons"
 msgstr ""
 
-#: B3Onboarding.php:399
+#: B3Onboarding.php:418
 msgid ""
-"You are currently editing the profile edit page. Do not edit the title or "
-"slug of this page!"
+"You are currently editing the profile edit page. Do not edit the slug of "
+"this page!"
 msgstr ""
 
-#: B3Onboarding.php:415
+#: B3Onboarding.php:434
 msgid "Enter a user name"
 msgstr ""
 
-#: B3Onboarding.php:418
+#: B3Onboarding.php:437
 msgid "You need to enter a password to login."
 msgstr ""
 
-#: B3Onboarding.php:421
+#: B3Onboarding.php:440
 msgid ""
 "We don't have any users with that email address. Maybe you used a different "
 "one when signing up?"
 msgstr ""
 
-#: B3Onboarding.php:424
+#: B3Onboarding.php:443
 #, php-format
 msgid ""
 "The password you entered wasn't quite right. <a href='%s'>Did you forget "
 "your password</a>?"
 msgstr ""
 
-#: B3Onboarding.php:430
+#: B3Onboarding.php:449
 msgid "This username address is already in use."
 msgstr ""
 
-#: B3Onboarding.php:433
+#: B3Onboarding.php:452
 msgid "The email address you entered is not valid."
 msgstr ""
 
-#: B3Onboarding.php:436
+#: B3Onboarding.php:455
 msgid "An account exists with this email address."
 msgstr ""
 
-#: B3Onboarding.php:439
+#: B3Onboarding.php:458
 msgid "Registering new users is currently not allowed."
 msgstr ""
 
-#: B3Onboarding.php:442
+#: B3Onboarding.php:461
 msgid "The Google reCAPTCHA check failed. Are you a robot?"
 msgstr ""
 
-#: B3Onboarding.php:447
+#: B3Onboarding.php:466
 msgid "There are no users registered with this email address."
 msgstr ""
 
-#: B3Onboarding.php:452
+#: B3Onboarding.php:471
 msgid "The password reset link you used is not valid anymore."
 msgstr ""
 
-#: B3Onboarding.php:455
+#: B3Onboarding.php:474
 msgid "The two passwords you entered don't match."
 msgstr ""
 
-#: B3Onboarding.php:458
+#: B3Onboarding.php:477
 msgid "Sorry, we don't accept empty passwords."
 msgstr ""
 
-#: B3Onboarding.php:462
+#: B3Onboarding.php:481
 msgid "Sorry, this subdomain has already been taken."
 msgstr ""
 
-#: B3Onboarding.php:465
+#: B3Onboarding.php:484
 msgid ""
 "You have successfully registered. Please check your email for an activation "
 "link."
 msgstr ""
 
-#: B3Onboarding.php:468 includes/tabs.php:155
+#: B3Onboarding.php:487 includes/tabs.php:53
 msgid "Settings saved"
 msgstr ""
 
-#: B3Onboarding.php:474
+#: B3Onboarding.php:493
 msgid "An unknown error occurred. Please try again later."
 msgstr ""
 
-#: B3Onboarding.php:637 B3Onboarding.php:677 B3Onboarding.php:765
+#: B3Onboarding.php:656 B3Onboarding.php:696 B3Onboarding.php:784
 msgid "You are already signed in."
 msgstr ""
 
-#: B3Onboarding.php:741
+#: B3Onboarding.php:760
 msgid "You are already logged in."
 msgstr ""
 
-#: B3Onboarding.php:784
+#: B3Onboarding.php:803
 msgid "Invalid password reset link."
 msgstr ""
 
@@ -148,40 +148,37 @@ msgstr ""
 msgid "Onboarding settings"
 msgstr ""
 
-#: includes/admin-page.php:28 includes/tabs.php:45
-msgid "Main"
-msgstr ""
-
-#: includes/admin-page.php:34 includes/tabs.php:102
+#: includes/admin-page.php:34 includes/tabs.php:170
 msgid "Pages"
 msgstr ""
 
-#: includes/admin-page.php:57 includes/tabs.php:237
+#: includes/admin-page.php:42 includes/tabs.php:216
 msgid "Emails"
 msgstr ""
 
-#: includes/admin-page.php:66 includes/tabs.php:266
+#: includes/admin-page.php:50 includes/tabs.php:245
 msgid "Recaptcha"
 msgstr ""
 
-#: includes/admin-page.php:75 includes/tabs.php:345
+#: includes/admin-page.php:68 includes/tabs.php:324
 msgid "Debug info"
 msgstr ""
 
-#: includes/do-stuff.php:15 includes/tabs.php:77
+#: includes/do-stuff.php:15 includes/tabs.php:143
 msgid "Forgot password"
 msgstr ""
 
-#: includes/do-stuff.php:20
+#: includes/do-stuff.php:20 includes/tabs.php:138 templates/login-form.php:8
+#: templates/login-form.php:79
 msgid "Log In"
 msgstr ""
 
-#: includes/do-stuff.php:25 includes/tabs.php:67 templates/register-form.php:10
-#: templates/register-form.php:90
+#: includes/do-stuff.php:25 includes/tabs.php:133
+#: templates/register-form.php:10 templates/register-form.php:90
 msgid "Register"
 msgstr ""
 
-#: includes/do-stuff.php:30 includes/tabs.php:82
+#: includes/do-stuff.php:30 includes/tabs.php:148
 msgid "Reset password"
 msgstr ""
 
@@ -201,38 +198,6 @@ msgstr ""
 msgid "This is the email address from which all emails will be sent."
 msgstr ""
 
-#: includes/emails/email-settings.php:44
-msgid "Mail sending method"
-msgstr ""
-
-#: includes/emails/email-settings.php:48
-msgid "SMTP"
-msgstr ""
-
-#: includes/emails/email-settings.php:49
-msgid "PHP Mail"
-msgstr ""
-
-#: includes/emails/email-settings.php:50
-msgid "WP Mail"
-msgstr ""
-
-#: includes/emails/email-settings.php:56
-msgid "Send HTML emails"
-msgstr ""
-
-#: includes/emails/email-settings.php:59 includes/emails/email-settings.php:71
-msgid "Yes"
-msgstr ""
-
-#: includes/emails/email-settings.php:62 includes/emails/email-settings.php:74
-msgid "No"
-msgstr ""
-
-#: includes/emails/email-settings.php:68
-msgid "Add br tags to HTML emails ?"
-msgstr ""
-
 #: includes/emails/email-settings.php:81 includes/emails/forgot-password.php:22
 #: includes/emails/ms-user-delete-site.php:22
 #: includes/emails/ms-user-new-site.php:22
@@ -241,7 +206,7 @@ msgstr ""
 #: includes/emails/new-user-admin.php:22
 #: includes/emails/password-changed.php:22
 #: includes/emails/send-password-mail.php:22
-#: includes/emails/welcome-email-user.php:22
+#: includes/emails/welcome-email-user.php:22 includes/tabs.php:200
 msgid "Save settings"
 msgstr ""
 
@@ -268,140 +233,84 @@ msgstr ""
 msgid "Email content"
 msgstr ""
 
-#: includes/functions.php:25
+#: includes/functions.php:11
 msgid "Password"
 msgstr ""
 
-#: includes/functions.php:30
+#: includes/functions.php:16
 msgid "Confirm Password"
 msgstr ""
 
-#: includes/functions.php:66 includes/functions.php:99
+#: includes/functions.php:53 includes/functions.php:86
 msgid "Email Settings"
 msgstr ""
 
-#: includes/functions.php:70 includes/functions.php:103
-msgid "Welcome email (user)"
-msgstr ""
-
-#: includes/functions.php:74 includes/functions.php:107
-msgid "New user (admin)"
-msgstr ""
-
-#: includes/functions.php:80
+#: includes/functions.php:67
 msgid "Send password by email"
 msgstr ""
 
-#: includes/functions.php:86
-msgid "Forgot password email"
-msgstr ""
-
 #: includes/functions.php:90
-msgid "Reset password email"
+msgid "Welcome email (user)"
 msgstr ""
 
-#: includes/tabs.php:48
-msgid "Bla bla bla"
+#: includes/functions.php:94
+msgid "New user (admin)"
 msgstr ""
 
-#: includes/tabs.php:72 templates/login-form.php:79
-msgid "Login"
-msgstr ""
-
-#: includes/tabs.php:107
-msgid "Pages saved"
-msgstr ""
-
-#: includes/tabs.php:112
-msgid "Here you can set which pages are assigned for the various 'actions'."
-msgstr ""
-
-#: includes/tabs.php:123
-msgid "Select a page"
-msgstr ""
-
-#: includes/tabs.php:132
-msgid "Submit"
-msgstr ""
-
-#: includes/tabs.php:160
+#: includes/tabs.php:58
 msgid "Here you can set some global settings for the plugin."
 msgstr ""
 
-#: includes/tabs.php:168
-msgid "Custom emails"
-msgstr ""
-
-#: includes/tabs.php:171
-msgid "Check this box to activate custom emails"
-msgstr ""
-
-#: includes/tabs.php:177
-msgid "Custom passwords"
-msgstr ""
-
-#: includes/tabs.php:180
-msgid "Check this box to activate custom passwords"
-msgstr ""
-
-#: includes/tabs.php:186
+#: includes/tabs.php:84
 msgid "Dashboard widget"
 msgstr ""
 
-#: includes/tabs.php:189
+#: includes/tabs.php:87
 msgid "Check this box to activate the dashboard widget"
 msgstr ""
 
-#: includes/tabs.php:195
+#: includes/tabs.php:93
 msgid "Sidebar widget"
 msgstr ""
 
-#: includes/tabs.php:198
+#: includes/tabs.php:96
 msgid "Check this box to activate the sidebar widget"
 msgstr ""
 
-#: includes/tabs.php:204
-msgid "reCAPTCHA"
-msgstr ""
-
-#: includes/tabs.php:207
-msgid "Check this box to activate reCAPTCHA"
-msgstr ""
-
-#: includes/tabs.php:213
-msgid "Privacy checkbox"
-msgstr ""
-
-#: includes/tabs.php:216
-msgid "Check this box to activate a privacy checkbox"
-msgstr ""
-
-#: includes/tabs.php:221 includes/tabs.php:299
+#: includes/tabs.php:119 includes/tabs.php:278
 msgid "Save options"
 msgstr ""
 
-#: includes/tabs.php:241
-msgid "Here you can will be able to set the various emails."
+#: includes/tabs.php:175
+msgid "Pages saved"
 msgstr ""
 
-#: includes/tabs.php:250
+#: includes/tabs.php:180
+msgid "Here you can set which pages are assigned for the various 'actions'."
+msgstr ""
+
+#: includes/tabs.php:191
+msgid "Select a page"
+msgstr ""
+
+#: includes/tabs.php:220
+msgid "Here you can set some default email settings."
+msgstr ""
+
+#: includes/tabs.php:229
 msgid "Save all email settings"
 msgstr ""
 
-#: includes/tabs.php:270
+#: includes/tabs.php:249
 msgid "Here you can set the reCaptcha settings."
 msgstr ""
 
-#: includes/tabs.php:282
+#: includes/tabs.php:261
 msgid "Public key"
 msgstr ""
 
-#: includes/tabs.php:291
+#: includes/tabs.php:270
 msgid "Secret key"
-msgstr ""
-
-#: includes/tabs.php:313
-msgid "Add ons"
 msgstr ""
 
 #: includes/unused.php:100
@@ -556,10 +465,6 @@ msgstr ""
 msgid "Reset Password"
 msgstr ""
 
-#: templates/login-form.php:8
-msgid "Sign In"
-msgstr ""
-
 #: templates/login-form.php:27
 #, php-format
 msgid ""
@@ -590,7 +495,7 @@ msgid "You have signed out. Would you like to sign in again?"
 msgstr ""
 
 #: templates/login-form.php:71
-msgid "Your password has been changed. You can sign in now."
+msgid "Your password has been changed. You can login now."
 msgstr ""
 
 #: templates/login-form.php:85
@@ -644,5 +549,5 @@ msgid "Beee"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://berryplasman.com"
+msgid "http://www.berryplasman.com"
 msgstr ""

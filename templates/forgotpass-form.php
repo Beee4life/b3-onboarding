@@ -35,7 +35,7 @@
         <?php } ?>
         
         <p class="lostpassword-submit">
-            <input type="submit" name="submit" class="lostpassword-button" value="<?php esc_html__( 'Reset Password', 'b3-user-register' ); ?>"/>
+            <input type="submit" name="submit" class="lostpassword-button" value="<?php esc_html_e( 'Reset Password', 'b3-user-register' ); ?>"/>
         </p>
     </form>
 </div>

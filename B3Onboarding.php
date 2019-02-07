@@ -118,15 +118,15 @@
     
             public function b3_set_default_settings() {
 
-                // update_option( 'b3_add_br_html_email','0' );
-                // update_option( 'b3_custom_emails','0' );
-                // update_option( 'b3_custom_passwords','0' );
-                // update_option( 'b3_dashboard_widget','1' );
-                // update_option( 'b3_html_emails','0' );
-                // update_option( 'b3_mail_sending_method','wpmail' );
+                // update_option( 'b3_add_br_html_email', '0' );
+                // update_option( 'b3_custom_emails', '0' );
+                // update_option( 'b3_custom_passwords', '0' );
+                // update_option( 'b3_dashboard_widget', '1' );
+                // update_option( 'b3_html_emails', '0' );
+                // update_option( 'b3_mail_sending_method', 'wpmail' );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name',get_bloginfo( 'name' ) );
-                // update_option( 'b3_sidebar_widget','1' );
+                // update_option( 'b3_sidebar_widget', '1' );
     
             }
     
@@ -189,6 +189,7 @@
                     if ( isset( $_POST[ 'b3_register_user' ] ) ) {
                         $redirect_url = home_url( 'register' );
                         if ( ! wp_verify_nonce( $_POST[ "b3_register_user" ], 'b3-register-user' ) ) {
+                            // error ?
                         } else {
                         
                             $user_login = ( isset( $_POST[ 'b3_user_login' ] ) ) ? $_POST[ 'b3_user_login' ] : false;
@@ -197,13 +198,37 @@
                             $last_name  = ( isset( $_POST[ 'b3_last_name' ] ) ) ? sanitize_text_field( $_POST[ 'b3_last_name' ] ) : false;
                             $meta_data  = [];
                         
-                            if ( ! is_multisite() && ! get_option( 'users_can_register' ) ) {
-                                // Registration closed, display error
-                                $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
-                                // @TODO: add option if users should still be allowed to register
-                            }
-                        
-                            if ( is_multisite() ) {
+                            if ( ! is_multisite() ) {
+                                if ( ! get_option( 'users_can_register' ) ) {
+                                    // Registration closed, display error
+                                    $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
+                                    // @TODO: add option if users should still be allowed to register
+                                } else {
+    
+                                    if ( false != $first_name ) {
+                                        $meta_data[ 'first_name' ] = $first_name;
+                                    }
+                                    if ( false != $last_name ) {
+                                        $meta_data[ 'last_name' ] = $last_name;
+                                    }
+    
+                                    // register new user
+                                    $result = $this->b3_register_user( $user_login, $user_email, $meta_data );
+    
+                                    if ( is_wp_error( $result ) ) {
+                                        // Parse errors into a string and append as parameter to redirect
+                                        $errors       = join( ',', $result->get_error_codes() );
+                                        $redirect_url = add_query_arg( 'register-errors', $errors, $redirect_url );
+                                    } else {
+                                        // Success, redirect to login page.
+                                        $redirect_url = home_url( 'login' ); // @TODO: make dynamic
+                                        $redirect_url = add_query_arg( 'registered', 'success', $redirect_url );
+                                    }
+                                }
+                                
+                            } else {
+                                
+                                // is_multisite
                                 $meta_data  = array(
                                     'blog_public' => '1',
                                     'lang_id'     => '0',
@@ -216,28 +241,6 @@
                                         $redirect_url = add_query_arg( 'registration-error', 'domain_exists', $redirect_url );
                                     }
                                     $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta );
-                                }
-                            
-                            } else {
-                            
-                                if ( false != $first_name ) {
-                                    $meta_data[ 'first_name' ] = $first_name;
-                                }
-                                if ( false != $last_name ) {
-                                    $meta_data[ 'last_name' ] = $last_name;
-                                }
-                            
-                                // register new user
-                                $result = $this->b3_register_user( $user_login, $user_email, $meta_data );
-                            
-                                if ( is_wp_error( $result ) ) {
-                                    // Parse errors into a string and append as parameter to redirect
-                                    $errors       = join( ',', $result->get_error_codes() );
-                                    $redirect_url = add_query_arg( 'register-errors', $errors, $redirect_url );
-                                } else {
-                                    // Success, redirect to login page.
-                                    $redirect_url = home_url( 'login' ); // @TODO: make dynamic
-                                    $redirect_url = add_query_arg( 'registered', 'success', $redirect_url );
                                 }
                             }
                         }
@@ -355,6 +358,7 @@
             public function b3_email_charset() {
                 $char_set = get_option( 'b3_email_charset' );
                 if ( $char_set ) {
+                    error_log('charset');
                     return $char_set;
                 }
 
@@ -532,27 +536,27 @@
                     return $errors;
                 }
             
-                $password   = wp_generate_password( 12, false );
-                $first_name = ( isset( $meta[ 'first_name' ] ) && ! empty( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : false;
-                $last_name  = ( isset( $meta[ 'last_name' ] ) && ! empty( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : false;
-            
                 $user_data = array(
                     'user_login' => $user_login,
                     'user_email' => $user_email,
-                    'user_pass'  => $password,
+                    'user_pass'  => '',
                 );
+
+                $first_name = ( isset( $meta[ 'first_name' ] ) && ! empty( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : false;
                 if ( false != $first_name ) {
                     $user_data[ 'first_name' ] = $first_name;
                 }
+
+                $last_name  = ( isset( $meta[ 'last_name' ] ) && ! empty( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : false;
                 if ( false != $first_name ) {
                     $user_data[ 'last_name' ] = $last_name;
                 }
             
-                return 160878;
+                // return 160878; // for testing
             
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    wp_new_user_notification( $user_id, null, $password );
+                    wp_new_user_notification( $user_id, null, 'user' ); // @TODO: make notify 'changable'
                 }
                 // @TODO: add if for if user needs to activate
                 // @TODO: add if for if admin needs to activate

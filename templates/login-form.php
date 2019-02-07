@@ -24,13 +24,13 @@
             <?php
                 if ( is_multisite() ) {
                     echo sprintf(
-                        esc_html__( 'You have successfully registered to <strong>%s</strong>. We have emailed you an activation link.', 'b3-user-register' ),
+                        __( 'You have successfully registered to <strong>%s</strong>. We have emailed you an activation link.', 'b3-user-register' ),
                         get_bloginfo( 'name' )
                     );
                 } else {
                     if ( true == $send_password_by_mail ) {
                         echo sprintf(
-                            esc_html__( 'You have successfully registered to <strong>%s</strong>. We have emailed your password to the email address you entered.', 'b3-user-register' ),
+                            __( 'You have successfully registered to <strong>%s</strong>. We have emailed your password to the email address you entered.', 'b3-user-register' ),
                             get_bloginfo( 'name' )
                         );
                     } else {
@@ -38,10 +38,10 @@
                         if ( true == $has_reset_page ) {
                             $password_reset_url = esc_url( wp_lostpassword_url() );
                         } else {
-                            $password_reset_url = esc_url( home_url( '/reset-password/' ) ); // make dynamic/filterable
+                            $password_reset_url = esc_url( home_url( '/forgot-password/' ) ); // make dynamic/filterable
                         }
                         echo sprintf(
-                            esc_html__( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),
+                            __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),
                             get_bloginfo( 'name' ),
                             $password_reset_url
                         );

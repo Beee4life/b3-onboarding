@@ -217,7 +217,7 @@
         </h2>
 
         <p>
-            <?php esc_html_e( 'Here you can will be able to set the various emails.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can set some default email settings.', 'b3-onboarding' ); ?>
         </p>
         
         <form action="" method="post">
