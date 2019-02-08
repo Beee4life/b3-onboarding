@@ -15,10 +15,6 @@
      / _  / _/   _/   _/
     /____/___/____/____/
 
-    
-    @TODO:
-    - processing through AJAX
-    
     */
 
     if ( ! defined( 'ABSPATH' ) ) {
@@ -32,11 +28,7 @@
             /**
              * Initializes the plugin.
              *
-             * To keep the initialization fast, only add filter and action
-             * hooks in the constructor.
-             */
-            /**
-             *  A dummy constructor to ensure plugin is only initialized once
+             * A dummy constructor to ensure plugin is only initialized once
              */
             function __construct() {
             }
