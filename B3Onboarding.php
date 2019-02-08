@@ -1,7 +1,7 @@
 <?php
     /*
     Plugin Name: B3 - User onboarding
-    Version: 0.3
+    Version: 0.4
     Tags: user, registration, login, forgot password, reset password
     Plugin URI: http://www.berrplasman.com
     Description: This plugin handles the registration/login process
@@ -36,7 +36,7 @@
             function initialize() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '0.3',
+                    'version' => '0.4',
                 );
     
                 // set text domain
@@ -52,7 +52,6 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
-                add_action( 'admin_init',                           array( $this, 'b3_register_settings_fields' ) );
                 add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
             
                 add_filter( 'display_post_states',                  array( $this, 'b3_add_post_state' ), 10, 2 );
