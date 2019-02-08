@@ -1,0 +1,297 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: B3 - User onboarding\n"
+"POT-Creation-Date: 2019-02-08 01:06+0100\n"
+"PO-Revision-Date: 2019-02-07 20:22+0100\n"
+"Last-Translator: Beee\n"
+"Language-Team: Beee\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: B3Onboarding.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: languages\n"
+
+#: B3Onboarding.php:245
+msgid "Settings"
+msgstr ""
+
+#: B3Onboarding.php:298
+msgid "Enter a user name"
+msgstr ""
+
+#: B3Onboarding.php:301
+msgid "You need to enter a password to login."
+msgstr ""
+
+#: B3Onboarding.php:304
+msgid ""
+"We don't have any users with that email address. Maybe you used a different "
+"one when signing up?"
+msgstr ""
+
+#: B3Onboarding.php:307
+#, php-format
+msgid ""
+"The password you entered wasn't quite right. <a href='%s'>Did you forget "
+"your password</a>?"
+msgstr ""
+
+#: B3Onboarding.php:313
+msgid "This username address is already in use."
+msgstr ""
+
+#: B3Onboarding.php:316
+msgid "The email address you entered is not valid."
+msgstr ""
+
+#: B3Onboarding.php:319
+msgid "An account exists with this email address."
+msgstr ""
+
+#: B3Onboarding.php:322
+msgid "Registering new users is currently not allowed."
+msgstr ""
+
+#: B3Onboarding.php:325
+msgid "The Google reCAPTCHA check failed. Are you a robot?"
+msgstr ""
+
+#: B3Onboarding.php:330
+msgid "There are no users registered with this email address."
+msgstr ""
+
+#: B3Onboarding.php:335
+msgid "The password reset link you used is not valid anymore."
+msgstr ""
+
+#: B3Onboarding.php:338
+msgid "The two passwords you entered don't match."
+msgstr ""
+
+#: B3Onboarding.php:341
+msgid "Sorry, we don't accept empty passwords."
+msgstr ""
+
+#: B3Onboarding.php:345
+msgid "Sorry, this subdomain has already been taken."
+msgstr ""
+
+#: B3Onboarding.php:348
+msgid ""
+"You have successfully registered. Please check your email for an activation "
+"link."
+msgstr ""
+
+#: B3Onboarding.php:351
+msgid "Settings saved"
+msgstr ""
+
+#: B3Onboarding.php:357
+msgid "An unknown error occurred. Please try again later."
+msgstr ""
+
+#: B3Onboarding.php:474 B3Onboarding.php:587
+msgid "You are already signed in."
+msgstr ""
+
+#: B3Onboarding.php:501 B3Onboarding.php:554
+msgid "You are already logged in."
+msgstr ""
+
+#: B3Onboarding.php:613
+msgid "Invalid password reset link."
+msgstr ""
+
+#: includes/admin-page.php:9
+msgid "Sorry, you do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/admin-page.php:15
+msgid "Onboarding settings"
+msgstr ""
+
+#: includes/admin-page.php:28 includes/tabs.php:66
+msgid "Pages"
+msgstr ""
+
+#: includes/admin-page.php:36 includes/tabs.php:112
+msgid "Emails"
+msgstr ""
+
+#: includes/admin-page.php:44 includes/tabs.php:138
+msgid "Debug info"
+msgstr ""
+
+#: includes/do-stuff.php:10 includes/tabs.php:44
+msgid "Forgot password"
+msgstr ""
+
+#: includes/do-stuff.php:15 includes/tabs.php:39 templates/login-form.php:7
+#: templates/login-form.php:71
+msgid "Log In"
+msgstr ""
+
+#: includes/do-stuff.php:20 includes/tabs.php:34 templates/register-form.php:3
+#: templates/register-form.php:32
+msgid "Register"
+msgstr ""
+
+#: includes/do-stuff.php:25 includes/tabs.php:49
+msgid "Reset password"
+msgstr ""
+
+#: includes/emails/email-settings.php:9
+msgid "Notification sender name"
+msgstr ""
+
+#: includes/emails/email-settings.php:19
+msgid "This is the name which is used to send emails from."
+msgstr ""
+
+#: includes/emails/email-settings.php:25
+msgid "Notification sender email"
+msgstr ""
+
+#: includes/emails/email-settings.php:35
+msgid "This is the email address from which all emails will be sent."
+msgstr ""
+
+#: includes/emails/email-settings.php:42 includes/tabs.php:96
+msgid "Save settings"
+msgstr ""
+
+#: includes/functions.php:40 includes/functions.php:56
+msgid "Email Settings"
+msgstr ""
+
+#: includes/functions.php:46
+msgid "Send password by email"
+msgstr ""
+
+#: includes/functions.php:60
+msgid "Welcome email (user)"
+msgstr ""
+
+#: includes/functions.php:64
+msgid "New user (admin)"
+msgstr ""
+
+#: includes/tabs.php:71
+msgid "Pages saved"
+msgstr ""
+
+#: includes/tabs.php:76
+msgid "Here you can set which pages are assigned for the various 'actions'."
+msgstr ""
+
+#: includes/tabs.php:87
+msgid "Select a page"
+msgstr ""
+
+#: includes/tabs.php:116
+msgid "Here you can set some default email settings."
+msgstr ""
+
+#: includes/tabs.php:124
+msgid "Save all email settings"
+msgstr ""
+
+#: templates/forgotpass-form.php:11
+msgid "Forgot Your Password?"
+msgstr ""
+
+#: templates/forgotpass-form.php:16
+msgid ""
+"Enter your email address and we'll send you a link you can use to pick a new "
+"password."
+msgstr ""
+
+#: templates/forgotpass-form.php:24 templates/login-form.php:70
+#: templates/register-form.php:23
+msgid "Email"
+msgstr ""
+
+#: templates/forgotpass-form.php:29 templates/resetpass-form.php:30
+msgid "Reset Password"
+msgstr ""
+
+#: templates/login-form.php:26
+#, php-format
+msgid ""
+"You have successfully registered to <strong>%s</strong>. We have emailed you "
+"an activation link."
+msgstr ""
+
+#: templates/login-form.php:37
+#, php-format
+msgid ""
+"You have successfully registered to <strong>%1$s</strong>. You can set your "
+"password when you <a href=\"%2$s\">reset it</a>."
+msgstr ""
+
+#: templates/login-form.php:49
+msgid "Check your email for a link to reset your password."
+msgstr ""
+
+#: templates/login-form.php:56
+msgid "You have signed out. Would you like to sign in again?"
+msgstr ""
+
+#: templates/login-form.php:63
+msgid "Your password has been changed. You can login now."
+msgstr ""
+
+#: templates/login-form.php:77
+msgid "Forgot your password?"
+msgstr ""
+
+#: templates/register-form.php:18
+msgid "User name"
+msgstr ""
+
+#: templates/register-form.php:28
+msgid "Note: You can set your own password after registering."
+msgstr ""
+
+#: templates/resetpass-form.php:3
+msgid "Pick a New Password"
+msgstr ""
+
+#: templates/resetpass-form.php:19
+msgid "New password"
+msgstr ""
+
+#: templates/resetpass-form.php:23
+msgid "Repeat new password"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "B3 - User onboarding"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.berrplasman.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "This plugin handles the registration/login process"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Beee"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.berryplasman.com"
+msgstr ""
