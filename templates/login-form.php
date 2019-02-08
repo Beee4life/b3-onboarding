@@ -1,6 +1,5 @@
 <?php
     $has_reset_page        = false;
-    $send_password_by_mail = get_option( 'b3_send_pass_mail' );
 ?>
 <div id="b3-login" class="b3">
     <?php if ( $attributes[ 'show_title' ] ) : ?>
@@ -28,24 +27,17 @@
                         get_bloginfo( 'name' )
                     );
                 } else {
-                    if ( true == $send_password_by_mail ) {
-                        echo sprintf(
-                            __( 'You have successfully registered to <strong>%s</strong>. We have emailed your password to the email address you entered.', 'b3-user-register' ),
-                            get_bloginfo( 'name' )
-                        );
+                    // if no reset pw page is set
+                    if ( true == $has_reset_page ) {
+                        $password_reset_url = esc_url( wp_lostpassword_url() );
                     } else {
-                        // if no reset pw page is set
-                        if ( true == $has_reset_page ) {
-                            $password_reset_url = esc_url( wp_lostpassword_url() );
-                        } else {
-                            $password_reset_url = esc_url( home_url( '/forgot-password/' ) ); // make dynamic/filterable
-                        }
-                        echo sprintf(
-                            __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),
-                            get_bloginfo( 'name' ),
-                            $password_reset_url
-                        );
+                        $password_reset_url = esc_url( home_url( '/forgot-password/' ) ); // make dynamic/filterable
                     }
+                    echo sprintf(
+                        __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),
+                        get_bloginfo( 'name' ),
+                        $password_reset_url
+                    );
                 }
             ?>
         </p>

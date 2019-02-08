@@ -104,15 +104,11 @@
     }
     
     
+    ## Admin settings
+    
     /**
-     * Handle user activation
+     * All admin fields at once
      */
-    function b3_activation_handling() {
-    }
-    
-    
-    // Admin settings
-    
     function b3_admin_form_handling() {
     
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -123,7 +119,6 @@
                 } else {
         
                     $loopable_ids = [
-                        'b3_account_id',
                         'b3_forgotpass_id',
                         'b3_login_id',
                         'b3_register_id',
@@ -146,51 +141,7 @@
                 if ( ! wp_verify_nonce( $_POST[ "b3_settings_nonce" ], 'b3-settings-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
-
-                    // Custom passwords
-                    if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) ) {
-                        update_option( 'b3_custom_passwords', '1', true );
-                    } else {
-                        delete_option( 'b3_custom_passwords' );
-                    }
-                    
-                    // Dashboard widget
-                    if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) ) {
-                        update_option( 'b3_dashboard_widget', '1', true );
-                    } else {
-                        delete_option( 'b3_dashboard_widget' );
-                    }
-                    
-                    // Sidebar widget
-                    if ( isset( $_POST[ 'b3_activate_sidebar_widget' ] ) ) {
-                        update_option( 'b3_sidebar_widget', '1', true );
-                    } else {
-                        delete_option( 'b3_sidebar_widget' );
-                    }
-                
-                    // reCAPTCHA
-                    if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) ) {
-                        update_option( 'b3_recaptcha', '1', true );
-                    } else {
-                        delete_option( 'b3_recaptcha' );
-                    }
-                
-                    // Privacy
-                    if ( isset( $_POST[ 'b3_activate_privacy' ] ) ) {
-                        update_option( 'b3_privacy', '1', true );
-                    } else {
-                        delete_option( 'b3_privacy' );
-                    }
-                
-                    // reCAPTCHA
-                    if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
-                        update_option( 'b3_custom_emails', '1', true );
-                    } else {
-                        delete_option( 'b3_custom_emails' );
-                    }
-    
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
-    
                 }
     
                 wp_redirect( $redirect_url );
@@ -204,23 +155,8 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
     
-                    // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
-    
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
                     update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
-                    update_option( 'b3_mail_sending_method', $_POST[ 'b3_mail_sending_method' ], true );
-                    update_option( 'b3_html_emails', $_POST[ 'b3_html_emails' ], true );
-    
-                    if ( "0" == $_POST[ 'b3_html_emails' ] ) {
-                        update_option( "b3_html_emails", "0", true );
-                    } else {
-                        update_option( "b3_html_emails", "1", true );
-                    }
-                    if ( "0" == $_POST[ 'b3_add_br_html_email' ] ) {
-                        update_option( "b3_add_br_html_email", "0", true );
-                    } else {
-                        update_option( "b3_add_br_html_email", "1", true );
-                    }
     
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
     

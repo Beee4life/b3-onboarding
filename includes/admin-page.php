@@ -24,12 +24,6 @@
 
                     $tabs        = array(
                         array(
-                            'id'      => 'settings',
-                            'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'settings' ),
-                            'icon'    => 'admin-generic',
-                        ),
-                        array(
                             'id'      => 'pages',
                             'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'pages' ),
@@ -44,24 +38,6 @@
                         'icon'    => 'email',
                     );
                     
-                    if ( get_option( 'b3_recaptcha' ) ) {
-                        $tabs[] = array(
-                            'id'      => 'recaptcha',
-                            'title'   => esc_html__( 'Recaptcha', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'recaptcha' ),
-                            'icon'    => 'star-filled',
-                        );
-                    }
-    
-                    // if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
-                    //     $tabs[] = array(
-                    //         'id'      => 'addon',
-                    //         'title'   => esc_html__( 'Add-ons', 'b3-onboarding' ),
-                    //         'content' => b3_render_tab_content( 'addons' ),
-                    //         'icon'    => 'plus-alt',
-                    //     );
-                    // }
-    
                     if ( current_user_can( 'manage_options' ) ) {
                         $tabs[] = array(
                             'id'      => 'debug',

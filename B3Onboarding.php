@@ -1,15 +1,13 @@
 <?php
     /*
     Plugin Name: B3 - User onboarding
-    Version: 0.0.1
+    Version: 0.1
     Tags: user, management, registration, login, forgot password, reset password, account
     Plugin URI: http://www.berrplasman.com
     Description: This plugin handles the registration/login process
     Author: Beee
     Author URI: http://www.berryplasman.com
     Text-domain: b3-onboarding
-
-    Source: https://code.tutsplus.com/tutorials/build-a-custom-wordpress-user-flow-part-1-replace-the-login-page--cms-23627
 
     http://www.berryplasman.com
        ___  ____ ____ ____
@@ -46,11 +44,14 @@
             function initialize() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '0.0.1',
+                    'version' => '0.1',
                 );
     
                 // set text domain
                 load_plugin_textdomain( 'b3-onboarding', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+                
+                // settings link
+                add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
     
                 // actions
                 register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
@@ -61,31 +62,21 @@
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_register_settings_fields' ) );
                 add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
-                add_action( 'admin_init',                           array( $this, 'b3_add_post_notice' ) );
-                add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
-                // add_action( 'wp_print_footer_scripts',               array( $this, 'add_captcha_js_to_footer' ) );
             
                 add_filter( 'display_post_states',                  array( $this, 'b3_add_post_state' ), 10, 2 );
-                add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
     
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
-                add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
-                add_filter( 'wp_mail_charset',                      array( $this, 'b3_email_charset' ) );
-    
-    
+
                 add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
-                // add_shortcode( 'account-page',                  array( $this, 'b3_render_account_page' ) );
             
                 include( 'includes/constants.php' );
                 include( 'includes/do-stuff.php' );
-                include( 'includes/dashboard-widget.php' );
                 include( 'includes/emails.php' );
                 include( 'includes/examples.php' );
-                include( 'includes/filters.php' );
                 include( 'includes/form-handling.php' );
                 include( 'includes/functions.php' );
                 include( 'includes/tabs.php' );
@@ -98,56 +89,20 @@
             
                 // create necessary pages
                 b3_create_initial_pages();
-                
-                $this->b3_set_default_settings();
     
-                /**
-                 * Independent
-                 */
-                $aw_activation = get_role( 'b3_activation' );
-                if ( ! $aw_activation ) {
-                    add_role( 'b3_activation', __( 'Awaiting activation' ), [] );
-                }
-                $aw_approval = get_role( 'b3_approval' );
-                if ( ! $aw_approval ) {
-                    add_role( 'b3_approval', __( 'Awaiting approval' ), [] );
-                }
-    
-            }
-    
-    
-            public function b3_set_default_settings() {
-
-                // update_option( 'b3_add_br_html_email', '0' );
-                // update_option( 'b3_custom_emails', '0' );
-                // update_option( 'b3_custom_passwords', '0' );
-                // update_option( 'b3_dashboard_widget', '1' );
-                // update_option( 'b3_html_emails', '0' );
-                // update_option( 'b3_mail_sending_method', 'wpmail' );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name',get_bloginfo( 'name' ) );
-                // update_option( 'b3_sidebar_widget', '1' );
     
             }
+    
     
             /*
              * Do stuff upon plugin activation
              */
             public function b3_plugin_deactivation() {
-                
-                // remove settings is for testing
-    
                 $meta_keys = b3_get_all_custom_meta_keys();
                 foreach ( $meta_keys as $key ) {
                     delete_option( $key );
-                }
-    
-                $roles = array(
-                    'b3_activation',
-                    'b3_approval',
-                );
-                foreach( $roles as $role ) {
-                    remove_role( $role );
                 }
             }
         
@@ -157,7 +112,6 @@
              */
             public function b3_enqueue_scripts_frontend() {
                 wp_enqueue_style( 'b3-main', plugins_url( 'assets/css/style.css', __FILE__ ) );
-                wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
             }
         
         
@@ -166,7 +120,6 @@
              */
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3-admin', plugins_url( 'assets/css/admin.css', __FILE__ ) );
-                // wp_enqueue_script( 'b3-tabs', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ) );
                 wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ) );
             }
         
@@ -263,9 +216,6 @@
              */
             public function b3_add_post_state( $post_states, $post ) {
                 
-                if ( defined( 'B3_ACCOUNT' ) && $post->ID == B3_ACCOUNT ) {
-                    $post_states[] = 'B3: Account';
-                }
                 if ( defined( 'B3_REGISTER' ) && $post->ID == B3_REGISTER ) {
                     $post_states[] = 'B3: Register';
                 }
@@ -293,8 +243,6 @@
              */
             public function b3_settings_link( $links ) {
                 $settings_link = '<a href="admin.php?page=b3-onboarding">' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a>';
-                // add if for if add-ons are active
-                $add_ons_link  = '<a href="admin.php?page=b3-onboarding&tab=addon">' . esc_html__( 'Add-ons', 'b3-onboarding' ) . '</a>';
                 array_unshift( $links, $settings_link );
             
                 return $links;
@@ -336,90 +284,6 @@
     
     
             /**
-             * For filter 'wp_mail_content_type', overrides content-type
-             *
-             * @return  string
-             */
-            public function b3_email_content_type() {
-                $html_emails = get_option( 'b3_notification_sender_name' );
-                if ( $html_emails ) {
-                    return 'text/html';
-                }
-                
-                return 'text/plain';
-            }
-    
-    
-            /**
-             * For filter 'wp_mail_charset', overrides char-set
-             *
-             * @return  string
-             */
-            public function b3_email_charset() {
-                $char_set = get_option( 'b3_email_charset' );
-                if ( $char_set ) {
-                    error_log('charset');
-                    return $char_set;
-                }
-
-                return 'UTF-8';
-            }
-            
-            
-            /**
-             * Redirects the user to the correct page depending on whether he / she
-             * is an admin or not.
-             *
-             * @param string $redirect_to An optional redirect_to URL for admin users
-             */
-            private function redirect_logged_in_user( $redirect_to = null ) {
-                $user = wp_get_current_user();
-                if ( user_can( $user, 'manage_options' ) ) {
-                    if ( $redirect_to ) {
-                        wp_safe_redirect( $redirect_to );
-                    } else {
-                        wp_redirect( admin_url() );
-                    }
-                } else {
-                    wp_redirect( home_url() );
-                }
-            }
-        
-        
-            /**
-             *
-             */
-            public function b3_add_post_notice() {
-                if ( ! empty( $_GET[ 'post' ] ) ) {
-                    $post = get_post( $_GET[ 'post' ] );
-                    if ( 'page' == $post->post_type && 'account' == $post->post_name ) {
-                        /* Add a notice to the edit page */
-                        add_action( 'edit_form_after_title', array( $this, 'b3_add_page_notice' ), 1 );
-                    }
-                }
-            }
-        
-        
-            /**
-             *
-             */
-            public function b3_register_widgets() {
-                if ( true == get_option( 'b3_sidebar_widget' ) ) {
-                    include( 'includes/B3WidgetSidebar.php' );
-                    register_widget( 'B3WidgetSidebar' );
-                }
-            }
-        
-        
-            /**
-             *
-             */
-            public function b3_add_page_notice() {
-                echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the profile edit page. Do not edit the slug of this page!', 'b3-onboarding' ) . '</p></div>';
-            }
-        
-        
-            /**
              * Finds and returns a matching error message for the given error code.
              *
              * @param string $error_code The error code to look up.
@@ -456,9 +320,6 @@
                 
                     case 'closed':
                         return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
-                
-                    case 'captcha':
-                        return esc_html__( 'The Google reCAPTCHA check failed. Are you a robot?', 'b3-onboarding' );
                 
                     // Lost password
                     case 'invalid_email':
@@ -542,24 +403,10 @@
                     'user_pass'  => '',
                 );
 
-                $first_name = ( isset( $meta[ 'first_name' ] ) && ! empty( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : false;
-                if ( false != $first_name ) {
-                    $user_data[ 'first_name' ] = $first_name;
-                }
-
-                $last_name  = ( isset( $meta[ 'last_name' ] ) && ! empty( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : false;
-                if ( false != $first_name ) {
-                    $user_data[ 'last_name' ] = $last_name;
-                }
-            
-                // return 160878; // for testing
-            
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    wp_new_user_notification( $user_id, null, 'user' ); // @TODO: make notify 'changable'
+                    wp_new_user_notification( $user_id, null, 'both' );
                 }
-                // @TODO: add if for if user needs to activate
-                // @TODO: add if for if admin needs to activate
             
                 return $user_id;
             }
@@ -574,23 +421,11 @@
                     wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                 } elseif ( 'none' == $register_type ) {
                     wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
-                    // @TODO: add if for user or user + site
-                    // @TODO: add if for if user needs to activate
-                    // @TODO: add if for if admin needs to activate
                 }
             
                 $errors->add( 'user_registered', $this->get_error_message( 'user_registered' ) );
             
                 return $errors;
-            }
-        
-        
-            /**
-             * An action function used to include the reCAPTCHA JavaScript file
-             * at the end of the page.
-             */
-            public function add_captcha_js_to_footer() {
-                echo "<script src='https://www.google.com/recaptcha/api.js'></script>";
             }
         
         
@@ -601,21 +436,6 @@
                 // Create settings fields for the two keys used by reCAPTCHA
                 register_setting( 'general', 'b3-onboarding-recaptcha-site-key' );
                 register_setting( 'general', 'b3-onboarding-recaptcha-secret-key' );
-            
-                ## add to site settings (general)
-                // add_settings_field(
-                //     'b3-onboarding-recaptcha-site-key',
-                //     '<label for="b3-onboarding-recaptcha-site-key">' . esc_html__( 'reCAPTCHA site key' , 'b3-onboarding' ) . '</label>',
-                //     array( $this, 'render_recaptcha_site_key_field' ),
-                //     'general'
-                // );
-            
-                // add_settings_field(
-                //     'b3-onboarding-recaptcha-secret-key',
-                //     '<label for="b3-onboarding-recaptcha-secret-key">' . esc_html__( 'reCAPTCHA secret key' , 'b3-onboarding' ) . '</label>',
-                //     array( $this, 'render_recaptcha_secret_key_field' ),
-                //     'general'
-                // );
             }
         
             public function render_recaptcha_site_key_field() {
@@ -641,24 +461,15 @@
              */
             public function b3_render_register_form( $user_variables, $content = null ) {
             
-                // Parse shortcode attributes
                 $default_attributes = array(
                     'show_title' => false,
                     'template'   => 'register-form',
                 );
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
             
-                // @TODO: IF
-                // Retrieve recaptcha key
-                $attributes[ 'recaptcha_site_key' ] = get_option( 'b3-onboarding-recaptcha-site-key', null );
-            
                 if ( is_user_logged_in() ) {
                     return esc_html__( 'You are already signed in.', 'b3-onboarding' );
-                    // } elseif ( ! get_option( 'users_can_register' ) ) {
-                    //     return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
                 } else {
-                
-                    // Retrieve possible errors from request parameters
                     $attributes[ 'errors' ] = array();
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
@@ -683,18 +494,15 @@
              */
             public function b3_render_login_form( $user_variables, $content = null ) {
             
-                // Parse shortcode attributes
+                if ( is_user_logged_in() ) {
+                    return esc_html__( 'You are already logged in.', 'b3-onboarding' );
+                }
+            
                 $default_attributes = array(
                     'show_title' => false,
                     'template'   => 'login-form',
                 );
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
-            
-                $show_title = $attributes[ 'show_title' ];
-            
-                if ( is_user_logged_in() ) {
-                    return esc_html__( 'You are already signed in.', 'b3-onboarding' );
-                }
             
                 // Pass the redirect parameter to the WordPress login functionality: by default,
                 // don't specify a redirect, but if a valid redirect URL has been passed as
@@ -725,7 +533,6 @@
                 $attributes[ 'registered' ] = isset( $_REQUEST[ 'registered' ] );
             
                 // Render the login form using an external template
-                // return $this->get_template_html( 'login-form', $attributes );
                 return $this->get_template_html( $attributes[ 'template' ], $attributes );
             }
         
@@ -739,14 +546,17 @@
              * @return string  The shortcode output
              */
             public function b3_render_forgot_password_form( $user_variables, $content = null ) {
-                // Parse shortcode attributes
+
+                if ( is_user_logged_in() ) {
+                    return esc_html__( 'You are already logged in.', 'b3-onboarding' );
+                }
+
                 $default_attributes = array(
                     'show_title' => false,
                     'template'   => 'forgotpass-form',
                 );
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
             
-                // Retrieve possible errors from request parameters
                 $attributes[ 'errors' ] = array();
                 if ( isset( $_REQUEST[ 'errors' ] ) ) {
                     $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
@@ -756,11 +566,7 @@
                     }
                 }
             
-                if ( is_user_logged_in() ) {
-                    return esc_html__( 'You are already logged in.', 'b3-onboarding' );
-                } else {
-                    return $this->get_template_html( $attributes[ 'template' ], $attributes );
-                }
+                return $this->get_template_html( $attributes[ 'template' ], $attributes );
             }
         
         
@@ -773,57 +579,37 @@
              * @return string  The shortcode output
              */
             public function b3_render_reset_password_form( $user_variables, $content = null ) {
-                // Parse shortcode attributes
+    
+                if ( is_user_logged_in() ) {
+                    return esc_html__( 'You are already signed in.', 'b3-onboarding' );
+                }
+                
                 $default_attributes = array(
                     'show_title' => false,
                     'template'   => 'resetpass-form',
                 );
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
+    
+                if ( isset( $_REQUEST[ 'login' ] ) && isset( $_REQUEST[ 'key' ] ) ) {
+                    $attributes[ 'login' ] = $_REQUEST[ 'login' ];
+                    $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
+        
+                    // Error messages
+                    $errors = array();
+                    if ( isset( $_REQUEST[ 'error' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'error' ] );
             
-                if ( is_user_logged_in() ) {
-                    return esc_html__( 'You are already signed in.', 'b3-onboarding' );
-                } else {
-                    if ( isset( $_REQUEST[ 'login' ] ) && isset( $_REQUEST[ 'key' ] ) ) {
-                        $attributes[ 'login' ] = $_REQUEST[ 'login' ];
-                        $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
-                    
-                        // Error messages
-                        $errors = array();
-                        if ( isset( $_REQUEST[ 'error' ] ) ) {
-                            $error_codes = explode( ',', $_REQUEST[ 'error' ] );
-                        
-                            foreach ( $error_codes as $code ) {
-                                $errors [] = $this->get_error_message( $code );
-                            }
+                        foreach ( $error_codes as $code ) {
+                            $errors [] = $this->get_error_message( $code );
                         }
-                        $attributes[ 'errors' ] = $errors;
-                    
-                        return $this->get_template_html( $attributes[ 'template' ], $attributes );
-                    } else {
-                        return esc_html__( 'Invalid password reset link.', 'b3-onboarding' );
                     }
+                    $attributes[ 'errors' ] = $errors;
+        
+                    return $this->get_template_html( $attributes[ 'template' ], $attributes );
+                } else {
+                    return esc_html__( 'Invalid password reset link.', 'b3-onboarding' );
                 }
-            }
-        
-        
-            /**
-             * A shortcode to render the account page
-             *
-             * @param      $attributes
-             * @param null $content
-             *
-             * @return string
-             */
-            public function b3_render_account_page( $user_variables, $content = null ) {
-            
-                // Parse shortcode attributes
-                $default_attributes = array(
-                    'show_title' => false,
-                    'template'   => 'account-page',
-                );
-                $attributes         = shortcode_atts( $default_attributes, $user_variables );
-            
-                return $this->get_template_html( $attributes[ 'template' ], $attributes );
+
             }
         
         
@@ -841,13 +627,7 @@
                 }
             
                 ob_start();
-            
-                do_action( 'b3_before_' . $template_name );
-            
                 require( 'templates/' . $template_name . '.php' );
-            
-                do_action( 'b3_after_' . $template_name );
-            
                 $html = ob_get_contents();
                 ob_end_clean();
             
