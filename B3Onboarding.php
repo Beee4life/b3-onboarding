@@ -421,26 +421,6 @@
             }
         
         
-            /**
-             * Registers the settings fields needed by the plugin (echoed on user page)
-             */
-            public function b3_register_settings_fields() {
-                // Create settings fields for the two keys used by reCAPTCHA
-                register_setting( 'general', 'b3-onboarding-recaptcha-site-key' );
-                register_setting( 'general', 'b3-onboarding-recaptcha-secret-key' );
-            }
-        
-            public function render_recaptcha_site_key_field() {
-                $value = get_option( 'b3-onboarding-recaptcha-site-key', '' );
-                echo '<input type="text" id="b3-onboarding-recaptcha-site-key" name="b3-onboarding-recaptcha-site-key" value="' . esc_attr( $value ) . '" />';
-            }
-        
-            public function render_recaptcha_secret_key_field() {
-                $value = get_option( 'b3-onboarding-recaptcha-secret-key', '' );
-                echo '<input type="text" id="b3-onboarding-recaptcha-secret-key" name="b3-onboarding-recaptcha-secret-key" value="' . esc_attr( $value ) . '" />';
-            }
-        
-        
             ## FORM RENDERS
         
             /**
