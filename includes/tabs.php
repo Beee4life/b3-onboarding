@@ -342,29 +342,36 @@
             <?php esc_html_e( 'Debug info', 'b3-onboarding' ); ?>
         </h2>
 
-        <p>Operating system: <?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?></p>
-        <p>PHP : <?php echo phpversion(); ?></p>
-        <p>Server IP: <?php echo $_SERVER[ 'SERVER_ADDR' ]; ?></p>
-        <p>Scheme: <?php echo $_SERVER[ 'REQUEST_SCHEME' ]; ?></p>
-        <p>Home path: <?php echo get_home_path(); ?></p>
+        <b>Server info</b>
+        <ul>
+            <li>Operating system: <?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?></li>
+            <li>PHP : <?php echo phpversion(); ?></li>
+            <li>Server IP: <?php echo $_SERVER[ 'SERVER_ADDR' ]; ?></li>
+            <li>Scheme: <?php echo $_SERVER[ 'REQUEST_SCHEME' ]; ?></li>
+            <li>Home path: <?php echo get_home_path(); ?></li>
+        </ul>
 
-        <h3>WP info</h3>
-        <p>WP version: <?php echo get_bloginfo( 'version' ); ?></p>
-        <p>Home url: <?php echo get_home_url(); ?></p>
-        <p>Admin email: <?php echo get_bloginfo( 'admin_email' ); ?></p>
-        <p>Blog public: <?php echo get_option( 'blog_public' ); ?></p>
-        <p>Users can register: <?php echo get_option( 'users_can_register' ); ?></p>
-        <p>Page on front: <?php echo get_option( 'page_on_front' ); ?></p>
-        <p>Charset: <?php echo get_bloginfo( 'charset' ); ?></p>
-        <p>Text direction: <?php echo get_bloginfo( 'text_direction' ); ?></p>
-        <p>Language: <?php echo get_bloginfo( 'language' ); ?></p>
+        <b>WP info</b>
+        <ul>
+            <li>WP version: <?php echo get_bloginfo( 'version' ); ?></li>
+            <li>Home url: <?php echo get_home_url(); ?></li>
+            <li>Admin email: <?php echo get_bloginfo( 'admin_email' ); ?></li>
+            <li>Blog public: <?php echo get_option( 'blog_public' ); ?></li>
+            <li>Users can register: <?php echo get_option( 'users_can_register' ); ?></li>
+            <li>Page on front: <?php echo get_option( 'page_on_front' ); ?></li>
+            <li>Charset: <?php echo get_bloginfo( 'charset' ); ?></li>
+            <li>Text direction: <?php echo get_bloginfo( 'text_direction' ); ?></li>
+            <li>Language: <?php echo get_bloginfo( 'language' ); ?></li>
+        </ul>
         
-        <h3>WP info</h3>
-        <p>Current theme: <?php echo get_option( 'current_theme' ); ?></p>
-        <p>Stylesheet: <?php echo get_option( 'stylesheet' ); ?></p>
-        <p>Template: <?php echo get_option( 'template' ); ?></p>
+        <b>WP info</b>
+        <ul>
+            <li>Current theme: <?php echo get_option( 'current_theme' ); ?></li>
+            <li>Stylesheet: <?php echo get_option( 'stylesheet' ); ?></li>
+            <li>Template: <?php echo get_option( 'template' ); ?></li>
+        </ul>
 
-        <h3>Active plugins</h3>
+        <b>Active plugins</b>
         <ul>
             <?php
                 $plugins = get_plugins();
@@ -376,7 +383,7 @@
             ?>
         </ul>
 
-        <h3>Inactive plugins</h3>
+        <b>Inactive plugins</b>
         <ul>
             <?php
                 $plugins = get_plugins();
@@ -387,14 +394,17 @@
                 }
             ?>
         </ul>
+
         <?php if ( class_exists( 'SitePress' ) ) { ?>
-            <p>WPLANG: <?php echo get_option( 'WPLANG' ); ?></p>
-            <p>WPML Version: <?php echo get_option( 'WPML_Plugin_verion' ); ?></p>
+            <b>WPML</b>
+            <ul>
+                <li>WPLANG: <?php echo get_option( 'WPLANG' ); ?></li>
+                <li>WPML Version: <?php echo get_option( 'WPML_Plugin_verion' ); ?></li>
+            </ul>
         <?php } ?>
 
         <?php
         // @TODO: download info as json
-        // echo '<pre>'; var_dump($_SERVER); echo '</pre>'; exit;
         $result = ob_get_clean();
     
         return $result;
