@@ -2,7 +2,7 @@
     /*
     Plugin Name: B3 - User onboarding
     Version: 0.1
-    Tags: user, management, registration, login, forgot password, reset password, account
+    Tags: user, registration, login, forgot password, reset password
     Plugin URI: http://www.berrplasman.com
     Description: This plugin handles the registration/login process
     Author: Beee
