@@ -52,6 +52,13 @@
                             'icon'    => 'star-filled',
                         );
                     }
+
+                    $tabs[] = array(
+                        'id'      => 'support',
+                        'title'   => esc_html__( 'Support', 'b3-onboarding' ),
+                        'content' => b3_render_tab_content( 'support' ),
+                        'icon'    => 'sos',
+                    );
     
                     // if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
                     //     $tabs[] = array(

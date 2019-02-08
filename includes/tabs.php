@@ -23,6 +23,9 @@
             case 'recaptcha':
                 $content = b3_render_recaptcha_tab();
                 break;
+            case 'support':
+                $content = b3_render_support_tab();
+                break;
             case 'addons':
                 $content = b3_render_addons_tab();
                 break;
@@ -284,6 +287,25 @@
         return $result;
     }
     
+    function b3_render_support_tab() {
+        ob_start();
+        ?>
+        <h2>
+            <?php esc_html_e( 'Support', 'b3-onboarding' ); ?>
+        </h2>
+
+        <p>
+            <?php echo sprintf( __( 'Please read the <a href="%s">README</a> on Github first and the <a href="%s">Wiki</a>. Those explain a lot already.', 'b3-onboarding' ), esc_url( 'https://github.com/Beee4life/b3-onboarding/issues' ), esc_url( 'https://github.com/Beee4life/b3-onboarding/wiki' ) ); ?>
+        </p>
+        <p>
+            <?php echo sprintf( __( 'If you need support, plese turn to the <a href="%s">issues section</a>.', 'b3-onboarding' ), esc_url( 'https://github.com/Beee4life/b3-onboarding/issues' ) ); ?>
+        </p>
+        <?php
+        $result = ob_get_clean();
+    
+        return $result;
+    }
+    
     function b3_render_addons_tab() {
     
         ob_start();
@@ -315,16 +337,11 @@
     function b3_render_debug_tab() {
     
         ob_start();
-        
-        // get wp version
-        // get theme
-        // get active plugins
         ?>
         <h2>
             <?php esc_html_e( 'Debug info', 'b3-onboarding' ); ?>
         </h2>
 
-        <h3>Server info</h3>
         <p>Operating system: <?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?></p>
         <p>PHP : <?php echo phpversion(); ?></p>
         <p>Server IP: <?php echo $_SERVER[ 'SERVER_ADDR' ]; ?></p>
