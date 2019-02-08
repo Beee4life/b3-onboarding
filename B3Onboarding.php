@@ -201,8 +201,8 @@
             /**
              * Add post states for plugin pages
              *
-             * @param $post_states
-             * @param $post
+             * @param array $post_states
+             * @param object $post
              *
              * @return array
              */
@@ -224,14 +224,14 @@
             
                 return $post_states;
             }
-        
-        
+    
+    
             /**
              * Add settings link to plugin page
              *
-             * @param $links
+             * @param  array $links
              *
-             * @return mixed
+             * @return array mixed
              */
             public function b3_settings_link( $links ) {
                 $settings_link = '<a href="admin.php?page=b3-onboarding">' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a>';
@@ -278,9 +278,9 @@
             /**
              * Finds and returns a matching error message for the given error code.
              *
-             * @param string $error_code The error code to look up.
+             * @param  string   $error_code The error code to look up.
              *
-             * @return string               An error message.
+             * @return string   An error message.
              */
             private function get_error_message( $error_code ) {
                 switch ( $error_code ) {
@@ -402,7 +402,18 @@
             
                 return $user_id;
             }
-        
+    
+    
+            /**
+             * Register WPMU user
+             *
+             * @param $user_name
+             * @param $user_email
+             * @param $sub_domain
+             * @param array $meta
+             *
+             * @return WP_Error
+             */
             private function b3_register_wpmu_user( $user_name, $user_email, $sub_domain, $meta = array() ) {
                 $errors = new WP_Error();
             
@@ -484,7 +495,6 @@
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
             
-                // Error messages
                 $errors = array();
                 if ( isset( $_REQUEST[ 'login' ] ) ) {
                     $error_codes = explode( ',', $_REQUEST[ 'login' ] );
@@ -566,7 +576,6 @@
                     $attributes[ 'login' ] = $_REQUEST[ 'login' ];
                     $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
         
-                    // Error messages
                     $errors = array();
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );

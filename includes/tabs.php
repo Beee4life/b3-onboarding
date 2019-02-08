@@ -27,7 +27,6 @@
     
     function b3_render_pages_tab() {
         
-        // get stored pages
         $b3_pages = array(
             array(
                 'id' => 'register',
@@ -51,7 +50,6 @@
             ),
         );
         
-        // get all pages
         $all_pages = get_posts( array(
             'post_type'      => 'page',
             'post_status'    => [ 'publish', 'pending', 'draft' ],
