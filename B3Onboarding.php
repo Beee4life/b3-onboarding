@@ -248,7 +248,7 @@
              */
             public function b3_email_from( $original_email_address ) {
                 // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
-                $from_email = get_option( 'b3_notification_sender_name' );
+                $from_email = get_option( 'b3_notification_sender_email' );
                 if ( $from_email ) {
                     return $from_email;
                 }
