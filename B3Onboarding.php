@@ -1,7 +1,7 @@
 <?php
     /*
     Plugin Name: B3 - User onboarding
-    Version: 0.6-beta
+    Version: 0.7-beta
     Tags: user, management, registration, login, forgot password, reset password, account
     Plugin URI: http://www.berrplasman.com
     Description: This plugin handles the registration/login process
@@ -46,7 +46,7 @@
             function initialize() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '0.6-beta',
+                    'version' => '0.7-beta',
                 );
     
                 // set text domain
