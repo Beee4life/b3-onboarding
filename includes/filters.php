@@ -10,7 +10,7 @@
      */
     function b3_lost_password_page_url( $lostpassword_url, $redirect ) {
         
-        $lost_password_page_id = get_option( 'b3_forgotpass_id' );
+        $lost_password_page_id = get_option( 'b3_forgotpass_page_id' );
         if ( false != $lost_password_page_id ) {
             $lost_pass_url = get_permalink( $lost_password_page_id );
             if ( class_exists( 'SitePress' ) ) {

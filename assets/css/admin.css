@@ -133,8 +133,8 @@
 .b3__settings-input {
 }
 
-.b3__settings-input--text input[type="text"] {
-    /*width: 300px;*/
+.b3__settings-input--radio {
+    margin-bottom: 0.5em;
 }
 
 /* Emails page */

@@ -19,7 +19,7 @@
                     if ( isset( $_GET[ 'tab' ] ) ) {
                         $default_tab = $_GET[ 'tab' ];
                     } else {
-                        $default_tab = 'debug';
+                        $default_tab = 'settings';
                     }
 
                     $tabs        = array(

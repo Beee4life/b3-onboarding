@@ -1,6 +1,7 @@
 <?php
     $has_reset_page        = false;
     $send_password_by_mail = get_option( 'b3_send_pass_mail' );
+    $request_access        = get_option( 'b3_registration_type' );
 ?>
 <div id="b3-login" class="b3">
     <?php if ( $attributes[ 'show_title' ] ) : ?>
@@ -19,7 +20,7 @@
     <?php endif; ?>
 
     <!-- Show success message if user successfully registered -->
-    <?php if ( $attributes['registered'] ) : ?>
+    <?php if ( $attributes[ 'registered' ] ) : ?>
         <p class="login-info">
             <?php
                 if ( is_multisite() ) {
@@ -34,17 +35,34 @@
                             get_bloginfo( 'name' )
                         );
                     } else {
-                        // if no reset pw page is set
-                        if ( true == $has_reset_page ) {
-                            $password_reset_url = esc_url( wp_lostpassword_url() );
+
+                        if ( 'request_access' == $request_access && ! empty( $_GET[ 'registered' ] ) && 'access_requested' == $_GET[ 'registered' ] ) {
+    
+                            echo sprintf(
+                                __( 'You have successfully requested access to <strong>%1$s</strong>. You\'ll be notified by email about the result.', 'b3-user-register' ),
+                                get_bloginfo( 'name' )
+                            );
+    
+                        } elseif ( ! empty( $_GET[ 'registered' ] ) && 'confirm_email' == $_GET[ 'registered' ] ) {
+    
+                            echo sprintf(
+                                __( 'You have successfully registered to <strong>%1$s</strong>. Please click the confirmation link in your email.', 'b3-user-register' ),
+                                get_bloginfo( 'name' )
+                            );
+    
                         } else {
-                            $password_reset_url = esc_url( home_url( '/forgot-password/' ) ); // make dynamic/filterable
+    
+                            if ( true == $has_reset_page ) {
+                                $password_reset_url = esc_url( wp_lostpassword_url() );
+                            } else {
+                                $password_reset_url = esc_url( home_url( '/forgot-password/' ) ); // make dynamic/filterable
+                            }
+                            echo sprintf(
+                                __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),
+                                get_bloginfo( 'name' ),
+                                $password_reset_url
+                            );
                         }
-                        echo sprintf(
-                            __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),
-                            get_bloginfo( 'name' ),
-                            $password_reset_url
-                        );
                     }
                 }
             ?>
@@ -61,7 +79,7 @@
     <!-- Show logged out message if user just logged out -->
     <?php if ( $attributes[ 'logged_out' ] ) : ?>
         <p class="login-info">
-            <?php esc_html_e( 'You have signed out. Would you like to sign in again?', 'b3-user-register' ); ?>
+            <?php esc_html_e( 'You have signed out ?', 'b3-user-register' ); ?>
         </p>
     <?php endif; ?>
 

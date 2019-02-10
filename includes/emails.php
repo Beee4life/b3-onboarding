@@ -1,18 +1,18 @@
 <?php
     
-    function b3_render_settings_field( $box = false ) {
+    function b3_render_email_settings_field( $box = false ) {
         
         if ( false != $box ) {
             
-            $basic_output = b3_basic_settings_field( $box );
-            $basic_output = str_replace( '##TABCONTENT##', b3_tab_content( $box ), $basic_output );
+            $basic_output = b3_basic_email_settings_field( $box );
+            $basic_output = str_replace( '##FOLDOUTCONTENT##', b3_foldout_content( $box ), $basic_output );
             return $basic_output;
         }
         
         return '<h4>Oops, no content yet...</h4>';
     }
 
-    function b3_basic_settings_field( $box = false ) {
+    function b3_basic_email_settings_field( $box = false ) {
     
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] )) ) {
@@ -26,8 +26,8 @@
                         <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
                     </div>
                     
-                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'email_settings' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'email_settings' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
-                        ##TABCONTENT##
+                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xemail_settings' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xemail_settings' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
+                        ##FOLDOUTCONTENT##
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
         return $output;
     }
 
-    function b3_tab_content( $box = false ) {
+    function b3_foldout_content( $box = false ) {
         
         if ( false != $box ) {
     
