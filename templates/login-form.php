@@ -93,7 +93,7 @@
     <?php
         wp_login_form(
             array(
-                'label_username' => esc_html__( 'Email', 'b3-user-register' ),
+                'label_username' => esc_html__( 'Username or email address', 'b3-user-register' ),
                 'label_log_in'   => esc_html__( 'Log In', 'b3-user-register' ),
                 'redirect'       => $attributes[ 'redirect' ],
             ) );

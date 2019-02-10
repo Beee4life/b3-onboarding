@@ -135,11 +135,25 @@
                     
                     // Registration options
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
-                        if ( in_array( $_POST[ 'b3_registration_type' ], array( 'closed', 'request_access' ) ) ) {
-                            update_option( 'users_can_register', '0', true );
+                        
+                        if ( ! is_multisite() ) {
+                            if ( in_array( $_POST[ 'b3_registration_type' ], array( 'closed', 'request_access', 'request_access_subdomain' ) ) ) {
+                                update_option( 'users_can_register', '0', true );
+                            } else {
+                                update_option( 'users_can_register', '1', true );
+                            }
                         } else {
-                            update_option( 'users_can_register', '1', true );
+                            if ( is_main_site( 1 ) ) {
+                            
+                            } else {
+                            
+                            }
+                            $blog_id = get_current_blog_id();
+                            update_blog_option( $blog_id, 'b3_registration_type', $_POST[ 'b3_registration_type' ] );
+                            
                         }
+                        
+                        
                         update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
                     }
                     

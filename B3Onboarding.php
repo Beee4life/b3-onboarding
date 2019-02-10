@@ -61,7 +61,7 @@
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_add_post_notice' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
-                add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ) );
+                add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
@@ -128,20 +128,20 @@
     
     
             public function b3_set_default_settings() {
-
-                $public_registration = get_option( 'users_can_register' );
                 
                 if ( ! is_multisite() ) {
+                    $public_registration = get_option( 'users_can_register' );
                     if ( true == $public_registration ) {
                         update_option( 'b3_registration_type', 'open' );
                     } else {
                         update_option( 'b3_registration_type', 'closed' );
                     }
                 } else {
-                    if ( true == $public_registration ) {
-                        update_option( 'b3_registration_type', 'open' );
+                    $public_registration = get_site_option( 'registration' );
+                    if ( 'none' != $public_registration ) {
+                        update_blog_option( get_current_blog_id(), 'b3_registration_type', 'ms_register_site_user' );
                     } else {
-                        update_option( 'b3_registration_type', 'closed' );
+                        update_blog_option( get_current_blog_id(), 'b3_registration_type', 'none' );
                     }
                 }
                 
@@ -214,9 +214,11 @@
             public function b3_add_post_notice() {
                 if ( ! empty( $_GET[ 'post' ] ) ) {
                     $post = get_post( $_GET[ 'post' ] );
-                    if ( 'page' == $post->post_type && 'account' == $post->post_name ) {
-                        /* Add a notice to the edit page */
-                        add_action( 'edit_form_after_title', array( $this, 'b3_add_page_notice' ), 1 );
+                    if ( false != $post ) {
+                        if ( 'page' == $post->post_type && 'account' == $post->post_name ) {
+                            /* Add a notice to the edit page */
+                            add_action( 'edit_form_after_title', array( $this, 'b3_add_page_notice' ), 1 );
+                        }
                     }
                 }
             }
@@ -809,7 +811,7 @@
                         return esc_html__( "We don't have any users with that email address. Maybe you used a different one when signing up?", 'b3-onboarding' );
                 
                     case 'incorrect_password':
-                        $err = esc_html__( "The password you entered wasn't quite right. <a href='%s'>Did you forget your password</a>?", 'b3-onboarding' );
+                        $err = __( "The password you entered wasn't quite right. <a href='%s'>Did you forget your password</a>?", 'b3-onboarding' );
                     
                         return sprintf( $err, wp_lostpassword_url() );
                 

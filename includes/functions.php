@@ -204,45 +204,73 @@
                 'label' => esc_html__( 'Closed (for everyone)', 'b3-onboarding' ),
             ),
         );
+
+        $normal_options = array(
+            array(
+                'value' => 'request_access',
+                'label' => esc_html__( 'Request access (admin needs to approve user registration)', 'b3-onboarding' ),
+            ),
+            array(
+                'value' => 'open',
+                'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
+            ),
+            array(
+                'value' => 'email_activation',
+                'label' => esc_html__( 'Open (user needs to confirm email)', 'b3-onboarding' ),
+            ),
+        );
+
+        $multisite_options = array(
+            array(
+                'value' => 'request_access',
+                'label' => esc_html__( 'Request access (admin approval)', 'b3-onboarding' ),
+            ),
+            array(
+                'value' => 'request_access_subdomain',
+                'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
+            ),
+            array(
+                'value' => 'ms_loggedin_register',
+                'label' => esc_html__( 'Logged in user may register a site', 'b3-onboarding' ),
+            ),
+            array(
+                'value' => 'ms_register_user',
+                'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
+            ),
+            array(
+                'value' => 'ms_register_site_user',
+                'label' => esc_html__( 'Visitor may register user + site', 'b3-onboarding' ),
+            ),
+        );
+
         if ( ! is_multisite() ) {
-            $normal_options = array(
-                array(
-                    'value' => 'request_access',
-                    'label' => esc_html__( 'Request access (admin needs to approve user registration)', 'b3-onboarding' ),
-                ),
-                array(
-                    'value' => 'open',
-                    'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
-                ),
-                array(
-                    'value' => 'email_activation',
-                    'label' => esc_html__( 'Open (user needs to confirm email)', 'b3-onboarding' ),
-                ),
-            );
             $registration_options = array_merge( $registration_options, $normal_options );
-    
         } else {
-            $multisite_options = array(
-                array(
-                    'value' => 'request_access',
-                    'label' => esc_html__( 'Request access (admin needs to approve user registration)', 'b3-onboarding' ),
-                ),
-                array(
-                    'value' => 'ms_loggedin_register',
-                    'label' => esc_html__( 'Logged in user may register a site', 'b3-onboarding' ),
-                ),
-                array(
-                    'value' => 'ms_register_user',
-                    'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
-                ),
-                array(
-                    'value' => 'ms_register_site_user',
-                    'label' => esc_html__( 'Visitor may register user + site', 'b3-onboarding' ),
-                ),
-            );
-            $registration_options = array_merge( $registration_options, $multisite_options );
+            if ( ! is_main_site() ) {
+                $registration_options = array_merge( $registration_options, $normal_options );
+            } else {
+                $registration_options = array_merge( $registration_options, $multisite_options );
+            }
             
         }
         
         return $registration_options;
+    }
+    
+    function b3_add_subdomain_field() {
+        
+        if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
+            ob_start();
+            ?>
+            <?php // @TODO: add more fields for Multisite ?>
+            <div class="b3__form-element b3__form-element--register">
+                <label class="b3__form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-user-register' ); ?></label>
+                <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3__form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-user-register' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
+            </div>
+            <?php
+            $output = ob_get_clean();
+    
+            echo $output;
+        }
+        
     }

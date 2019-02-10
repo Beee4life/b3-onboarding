@@ -34,6 +34,8 @@
                 <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-user-register' ); ?> <strong>*</strong></label>
                 <input type="email" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="info@xxx.com" required>
             </div>
+    
+            <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
 
             <?php do_action( 'b3_add_custom_fields_registration' ); ?>
             <?php b3_extra_fields_registration(); ?>
@@ -58,13 +60,7 @@
                 <input type="text" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="info@xxx.com" required>
             </div>
     
-            <?php if ( is_multisite() ) { ?>
-                <?php // @TODO: add more fields for Multisite ?>
-                <div class="b3__form-element b3__form-element--register">
-                    <label class="b3__form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-user-register' ); ?></label>
-                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3__form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-user-register' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
-                </div>
-            <?php } ?>
+            <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
             
             <?php // this function is not in use yet ?>
             <?php if ( $show_custom_passwords == true ) { ?>
