@@ -1,26 +1,34 @@
 <?php
     $has_reset_page        = false;
+    $show_form             = true;
     $send_password_by_mail = get_option( 'b3_send_pass_mail' );
     $request_access        = get_option( 'b3_registration_type' );
 ?>
 <div id="b3-login" class="b3">
-    <?php if ( $attributes[ 'show_title' ] ) : ?>
+    <?php if ( $attributes[ 'show_title' ] ) { ?>
         <h2>
             <?php _e( 'Log In', 'b3-user-register' ); ?>
         </h2>
-    <?php endif; ?>
+    <?php } ?>
 
     <!-- Show errors if there are any -->
-    <?php if ( count( $attributes[ 'errors' ] ) > 0 ) : ?>
-        <?php foreach ( $attributes[ 'errors' ] as $error ) : ?>
+    <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
+        <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
             <p class="b3__message">
                 <?php echo $error; ?>
             </p>
-        <?php endforeach; ?>
-    <?php endif; ?>
+        <?php } ?>
+    <?php } ?>
+
+    <!-- Show success message if user successfully activated -->
+    <?php if ( $attributes[ 'user_activate' ] ) { ?>
+        <p class="b3__message">
+            <?php esc_html_e( 'You have successfully activated your account. You can now log in.', 'b3-user-register' ); ?>
+        </p>
+    <?php } ?>
 
     <!-- Show success message if user successfully registered -->
-    <?php if ( $attributes[ 'registered' ] ) : ?>
+    <?php if ( $attributes[ 'registered' ] ) { ?>
         <p class="login-info">
             <?php
                 if ( is_multisite() ) {
@@ -42,6 +50,7 @@
                                 __( 'You have successfully requested access to <strong>%1$s</strong>. You\'ll be notified by email about the result.', 'b3-user-register' ),
                                 get_bloginfo( 'name' )
                             );
+                            $show_form = false;
     
                         } elseif ( ! empty( $_GET[ 'registered' ] ) && 'confirm_email' == $_GET[ 'registered' ] ) {
     
@@ -49,6 +58,7 @@
                                 __( 'You have successfully registered to <strong>%1$s</strong>. Please click the confirmation link in your email.', 'b3-user-register' ),
                                 get_bloginfo( 'name' )
                             );
+                            $show_form = false;
     
                         } else {
     
@@ -62,44 +72,47 @@
                                 get_bloginfo( 'name' ),
                                 $password_reset_url
                             );
+                            $show_form = false;
                         }
                     }
                 }
             ?>
         </p>
-    <?php endif; ?>
+    <?php } ?>
 
     <!-- Show message if user reset password -->
-    <?php if ( $attributes[ 'lost_password_sent' ] ) : ?>
+    <?php if ( $attributes[ 'lost_password_sent' ] ) { ?>
         <p class="login-info">
             <?php esc_html_e( 'Check your email for a link to reset your password.', 'b3-user-register' ); ?>
         </p>
-    <?php endif; ?>
+    <?php } ?>
 
     <!-- Show logged out message if user just logged out -->
-    <?php if ( $attributes[ 'logged_out' ] ) : ?>
+    <?php if ( $attributes[ 'logged_out' ] ) { ?>
         <p class="login-info">
-            <?php esc_html_e( 'You have signed out ?', 'b3-user-register' ); ?>
+            <?php esc_html_e( 'You have signed out.', 'b3-user-register' ); ?>
         </p>
-    <?php endif; ?>
+    <?php } ?>
 
     <!-- Show message if user just reset password -->
-    <?php if ( $attributes[ 'password_updated' ] ) : ?>
+    <?php if ( $attributes[ 'password_updated' ] ) { ?>
         <p class="login-info">
             <?php esc_html_e( 'Your password has been changed. You can login now.', 'b3-user-register' ); ?>
         </p>
-    <?php endif; ?>
-    
-    <?php
-        wp_login_form(
-            array(
-                'label_username' => esc_html__( 'Username or email address', 'b3-user-register' ),
-                'label_log_in'   => esc_html__( 'Log In', 'b3-user-register' ),
-                'redirect'       => $attributes[ 'redirect' ],
-            ) );
-    ?>
+    <?php } ?>
 
-    <a class="forgot-password" href="<?php echo wp_lostpassword_url(); ?>">
-        <?php esc_html_e( 'Forgot your password?', 'b3-user-register' ); ?>
-    </a>
+    <?php if ( false != $show_form ) { ?>
+        <?php
+            wp_login_form(
+                array(
+                    'label_username' => esc_html__( 'Username or email address', 'b3-user-register' ),
+                    'label_log_in'   => esc_html__( 'Log In', 'b3-user-register' ),
+                    'redirect'       => $attributes[ 'redirect' ],
+                ) );
+        ?>
+        <a class="forgot-password" href="<?php echo wp_lostpassword_url(); ?>">
+            <?php esc_html_e( 'Forgot your password?', 'b3-user-register' ); ?>
+        </a>
+    <?php } ?>
+
 </div>

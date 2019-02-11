@@ -1,4 +1,5 @@
 .b3__admin {
+    max-width: 90%
 }
 
 /* TABS */
@@ -169,6 +170,16 @@
 
 .b3__inside {
     padding: 1em 12px 12px 12px;
+}
+
+
+.b3__user-table {
+    width: 50%;
+    max-width: 100%;
+}
+
+.b3__user-table th {
+    text-align: left;
 }
 
 /* Form styling */

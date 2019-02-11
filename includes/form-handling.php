@@ -106,15 +106,7 @@
     }
     
     
-    /**
-     * Handle user activation
-     */
-    function b3_activation_handling() {
-    }
-    
-    
     // Admin settings
-    
     function b3_admin_form_handling() {
     
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -135,26 +127,9 @@
                     
                     // Registration options
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
-                        
                         if ( ! is_multisite() ) {
-                            if ( in_array( $_POST[ 'b3_registration_type' ], array( 'closed', 'request_access', 'request_access_subdomain' ) ) ) {
-                                update_option( 'users_can_register', '0', true );
-                            } else {
-                                update_option( 'users_can_register', '1', true );
-                            }
-                        } else {
-                            if ( is_main_site( 1 ) ) {
-                            
-                            } else {
-                            
-                            }
-                            $blog_id = get_current_blog_id();
-                            update_blog_option( $blog_id, 'b3_registration_type', $_POST[ 'b3_registration_type' ] );
-                            
+                            update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
                         }
-                        
-                        
-                        update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
                     }
                     
                     // Dashboard widget
@@ -274,3 +249,79 @@
         }
     }
     add_action( 'admin_init', 'b3_admin_form_handling' );
+    
+    
+    // Admin settings
+    function b3_approve_deny_users() {
+    
+        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+            if ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
+            
+                if ( is_admin() ) {
+                    $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
+                } else {
+                    $redirect_url = home_url( 'user-management' );
+                }
+            
+                if ( ! wp_verify_nonce( $_POST[ "b3_users_nonce" ], 'b3-users-nonce' ) ) {
+                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
+                } else {
+                    
+                    $approve   = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? $_POST[ 'b3_approve_user' ] : false;
+                    $reject    = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? $_POST[ 'b3_reject_user' ] : false;
+                    $user_id   = ( isset( $_POST[ 'b3_user_id' ] ) ) ? $_POST[ 'b3_user_id' ] : false;
+                    $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
+                    
+                    if ( false != $approve && isset( $user_object->ID ) ) {
+    
+                        // activate user
+                        $user_object = new WP_User( $user_id );
+                        $user_object->set_role( get_option( 'default_role' ) );
+    
+                        // send mail
+                        $site_name  = get_option( 'blogname' );
+                        $from_email = get_option( 'admin_email' );
+                        $to         = $user_object->user_email;
+                        $subject    = esc_html__( 'Account approved', 'b3-onboarding' );
+                        $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login.', 'b3-onboarding' ), $site_name );
+                        $headers    = array(
+                            'From: ' . $site_name . ' <' . $from_email . '>',
+                            'Content-Type: text/plain; charset=UTF-8',
+                        );
+                        
+                        wp_mail( $to, $subject, $message, $headers );
+    
+                        do_action( 'b3_new_user_activated', $user_id );
+                        do_action( 'b3_new_user_activated_by_admin', $user_id );
+    
+                        $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
+    
+                    } elseif ( false != $reject && isset( $user_object->ID ) ) {
+
+                        // do reject user
+                        wp_delete_user( $user_id );
+    
+                        // send mail
+                        $site_name  = get_option( 'blogname' );
+                        $from_email = get_option( 'admin_email' );
+                        $to         = $user_object->user_email;
+                        $subject    = sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), $site_name );
+                        $message    = sprintf( esc_html__( "We're sorry to have to inform you, but your request for access to %s was rejected.", "b3-onboarding" ), $site_name );
+                        $headers    = array(
+                            'From: ' . $site_name . ' <' . $from_email . '>',
+                            'Content-Type: text/plain; charset=UTF-8',
+                        );
+                        wp_mail( $to, $subject, $message, $headers );
+    
+                        do_action( 'b3_new_user_rejected', $user_id );
+    
+                        $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                    }
+                }
+                
+                wp_redirect( $redirect_url );
+                exit;
+            }
+        }
+    }
+    add_action( 'init', 'b3_approve_deny_users' );

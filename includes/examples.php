@@ -1,9 +1,9 @@
 <?php
     
     function b3_do_before_request_access() {
-        echo '<p>Before request access<p>';
+        echo '<p>You have to request access before you can use this platform.<p>';
     }
-    // add_action( 'b3_do_before_request_access', 'b3_do_before_request_access' );
+    add_action( 'b3_do_before_request_access', 'b3_do_before_request_access' );
     
     function b3_do_after_request_access() {
         echo '<p>After request access<p>';
@@ -46,7 +46,6 @@
             'key1' => 'value1',
             'key2' => 'value2',
             'key3' => 'value3',
-            'key4' => 'value4',
         ];
         
     }
@@ -81,3 +80,92 @@
         
     }
     // add_filter( 'b3_add_filter_extra_fields_values', 'b3_add_filter_extra_fields_values' );
+    
+    function b3_filter_closed_message() {
+        return "A custom 'registration closed' message";
+    }
+    // add_filter( 'b3_filter_closed_message', 'b3_filter_closed_message' );
+    
+    function b3_filter_closed_messagex() {
+        return "A custom 'registration closed' message";
+    }
+    // add_filter( 'b3_filter_closed_message', 'b3_filter_closed_message' );
+    
+    
+    /**
+     * Override new user notification for admin
+     *
+     * @param $wp_new_user_notification_email_admin
+     * @param $user
+     * @param $blogname
+     *
+     * @return mixed
+     */
+    function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
+    
+        if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+            $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
+            $wp_new_user_notification_email_admin[ 'subject' ] = __( 'Test subject', 'b3-onboarding' );
+            $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access.', 'b3-onboarding' );
+        } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
+        }
+        
+        return $wp_new_user_notification_email_admin;
+        
+    }
+    add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 10, 3 );
+    
+    
+    /**
+     * Override new user notification email for user
+     *
+     * @param $wp_new_user_notification_email
+     * @param $user
+     * @param $blogname
+     *
+     * @return mixed
+     */
+    function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
+    
+        global $wpdb;
+        
+        if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+    
+            $wp_new_user_notification_email[ 'subject' ] = sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), $blogname );
+            $wp_new_user_notification_email[ 'message' ] = sprintf( esc_html__( "You have successfully requested access to %s. We'll inform you by email.", "b3-onboarding" ), $blogname );
+    
+        } elseif ( 'email_activation' == get_option( 'b3_registration_type' ) ) {
+            // Generate an activation key
+            $key = wp_generate_password( 20, false );
+    
+            // Set the activation key for the user
+            $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user->user_login ) );
+    
+            $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user->user_login ) ), home_url( 'login' ) );
+    
+            $wp_new_user_notification_email[ 'subject' ] = esc_html__( 'Activate your account', 'b3-onboarding' );
+            $wp_new_user_notification_email[ 'message' ] = 'Add a link here: ' . $activation_url;
+        
+        } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
+    
+            $wp_new_user_notification_email[ 'subject' ] = esc_html__( 'Activate your account', 'b3-onboarding' );
+            $wp_new_user_notification_email[ 'message' ] = sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can now log in.', 'b3-onboarding' ), $user->user_login, $blogname );
+
+        }
+        $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
+    
+        return $wp_new_user_notification_email;
+    
+    }
+    add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
+
+    
+    function b3_new_user_activated( $user_id ) {
+        // Do stuff when user is activated
+    }
+    add_action( 'b3_new_user_activated', 'b3_new_user_activated' );
+    
+    function b3_new_user_activated_by_admin( $user_id ) {
+        // Do stuff when user is activated by admin
+    }
+    add_action( 'b3_new_user_activated_by_admin', 'b3_new_user_activated_by_admin' );

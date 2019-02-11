@@ -26,10 +26,16 @@
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
         <?php b3_hidden_fields_registration_form(); ?>
         
-        <?php if ( 'request_access' == $registration_type ) { ?>
+        <?php if ( 'closed' == $registration_type ) { ?>
+            
+            <p><?php echo apply_filters( 'b3_filter_closed_message', __( 'Sorry, registration is closed.', 'b3-onboarding' ) ); ?></p>
+        
+        <?php } elseif ( 'request_access' == $registration_type ) { ?>
 
             <?php do_action( 'b3_do_before_request_access' ); ?>
-
+            
+            <?php // @TODO: let user decide on user name ?>
+            
             <div class="b3__form-element b3__form-element--email">
                 <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-user-register' ); ?> <strong>*</strong></label>
                 <input type="email" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="info@xxx.com" required>
@@ -98,11 +104,11 @@
             <?php if ( $show_custom_passwords != true ) { ?>
                 <div class="b3__form-element b3__form-element--register">
                     <?php if ( $send_password_by_mail == true ) { ?>
-                        <?php esc_html_e( 'Note: Your password will be generated automatically and sent to your email address.', 'b3-user-register' ); ?>
+                        <?php esc_html_e( 'Your password will be generated automatically and sent to your email address.', 'b3-user-register' ); ?>
                     <?php } elseif ( 'email_activation' == $registration_type )  { ?>
-                        <?php esc_html_e( 'Note: You can set your own password after you have confirmed your email.', 'b3-user-register' ); ?>
+                        <?php esc_html_e( 'You can set your own password after you have confirmed your email.', 'b3-user-register' ); ?>
                     <?php } else { ?>
-                        <?php esc_html_e( 'Note: You can set your own password after registering.', 'b3-user-register' ); ?>
+                        <?php esc_html_e( 'You can set your own password after registering.', 'b3-user-register' ); ?>
                     <?php } ?>
                 </div>
             <?php } ?>

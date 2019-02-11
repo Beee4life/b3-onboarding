@@ -3,7 +3,7 @@
     Plugin Name: B3 - User onboarding
     Version: 0.7-beta
     Tags: user, management, registration, login, forgot password, reset password, account
-    Plugin URI: http://www.berrplasman.com
+    Plugin URI: http://www.berryplasman.com
     Description: This plugin handles the registration/login process
     Author: Beee
     Author URI: http://www.berryplasman.com
@@ -54,7 +54,7 @@
     
                 // actions
                 register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
-                register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
+                // register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
             
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
@@ -69,6 +69,7 @@
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_password_reset' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_password_reset' ) );
+                add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
@@ -89,6 +90,8 @@
                 add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
+                add_shortcode( 'user-management',              array( $this, 'b3_user_management_shortcode' ) );
+                add_shortcode( 'testing123',                   array( $this, 'b3_123' ) );
                 // add_shortcode( 'account-page',                  array( $this, 'b3_render_account_page' ) );
             
                 include( 'includes/constants.php' );
@@ -100,8 +103,12 @@
                 include( 'includes/form-handling.php' );
                 include( 'includes/functions.php' );
                 include( 'includes/tabs.php' );
+                
+                // add_action( 'init', array( $this, 'test_this' ) );
             }
-        
+            
+            public function test_this() {
+            }
             /*
              * Do stuff upon plugin activation
              */
@@ -130,12 +137,8 @@
             public function b3_set_default_settings() {
                 
                 if ( ! is_multisite() ) {
-                    $public_registration = get_option( 'users_can_register' );
-                    if ( true == $public_registration ) {
-                        update_option( 'b3_registration_type', 'open' );
-                    } else {
-                        update_option( 'b3_registration_type', 'closed' );
-                    }
+                    update_option( 'users_can_register', '0' );
+                    update_option( 'b3_registration_type', 'open' );
                 } else {
                     $public_registration = get_site_option( 'registration' );
                     if ( 'none' != $public_registration ) {
@@ -205,6 +208,8 @@
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
                 add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', '', '3' );
+                include( 'includes/user-approval-page.php' ); // content for the settings page
+                add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );
             }
     
     
@@ -331,7 +336,7 @@
              * @return  string
              */
             public function b3_email_content_type() {
-                $html_emails = get_option( 'b3_notification_sender_name' );
+                $html_emails = get_option( 'b3_notification_content_type' );
                 if ( $html_emails ) {
                     return 'text/html';
                 }
@@ -348,7 +353,6 @@
             public function b3_email_charset() {
                 $char_set = get_option( 'b3_email_charset' );
                 if ( $char_set ) {
-                    error_log('charset');
                     return $char_set;
                 }
         
@@ -419,44 +423,42 @@
                             $last_name  = ( isset( $_POST[ 'b3_last_name' ] ) ) ? sanitize_text_field( $_POST[ 'b3_last_name' ] ) : false;
                             $role       = apply_filters( 'b3_filter_default_role', get_option( 'default_role' ) );
                             $meta_data  = [];
-                        
+                            $registration_type = get_option( 'b3_registration_type' );
                             if ( ! is_multisite() ) {
-                                if ( ! get_option( 'users_can_register' ) ) {
+                                if ( 'closed' == $registration_type ) {
+    
+                                    // Registration closed, display error
+                                    $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
                                     
-                                    if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                                        $result = $this->b3_register_user( $user_email, $user_email, 'b3_approval', $meta_data );
-    
-                                        if ( is_wp_error( $result ) ) {
-                                            // Parse errors into a string and append as parameter to redirect
-                                            $errors       = join( ',', $result->get_error_codes() );
-                                            $redirect_url = add_query_arg( 'register-errors', $errors, $redirect_url );
-                                        } else {
-                                            // Success, redirect to login page.
-                                            $redirect_url = home_url( 'login' ); // @TODO: make dynamic
-                                            $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
-                                        }
-    
-                                    } else {
-                                        // Registration closed, display error
-                                        $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
-                                    }
-                                    
-                                } elseif ( get_option( 'b3_recaptcha' ) && ! $this->b3_verify_recaptcha() ) {
-                                    // Recaptcha check failed, display error
-                                    $redirect_url = add_query_arg( 'register-errors', 'captcha', $redirect_url );
-    
-                                } elseif ( 'email_activation' == get_option( 'b3_registration_type' ) ) {
-                                    $result = $this->b3_register_user( $user_email, $user_email, 'b3_activation', $meta_data );
+                                } elseif ( 'request_access' == $registration_type ) {
+                                    $result = $this->b3_register_user( $user_email, $user_email, 'b3_approval', $meta_data );
     
                                     if ( is_wp_error( $result ) ) {
                                         // Parse errors into a string and append as parameter to redirect
                                         $errors       = join( ',', $result->get_error_codes() );
-                                        $redirect_url = add_query_arg( 'register-errors', $errors, $redirect_url );
+                                        $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
+                                    } else {
+                                        // Success, redirect to login page.
+                                        $redirect_url = home_url( 'login' ); // @TODO: make dynamic
+                                        $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
+                                    }
+
+                                } elseif ( 'email_activation' == $registration_type ) {
+                                    $result = $this->b3_register_user( $user_email, $user_login, 'b3_activation', $meta_data );
+    
+                                    if ( is_wp_error( $result ) ) {
+                                        // Parse errors into a string and append as parameter to redirect
+                                        $errors       = join( ',', $result->get_error_codes() );
+                                        $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                     } else {
                                         // Success, redirect to login page.
                                         $redirect_url = home_url( 'login' ); // @TODO: make dynamic
                                         $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
                                     }
+    
+                                } elseif ( get_option( 'b3_recaptcha' ) && ! $this->b3_verify_recaptcha() ) {
+                                    // Recaptcha check failed, display error
+                                    $redirect_url = add_query_arg( 'registration-error', 'captcha', $redirect_url );
     
                                 } else {
     
@@ -473,7 +475,7 @@
                                     if ( is_wp_error( $result ) ) {
                                         // Parse errors into a string and append as parameter to redirect
                                         $errors       = join( ',', $result->get_error_codes() );
-                                        $redirect_url = add_query_arg( 'register-errors', $errors, $redirect_url );
+                                        $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                     } else {
                                         // Success, redirect to login page.
                                         $redirect_url = home_url( 'login' ); // @TODO: make dynamic
@@ -662,14 +664,66 @@
     
     
             /**
+             * Initiates user activation
+             */
+            function b3_do_user_activate() {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                    if ( ! empty( $_GET[ 'action' ] ) && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+    
+                        global $wpdb;
+                        
+                        $key = preg_replace( '/[^a-zA-Z0-9]/i', '', $_GET[ 'key' ] );
+    
+                        $errors = false;
+                        if ( empty( $key ) || ! is_string( $key ) ) {
+                            $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                        }
+    
+                        if ( empty( $_GET[ 'user_login' ] ) || ! is_string( $_GET[ 'user_login' ] ) ) {
+                            $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                        }
+    
+                        // Validate activation key
+                        $user   = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, $_GET[ 'user_login' ] ) );
+
+                        if ( empty( $user ) ) {
+                            $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                        }
+
+                        if ( is_wp_error( $errors ) ) {
+                            // Errors found
+                            $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), home_url( 'login' ) ); // @TODO: make dynamic
+                        } else {
+
+                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), home_url( 'login' ) ); // @TODO: make dynamic
+
+                            // remove user_activation_key
+                            $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
+
+                            // activate user, change user role
+                            $user_object = new WP_User( $user->ID );
+                            $user_object->set_role( get_option( 'default_role' ) );
+    
+                            do_action( 'b3_new_user_activated', $user->ID );
+    
+                        }
+    
+                        wp_redirect( $redirect_url );
+                        exit;
+                    }
+                }
+            }
+    
+    
+            /**
              * Initiates password reset.
              */
             function b3_do_password_lost() {
-                if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
+                if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $errors = retrieve_password();
                     if ( is_wp_error( $errors ) ) {
                         // Errors found
-                        $redirect_url = home_url( 'member-password-lost' );
+                        $redirect_url = home_url( 'forgot-password' );
                         $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
                     } else {
                         // Email sent
@@ -695,9 +749,9 @@
             
                     if ( ! $user || is_wp_error( $user ) ) {
                         if ( $user && $user->get_error_code() === 'expired_key' ) {
-                            wp_redirect( home_url( 'member-login?login=expiredkey' ) );
+                            wp_redirect( home_url( 'login?login=expiredkey' ) );
                         } else {
-                            wp_redirect( home_url( 'member-login?login=invalidkey' ) );
+                            wp_redirect( home_url( 'login?login=invalidkey' ) );
                         }
                         exit;
                     }
@@ -705,7 +759,7 @@
                     if ( isset( $_POST[ 'pass1' ] ) ) {
                         if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
                             // Passwords don't match
-                            $redirect_url = home_url( 'member-password-reset' );
+                            $redirect_url = home_url( 'password-reset' );
                     
                             $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                             $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
@@ -817,13 +871,13 @@
                 
                     // Registration errors
                     case 'username_exists':
-                        return esc_html__( 'This username address is already in use.', 'b3-onboarding' );
+                        return esc_html__( 'This username is already in use.', 'b3-onboarding' );
                 
                     case 'email':
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
                 
                     case 'email_exists':
-                        return esc_html__( 'An account exists with this email address.', 'b3-onboarding' );
+                        return esc_html__( 'An account already exists with this email address.', 'b3-onboarding' );
                 
                     case 'closed':
                         return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
@@ -832,7 +886,7 @@
                         return esc_html__( 'The Google reCAPTCHA check failed. Are you a robot?', 'b3-onboarding' );
                 
                     case 'access_requested':
-                        return esc_html__( 'You have sucessfully requested access.', 'b3-onboarding' );
+                        return esc_html__( 'You have sucessfully requested access. An administrator will check your request.', 'b3-onboarding' );
                 
                     case 'confirm_email':
                         return esc_html__( 'You have sucessfully registered but need to confirm your email first.', 'b3-onboarding' );
@@ -848,6 +902,13 @@
                     case 'wait_confirmation':
                         return esc_html__( 'You have to confirm your email first.', 'b3-onboarding' );
                 
+                    // Activation
+                    case 'activate_success':
+                        return esc_html__( 'You have succesfully confirmed your email.', 'b3-onboarding' );
+                    
+                    case 'invalid_key':
+                        return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
+                    
                     // Reset password
                     case 'expiredkey':
                     case 'invalidkey':
@@ -943,12 +1004,11 @@
                     $user_data[ 'last_name' ] = $last_name;
                 }
             
-                // error_log( 'HIT' );
                 // return 160878; // for testing
             
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    // wp_new_user_notification( $user_id, null, 'user' ); // @TODO: make notify 'changable'
+                    wp_new_user_notification( $user_id, null, 'user' ); // @TODO: make notify 'changable' for admin notice
                 }
                 // @TODO: add if for if user needs to activate
                 // @TODO: add if for if admin needs to activate
@@ -1056,10 +1116,12 @@
                 $errors = array();
                 if ( isset( $_REQUEST[ 'login' ] ) ) {
                     $error_codes = explode( ',', $_REQUEST[ 'login' ] );
-                
+    
                     foreach ( $error_codes as $code ) {
                         $errors [] = $this->b3_get_error_message( $code );
                     }
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) ) {
+                    $attributes[ 'user_activate' ] = isset( $_REQUEST[ 'activate' ] ) && $_REQUEST[ 'activate' ] == 'success';
                 }
                 $attributes[ 'errors' ] = $errors;
             
@@ -1152,8 +1214,60 @@
                     }
                 }
             }
+    
+            public function b3_user_management_shortcode( $user_variables, $content = null ) {
+    
+                // get users which are awaiting approval
+                $user_args = array(
+                    'role' => 'b3_approval'
+                );
+                $users = get_users( $user_args );
+
+                if ( ! empty( $_GET[ 'user' ] ) ) {
+                    if ( 'approved' == $_GET[ 'user' ] ) { ?>
+                        <p class="b3__message"><?php esc_html_e( 'User is successfully approved', 'b3-onboarding' ); ?></p>
+                    <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
+                        <p class="b3__message"><?php esc_html_e( 'User is successfully rejected and user is deleted', 'b3-onboarding' ); ?></p>
+                    <?php } ?>
+                <?php } ?>
+                <?php if ( $users ) { ?>
+                    <table class="b3__user-table" border="0" cellspacing="0" cellpadding="0" style="">
+                        <thead>
+                        <tr>
+                            <th>
+                                User ID
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach( $users as $user ) { ?>
+                            <tr>
+                                <td><?php echo $user->ID; ?></td>
+                                <td><?php echo $user->user_email; ?></td>
+                                <td>
+                                    <form name="b3_user_management" action="/user-management/" method="post">
+                                        <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>" />
+                                        <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
+                                        <input name="b3_approve_user" class="button" type="submit" value="<?php esc_html_e( 'Approve user', 'b3-onboarding' ); ?>" />
+                                        <input name="b3_reject_user" class="button" type="submit" value="<?php esc_html_e( 'Reject user', 'b3-onboarding' ); ?>" />
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                <?php } ?>
+
+                <?php
+            }
         
-        
+
             /**
              * Renders the contents of the given template to a string and returns it.
              *
