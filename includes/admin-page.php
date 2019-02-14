@@ -10,9 +10,11 @@
         }
         ?>
 
-        <div class="b3 b3__admin">
+        <div class="wrap b3 b3__admin">
 
-            <h1 id="b3__admin-title"><?php _e( 'Onboarding settings', 'b3-onboarding' ); ?></h1>
+            <h1 id="b3__admin-title">
+                <?php _e( 'Onboarding settings', 'b3-onboarding' ); ?>
+            </h1>
 
             <div class="b3__tabs">
                 <?php

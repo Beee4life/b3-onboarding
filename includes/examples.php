@@ -105,9 +105,10 @@
     
         if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
             $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
-            $wp_new_user_notification_email_admin[ 'subject' ] = __( 'Test subject', 'b3-onboarding' );
-            $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access.', 'b3-onboarding' );
+            $wp_new_user_notification_email_admin[ 'subject' ] = __( 'New user access request', 'b3-onboarding' );
+            $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access. You can approve/deny him/her in the User approval panel.', 'b3-onboarding' );
         } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
+            // @TODO: add if user wants to receive admin notification on open registration
         }
         
         return $wp_new_user_notification_email_admin;
@@ -148,7 +149,7 @@
         
         } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
     
-            $wp_new_user_notification_email[ 'subject' ] = esc_html__( 'Activate your account', 'b3-onboarding' );
+            $wp_new_user_notification_email[ 'subject' ] = sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), $blogname );
             $wp_new_user_notification_email[ 'message' ] = sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can now log in.', 'b3-onboarding' ), $user->user_login, $blogname );
 
         }

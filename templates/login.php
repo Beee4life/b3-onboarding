@@ -21,7 +21,7 @@
     <?php } ?>
 
     <!-- Show success message if user successfully activated -->
-    <?php if ( $attributes[ 'user_activate' ] ) { ?>
+    <?php if ( isset( $attributes[ 'user_activate' ] ) ) { ?>
         <p class="b3__message">
             <?php esc_html_e( 'You have successfully activated your account. You can now log in.', 'b3-user-register' ); ?>
         </p>
@@ -65,7 +65,7 @@
                             if ( true == $has_reset_page ) {
                                 $password_reset_url = esc_url( wp_lostpassword_url() );
                             } else {
-                                $password_reset_url = esc_url( home_url( '/forgot-password/' ) ); // make dynamic/filterable
+                                $password_reset_url = esc_url( home_url( 'lostpassword' ) ); // make dynamic/filterable
                             }
                             echo sprintf(
                                 __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),
@@ -85,6 +85,7 @@
         <p class="login-info">
             <?php esc_html_e( 'Check your email for a link to reset your password.', 'b3-user-register' ); ?>
         </p>
+        <?php $show_form = false; ?>
     <?php } ?>
 
     <!-- Show logged out message if user just logged out -->

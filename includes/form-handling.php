@@ -3,29 +3,30 @@
     /**
      * Handle forgot pass form
      */
-    function b3_forgot_pass_form_handling() {
+    function xb3_forgot_pass_form_handling() {
         $show_custom_passwords = get_option( 'b3_custom_passwords' );
-        
+        error_log('hit custom function handling');
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_forgot_pass' ] ) ) {
                 $redirect_url = home_url( 'forgot-password' );
                 if ( ! wp_verify_nonce( $_POST[ 'b3_forgot_pass' ], 'b3-forgot-pass' ) ) {
                     // @TODO: add error
                 } else {
-                    
-                    $user_email = ( isset( $_POST[ 'b3_user_email' ] ) ) ? $_POST[ 'b3_user_email' ] : false;
-                    if ( false != $user_email ) {
-                        $user_data = get_user_by( 'email', $user_email );
+                    error_log('HIT');
+                    $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
+                    if ( false != $user_login ) {
+                        $user_data = get_user_by( 'email', $user_login );
                         if ( false != $user_data ) {
                             if ( in_array( 'b3_approval', $user_data->roles ) ) {
-                                $redirect_url = add_query_arg( 'success', 'wait_approval', $redirect_url );
+                                $redirect_url = add_query_arg( 'error', 'wait_approval', $redirect_url );
                             } elseif ( in_array( 'b3_confirmation', $user_data->roles ) ) {
-                                $redirect_url = add_query_arg( 'success', 'wait_confirmation', $redirect_url );
+                                $redirect_url = add_query_arg( 'error', 'wait_confirmation', $redirect_url );
                             } else {
     
-                                $errors = get_password_reset_key( $user_data );
+                                $errors = retrieve_password();
                                 if ( is_wp_error( $errors ) ) {
                                     // Errors found
+                                    error_log('error');
                                     $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
                                 } else {
                                     // Email sent
@@ -44,7 +45,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_forgot_pass_form_handling' );
+    // add_action( 'init', 'xb3_forgot_pass_form_handling' );
     
     
     /**
@@ -53,11 +54,11 @@
     function b3_reset_pass_handling() {
         
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            
+            error_log( 'hit reset pass handling' );
             if ( isset( $_REQUEST[ 'rp_key' ] ) && isset( $_REQUEST[ 'rp_login' ] ) ) {
                 
-                $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
-                $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
+                $rp_key   = ( isset( $_REQUEST[ 'key' ] ) ) ? $_REQUEST[ 'key' ] : false;
+                $rp_login = ( isset( $_REQUEST[ 'user_login' ] ) ) ? $_REQUEST[ 'user_login' ] : false;
                 
                 $user = check_password_reset_key( $rp_key, $rp_login );
                 
@@ -297,25 +298,29 @@
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
     
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
-
+    
+                        require_once(ABSPATH.'wp-admin/includes/user.php' );
                         // do reject user
-                        wp_delete_user( $user_id );
+                        if ( true == wp_delete_user( $user_id ) ) {
+                            // send mail
+                            $site_name  = get_option( 'blogname' );
+                            $from_email = get_option( 'admin_email' );
+                            $to         = $user_object->user_email;
+                            $subject    = sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), $site_name );
+                            $message    = sprintf( esc_html__( "We're sorry to have to inform you, but your request for access to %s was rejected.", "b3-onboarding" ), $site_name );
+                            $headers    = array(
+                                'From: ' . $site_name . ' <' . $from_email . '>',
+                                'Content-Type: text/plain; charset=UTF-8',
+                            );
+                            wp_mail( $to, $subject, $message, $headers );
     
-                        // send mail
-                        $site_name  = get_option( 'blogname' );
-                        $from_email = get_option( 'admin_email' );
-                        $to         = $user_object->user_email;
-                        $subject    = sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), $site_name );
-                        $message    = sprintf( esc_html__( "We're sorry to have to inform you, but your request for access to %s was rejected.", "b3-onboarding" ), $site_name );
-                        $headers    = array(
-                            'From: ' . $site_name . ' <' . $from_email . '>',
-                            'Content-Type: text/plain; charset=UTF-8',
-                        );
-                        wp_mail( $to, $subject, $message, $headers );
+                            do_action( 'b3_new_user_rejected', $user_id );
     
-                        do_action( 'b3_new_user_rejected', $user_id );
+                            $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                        } else {
+                            // @TODO: add error
+                        }
     
-                        $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                     }
                 }
                 

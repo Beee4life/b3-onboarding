@@ -10,11 +10,13 @@
         }
         ?>
 
-        <div class="b3 b3__admin">
+        <div class="wrap b3 b3__admin">
 
-            <h1 id="b3__admin-title"><?php esc_html_e( 'User approval', 'b3-onboarding' ); ?></h1>
+            <h1 id="b3__admin-title">
+                <?php esc_html_e( 'User approval', 'b3-onboarding' ); ?>
+            </h1>
             
-            <?php include 'user-approval-include.php'; ?>
+            <?php echo do_shortcode( '[user-management]' ); ?>
 
         </div>
     <?php }

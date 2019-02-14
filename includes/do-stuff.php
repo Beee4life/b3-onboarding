@@ -6,7 +6,7 @@
         
         // Information needed for creating the plugin's pages
         $page_definitions = array(
-            'forgot-password' => array(
+            'lostpassword' => array(
                 'title'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
                 'content' => '[forgotpass-form]',
                 'meta'    => 'b3_forgotpass_page_id'
