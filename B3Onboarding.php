@@ -69,7 +69,6 @@
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_password_reset' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
-                // add_action( 'login_form_lostpassword',              array( $this, 'b3_forgot_pass_form_handling' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
                 add_action( 'wp_print_footer_scripts',              array( $this, 'b3_add_captcha_js_to_footer' ) );
@@ -256,19 +255,19 @@
              */
             public function b3_add_post_state( $post_states, $post ) {
         
-                if ( defined( 'B3_ACCOUNT' ) && $post->ID == B3_ACCOUNT ) {
-                    $post_states[] = 'B3: Account';
-                }
-                if ( defined( 'B3_REGISTER' ) && $post->ID == B3_REGISTER ) {
+                // if ( $post->ID == b3_get_account_id() ) {
+                //     $post_states[] = 'B3: Account';
+                // }
+                if ( $post->ID == b3_get_register_id() ) {
                     $post_states[] = 'B3: Register';
                 }
-                if ( defined( 'B3_LOGIN' ) && $post->ID == B3_LOGIN ) {
+                if ( $post->ID == b3_get_login_id() ) {
                     $post_states[] = 'B3: Login';
                 }
-                if ( defined( 'B3_FORGOTPASS' ) && $post->ID == B3_FORGOTPASS ) {
+                if ( $post->ID == b3_get_forgotpass_id() ) {
                     $post_states[] = 'B3: Forgot password';
                 }
-                if ( defined( 'B3_RESETPASS' ) && $post->ID == B3_RESETPASS ) {
+                if ( $post->ID == b3_get_resetpass_id() ) {
                     $post_states[] = 'B3: Reset password';
                 }
         
@@ -588,14 +587,18 @@
              */
             public function b3_redirect_to_custom_lostpassword() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    error_log('hit redirect to custom lost password');
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                         exit;
                     }
         
-                    wp_redirect( home_url( 'forgot-password' ) ); // @TODO: make filterable
-                    exit;
+                    if ( false != b3_get_forgotpass_id() ) {
+                        wp_redirect( get_permalink( b3_get_forgotpass_id() ) );
+                        exit;
+                    } else {
+                        wp_redirect( home_url( 'lostpassword' ) ); // @TODO: make filterable
+                        exit;
+                    }
                 }
             }
     
@@ -694,7 +697,12 @@
                             $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), home_url( 'login' ) ); // @TODO: make dynamic
                         } else {
 
-                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), home_url( 'login' ) ); // @TODO: make dynamic
+                            if ( false != b3_get_forgotpass_id() ) {
+                                $lostpassword_url = get_permalink( b3_get_forgotpass_id() );
+                            } else {
+                                $lostpassword_url = home_url( 'lostpassword' );
+                            }
+                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url ); // @TODO: make dynamic
 
                             // remove user_activation_key
                             $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
@@ -740,13 +748,11 @@
              * Resets the user's password if the password reset form was submitted (with custom passwords)
              */
             public function b3_do_password_reset() {
-                error_log('do pw reset');
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $rp_key   = $_REQUEST[ 'rp_key' ];
                     $rp_login = $_REQUEST[ 'rp_login' ];
             
                     $user = check_password_reset_key( $rp_key, $rp_login );
-                    // echo '<pre>'; var_dump($user); echo '</pre>'; exit;
                     if ( ! $user || is_wp_error( $user ) ) {
                         if ( $user && $user->get_error_code() === 'expired_key' ) {
                             wp_redirect( home_url( 'login?login=expiredkey' ) );
@@ -793,37 +799,7 @@
                 }
             }
             
-            /**
-             * Redirects to the custom password reset page, or the login page
-             * if there are errors.
-             */
-            public function b3_redirect_to_custom_password_reset() {
-                error_log('hit redirect to custom pw reset');
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    // Verify key / login combo
-                    $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
-                    if ( ! $user || is_wp_error( $user ) ) {
-                        error_log('error');
-                        if ( $user && $user->get_error_code() === 'expired_key' ) {
-                            error_log('error expired');
-                            wp_redirect( home_url( 'login?login=expiredkey' ) );
-                        } else {
-                            error_log('error invalid');
-                            wp_redirect( home_url( 'login?login=invalidkey' ) );
-                        }
-                        exit;
-                    }
-                    
-                    $redirect_url = home_url( 'reset-password' );
-                    $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST[ 'login' ] ), $redirect_url );
-                    $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST[ 'key' ] ), $redirect_url );
-        
-                    wp_redirect( $redirect_url );
-                    exit;
-                }
-            }
-    
-            
+
             /**
              * Returns the message body for the password reset mail.
              * Called through the retrieve_password_message filter.
@@ -837,11 +813,11 @@
              */
             public function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
                 // Create new message
-                $msg  = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
+                $msg = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
                 $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
                 $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
-                $msg .= __( 'To reset your password, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
-                $msg .= site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n\r\n";
+                $msg .= __( 'To reset your password to something you\'d like, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
+                $msg .= network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n";
                 $msg .= __( 'Thanks!', 'b3-onboarding' ) . "\r\n";
         
                 return $msg;
@@ -1169,12 +1145,13 @@
                 // Retrieve possible errors from request parameters
                 $attributes[ 'errors' ] = array();
                 if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                    error_log('isset forgot pw error');
                     $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
                 
                     foreach ( $error_codes as $error_code ) {
                         $attributes[ 'errors' ][] = $this->b3_get_error_message( $error_code );
                     }
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) ) {
+                    $attributes[ 'user_activate' ] = isset( $_REQUEST[ 'activate' ] ) && $_REQUEST[ 'activate' ] == 'success';
                 }
                 
                 if ( is_user_logged_in() ) {
@@ -1194,7 +1171,6 @@
              * @return string  The shortcode output
              */
             public function b3_render_reset_password_form( $user_variables, $content = null ) {
-                error_log( 'hit render reset pw function' );
                 // Parse shortcode attributes
                 $default_attributes = array(
                     'show_title' => false,
@@ -1205,16 +1181,13 @@
                 if ( is_user_logged_in() ) {
                     return esc_html__( 'You are already signed in.', 'b3-onboarding' );
                 } else {
-                    error_log('else line 1246');
                     if ( isset( $_REQUEST[ 'login' ] ) && isset( $_REQUEST[ 'key' ] ) ) {
-                        error_log('both isset');
                         $attributes[ 'login' ] = $_REQUEST[ 'login' ];
                         $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
                     
                         // Error messages
                         $errors = array();
                         if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                            error_log( 'hit error reset pw function' );
                             $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
                         
                             foreach ( $error_codes as $code ) {

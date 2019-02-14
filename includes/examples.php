@@ -150,7 +150,7 @@
         } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
     
             $wp_new_user_notification_email[ 'subject' ] = sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), $blogname );
-            $wp_new_user_notification_email[ 'message' ] = sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can now log in.', 'b3-onboarding' ), $user->user_login, $blogname );
+            $wp_new_user_notification_email[ 'message' ] = sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can now set your password here: %s.', 'b3-onboarding' ), $user->user_login, $blogname, get_permalink( b3_get_forgotpass_id() ) );
 
         }
         $wp_new_user_notification_email[ 'to' ]      = $user->user_email;

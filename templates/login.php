@@ -1,5 +1,5 @@
 <?php
-    $has_reset_page        = false;
+    $has_reset_page        = true;
     $show_form             = true;
     $send_password_by_mail = get_option( 'b3_send_pass_mail' );
     $request_access        = get_option( 'b3_registration_type' );
@@ -65,7 +65,11 @@
                             if ( true == $has_reset_page ) {
                                 $password_reset_url = esc_url( wp_lostpassword_url() );
                             } else {
-                                $password_reset_url = esc_url( home_url( 'lostpassword' ) ); // make dynamic/filterable
+                                if ( false != b3_get_forgotpass_id() ) {
+                                    $password_reset_url = esc_url( get_permalink( b3_get_forgotpass_id() ) ); // make dynamic/filterable
+                                } else {
+                                    $password_reset_url = esc_url( wp_lostpassword_url() );
+                                }
                             }
                             echo sprintf(
                                 __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-user-register' ),

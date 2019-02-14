@@ -1,60 +1,12 @@
 <?php
-    
-    /**
-     * Handle forgot pass form
-     */
-    function xb3_forgot_pass_form_handling() {
-        $show_custom_passwords = get_option( 'b3_custom_passwords' );
-        error_log('hit custom function handling');
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            if ( isset( $_POST[ 'b3_forgot_pass' ] ) ) {
-                $redirect_url = home_url( 'forgot-password' );
-                if ( ! wp_verify_nonce( $_POST[ 'b3_forgot_pass' ], 'b3-forgot-pass' ) ) {
-                    // @TODO: add error
-                } else {
-                    error_log('HIT');
-                    $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
-                    if ( false != $user_login ) {
-                        $user_data = get_user_by( 'email', $user_login );
-                        if ( false != $user_data ) {
-                            if ( in_array( 'b3_approval', $user_data->roles ) ) {
-                                $redirect_url = add_query_arg( 'error', 'wait_approval', $redirect_url );
-                            } elseif ( in_array( 'b3_confirmation', $user_data->roles ) ) {
-                                $redirect_url = add_query_arg( 'error', 'wait_confirmation', $redirect_url );
-                            } else {
-    
-                                $errors = retrieve_password();
-                                if ( is_wp_error( $errors ) ) {
-                                    // Errors found
-                                    error_log('error');
-                                    $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
-                                } else {
-                                    // Email sent
-                                    $redirect_url = home_url( 'login' ); // @TODO: make dynamic/filterable
-                                    $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
-                                }
 
-                            }
-                        }
-                    }
-                    
-                    wp_redirect( $redirect_url );
-                    exit;
-                    
-                }
-            }
-        }
-    }
-    // add_action( 'init', 'xb3_forgot_pass_form_handling' );
-    
-    
     /**
      * Handle reset pass form
      */
     function b3_reset_pass_handling() {
         
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            error_log( 'hit reset pass handling' );
+            error_log( 'hit custom reset pass handling' );
             if ( isset( $_REQUEST[ 'rp_key' ] ) && isset( $_REQUEST[ 'rp_login' ] ) ) {
                 
                 $rp_key   = ( isset( $_REQUEST[ 'key' ] ) ) ? $_REQUEST[ 'key' ] : false;

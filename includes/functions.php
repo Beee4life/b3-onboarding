@@ -257,6 +257,9 @@
         return $registration_options;
     }
     
+    /**
+     * Add field for subdomain when WPMU is active
+     */
     function b3_add_subdomain_field() {
         
         if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
@@ -272,5 +275,74 @@
     
             echo $output;
         }
+        
+    }
+    
+    /**
+     * Return register ID page (for current language if WPML is active)
+     *
+     * @return bool|string
+     */
+    function b3_get_register_id() {
+        $id = get_option( 'b3_register_page_id', false );
+        if ( false != $id && get_post( $id ) ) {
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
+        }
+        
+        return $id;
+        
+    }
+    
+    
+    /**
+     * Return login page id (for current language if WPML is active)
+     *
+     * @return bool|string
+     */
+    function b3_get_login_id() {
+        $id = get_option( 'b3_login_page_id', false );
+        if ( false != $id && get_post( $id ) ) {
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
+        }
+        
+        return $id;
+        
+    }
+    
+    /**
+     * Return forgot pass page id (for current language if WPML is active)
+     *
+     * @return bool|string
+     */
+    function b3_get_forgotpass_id() {
+        $id = get_option( 'b3_forgotpass_page_id', false );
+        if ( false != $id && get_post( $id ) ) {
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
+        }
+        
+        return $id;
+        
+    }
+    
+    /**
+     * Return reset pass page id (for current language if WPML is active)
+     *
+     * @return bool|string
+     */
+    function b3_get_resetpass_id() {
+        $id = get_option( 'b3_resetpass_page_id', false );
+        if ( false != $id && get_post( $id ) ) {
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
+        }
+        
+        return $id;
         
     }

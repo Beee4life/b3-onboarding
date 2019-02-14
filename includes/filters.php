@@ -10,11 +10,11 @@
      */
     function b3_lost_password_page_url( $lostpassword_url, $redirect ) {
         
-        $lost_password_page_id = home_url( 'lostpassword' );
+        $lost_password_page_id = b3_get_forgotpass_id();
         if ( false != $lost_password_page_id ) {
-            $lost_pass_url = get_permalink( $lost_password_page_id );
+            $lost_pass_url = esc_url( get_permalink( $lost_password_page_id ) );
             if ( class_exists( 'SitePress' ) ) {
-                $lost_pass_url = apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true );
+                $lost_pass_url = esc_url( get_permalink( apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true ) ) );
             }
             if ( false != $redirect ) {
                 return $lost_pass_url . '?redirect_to=' . $redirect;
@@ -41,17 +41,15 @@
      * @return string   The mail message to send.
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
-        $key = get_password_reset_key( $user_data );
-    
         // Create new message
         $msg = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
         $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
         $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
         $msg .= __( 'To reset your password to something you\'d like, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
-        $msg .= site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n";
+        $msg .= network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n";
         $msg .= __( 'Thanks!', 'b3-onboarding' ) . "\r\n";
         
         return $msg;
     }
-    add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
+    // add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
 
