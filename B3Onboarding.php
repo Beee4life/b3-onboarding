@@ -9,8 +9,6 @@
     Author URI: http://www.berryplasman.com
     Text-domain: b3-onboarding
 
-    Source: https://code.tutsplus.com/tutorials/build-a-custom-wordpress-user-flow-part-1-replace-the-login-page--cms-23627
-
     http://www.berryplasman.com
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
