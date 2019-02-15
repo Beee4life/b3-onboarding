@@ -368,7 +368,7 @@
             <li>Users can register: <?php echo get_option( 'users_can_register' ); ?></li>
             <li>Page on front: <?php echo get_option( 'page_on_front' ); ?></li>
             <li>Charset: <?php echo get_bloginfo( 'charset' ); ?></li>
-            <li>Text direction: <?php echo get_bloginfo( 'text_direction' ); ?></li>
+            <li>Text direction: <?php echo is_rtl() ? 'RTL' : 'LTR'; ?></li>
             <li>Language: <?php echo get_bloginfo( 'language' ); ?></li>
         </ul>
         
