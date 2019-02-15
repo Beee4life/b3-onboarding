@@ -89,15 +89,6 @@
 
 <!--            <div class="b3__settings-field">-->
 <!--                <div class="b3__settings-label">-->
-<!--                    <label for="b3_activate_custom_passwords">--><?php //esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?><!--</label>-->
-<!--                </div>-->
-<!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
-<!--                    <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" --><?php //if ( $custom_passwords ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate custom passwords', 'b3-onboarding' ); ?>
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="b3__settings-field">-->
-<!--                <div class="b3__settings-label">-->
 <!--                    <label for="b3_activate_dashboard_widget">--><?php //esc_html_e( 'Dashboard widget', 'b3-onboarding' ); ?><!--</label>-->
 <!--                </div>-->
 <!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
@@ -219,7 +210,7 @@
     
     function b3_render_emails_tab() {
     
-        $send_password_mail = get_option( 'b3_custom_passwords' );
+        $send_password_mail = get_option( 'b3_password_by_mail' );
         
         $email_boxes = b3_get_email_boxes( $send_password_mail );
         ob_start();

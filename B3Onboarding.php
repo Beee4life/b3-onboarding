@@ -81,7 +81,6 @@
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
                 add_filter( 'wp_mail_charset',                      array( $this, 'b3_email_charset' ) );
-                add_filter( 'retrieve_password_message',            array( $this, 'b3_replace_retrieve_password_message' ), 10, 4 );
     
     
                 add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
@@ -105,6 +104,8 @@
             }
             
             public function test_this() {
+                $user = new WP_User( 38 );
+                echo '<pre>'; var_dump(date( get_option( 'date_format' ), strtotime( $user->user_registered ))); echo '</pre>'; exit;
             }
             /*
              * Do stuff upon plugin activation
@@ -150,7 +151,6 @@
                 update_option( 'b3_notification_sender_name',get_bloginfo( 'name' ) );
                 // update_option( 'b3_add_br_html_email', '0' );
                 // update_option( 'b3_custom_emails', '0' );
-                // update_option( 'b3_custom_passwords', '0' );
                 // update_option( 'b3_dashboard_widget', '1' );
                 // update_option( 'b3_html_emails', '0' );
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
@@ -332,7 +332,7 @@
              *
              * @return  string
              */
-            public function b3_email_content_type() {
+            public function b3_email_content_type( $content_type ) {
                 $html_emails = get_option( 'b3_notification_content_type' );
                 if ( $html_emails ) {
                     return 'text/html';
@@ -347,7 +347,7 @@
              *
              * @return  string
              */
-            public function b3_email_charset() {
+            public function b3_email_charset( $charset ) {
                 $char_set = get_option( 'b3_email_charset' );
                 if ( $char_set ) {
                     return $char_set;
@@ -702,7 +702,7 @@
                             } else {
                                 $lostpassword_url = home_url( 'lostpassword' );
                             }
-                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url ); // @TODO: make dynamic
+                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
 
                             // remove user_activation_key
                             $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
@@ -990,7 +990,7 @@
                 if ( ! is_wp_error( $user_id ) ) {
     
                     $inform = 'user';
-                    if ( 'request_access' == $registration_type ) {
+                    if ( 'request_access' == $registration_type || get_option( 'b3_new_user_message', false ) ) {
                         $inform = 'both';
                     }
                     wp_new_user_notification( $user_id, null, $inform ); // @TODO: make notify 'changable' for admin notice

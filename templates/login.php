@@ -11,7 +11,7 @@
         </h2>
     <?php } ?>
 
-    <!-- Show errors if there are any -->
+    <?php /* Show errors if there are any */ ?>
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
             <p class="b3__message">
@@ -20,14 +20,14 @@
         <?php } ?>
     <?php } ?>
 
-    <!-- Show success message if user successfully activated -->
+    <?php /* Show success message if user successfully activated */ ?>
     <?php if ( isset( $attributes[ 'user_activate' ] ) ) { ?>
         <p class="b3__message">
             <?php esc_html_e( 'You have successfully activated your account. You can now log in.', 'b3-user-register' ); ?>
         </p>
     <?php } ?>
 
-    <!-- Show success message if user successfully registered -->
+    <?php /* Show success message if user successfully registered */ ?>
     <?php if ( $attributes[ 'registered' ] ) { ?>
         <p class="login-info">
             <?php
@@ -84,7 +84,7 @@
         </p>
     <?php } ?>
 
-    <!-- Show message if user reset password -->
+    <?php /* Show message if user reset password */ ?>
     <?php if ( $attributes[ 'lost_password_sent' ] ) { ?>
         <p class="login-info">
             <?php esc_html_e( 'Check your email for a link to reset your password.', 'b3-user-register' ); ?>
@@ -92,14 +92,14 @@
         <?php $show_form = false; ?>
     <?php } ?>
 
-    <!-- Show logged out message if user just logged out -->
+    <?php /* Show logged out message if user just logged out */ ?>
     <?php if ( $attributes[ 'logged_out' ] ) { ?>
         <p class="login-info">
             <?php esc_html_e( 'You have signed out.', 'b3-user-register' ); ?>
         </p>
     <?php } ?>
 
-    <!-- Show message if user just reset password -->
+    <?php /* Show message if user just reset password */ ?>
     <?php if ( $attributes[ 'password_updated' ] ) { ?>
         <p class="login-info">
             <?php esc_html_e( 'Your password has been changed. You can login now.', 'b3-user-register' ); ?>

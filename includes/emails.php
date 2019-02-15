@@ -15,23 +15,25 @@
     function b3_basic_email_settings_field( $box = false ) {
     
         ob_start();
-        if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] )) ) {
+        if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
+            if ( 'email_settings' == $box[ 'id' ] || ( 'email_settings' != $box[ 'id' ] && b3_custom_emails_active() ) ) {
             ?>
             <div class="metabox-handler">
                 <div class="postbox" id="">
                     <div class="handlediv" title="">
                         <i class="dashicons dashicons-plus"></i>
                     </div>
-                    <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'email_settings' == $box[ 'id' ] ) ? ' open' : false; ?>">
+                    <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xnew_user_admin' == $box[ 'id' ] ) ? ' open' : false; ?>">
                         <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
                     </div>
                     
-                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xemail_settings' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xemail_settings' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
+                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xnew_user_admin' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xnew_user_admin' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
                         ##FOLDOUTCONTENT##
                     </div>
                 </div>
             </div>
             <?php
+            }
         }
         $output = ob_get_clean();
         

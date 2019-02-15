@@ -120,7 +120,6 @@
         $meta_keys = array(
             'b3_account_id',
             'b3_custom_emails',
-            'b3_custom_passwords',
             'b3_dashboard_widget',
             'b3_forgotpass_page_id',
             'b3_html_emails',
@@ -131,7 +130,11 @@
             'b3_notification_sender_email',
             'b3_register_page_id',
             'b3_resetpass_page_id',
-            'b3_sidebar_widget'
+            'b3_sidebar_widget',
+            'b3_welcome_user_subject',
+            'b3_welcome_user_message',
+            'b3_new_user_subject',
+            'b3_new_user_message',
         );
         
         return $meta_keys;
@@ -144,12 +147,14 @@
                 'id'    => 'email_settings',
                 'title' => esc_html__( 'Email Settings', 'b3-onboarding' ),
             ),
-            // array(            //     'id'    => 'welcome_email_user',
-            //     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-            // ),
-            // array(            //     'id'    => 'new_user_admin',
-            //     'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
-            // ),
+            array(
+                'id'    => 'welcome_email_user',
+                'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+            ),
+            array(
+                'id'    => 'new_user_admin',
+                'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+            ),
         );
         if ( true == $send_password_mail ) {
             $default_boxes1[] = array(
@@ -345,4 +350,55 @@
         
         return $id;
         
+    }
+    
+    function b3_custom_emails_active() {
+        
+        if ( false != get_option( 'b3_custom_emails', false ) ) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    function b3_get_welcome_user_subject( $blogname ) {
+        $b3_welcome_user_subject = get_option( 'b3_welcome_user_subject', false );
+        if ( $b3_welcome_user_subject ) {
+            return $b3_welcome_user_subject;
+        } else {
+            return sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), $blogname );
+        }
+    }
+
+    function b3_get_welcome_user_message( $blogname, $user ) {
+        $b3_welcome_user_message = get_option( 'b3_welcome_user_message', false );
+        if ( $b3_welcome_user_message ) {
+            return $b3_welcome_user_message;
+        } else {
+            return sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can set your password here: %s.', 'b3-onboarding' ), $user->user_login, $blogname, get_permalink( b3_get_forgotpass_id() ) );
+        }
+    }
+
+    function b3_get_new_user_subject( $blogname ) {
+        $b3_new_user_subject = get_option( 'b3_welcome_user_subject', false );
+        if ( $b3_new_user_subject ) {
+            return $b3_new_user_subject;
+        } else {
+            return sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), $blogname );
+        }
+    }
+
+    function b3_get_new_user_message( $blogname, $user ) {
+        $b3_new_user_message = get_option( 'b3_welcome_user_message', false );
+        if ( $b3_new_user_message ) {
+            return $b3_new_user_message;
+        } else {
+    
+            $user_ip      = $ip = $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] );
+            $user_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), $blogname, date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $user->user_registered ) ) ) . "\r\n\r\n";
+            $user_message .= sprintf( __( 'Login %s', 'b3-onboarding' ), $user->user_login ) . "\r\n\r\n";
+            // $user_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), $user_ip ) . "\r\n\r\n";
+            
+            return $user_message;
+        }
     }

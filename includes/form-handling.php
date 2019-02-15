@@ -118,6 +118,7 @@
                         update_option( 'b3_custom_emails', '1', true );
                     } else {
                         delete_option( 'b3_custom_emails' );
+                        // @TODO: delete all custom emails
                     }
     
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
@@ -157,21 +158,29 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
     
+                    // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
                     update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
-                    update_option( 'b3_mail_sending_method', $_POST[ 'b3_mail_sending_method' ], true );
-                    update_option( 'b3_html_emails', $_POST[ 'b3_html_emails' ], true );
+                    // update_option( 'b3_mail_sending_method', $_POST[ 'b3_mail_sending_method' ], true );
+                    // update_option( 'b3_html_emails', $_POST[ 'b3_html_emails' ], true );
+                    
+                    update_option( 'b3_welcome_user_subject', $_POST[ 'b3_welcome_user_subject' ], true );
+                    update_option( 'b3_welcome_user_message', $_POST[ 'b3_welcome_user_message' ], true );
+                    update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
+                    update_option( 'b3_new_user_message', $_POST[ 'b3_new_user_message' ], true );
+                    
+                    
     
-                    if ( "0" == $_POST[ 'b3_html_emails' ] ) {
-                        update_option( "b3_html_emails", "0", true );
-                    } else {
-                        update_option( "b3_html_emails", "1", true );
-                    }
-                    if ( "0" == $_POST[ 'b3_add_br_html_email' ] ) {
-                        update_option( "b3_add_br_html_email", "0", true );
-                    } else {
-                        update_option( "b3_add_br_html_email", "1", true );
-                    }
+                    // if ( "0" == $_POST[ 'b3_html_emails' ] ) {
+                    //     update_option( "b3_html_emails", "0", true );
+                    // } else {
+                    //     update_option( "b3_html_emails", "1", true );
+                    // }
+                    // if ( "0" == $_POST[ 'b3_add_br_html_email' ] ) {
+                    //     update_option( "b3_add_br_html_email", "0", true );
+                    // } else {
+                    //     update_option( "b3_add_br_html_email", "1", true );
+                    // }
     
                     $redirect_url = add_query_arg( 'success', 'emails_saved', $redirect_url );
     
