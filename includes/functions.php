@@ -163,6 +163,10 @@
             );
         }
         $default_boxes2 = array(
+            array(
+                'id'    => 'request_access',
+                'title' => esc_html__( 'Request access email', 'b3-onboarding' ),
+            ),
             // array(
             //     'id'    => 'forgot_password',
             //     'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
@@ -378,27 +382,47 @@
             return sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can set your password here: %s.', 'b3-onboarding' ), $user->user_login, $blogname, get_permalink( b3_get_forgotpass_id() ) );
         }
     }
-
+    
     function b3_get_new_user_subject( $blogname ) {
-        $b3_new_user_subject = get_option( 'b3_welcome_user_subject', false );
+        $b3_new_user_subject = get_option( 'b3_new_user_subject', false );
         if ( $b3_new_user_subject ) {
             return $b3_new_user_subject;
         } else {
             return sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), $blogname );
         }
     }
-
+    
     function b3_get_new_user_message( $blogname, $user ) {
-        $b3_new_user_message = get_option( 'b3_welcome_user_message', false );
+        $b3_new_user_message = get_option( 'b3_new_user_message', false );
         if ( $b3_new_user_message ) {
             return $b3_new_user_message;
         } else {
-    
+            
             $user_ip      = $ip = $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] );
             $user_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), $blogname, date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $user->user_registered ) ) ) . "\r\n\r\n";
             $user_message .= sprintf( __( 'Login %s', 'b3-onboarding' ), $user->user_login ) . "\r\n\r\n";
             // $user_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), $user_ip ) . "\r\n\r\n";
             
             return $user_message;
+        }
+    }
+    
+    function b3_get_request_access_subject( $blogname ) {
+        $b3_request_access_subject = get_option( 'b3_request_access_subject', false );
+        if ( $b3_request_access_subject ) {
+            return $b3_request_access_subject;
+        } else {
+            return sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), $blogname );
+        }
+    }
+    
+    function b3_get_request_access_message( $blogname, $user ) {
+        $b3_request_access_message = get_option( 'b3_request_access_message', false );
+        if ( $b3_request_access_message ) {
+            return $b3_request_access_message;
+        } else {
+            
+            return sprintf( esc_html__( "You have successfully requested access to %s. We'll inform you by email.", "b3-onboarding" ), $blogname );
+
         }
     }

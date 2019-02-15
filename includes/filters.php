@@ -50,9 +50,7 @@
             // @TODO: add if user wants to receive admin notification on open registration
             if ( b3_custom_emails_active() ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
-                $wp_new_user_notification_email_admin[ 'subject' ] = __( 'New user access request', 'b3-onboarding' );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject( $blogname ) );
-                $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access. You can approve/deny him/her in the User approval panel.', 'b3-onboarding' );
                 $wp_new_user_notification_email_admin[ 'message' ] = apply_filters( 'b3_new_user_mesage', b3_get_new_user_message( $blogname, $user ) );
             }
         }
@@ -79,8 +77,8 @@
         $wp_new_user_notification_email[ 'to' ] = $user->user_email;
         if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
             
-            $wp_new_user_notification_email[ 'subject' ] = sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), $blogname );
-            $wp_new_user_notification_email[ 'message' ] = sprintf( esc_html__( "You have successfully requested access to %s. We'll inform you by email.", "b3-onboarding" ), $blogname );
+            $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject', b3_get_request_access_subject( $blogname ) );
+            $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_request_access_message', b3_get_request_access_message( $blogname, $user ) );
             
         } elseif ( 'email_activation' == get_option( 'b3_registration_type' ) ) {
             // Generate an activation key
@@ -89,7 +87,7 @@
             // Set the activation key for the user
             $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user->user_login ) );
             
-            $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user->user_login ) ), home_url( 'login' ) );
+            $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user->user_login ) ), home_url( 'login' ) ); // @TODO: make filterable login url
             
             $wp_new_user_notification_email[ 'subject' ] = esc_html__( 'Activate your account', 'b3-onboarding' );
             $wp_new_user_notification_email[ 'message' ] = 'Add a link here: ' . $activation_url;

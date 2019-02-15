@@ -168,9 +168,9 @@
                     update_option( 'b3_welcome_user_message', $_POST[ 'b3_welcome_user_message' ], true );
                     update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
                     update_option( 'b3_new_user_message', $_POST[ 'b3_new_user_message' ], true );
-                    
-                    
-    
+                    update_option( 'b3_request_access_subject', $_POST[ 'b3_request_access_subject' ], true );
+                    update_option( 'b3_request_access_message', $_POST[ 'b3_request_access_message' ], true );
+
                     // if ( "0" == $_POST[ 'b3_html_emails' ] ) {
                     //     update_option( "b3_html_emails", "0", true );
                     // } else {

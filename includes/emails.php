@@ -23,11 +23,11 @@
                     <div class="handlediv" title="">
                         <i class="dashicons dashicons-plus"></i>
                     </div>
-                    <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xnew_user_admin' == $box[ 'id' ] ) ? ' open' : false; ?>">
+                    <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? ' open' : false; ?>">
                         <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
                     </div>
                     
-                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xnew_user_admin' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xnew_user_admin' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
+                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
                         ##FOLDOUTCONTENT##
                     </div>
                 </div>
@@ -61,6 +61,10 @@
                     break;
                 case 'send_password_mail':
                     include( 'emails/send-password-mail.php' );
+                    $output = ob_get_clean();
+                    break;
+                case 'request_access':
+                    include( 'emails/request-access.php' );
                     $output = ob_get_clean();
                     break;
                 case 'forgot_password':
