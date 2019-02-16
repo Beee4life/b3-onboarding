@@ -1,64 +1,5 @@
 <?php
 
-    /**
-     * Handle reset pass form
-     */
-    function b3_reset_pass_handling() {
-        
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            error_log( 'hit custom reset pass handling' );
-            if ( isset( $_REQUEST[ 'rp_key' ] ) && isset( $_REQUEST[ 'rp_login' ] ) ) {
-                
-                $rp_key   = ( isset( $_REQUEST[ 'key' ] ) ) ? $_REQUEST[ 'key' ] : false;
-                $rp_login = ( isset( $_REQUEST[ 'user_login' ] ) ) ? $_REQUEST[ 'user_login' ] : false;
-                
-                $user = check_password_reset_key( $rp_key, $rp_login );
-                
-                if ( ! $user || is_wp_error( $user ) ) {
-                    if ( $user && $user->get_error_code() === 'expired_key' ) {
-                        wp_redirect( home_url( 'login/?login=expiredkey' ) ); // @TODO: make dynamic/filterable
-                    } else {
-                        wp_redirect( home_url( 'login/?login=invalidkey' ) ); // @TODO: make dynamic/filterable
-                    }
-                    exit;
-                }
-                
-                if ( isset( $_POST[ 'pass1' ] ) ) {
-                    if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
-                        // Passwords don't match
-                        $redirect_url = home_url( 'reset-password' ); // @TODO: make dynamic/filterable
-                        $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
-                        $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
-                        $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
-                        
-                        wp_redirect( $redirect_url );
-                        exit;
-                    }
-                    
-                    if ( empty( $_POST[ 'pass1' ] ) ) {
-                        // Password is empty
-                        $redirect_url = home_url( 'reset-password' ); // @TODO: make dynamic/filterable
-                        $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
-                        $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
-                        $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
-                        
-                        wp_redirect( $redirect_url );
-                        exit;
-                    }
-                    
-                    // Parameter checks OK, reset password
-                    reset_password( $user, $_POST[ 'pass1' ] );
-                    wp_redirect( home_url( 'login/?password=changed' ) ); // @TODO: make dynamic/filterable
-                } else {
-                    echo "Invalid request.";
-                }
-                
-                exit;
-            }
-        }
-    }
-    
-    
     // Admin settings
     function b3_admin_form_handling() {
     
@@ -158,7 +99,6 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
     
-                    // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
                     update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
                     // update_option( 'b3_mail_sending_method', $_POST[ 'b3_mail_sending_method' ], true );
