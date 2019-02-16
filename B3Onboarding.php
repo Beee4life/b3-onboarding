@@ -65,12 +65,12 @@
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
                 add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
-                add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_password_reset' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_password_reset' ) );
+                add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_password_reset' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
-                add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
+                add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
                 add_action( 'wp_print_footer_scripts',              array( $this, 'b3_add_captcha_js_to_footer' ) );
             
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -560,7 +560,7 @@
              * Redirect the user to the custom login page instead of wp-login.php.
              */
             function b3_redirect_to_custom_login() {
-                if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
             
@@ -603,6 +603,33 @@
             }
     
     
+            /**
+             * Redirects to the custom password reset page, or the login page
+             * if there are errors.
+             */
+            public function b3_redirect_to_custom_password_reset() {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                    // Verify key / login combo
+                    $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
+                    if ( ! $user || is_wp_error( $user ) ) {
+                        if ( $user && $user->get_error_code() === 'expired_key' ) {
+                            wp_redirect( home_url( 'login?login=expiredkey' ) );
+                        } else {
+                            wp_redirect( home_url( 'login?login=invalidkey' ) );
+                        }
+                        exit;
+                    }
+    
+                    error_log( 'HIT redirect custom password reset');
+                    $redirect_url = home_url( 'reset-password' );
+                    $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST[ 'login' ] ), $redirect_url );
+                    $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST[ 'key' ] ), $redirect_url );
+            
+                    wp_redirect( $redirect_url );
+                    exit;
+                }
+            }
+            
             /**
              * Redirects the user to the correct page depending on whether he / she
              * is an admin or not.
@@ -648,7 +675,7 @@
                     }
                 } else {
                     // Non-admin users always go to their account page after login
-                    $redirect_url = home_url( 'account' ); // @TODO: make filterable
+                    // $redirect_url = home_url( 'account' ); // @TODO: make filterable
                 }
         
                 return wp_validate_redirect( $redirect_url, home_url() );
@@ -749,48 +776,55 @@
              */
             public function b3_do_password_reset() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    $rp_key   = $_REQUEST[ 'rp_key' ];
-                    $rp_login = $_REQUEST[ 'rp_login' ];
+                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
+                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
             
-                    $user = check_password_reset_key( $rp_key, $rp_login );
-                    if ( ! $user || is_wp_error( $user ) ) {
-                        if ( $user && $user->get_error_code() === 'expired_key' ) {
-                            wp_redirect( home_url( 'login?login=expiredkey' ) );
+                    if ( $rp_key && $rp_login ) {
+    
+                        $user = check_password_reset_key( $rp_key, $rp_login );
+                        if ( ! $user || is_wp_error( $user ) ) {
+                            if ( $user && $user->get_error_code() === 'expired_key' ) {
+                                wp_redirect( home_url( 'login?login=expiredkey' ) );
+                            } else {
+                                wp_redirect( home_url( 'login?login=invalidkey' ) );
+                            }
+                            exit;
+                        }
+    
+                        if ( isset( $_POST[ 'pass1' ] ) ) {
+                            if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
+                                // Passwords don't match
+                                $redirect_url = home_url( 'password-reset' );
+            
+                                $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
+                                $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
+                                $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
+            
+                                wp_redirect( $redirect_url );
+                                exit;
+                            }
+        
+                            if ( empty( $_POST[ 'pass1' ] ) ) {
+                                // Password is empty
+                                error_log( 'HIT empty pass 1');
+                                $redirect_url = home_url( 'reset-password' );
+            
+                                $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
+                                $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
+                                $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
+            
+                                wp_redirect( $redirect_url );
+                                exit;
+                            }
+        
+                            // Parameter checks OK, reset password
+                            reset_password( $user, $_POST[ 'pass1' ] );
+                            wp_redirect( home_url( 'login?password=changed' ) );
+        
                         } else {
-                            wp_redirect( home_url( 'login?login=invalidkey' ) );
+                            echo "Invalid request.";
                         }
-                        exit;
-                    }
-            
-                    if ( isset( $_POST[ 'pass1' ] ) ) {
-                        if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
-                            // Passwords don't match
-                            $redirect_url = home_url( 'password-reset' );
-                    
-                            $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
-                            $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
-                            $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
-                    
-                            wp_redirect( $redirect_url );
-                            exit;
-                        }
-                
-                        if ( empty( $_POST[ 'pass1' ] ) ) {
-                            // Password is empty
-                            $redirect_url = home_url( 'reset-password' );
-                    
-                            $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
-                            $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
-                            $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
-                    
-                            wp_redirect( $redirect_url );
-                            exit;
-                        }
-                
-                        // Parameter checks OK, reset password
-                        reset_password( $user, $_POST[ 'pass1' ] );
-                        wp_redirect( home_url( 'login?password=changed' ) );
-                
+    
                     } else {
                         echo "Invalid request.";
                     }
