@@ -421,18 +421,21 @@
             
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user' ] ) ) {
-                        $redirect_url = home_url( 'register' );
+                        $redirect_url = home_url( 'register' ); // make dynamic from function
                         if ( ! wp_verify_nonce( $_POST[ "b3_register_user" ], 'b3-register-user' ) ) {
                             // error ?
                         } else {
     
-                            $user_login        = ( isset( $_POST[ 'b3_user_login' ] ) ) ? $_POST[ 'b3_user_login' ] : false;
-                            $user_email        = ( isset( $_POST[ 'b3_user_email' ] ) ) ? $_POST[ 'b3_user_email' ] : false;
-                            $first_name        = ( isset( $_POST[ 'b3_first_name' ] ) ) ? sanitize_text_field( $_POST[ 'b3_first_name' ] ) : false;
-                            $last_name         = ( isset( $_POST[ 'b3_last_name' ] ) ) ? sanitize_text_field( $_POST[ 'b3_last_name' ] ) : false;
-                            $role              = apply_filters( 'b3_filter_default_role', get_option( 'default_role' ) );
-                            $registration_type = get_option( 'b3_registration_type' );
-                            $meta_data         = [];
+                            $meta_data                 = [];
+                            $user_login                = ( isset( $_POST[ 'b3_user_login' ] ) ) ? $_POST[ 'b3_user_login' ] : false;
+                            $user_email                = ( isset( $_POST[ 'b3_user_email' ] ) ) ? $_POST[ 'b3_user_email' ] : false;
+                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'b3_first_name' ] ) ) ? sanitize_text_field( $_POST[ 'b3_first_name' ] ) : false;
+                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'b3_last_name' ] ) ) ? sanitize_text_field( $_POST[ 'b3_last_name' ] ) : false;
+                            $role                      = apply_filters( 'b3_filter_default_role', get_option( 'default_role' ) );
+                            $registration_type         = get_option( 'b3_registration_type' );
+                            $meta_data                 = apply_filters( 'b3_check_custom_registration_fields', $meta_data );
+
+                            // echo '<pre>'; var_dump($meta_data); echo '</pre>'; exit;
 
                             if ( ! is_multisite() ) {
                                 if ( 'closed' == $registration_type ) {
@@ -472,13 +475,6 @@
     
                                 } else {
     
-                                    if ( false != $first_name ) {
-                                        $meta_data[ 'first_name' ] = $first_name;
-                                    }
-                                    if ( false != $last_name ) {
-                                        $meta_data[ 'last_name' ] = $last_name;
-                                    }
-    
                                     // register new user
                                     $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role, $meta_data );
     
@@ -502,31 +498,26 @@
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
         
-                                } elseif ( 'request_access' == $registration_type ) {
+                                } elseif ( in_array( $registration_type, [ 'request_access', 'email_activation', 'ms_register_site_user' ] ) ) {
                                     $register = true;
-                                } elseif ( 'email_activation' == $registration_type ) {
                                 } elseif ( get_option( 'b3_recaptcha' ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'captcha', $redirect_url );
-        
                                 } else {
                                 }
 
                                 if ( true == $register ) {
                                     // is_multisite
-                                    $meta_data  = array(
-                                        'blog_public' => '1',
-                                        'lang_id'     => '0',
-                                    );
-                                    $meta       = apply_filters( 'add_user_meta', $meta_data );
-                                    $sub_domain = ( isset( $_POST[ 'b3_subdomain' ] ) ) ? $_POST[ 'b3_subdomain' ] : false;
+                                    $meta_data[ 'blog_public' ] = '1';
+                                    $meta_data[ 'lang_id' ]     = '0';
+                                    $sub_domain                 = ( isset( $_POST[ 'b3_subdomain' ] ) ) ? $_POST[ 'b3_subdomain' ] : false;
                                     
                                     if ( false != $sub_domain ) {
                                         // @TODO: check this for options
                                         if ( true == domain_exists( $sub_domain, '/' ) ) {
                                             $redirect_url = add_query_arg( 'registration-error', 'domain_exists', $redirect_url );
                                         } else {
-                                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta );
+                                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
         
                                             if ( is_wp_error( $result ) ) {
                                                 // Parse errors into a string and append as parameter to redirect
@@ -541,7 +532,7 @@
                                     } else {
                                         // no subdomain entered
                                         error_log('no subdomain entered');
-                                        $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta );
+                                        $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
                                     }
                                 }
                             }
@@ -1067,16 +1058,18 @@
                     'role'       => $role,
                 );
 
-                $first_name = ( isset( $meta[ 'first_name' ] ) && ! empty( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : false;
+                $first_name = ( ! empty( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : false;
                 if ( false != $first_name ) {
                     $user_data[ 'first_name' ] = $first_name;
+                    unset( $meta[ 'first_name' ] );
                 }
 
-                $last_name  = ( isset( $meta[ 'last_name' ] ) && ! empty( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : false;
+                $last_name  = ( ! empty( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : false;
                 if ( false != $first_name ) {
                     $user_data[ 'last_name' ] = $last_name;
+                    unset( $meta[ 'last_name' ] );
                 }
-            
+                
                 // return 160878; // for testing
             
                 $user_id = wp_insert_user( $user_data );
@@ -1102,36 +1095,39 @@
                 $user_registered       = false;
 
                 if ( is_main_site() ) {
-                
-                } else {
-                
-                }
-                if ( 'user' == $main_register_type && 'closed' != $subsite_register_type ) {
-                    wpmu_signup_user( $user_name, $user_email, $meta );
-                    $user_registered = true;
-                    
-                } elseif ( in_array( $main_register_type, [ 'all', 'blog' ] )  && in_array( $subsite_register_type, [ '' ] )) {
-                    if ( false == $sub_domain ) {
-                        // wpmu_signup_user( $user_name, $user_email, $meta );
-                        $user_registered = true;
-                    } else {
+    
+                    if ( in_array( $main_register_type, [ 'all', 'blog' ] ) && in_array( $subsite_register_type, [ 'request_access', 'request_access_subdomain', 'ms_loggedin_register', 'ms_register_user', 'ms_register_site_user' ] )) {
+                        if ( false == $sub_domain ) {
+                            wpmu_signup_user( $user_name, $user_email, $meta );
+                            $user_registered = true;
+                            do_action( 'b3_after_insert_user' );
+                        } else {
+                            wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
+                            // get site id by
+                            $site_id = get_id_from_blogname( $sub_domain );
+                            do_action( 'b3_after_insert_site', $site_id );
+                        }
+                    } elseif ( 'none' == $main_register_type ) {
+                        // @TODO: add if for user or user + site
+                        // @TODO: add if for if user needs to activate
+                        // @TODO: add if for if admin needs to activate
                         // wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
-                        // get site id by
-                        $site_id = get_id_from_blogname( $sub_domain );
-                        do_action( 'b3_after_insert_site', $site_id );
+                    } else {
+                        $errors->add( 'unknown', $this->b3_get_error_message( 'unknown' ) );
                     }
                     
-                } elseif ( 'none' == $main_register_type ) {
-                    // @TODO: add if for user or user + site
-                    // @TODO: add if for if user needs to activate
-                    // @TODO: add if for if admin needs to activate
-                    // wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                 } else {
-                    $errors->add( 'unknown', $this->b3_get_error_message( 'unknown' ) );
+    
+                    if ( 'user' == $main_register_type && 'closed' != $subsite_register_type ) {
+                        wpmu_signup_user( $user_name, $user_email, $meta );
+                        $user_registered = true;
+                        do_action( 'b3_after_insert_user' );
+                    } else {
+                        $errors->add( 'unknown', $this->b3_get_error_message( 'unknown' ) );
+                    }
+        
                 }
-
-                do_action( 'b3_after_insert_user' );
-                
+    
                 if ( true == $user_registered ) {
                     $errors->add( 'user_registered', $this->b3_get_error_message( 'user_registered' ) );
                 }
