@@ -74,6 +74,7 @@
             $input_placeholder = ( ! empty( $extra_field[ 'placeholder' ] ) ) ? ' placeholder="' . $extra_field[ 'placeholder' ] . '"' : false;
             $input_required    = ( ! empty( $extra_field[ 'required' ] ) ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
             $input_type        = ( ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
+            $input_options     = ( ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : [];
 
             if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) && isset( $extra_field[ 'class' ] ) ) {
     
@@ -81,10 +82,19 @@
                 ?>
                 <div class="b3__form-element b3__form-element--<?php echo $input_type; ?>">
                     <label class="b3__form-label" for="<?php echo $input_id; ?>"><?php echo $input_label; ?> <?php echo $input_required; ?></label>
-                    <?php if ( 'textarea' != $input_type ) { ?>
+                    <?php if ( 'text' == $input_type ) { ?>
                         <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3__form--input<?php echo $input_class; ?>"<?php if ( $input_placeholder && 'text' == $extra_field[ 'type' ] ) { echo $input_placeholder; } ?>value=""<?php if ( $input_required ) { echo ' required'; }; ?>>
-                    <?php } else { ?>
+                    <?php } elseif ( 'textarea' == $input_type ) { ?>
                         <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3__form--input<?php echo $input_class; ?>" value=""<?php if ( $input_placeholder ) { echo $input_placeholder; } ?><?php if ( $input_required ) { echo ' required'; }; ?>></textarea>
+                    <?php } elseif ( 'radio' == $input_type ) { ?>
+                        <?php if ( $input_options ) { ?>
+                            <?php $counter = 1; ?>
+                            <?php foreach( $input_options as $option ) { ?>
+                                <label for="<?php echo $option[ 'label' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                <input class="b3__form--input<?php echo $input_class; ?>" id="<?php echo $option[ 'label' ]; ?>_<?php echo $counter; ?>" name="<?php echo $option[ 'name' ]; ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php if ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) { echo ' checked="checked"'; } ?>> &nbsp;<?php echo $option[ 'label' ]; ?>
+                                <?php $counter++; ?>
+                            <?php } ?>
+                        <?php } ?>
                     <?php } ?>
                 </div>
                 <?php
@@ -148,7 +158,7 @@
             ),
         );
         $request_access_box = [];
-        if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+        if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
             $request_access_box = array(
                 array(
                     'id'    => 'request_access',
