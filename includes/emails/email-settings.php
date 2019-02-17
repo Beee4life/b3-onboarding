@@ -39,6 +39,7 @@
             </div>
         </td>
     </tr>
+    
 <!--    <tr class="">-->
 <!--        <th>-->
 <!--            <label for="b3_mail_sending_method" class="b3__label">--><?php //esc_html_e( 'Mail sending method', 'b3-onboarding' ); ?><!--</label>-->

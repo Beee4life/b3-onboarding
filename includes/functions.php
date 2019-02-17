@@ -119,7 +119,6 @@
     
         $meta_keys = array(
             'b3_account_id',
-            'b3_custom_emails',
             'b3_dashboard_widget',
             'b3_forgotpass_page_id',
             'b3_html_emails',
@@ -140,13 +139,24 @@
         return $meta_keys;
     }
 
-    function b3_get_email_boxes( $send_password_mail ) {
+    function b3_get_email_boxes() {
         
-        $default_boxes1 = array(
+        $settings_box = array(
             array(
                 'id'    => 'email_settings',
                 'title' => esc_html__( 'Email Settings', 'b3-onboarding' ),
             ),
+        );
+        $request_access_box = [];
+        if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+            $request_access_box = array(
+                array(
+                    'id'    => 'request_access',
+                    'title' => esc_html__( 'Request access email', 'b3-onboarding' ),
+                ),
+            );
+        }
+        $default_boxes1 = array(
             array(
                 'id'    => 'welcome_email_user',
                 'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
@@ -156,17 +166,7 @@
                 'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
             ),
         );
-        if ( true == $send_password_mail ) {
-            $default_boxes1[] = array(
-                'id'    => 'send_password_mail',
-                'title' => esc_html__( 'Send password by email', 'b3-onboarding' ),
-            );
-        }
         $default_boxes2 = array(
-            array(
-                'id'    => 'request_access',
-                'title' => esc_html__( 'Request access email', 'b3-onboarding' ),
-            ),
             // array(
             //     'id'    => 'forgot_password',
             //     'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
@@ -176,24 +176,10 @@
             //     'title' => esc_html__( 'Reset password email', 'b3-onboarding' ),
             // ),
         );
-        $email_boxes = array_merge( $default_boxes1, $default_boxes2 );
+        $email_boxes = array_merge( $settings_box, $request_access_box, $default_boxes1, $default_boxes2 );
     
         if ( is_multisite() ) {
-            $multisite_boxes = array(
-                array(
-                    'id'    => 'email_settings',
-                    'title' => esc_html__( 'Email Settings', 'b3-onboarding' ),
-                ),
-                array(
-                    'id'    => 'welcome_email_user',
-                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-                ),
-                array(
-                    'id'    => 'new_user_admin',
-                    'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
-                ),
-            );
-            $email_boxes = array_merge( $email_boxes, $multisite_boxes );
+            // $email_boxes = array_merge( $email_boxes, $default_boxes2 );
         }
         
         return $email_boxes;
@@ -207,7 +193,9 @@
      * @return array
      */
     function b3_registration_types() {
-        $registration_options = array(
+        $registration_options = array();
+
+        $closed_option = array(
             array(
                 'value' => 'closed',
                 'label' => esc_html__( 'Closed (for everyone)', 'b3-onboarding' ),
@@ -229,11 +217,13 @@
             ),
         );
 
-        $multisite_options = array(
+        $multisite_options1 = array(
             array(
                 'value' => 'request_access',
                 'label' => esc_html__( 'Request access (admin approval)', 'b3-onboarding' ),
             ),
+        );
+        $multisite_options2 = array(
             array(
                 'value' => 'request_access_subdomain',
                 'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
@@ -255,10 +245,15 @@
         if ( ! is_multisite() ) {
             $registration_options = array_merge( $registration_options, $normal_options );
         } else {
+            $mu_registration = get_site_option( 'registration' );
             if ( ! is_main_site() ) {
-                $registration_options = array_merge( $registration_options, $normal_options );
+                if ( 'none' != $mu_registration ) {
+                    $registration_options = array_merge( $closed_option, $normal_options );
+                }
             } else {
-                $registration_options = array_merge( $registration_options, $multisite_options );
+                if ( 'none' != $mu_registration ) {
+                    $registration_options = array_merge( $closed_option, $multisite_options2 );
+                }
             }
             
         }
@@ -271,7 +266,7 @@
      */
     function b3_add_subdomain_field() {
         
-        if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
+        if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type') , [ 'request_access_subdomain', 'ms_register_site_user' ] ) ) {
             ob_start();
             ?>
             <?php // @TODO: add more fields for Multisite ?>

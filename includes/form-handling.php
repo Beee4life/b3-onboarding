@@ -21,9 +21,7 @@
                     
                     // Registration options
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
-                        if ( ! is_multisite() ) {
-                            update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
-                        }
+                        update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
                     }
                     
                     // Dashboard widget

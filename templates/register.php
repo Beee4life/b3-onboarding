@@ -6,6 +6,11 @@
     $show_recaptcha        = get_option( 'b3_recaptcha' );
     $recaptcha_public      = get_option( 'b3_recaptcha_public' );
     $registration_type     = get_option( 'b3_registration_type' );
+    
+    // $register_type = get_site_option( 'registration' );
+    // $register_type = get_option( 'b3_registration_type' );
+    // echo '<pre>'; var_dump($register_type); echo '</pre>'; exit;
+
 ?>
 <div id="b3-register" class="b3">
     <?php if ( $attributes[ 'show_title' ] ) { ?>

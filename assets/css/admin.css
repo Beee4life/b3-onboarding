@@ -78,8 +78,21 @@
     margin-block-start: 0;
     margin-block-end:   0;
     list-style:         disc;
-    margin:             15px 0;
     padding-left:       1.5em;
+}
+
+.b3__tab-content ul ul {
+    margin-top: 0.5em;
+}
+
+.b3__tab-content ul.debug-list li.debug-list-part {
+    margin-bottom: 1.5em;
+}
+
+.b3__tab-content ul.debug-list {
+    list-style:   none;
+    margin:       0;
+    padding-left: 0;
 }
 
 .b3__table {
@@ -192,6 +205,11 @@
 .b3 input[type="url"],
 .b3 select,
 .b3 textarea {
+    font-size: 14px;
+}
+
+.b3 select {
+    box-sizing: border-box;
 }
 
 .b3 input[type="text"],
@@ -200,23 +218,16 @@
 .b3 input[type="text"],
 .b3 input[type="url"],
 .b3 textarea {
-    width: 100%;
+    padding: 8px;
+    width:   100%;
 }
-
-.b3 textarea,
-.b3 input,
-.b3 select {
-    font-size: 14px;
-    padding:   6px 10px;
-}
-
 
 /* Because load-styles.php is not loaded */
 .metabox-handler .b3__foldout--header,
 .metabox-handler > h3,
 .metabox-handler .stuffbox > h3,
-.metabox-handler h2.hndle,
-.metabox-handler h3.hndle {
+.metabox-handler h2.handle,
+.metabox-handler h3.handle {
     font-size:   14px;
     padding:     8px 12px;
     margin:      0;

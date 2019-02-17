@@ -18,12 +18,17 @@
 
             <div class="b3__tabs">
                 <?php
+    
                     if ( isset( $_GET[ 'tab' ] ) ) {
                         $default_tab = $_GET[ 'tab' ];
                     } else {
-                        $default_tab = 'emails';
+                        if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
+                            $default_tab = 'pages';
+                        } else {
+                            $default_tab = 'settings';
+                        }
                     }
-
+                    
                     $tabs        = array(
                         array(
                             'id'      => 'settings',
@@ -55,13 +60,6 @@
                         );
                     }
 
-                    $tabs[] = array(
-                        'id'      => 'support',
-                        'title'   => esc_html__( 'Support', 'b3-onboarding' ),
-                        'content' => b3_render_tab_content( 'support' ),
-                        'icon'    => 'sos',
-                    );
-    
                     // if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
                     //     $tabs[] = array(
                     //         'id'      => 'addon',
@@ -70,6 +68,13 @@
                     //         'icon'    => 'plus-alt',
                     //     );
                     // }
+    
+                    $tabs[] = array(
+                        'id'      => 'support',
+                        'title'   => esc_html__( 'Support', 'b3-onboarding' ),
+                        'content' => b3_render_tab_content( 'support' ),
+                        'icon'    => 'sos',
+                    );
     
                     if ( current_user_can( 'manage_options' ) ) {
                         $tabs[] = array(

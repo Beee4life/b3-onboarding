@@ -16,24 +16,22 @@
     
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
-            if ( 'email_settings' == $box[ 'id' ] || ( 'email_settings' != $box[ 'id' ] && b3_custom_emails_active() ) ) {
-            ?>
-            <div class="metabox-handler">
-                <div class="postbox" id="">
-                    <div class="handlediv" title="">
-                        <i class="dashicons dashicons-plus"></i>
-                    </div>
-                    <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? ' open' : false; ?>">
-                        <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
-                    </div>
-                    
-                    <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
-                        ##FOLDOUTCONTENT##
-                    </div>
+        ?>
+        <div class="metabox-handler">
+            <div class="postbox" id="">
+                <div class="handlediv" title="">
+                    <i class="dashicons dashicons-plus"></i>
+                </div>
+                <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? ' open' : false; ?>">
+                    <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
+                </div>
+                
+                <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
+                    ##FOLDOUTCONTENT##
                 </div>
             </div>
-            <?php
-            }
+        </div>
+        <?php
         }
         $output = ob_get_clean();
         
@@ -57,10 +55,6 @@
                     break;
                 case 'new_user_admin':
                     include( 'emails/new-user-admin.php' );
-                    $output = ob_get_clean();
-                    break;
-                case 'send_password_mail':
-                    include( 'emails/send-password-mail.php' );
                     $output = ob_get_clean();
                     break;
                 case 'request_access':

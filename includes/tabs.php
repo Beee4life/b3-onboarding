@@ -39,13 +39,18 @@
     
     function b3_render_settings_tab() {
     
-        $custom_emails     = get_option( 'b3_custom_emails' );
         $custom_passwords  = get_option( 'b3_custom_passwords' );
         $dashboard_widget  = get_option( 'b3_dashboard_widget' );
         $privacy           = get_option( 'b3_privacy' );
         $recaptcha         = get_option( 'b3_recaptcha' );
-        $registration_type = get_option( 'b3_registration_type' );
         $sidebar_widget    = get_option( 'b3_sidebar_widget' );
+
+        if ( is_multisite() ) {
+            $registration_type = get_option( 'b3_registration_type' );
+        } else {
+            $registration_type = get_option( 'b3_registration_type' );
+        }
+
         ob_start();
         ?>
         <h2>
@@ -71,20 +76,19 @@
                 </div>
                 
                 <?php $options = b3_registration_types(); ?>
-                <?php foreach( $options as $option ) { ?>
-                    <div class="b3__settings-input b3__settings-input--radio">
-                        <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
-                    </div>
+                <?php if ( ! empty( $options ) ) {
+                    // echo '<pre>'; var_dump($registration_type); echo '</pre>'; exit;
+                    ?>
+                    <?php foreach( $options as $option ) { ?>
+                        <div class="b3__settings-input b3__settings-input--radio">
+                            <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                        </div>
+                    <?php } ?>
+                <?php } else { ?>
+                        <div class="b3__settings-input b3__settings-input--radio">
+                            <?php esc_html_e( 'The network owner has disabled registrations.','b3-onbaording' ); ?>
+                        </div>
                 <?php } ?>
-            </div>
-
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
-                    <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom emails', 'b3-onboarding' ); ?></label>
-                </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom emails', 'b3-onboarding' ); ?>
-                </div>
             </div>
 
 <!--            <div class="b3__settings-field">-->
@@ -210,9 +214,7 @@
     
     function b3_render_emails_tab() {
     
-        $send_password_mail = get_option( 'b3_password_by_mail' );
-        
-        $email_boxes = b3_get_email_boxes( $send_password_mail );
+        $email_boxes = b3_get_email_boxes();
         ob_start();
         ?>
         <h2>
@@ -322,18 +324,19 @@
             <?php esc_html_e( 'Add-ons', 'b3-onboarding' ); ?>
         </h2>
         
-        <p>
-            We don't have any add-ons yet... but we do understand there might be a need for them.
-            <br />
-            We'll look into creating an add-on for the ones below soon.
-        </p>
-        
-        <ul>
-            <li>Salesforce</li>
-            <li>Mailchimp</li>
-        </ul>
-        
-    
+        <div class="addons">
+            <p>
+                We don't have any add-ons yet... but we do understand there might be a need for them.
+                <br />
+                We'll look into creating an add-on for the ones below soon.
+            </p>
+
+            <ul>
+                <li>Salesforce</li>
+                <li>Mailchimp</li>
+            </ul>
+        </div>
+
         <?php
         $result = ob_get_clean();
     
@@ -345,75 +348,9 @@
     function b3_render_debug_tab() {
     
         ob_start();
-        ?>
-        <h2>
-            <?php esc_html_e( 'Debug info', 'b3-onboarding' ); ?>
-        </h2>
-
-        <b>Server info</b>
-        <ul>
-            <li>Operating system: <?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?></li>
-            <li>PHP : <?php echo phpversion(); ?></li>
-            <li>Server IP: <?php echo $_SERVER[ 'SERVER_ADDR' ]; ?></li>
-            <li>Scheme: <?php echo $_SERVER[ 'REQUEST_SCHEME' ]; ?></li>
-            <li>Home path: <?php echo get_home_path(); ?></li>
-        </ul>
-
-        <b>WP info</b>
-        <ul>
-            <li>WP version: <?php echo get_bloginfo( 'version' ); ?></li>
-            <li>Home url: <?php echo get_home_url(); ?></li>
-            <li>Admin email: <?php echo get_bloginfo( 'admin_email' ); ?></li>
-            <li>Blog public: <?php echo get_option( 'blog_public' ); ?></li>
-            <li>Users can register: <?php echo get_option( 'users_can_register' ); ?></li>
-            <li>Page on front: <?php echo get_option( 'page_on_front' ); ?></li>
-            <li>Charset: <?php echo get_bloginfo( 'charset' ); ?></li>
-            <li>Text direction: <?php echo is_rtl() ? 'RTL' : 'LTR'; ?></li>
-            <li>Language: <?php echo get_bloginfo( 'language' ); ?></li>
-        </ul>
-        
-        <b>WP info</b>
-        <ul>
-            <li>Current theme: <?php echo get_option( 'current_theme' ); ?></li>
-            <li>Stylesheet: <?php echo get_option( 'stylesheet' ); ?></li>
-            <li>Template: <?php echo get_option( 'template' ); ?></li>
-        </ul>
-
-        <b>Active plugins</b>
-        <ul>
-            <?php
-                $plugins = get_plugins();
-                foreach( $plugins as $key => $value ) {
-                    if ( is_plugin_active( $key ) ) {
-                        echo '<li>' . $value[ 'Name' ] . '</li>';
-                    }
-                }
-            ?>
-        </ul>
-
-        <b>Inactive plugins</b>
-        <ul>
-            <?php
-                $plugins = get_plugins();
-                foreach( $plugins as $key => $value ) {
-                    if ( ! is_plugin_active( $key ) ) {
-                        echo '<li>' . $value[ 'Name' ] . '</li>';
-                    }
-                }
-            ?>
-        </ul>
-
-        <?php if ( class_exists( 'SitePress' ) ) { ?>
-            <b>WPML</b>
-            <ul>
-                <li>WPLANG: <?php echo get_option( 'WPLANG' ); ?></li>
-                <li>WPML Version: <?php echo get_option( 'WPML_Plugin_verion' ); ?></li>
-            </ul>
-        <?php } ?>
-
-        <?php
-        // @TODO: download info as json
+        include( 'debug-info.php' );
         $result = ob_get_clean();
-    
+        // @TODO: output $result as json
+
         return $result;
     }
