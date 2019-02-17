@@ -76,9 +76,7 @@
                 </div>
                 
                 <?php $options = b3_registration_types(); ?>
-                <?php if ( ! empty( $options ) ) {
-                    // echo '<pre>'; var_dump($registration_type); echo '</pre>'; exit;
-                    ?>
+                <?php if ( ! empty( $options ) ) { ?>
                     <?php foreach( $options as $option ) { ?>
                         <div class="b3__settings-input b3__settings-input--radio">
                             <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
