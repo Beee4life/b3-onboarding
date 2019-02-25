@@ -186,7 +186,17 @@
             //     'title' => esc_html__( 'Reset password email', 'b3-onboarding' ),
             // ),
         );
-        $email_boxes = array_merge( $settings_box, $request_access_box, $default_boxes1, $default_boxes2 );
+        $styling_boxes = array(
+            array(
+                'id'    => 'email_styling',
+                'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
+            ),
+            array(
+                'id'    => 'email_template',
+                'title' => esc_html__( 'Email template', 'b3-onboarding' ),
+            ),
+        );
+        $email_boxes = array_merge( $settings_box, $request_access_box, $default_boxes1, $default_boxes2, $styling_boxes );
     
         if ( is_multisite() ) {
             // $email_boxes = array_merge( $email_boxes, $default_boxes2 );
@@ -361,6 +371,9 @@
         
     }
     
+    /**
+     * @return bool
+     */
     function b3_custom_emails_active() {
         
         if ( false != get_option( 'b3_custom_emails', false ) ) {
@@ -369,7 +382,12 @@
         
         return false;
     }
-
+    
+    /**
+     * @param $blogname
+     *
+     * @return mixed|string
+     */
     function b3_get_welcome_user_subject( $blogname ) {
         $b3_welcome_user_subject = get_option( 'b3_welcome_user_subject', false );
         if ( $b3_welcome_user_subject ) {
@@ -378,7 +396,13 @@
             return sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), $blogname );
         }
     }
-
+    
+    /**
+     * @param $blogname
+     * @param $user
+     *
+     * @return mixed|string
+     */
     function b3_get_welcome_user_message( $blogname, $user ) {
         $b3_welcome_user_message = get_option( 'b3_welcome_user_message', false );
         if ( $b3_welcome_user_message ) {
@@ -388,6 +412,14 @@
         }
     }
     
+    
+    /**
+     * Get subject for 'new user' email
+     *
+     * @param $blogname
+     *
+     * @return mixed|string
+     */
     function b3_get_new_user_subject( $blogname ) {
         $b3_new_user_subject = get_option( 'b3_new_user_subject', false );
         if ( $b3_new_user_subject ) {
@@ -397,6 +429,15 @@
         }
     }
     
+    
+    /**
+     * New user message
+     *
+     * @param $blogname
+     * @param $user
+     *
+     * @return mixed|string
+     */
     function b3_get_new_user_message( $blogname, $user ) {
         $b3_new_user_message = get_option( 'b3_new_user_message', false );
         if ( $b3_new_user_message ) {
@@ -412,22 +453,64 @@
         }
     }
     
+    
+    /**
+     * Return request access email subject
+     *
+     * @param $blogname
+     *
+     * @return mixed|string
+     */
     function b3_get_request_access_subject( $blogname ) {
         $b3_request_access_subject = get_option( 'b3_request_access_subject', false );
         if ( $b3_request_access_subject ) {
             return $b3_request_access_subject;
         } else {
+            // default
             return sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), $blogname );
         }
     }
     
+    
+    /**
+     * Request access email message
+     *
+     * @param $blogname
+     * @param $user
+     *
+     * @return mixed|string
+     */
     function b3_get_request_access_message( $blogname, $user ) {
         $b3_request_access_message = get_option( 'b3_request_access_message', false );
         if ( $b3_request_access_message ) {
             return $b3_request_access_message;
         } else {
-            
+            // default
             return sprintf( esc_html__( "You have successfully requested access to %s. We'll inform you by email.", "b3-onboarding" ), $blogname );
 
         }
+    }
+    
+    
+    /**
+     * Return default email styling
+     *
+     * @return false|string
+     */
+    function b3_default_email_styling() {
+        
+        $default_css = file_get_contents( dirname(__FILE__) . '/default-styling.css' );
+        
+        return $default_css;
+    }
+    
+    /**
+     * Return default email template
+     *
+     * @return false|string
+     */
+    function b3_default_email_template() {
+        $default_template = file_get_contents( dirname(__FILE__) . '/default-template.html' );
+    
+        return $default_template;
     }
