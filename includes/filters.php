@@ -83,7 +83,12 @@
             // Set the activation key for the user
             $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user->user_login ) );
             
-            $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user->user_login ) ), home_url( 'login' ) ); // @TODO: make filterable login url
+            $login_url = home_url( 'login' );
+            if ( false != b3_get_login_id() ) {
+                $login_url = get_permalink( b3_get_login_id() );
+            }
+            
+            $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user->user_login ) ), home_url( 'login' ) );
             
             $wp_new_user_notification_email[ 'subject' ] = esc_html__( 'Activate your account', 'b3-onboarding' );
             $wp_new_user_notification_email[ 'message' ] = 'Add a link here: ' . $activation_url;

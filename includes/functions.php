@@ -128,18 +128,17 @@
     function b3_get_all_custom_meta_keys() {
     
         $meta_keys = array(
-            'b3_account_id',
-            'b3_dashboard_widget',
+            'b3_account_id', // not used yet
+            'b3_dashboard_widget', // not used yet
             'b3_forgotpass_page_id',
-            'b3_html_emails',
             'b3_login_page_id',
-            'b3_mail_sending_method',
-            'b3_add_br_html_email',
+            'b3_mail_sending_method', // not used yet
+            'b3_add_br_html_email', // not used yet
             'b3_notification_sender_name',
             'b3_notification_sender_email',
             'b3_register_page_id',
             'b3_resetpass_page_id',
-            'b3_sidebar_widget',
+            'b3_sidebar_widget', // not used yet
             'b3_welcome_user_subject',
             'b3_welcome_user_message',
             'b3_new_user_subject',

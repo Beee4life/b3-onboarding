@@ -96,7 +96,8 @@
                 if ( ! wp_verify_nonce( $_POST[ "b3_emails_nonce" ], 'b3-emails-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
-    
+                    
+                    // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
                     update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
                     // update_option( 'b3_mail_sending_method', $_POST[ 'b3_mail_sending_method' ], true );
@@ -104,10 +105,18 @@
                     update_option( 'b3_welcome_user_message', $_POST[ 'b3_welcome_user_message' ], true );
                     update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
                     update_option( 'b3_new_user_message', $_POST[ 'b3_new_user_message' ], true );
-                    update_option( 'b3_request_access_subject', $_POST[ 'b3_request_access_subject' ], true );
-                    update_option( 'b3_request_access_message', $_POST[ 'b3_request_access_message' ], true );
+                    if ( isset( $_POST[ 'b3_request_access_subject' ] ) ) {
+                        update_option( 'b3_request_access_subject', $_POST[ 'b3_request_access_subject' ], true );
+                    } else {
+                        delete_option( 'b3_request_access_subject' );
+                    }
+                    if ( isset( $_POST[ 'b3_request_access_message' ] ) ) {
+                        update_option( 'b3_request_access_message', $_POST[ 'b3_request_access_message' ], true );
+                    } else {
+                        delete_option( 'b3_request_access_message' );
+                    }
                     update_option( 'b3_email_styling', $_POST[ 'b3_email_styling' ], true );
-                    update_option( 'b3_email_template', $_POST[ 'b3_email_template' ], true );
+                    update_option( 'b3_email_template', stripslashes($_POST[ 'b3_email_template' ]), true );
 
                     // if ( "0" == $_POST[ 'b3_add_br_html_email' ] ) {
                     //     update_option( "b3_add_br_html_email", "0", true );
