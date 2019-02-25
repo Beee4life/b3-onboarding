@@ -90,7 +90,7 @@
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
                 add_shortcode( 'user-management',              array( $this, 'b3_user_management_shortcode' ) );
                 // add_shortcode( 'account-page',                  array( $this, 'b3_render_account_page' ) );
-            
+    
                 include( 'includes/constants.php' );
                 include( 'includes/do-stuff.php' );
                 include( 'includes/dashboard-widget.php' );
@@ -133,7 +133,7 @@
             }
     
     
-            public function b3_set_default_settings() {
+            private function b3_set_default_settings() {
                 
                 if ( ! is_multisite() ) {
                     update_option( 'users_can_register', '0' );
@@ -425,6 +425,7 @@
                         if ( ! wp_verify_nonce( $_POST[ "b3_register_user" ], 'b3-register-user' ) ) {
                             // error ?
                         } else {
+                            // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
     
                             $meta_data                 = [];
                             $user_login                = ( isset( $_POST[ 'b3_user_login' ] ) ) ? $_POST[ 'b3_user_login' ] : false;
@@ -434,49 +435,31 @@
                             $role                      = apply_filters( 'b3_filter_default_role', get_option( 'default_role' ) );
                             $registration_type         = get_option( 'b3_registration_type' );
                             $meta_data                 = apply_filters( 'b3_check_custom_registration_fields', $meta_data );
-
+                            
                             // echo '<pre>'; var_dump($meta_data); echo '</pre>'; exit;
 
                             if ( ! is_multisite() ) {
                                 if ( 'closed' == $registration_type ) {
-    
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
                                     
-                                } elseif ( 'request_access' == $registration_type ) {
-                                    $result = $this->b3_register_user( $user_email, $user_email, $registration_type, 'b3_approval', $meta_data );
-    
-                                    if ( is_wp_error( $result ) ) {
-                                        // Parse errors into a string and append as parameter to redirect
-                                        $errors       = join( ',', $result->get_error_codes() );
-                                        $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
-                                    } else {
-                                        // Success, redirect to login page.
-                                        $redirect_url = home_url( 'login' ); // @TODO: make dynamic
-                                        $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
-                                    }
-
-                                } elseif ( 'email_activation' == $registration_type ) {
-                                    $result = $this->b3_register_user( $user_email, $user_login, $registration_type, 'b3_activation', $meta_data );
-    
-                                    if ( is_wp_error( $result ) ) {
-                                        // Parse errors into a string and append as parameter to redirect
-                                        $errors       = join( ',', $result->get_error_codes() );
-                                        $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
-                                    } else {
-                                        // Success, redirect to login page.
-                                        $redirect_url = home_url( 'login' ); // @TODO: make dynamic
-                                        $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
-                                    }
-    
                                 } elseif ( get_option( 'b3_recaptcha' ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'captcha', $redirect_url );
     
-                                } else {
-    
-                                    // register new user
-                                    $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role, $meta_data );
+                                } elseif ( 'closed' != $registration_type ) {
+                                    // Registration is not closed
+                                    if ( 'request_access' == $registration_type ) {
+                                        $role      = 'b3_approval';
+                                        $query_arg = 'access_requested';
+                                    } elseif ( 'email_activation' == $registration_type ) {
+                                        $role      = 'b3_activation';
+                                        $query_arg = 'email_confirmation';
+                                    } else {
+                                        $query_arg = 'success';
+                                    }
+
+                                    $result = $this->b3_register_user( $user_email, $user_email, $registration_type, $role, $meta_data );
     
                                     if ( is_wp_error( $result ) ) {
                                         // Parse errors into a string and append as parameter to redirect
@@ -485,8 +468,9 @@
                                     } else {
                                         // Success, redirect to login page.
                                         $redirect_url = home_url( 'login' ); // @TODO: make dynamic
-                                        $redirect_url = add_query_arg( 'registered', 'success', $redirect_url );
+                                        $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
                                     }
+    
                                 }
                                 
                             } else {
@@ -494,15 +478,13 @@
                                 // if is_multisite
                                 $register = false;
                                 if ( 'closed' == $registration_type ) {
-        
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
-        
-                                } elseif ( in_array( $registration_type, [ 'request_access', 'email_activation', 'ms_register_site_user' ] ) ) {
-                                    $register = true;
                                 } elseif ( get_option( 'b3_recaptcha' ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'captcha', $redirect_url );
+                                } elseif ( in_array( $registration_type, [ 'request_access', 'email_activation', 'ms_register_site_user' ] ) ) {
+                                    $register = true;
                                 } else {
                                 }
 
@@ -1161,8 +1143,8 @@
             
                 if ( is_user_logged_in() ) {
                     return esc_html__( 'You are already signed in.', 'b3-onboarding' );
-                } elseif ( ! get_option( 'users_can_register' ) ) {
-                    return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
+                } elseif ( 'closed' == get_option( 'b3_registration_type' ) ) {
+                    return apply_filters( 'b3_filter_closed_message', esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' ) );
                 } else {
                 
                     // Retrieve possible errors from request parameters
