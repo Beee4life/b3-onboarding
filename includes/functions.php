@@ -90,8 +90,8 @@
                         <?php if ( $input_options ) { ?>
                             <?php $counter = 1; ?>
                             <?php foreach( $input_options as $option ) { ?>
-                                <label for="<?php echo $option[ 'label' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                <input class="b3__form--input<?php echo $input_class; ?>" id="<?php echo $option[ 'label' ]; ?>_<?php echo $counter; ?>" name="<?php echo $option[ 'name' ]; ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php if ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) { echo ' checked="checked"'; } ?>> &nbsp;<?php echo $option[ 'label' ]; ?>
+                                <label for="<?php echo $option[ 'value' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                <input class="b3__form--input<?php echo $input_class; ?>" id="<?php echo $option[ 'value' ]; ?>_<?php echo $counter; ?>" name="<?php echo $option[ 'name' ]; ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php if ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) { echo ' checked="checked"'; } ?>> &nbsp;<?php echo $option[ 'label' ]; ?>
                                 <?php $counter++; ?>
                             <?php } ?>
                         <?php } ?>
@@ -253,7 +253,7 @@
         );
 
         if ( ! is_multisite() ) {
-            $registration_options = array_merge( $registration_options, $normal_options );
+            $registration_options = array_merge( $closed_option, $registration_options, $normal_options );
         } else {
             $mu_registration = get_site_option( 'registration' );
             if ( ! is_main_site() ) {
