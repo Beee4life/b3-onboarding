@@ -91,7 +91,7 @@
                 add_shortcode( 'user-management',              array( $this, 'b3_user_management_shortcode' ) );
                 // add_shortcode( 'account-page',                  array( $this, 'b3_render_account_page' ) );
     
-                include( 'includes/constants.php' );
+                // include( 'includes/constants.php' );
                 include( 'includes/do-stuff.php' );
                 include( 'includes/dashboard-widget.php' );
                 include( 'includes/emails.php' );
@@ -101,20 +101,24 @@
                 include( 'includes/functions.php' );
                 include( 'includes/tabs.php' );
                 
-                // add_action( 'init', array( $this, 'test_this' ) );
+                // $this->test_this();
             }
             
             public function test_this() {
-                $page_address = "$_SERVER[REQUEST_URI]";
-                echo '<pre>'; var_dump($page_address); echo '</pre>'; exit;
+    
+                $default_css = file_get_contents( dirname(__FILE__) . '/includes/default-template.html' );
+                echo '<pre>'; var_dump($default_css); echo '</pre>'; exit;
+    
+    
             }
+            
             /*
              * Do stuff upon plugin activation
              */
             public function b3_plugin_activation() {
             
                 // create necessary pages
-                b3_create_initial_pages();
+                // b3_create_initial_pages();
                 
                 $this->b3_set_default_settings();
     
@@ -159,10 +163,11 @@
                 
                 
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
-                update_option( 'b3_notification_sender_name',get_bloginfo( 'name' ) );
+                update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
+                update_option( 'b3_email_styling', b3_default_email_styling() );
+                update_option( 'b3_email_template',b3_default_email_template() );
                 // update_option( 'b3_add_br_html_email', '0' );
                 // update_option( 'b3_dashboard_widget', '1' );
-                // update_option( 'b3_html_emails', '0' );
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
                 // update_option( 'b3_sidebar_widget', '1' );
                 

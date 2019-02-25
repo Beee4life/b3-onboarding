@@ -41,24 +41,21 @@
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
         
         if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-            if ( b3_custom_emails_active() ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
-                $wp_new_user_notification_email_admin[ 'subject' ] = __( 'New user access request', 'b3-onboarding' );
-                $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access. You can approve/deny him/her in the User approval panel.', 'b3-onboarding' );
-            }
+            error_log('hit request access admin email');
+            $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
+            $wp_new_user_notification_email_admin[ 'subject' ] = __( 'New user access request', 'b3-onboarding' );
+            $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access. You can approve/deny him/her in the User approval panel.', 'b3-onboarding' );
         } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
             // @TODO: add if user wants to receive admin notification on open registration
-            if ( b3_custom_emails_active() ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
-                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject( $blogname ) );
-                $wp_new_user_notification_email_admin[ 'message' ] = apply_filters( 'b3_new_user_mesage', b3_get_new_user_message( $blogname, $user ) );
-            }
+            $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
+            $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject( $blogname ) );
+            $wp_new_user_notification_email_admin[ 'message' ] = apply_filters( 'b3_new_user_mesage', b3_get_new_user_message( $blogname, $user ) );
         }
         
         return $wp_new_user_notification_email_admin;
         
     }
-    add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 10, 3 );
+    add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
     
     
     /**
@@ -76,7 +73,6 @@
         
         $wp_new_user_notification_email[ 'to' ] = $user->user_email;
         if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-            
             $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject', b3_get_request_access_subject( $blogname ) );
             $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_request_access_message', b3_get_request_access_message( $blogname, $user ) );
             
@@ -94,10 +90,11 @@
             
         } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
             
-            if ( b3_custom_emails_active() ) {
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject( $blogname ) );
-                $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message( $blogname, $user ) );
-            }
+            $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject( $blogname ) );
+            $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message( $blogname, $user ) );
+
+        } else {
+            error_log( 'OOPS, else' );
         }
         
         return $wp_new_user_notification_email;
