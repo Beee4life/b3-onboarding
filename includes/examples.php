@@ -27,7 +27,7 @@
      * Hook to output any custom fields/info
      */
     function b3_do_before_registration_form() {
-        echo '<p>BEFORE FORM</p>';
+        echo '<p>Add something before form</p>';
     }
     // add_action( 'b3_do_before_registration_form', 'b3_do_before_registration_form' );
 
@@ -60,12 +60,14 @@
      * @return array
      */
     function b3_do_filter_hidden_fields_values() {
-        
-        return [
+    
+        $hidden_fields = [
             'key1' => 'value1',
             'key2' => 'value2',
             'key3' => 'value3',
         ];
+        
+        return $hidden_fields;
         
     }
     // add_filter( 'b3_do_filter_hidden_fields_values', 'b3_do_filter_hidden_fields_values' );
