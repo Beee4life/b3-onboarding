@@ -8,7 +8,7 @@
         $page_definitions = array(
             'account' => array(
                 'title'   => esc_html__( 'Account', 'b3-onboarding' ),
-                'content' => '[account]',
+                'content' => '[account-page]',
                 'meta'    => 'b3_account_page_id'
             ),
             'lostpassword' => array(

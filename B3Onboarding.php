@@ -87,8 +87,8 @@
                 add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
-                add_shortcode( 'user-management',              array( $this, 'b3_user_management_shortcode' ) );
-                // add_shortcode( 'account-page',                  array( $this, 'b3_render_account_page' ) );
+                add_shortcode( 'user-management',              array( $this, 'b3_render_user_management_page' ) );
+                add_shortcode( 'account-page',                 array( $this, 'b3_render_account_page' ) );
     
                 include( 'includes/do-stuff.php' );
                 include( 'includes/dashboard-widget.php' ); // @TODO: add if setting is active
@@ -1290,7 +1290,42 @@
                 }
             }
     
-            public function b3_user_management_shortcode( $user_variables, $content = null ) {
+    
+            /**
+             * Render user/account page
+             *
+             * @param $user_variables
+             * @param null $content
+             *
+             * @return bool|string
+             */
+            public function b3_render_account_page( $user_variables, $content = null ) {
+    
+                if ( is_user_logged_in() ) {
+    
+                    // Parse shortcode attributes
+                    $default_attributes = array(
+                        'show_title' => false,
+                        'template'   => 'account',
+                    );
+                    $attributes         = shortcode_atts( $default_attributes, $user_variables );
+    
+                    return $this->get_template_html( $attributes[ 'template' ], $attributes );
+    
+                }
+                
+                return false;
+    
+            }
+    
+    
+            /**
+             * Render user management page
+             *
+             * @param $user_variables
+             * @param null $content
+             */
+            public function b3_render_user_management_page( $user_variables, $content = null ) {
     
                 // get users which are awaiting approval
                 $user_args = array(

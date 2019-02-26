@@ -238,3 +238,34 @@
         }
     }
     add_action( 'init', 'b3_approve_deny_users' );
+    
+    
+    /**
+     *
+     */
+    function b3_profile_form_handling() {
+    
+        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+            if ( isset( $_POST[ 'b3_profile_nonce' ] ) ) {
+    
+                $redirect_url = '';
+                
+                if ( ! wp_verify_nonce( $_POST[ "b3_profile_nonce" ], 'b3-profile-nonce' ) ) {
+                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
+                } else {
+                    
+                    // @TODO: store values
+                    // - verify + store email
+                    // - verify + store pass1/pass2
+
+                    $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
+    
+                }
+    
+                wp_redirect( $redirect_url );
+                exit;
+            }
+        }
+    }
+    add_action( 'init', 'b3_profile_form_handling' );
+    
