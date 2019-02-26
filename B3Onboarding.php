@@ -90,28 +90,18 @@
                 add_shortcode( 'user-management',              array( $this, 'b3_user_management_shortcode' ) );
                 // add_shortcode( 'account-page',                  array( $this, 'b3_render_account_page' ) );
     
-                // include( 'includes/constants.php' );
                 include( 'includes/do-stuff.php' );
-                include( 'includes/dashboard-widget.php' );
+                include( 'includes/dashboard-widget.php' ); // @TODO: add if setting is active
                 include( 'includes/emails.php' );
                 include( 'includes/examples.php' );
                 include( 'includes/filters.php' );
                 include( 'includes/form-handling.php' );
                 include( 'includes/functions.php' );
+                include( 'includes/help-tabs.php' );
                 include( 'includes/tabs.php' );
-                
-                // $this->test_this();
             }
-            
-            public function test_this() {
     
-                $default_css = file_get_contents( dirname(__FILE__) . '/includes/default-template.html' );
-                echo '<pre>'; var_dump($default_css); echo '</pre>'; exit;
-    
-    
-            }
-            
-            /*
+            /**
              * Do stuff upon plugin activation
              */
             public function b3_plugin_activation() {
@@ -136,6 +126,9 @@
             }
     
     
+            /**
+             * Set default settings
+             */
             private function b3_set_default_settings() {
                 
                 if ( ! is_multisite() ) {
@@ -163,11 +156,10 @@
                     }
                 }
                 
-                
-                update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
-                update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
+                update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
+                update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 
                 // 2 use
                 // update_option( 'b3_add_br_html_email', '0' );
@@ -179,7 +171,7 @@
     
             }
     
-            /*
+            /**
              * Do stuff upon plugin activation
              */
             public function b3_plugin_deactivation() {
@@ -230,12 +222,12 @@
     
     
             /**
-             *
+             * Register widgets (if activated)
              */
             public function b3_register_widgets() {
                 if ( true == get_option( 'b3_sidebar_widget' ) ) {
-                    include( 'includes/B3WidgetSidebar.php' );
-                    register_widget( 'B3WidgetSidebar' );
+                    include( 'includes/B3SidebarWidget.php' );
+                    register_widget( 'B3SidebarWidget' );
                 }
             }
     

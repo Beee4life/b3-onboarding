@@ -145,19 +145,19 @@
         if ( false != $b3_forgot_password_message ) {
             $message = $b3_forgot_password_message;
         } else {
-            $message = b3_default_forgot_password_template();
+            $message = b3_default_forgot_password_message();
         }
     
-        $email_styling  = get_option( 'b3_email_styling', false );
-        $email_template = get_option( 'b3_email_template', false );
-        if ( false != $email_styling && false != $email_template ) {
-            // replace email variables
-            $vars = [
-                'reset_url' => network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n",
-            ];
-            $message = strtr( $message, b3_replace_email_vars( $vars ) );
+        if ( false != get_option( 'b3_custom_emails', false ) ) {
+            $message = b3_replace_template_styling( $message );
         }
-        
+    
+        // replace email variables
+        $vars = [
+            'reset_url' => network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n",
+        ];
+        $message = strtr( $message, b3_replace_email_vars( $vars ) );
+    
         return $message;
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );

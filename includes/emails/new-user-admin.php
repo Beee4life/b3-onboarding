@@ -22,6 +22,8 @@
             <label for="b3__input--new-user-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
         </th>
         <td>
+            <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %blog_name%, %home_url%, %site_url%, %user_ip%, %user_login%
+            <br /><br />
             <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo b3_default_new_user_admin_message(); ?>" rows="4"><?php echo $new_user_email_message; ?></textarea>
         </td>
     </tr>

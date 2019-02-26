@@ -37,19 +37,21 @@
         return $content;
     }
     
+    
+    /**
+     * Render settings tab
+     *
+     * @return false|string
+     */
     function b3_render_settings_tab() {
     
-        $custom_passwords  = get_option( 'b3_custom_passwords' );
-        $dashboard_widget  = get_option( 'b3_dashboard_widget' );
-        $privacy           = get_option( 'b3_privacy' );
-        $recaptcha         = get_option( 'b3_recaptcha' );
-        $sidebar_widget    = get_option( 'b3_sidebar_widget' );
-
-        if ( is_multisite() ) {
-            $registration_type = get_option( 'b3_registration_type' );
-        } else {
-            $registration_type = get_option( 'b3_registration_type' );
-        }
+        $custom_emails      = get_option( 'b3_custom_emails' );
+        $dashboard_widget   = get_option( 'b3_dashboard_widget' );
+        $front_end_approval = get_option( 'b3_front_end_approval' );
+        $privacy            = get_option( 'b3_privacy' );
+        $recaptcha          = get_option( 'b3_recaptcha' );
+        $sidebar_widget     = get_option( 'b3_sidebar_widget' );
+        $registration_type  = get_option( 'b3_registration_type' );
 
         ob_start();
         ?>
@@ -88,6 +90,24 @@
                         </div>
                 <?php } ?>
             </div>
+
+            <div class="b3__settings-field">
+                <div class="b3__settings-label">
+                    <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3__settings-input b3__settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom email styling', 'b3-onboarding' ); ?>
+                </div>
+            </div>
+
+<!--            <div class="b3__settings-field">-->
+<!--                <div class="b3__settings-label">-->
+<!--                    <label for="b3_activate_frontend_approval">--><?php //esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?><!--</label>-->
+<!--                </div>-->
+<!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
+<!--                    <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" --><?php //if ( $front_end_approval ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
+<!--                </div>-->
+<!--            </div>-->
 
 <!--            <div class="b3__settings-field">-->
 <!--                <div class="b3__settings-label">-->
@@ -134,41 +154,52 @@
         return $result;
     }
     
+    
+    /**
+     * Render pages tab
+     *
+     * @return false|string
+     */
     function b3_render_pages_tab() {
         
         // get stored pages
         $b3_pages = array(
             array(
-                'id' => 'register_page',
-                'label' => esc_html__( 'Register', 'b3-onboarding' ),
+                'id'      => 'register_page',
+                'label'   => esc_html__( 'Register', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_register_page_id' ),
             ),
             array(
-                'id' => 'login_page',
-                'label' => esc_html__( 'Log In', 'b3-onboarding' ),
+                'id'      => 'login_page',
+                'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_login_page_id' ),
             ),
             array(
-                'id' => 'forgotpass_page',
-                'label' => esc_html__( 'Forgot password', 'b3-onboarding' ),
+                'id'      => 'forgotpass_page',
+                'label'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_forgotpass_page_id' ),
             ),
             array(
-                'id' => 'resetpass_page',
-                'label' => esc_html__( 'Reset password', 'b3-onboarding' ),
+                'id'      => 'resetpass_page',
+                'label'   => esc_html__( 'Reset password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_resetpass_page_id' ),
             ),
             array(
-                'id' => 'account_page',
-                'label' => esc_html__( 'Account', 'b3-onboarding' ),
+                'id'      => 'account_page',
+                'label'   => esc_html__( 'Account', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_account_page_id' ),
             ),
-            array(
-                'id' => 'approval_page',
-                'label' => esc_html__( 'Approval page', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_approval_page_id' ),
-            ),
         );
+    
+        $front_end_approval = array(
+            'id'      => 'approval_page',
+            'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
+            'page_id' => get_option( 'b3_approval_page_id' ),
+        );
+        
+        if ( true == get_option( 'b3_front_user_approval' ) ) {
+            $b3_pages[] = $front_end_approval;
+        }
         
         // get all pages
         $all_pages = get_posts( array(
@@ -229,6 +260,12 @@
         return $result;
     }
     
+    
+    /**
+     * Render emails tab
+     *
+     * @return false|string
+     */
     function b3_render_emails_tab() {
     
         $email_boxes = b3_get_email_boxes();
@@ -263,6 +300,12 @@
         return $result;
     }
     
+    
+    /**
+     * Render recaptcha tab
+     *
+     * @return false|string
+     */
     function b3_render_recaptcha_tab() {
         
         ob_start();
@@ -314,6 +357,12 @@
         return $result;
     }
     
+    
+    /**
+     * Render support tab
+     *
+     * @return false|string
+     */
     function b3_render_support_tab() {
         ob_start();
         ?>
@@ -333,6 +382,12 @@
         return $result;
     }
     
+    
+    /**
+     * Render add-ons tab
+     *
+     * @return false|string
+     */
     function b3_render_addons_tab() {
     
         ob_start();
@@ -362,6 +417,11 @@
     }
     
     
+    /**
+     * Render debug page
+     *
+     * @return false|string
+     */
     function b3_render_debug_tab() {
     
         ob_start();

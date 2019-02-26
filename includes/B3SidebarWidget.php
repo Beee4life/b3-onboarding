@@ -1,6 +1,6 @@
 <?php
     
-    class B3WidgetSidebar extends WP_Widget {
+    class B3SidebarWidget extends WP_Widget {
         
         function __construct() {
             parent::__construct(

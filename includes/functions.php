@@ -202,7 +202,7 @@
             // ),
         );
         $styling_boxes = array();
-        if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
+        if ( false != get_option( 'b3_custom_emails', false ) && ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) ) {
             $styling_boxes = array(
                 array(
                     'id'    => 'email_styling',
@@ -414,7 +414,35 @@
         
     }
     
+    
     /**
+     * Return default email styling
+     *
+     * @return false|string
+     */
+    function b3_default_email_styling() {
+        
+        $default_css = file_get_contents( dirname(__FILE__) . '/default-styling.css' );
+        
+        return $default_css;
+    }
+    
+    
+    /**
+     * Return default email template
+     *
+     * @return false|string
+     */
+    function b3_default_email_template() {
+        $default_template = file_get_contents( dirname(__FILE__) . '/default-template.html' );
+        
+        return $default_template;
+    }
+    
+    
+    /**
+     * Return welcome user subject (user)
+     *
      * @param $blogname
      *
      * @return mixed|string
@@ -429,6 +457,8 @@
     }
     
     /**
+     * Return welcome user message (user)
+     *
      * @param $blogname
      * @param $user
      *
@@ -445,7 +475,7 @@
     
     
     /**
-     * Get subject for 'new user' email
+     * Return new user subject (admin)
      *
      * @param $blogname
      *
@@ -462,7 +492,7 @@
     
     
     /**
-     * New user message
+     * Return new user message (admin)
      *
      * @param $blogname
      * @param $user
@@ -496,7 +526,7 @@
     
     
     /**
-     * Return request access email subject
+     * Return request access email subject (user)
      *
      * @param $blogname
      *
@@ -514,7 +544,7 @@
     
     
     /**
-     * Request access email message
+     * Request access email message (user)
      *
      * @param $blogname
      * @param $user
@@ -532,6 +562,12 @@
         }
     }
     
+    
+    /**
+     * Default new user message (admin)
+     *
+     * @return string
+     */
     function b3_default_new_user_admin_message() {
     
         $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\r\n\r\n";
@@ -542,37 +578,21 @@
     }
     
     /**
-     * Return default email styling
+     * Default forgot password subject (user)
      *
-     * @return false|string
-     */
-    function b3_default_email_styling() {
-        
-        $default_css = file_get_contents( dirname(__FILE__) . '/default-styling.css' );
-        
-        return $default_css;
-    }
-    
-    /**
-     * Return default email template
-     *
-     * @return false|string
-     */
-    function b3_default_email_template() {
-        $default_template = file_get_contents( dirname(__FILE__) . '/default-template.html' );
-    
-        return $default_template;
-    }
-    
-    
-    /**
      * @return string
      */
     function b3_default_forgot_password_subject() {
         return sprintf( esc_html__( 'Password reset for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
-
-    function b3_default_forgot_password_template() {
+    
+    
+    /**
+     * Default forgot password message (user)
+     *
+     * @return string
+     */
+    function b3_default_forgot_password_message() {
         
         // Create new message (text)
         $default_message = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
@@ -585,18 +605,53 @@
         return $default_message;
     
     }
-
+    
+    
+    /**
+     * Replace vars in email
+     *
+     * @param $vars
+     *
+     * @return array
+     */
     function b3_replace_email_vars( $vars ) {
     
         $replacements = array(
-            '%salutation%'        => '',
-            '%email_styling%'     => get_option( 'b3_email_styling' ),
+            '%blog_name%'         => get_option( 'blogname' ),
+            '%email_styling%'     => ( false != get_option( 'b3_email_styling' ) ) ? get_option( 'b3_email_styling' ) : b3_default_email_styling(),
             '%home_url%'          => get_home_url(),
             '%registration_date%' => ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : false,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
-            '%site_name%'         => get_option( 'blogname' ),
             '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
         );
         
         return $replacements;
+    }
+    
+    
+    /**
+     * Replace vars in email template
+     *
+     * @param bool $message
+     *
+     * @return bool|string
+     */
+    function b3_replace_template_styling( $message = false ) {
+    
+        if ( false != $message ) {
+            // get $message from function
+            $email_styling  = ( get_option( 'b3_email_styling', false ) ) ? : b3_default_email_styling();
+            $email_template = ( get_option( 'b3_email_template', false ) ) ? : b3_default_email_template();
+    
+            if ( false != $email_styling && false != $email_template ) {
+                // replace email_template + styling
+                $replace_vars = [
+                    '%email_styling%' => $email_styling,
+                    '%email_message%' => $message,
+                ];
+                $message = strtr( $email_template, $replace_vars );
+            }
+        }
+        
+        return $message;
     }

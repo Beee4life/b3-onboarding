@@ -24,40 +24,47 @@
                         update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
                     }
                     
-                    // Dashboard widget
+                    // Custom emails
+                    if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
+                        update_option( 'b3_custom_emails', '1', true );
+                    } else {
+                        delete_option( 'b3_custom_emails' );
+                    }
+                    
+                    // Custom emails
+                    if ( isset( $_POST[ 'b3_activate_frontend_approval' ] ) ) {
+                        update_option( 'b3_front_end_approval', '1', true );
+                    } else {
+                        delete_option( 'b3_front_end_approval' );
+                        delete_option( 'b3_approval_page_id' );
+                    }
+                    
+                    // Dashboard widget (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) ) {
                         update_option( 'b3_dashboard_widget', '1', true );
                     } else {
                         delete_option( 'b3_dashboard_widget' );
                     }
                     
-                    // Sidebar widget
+                    // Sidebar widget (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_sidebar_widget' ] ) ) {
                         update_option( 'b3_sidebar_widget', '1', true );
                     } else {
                         delete_option( 'b3_sidebar_widget' );
                     }
                 
-                    // reCAPTCHA
+                    // reCAPTCHA (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) ) {
                         update_option( 'b3_recaptcha', '1', true );
                     } else {
                         delete_option( 'b3_recaptcha' );
                     }
                 
-                    // Privacy
+                    // Privacy (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_privacy' ] ) ) {
                         update_option( 'b3_privacy', '1', true );
                     } else {
                         delete_option( 'b3_privacy' );
-                    }
-                
-                    // reCAPTCHA
-                    if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
-                        update_option( 'b3_custom_emails', '1', true );
-                    } else {
-                        delete_option( 'b3_custom_emails' );
-                        // @TODO: delete all custom emails
                     }
     
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
@@ -181,13 +188,13 @@
                         $user_object->set_role( get_option( 'default_role' ) );
     
                         // send mail
-                        $site_name  = get_option( 'blogname' );
+                        $blog_name  = get_option( 'blogname' );
                         $from_email = get_option( 'admin_email' );
                         $to         = $user_object->user_email;
                         $subject    = esc_html__( 'Account approved', 'b3-onboarding' );
-                        $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login.', 'b3-onboarding' ), $site_name );
+                        $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login.', 'b3-onboarding' ), $blog_name );
                         $headers    = array(
-                            'From: ' . $site_name . ' <' . $from_email . '>',
+                            'From: ' . $blog_name . ' <' . $from_email . '>',
                             'Content-Type: text/plain; charset=UTF-8',
                         );
                         
@@ -204,13 +211,13 @@
                         // do reject user
                         if ( true == wp_delete_user( $user_id ) ) {
                             // send mail
-                            $site_name  = get_option( 'blogname' );
+                            $blog_name  = get_option( 'blogname' );
                             $from_email = get_option( 'admin_email' );
                             $to         = $user_object->user_email;
-                            $subject    = sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), $site_name );
-                            $message    = sprintf( esc_html__( "We're sorry to have to inform you, but your request for access to %s was rejected.", "b3-onboarding" ), $site_name );
+                            $subject    = sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), $blog_name );
+                            $message    = sprintf( esc_html__( "We're sorry to have to inform you, but your request for access to %s was rejected.", "b3-onboarding" ), $blog_name );
                             $headers    = array(
-                                'From: ' . $site_name . ' <' . $from_email . '>',
+                                'From: ' . $blog_name . ' <' . $from_email . '>',
                                 'Content-Type: text/plain; charset=UTF-8',
                             );
                             wp_mail( $to, $subject, $message, $headers );

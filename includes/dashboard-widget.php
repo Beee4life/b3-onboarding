@@ -15,7 +15,6 @@
     
     // the function which adds the widget
     function b3_add_dashboard_widget() {
-    
         if ( true == get_option( 'b3_dashboard_widget' ) ) {
             wp_add_dashboard_widget( 'b3-dashboard', 'Onboarding Info', 'b3_dashboard_widget_function' );
         }
