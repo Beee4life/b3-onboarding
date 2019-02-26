@@ -84,7 +84,7 @@
                     <?php } ?>
                 <?php } else { ?>
                         <div class="b3__settings-input b3__settings-input--radio">
-                            <?php esc_html_e( 'The network owner has disabled registrations.','b3-onbaording' ); ?>
+                            <?php esc_html_e( 'The network owner has disabled registrations.','b3-onboarding' ); ?>
                         </div>
                 <?php } ?>
             </div>
@@ -158,6 +158,16 @@
                 'label' => esc_html__( 'Reset password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_resetpass_page_id' ),
             ),
+            array(
+                'id' => 'account_page',
+                'label' => esc_html__( 'Account', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_account_page_id' ),
+            ),
+            array(
+                'id' => 'approval_page',
+                'label' => esc_html__( 'Approval page', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_approval_page_id' ),
+            ),
         );
         
         // get all pages
@@ -201,6 +211,15 @@
                         </select>
                     </div>
                 </div>
+                <?php if ( 'approval_page' == $page[ 'id' ] && false != b3_get_user_approval_id() ) { ?>
+                    <div class="b3__select-page">
+                        <div class="b3__select-page__label">&nbsp;</div>
+
+                        <div class="b3__select-page__selector">
+                            <?php esc_html_e( 'Please be aware that right now user approval is open through the front-end.', 'b3-onboarding' ); ?>
+                        </div>
+                    </div>
+                <?php } ?>
             <?php } ?>
             <input type="submit" class="button button-primary" name="" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>">
         </form>

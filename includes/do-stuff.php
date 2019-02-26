@@ -6,13 +6,18 @@
         
         // Information needed for creating the plugin's pages
         $page_definitions = array(
+            'account' => array(
+                'title'   => esc_html__( 'Account', 'b3-onboarding' ),
+                'content' => '[account]',
+                'meta'    => 'b3_account_page_id'
+            ),
             'lostpassword' => array(
                 'title'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
                 'content' => '[forgotpass-form]',
                 'meta'    => 'b3_forgotpass_page_id'
             ),
             'login'           => array(
-                'title'   => esc_html__( 'Log In', 'b3-onboarding' ),
+                'title'   => esc_html__( 'Login', 'b3-onboarding' ),
                 'content' => '[login-form]',
                 'meta'    => 'b3_login_page_id'
             ),
@@ -35,7 +40,7 @@
             if ( $stored_id ) {
                 $check_page = get_post( $stored_id );
                 if ( ! $check_page ) {
-                    error_log( 'page is not valid' );
+                    delete_option( $slug );
                 }
             } else {
                 // no stored id, so continue

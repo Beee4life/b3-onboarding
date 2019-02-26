@@ -44,12 +44,12 @@
     function b3_do_stuff_after_new_user_activated( $user_id ) {
         // Do stuff when user is activated
     }
-    add_action( 'b3_new_user_activated', 'b3_do_stuff_after_new_user_activated' );
+    // add_action( 'b3_new_user_activated', 'b3_do_stuff_after_new_user_activated' );
     
     function b3_do_stuff_after_new_user_activated_by_admin( $user_id ) {
         // Do stuff when user is activated by admin
     }
-    add_action( 'b3_new_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
+    // add_action( 'b3_new_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
     
     
     ###########
@@ -82,7 +82,7 @@
             array(
                 'id'          => 'id1', // will be forced to lowercase (no spaces)
                 'type'        => 'text',
-                'label'       => __( 'A value', 'b3-onboarding' ),
+                'label'       => 'A value',
                 'class'       => 'some_class',
                 'placeholder' => 'placeholder',
                 'required'    => true,
@@ -90,7 +90,7 @@
             array(
                 'id'          => 'id2',
                 'type'        => 'textarea',
-                'label'       => __( 'Textarea', 'b3-onboarding' ),
+                'label'       => 'Textarea',
                 'class'       => 'some_class',
                 'placeholder' => 'placeholder',
                 'required'    => true,
@@ -102,6 +102,11 @@
     }
     // add_filter( 'b3_add_filter_extra_fields_values', 'b3_add_filter_extra_fields_values' );
     
+    /**
+     * Override custom closed message
+     *
+     * @return string
+     */
     function b3_override_filter_closed_message() {
         return "A custom 'registration closed' message";
     }
@@ -119,6 +124,6 @@
     
     
     function b3_override_welcome_user_message( $blogname ) {
-        return sprintf( esc_html__( 'This is test content', 'b3-onboarding' ), $blogname );
+        return 'This is test content';
     }
     // add_filter( 'b3_welcome_user_message', 'b3_override_welcome_user_message' );

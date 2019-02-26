@@ -123,31 +123,47 @@
         <?php
         do_action( 'b3_after_recaptcha_' . $form_type );
     }
-
-
+    
+    
+    /**
+     * Return all custom meta keys
+     *
+     * @return array
+     */
     function b3_get_all_custom_meta_keys() {
     
         $meta_keys = array(
-            'b3_account_id', // not used yet
+            'b3_account_page_id',
+            'b3_approval_page_id',
+            'b3_add_br_html_email', // not used yet
             'b3_dashboard_widget', // not used yet
+            'b3_email_styling', // not used yet
+            'b3_email_template', // not used yet
+            'b3_forgot_password_message',
+            'b3_forgot_password_subject',
             'b3_forgotpass_page_id',
             'b3_login_page_id',
             'b3_mail_sending_method', // not used yet
-            'b3_add_br_html_email', // not used yet
-            'b3_notification_sender_name',
+            'b3_new_user_message',
+            'b3_new_user_subject',
             'b3_notification_sender_email',
+            'b3_notification_sender_name',
             'b3_register_page_id',
+            'b3_registration_type',
             'b3_resetpass_page_id',
             'b3_sidebar_widget', // not used yet
-            'b3_welcome_user_subject',
             'b3_welcome_user_message',
-            'b3_new_user_subject',
-            'b3_new_user_message',
+            'b3_welcome_user_subject',
         );
         
         return $meta_keys;
     }
-
+    
+    /**
+     * Create an array of available email 'boxes'
+     *
+     * @return array
+     */
     function b3_get_email_boxes() {
         
         $settings_box = array(
@@ -176,25 +192,28 @@
             ),
         );
         $default_boxes2 = array(
-            // array(
-            //     'id'    => 'forgot_password',
-            //     'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
-            // ),
+            array(
+                'id'    => 'forgot_password',
+                'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
+            ),
             // array(
             //     'id'    => 'password_changed',
             //     'title' => esc_html__( 'Reset password email', 'b3-onboarding' ),
             // ),
         );
-        $styling_boxes = array(
-            array(
-                'id'    => 'email_styling',
-                'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
-            ),
-            array(
-                'id'    => 'email_template',
-                'title' => esc_html__( 'Email template', 'b3-onboarding' ),
-            ),
-        );
+        $styling_boxes = array();
+        if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
+            $styling_boxes = array(
+                array(
+                    'id'    => 'email_styling',
+                    'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
+                ),
+                array(
+                    'id'    => 'email_template',
+                    'title' => esc_html__( 'Email template', 'b3-onboarding' ),
+                ),
+            );
+        }
         $email_boxes = array_merge( $settings_box, $request_access_box, $default_boxes1, $default_boxes2, $styling_boxes );
     
         if ( is_multisite() ) {
@@ -319,6 +338,19 @@
     }
     
     
+    function b3_get_account_id() {
+        $id = get_option( 'b3_account_page_id', false );
+        if ( false != $id && get_post( $id ) ) {
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
+        }
+        
+        return $id;
+        
+    }
+    
+    
     /**
      * Return login page id (for current language if WPML is active)
      *
@@ -370,16 +402,16 @@
         
     }
     
-    /**
-     * @return bool
-     */
-    function b3_custom_emails_active() {
-        
-        if ( false != get_option( 'b3_custom_emails', false ) ) {
-            return true;
+    function b3_get_user_approval_id() {
+        $id = get_option( 'b3_approval_page_id', false );
+        if ( false != $id && get_post( $id ) ) {
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
         }
         
-        return false;
+        return $id;
+        
     }
     
     /**
@@ -438,18 +470,28 @@
      * @return mixed|string
      */
     function b3_get_new_user_message( $blogname, $user ) {
+    
         $b3_new_user_message = get_option( 'b3_new_user_message', false );
-        if ( $b3_new_user_message ) {
-            return $b3_new_user_message;
+        if ( false != $b3_new_user_message ) {
+            $message = $b3_new_user_message;
         } else {
-            
-            $user_ip      = $ip = $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] );
-            $user_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), $blogname, date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $user->user_registered ) ) ) . "\r\n\r\n";
-            $user_message .= sprintf( __( 'Login %s', 'b3-onboarding' ), $user->user_login ) . "\r\n\r\n";
-            // $user_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), $user_ip ) . "\r\n\r\n";
-            
-            return $user_message;
+            $message = b3_default_new_user_admin_message();
         }
+    
+        $email_styling  = get_option( 'b3_email_styling', false );
+        $email_template = get_option( 'b3_email_template', false );
+        if ( false != $email_styling && false != $email_template ) {
+            // replace email variables
+            $vars = [];
+            if ( strpos( $message, '%registration_date%' ) !== false ) {
+                $vars[ 'registration_date' ] = $user->user_registered;
+        
+            }
+            $message = strtr( $message, b3_replace_email_vars( $vars ) );
+        }
+        
+        return $message;
+    
     }
     
     
@@ -490,6 +532,14 @@
         }
     }
     
+    function b3_default_new_user_admin_message() {
+    
+        $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\r\n\r\n";
+        $admin_message .= sprintf( __( 'Login: %s', 'b3-onboarding' ), '%user_login%' ) . "\r\n\r\n";
+        $admin_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), '%user_ip%' ) . "\r\n\r\n";
+    
+        return $admin_message;
+    }
     
     /**
      * Return default email styling
@@ -512,4 +562,41 @@
         $default_template = file_get_contents( dirname(__FILE__) . '/default-template.html' );
     
         return $default_template;
+    }
+    
+    
+    /**
+     * @return string
+     */
+    function b3_default_forgot_password_subject() {
+        return sprintf( esc_html__( 'Password reset for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+    }
+
+    function b3_default_forgot_password_template() {
+        
+        // Create new message (text)
+        $default_message = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
+        $default_message .= __( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\r\n\r\n";
+        $default_message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
+        $default_message .= __( "To reset your password to something you'd like, visit the following address:", "b3-onboarding" ) . "\r\n\r\n";
+        $default_message .= "%reset_url%\r\n\r\n";
+        $default_message .= __( 'Thanks!', 'b3-onboarding' ) . "\r\n";
+        
+        return $default_message;
+    
+    }
+
+    function b3_replace_email_vars( $vars ) {
+    
+        $replacements = array(
+            '%salutation%'        => '',
+            '%email_styling%'     => get_option( 'b3_email_styling' ),
+            '%home_url%'          => get_home_url(),
+            '%registration_date%' => ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : false,
+            '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
+            '%site_name%'         => get_option( 'blogname' ),
+            '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
+        );
+        
+        return $replacements;
     }

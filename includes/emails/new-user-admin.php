@@ -14,7 +14,7 @@
             <label for="b3__input--new-user-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="" type="text" value="<?php echo $new_user_email_subject; ?>" />
+            <input class="" id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) ); ?>" type="text" value="<?php echo $new_user_email_subject; ?>" />
         </td>
     </tr>
     <tr>
@@ -22,7 +22,7 @@
             <label for="b3__input--new-user-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <textarea id="b3__input--new-user-message" name="b3_new_user_message" rows="4"><?php echo $new_user_email_message; ?></textarea>
+            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo b3_default_new_user_admin_message(); ?>" rows="4"><?php echo $new_user_email_message; ?></textarea>
         </td>
     </tr>
     <tr>

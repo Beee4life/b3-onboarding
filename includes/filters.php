@@ -41,7 +41,6 @@
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
         
         if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-            error_log('hit request access admin email');
             $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
             $wp_new_user_notification_email_admin[ 'subject' ] = __( 'New user access request', 'b3-onboarding' );
             $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access. You can approve/deny him/her in the User approval panel.', 'b3-onboarding' );
@@ -109,8 +108,29 @@
     
     
     /**
+     * Returns the message subject for the password reset mail.
+     *
+     * @param $subject
+     * @param $user_login
+     * @param $user_data
+     *
+     * @return mixed
+     */
+    function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
+    
+        $b3_forgot_password_subject = get_option( 'b3_forgot_password_subject', false );
+        if ( false != $b3_forgot_password_subject ) {
+            return $b3_forgot_password_subject;
+        }
+        
+        return b3_default_forgot_password_subject();
+
+    }
+    add_filter( 'retrieve_password_title', 'b3_replace_retrieve_password_subject', 10, 3 );
+
+
+    /**
      * Returns the message body for the password reset mail.
-     * Called through the retrieve_password_message filter.
      *
      * @param string  $message    Default mail message.
      * @param string  $key        The activation key.
@@ -120,14 +140,25 @@
      * @return string   The mail message to send.
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
-        // Create new message
-        $msg = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
-        $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
-        $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
-        $msg .= __( 'To reset your password to something you\'d like, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
-        $msg .= network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n";
-        $msg .= __( 'Thanks!', 'b3-onboarding' ) . "\r\n";
+    
+        $b3_forgot_password_message = get_option( 'b3_forgot_password_message', false );
+        if ( false != $b3_forgot_password_message ) {
+            $message = $b3_forgot_password_message;
+        } else {
+            $message = b3_default_forgot_password_template();
+        }
+    
+        $email_styling  = get_option( 'b3_email_styling', false );
+        $email_template = get_option( 'b3_email_template', false );
+        if ( false != $email_styling && false != $email_template ) {
+            // replace email variables
+            $vars = [
+                'reset_url' => network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n",
+            ];
+            $message = strtr( $message, b3_replace_email_vars( $vars ) );
+        }
         
-        return $msg;
+        return $message;
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
+    

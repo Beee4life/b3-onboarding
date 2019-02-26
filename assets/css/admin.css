@@ -163,6 +163,14 @@
     padding-top: 2em;
 }
 
+.b3 table.b3__table--emails th {
+    font-weight: normal;
+}
+
+.b3 table.b3__table--emails th label {
+    font-weight: bold;
+}
+
 .b3 table.b3__table--emails tr:first-child th,
 .b3 table.b3__table--emails tr:first-child td {
     padding-top: 0;

@@ -52,12 +52,11 @@
     
                 // actions
                 register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
-                // register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
+                register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
             
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
-                add_action( 'admin_init',                           array( $this, 'b3_add_post_notice' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
@@ -143,6 +142,9 @@
                     update_option( 'users_can_register', '0' );
                     update_option( 'b3_registration_type', 'open' );
                 } else {
+                    
+                    // @TODO: check if settings should be preserved
+                    
                     $public_registration = get_site_option( 'registration' );
                     
                     if ( is_main_site() ) {
@@ -166,6 +168,8 @@
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
+                
+                // 2 use
                 // update_option( 'b3_add_br_html_email', '0' );
                 // update_option( 'b3_dashboard_widget', '1' );
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
@@ -180,8 +184,6 @@
              */
             public function b3_plugin_deactivation() {
                 
-                // remove settings is for testing
-    
                 $meta_keys = b3_get_all_custom_meta_keys();
                 foreach ( $meta_keys as $key ) {
                     delete_option( $key );
@@ -230,35 +232,11 @@
             /**
              *
              */
-            public function b3_add_post_notice() {
-                if ( ! empty( $_GET[ 'post' ] ) ) {
-                    $post = get_post( $_GET[ 'post' ] );
-                    if ( false != $post ) {
-                        if ( 'page' == $post->post_type && 'account' == $post->post_name ) {
-                            /* Add a notice to the edit page */
-                            add_action( 'edit_form_after_title', array( $this, 'b3_add_page_notice' ), 1 );
-                        }
-                    }
-                }
-            }
-    
-    
-            /**
-             *
-             */
             public function b3_register_widgets() {
                 if ( true == get_option( 'b3_sidebar_widget' ) ) {
                     include( 'includes/B3WidgetSidebar.php' );
                     register_widget( 'B3WidgetSidebar' );
                 }
-            }
-    
-    
-            /**
-             *
-             */
-            public function b3_add_page_notice() {
-                echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the profile edit page. Do not edit the slug of this page!', 'b3-onboarding' ) . '</p></div>';
             }
     
     
@@ -272,22 +250,38 @@
              */
             public function b3_add_post_state( $post_states, $post ) {
         
-                // if ( $post->ID == b3_get_account_id() ) {
-                //     $post_states[] = 'B3: Account';
-                // }
-                if ( $post->ID == b3_get_register_id() ) {
-                    $post_states[] = 'B3: Register';
+                $title_suffix = false;
+                if ( $post->ID == b3_get_account_id() ) {
+                    if ( $post->post_title != 'Account' ) {
+                        $title_suffix = ': Account';
+                    }
+                    $post_states[] = 'B3' . $title_suffix;
+                } elseif ( $post->ID == b3_get_register_id() ) {
+                    if ( $post->post_title != 'Register' ) {
+                        $title_suffix = ': Register';
+                    }
+                    $post_states[] = 'B3' . $title_suffix;
+                } elseif ( $post->ID == b3_get_login_id() ) {
+                    if ( $post->post_title != 'Login' ) {
+                        $title_suffix = ': Login';
+                    }
+                    $post_states[] = 'B3' . $title_suffix;
+                } elseif ( $post->ID == b3_get_forgotpass_id() ) {
+                    if ( $post->post_title != 'Forgot password' ) {
+                        $title_suffix = ': Forgot password';
+                    }
+                    $post_states[] = 'B3' . $title_suffix;
+                } elseif ( $post->ID == b3_get_resetpass_id() ) {
+                    if ( $post->post_title != 'Reset password' ) {
+                        $title_suffix = ': Reset password';
+                    }
+                    $post_states[] = 'B3' . $title_suffix;
+                } elseif ( $post->ID == b3_get_user_approval_id() ) {
+                    if ( $post->post_title != 'User approval' ) {
+                        $title_suffix = ': User approval';
+                    }
+                    $post_states[] = 'B3' . $title_suffix;
                 }
-                if ( $post->ID == b3_get_login_id() ) {
-                    $post_states[] = 'B3: Login';
-                }
-                if ( $post->ID == b3_get_forgotpass_id() ) {
-                    $post_states[] = 'B3: Forgot password';
-                }
-                if ( $post->ID == b3_get_resetpass_id() ) {
-                    $post_states[] = 'B3: Reset password';
-                }
-        
         
                 return $post_states;
             }
