@@ -13,11 +13,10 @@ jQuery(document).ready(function() {
             jQuery(this).addClass('open');
         }
 
-        var $icon = '.handlediv i';
+        var jQueryicon = '.handlediv i';
         if (jQuery(this).prev().find('i.dashicons').hasClass('dashicons-plus')){
             jQuery(this).prev().find('i.dashicons').removeClass('dashicons-plus');
             jQuery(this).prev().find('i.dashicons').addClass('dashicons-no');
-            // jQuery(this).prev().find('i.dashicons').find('i').addClass('beee');
 
         } else if (jQuery(this).prev().find('i.dashicons').hasClass('dashicons-no')){
             jQuery(this).prev().find('i.dashicons').removeClass('dashicons-no');
@@ -26,6 +25,15 @@ jQuery(document).ready(function() {
     });
 });
 
+jQuery(function($){
+
+    $("span.b3__message-close").click(function(e){
+
+        $(".b3__message").fadeOut(750);
+
+    });
+
+});
 
 // https://www.w3schools.com/howto/howto_js_tabs.asp
 function openTab(evt, tabName) {
@@ -48,3 +56,4 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+

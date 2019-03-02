@@ -106,8 +106,11 @@
 }
 
 .b3__message {
-    border:  1px dashed black;
-    padding: 5px 10px;
+    display:         flex;
+    flex-flow:       row nowrap;
+    justify-content: space-between;
+    border:          1px dashed black;
+    padding:         5px 10px;
 }
 
 /* Pages pages */
@@ -121,7 +124,7 @@
 .b3__select-page__label {
     font-weight:  bold;
     margin-right: 1em;
-    min-width:    250px;
+    min-width:    200px;
 }
 
 .b3__select-page__selector {
@@ -148,19 +151,27 @@
 .b3__settings-input {
 }
 
+.b3__settings-input--checkbox,
 .b3__settings-input--radio {
     margin-bottom: 0.5em;
+}
+
+.b3__settings-input--checkbox input {
+    margin-top: 0.25em;
 }
 
 /* Emails page */
 .b3 table.b3__table--emails th {
     padding-top: 0.5em;
-    width:       250px;
+    width:       200px;
 }
 
 .b3 table.b3__table--emails th,
 .b3 table.b3__table--emails td {
     padding-top: 2em;
+}
+.b3__intro {
+    line-height: 1.5em;
 }
 
 .b3 table.b3__table--emails th {
@@ -202,6 +213,36 @@
 
 .b3__user-table th {
     text-align: left;
+}
+
+ul.addons__list {
+    list-style:   none;
+    padding-left: 0;
+    position:     relative;
+}
+
+.addons__list--item {
+    border-radius:  10px;
+    border:         1px solid #444444;
+    display:        inline-block;
+    margin-right:   1em;
+    padding:        1em;
+    text-align:     center;
+    vertical-align: top;
+    width:          200px;
+}
+
+.addon__image {
+    margin-bottom: 0.5em;
+}
+
+.addon__image img {
+    max-width: 75%;
+    height:    auto;
+}
+
+.addon__name {
+    text-transform: uppercase;
 }
 
 /* Form styling */

@@ -1,12 +1,131 @@
-.tml-profile #pass-strength-result {
-    margin: 0.5em 0;
-}
-
 .no-js .hide-if-no-js,
 .js .hide-if-js {
     display: none;
 }
 
+.b3__message {
+    display:         flex;
+    flex-flow:       row nowrap;
+    justify-content: space-between;
+    border:          1px dashed black;
+    padding:         5px 10px;
+}
+
+.b3__page {
+    margin:    0 auto;
+    width: 400px;
+}
+
+.b3__page .b3__form-label {
+    display: inline-block;
+    width: 200px;
+}
+
+ul.b3__form-links {
+    list-style: none;
+    position:   relative;
+}
+
+ul.b3__form-links li {
+    border-right:  1px solid grey;
+    display:       inline-block;
+    line-height:   1;
+    margin-left:   0;
+    padding-left:  1em;
+    padding-right: 1em;
+}
+
+ul.b3__form-links li:first-child {
+    padding-left: 0;
+}
+
+ul.b3__form-links li:last-child {
+    border-right: 0;
+}
+
 .b3__form-element {
     margin-bottom: 2em;
+}
+
+#pass-strength-result {
+    background-color: #eee;
+    border:           1px solid #ddd;
+    color:            #23282d;
+    font-weight:      600;
+    margin:           -1px 0 1.5em;
+    padding:          3px 5px;
+    text-align:       center;
+    width:            100%;
+    opacity:          0;
+}
+
+#pass-strength-result.short {
+    background-color: #f1adad;
+    border-color:     #e35b5b;
+    opacity:          1;
+}
+
+#pass1.short,
+#pass1-text.short {
+    border-color: #e35b5b;
+}
+
+#pass-strength-result.bad {
+    background-color: #fbc5a9;
+    border-color:     #f78b53;
+    opacity:          1;
+}
+
+#pass1.bad,
+#pass1-text.bad {
+    border-color: #f78b53;
+}
+
+#pass-strength-result.good {
+    background-color: #ffe399;
+    border-color:     #ffc733;
+    opacity:          1;
+}
+
+#pass1.good,
+#pass1-text.good {
+    border-color: #ffc733;
+}
+
+#pass-strength-result.strong {
+    background-color: #c1e1b9;
+    border-color:     #83c373;
+    opacity:          1;
+}
+
+#pass1.strong,
+#pass1-text.strong {
+    border-color: #83c373;
+}
+
+.pw-weak {
+    display: none;
+}
+
+.indicator-hint {
+    padding-top: 8px;
+}
+
+#pass1,
+#pass1-text {
+    max-width: 100%;
+}
+
+#pass1-text,
+.show-password #pass1 {
+    display: none;
+}
+
+.show-password #pass1-text {
+    display: inline-block;
+}
+
+.hide,
+.hidden {
+    display: none;
 }
