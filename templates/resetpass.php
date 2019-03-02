@@ -1,5 +1,5 @@
 <div id="b3-resetpass" class="b3">
-    <?php if ( $attributes['show_title'] ) : ?>
+    <?php if ( $attributes['title'] ) : ?>
         <h3><?php esc_html_e( 'Pick a New Password', 'b3-onboarding' ); ?></h3>
     <?php endif; ?>
 

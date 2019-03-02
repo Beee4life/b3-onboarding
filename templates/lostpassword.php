@@ -1,6 +1,4 @@
-<?php $show_custom_passwords = get_option( 'b3_custom_passwords' ); ?>
-
-<div id="b3-forgotpass" class="b3">
+<div class="b3__page b3__page--lostpass">
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
             <p class="b3__message">
@@ -9,18 +7,12 @@
         <?php } ?>
     <?php } ?>
     
-    <?php if ( $attributes[ 'show_title' ] ) { ?>
-        <h3><?php echo $attributes[ 'show_title' ]; ?></h3>
+    <?php if ( $attributes[ 'title' ] ) { ?>
+        <h3><?php esc_html_e( 'Lost password', 'b3-onboarding' ); ?></h3>
     <?php } ?>
     
     <p>
-        <?php
-            if ( true == $show_custom_passwords ) {
-                esc_html_e( "Enter your email address and a new password.", 'b3-user-register' );
-            } else {
-                esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-user-register' );
-            }
-        ?>
+        <?php esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-user-register' ); ?>
     </p>
 
     <form id="lostpasswordform" class="b3__form b3__form--register" action="<?php echo wp_lostpassword_url(); ?>" method="post">
@@ -38,5 +30,7 @@
             <input type="submit" name="submit" class="lostpassword-button" value="<?php esc_html_e( 'Reset Password', 'b3-user-register' ); ?>"/>
         </p>
     </form>
+
+    <?php echo b3_form_links( 'lostpassword' ); ?>
 
 </div>
