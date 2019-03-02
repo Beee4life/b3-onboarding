@@ -27,17 +27,29 @@
             if ( ! empty( $instance[ 'title' ] ) ) {
                 echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
             }
+    
+            $redirect_url  = b3_get_current_url();
+            $login_id      = get_option( 'b3_login_page_id' );
+            $login_link    = ( false != $login_id ) ? get_permalink( $login_id ) : network_site_url( 'wp-login.php' );
+            $account_id    = get_option( 'b3_account_page_id' );
+            $account_link  = ( false != $account_id ) ? get_permalink( $account_id ) : false;
+            $logout_id     = get_option( 'b3_logout_page_id' );
+            $logout_link   = ( false != $logout_id ) ? get_permalink( $logout_id ) : wp_logout_url();
+            $register_id   = get_option( 'b3_register_page_id' );
+            $register_link = ( false != $register_id ) ? get_permalink( $register_id ) : network_site_url( 'wp-login.php?action=register' );
             
             echo '<ul>';
             if ( ! is_user_logged_in() ) {
-                echo '<li><a href="">Login</a></li>';
-                echo '<li><a href="">Register</a></li>';
+                echo '<li><a href="'.$login_link.'">'.__( 'Login', 'b3-onboarding' ).'</a></li>';
+                echo '<li><a href="'.$register_link.'">'.__( 'Register', 'b3-onboarding' ).'</a></li>';
             } else {
-                if ( current_user_can( 'manage_options' ) ) {
-                    echo '<li><a href="'.admin_url( 'admin.php?page=b3-onboarding' ) .'">Settings</a></li>';
+                if ( false != $account_link ) {
+                    echo '<li><a href="' . $account_link . '">' . __( 'Account', 'b3-onboarding' ) . '</a></li>';
                 }
-                echo '<li><a href="">Account</a></li>';
-                echo '<li><a href="">Log out</a></li>';
+                if ( current_user_can( 'manage_options' ) ) {
+                    echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">' . __( 'Settings', 'b3-onboarding' ) . '</a></li>';
+                }
+                echo '<li><a href="' . $logout_link . '">' . __( 'Log out', 'b3-onboarding' ) . '</a></li>';
             }
             echo '</ul>';
             

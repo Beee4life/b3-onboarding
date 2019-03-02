@@ -18,12 +18,12 @@
 
             <div class="b3__tabs">
                 <?php
-    
+                    $current_user = wp_get_current_user();
                     if ( isset( $_GET[ 'tab' ] ) ) {
                         $default_tab = $_GET[ 'tab' ];
                     } else {
                         if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
-                            $default_tab = 'settings';
+                            $default_tab = 'users';
                         } else {
                             $default_tab = 'settings';
                         }
@@ -51,6 +51,13 @@
                         'icon'    => 'email',
                     );
                     
+                    $tabs[] = array(
+                        'id'      => 'users',
+                        'title'   => esc_html__( 'Users', 'b3-onboarding' ),
+                        'content' => b3_render_tab_content( 'users' ),
+                        'icon'    => 'admin-users',
+                    );
+                    
                     if ( get_option( 'b3_recaptcha' ) ) {
                         $tabs[] = array(
                             'id'      => 'recaptcha',
@@ -60,14 +67,14 @@
                         );
                     }
 
-                    // if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
-                    //     $tabs[] = array(
-                    //         'id'      => 'addon',
-                    //         'title'   => esc_html__( 'Add-ons', 'b3-onboarding' ),
-                    //         'content' => b3_render_tab_content( 'addons' ),
-                    //         'icon'    => 'plus-alt',
-                    //     );
-                    // }
+                    if ( defined( 'WP_ENV' ) && 'development' == WP_ENV && $current_user->user_login == 'Beee' ) {
+                        $tabs[] = array(
+                            'id'      => 'addon',
+                            'title'   => esc_html__( 'Add-ons', 'b3-onboarding' ),
+                            'content' => b3_render_tab_content( 'addons' ),
+                            'icon'    => 'plus-alt',
+                        );
+                    }
     
                     $tabs[] = array(
                         'id'      => 'support',

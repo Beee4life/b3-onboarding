@@ -41,12 +41,12 @@
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
         
         if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-            $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
+            $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( get_option( 'b3_registration_type' ) ) );
             $wp_new_user_notification_email_admin[ 'subject' ] = __( 'New user access request', 'b3-onboarding' );
             $wp_new_user_notification_email_admin[ 'message' ] = __( 'A new user has requested access. You can approve/deny him/her in the User approval panel.', 'b3-onboarding' );
         } elseif ( 'open' == get_option( 'b3_registration_type' ) ) {
             // @TODO: add if user wants to receive admin notification on open registration
-            $wp_new_user_notification_email_admin[ 'to' ]      = get_option( 'admin_email' ); // add filter for override
+            $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( get_option( 'b3_registration_type' ) ) );
             $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject( $blogname ) );
             $wp_new_user_notification_email_admin[ 'message' ] = apply_filters( 'b3_new_user_mesage', b3_get_new_user_message( $blogname, $user ) );
         }
@@ -161,4 +161,53 @@
         return $message;
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
+    
+    /**
+     * Redirect user after successful login.
+     *
+     * @param string $redirect_to URL to redirect to.
+     * @param string $request URL the user is coming from.
+     * @param object $user Logged user's data.
+     * @return string
+     */
+    function b3_login_redirect( $redirect_to, $request, $user ) {
+        // is there a user to check?
+        if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+            // check for users who are not allowed
+            $stored_roles = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
+            
+            if ( in_array( $stored_roles, $user->roles ) ) {
+                // redirect them to another URL
+                $login_id = b3_get_login_id();
+                if ( false != $login_id ) {
+                    $redirect_to = get_permalink( $login_id );
+                }
+            }
+        }
+        
+        return $redirect_to;
+    }
+    add_filter( 'login_redirect', 'b3_login_redirect', 10, 3 );
+    
+    /**
+     * Redirect after logout
+     *
+     * @param $redirect_to
+     * @param $request
+     * @param $user
+     *
+     * @return string
+     */
+    function b3_logout_redirect( $redirect_to, $request, $user ) {
+        
+        // Make sure we're not trying to redirect to an admin URL
+        if ( false !== strpos( $redirect_to, 'wp-admin' ) ) {
+            $redirect_to = add_query_arg( 'loggedout', 'true', wp_login_url() );
+        }
+        
+        // Return the redirect URL for the user
+        return $redirect_to;
+    }
+    add_filter( 'logout_redirect', 'b3_logout_redirect', 10, 3 );
+    
     

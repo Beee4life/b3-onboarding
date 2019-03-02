@@ -20,6 +20,9 @@
             case 'emails':
                 $content = b3_render_emails_tab();
                 break;
+            case 'users':
+                $content = b3_render_users_tab();
+                break;
             case 'recaptcha':
                 $content = b3_render_recaptcha_tab();
                 break;
@@ -45,13 +48,13 @@
      */
     function b3_render_settings_tab() {
     
-        $custom_emails      = get_option( 'b3_custom_emails' );
-        $dashboard_widget   = get_option( 'b3_dashboard_widget' );
-        $front_end_approval = get_option( 'b3_front_end_approval' );
-        $privacy            = get_option( 'b3_privacy' );
-        $recaptcha          = get_option( 'b3_recaptcha' );
-        $sidebar_widget     = get_option( 'b3_sidebar_widget' );
-        $registration_type  = get_option( 'b3_registration_type' );
+        $custom_emails       = get_option( 'b3_custom_emails' );
+        $dashboard_widget    = get_option( 'b3_dashboard_widget' );
+        $front_end_approval  = get_option( 'b3_front_end_approval' );
+        $privacy             = get_option( 'b3_privacy' );
+        $recaptcha           = get_option( 'b3_recaptcha' );
+        $sidebar_widget      = get_option( 'b3_sidebar_widget' );
+        $registration_type   = get_option( 'b3_registration_type' );
 
         ob_start();
         ?>
@@ -61,7 +64,7 @@
     
         <?php if ( isset( $_GET[ 'success' ] ) && 'settings_saved' == $_GET[ 'success' ] ) { ?>
             <p class="b3__message">
-                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?>
+                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
         <?php } ?>
 
@@ -85,9 +88,9 @@
                         </div>
                     <?php } ?>
                 <?php } else { ?>
-                        <div class="b3__settings-input b3__settings-input--radio">
-                            <?php esc_html_e( 'The network owner has disabled registrations.','b3-onboarding' ); ?>
-                        </div>
+                    <div class="b3__settings-input b3__settings-input--radio">
+                        <?php esc_html_e( 'The network owner has disabled registrations.','b3-onboarding' ); ?>
+                    </div>
                 <?php } ?>
             </div>
 
@@ -100,14 +103,14 @@
                 </div>
             </div>
 
-<!--            <div class="b3__settings-field">-->
-<!--                <div class="b3__settings-label">-->
-<!--                    <label for="b3_activate_frontend_approval">--><?php //esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?><!--</label>-->
-<!--                </div>-->
-<!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
-<!--                    <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" --><?php //if ( $front_end_approval ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
-<!--                </div>-->
-<!--            </div>-->
+            <div class="b3__settings-field">
+                <div class="b3__settings-label">
+                    <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3__settings-input b3__settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
+                </div>
+            </div>
 
 <!--            <div class="b3__settings-field">-->
 <!--                <div class="b3__settings-label">-->
@@ -118,14 +121,14 @@
 <!--                </div>-->
 <!--            </div>-->
 
-<!--            <div class="b3__settings-field">-->
-<!--                <div class="b3__settings-label">-->
-<!--                    <label for="b3_activate_sidebar_widget">--><?php //esc_html_e( 'Sidebar widget', 'b3-onboarding' ); ?><!--</label>-->
-<!--                </div>-->
-<!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
-<!--                    <input type="checkbox" id="b3_activate_sidebar_widget" name="b3_activate_sidebar_widget" value="1" --><?php //if ( $sidebar_widget ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate the sidebar widget', 'b3-onboarding' ); ?>
-<!--                </div>-->
-<!--            </div>-->
+            <div class="b3__settings-field">
+                <div class="b3__settings-label">
+                    <label for="b3_activate_sidebar_widget"><?php esc_html_e( 'Sidebar widget', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3__settings-input b3__settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_sidebar_widget" name="b3_activate_sidebar_widget" value="1" <?php if ( $sidebar_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate the sidebar widget', 'b3-onboarding' ); ?>
+                </div>
+            </div>
 
 <!--            <div class="b3__settings-field">-->
 <!--                <div class="b3__settings-label">-->
@@ -175,6 +178,11 @@
                 'page_id' => get_option( 'b3_login_page_id' ),
             ),
             array(
+                'id'      => 'logout_page',
+                'label'   => esc_html__( 'Log Out', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_logout_page_id' ),
+            ),
+            array(
                 'id'      => 'forgotpass_page',
                 'label'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_forgotpass_page_id' ),
@@ -197,7 +205,7 @@
             'page_id' => get_option( 'b3_approval_page_id' ),
         );
         
-        if ( true == get_option( 'b3_front_user_approval' ) ) {
+        if ( true == get_option( 'b3_front_end_approval' ) ) {
             $b3_pages[] = $front_end_approval;
         }
         
@@ -206,6 +214,8 @@
             'post_type'      => 'page',
             'post_status'    => [ 'publish', 'pending', 'draft' ],
             'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
         ) );
         
         ob_start();
@@ -218,7 +228,7 @@
         
             <?php if ( isset( $_GET[ 'success' ] ) && 'pages_saved' == $_GET[ 'success' ] ) { ?>
                 <p class="b3__message">
-                    <?php esc_html_e( 'Pages saved', 'b3-onboarding' ); ?>
+                    <?php esc_html_e( 'Pages saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
                 </p>
             <?php } ?>
     
@@ -241,17 +251,18 @@
                             <?php } ?>
                         </select>
                     </div>
-                </div>
-                <?php if ( 'approval_page' == $page[ 'id' ] && false != b3_get_user_approval_id() ) { ?>
-                    <div class="b3__select-page">
-                        <div class="b3__select-page__label">&nbsp;</div>
 
-                        <div class="b3__select-page__selector">
-                            <?php esc_html_e( 'Please be aware that right now user approval is open through the front-end.', 'b3-onboarding' ); ?>
+                    <?php if ( false != get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
+                        <div class="b3__select-page__link">
+                            <a href="<?php echo get_the_permalink( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener">
+                                <?php esc_html_e( 'Visit page', 'b3-onboarding' ); ?>
+                            </a>
                         </div>
-                    </div>
-                <?php } ?>
+                    <?php } ?>
+
+                </div>
             <?php } ?>
+            <p><small><?php esc_html_e( 'Links open in new window/tab.', 'b3-onboarding' ); ?></small></p>
             <input type="submit" class="button button-primary" name="" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>">
         </form>
         <?php
@@ -277,7 +288,7 @@
     
         <?php if ( isset( $_GET[ 'success' ] ) && 'emails_saved' == $_GET[ 'success' ] ) { ?>
             <p class="b3__message">
-                <?php esc_html_e( 'Email settings saved', 'b3-onboarding' ); ?>
+                <?php esc_html_e( 'Email settings saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
         <?php } ?>
 
@@ -292,6 +303,106 @@
             <?php } ?>
 
             <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save all email settings', 'b3-onboarding' ); ?>" />
+        </form>
+
+        <?php
+        $result = ob_get_clean();
+        
+        return $result;
+    }
+    
+    
+    /**
+     * Render emails tab
+     *
+     * @return false|string
+     */
+    function b3_render_users_tab() {
+    
+        $first_last          = get_option( 'b3_first_last_name' );
+        $first_last_required = get_option( 'b3_first_last_required' );
+        $roles               = get_editable_roles();
+        asort( $roles );
+
+        ob_start();
+        ?>
+        <h2>
+            <?php esc_html_e( 'Users', 'b3-onboarding' ); ?>
+        </h2>
+    
+        <?php if ( isset( $_GET[ 'success' ] ) && 'settings_saved' == $_GET[ 'success' ] ) { ?>
+            <p class="b3__message">
+                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+            </p>
+        <?php } ?>
+
+        <p>
+            <?php esc_html_e( 'This page contains all the user settings.', 'b3-onboarding' ); ?>
+        </p>
+
+        <form action="" method="post">
+            <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
+
+            <div class="b3__settings-field">
+                <div class="b3__settings-label">
+                    <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3__settings-input b3__settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration', 'b3-onboarding' ); ?>
+                </div>
+                <?php if ( $first_last ) { ?>
+                    <div class="b3__settings-input b3__settings-input--checkbox">
+                        <label for="b3_first_last_required" class="screen-reader-text"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                        <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <div class="b3__settings-field">
+                <div class="b3__settings-label">
+                    <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3__settings-input b3__settings-input--checkbox">
+                    <div>Which users do <b>not</b> have access to the Wordpress admin ?</div>
+                    <?php
+                        $disallowed_roles = [ 'administrator' ];
+                        $stored_roles     = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
+                        foreach( $roles as $name => $capabilities ) {
+                            if ( ! in_array( $name, $disallowed_roles ) ) {
+                            ?>
+                                <label for="b3_restrict_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
+                                <input type="checkbox" id="b3_restrict_<?php echo $name; ?>" name="b3_restrict_admin[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?>/> <?php echo $name; ?>
+                                <br />
+                            <?php
+                            }
+                        }
+                    ?>
+                </div>
+            </div>
+
+            <div class="b3__settings-field">
+                <div class="b3__settings-label">
+                    <label><?php esc_html_e( 'Themed profile', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3__settings-input b3__settings-input--checkbox">
+                    <div>Which users see a front-end account page ?</div>
+                    <?php
+                        $disallowed_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
+                        $stored_roles     = ( is_array( get_option( 'b3_themed_profile' ) ) ) ? get_option( 'b3_themed_profile' ) : [ 'subscriber' ];
+                        foreach( $roles as $name => $capabilities ) {
+                            if ( ! in_array( $name, $disallowed_roles ) ) {
+                            ?>
+                                <label for="b3_themed_profile_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
+                                <input type="checkbox" id="b3_themed_profile_<?php echo $name; ?>" name="b3_themed_profile[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?>/> <?php echo $name; ?>
+                                <br />
+                            <?php
+                            }
+                        }
+                    ?>
+                </div>
+            </div>
+
+            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save all user settings', 'b3-onboarding' ); ?>" />
         </form>
 
         <?php
@@ -318,7 +429,7 @@
     
         <?php if ( isset( $_GET[ 'success' ] ) && 'recaptcha_saved' == $_GET[ 'success' ] ) { ?>
             <p class="b3__message">
-                <?php esc_html_e( 'Recaptcha saved', 'b3-onboarding' ); ?>
+                <?php esc_html_e( 'Recaptcha saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
         <?php } ?>
 
@@ -402,11 +513,41 @@
                 <br />
                 We'll look into creating an add-on for the ones below soon.
             </p>
-
-            <ul>
-                <li>Salesforce</li>
-                <li>Mailchimp</li>
-            </ul>
+            
+            <?php
+                $modules = [
+                    [
+                        'id'   => 'salesforce',
+                        'name' => 'Salesforce',
+                        'logo' => 'logo-salesforce.png',
+                        'link' => '#',
+                    ],
+                    [
+                        'id'   => 'mailchimp',
+                        'name' => 'Mailchimp',
+                        'logo' => 'logo-mailchimp.png',
+                        'link' => '#',
+                    ],
+                    [
+                        'id'   => 'aweber',
+                        'name' => 'AWeber',
+                        'logo' => 'logo-aweber.png',
+                        'link' => '#',
+                    ],
+                ];
+            ?>
+            <ul class="addons__list"><!--
+                <?php foreach( $modules as $module ) { ?>
+                --><li class="addons__list--item">
+                    <div class="addon__image">
+                        <img src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module['logo']; ?>" alt="<?php echo $module['name']; ?>" />
+                    </div>
+                    <div class="addon__name">
+                        <?php echo $module['name']; ?>
+                    </div>
+                </li><!--
+                <?php } ?>
+            --></ul>
         </div>
 
         <?php

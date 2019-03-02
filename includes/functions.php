@@ -18,6 +18,7 @@
         </div>
         <?php
         $results = ob_get_clean();
+        
         echo $results;
     }
     
@@ -58,57 +59,6 @@
     
     
     /**
-     * Render any extra fields
-     *
-     * @param bool $extra_field
-     *
-     * @return bool|false|string
-     */
-    function b3_render_extra_field( $extra_field = false ) {
-        
-        if ( false != $extra_field ) {
-    
-            $input_id          = ( ! empty( $extra_field[ 'id' ] ) ) ? $extra_field[ 'id' ] : false;
-            $input_class       = ( ! empty( $extra_field[ 'class' ] ) ) ? ' ' . $extra_field[ 'class' ] : false;
-            $input_label       = ( ! empty( $extra_field[ 'label' ] ) ) ? $extra_field[ 'label' ] : false;
-            $input_placeholder = ( ! empty( $extra_field[ 'placeholder' ] ) ) ? ' placeholder="' . $extra_field[ 'placeholder' ] . '"' : false;
-            $input_required    = ( ! empty( $extra_field[ 'required' ] ) ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
-            $input_type        = ( ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
-            $input_options     = ( ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : [];
-
-            if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) && isset( $extra_field[ 'class' ] ) ) {
-    
-                ob_start();
-                ?>
-                <div class="b3__form-element b3__form-element--<?php echo $input_type; ?>">
-                    <label class="b3__form-label" for="<?php echo $input_id; ?>"><?php echo $input_label; ?> <?php echo $input_required; ?></label>
-                    <?php if ( 'text' == $input_type ) { ?>
-                        <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3__form--input<?php echo $input_class; ?>"<?php if ( $input_placeholder && 'text' == $extra_field[ 'type' ] ) { echo $input_placeholder; } ?>value=""<?php if ( $input_required ) { echo ' required'; }; ?>>
-                    <?php } elseif ( 'textarea' == $input_type ) { ?>
-                        <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3__form--input<?php echo $input_class; ?>" value=""<?php if ( $input_placeholder ) { echo $input_placeholder; } ?><?php if ( $input_required ) { echo ' required'; }; ?>></textarea>
-                    <?php } elseif ( 'radio' == $input_type ) { ?>
-                        <?php if ( $input_options ) { ?>
-                            <?php $counter = 1; ?>
-                            <?php foreach( $input_options as $option ) { ?>
-                                <label for="<?php echo $option[ 'value' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                <input class="b3__form--input<?php echo $input_class; ?>" id="<?php echo $option[ 'value' ]; ?>_<?php echo $counter; ?>" name="<?php echo $option[ 'name' ]; ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php if ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) { echo ' checked="checked"'; } ?>> &nbsp;<?php echo $option[ 'label' ]; ?>
-                                <?php $counter++; ?>
-                            <?php } ?>
-                        <?php } ?>
-                    <?php } ?>
-                </div>
-                <?php
-                $output = ob_get_clean();
-    
-                return $output;
-            }
-        }
-        
-        return false;
-    }
-
-
-    /**
      * @param $recaptcha_public
      * @param string $form_type
      */
@@ -137,21 +87,30 @@
             'b3_approval_page_id',
             'b3_add_br_html_email', // not used yet
             'b3_dashboard_widget', // not used yet
-            'b3_email_styling', // not used yet
-            'b3_email_template', // not used yet
+            'b3_email_styling',
+            'b3_email_template',
+            'b3_first_last_name',
+            'b3_first_last_required',
             'b3_forgot_password_message',
             'b3_forgot_password_subject',
             'b3_forgotpass_page_id',
             'b3_login_page_id',
+            'b3_logout_page_id',
             'b3_mail_sending_method', // not used yet
             'b3_new_user_message',
+            'b3_new_user_notification_addresses',
             'b3_new_user_subject',
             'b3_notification_sender_email',
             'b3_notification_sender_name',
+            'b3_request_access_message',
+            'b3_request_access_notification_addresses',
+            'b3_request_access_subject',
             'b3_register_page_id',
             'b3_registration_type',
+            'b3_restrict_admin',
             'b3_resetpass_page_id',
-            'b3_sidebar_widget', // not used yet
+            'b3_themed_profile',
+            'b3_sidebar_widget',
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
         );
@@ -319,109 +278,14 @@
         }
         
     }
-    
-    /**
-     * Return register ID page (for current language if WPML is active)
-     *
-     * @return bool|string
-     */
-    function b3_get_register_id() {
-        $id = get_option( 'b3_register_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-        }
-        
-        return $id;
-        
-    }
-    
-    
-    function b3_get_account_id() {
-        $id = get_option( 'b3_account_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-        }
-        
-        return $id;
-        
-    }
-    
-    
-    /**
-     * Return login page id (for current language if WPML is active)
-     *
-     * @return bool|string
-     */
-    function b3_get_login_id() {
-        $id = get_option( 'b3_login_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-        }
-        
-        return $id;
-        
-    }
-    
-    /**
-     * Return forgot pass page id (for current language if WPML is active)
-     *
-     * @return bool|string
-     */
-    function b3_get_forgotpass_id() {
-        $id = get_option( 'b3_forgotpass_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-        }
-        
-        return $id;
-        
-    }
-    
-    /**
-     * Return reset pass page id (for current language if WPML is active)
-     *
-     * @return bool|string
-     */
-    function b3_get_resetpass_id() {
-        $id = get_option( 'b3_resetpass_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-        }
-        
-        return $id;
-        
-    }
-    
-    function b3_get_user_approval_id() {
-        $id = get_option( 'b3_approval_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-        }
-        
-        return $id;
-        
-    }
-    
-    
+
+
     /**
      * Return default email styling
      *
      * @return false|string
      */
     function b3_default_email_styling() {
-        
         $default_css = file_get_contents( dirname(__FILE__) . '/default-styling.css' );
         
         return $default_css;
@@ -473,6 +337,27 @@
         }
     }
     
+    
+    /**
+     * @param $registration_type
+     *
+     * @return mixed
+     */
+    function b3_get_notification_addresses( $registration_type ) {
+        $email_addresses = get_option( 'admin_email' );
+        if ( 'request_access' == $registration_type ) {
+            if ( false != get_option( 'b3_request_access_notification_addresses' ) ) {
+                $email_addresses = get_option( 'b3_request_access_notification_addresses' );
+            }
+        } elseif ( 'open' == $registration_type ) {
+            if ( false != get_option( 'b3_new_user_notification_addresses' ) ) {
+                $email_addresses = get_option( 'b3_new_user_notification_addresses' );
+            }
+        }
+        
+        return $email_addresses;
+        
+    }
     
     /**
      * Return new user subject (admin)
@@ -654,4 +539,123 @@
         }
         
         return $message;
+    }
+
+    function b3_first_last_name_fields() {
+        
+        ob_start();
+        ?>
+            <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
+            <div class="b3__form-element b3__form-element--register">
+                <label class="b3__form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <input type="text" name="b3_first_name" id="b3_first_name" class="b3__form--input"<?php echo $required; ?>>
+            </div>
+            <div class="b3__form-element b3__form-element--register">
+                <label class="b3__form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <input type="text" name="b3_last_name" id="b3_last_name" class="b3__form--input"<?php echo $required; ?>>
+            </div>
+        <?php
+        $output = ob_get_clean();
+        
+        echo $output;
+    }
+    
+    /**
+     * Render login form
+     */
+    function b3_render_login_form() {
+        
+        ob_start();
+        ?>
+        <form name="loginform" id="loginform" action="http://bedrock.beee/wp/wp-login.php" method="post">
+            <table class="b3__table b3__table--login" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <label for="user_login">Email address</label>
+                    </td>
+                    <td>
+                        <input type="text" name="log" id="user_login" class="input" value="" size="20">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="user_pass">Password</label>
+                    </td>
+                    <td>
+                        <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> Remember Me</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="Log In">
+                        <input type="hidden" name="redirect_to" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <?php echo b3_form_links( 'login' ); ?>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <?php
+        $output = ob_get_clean();
+        
+        return $output;
+    }
+    
+    /**
+     * Return links below a (public) form
+     */
+    function b3_form_links( $current_form ) {
+    
+        $output = '';
+        $page_types = [];
+        switch ( $current_form ) {
+    
+            case 'login':
+                $page_types[ 'lostpassword' ] = [
+                    'title' => 'Lost password',
+                    'link'  => b3_get_forgotpass_id( true )
+                ];
+                if ( 'closed' != get_option( 'registration_type' ) ) {
+                    $page_types[ 'register' ] = [
+                        'title' => __( 'Register', 'b3-onboarding' ),
+                        'link'  => b3_get_register_id( true )
+                    ];
+                }
+                break;
+                
+            case 'register':
+                $page_types[ 'login' ] = [
+                    'title' => __( 'Log In', 'b3-onboarding' ),
+                    'link'  => b3_get_login_id( true )
+                ];
+                $page_types[ 'forgotpass' ] = [
+                    'title' => __( 'Lost password', 'b3-onboarding' ),
+                    'link'  => b3_get_forgotpass_id( true )
+                ];
+                break;
+                
+            default:
+                break;
+        }
+        
+        if ( count( $page_types ) > 0 ) {
+            ob_start();
+            echo '<ul class="b3__form-links"><!--';
+            foreach( $page_types as $key => $values ) {
+                echo '--><li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li><!--';
+            }
+            echo '--></ul>';
+            $output = ob_get_clean();
+        }
+        
+        return $output;
     }
