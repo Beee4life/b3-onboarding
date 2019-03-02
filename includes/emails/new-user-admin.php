@@ -1,9 +1,23 @@
 <?php
+    $new_user_email_addresses = get_option( 'b3_new_user_notification_addresses', false );
     $new_user_email_subject = get_option( 'b3_new_user_subject', false );
     $new_user_email_message = get_option( 'b3_new_user_message', false );
 ?>
 <table class="b3__table b3__table--emails" border="0" cellpadding="0" cellspacing="0">
     <tbody>
+    <tr>
+        <td colspan="2" class="b3__intro">
+            <?php esc_html_e( "Enter the email address (searated by comma) which should receive the notification email. If no email is entered, it will be sent to the administrator's email address.", "b3-onboarding" ); ?>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="b3__input--new-user-notification-addresses" class=""><?php esc_html_e( 'Email addresses', 'b3-onboarding' ); ?></label>
+        </th>
+        <td>
+            <input class="" id="b3__input--new-user-notification-addresses" name="b3_new_user_notification_addresses" placeholder="<?php echo get_option( 'admin_email' ); ?>" type="text" value="<?php echo $new_user_email_addresses; ?>" />
+        </td>
+    </tr>
     <tr>
         <td colspan="2">
             <?php esc_html_e( 'If any field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
