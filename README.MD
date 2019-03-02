@@ -1,5 +1,7 @@
 # B3 Onboarding plugin
 
+Version: 0.7-beta
+
 This plugin focusses on how to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
 You can easily customise a lot of things, if you know your way around [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks). Right now we focus mostly on technique, to make this plugin as customisable as possible. A proper user interface for the less techy will follow later.
@@ -16,7 +18,6 @@ You can easily customise a lot of things, if you know your way around [actions/f
 - [Shortcodes](#shortcodes)
 - [Notes](#notes)
 - [Roadmap](#roadmap)
-- [Source(s)](#sources)
 
 <a name="activate"></a>
 ### Activation 
@@ -36,19 +37,16 @@ All stored options are removed (unless option to not remove data is selected) an
 <a name="features"></a>
 ### Features
 
-* custom forms
+* custom forms/pages
   * register
   * login
   * forgot password
   * reset password
-* options
-  * custom passwords by user
-  * send password by mail
-  * recaptcha
+  * account
 * styled according to [BEM](https://en.bem.info) technology
 * add custom fields through hooks
-* WPML ready
-* Multisite ready
+* WPML prepared (partially)
+* Multisite prepared (partially)
 
 
 <a name="hooks"></a>
@@ -59,32 +57,46 @@ All stored options are removed (unless option to not remove data is selected) an
 * b3_after_registration_form
 * b3_before_recaptcha_{form_type}
 * b3_before_submit_registration_form
+* b3_do_before_request_access
+* b3_do_after_request_access
+* b3_do_before_registration_form
+* b3_do_after_registration_form
+* b3_new_user_activated
+* b3_new_user_activated_by_admin
+* b3_before_recaptcha_{$form_type}
+* b3_after_recaptcha_{$form_type}
 
 <a name="filters"></a>
 ### Filters
 
 * b3_filter_hidden_fields_values
+* b3_do_filter_hidden_fields_values
+* b3_add_filter_extra_fields_values
+* b3_filter_closed_message
+* b3_welcome_user_subject
+* b3_welcome_user_message
 
-#### Example 
+<a name="shortcodes"></a>
+### Shortcodes
+* [account-page] = renders account page
+* [forgotpass-form] = renders forgot password form
+* [login-form] = renders login form
+* [register-form] = renders regster form
+* [resetpass-form] = renders reset password form
 
-```
-function b3_my_hidden_fields() {
-
-    return [
-        'key1' => 'value1',
-        'key2' => 'value2',
-    ];
-}
-add_filter( 'b3_filter_hidden_fields_values', 'b3_my_hidden_fields' );
-```
+<a name="notes"></a>
+### Notes
+1. It's still under development, use at your own risk.
+1. Not styled for mobile yet.
 
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
-* integration with Salesforce
-* integration with Mailchimp
-* multi page registration forms
+* [ ] integration with Salesforce
+* [ ] integration with Mailchimp
+* [ ] integration with AWeber
+* [ ] multi page registration forms
 
 #### What problems does this plugin solve ?
 
-No part is obligated. You can use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want.
+This plugin gives you all the freedom to change/use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want with filters/hooks or through a settings page.
