@@ -82,13 +82,15 @@
         
                     $loopable_ids = [
                         'b3_account_page_id',
-                        'b3_approval_page_id',
                         'b3_forgotpass_page_id',
                         'b3_login_page_id',
                         'b3_logout_page_id',
                         'b3_register_page_id',
                         'b3_resetpass_page_id',
                     ];
+                    if ( isset( $_POST[ 'b3_approval_page_id' ] ) ) {
+                        $loopable_ids[] = 'b3_approval_page_id';
+                    }
                     foreach( $loopable_ids as $page ) {
                         $old_id = get_option( $page );
                         update_option( $page, $_POST[ $page ], true );
