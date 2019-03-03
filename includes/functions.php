@@ -567,7 +567,7 @@
         
         ob_start();
         ?>
-        <form name="loginform" id="loginform" action="http://bedrock.beee/wp/wp-login.php" method="post">
+        <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
             <table class="b3__table b3__table--login" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>
