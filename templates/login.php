@@ -5,7 +5,7 @@
     $request_access        = get_option( 'b3_registration_type' );
 ?>
 <div id="b3-login" class="b3__page b3__page--login">
-    <?php if ( $attributes[ 'show_title' ] ) { ?>
+    <?php if ( $attributes[ 'title' ] ) { ?>
         <h2>
             <?php _e( 'Log In', 'b3-onboarding' ); ?>
         </h2>
