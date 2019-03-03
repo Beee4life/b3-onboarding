@@ -46,6 +46,29 @@
     
     
     /**
+     * Return logout page id
+     *
+     * @return bool|string
+     */
+    function b3_get_logout_id( $return_link = false ) {
+        $id = get_option( 'b3_logout_page_id', false );
+        if ( false != $id && get_post( $id ) ) {
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
+            if ( true == $return_link ) {
+                return get_permalink( $id );
+            }
+        } elseif ( true == $return_link ) {
+            return wp_login_url();
+        }
+        
+        return $id;
+        
+    }
+    
+    
+    /**
      * Get page id for account page
      *
      * @return mixed
