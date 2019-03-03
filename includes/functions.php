@@ -571,7 +571,7 @@
             <table class="b3__table b3__table--login" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>
-                        <label for="user_login">Email address</label>
+                        <label for="user_login"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
                     </td>
                     <td>
                         <input type="text" name="log" id="user_login" class="input" value="" size="20">
@@ -579,7 +579,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="user_pass">Password</label>
+                        <label for="user_pass"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
                     </td>
                     <td>
                         <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
@@ -588,7 +588,7 @@
                 <tr>
                     <td>&nbsp;</td>
                     <td>
-                        <label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> Remember Me</label>
+                        <label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <?php esc_html_e( 'Remember Me', 'b3-onboarding' ); ?></label>
                     </td>
                 </tr>
                 <tr>
