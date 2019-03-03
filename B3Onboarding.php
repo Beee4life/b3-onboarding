@@ -92,6 +92,7 @@
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
                 add_shortcode( 'account-page',                 array( $this, 'b3_render_account_page' ) );
                 add_shortcode( 'user-management',              array( $this, 'b3_render_user_management_page' ) );
+                add_shortcode( 'delete-account',               array( $this, 'b3_render_delete_account_page' ) );
     
                 include( 'includes/do-stuff.php' );
                 include( 'includes/dashboard-widget.php' ); // @TODO: add if setting is active
@@ -331,6 +332,11 @@
                 } elseif ( $post->ID == b3_get_login_id() ) {
                     if ( $post->post_title != 'Login' ) {
                         $title_suffix = ': Login';
+                    }
+                    $post_states[] = 'B3' . $title_suffix;
+                } elseif ( $post->ID == b3_get_logout_id() ) {
+                    if ( $post->post_title != 'Log out' ) {
+                        $title_suffix = ': Log out';
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_forgotpass_id() ) {
@@ -1488,6 +1494,20 @@
                 <?php } ?>
 
                 <?php
+            }
+        
+
+            /**
+             * Render user management page
+             *
+             * @param $user_variables
+             * @param null $content
+             */
+            public function b3_render_delete_account_page( $user_variables, $content = null ) {
+                
+                if ( is_user_logged_in() ) {
+                    echo 'This needs to be rendered into a button (from B3 Onboarding)';
+                }
             }
         
 
