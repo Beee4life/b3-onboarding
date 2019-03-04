@@ -8,6 +8,7 @@
     Author: Beee
     Author URI: http://www.berryplasman.com
     Text-domain: b3-onboarding
+    License: GNU v3
 
     http://www.berryplasman.com
        ___  ____ ____ ____
