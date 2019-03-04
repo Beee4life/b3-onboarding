@@ -6,6 +6,7 @@ This plugin focusses on how to 'onboard' (in other words register/add) users to 
 
 You can easily customise a lot of things, if you know your way around [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks). Right now we focus mostly on technique, to make this plugin as customisable as possible. A proper user interface for the less techy will follow later.
 
+Note: it's still in beta. Everything should be working, but don't rely on it for the full 100% yet.
 
 ## Contents
 
@@ -56,6 +57,7 @@ All stored options are removed (unless option to not remove data is selected) an
 * b3_after_recaptcha_{form_type}
 * b3_after_registration_form
 * b3_before_recaptcha_{form_type}
+* b3_before_{template_name}
 * b3_before_submit_registration_form
 * b3_do_before_request_access
 * b3_do_after_request_access
@@ -63,8 +65,6 @@ All stored options are removed (unless option to not remove data is selected) an
 * b3_do_after_registration_form
 * b3_new_user_activated
 * b3_new_user_activated_by_admin
-* b3_before_recaptcha_{$form_type}
-* b3_after_recaptcha_{$form_type}
 
 <a name="filters"></a>
 ### Filters
