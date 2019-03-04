@@ -79,23 +79,6 @@
                 if ( ! is_wp_error( $result) ) {
                     update_option( $page[ 'meta' ], $result, true );
                     update_post_meta( $result, '_b3_page', true );
-                } else {
-                    // if page does return an error (thus a page exists with $slug)
-                    $alternative_result = wp_insert_post( array(
-                            'post_title'     => $page[ 'title' ],
-                            'post_name'      => $slug . '-2',
-                            'post_content'   => $page[ 'content' ],
-                            'post_status'    => 'publish',
-                            'post_type'      => 'page',
-                            'ping_status'    => 'closed',
-                            'comment_status' => 'closed',
-                        ),
-                        false
-                    );
-                    if ( ! is_wp_error( $alternative_result) ) {
-                        update_option( $page[ 'meta' ], $alternative_result, true );
-                        update_post_meta( $alternative_result, '_b3_page', true );
-                    }
                 }
 
             } else {

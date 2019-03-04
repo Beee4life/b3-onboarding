@@ -1,5 +1,12 @@
 <?php
     
+    /**
+     * Render email settings field
+     *
+     * @param bool $box
+     *
+     * @return false|mixed|string
+     */
     function b3_render_email_settings_field( $box = false ) {
         
         if ( false != $box ) {
@@ -11,7 +18,15 @@
         
         return '<h4>Oops, no content yet...</h4>';
     }
-
+    
+    
+    /**
+     * Content for an email settings field
+     *
+     * @param bool $box
+     *
+     * @return false|string
+     */
     function b3_basic_email_settings_field( $box = false ) {
     
         ob_start();
@@ -37,7 +52,15 @@
         
         return $output;
     }
-
+    
+    
+    /**
+     * Load fold out content
+     *
+     * @param bool $box
+     *
+     * @return bool|false|string
+     */
     function b3_foldout_content( $box = false ) {
         
         if ( false != $box ) {

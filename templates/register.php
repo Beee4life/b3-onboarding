@@ -21,8 +21,6 @@
         <?php } ?>
     <?php } ?>
     
-    <?php do_action( 'b3_do_before_registration_form' ); ?>
-
     <form id="b3-register-form" class="b3__form b3__form--register" action="<?php echo wp_registration_url(); ?>" method="post">
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
         <?php b3_hidden_fields_registration_form(); ?>
@@ -115,6 +113,4 @@
     
     </form>
 
-    <?php do_action( 'b3_do_after_registration_form' ); ?>
-    
 </div>

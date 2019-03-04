@@ -105,7 +105,7 @@
                 include( 'includes/help-tabs.php' );
                 include( 'includes/tabs.php' );
             }
-    
+            
             /**
              * Do stuff upon plugin activation
              */
@@ -165,14 +165,11 @@
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
+                update_option( 'b3_sidebar_widget', '1' );
                 
                 // 2 use
-                // update_option( 'b3_add_br_html_email', '0' );
                 // update_option( 'b3_dashboard_widget', '1' );
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
-                // update_option( 'b3_sidebar_widget', '1' );
-                
-                // @TODO: add default emails for each field
     
             }
     
@@ -1523,12 +1520,24 @@
                 if ( ! $attributes ) {
                     $attributes = array();
                 }
+    
+                $template_paths = array(
+                    get_stylesheet_directory() . '/plugins/b3-onboarding/',
+                    get_template_directory() . '/plugins/b3-onboarding/',
+                    plugin_dir_path( __FILE__ ) . 'templates/',
+                );
+                foreach( $template_paths as $possible_location ) {
+                    if ( file_exists( $possible_location . $template_name . '.php' )) {
+                        $location = $possible_location;
+                        break;
+                    }
+                }
             
                 ob_start();
     
                 do_action( 'b3_before_' . $template_name );
 
-                require( 'templates/' . $template_name . '.php' );
+                include( $location . $template_name . '.php' );
             
                 do_action( 'b3_after_' . $template_name );
             

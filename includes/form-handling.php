@@ -130,13 +130,6 @@
                         update_option( 'b3_request_access_subject', $_POST[ 'b3_request_access_subject' ], true );
                     }
     
-                    // update_option( 'b3_mail_sending_method', $_POST[ 'b3_mail_sending_method' ], true );
-                    // if ( "0" == $_POST[ 'b3_add_br_html_email' ] ) {
-                    //     update_option( "b3_add_br_html_email", "0", true );
-                    // } else {
-                    //     update_option( "b3_add_br_html_email", "1", true );
-                    // }
-    
                     $redirect_url = add_query_arg( 'success', 'emails_saved', $redirect_url );
     
                 }

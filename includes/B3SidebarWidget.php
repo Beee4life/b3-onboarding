@@ -28,7 +28,6 @@
                 echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
             }
     
-            $redirect_url  = b3_get_current_url();
             $login_id      = get_option( 'b3_login_page_id' );
             $login_link    = ( false != $login_id ) ? get_permalink( $login_id ) : network_site_url( 'wp-login.php' );
             $account_id    = get_option( 'b3_account_page_id' );

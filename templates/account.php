@@ -7,7 +7,6 @@
         </p>
     <?php } ?>
 
-    <?php do_action( 'b3_before_user_profile' ); ?>
     <form id="" name="" action="<?php echo get_permalink( get_the_ID() ); ?>" method="post">
 
         <input name="b3_profile_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-profile-nonce' ); ?>" />
@@ -129,6 +128,4 @@
         </div>
         
     </form>
-    
-    <?php do_action( 'b3_after_user_profile' ); ?>
 </div>
