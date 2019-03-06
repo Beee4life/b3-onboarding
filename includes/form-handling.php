@@ -218,8 +218,8 @@
                         $user_object->set_role( get_option( 'default_role' ) );
     
                         // send mail
-                        $blog_name  = get_option( 'blogname' );
-                        $from_email = get_option( 'admin_email' );
+                        $blog_name  = get_option( 'blogname' ); // @TODO: add filter
+                        $from_email = get_option( 'admin_email' ); // @TODO: add filter
                         $to         = $user_object->user_email;
                         $subject    = esc_html__( 'Account approved', 'b3-onboarding' );
                         $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login.', 'b3-onboarding' ), $blog_name );
@@ -241,8 +241,8 @@
                         // do reject user
                         if ( true == wp_delete_user( $user_id ) ) {
                             // send mail
-                            $blog_name  = get_option( 'blogname' );
-                            $from_email = get_option( 'admin_email' );
+                            $blog_name  = get_option( 'blogname' ); // @TODO: add filter
+                            $from_email = get_option( 'admin_email' ); // @TODO: add filter
                             $to         = $user_object->user_email;
                             $subject    = sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), $blog_name );
                             $message    = sprintf( esc_html__( "We're sorry to have to inform you, but your request for access to %s was rejected.", "b3-onboarding" ), $blog_name );
