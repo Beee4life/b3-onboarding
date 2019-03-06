@@ -4,9 +4,12 @@
 }
 
 .b3__message {
-    display:         flex;
-    flex-flow:       row nowrap;
-    justify-content: space-between;
+
+    /*@TODO: why this again ?*/
+    /*display:         flex;*/
+    /*flex-flow:       row nowrap;*/
+    /*justify-content: space-between;*/
+
     border:          1px dashed black;
     padding:         5px 10px;
 }
