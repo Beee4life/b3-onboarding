@@ -2,6 +2,9 @@
     
     /**
      * Output the password fields
+     * Not used
+     *
+     * Do I still need this ?
      */
     function b3_show_password_fields() {
         
@@ -268,8 +271,8 @@
             ?>
             <?php // @TODO: add more fields for Multisite ?>
             <div class="b3__form-element b3__form-element--register">
-                <label class="b3__form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-user-register' ); ?></label>
-                <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3__form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-user-register' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
+                <label class="b3__form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
+                <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3__form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
             </div>
             <?php
             $output = ob_get_clean();
