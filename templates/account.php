@@ -3,7 +3,7 @@
     
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
         <p class="b3__message">
-            <?php echo esc_html__( 'Profile saved', 'b3-user-register' ); ?>
+            <?php echo esc_html__( 'Profile saved', 'b3-onboarding' ); ?>
         </p>
     <?php } ?>
 

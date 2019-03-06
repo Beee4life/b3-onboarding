@@ -1456,7 +1456,7 @@
                     <?php } ?>
                 <?php } ?>
                 <?php if ( $users ) { ?>
-                    <table class="b3__user-table" border="0" cellspacing="0" cellpadding="0" style="">
+                    <table class="b3__table--user" border="0" cellspacing="0" cellpadding="0" style="">
                         <thead>
                         <tr>
                             <th>
