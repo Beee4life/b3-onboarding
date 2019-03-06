@@ -12,22 +12,19 @@
     <?php } ?>
     
     <p>
-        <?php esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-user-register' ); ?>
+        <?php esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-onboarding' ); ?>
     </p>
 
     <form id="lostpasswordform" class="b3__form b3__form--register" action="<?php echo wp_lostpassword_url(); ?>" method="post">
         <input name="b3_forgot_pass" value="<?php echo wp_create_nonce( 'b3-forgot-pass' ); ?>" type="hidden" />
 
         <p class="form-row">
-            <label for="b3_user_email"><?php esc_html_e( 'Email', 'b3-user-register' ); ?>
+            <label for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
             <input type="text" name="user_login" id="b3_user_email" value="info@xxx.com" required>
         </p>
-        <?php if ( true == $show_custom_passwords ) { ?>
-            <?php b3_show_password_fields(); ?>
-        <?php } ?>
 
         <p class="lostpassword-submit">
-            <input type="submit" name="submit" class="lostpassword-button" value="<?php esc_html_e( 'Reset Password', 'b3-user-register' ); ?>"/>
+            <input type="submit" name="submit" class="lostpassword-button" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
         </p>
     </form>
 
