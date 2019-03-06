@@ -23,7 +23,7 @@
                         $default_tab = $_GET[ 'tab' ];
                     } else {
                         if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
-                            $default_tab = 'users';
+                            $default_tab = 'settings';
                         } else {
                             $default_tab = 'settings';
                         }
