@@ -92,7 +92,7 @@
                 add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
                 add_shortcode( 'account-page',                 array( $this, 'b3_render_account_page' ) );
-                add_shortcode( 'user-management',              array( $this, 'b3_render_user_management_page' ) );
+                add_shortcode( 'user-management',              array( $this, 'b3_render_user_approval_page' ) );
                 add_shortcode( 'delete-account',               array( $this, 'b3_render_delete_account_page' ) );
     
                 include( 'includes/do-stuff.php' );
@@ -252,9 +252,10 @@
                     wp_logout();
     
                     if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
-                        $redirect_to = $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
+                        $redirect_to = $_REQUEST[ 'redirect_to' ];
+                        $requested_redirect_to = '';
                     } else {
-                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
+                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' ); // @TODO: make dynamic
                         $requested_redirect_to = '';
                     }
     
@@ -1436,7 +1437,7 @@
              * @param $user_variables
              * @param null $content
              */
-            public function b3_render_user_management_page( $user_variables, $content = null ) {
+            public function b3_render_user_approval_page( $user_variables, $content = null ) {
     
                 // get users which are awaiting approval
                 $user_args = array(
