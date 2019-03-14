@@ -94,6 +94,7 @@ All stored options are removed (unless option to not remove data is selected) an
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
+* [ ] make it more responsive
 * [ ] reCAPTCHA
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
