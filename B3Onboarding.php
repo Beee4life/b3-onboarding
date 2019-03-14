@@ -336,7 +336,7 @@
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_logout_id() ) {
-                    if ( $post->post_title != 'Log out' ) {
+                    if ( $post->post_title != 'Log Out' ) {
                         $title_suffix = ': Log out';
                     }
                     $post_states[] = 'B3' . $title_suffix;
