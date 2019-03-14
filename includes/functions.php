@@ -87,19 +87,19 @@
     
         $meta_keys = array(
             'b3_account_page_id',
+            'b3_activate_first_last',
             'b3_approval_page_id',
-            'b3_add_br_html_email', // not used yet
-            'b3_dashboard_widget', // not used yet
+            // 'b3_add_br_html_email', // not used yet
+            // 'b3_dashboard_widget', // not used yet
             'b3_email_styling',
             'b3_email_template',
-            'b3_first_last_name',
             'b3_first_last_required',
             'b3_forgot_password_message',
             'b3_forgot_password_subject',
             'b3_forgotpass_page_id',
             'b3_login_page_id',
             'b3_logout_page_id',
-            'b3_mail_sending_method', // not used yet
+            // 'b3_mail_sending_method', // not used yet
             'b3_new_user_message',
             'b3_new_user_notification_addresses',
             'b3_new_user_subject',
