@@ -76,6 +76,29 @@
             </ul>
         </li>
     <?php } ?>
+    
+    <?php $b3_values = b3_get_all_custom_meta_keys(); ?>
+    <ul>
+        <?php
+            if ( ( $key = array_search( 'b3_email_styling', $b3_values ) ) !== false ) {
+                unset( $b3_values[ $key ] );
+            }
+            if ( ( $key = array_search( 'b3_email_template', $b3_values ) ) !== false ) {
+                unset( $b3_values[ $key ] );
+            }
+            foreach( $b3_values as $meta_key ) {
+                echo '<li>';
+                echo $meta_key . ': ';
+                $value = get_option( $meta_key );
+                if ( is_array( $value ) ) {
+                    echo '<pre>' . var_dump( $value ) . '</pre>';
+                } else {
+                    echo ($value) ? $value : esc_html__( 'empty', 'b3-onboarding');
+                }
+                echo '</li>';
+            }
+        ?>
+    </ul>
 </ul>
 
 
