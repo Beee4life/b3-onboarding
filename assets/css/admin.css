@@ -170,6 +170,7 @@
 .b3 table.b3__table--emails td {
     padding-top: 2em;
 }
+
 .b3__intro {
     line-height: 1.5em;
 }
@@ -219,26 +220,33 @@ ul.addons__list {
     list-style:   none;
     padding-left: 0;
     position:     relative;
+    display:      flex;
+    flex-flow:    row nowrap;
 }
 
 .addons__list--item {
-    border-radius:  10px;
-    border:         1px solid #444444;
-    display:        inline-block;
-    margin-right:   1em;
-    padding:        1em;
-    text-align:     center;
-    vertical-align: top;
-    width:          200px;
+    box-sizing:         border-box;
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    border-radius:      10px;
+    border:             1px solid #444444;
+    margin-right:       1em;
+    overflow:           hidden;
+    padding:            1em;
+    text-align:         center;
+    vertical-align:     top;
+    width:              200px;
 }
 
 .addon__image {
+    height:        90px;
     margin-bottom: 0.5em;
 }
 
 .addon__image img {
-    max-width: 75%;
-    height:    auto;
+    height:     auto;
+    max-height: 90px;
+    max-width:  100%;
 }
 
 .addon__name {

@@ -539,11 +539,13 @@
             <ul class="addons__list"><!--
                 <?php foreach( $modules as $module ) { ?>
                 --><li class="addons__list--item">
-                    <div class="addon__image">
-                        <img src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module['logo']; ?>" alt="<?php echo $module['name']; ?>" />
-                    </div>
-                    <div class="addon__name">
-                        <?php echo $module['name']; ?>
+                    <div class="addon__container">
+                        <div class="addon__image">
+                            <img src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module['logo']; ?>" alt="<?php echo $module['name']; ?>" />
+                        </div>
+                        <div class="addon__name">
+                            <?php echo $module['name']; ?>
+                        </div>
                     </div>
                 </li><!--
                 <?php } ?>
