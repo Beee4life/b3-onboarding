@@ -55,20 +55,22 @@ All stored options are removed (unless option to not remove data is selected) an
 ### Hooks
 
 * b3_add_custom_fields_registration
-* b3_after_recaptcha_{form_type}
-* b3_after_registration_form
-* b3_before_recaptcha_{form_type}
+* b3_after_insert_user
+* b3_after_recaptcha_{form_type} (not used yet)
+* b3_after_{template_name}
+* b3_before_recaptcha_{form_type} (not used yet)
 * b3_before_{template_name}
-* b3_before_submit_registration_form
-* b3_do_before_request_access
+* b3_do_after_registration_form
 * b3_do_after_request_access
 * b3_do_before_registration_form
-* b3_do_after_registration_form
+* b3_do_before_request_access
 * b3_new_user_activated
 * b3_new_user_activated_by_admin
+* b3_new_user_rejected
 
 <a name="filters"></a>
 ### Filters
+... list is not complete yet
 
 * b3_filter_hidden_fields_values
 * b3_do_filter_hidden_fields_values
@@ -76,6 +78,7 @@ All stored options are removed (unless option to not remove data is selected) an
 * b3_filter_closed_message
 * b3_welcome_user_subject
 * b3_welcome_user_message
+
 
 <a name="shortcodes"></a>
 ### Shortcodes
@@ -109,6 +112,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
 0.9-beta
 * exclude more user roles from admin
 * remove fallback for existing pages
+* output b3_* option values on debug page
 
 0.8-beta
 * add first/last name to request access
