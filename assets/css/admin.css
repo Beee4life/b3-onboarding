@@ -132,6 +132,10 @@
 }
 
 /* Dashboard widget */
+.b3__widget--dashboard p:last-child {
+    margin-bottom: 0;
+}
+
 .b3__widget--dashboard ul {
     list-style:   disc;
     padding-left: 17px;
