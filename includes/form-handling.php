@@ -12,7 +12,7 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
                     
-                    // Custom passwords
+                    // Custom passwords (not used yet)
                     if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) ) {
                         update_option( 'b3_custom_passwords', '1', true );
                     } else {
@@ -163,6 +163,7 @@
                         update_option( 'b3_activate_first_last', $_POST[ 'b3_activate_first_last' ], true );
                     } else {
                         delete_option( 'b3_activate_first_last' );
+                        delete_option( 'b3_first_last_required' );
                     }
         
                     // First/last name
