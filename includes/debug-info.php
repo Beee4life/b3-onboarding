@@ -93,7 +93,7 @@
                     echo $meta_key . ': ';
                     $value = get_option( $meta_key );
                     if ( is_array( $value ) ) {
-                        var_dump( $value );
+                        echo 'array( ' . implode( ', ', $value ) . ' )';
                     } else {
                         echo ($value) ? $value : esc_html__( 'empty', 'b3-onboarding');
                     }
