@@ -167,6 +167,7 @@
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
+                update_option( 'b3_themed_profile', [ 'subscriber' ] );
                 update_option( 'b3_sidebar_widget', '1' );
                 
                 // 2 use
