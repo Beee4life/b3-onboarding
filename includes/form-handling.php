@@ -213,7 +213,11 @@
                 if ( is_admin() ) {
                     $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
                 } else {
-                    $redirect_url = home_url( 'user-management' );
+                    if ( false != b3_get_user_approval_id() ) {
+                        $redirect_url = get_permalink( b3_get_user_approval_id() );
+                    } else {
+                        $redirect_url = '';
+                    }
                 }
             
                 if ( ! wp_verify_nonce( $_POST[ "b3_manage_users_nonce" ], 'b3-manage-users-nonce' ) ) {
