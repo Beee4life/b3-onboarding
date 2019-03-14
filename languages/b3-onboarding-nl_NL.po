@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: B3 - User onboarding\n"
-"POT-Creation-Date: 2019-03-14 22:31+0100\n"
-"PO-Revision-Date: 2019-03-14 22:34+0100\n"
+"Project-Id-Version: B3 - Onboarding\n"
+"POT-Creation-Date: 2019-03-14 23:32+0100\n"
+"PO-Revision-Date: 2019-03-14 23:32+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -332,6 +332,10 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nee"
 
+#: includes/debug-info.php:98
+msgid "empty"
+msgstr "leeg"
+
 #: includes/do-stuff.php:15 includes/tabs.php:187
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
@@ -487,21 +491,21 @@ msgstr ""
 msgid "Activate your account"
 msgstr "Activeer je account"
 
-#: includes/form-handling.php:239
+#: includes/form-handling.php:240
 msgid "Account approved"
 msgstr "Account goedgekeurd"
 
-#: includes/form-handling.php:240
+#: includes/form-handling.php:241
 #, php-format
 msgid "Welcome to %s. Your account has been approved and you can now login."
 msgstr "Welkom op %s. Je account is goedgekeurd en je kan nu inloggen."
 
-#: includes/form-handling.php:262
+#: includes/form-handling.php:263
 #, php-format
 msgid "Account rejected for %s"
 msgstr "Account geweigerd voor %s"
 
-#: includes/form-handling.php:263
+#: includes/form-handling.php:264
 #, php-format
 msgid ""
 "We're sorry to have to inform you, but your request for access to %s was "
@@ -980,8 +984,8 @@ msgid "Pick a New Password"
 msgstr "Kies een nieuw wachtwoord"
 
 #. Plugin Name of the plugin/theme
-msgid "B3 - User onboarding"
-msgstr "B3 - User onboarding"
+msgid "B3 - Onboarding"
+msgstr "B3 - Onboarding"
 
 #. Plugin URI of the plugin/theme
 #. Author URI of the plugin/theme
