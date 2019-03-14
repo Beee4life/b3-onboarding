@@ -83,6 +83,7 @@ All stored options are removed (unless option to not remove data is selected) an
 * [login-form] = renders login form
 * [register-form] = renders regster form
 * [resetpass-form] = renders reset password form
+* [user-management] = renders user management page
 
 <a name="notes"></a>
 ### Notes
