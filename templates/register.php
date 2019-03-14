@@ -1,7 +1,7 @@
 <?php
     $send_password_by_mail    = get_option( 'b3_send_pass_mail' );
     $show_custom_passwords    = false;
-    $show_first_last_name     = get_option( 'b3_first_last_name' );
+    $show_first_last_name     = get_option( 'b3_activate_first_last' );
     $first_last_name_required = get_option( 'b3_first_last_required' );
     $show_privacy             = get_option( 'b3_privacy' );
     $show_recaptcha           = get_option( 'b3_recaptcha' );
@@ -39,12 +39,12 @@
 
                 <div class="b3__form-element b3__form-element--login">
                     <label class="b3__form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" value="name" required>
+                    <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" value="" required>
                 </div>
 
                 <div class="b3__form-element b3__form-element--email">
                     <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="email" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="info@xxx.com" required>
+                    <input type="email" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="" required>
                 </div>
         
                 <?php if ( $show_first_last_name == true ) { b3_first_last_name_fields(); } ?>
@@ -68,12 +68,12 @@
 
                 <div class="b3__form-element b3__form-element--register">
                     <label class="b3__form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" value="xxx" required>
+                    <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" value="" required>
                 </div>
 
                 <div class="b3__form-element b3__form-element--register">
                     <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="info@xxx.com" required>
+                    <input type="text" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="" required>
                 </div>
     
                 <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>

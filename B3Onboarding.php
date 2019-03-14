@@ -1,7 +1,7 @@
 <?php
     /*
     Plugin Name: B3 - User onboarding
-    Version: 0.7-beta
+    Version: 0.8-beta
     Tags: user, management, registration, login, forgot password, reset password, account
     Plugin URI: http://www.berryplasman.com
     Description: This plugin handles the registration/login process
@@ -45,7 +45,7 @@
             function initialize() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '0.7-beta',
+                    'version' => '0.8-beta',
                 );
     
                 // set text domain
@@ -121,7 +121,7 @@
                  * Independent
                  */
                 $aw_activation = get_role( 'b3_activation' );
-                if ( ! $aw_activation ) {
+                            if ( ! $aw_activation ) {
                     add_role( 'b3_activation', __( 'Awaiting activation' ), [] );
                 }
                 $aw_approval = get_role( 'b3_approval' );
@@ -1443,7 +1443,8 @@
                 $user_args = array(
                     'role' => 'b3_approval'
                 );
-                $users = get_users( $user_args );
+                $users                = get_users( $user_args );
+                $show_first_last_name = get_option( 'b3_activate_first_last' );
 
                 if ( ! empty( $_GET[ 'user' ] ) ) {
                     if ( 'approved' == $_GET[ 'user' ] ) { ?>
@@ -1463,6 +1464,14 @@
                             <th>
                                 <?php esc_html_e( 'User ID', 'b3-onboarding' ); ?>
                             </th>
+                            <?php if ( false != $show_first_last_name ) { ?>
+                                <th>
+                                    <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
+                                </th>
+                                <th>
+                                    <?php esc_html_e( 'Last name', 'b3-onboarding' ); ?>
+                                </th>
+                            <?php } ?>
                             <th>
                                 <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
                             </th>
@@ -1475,6 +1484,10 @@
                         <?php foreach( $users as $user ) { ?>
                             <tr>
                                 <td><?php echo $user->ID; ?></td>
+                                <?php if ( false != $show_first_last_name ) { ?>
+                                    <td><?php echo $user->first_name; ?></td>
+                                    <td><?php echo $user->last_name; ?></td>
+                                <?php } ?>
                                 <td><?php echo $user->user_email; ?></td>
                                 <td>
                                     <form name="b3_user_management" action="" method="post">

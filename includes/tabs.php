@@ -319,7 +319,7 @@
      */
     function b3_render_users_tab() {
     
-        $first_last          = get_option( 'b3_first_last_name' );
+        $first_last          = get_option( 'b3_activate_first_last' );
         $first_last_required = get_option( 'b3_first_last_required' );
         $roles               = get_editable_roles();
         asort( $roles );
