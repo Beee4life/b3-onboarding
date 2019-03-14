@@ -22,7 +22,7 @@
                 'meta'    => 'b3_login_page_id'
             ),
             'logout'           => array(
-                'title'   => esc_html__( 'Log out', 'b3-onboarding' ),
+                'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
                 'content' => '',
                 'meta'    => 'b3_logout_page_id'
             ),

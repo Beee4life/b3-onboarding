@@ -48,7 +48,7 @@
                 if ( current_user_can( 'manage_options' ) ) {
                     echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">' . __( 'Settings', 'b3-onboarding' ) . '</a></li>';
                 }
-                echo '<li><a href="' . $logout_link . '">' . __( 'Log out', 'b3-onboarding' ) . '</a></li>';
+                echo '<li><a href="' . $logout_link . '">' . __( 'Log Out', 'b3-onboarding' ) . '</a></li>';
             }
             echo '</ul>';
             
