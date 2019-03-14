@@ -220,7 +220,7 @@
     text-align: left;
 }
 
-ul.addons__list {
+ul.b3_addons--list {
     list-style:   none;
     padding-left: 0;
     position:     relative;
@@ -228,7 +228,7 @@ ul.addons__list {
     flex-flow:    row nowrap;
 }
 
-.addons__list--item {
+.b3_addons--list-item {
     box-sizing:         border-box;
     -moz-box-sizing:    border-box;
     -webkit-box-sizing: border-box;
@@ -242,18 +242,22 @@ ul.addons__list {
     width:              200px;
 }
 
-.addon__image {
+.b3_addon__image {
     height:        90px;
     margin-bottom: 0.5em;
 }
 
-.addon__image img {
+.b3_addon__image img {
     height:     auto;
     max-height: 90px;
     max-width:  100%;
 }
 
-.addon__name {
+.b3_addons--list-item--aweber .b3_addon__image img {
+    margin-top: 25px;
+}
+
+.b3_addon__name {
     text-transform: uppercase;
 }
 

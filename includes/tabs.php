@@ -536,14 +536,14 @@
                     ],
                 ];
             ?>
-            <ul class="addons__list"><!--
+            <ul class="b3_addons--list"><!--
                 <?php foreach( $modules as $module ) { ?>
-                --><li class="addons__list--item">
-                    <div class="addon__container">
-                        <div class="addon__image">
+                --><li class="b3_addons--list-item b3_addons--list-item--<?php echo $module['id']; ?>">
+                    <div class="b3_addon__container">
+                        <div class="b3_addon__image">
                             <img src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module['logo']; ?>" alt="<?php echo $module['name']; ?>" />
                         </div>
-                        <div class="addon__name">
+                        <div class="b3_addon__name">
                             <?php echo $module['name']; ?>
                         </div>
                     </div>
