@@ -51,19 +51,10 @@
                 // no stored id, so continue
             }
     
-            $post_id = false;
             $query   = new WP_Query( 'pagename=' . $slug );
-            if ( $query->have_posts() ) {
-                while ( $query->have_posts() ) : $query->the_post();
-                    $post_id = get_the_ID();
-                    break;
-                endwhile;
-            }
-            
             if ( ! $query->have_posts() ) {
     
                 // Add the page using the data from the array above
-                $errors = new WP_Error();
                 $result = wp_insert_post( array(
                         'post_title'     => $page[ 'title' ],
                         'post_name'      => $slug,
@@ -73,18 +64,13 @@
                         'ping_status'    => 'closed',
                         'comment_status' => 'closed',
                     ),
-                    false
+                    true
                 );
                 // if page doesn't return an error (thus successful)
                 if ( ! is_wp_error( $result) ) {
                     update_option( $page[ 'meta' ], $result, true );
                     update_post_meta( $result, '_b3_page', true );
                 }
-
-            } else {
-                // page exists
-                update_option( $page[ 'meta' ], $post_id, true );
-                update_post_meta( $post_id, '_b3_page', true );
             }
         }
     }
