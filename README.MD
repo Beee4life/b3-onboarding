@@ -19,6 +19,7 @@ Note: it's still in beta. Everything should be working, but don't rely on it for
 - [Shortcodes](#shortcodes)
 - [Notes](#notes)
 - [Roadmap](#roadmap)
+- [Changelog](#changelog)
 
 <a name="activate"></a>
 ### Activation 
@@ -101,3 +102,15 @@ These are the things we have planned to add.
 #### What problems does this plugin solve ?
 
 This plugin gives you all the freedom to change/use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want with filters/hooks or through a settings page.
+
+<a name="changelog"></a>
+0.9-beta
+* exclude more user roles from admin
+* remove fallback for existing pages
+
+0.8-beta
+* add first/last name to request access
+* option to make first/last name required 
+
+0.7-beta
+* first decent release
