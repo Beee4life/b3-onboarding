@@ -39,13 +39,6 @@
                         delete_option( 'b3_approval_page_id' );
                     }
                     
-                    // Dashboard widget (not in use yet)
-                    if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) ) {
-                        update_option( 'b3_dashboard_widget', '1', true );
-                    } else {
-                        delete_option( 'b3_dashboard_widget' );
-                    }
-                    
                     // Sidebar widget
                     if ( isset( $_POST[ 'b3_activate_sidebar_widget' ] ) ) {
                         update_option( 'b3_sidebar_widget', '1', true );
@@ -53,6 +46,13 @@
                         delete_option( 'b3_sidebar_widget' );
                     }
                 
+                    // Dashboard widget (not in use yet)
+                    if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) ) {
+                        update_option( 'b3_dashboard_widget', '1', true );
+                    } else {
+                        delete_option( 'b3_dashboard_widget' );
+                    }
+                    
                     // reCAPTCHA (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) ) {
                         update_option( 'b3_recaptcha', '1', true );
@@ -131,7 +131,6 @@
                     }
     
                     $redirect_url = add_query_arg( 'success', 'emails_saved', $redirect_url );
-    
                 }
         
                 wp_redirect( $redirect_url );
@@ -174,7 +173,6 @@
                     }
         
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
-        
                 }
     
                 wp_redirect( $redirect_url );
@@ -192,7 +190,6 @@
                     update_option( 'b3_recaptcha_secret', $_POST[ 'b3_recaptcha_secret' ], true );
                     
                     $redirect_url = add_query_arg( 'success', 'recaptcha_saved', $redirect_url );
-                
                 }
     
                 wp_redirect( $redirect_url );
@@ -211,7 +208,7 @@
             if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
             
                 if ( is_admin() ) {
-                    $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
+                    $redirect_url = network_admin_url( 'admin.php?page=b3-user-approval' );
                 } else {
                     if ( false != b3_get_user_approval_id() ) {
                         $redirect_url = get_permalink( b3_get_user_approval_id() );
