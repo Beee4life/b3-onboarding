@@ -24,12 +24,16 @@ Note: it's still in beta. Everything should be working, but don't rely on it for
 <a name="activate"></a>
 ### Activation 
 
-If you activate this plugin only a few most used toolbar settings are preset, because if you use this plugin, you want to limit something anyway ;)
+If you activate this plugin the following will be done:
+* the necessary pages are created
+* default setting/limits are set
+* 2 new user roles are created: b3_approval, b3_activation
+* access to admin is restricted for some user roles
 
 <a name="deactivate"></a>
 ### Deactivation 
 
-Nothing yet... but all settings will be removed and it leaves all custom data 'untouched'. 
+All option values are removed as well as both user roles, created by B3. 
 
 <a name="uninstall"></a>
 ### Uninstall
