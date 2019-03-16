@@ -3,7 +3,6 @@
     Plugin Name: B3 - Onboarding
     Version: 0.9-beta
     Tags: user, management, registration, login, forgot password, reset password, account
-    Plugin URI: http://www.berryplasman.com
     Description: This plugin handles the registration/login process
     Author: Beee
     Author URI: http://www.berryplasman.com
