@@ -831,7 +831,7 @@
                         }
     
                         // Validate activation key
-                        $user   = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, $_GET[ 'user_login' ] ) );
+                        $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, $_GET[ 'user_login' ] ) );
 
                         if ( empty( $user ) ) {
                             $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
@@ -839,6 +839,7 @@
 
                         if ( is_wp_error( $errors ) ) {
                             // Errors found
+                            
                             $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), home_url( 'login' ) ); // @TODO: make dynamic
                         } else {
 

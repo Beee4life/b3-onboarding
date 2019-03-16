@@ -211,3 +211,12 @@
     add_filter( 'logout_redirect', 'b3_logout_redirect', 10, 3 );
     
     
+    function b3_account_approved_subject() {
+        
+        $subject = __( 'Account approved', 'b3-onboarding' );
+        // get from db
+        // if false return default
+        
+        return $subject;
+    }
+    add_filter( 'b3_account_approved_subject', 'b3_account_approved_subject' );

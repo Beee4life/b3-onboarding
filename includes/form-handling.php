@@ -140,6 +140,8 @@
                     update_option( 'b3_welcome_user_subject', $_POST[ 'b3_welcome_user_subject' ], true );
     
                     if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                        update_option( 'b3_account_approved_message', $_POST[ 'b3_account_approved_message' ], true );
+                        update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ], true );
                         update_option( 'b3_request_access_message', stripslashes( $_POST[ 'b3_request_access_message' ] ), true );
                         update_option( 'b3_request_access_notification_addresses', $_POST[ 'b3_request_access_notification_addresses' ], true );
                         update_option( 'b3_request_access_subject', $_POST[ 'b3_request_access_subject' ], true );
@@ -237,6 +239,7 @@
                         $blog_name  = get_option( 'blogname' ); // @TODO: add filter
                         $from_email = get_option( 'admin_email' ); // @TODO: add filter
                         $to         = $user_object->user_email;
+                        $subject    = apply_filters( 'b3_account_approved_subject', __( 'Account approved', 'b3-onboarding' ) );
                         $subject    = esc_html__( 'Account approved', 'b3-onboarding' );
                         $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password on %s.', 'b3-onboarding' ), $blog_name, esc_url( b3_get_forgotpass_url() ) );
                         $headers    = array(

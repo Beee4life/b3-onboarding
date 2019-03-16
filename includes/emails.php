@@ -13,6 +13,7 @@
             
             $basic_output = b3_basic_email_settings_field( $box );
             $basic_output = str_replace( '##FOLDOUTCONTENT##', b3_foldout_content( $box ), $basic_output );
+            
             return $basic_output;
         }
         
@@ -82,6 +83,14 @@
                     break;
                 case 'request_access':
                     include( 'emails/request-access.php' );
+                    $output = ob_get_clean();
+                    break;
+                case 'email_activation':
+                    include( 'emails/email-activation.php' );
+                    $output = ob_get_clean();
+                    break;
+                case 'account_approved':
+                    include( 'emails/account-approved.php' );
                     $output = ob_get_clean();
                     break;
                 case 'forgot_password':

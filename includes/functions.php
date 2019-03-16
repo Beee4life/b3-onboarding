@@ -127,6 +127,10 @@
      * @return array
      */
     function b3_get_email_boxes() {
+    
+        $activate_email_boxes = [];
+        $new_user_boxes       = [];
+        $welcome_user_boxes   = [];
         
         $settings_box = array(
             array(
@@ -141,18 +145,36 @@
                     'id'    => 'request_access',
                     'title' => esc_html__( 'Request access email', 'b3-onboarding' ),
                 ),
+                array(
+                    'id'    => 'account_approved',
+                    'title' => esc_html__( 'Account approved email', 'b3-onboarding' ),
+                ),
             );
         }
-        $default_boxes1 = array(
-            array(
-                'id'    => 'welcome_email_user',
-                'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-            ),
-            array(
-                'id'    => 'new_user_admin',
-                'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
-            ),
-        );
+        if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
+            $activate_email_boxes = array(
+                array(
+                    'id'    => 'email_activation',
+                    'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
+                ),
+            );
+        }
+        if ( in_array( get_option( 'b3_registration_type' ), [ 'open' ] ) ) {
+            $welcome_user_boxes = array(
+                array(
+                    'id'    => 'welcome_email_user',
+                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+                ),
+            );
+        }
+        if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+            $new_user_boxes = array(
+                array(
+                    'id'    => 'new_user_admin',
+                    'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+                ),
+            );
+        }
         $default_boxes2 = array(
             array(
                 'id'    => 'forgot_password',
@@ -176,7 +198,7 @@
                 ),
             );
         }
-        $email_boxes = array_merge( $settings_box, $request_access_box, $default_boxes1, $default_boxes2, $styling_boxes );
+        $email_boxes = array_merge( $settings_box, $request_access_box, $activate_email_boxes, $welcome_user_boxes, $new_user_boxes, $default_boxes2, $styling_boxes );
     
         if ( is_multisite() ) {
             // $email_boxes = array_merge( $email_boxes, $default_boxes2 );
@@ -677,6 +699,13 @@
         } else {
             $url = wp_lostpassword_url();
         }
+        
+        return $url;
+    }
+    
+    
+    function b3_get_activation_url() {
+        $url = '';
         
         return $url;
     }
