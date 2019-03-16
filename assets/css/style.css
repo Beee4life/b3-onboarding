@@ -4,14 +4,8 @@
 }
 
 .b3__message {
-
-    /*@TODO: why this again ?*/
-    /*display:         flex;*/
-    /*flex-flow:       row nowrap;*/
-    /*justify-content: space-between;*/
-
-    border:          1px dashed black;
-    padding:         5px 10px;
+    border:  1px dashed black;
+    padding: 5px 10px;
 }
 
 .b3__page {
@@ -65,7 +59,6 @@ ul.b3__form-links li:last-child {
 .b3__table--user th {
     text-align: left;
 }
-
 
 #pass-strength-result.short {
     background-color: #f1adad;

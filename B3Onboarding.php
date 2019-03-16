@@ -515,11 +515,10 @@
                         if ( ! wp_verify_nonce( $_POST[ "b3_register_user" ], 'b3-register-user' ) ) {
                             // error ?
                         } else {
-                            // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
     
                             $meta_data                 = [];
-                            $user_login                = ( isset( $_POST[ 'b3_user_login' ] ) ) ? $_POST[ 'b3_user_login' ] : false;
-                            $user_email                = ( isset( $_POST[ 'b3_user_email' ] ) ) ? $_POST[ 'b3_user_email' ] : false;
+                            $user_login                = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
+                            $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false;
                             $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false;
                             $role                      = apply_filters( 'b3_filter_default_role', get_option( 'default_role' ) );
@@ -547,7 +546,7 @@
                                         $query_arg = 'success';
                                     }
 
-                                    $result = $this->b3_register_user( $user_email, $user_email, $registration_type, $role, $meta_data );
+                                    $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role, $meta_data );
     
                                     if ( is_wp_error( $result ) ) {
                                         // Parse errors into a string and append as parameter to redirect
@@ -1445,76 +1444,76 @@
                     'role' => 'b3_approval'
                 );
                 $users                = get_users( $user_args );
+                // echo '<pre>'; var_dump($users); echo '</pre>'; exit;
                 $show_first_last_name = get_option( 'b3_activate_first_last' );
                 $user_approval_page   = b3_get_user_approval_id();
                 
-                if ( false == b3_get_user_approval_id() ) {
                     ?>
-                    <p class="b3__message">
-                        <?php echo sprintf( __( "You haven't set your user approval page yet. <a href=\"%s\">Click here</a> to set it.", "b3-onboarding" ), esc_url( network_admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ) ); ?>
+                    <p>
+                        <?php echo __( 'On this page you can approve/deny user requests for access.', 'b3-onboaarding' ); ?>
                     </p>
                     <?php
-                } else {
-    
-                    if ( ! empty( $_GET[ 'user' ] ) ) {
-                        if ( 'approved' == $_GET[ 'user' ] ) { ?>
-                            <p class="b3__message">
-                                <?php esc_html_e( 'User is successfully approved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-                            </p>
-                        <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
-                            <p class="b3__message">
-                                <?php esc_html_e( 'User is successfully rejected and user is deleted', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-                            </p>
-                        <?php } ?>
-                    <?php } ?>
-                    <?php if ( $users ) { ?>
-                        <table class="b3__table--user" border="0" cellspacing="0" cellpadding="0" style="">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <?php esc_html_e( 'User ID', 'b3-onboarding' ); ?>
-                                </th>
-                                <?php if ( false != $show_first_last_name ) { ?>
-                                    <th>
-                                        <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
-                                    </th>
-                                    <th>
-                                        <?php esc_html_e( 'Last name', 'b3-onboarding' ); ?>
-                                    </th>
-                                <?php } ?>
-                                <th>
-                                    <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
-                                </th>
-                                <th>
-                                    <?php esc_html_e( 'Actions', 'b3-onboarding' ); ?>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach( $users as $user ) { ?>
-                                <tr>
-                                    <td><?php echo $user->ID; ?></td>
-                                    <?php if ( false != $show_first_last_name ) { ?>
-                                        <td><?php echo $user->first_name; ?></td>
-                                        <td><?php echo $user->last_name; ?></td>
-                                    <?php } ?>
-                                    <td><?php echo $user->user_email; ?></td>
-                                    <td>
-                                        <form name="b3_user_management" action="" method="post">
-                                            <input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
-                                            <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
-                                            <input name="b3_approve_user" class="button" type="submit" value="<?php esc_html_e( 'Approve user', 'b3-onboarding' ); ?>" />
-                                            <input name="b3_reject_user" class="button" type="submit" value="<?php esc_html_e( 'Reject user', 'b3-onboarding' ); ?>" />
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
-                    <?php } else { ?>
-                        <p><?php esc_html_e( 'No users to approve.', 'b3-onboarding' ); ?></p>
-                    <?php }
+                if ( is_admin() ) {
                 }
+    
+                if ( ! empty( $_GET[ 'user' ] ) ) {
+                    if ( 'approved' == $_GET[ 'user' ] ) { ?>
+                        <p class="b3__message">
+                            <?php esc_html_e( 'User is successfully approved', 'b3-onboarding' ); ?>
+                        </p>
+                    <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
+                        <p class="b3__message">
+                            <?php esc_html_e( 'User is successfully rejected and user is deleted', 'b3-onboarding' ); ?>
+                        </p>
+                    <?php } ?>
+                <?php } ?>
+                <?php if ( $users ) { ?>
+                    <table class="b3__table b3__table--user" border="0" cellspacing="0" cellpadding="0" style="">
+                        <thead>
+                        <tr>
+                            <th>
+                                <?php esc_html_e( 'User ID', 'b3-onboarding' ); ?>
+                            </th>
+                            <?php if ( false != $show_first_last_name ) { ?>
+                                <th>
+                                    <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
+                                </th>
+                                <th>
+                                    <?php esc_html_e( 'Last name', 'b3-onboarding' ); ?>
+                                </th>
+                            <?php } ?>
+                            <th>
+                                <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
+                            </th>
+                            <th>
+                                <?php esc_html_e( 'Actions', 'b3-onboarding' ); ?>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach( $users as $user ) { ?>
+                            <tr>
+                                <td><?php echo $user->ID; ?></td>
+                                <?php if ( false != $show_first_last_name ) { ?>
+                                    <td><?php echo $user->first_name; ?></td>
+                                    <td><?php echo $user->last_name; ?></td>
+                                <?php } ?>
+                                <td><?php echo $user->user_email; ?></td>
+                                <td>
+                                    <form name="b3_user_management" action="" method="post">
+                                        <input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
+                                        <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
+                                        <input name="b3_approve_user" class="button" type="submit" value="<?php esc_html_e( 'Approve user', 'b3-onboarding' ); ?>" />
+                                        <input name="b3_reject_user" class="button" type="submit" value="<?php esc_html_e( 'Reject user', 'b3-onboarding' ); ?>" />
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                <?php } else { ?>
+                    <p><?php esc_html_e( 'No (more) users to approve.', 'b3-onboarding' ); ?></p>
+                <?php }
             }
         
 

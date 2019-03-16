@@ -336,7 +336,7 @@
         if ( $b3_welcome_user_message ) {
             return $b3_welcome_user_message;
         } else {
-            return sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can set your password here: %s.', 'b3-onboarding' ), $user->user_login, $blogname, get_permalink( b3_get_forgotpass_id() ) );
+            return sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can set your password here: %s.', 'b3-onboarding' ), $user->user_login, $blogname, b3_get_forgotpass_url() );
         }
     }
     
@@ -551,11 +551,11 @@
             <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
             <div class="b3__form-element b3__form-element--register">
                 <label class="b3__form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="b3_first_name" id="b3_first_name" class="b3__form--input"<?php echo $required; ?>>
+                <input type="text" name="first_name" id="b3_first_name" class="b3__form--input" value="First name"<?php echo $required; ?>>
             </div>
             <div class="b3__form-element b3__form-element--register">
                 <label class="b3__form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="b3_last_name" id="b3_last_name" class="b3__form--input"<?php echo $required; ?>>
+                <input type="text" name="last_name" id="b3_last_name" class="b3__form--input" value="Last name"<?php echo $required; ?>>
             </div>
         <?php
         $output = ob_get_clean();
@@ -661,4 +661,22 @@
         }
         
         return $output;
+    }
+    
+    
+    /**
+     * Return lost pass URL
+     *
+     * @return false|string
+     */
+    function b3_get_forgotpass_url() {
+        
+        $lost_password_id = get_option( 'b3_forgotpass_page_id' );
+        if ( $lost_password_id ) {
+            $url = get_permalink( $lost_password_id );
+        } else {
+            $url = wp_lostpassword_url();
+        }
+        
+        return $url;
     }

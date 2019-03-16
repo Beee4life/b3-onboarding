@@ -238,7 +238,7 @@
                         $from_email = get_option( 'admin_email' ); // @TODO: add filter
                         $to         = $user_object->user_email;
                         $subject    = esc_html__( 'Account approved', 'b3-onboarding' );
-                        $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login.', 'b3-onboarding' ), $blog_name );
+                        $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password on %s.', 'b3-onboarding' ), $blog_name, esc_url( b3_get_forgotpass_url() ) );
                         $headers    = array(
                             'From: ' . $blog_name . ' <' . $from_email . '>',
                             'Content-Type: text/plain; charset=UTF-8',
@@ -273,6 +273,7 @@
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         } else {
                             // @TODO: add error
+                            // $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         }
     
                     }

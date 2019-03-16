@@ -99,10 +99,15 @@
     width: 100%;
 }
 
-.b3 table.b3__table th,
-.b3 table.b3__table td {
+.b3__table--user {
+    width: 60%;
+}
+
+.b3__table th,
+.b3__table td {
     text-align:     left;
     vertical-align: middle;
+    padding-right:  0.5em;
 }
 
 .b3__message {
