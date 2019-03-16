@@ -23,7 +23,22 @@
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                         update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
                     }
-                    
+    
+                    // First/last name
+                    if ( isset( $_POST[ 'b3_activate_first_last' ] ) ) {
+                        update_option( 'b3_activate_first_last', $_POST[ 'b3_activate_first_last' ], true );
+                    } else {
+                        delete_option( 'b3_activate_first_last' );
+                        delete_option( 'b3_first_last_required' );
+                    }
+    
+                    // First/last name
+                    if ( isset( $_POST[ 'b3_first_last_required' ] ) ) {
+                        update_option( 'b3_first_last_required', $_POST[ 'b3_first_last_required' ], true );
+                    } else {
+                        delete_option( 'b3_first_last_required' );
+                    }
+    
                     // Custom emails
                     if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
                         update_option( 'b3_custom_emails', '1', true );
@@ -158,21 +173,6 @@
                         delete_option( 'b3_themed_profile' );
                     }
 
-                    // First/last name
-                    if ( isset( $_POST[ 'b3_activate_first_last' ] ) ) {
-                        update_option( 'b3_activate_first_last', $_POST[ 'b3_activate_first_last' ], true );
-                    } else {
-                        delete_option( 'b3_activate_first_last' );
-                        delete_option( 'b3_first_last_required' );
-                    }
-        
-                    // First/last name
-                    if ( isset( $_POST[ 'b3_first_last_required' ] ) ) {
-                        update_option( 'b3_first_last_required', $_POST[ 'b3_first_last_required' ], true );
-                    } else {
-                        delete_option( 'b3_first_last_required' );
-                    }
-        
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
                 }
     

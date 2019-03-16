@@ -55,6 +55,8 @@
         $recaptcha           = get_option( 'b3_recaptcha' );
         $sidebar_widget      = get_option( 'b3_sidebar_widget' );
         $registration_type   = get_option( 'b3_registration_type' );
+        $first_last          = get_option( 'b3_activate_first_last' );
+        $first_last_required = get_option( 'b3_first_last_required' );
 
         ob_start();
         ?>
@@ -90,6 +92,21 @@
                 <?php } else { ?>
                     <div class="b3__settings-input b3__settings-input--radio">
                         <?php esc_html_e( 'The network owner has disabled registrations.','b3-onboarding' ); ?>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <div class="b3__settings-field">
+                <div class="b3__settings-label">
+                    <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3__settings-input b3__settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration', 'b3-onboarding' ); ?>
+                </div>
+                <?php if ( $first_last ) { ?>
+                    <div class="b3__settings-input b3__settings-input--checkbox">
+                        <label for="b3_first_last_required" class="screen-reader-text"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                        <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?>
                     </div>
                 <?php } ?>
             </div>
@@ -319,9 +336,7 @@
      */
     function b3_render_users_tab() {
     
-        $first_last          = get_option( 'b3_activate_first_last' );
-        $first_last_required = get_option( 'b3_first_last_required' );
-        $roles               = get_editable_roles();
+        $roles = get_editable_roles();
         asort( $roles );
 
         ob_start();
@@ -342,21 +357,6 @@
 
         <form action="" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
-
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
-                    <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
-                </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration', 'b3-onboarding' ); ?>
-                </div>
-                <?php if ( $first_last ) { ?>
-                    <div class="b3__settings-input b3__settings-input--checkbox">
-                        <label for="b3_first_last_required" class="screen-reader-text"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
-                        <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?>
-                    </div>
-                <?php } ?>
-            </div>
 
             <div class="b3__settings-field">
                 <div class="b3__settings-label">
