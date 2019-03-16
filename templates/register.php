@@ -39,12 +39,12 @@
 
                 <div class="b3__form-element b3__form-element--login">
                     <label class="b3__form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" value="" required>
+                    <input type="text" name="user_login" id="b3_user_login" class="b3__form--input" value="username" required>
                 </div>
 
                 <div class="b3__form-element b3__form-element--email">
                     <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="email" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="" required>
+                    <input type="email" name="user_email" id="b3_user_email" class="b3__form--input" value="test@xxx.com" required>
                 </div>
         
                 <?php if ( $show_first_last_name == true ) { b3_first_last_name_fields(); } ?>

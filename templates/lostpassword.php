@@ -20,7 +20,7 @@
 
         <p class="form-row">
             <label for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
-            <input type="text" name="user_login" id="b3_user_email" value="info@xxx.com" required>
+            <input type="text" name="user_login" id="b3_user_email" value="test@xxx.com" required>
         </p>
 
         <p class="lostpassword-submit">

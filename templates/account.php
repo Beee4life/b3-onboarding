@@ -1,4 +1,6 @@
-<?php $current_user = get_userdata( get_current_user_id() ); ?>
+<?php
+    $current_user = get_userdata( get_current_user_id() );
+    $required     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
 <div class="" id="">
     
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
@@ -54,18 +56,18 @@
         <table class="b3__table b3__table--account">
             <tr class="">
                 <td>
-                    <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?></label>
+                    <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
                 </td>
                 <td>
-                    <input type="text" name="first_name" id="first_name" value="<?php echo esc_attr( $current_user->first_name ); ?>" class="input regular-text" />
+                    <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php echo esc_attr( $current_user->first_name ); ?>"<?php echo $required; ?> />
                 </td>
             </tr>
             <tr class="">
                 <td>
-                    <label for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?></label>
+                    <label for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
                 </td>
                 <td>
-                    <input type="text" name="last_name" id="last_name" value="<?php echo esc_attr( $current_user->last_name ); ?>" class="input regular-text" />
+                    <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php echo esc_attr( $current_user->last_name ); ?>"<?php echo $required; ?> />
                 </td>
             </tr>
         </table>
