@@ -64,7 +64,6 @@ All stored options are removed (unless option to not remove data is selected) an
 * b3_after_{template_name}
 * b3_before_recaptcha_{form_type} (not used yet)
 * b3_before_{template_name}
-* b3_do_after_registration_form
 * b3_do_after_request_access
 * b3_do_before_registration_form
 * b3_do_before_request_access

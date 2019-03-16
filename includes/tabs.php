@@ -48,15 +48,16 @@
      */
     function b3_render_settings_tab() {
     
+        $action_links        = get_option( 'b3_action_links' );
         $custom_emails       = get_option( 'b3_custom_emails' );
         $dashboard_widget    = get_option( 'b3_dashboard_widget' );
+        $first_last          = get_option( 'b3_activate_first_last' );
+        $first_last_required = get_option( 'b3_first_last_required' );
         $front_end_approval  = get_option( 'b3_front_end_approval' );
         $privacy             = get_option( 'b3_privacy' );
         $recaptcha           = get_option( 'b3_recaptcha' );
-        $sidebar_widget      = get_option( 'b3_sidebar_widget' );
         $registration_type   = get_option( 'b3_registration_type' );
-        $first_last          = get_option( 'b3_activate_first_last' );
-        $first_last_required = get_option( 'b3_first_last_required' );
+        $sidebar_widget      = get_option( 'b3_sidebar_widget' );
 
         ob_start();
         ?>
@@ -65,8 +66,8 @@
         </h2>
     
         <?php if ( isset( $_GET[ 'success' ] ) && 'settings_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3__message">
-                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+            <p class="b3_message">
+                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
         <?php } ?>
 
@@ -77,90 +78,99 @@
         <form name="" class="" action="" method="post">
             <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label for="b3_registration_types"><?php esc_html_e( 'Registration options', 'b3-onboarding' ); ?></label>
                 </div>
                 
                 <?php $options = b3_registration_types(); ?>
                 <?php if ( ! empty( $options ) ) { ?>
                     <?php foreach( $options as $option ) { ?>
-                        <div class="b3__settings-input b3__settings-input--radio">
+                        <div class="b3_settings-input b3_settings-input--radio">
                             <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
                         </div>
                     <?php } ?>
                 <?php } else { ?>
-                    <div class="b3__settings-input b3__settings-input--radio">
+                    <div class="b3_settings-input b3_settings-input--radio">
                         <?php esc_html_e( 'The network owner has disabled registrations.','b3-onboarding' ); ?>
                     </div>
                 <?php } ?>
             </div>
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration', 'b3-onboarding' ); ?>
                 </div>
                 <?php if ( $first_last ) { ?>
-                    <div class="b3__settings-input b3__settings-input--checkbox">
+                    <div class="b3_settings-input b3_settings-input--checkbox">
                         <label for="b3_first_last_required" class="screen-reader-text"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
                         <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?>
                     </div>
                 <?php } ?>
             </div>
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom email styling', 'b3-onboarding' ); ?>
                 </div>
             </div>
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
                 </div>
             </div>
 
-<!--            <div class="b3__settings-field">-->
-<!--                <div class="b3__settings-label">-->
-<!--                    <label for="b3_activate_dashboard_widget">--><?php //esc_html_e( 'Dashboard widget', 'b3-onboarding' ); ?><!--</label>-->
-<!--                </div>-->
-<!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
-<!--                    <input type="checkbox" id="b3_activate_dashboard_widget" name="b3_activate_dashboard_widget" value="1" --><?php //if ( $dashboard_widget ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate the dashboard widget', 'b3-onboarding' ); ?>
-<!--                </div>-->
-<!--            </div>-->
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
+                    <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate the dashboard widget', 'b3-onboarding' ); ?>
+                </div>
+            </div>
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
+                    <label for="b3_activate_dashboard_widget"><?php esc_html_e( 'Dashboard widget', 'b3-onboarding' ); ?></label>
+                </div>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_dashboard_widget" name="b3_activate_dashboard_widget" value="1" <?php if ( $dashboard_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate the dashboard widget', 'b3-onboarding' ); ?>
+                </div>
+            </div>
+
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label for="b3_activate_sidebar_widget"><?php esc_html_e( 'Sidebar widget', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_sidebar_widget" name="b3_activate_sidebar_widget" value="1" <?php if ( $sidebar_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate the sidebar widget', 'b3-onboarding' ); ?>
                 </div>
             </div>
 
-<!--            <div class="b3__settings-field">-->
-<!--                <div class="b3__settings-label">-->
+<!--            <div class="b3_settings-field">-->
+<!--                <div class="b3_settings-label">-->
 <!--                    <label for="b3_activate_recaptcha">--><?php //esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?><!--</label>-->
 <!--                </div>-->
-<!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
+<!--                <div class="b3_settings-input b3_settings-input--checkbox">-->
 <!--                    <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" --><?php //if ( $recaptcha ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate reCAPTCHA', 'b3-onboarding' ); ?>
 <!--                </div>-->
 <!--            </div>-->
 
-<!--            <div class="b3__settings-field">-->
-<!--                <div class="b3__settings-label">-->
+<!--            <div class="b3_settings-field">-->
+<!--                <div class="b3_settings-label">-->
 <!--                    <label for="b3_activate_privacy">--><?php //esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?><!--</label>-->
 <!--                </div>-->
-<!--                <div class="b3__settings-input b3__settings-input--checkbox">-->
+<!--                <div class="b3_settings-input b3_settings-input--checkbox">-->
 <!--                    <input type="checkbox" id="b3_activate_privacy" name="b3_activate_privacy" value="1" --><?php //if ( $privacy ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate a privacy checkbox', 'b3-onboarding' ); ?>
 <!--                </div>-->
 <!--            </div>-->
@@ -244,8 +254,8 @@
             </h2>
         
             <?php if ( isset( $_GET[ 'success' ] ) && 'pages_saved' == $_GET[ 'success' ] ) { ?>
-                <p class="b3__message">
-                    <?php esc_html_e( 'Pages saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+                <p class="b3_message">
+                    <?php esc_html_e( 'Pages saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
                 </p>
             <?php } ?>
     
@@ -254,12 +264,12 @@
             </p>
             
             <?php foreach( $b3_pages as $page ) { ?>
-                <div class="b3__select-page">
-                    <div class="b3__select-page__label">
+                <div class="b3_select-page">
+                    <div class="b3_select-page__label">
                         <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo $page[ 'label' ]; ?></label>
                     </div>
     
-                    <div class="b3__select-page__selector">
+                    <div class="b3_select-page__selector">
                         <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
                             <option value=""> <?php esc_html_e( "Select a page", "b3-user-regiser" ); ?></option>
                             <?php foreach( $all_pages as $active_page ) { ?>
@@ -270,7 +280,7 @@
                     </div>
 
                     <?php if ( false != get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
-                        <div class="b3__select-page__link">
+                        <div class="b3_select-page__link">
                             <a href="<?php echo get_the_permalink( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener">
                                 <?php esc_html_e( 'Visit page', 'b3-onboarding' ); ?>
                             </a>
@@ -304,8 +314,8 @@
         </h2>
     
         <?php if ( isset( $_GET[ 'success' ] ) && 'emails_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3__message">
-                <?php esc_html_e( 'Email settings saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+            <p class="b3_message">
+                <?php esc_html_e( 'Email settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
         <?php } ?>
 
@@ -346,8 +356,8 @@
         </h2>
     
         <?php if ( isset( $_GET[ 'success' ] ) && 'settings_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3__message">
-                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+            <p class="b3_message">
+                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
         <?php } ?>
 
@@ -358,11 +368,11 @@
         <form action="" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox">
                     <div>Which users do <b>not</b> have access to the Wordpress admin ?</div>
                     <?php
                         $disallowed_roles = [ 'administrator' ];
@@ -380,11 +390,11 @@
                 </div>
             </div>
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label><?php esc_html_e( 'Themed profile', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox">
                     <div>Which users see a front-end account page ?</div>
                     <?php
                         $disallowed_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
@@ -428,8 +438,8 @@
         </h2>
     
         <?php if ( isset( $_GET[ 'success' ] ) && 'recaptcha_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3__message">
-                <?php esc_html_e( 'Recaptcha saved', 'b3-onboarding' ); ?> <span class="b3__message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+            <p class="b3_message">
+                <?php esc_html_e( 'Recaptcha saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
         <?php } ?>
 
@@ -440,20 +450,20 @@
         <form name="" class="" action="" method="post">
             <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--text">
+                <div class="b3_settings-input b3_settings-input--text">
                     <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" value="<?php if ( $public_key ) { echo $public_key; } ?>" />
                 </div>
             </div>
 
-            <div class="b3__settings-field">
-                <div class="b3__settings-label">
+            <div class="b3_settings-field">
+                <div class="b3_settings-label">
                     <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3__settings-input b3__settings-input--text">
+                <div class="b3_settings-input b3_settings-input--text">
                     <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" value="<?php if ( $secret_key ) { echo $secret_key; } ?>" />
                 </div>
             </div>

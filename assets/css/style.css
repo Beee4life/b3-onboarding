@@ -3,27 +3,31 @@
     display: none;
 }
 
-.b3__message {
-    border:  1px dashed black;
-    padding: 5px 10px;
+.b3_message {
+    border:    1px dashed black;
+    padding:   5px 10px;
+    word-wrap: initial;
 }
 
-.b3__page {
-    margin:    0 auto;
+.b3_page {
+}
+
+.b3_page form {
+    margin: 0 auto;
     width: 400px;
 }
 
-.b3__page .b3__form-label {
+.b3_page .b3_form-label {
     display: inline-block;
-    width: 200px;
+    width:   200px;
 }
 
-ul.b3__form-links {
+ul.b3_form-links {
     list-style: none;
     position:   relative;
 }
 
-ul.b3__form-links li {
+ul.b3_form-links li {
     border-right:  1px solid grey;
     display:       inline-block;
     line-height:   1;
@@ -32,15 +36,15 @@ ul.b3__form-links li {
     padding-right: 1em;
 }
 
-ul.b3__form-links li:first-child {
+ul.b3_form-links li:first-child {
     padding-left: 0;
 }
 
-ul.b3__form-links li:last-child {
+ul.b3_form-links li:last-child {
     border-right: 0;
 }
 
-.b3__form-element {
+.b3_form-element {
     margin-bottom: 2em;
 }
 
@@ -56,7 +60,7 @@ ul.b3__form-links li:last-child {
     opacity:          0;
 }
 
-.b3__table--user th {
+.b3_table--user th {
     text-align: left;
 }
 

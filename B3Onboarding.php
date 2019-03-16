@@ -231,20 +231,32 @@
             }
     
             public function b3_template_redirect() {
-                if ( is_page( [ 'account' ] ) && ! is_user_logged_in() ) {
-                    wp_redirect( home_url( 'login' ) );
+    
+                $account_page_id  = get_option( 'b3_account_page_id' );
+                $approval_page_id = get_option( 'b3_approval_page_id' );
+                $login_page_id    = get_option( 'b3_login_page_id' );
+                $logout_page_id   = get_option( 'b3_logout_page_id' );
+
+                $login_url = ( false != $login_page_id ) ? get_permalink( $login_page_id ) : wp_login_url();
+                $account_url = ( false != $account_page_id ) ? get_permalink( $account_page_id ) : admin_url( 'profile.php' );
+                
+                if ( false != $account_page_id && is_page( [ $account_page_id ] ) && ! is_user_logged_in() ) {
+                    
+                    wp_redirect( $login_url );
                     exit;
-                } elseif ( is_page( [ 'user-approval' ] ) ) {
+                    
+                } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
                     if ( is_user_logged_in() ) {
                         if ( ! current_user_can( 'promote_users' ) ) {
-                            wp_redirect( home_url( 'account' ) ); // @TODO: make dynamic
+                            wp_redirect( $account_url );
                             exit;
                         }
                     } else {
-                        wp_redirect( home_url( 'login' ) ); // @TODO: make dynamic
+                        wp_redirect( $login_url );
                         exit;
                     }
-                } elseif ( is_page( [ 'log-out' ] ) ) {
+                    
+                } elseif ( false != $logout_page_id && is_page( [ $logout_page_id ] ) ) {
     
                     check_admin_referer( 'log-out' );
     
@@ -253,10 +265,10 @@
                     wp_logout();
     
                     if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
-                        $redirect_to = $_REQUEST[ 'redirect_to' ];
+                        $redirect_to           = $_REQUEST[ 'redirect_to' ];
                         $requested_redirect_to = '';
                     } else {
-                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' ); // @TODO: make dynamic
+                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
                         $requested_redirect_to = '';
                     }
     
@@ -1459,17 +1471,17 @@
     
                 if ( ! empty( $_GET[ 'user' ] ) ) {
                     if ( 'approved' == $_GET[ 'user' ] ) { ?>
-                        <p class="b3__message">
+                        <p class="b3_message">
                             <?php esc_html_e( 'User is successfully approved', 'b3-onboarding' ); ?>
                         </p>
                     <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
-                        <p class="b3__message">
+                        <p class="b3_message">
                             <?php esc_html_e( 'User is successfully rejected and user is deleted', 'b3-onboarding' ); ?>
                         </p>
                     <?php } ?>
                 <?php } ?>
                 <?php if ( $users ) { ?>
-                    <table class="b3__table b3__table--user" border="0" cellspacing="0" cellpadding="0" style="">
+                    <table class="b3_table b3_table--user" border="0" cellspacing="0" cellpadding="0" style="">
                         <thead>
                         <tr>
                             <th>
@@ -1559,11 +1571,11 @@
             
                 ob_start();
     
-                do_action( 'b3_before_' . $template_name );
+                do_action( 'b3_do_before_' . $template_name );
 
                 include( $location . $template_name . '.php' );
             
-                do_action( 'b3_after_' . $template_name );
+                do_action( 'b3_do_after_' . $template_name );
             
                 $html = ob_get_contents();
                 ob_end_clean();

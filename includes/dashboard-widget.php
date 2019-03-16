@@ -21,29 +21,32 @@
         $all_users = get_users( $all_args );
         
         ?>
-        <div class="b3__widget--dashboard">
+        <div class="b3_widget--dashboard">
             <p>
                 <?php
                     if ( count( $approval_users ) > 0 ) {
-                        echo sprintf( __( 'There are %d users awaiting approval.', 'b3-onboarding' ), count( $approval_users ) );
+                        echo sprintf( __( 'There %s %d %s waiting approval. <a href="%s">Click here</a> to approve or deny them.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ) );
                     } elseif ( count( $activation_users ) > 0 ) {
-                        echo sprintf( __( 'There are %d users awaiting activation.', 'b3-onboarding' ), count( $activation_users ) );
+                        echo sprintf( esc_html__( 'There %s %d %s awaiting activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
                     } else {
-                        _e( 'All done. No users to approve.', 'b3-onboarding' );
+                        esc_html_e( 'All done. No users to approve.', 'b3-onboarding' );
                     }
                 ?>
             </p>
             
             <?php if ( ! empty( $all_users ) ) { ?>
+                <?php $date_time_format = get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ); ?>
                 <ul>
                     <?php foreach( $all_users as $user ) { ?>
                         <li>
-                            <?php echo $user->user_login; ?>
+                            <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->user_id ); ?>">
+                                <?php echo $user->user_login; ?>
+                            </a>
+                            (<?php echo date( $date_time_format, strtotime( $user->user_registered ) ); ?>)
                         </li>
                     <?php } ?>
                 </ul>
             <?php } ?>
-            
         </div>
         <?php
     }

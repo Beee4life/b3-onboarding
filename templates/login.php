@@ -2,7 +2,7 @@
     $has_reset_page = true;
     $request_access = get_option( 'b3_registration_type' );
 ?>
-<div id="b3-login" class="b3__page b3__page--login">
+<div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
         <h2>
             <?php _e( 'Log In', 'b3-onboarding' ); ?>
@@ -12,7 +12,7 @@
     <?php /* Show errors if there are any */ ?>
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
-            <p class="b3__message">
+            <p class="b3_message">
                 <?php echo $error; ?>
             </p>
         <?php } ?>
@@ -20,14 +20,14 @@
     
     <?php /* Show success message if user successfully activated */ ?>
     <?php if ( isset( $attributes[ 'user_activate' ] ) ) { ?>
-        <p class="b3__message">
+        <p class="b3_message">
             <?php esc_html_e( 'You have successfully activated your account. You can now log in.', 'b3-onboarding' ); ?>
         </p>
     <?php } ?>
 
     <?php /* Show success message if user successfully registered */ ?>
     <?php if ( $attributes[ 'registered' ] ) { ?>
-        <p class="b3__message">
+        <p class="b3_message">
             <?php
                 if ( is_multisite() ) {
                     echo sprintf(
@@ -76,7 +76,7 @@
     
     <?php /* Show message if user reset password */ ?>
     <?php if ( $attributes[ 'lost_password_sent' ] ) { ?>
-        <p class="b3__message">
+        <p class="b3_message">
             <?php esc_html_e( 'Check your email for a link to reset your password.', 'b3-onboarding' ); ?>
         </p>
         <?php $show_form = false; ?>
@@ -84,14 +84,14 @@
     
     <?php /* Show logged out message if user just logged out */ ?>
     <?php if ( $attributes[ 'logged_out' ] ) { ?>
-        <p class="b3__message">
+        <p class="b3_message">
             <?php esc_html_e( 'You are logged out.', 'b3-onboarding' ); ?>
         </p>
     <?php } ?>
     
     <?php /* Show message if user just reset password */ ?>
     <?php if ( $attributes[ 'password_updated' ] ) { ?>
-        <p class="b3__message">
+        <p class="b3_message">
             <?php esc_html_e( 'Your password has been changed. You can login now.', 'b3-onboarding' ); ?>
         </p>
     <?php } ?>

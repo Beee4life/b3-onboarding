@@ -16,14 +16,14 @@
                 <?php _e( 'Onboarding settings', 'b3-onboarding' ); ?>
             </h1>
 
-            <div class="b3__tabs">
+            <div class="b3_tabs">
                 <?php
                     $current_user = wp_get_current_user();
                     if ( isset( $_GET[ 'tab' ] ) ) {
                         $default_tab = $_GET[ 'tab' ];
                     } else {
                         if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
-                            $default_tab = 'emails';
+                            $default_tab = 'settings';
                         } else {
                             $default_tab = 'settings';
                         }
@@ -92,9 +92,9 @@
                         );
                     }
                 ?>
-                <div class="b3__tab-header">
+                <div class="b3_tab-header">
                     <?php foreach ( $tabs as $tab ) { ?>
-                        <button class="b3__tab-button<?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
+                        <button class="b3_tab-button<?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
                             <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
                                 <i class="dashicons dashicons-<?php echo $tab[ 'icon' ]; ?>"></i>
                             <?php } ?>
@@ -105,7 +105,7 @@
 
                 <div class="tab-contents">
                     <?php foreach ( $tabs as $tab ) { ?>
-                        <div id="<?php echo $tab[ 'id' ]; ?>" class="b3__tab-content b3__tab-content--<?php echo $tab[ 'id' ]; ?>"<?php echo ( $tab[ 'id' ] == $default_tab ) ? ' style="display: block;"' : false; ?>>
+                        <div id="<?php echo $tab[ 'id' ]; ?>" class="b3_tab-content b3_tab-content--<?php echo $tab[ 'id' ]; ?>"<?php echo ( $tab[ 'id' ] == $default_tab ) ? ' style="display: block;"' : false; ?>>
                             <?php if ( $tab[ 'content' ] ) { ?>
                                 <?php echo $tab[ 'content' ]; ?>
                             <?php } ?>

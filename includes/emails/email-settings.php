@@ -5,7 +5,7 @@
     $notification_sender_email = get_option( 'b3_notification_sender_email' );
     $notification_sender_name  = get_option( 'b3_notification_sender_name' );
 ?>
-<table class="b3__table b3__table--emails" border="0" cellpadding="0" cellspacing="0">
+<table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
     <tbody>
     <tr>
         <th>

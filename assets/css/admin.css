@@ -3,19 +3,19 @@
 }
 
 /* TABS */
-.b3__tabs {
+.b3_tabs {
     background: white;
     margin-top: 2em;
     max-width:  60%;
 }
 
-.b3__tab-header {
+.b3_tab-header {
     overflow:         hidden;
     border:           1px solid #ccc;
     background-color: #f1f1f1;
 }
 
-.b3__tab-header .b3__tab-button {
+.b3_tab-header .b3_tab-button {
     background-color: inherit;
     float:            left;
     border:           none;
@@ -25,34 +25,34 @@
     transition:       0.3s;
 }
 
-.b3__tab-header .dashicons {
+.b3_tab-header .dashicons {
     font-size:    15px;
     margin-right: 5px;
     width:        10px;
     height:       10px;
 }
 
-.b3__tab-header button:hover {
+.b3_tab-header button:hover {
     background-color: #ddd;
 }
 
-.b3__tab-header button.active {
+.b3_tab-header button.active {
     background-color: #ccc;
 }
 
-.b3__tab-content {
+.b3_tab-content {
     display:    none;
     padding:    1.5em;
     border:     1px solid #ccc;
     border-top: none;
 }
 
-.b3__tab-content h2,
-.b3__tab-content h3 {
+.b3_tab-content h2,
+.b3_tab-content h3 {
     margin: 0 0 1.5em 0;
 }
 
-.b3__foldout--header {
+.b3_foldout--header {
     background:      #F8F8F8;
     display:         flex;
     flex-flow:       row nowrap;
@@ -74,43 +74,43 @@
     background: pink;
 }
 
-.b3__tab-content ul {
+.b3_tab-content ul {
     margin-block-start: 0;
     margin-block-end:   0;
     list-style:         disc;
     padding-left:       1.5em;
 }
 
-.b3__tab-content ul ul {
+.b3_tab-content ul ul {
     margin-top: 0.5em;
 }
 
-.b3__tab-content ul.debug-list li.debug-list-part {
+.b3_tab-content ul.debug-list li.debug-list-part {
     margin-bottom: 1.5em;
 }
 
-.b3__tab-content ul.debug-list {
+.b3_tab-content ul.debug-list {
     list-style:   none;
     margin:       0;
     padding-left: 0;
 }
 
-.b3__table {
+.b3_table {
     width: 100%;
 }
 
-.b3__table--user {
+.b3_table--user {
     width: 60%;
 }
 
-.b3__table th,
-.b3__table td {
+.b3_table th,
+.b3_table td {
     text-align:     left;
     vertical-align: middle;
     padding-right:  0.5em;
 }
 
-.b3__message {
+.b3_message {
     display:         flex;
     flex-flow:       row nowrap;
     justify-content: space-between;
@@ -119,64 +119,64 @@
 }
 
 /* Pages pages */
-.b3__select-page {
+.b3_select-page {
     width:         100%;
     margin-bottom: 1em;
     display:       flex;
     flex-flow:     row nowrap;
 }
 
-.b3__select-page__label {
+.b3_select-page__label {
     font-weight:  bold;
     margin-right: 1em;
     min-width:    200px;
 }
 
-.b3__select-page__selector {
+.b3_select-page__selector {
     min-width: 250px;
 }
 
 /* Dashboard widget */
-.b3__widget--dashboard p:last-child {
+.b3_widget--dashboard p:last-child {
     margin-bottom: 0;
 }
 
-.b3__widget--dashboard ul {
+.b3_widget--dashboard ul {
     list-style:   disc;
     padding-left: 17px;
 }
 
 /* Settings page */
-.b3__settings-field {
+.b3_settings-field {
     margin-bottom: 1em;
 }
 
-.b3__settings-label {
+.b3_settings-label {
     font-weight:   bold;
     font-size:     1.25em;
     margin-bottom: 0.5em;
 }
 
-.b3__settings-input {
+.b3_settings-input {
 }
 
-.b3__settings-input--checkbox,
-.b3__settings-input--radio {
+.b3_settings-input--checkbox,
+.b3_settings-input--radio {
     margin-bottom: 0.5em;
 }
 
-.b3__settings-input--checkbox input {
+.b3_settings-input--checkbox input {
     margin-top: 0.25em;
 }
 
 /* Emails page */
-.b3 table.b3__table--emails th {
+.b3 table.b3_table--emails th {
     padding-top: 0.5em;
     width:       200px;
 }
 
-.b3 table.b3__table--emails th,
-.b3 table.b3__table--emails td {
+.b3 table.b3_table--emails th,
+.b3 table.b3_table--emails td {
     padding-top: 2em;
 }
 
@@ -184,25 +184,25 @@
     line-height: 1.5em;
 }
 
-.b3 table.b3__table--emails th {
+.b3 table.b3_table--emails th {
     font-weight: normal;
 }
 
-.b3 table.b3__table--emails th label {
+.b3 table.b3_table--emails th label {
     font-weight: bold;
 }
 
-.b3 table.b3__table--emails tr:first-child th,
-.b3 table.b3__table--emails tr:first-child td {
+.b3 table.b3_table--emails tr:first-child th,
+.b3 table.b3_table--emails tr:first-child td {
     padding-top: 0;
 }
 
-.b3 table.b3__table--emails th.align-top {
+.b3 table.b3_table--emails th.align-top {
     vertical-align: top;
 }
 
-.b3 table.b3__table--emails tr.b3__description-row th,
-.b3 table.b3__table--emails tr.b3__description-row td {
+.b3 table.b3_table--emails tr.b3__description-row th,
+.b3 table.b3_table--emails tr.b3__description-row td {
     padding-top: 0;
 }
 
@@ -215,13 +215,12 @@
     padding: 1em 12px 12px 12px;
 }
 
-
-.b3__user-table {
+.b3_user-table {
     width:     50%;
     max-width: 100%;
 }
 
-.b3__user-table th {
+.b3_user-table th {
     text-align: left;
 }
 
@@ -293,7 +292,7 @@ ul.b3_addons--list {
 }
 
 /* Because load-styles.php is not loaded */
-.metabox-handler .b3__foldout--header,
+.metabox-handler .b3_foldout--header,
 .metabox-handler > h3,
 .metabox-handler .stuffbox > h3,
 .metabox-handler h2.handle,

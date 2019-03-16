@@ -27,9 +27,9 @@ jQuery(document).ready(function() {
 
 jQuery(function($){
 
-    $("span.b3__message-close").click(function(e){
+    $("span.b3_message-close").click(function(e){
 
-        $(".b3__message").fadeOut(750);
+        $(".b3_message").fadeOut(750);
 
     });
 
@@ -41,13 +41,13 @@ function openTab(evt, tabName) {
     var i, tabcontent, tabbutton;
 
     // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("b3__tab-content");
+    tabcontent = document.getElementsByClassName("b3_tab-content");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
 
     // Get all elements with class="tabbutton" and remove the class "active"
-    tabbutton = document.getElementsByClassName("b3__tab-button");
+    tabbutton = document.getElementsByClassName("b3_tab-button");
     for (i = 0; i < tabbutton.length; i++) {
         tabbutton[i].className = tabbutton[i].className.replace(" active", "");
     }

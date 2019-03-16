@@ -61,6 +61,13 @@
                         delete_option( 'b3_sidebar_widget' );
                     }
                 
+                    // Sidebar widget
+                    if ( isset( $_POST[ 'b3_disable_action_links' ] ) ) {
+                        update_option( 'b3_action_links', '1', true );
+                    } else {
+                        delete_option( 'b3_action_links' );
+                    }
+                
                     // Dashboard widget (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) ) {
                         update_option( 'b3_dashboard_widget', '1', true );
@@ -95,7 +102,7 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
         
-                    $loopable_ids = [
+                    $page_ids = [
                         'b3_account_page_id',
                         'b3_forgotpass_page_id',
                         'b3_login_page_id',
@@ -104,9 +111,9 @@
                         'b3_resetpass_page_id',
                     ];
                     if ( isset( $_POST[ 'b3_approval_page_id' ] ) ) {
-                        $loopable_ids[] = 'b3_approval_page_id';
+                        $page_ids[] = 'b3_approval_page_id';
                     }
-                    foreach( $loopable_ids as $page ) {
+                    foreach( $page_ids as $page ) {
                         $old_id = get_option( $page );
                         update_option( $page, $_POST[ $page ], true );
                         delete_post_meta( $old_id, '_b3_page' );
@@ -131,14 +138,17 @@
                     update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), true );
                     update_option( 'b3_forgot_password_message', stripslashes( $_POST[ 'b3_forgot_password_message' ] ), true );
                     update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
-                    update_option( 'b3_new_user_message', stripslashes( $_POST[ 'b3_new_user_message' ] ), true );
-                    update_option( 'b3_new_user_notification_addresses', $_POST[ 'b3_new_user_notification_addresses' ], true );
-                    update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
                     update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
-                    update_option( 'b3_welcome_user_message', stripslashes( $_POST[ 'b3_welcome_user_message' ] ), true );
-                    update_option( 'b3_welcome_user_subject', $_POST[ 'b3_welcome_user_subject' ], true );
     
+                    if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+                        update_option( 'b3_new_user_message', stripslashes( $_POST[ 'b3_new_user_message' ] ), true );
+                        update_option( 'b3_new_user_notification_addresses', $_POST[ 'b3_new_user_notification_addresses' ], true );
+                        update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
+                        update_option( 'b3_welcome_user_message', stripslashes( $_POST[ 'b3_welcome_user_message' ] ), true );
+                        update_option( 'b3_welcome_user_subject', $_POST[ 'b3_welcome_user_subject' ], true );
+                    }
+
                     if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                         update_option( 'b3_account_approved_message', $_POST[ 'b3_account_approved_message' ], true );
                         update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ], true );

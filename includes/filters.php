@@ -98,7 +98,7 @@
             $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message( $blogname, $user ) );
 
         } else {
-            error_log( 'OOPS, else' );
+            error_log( 'OOPS' );
         }
         
         return $wp_new_user_notification_email;

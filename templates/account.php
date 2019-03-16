@@ -4,7 +4,7 @@
 <div class="" id="">
     
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
-        <p class="b3__message">
+        <p class="b3_message">
             <?php echo esc_html__( 'Profile saved', 'b3-onboarding' ); ?>
         </p>
     <?php } ?>
@@ -22,7 +22,7 @@
         <h2>
             <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
         </h2>
-        <table class="b3__table b3__table--account">
+        <table class="b3_table b3_table--account">
             <tr class="">
                 <td>
                     <label for="email"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?>
@@ -53,7 +53,7 @@
         <h2>
             <?php esc_html_e( 'Name', 'b3-onboarding' ); ?>
         </h2>
-        <table class="b3__table b3__table--account">
+        <table class="b3_table b3_table--account">
             <tr class="">
                 <td>
                     <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
@@ -79,7 +79,7 @@
         <h2>
             <?php esc_html_e( 'Password', 'b3-onboarding' ); ?>
         </h2>
-        <table class="b3__table b3__table--account">
+        <table class="b3_table b3_table--account">
             <tr id="password" class="user-pass1-wrap">
                 <td><label for="pass1"><?php esc_html_e( 'New password', 'b3-onboarding' ); ?></label></td>
                 <td>

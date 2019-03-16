@@ -1,5 +1,5 @@
 <?php $email_styling = get_option( 'b3_email_styling', false ); ?>
-<table class="b3__table b3__table--emails" border="0" cellpadding="0" cellspacing="0">
+<table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">

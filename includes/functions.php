@@ -10,19 +10,23 @@
         
         ob_start();
         ?>
-        <div class="b3__form-element b3__form-element--register">
-            <label class="b3__form-label" for="pass1"><?php _e( 'Password', 'b3-onboarding' ); ?></label>
-            <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3__form--input" />
+        <p class="b3_message">
+            <?php esc_html_e( "If you triggered this setting manually, be aware that it's not working yet.", "b3-onboarding" ); ?>
+            
+        </p>
+        <div class="b3_form-element b3_form-element--register">
+            <label class="b3_form-label" for="pass1"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
+            <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3_form--input" />
         </div>
         
-        <div class="b3__form-element b3__form-element--register">
-            <label class="b3__form-label" for="pass2"><?php _e( 'Confirm Password', 'b3-onboarding' ); ?></label>
-            <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3__form--input" />
+        <div class="b3_form-element b3_form-element--register">
+            <label class="b3_form-label" for="pass2"><?php esc_html_e( 'Confirm Password', 'b3-onboarding' ); ?></label>
+            <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3_form--input" />
         </div>
         <?php
         $results = ob_get_clean();
         
-        echo $results;
+        return $results;
     }
     
     /**
@@ -62,6 +66,8 @@
     
     
     /**
+     * Add reCAPTCHA validation (not in use yet)
+     *
      * @param $recaptcha_public
      * @param string $form_type
      */
@@ -86,7 +92,10 @@
     function b3_get_all_custom_meta_keys() {
     
         $meta_keys = array(
+            'b3_account_approved_message',
+            'b3_account_approved_subject',
             'b3_account_page_id',
+            'b3_action_links',
             'b3_activate_first_last',
             'b3_approval_page_id',
             // 'b3_add_br_html_email', // not used yet
@@ -105,15 +114,14 @@
             'b3_new_user_subject',
             'b3_notification_sender_email',
             'b3_notification_sender_name',
+            'b3_register_page_id',
+            'b3_registration_type',
             'b3_request_access_message',
             'b3_request_access_notification_addresses',
             'b3_request_access_subject',
-            'b3_register_page_id',
-            'b3_registration_type',
             'b3_restrict_admin',
-            'b3_resetpass_page_id',
-            'b3_themed_profile',
             'b3_sidebar_widget',
+            'b3_themed_profile',
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
         );
@@ -292,9 +300,9 @@
             ob_start();
             ?>
             <?php // @TODO: add more fields for Multisite ?>
-            <div class="b3__form-element b3__form-element--register">
-                <label class="b3__form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3__form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
+            <div class="b3_form-element b3_form-element--register">
+                <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
+                <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
             </div>
             <?php
             $output = ob_get_clean();
@@ -571,13 +579,13 @@
         ob_start();
         ?>
             <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
-            <div class="b3__form-element b3__form-element--register">
-                <label class="b3__form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="first_name" id="b3_first_name" class="b3__form--input" value="First name"<?php echo $required; ?>>
+            <div class="b3_form-element b3_form-element--register">
+                <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="First name"<?php echo $required; ?>>
             </div>
-            <div class="b3__form-element b3__form-element--register">
-                <label class="b3__form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="last_name" id="b3_last_name" class="b3__form--input" value="Last name"<?php echo $required; ?>>
+            <div class="b3_form-element b3_form-element--register">
+                <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="Last name"<?php echo $required; ?>>
             </div>
         <?php
         $output = ob_get_clean();
@@ -593,7 +601,7 @@
         ob_start();
         ?>
         <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
-            <table class="b3__table b3__table--login" border="0" cellspacing="0" cellpadding="0">
+            <table class="b3_table b3_table--login" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>
                         <label for="user_login"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
@@ -641,45 +649,62 @@
     function b3_form_links( $current_form ) {
     
         $output = '';
-        $page_types = [];
-        switch ( $current_form ) {
+        if ( true == get_option( 'b3_action_links' ) ) {
+            $page_types = [];
     
-            case 'login':
-                $page_types[ 'lostpassword' ] = [
-                    'title' => 'Lost password',
-                    'link'  => b3_get_forgotpass_id( true )
-                ];
-                if ( 'closed' != get_option( 'registration_type' ) ) {
-                    $page_types[ 'register' ] = [
-                        'title' => __( 'Register', 'b3-onboarding' ),
-                        'link'  => b3_get_register_id( true )
-                    ];
-                }
-                break;
-                
-            case 'register':
-                $page_types[ 'login' ] = [
-                    'title' => __( 'Log In', 'b3-onboarding' ),
-                    'link'  => b3_get_login_id( true )
-                ];
-                $page_types[ 'forgotpass' ] = [
-                    'title' => __( 'Lost password', 'b3-onboarding' ),
-                    'link'  => b3_get_forgotpass_id( true )
-                ];
-                break;
-                
-            default:
-                break;
-        }
+            switch ( $current_form ) {
         
-        if ( count( $page_types ) > 0 ) {
-            ob_start();
-            echo '<ul class="b3__form-links"><!--';
-            foreach( $page_types as $key => $values ) {
-                echo '--><li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li><!--';
+                case 'login':
+                    $page_types[ 'forgotpassword' ] = [
+                        'title' => 'Forgot password',
+                        'link'  => b3_get_forgotpass_id( true )
+                    ];
+                    if ( 'closed' != get_option( 'registration_type' ) ) {
+                        $page_types[ 'register' ] = [
+                            'title' => __( 'Register', 'b3-onboarding' ),
+                            'link'  => b3_get_register_id( true )
+                        ];
+                    }
+                    break;
+        
+                case 'register':
+                    $page_types[ 'login' ] = [
+                        'title' => __( 'Log In', 'b3-onboarding' ),
+                        'link'  => b3_get_login_id( true )
+                    ];
+                    $page_types[ 'fogotpassword' ] = [
+                        'title' => __( 'Forgot password', 'b3-onboarding' ),
+                        'link'  => b3_get_forgotpass_id( true )
+                    ];
+                    break;
+        
+                case 'forgotpassword':
+                    $page_types[ 'login' ] = [
+                        'title' => __( 'Log In', 'b3-onboarding' ),
+                        'link'  => b3_get_login_id( true )
+                    ];
+                    if ( 'closed' != get_option( 'registration_type' ) ) {
+                        $page_types[ 'register' ] = [
+                            'title' => __( 'Register', 'b3-onboarding' ),
+                            'link'  => b3_get_register_id( true )
+                        ];
+                    }
+                    break;
+        
+                default:
+                    break;
             }
-            echo '--></ul>';
-            $output = ob_get_clean();
+    
+            if ( count( $page_types ) > 0 ) {
+                ob_start();
+                echo '<ul class="b3_form-links"><!--';
+                foreach( $page_types as $key => $values ) {
+                    echo '--><li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li><!--';
+                }
+                echo '--></ul>';
+                $output = ob_get_clean();
+            }
+    
         }
         
         return $output;

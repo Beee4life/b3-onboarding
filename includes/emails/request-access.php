@@ -3,7 +3,7 @@
     $request_access_email_subject   = get_option( 'b3_request_access_subject', false );
     $request_access_email_message   = get_option( 'b3_request_access_message', false );
 ?>
-<table class="b3__table b3__table--emails" border="0" cellpadding="0" cellspacing="0">
+<table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
@@ -28,7 +28,7 @@
             <label for="b3__input--request-access-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--request-access-subject" name="b3_request_access_subject" placeholder="" type="text" value="<?php echo $request_access_email_subject; ?>" />
+            <input class="" id="b3__input--request-access-subject" name="b3_request_access_subject" placeholder="@TODO" type="text" value="<?php echo $request_access_email_subject; ?>" />
         </td>
     </tr>
     <tr>
@@ -36,7 +36,7 @@
             <label for="b3__input--request-access-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <textarea id="b3__input--request-access-message" name="b3_request_access_message" rows="4"><?php echo $request_access_email_message; ?></textarea>
+            <textarea id="b3__input--request-access-message" name="b3_request_access_message" placeholder="@TODO" rows="4"><?php echo $request_access_email_message; ?></textarea>
         </td>
     </tr>
     <tr>

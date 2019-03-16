@@ -4,9 +4,9 @@ jQuery(document).ready(function () {
 
 jQuery(function($){
 
-    $("span.b3__message-close").click(function(e){
+    $("span.b3_message-close").click(function(e){
 
-        $(".b3__message").fadeOut(750);
+        $(".b3_message").fadeOut(750);
 
     });
 

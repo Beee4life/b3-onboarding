@@ -38,7 +38,7 @@
                 <div class="handlediv" title="">
                     <i class="dashicons dashicons-plus"></i>
                 </div>
-                <div class="b3__foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? ' open' : false; ?>">
+                <div class="b3_foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? ' open' : false; ?>">
                     <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
                 </div>
                 
