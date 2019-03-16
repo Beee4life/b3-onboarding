@@ -32,83 +32,57 @@
         <?php } else { ?>
 
             <?php if ( 'request_access' == $registration_type ) { ?>
-
                 <?php do_action( 'b3_do_before_request_access' ); ?>
-    
-                <?php // @TODO: let user decide on user name ?>
-
-                <div class="b3__form-element b3__form-element--login">
-                    <label class="b3__form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="user_login" id="b3_user_login" class="b3__form--input" value="username" required>
-                </div>
-
-                <div class="b3__form-element b3__form-element--email">
-                    <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="email" name="user_email" id="b3_user_email" class="b3__form--input" value="test@xxx.com" required>
-                </div>
-        
-                <?php if ( $show_first_last_name == true ) { b3_first_last_name_fields(); } ?>
-        
-                <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
-    
-                <?php do_action( 'b3_add_custom_fields_registration' ); ?>
-                <?php b3_extra_fields_registration(); ?>
-    
-                <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
-                <div class="b3__form-element b3__form-element--submit">
-                    <input type="submit" name="submit" class="button" value="<?php esc_html_e( 'Request access', 'b3-onboarding' ); ?>"/>
-                </div>
-                <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
-    
-                <?php do_action( 'b3_do_after_request_access' ); ?>
-
-            <?php } else { ?>
-                
-                <?php // email approval or open ?>
-
-                <div class="b3__form-element b3__form-element--register">
-                    <label class="b3__form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="b3_user_login" id="b3_user_login" class="b3__form--input" value="" required>
-                </div>
-
-                <div class="b3__form-element b3__form-element--register">
-                    <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="b3_user_email" id="b3_user_email" class="b3__form--input" value="" required>
-                </div>
-    
-                <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
-    
-                <?php // this function is not in use yet ?>
-                <?php if ( $show_custom_passwords == true ) { b3_show_password_fields(); } ?>
-    
-                <?php if ( $show_first_last_name == true ) { b3_first_last_name_fields(); } ?>
-    
-                <?php do_action( 'b3_add_custom_fields_registration' ); ?>
-                <?php b3_extra_fields_registration(); ?>
-    
-                <?php // this function is not in use yet ?>
-                <?php if ( $show_recaptcha == true && $recaptcha_public ) { ?>
-                    <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public ); } ?>
-                <?php } ?>
-    
-                <?php // this function is not in use yet ?>
-                <?php if ( $show_privacy == true ) { ?>
-                    <div class="b3__form-element b3__form-element--register">
-                        <label>
-                            <input name="b3_privacy" type="checkbox" id="b3_privacy" value="accept"> <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
-                        </label>
-                    </div>
-                <?php } ?>
-    
-                <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
-                <div class="b3__form-element b3__form-element--submit">
-                    <input type="submit" name="submit" class="button" value="<?php esc_html_e( 'Register', 'b3-onboarding' ); ?>"/>
-                </div>
-                <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
-
-                <?php echo b3_form_links( 'register' ); ?>
-
             <?php } ?>
+    
+            <div class="b3__form-element b3__form-element--login">
+                <label class="b3__form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="text" name="user_login" id="b3_user_login" class="b3__form--input" value="username" required>
+            </div>
+
+            <div class="b3__form-element b3__form-element--email">
+                <label class="b3__form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="email" name="user_email" id="b3_user_email" class="b3__form--input" value="test@xxx.com" required>
+            </div>
+
+            <?php if ( $show_first_last_name == true ) { b3_first_last_name_fields(); } ?>
+    
+            <?php // this function is not in use yet ?>
+            <?php if ( $show_custom_passwords == true ) { b3_show_password_fields(); } ?>
+    
+            <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
+    
+            <?php do_action( 'b3_add_custom_fields_registration' ); ?>
+            <?php b3_extra_fields_registration(); ?>
+    
+            <?php // this function is not in use yet ?>
+            <?php if ( $show_recaptcha == true && $recaptcha_public ) { ?>
+                <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public ); } ?>
+            <?php } ?>
+    
+            <?php // this function is not in use yet ?>
+            <?php if ( $show_privacy == true ) { ?>
+                <div class="b3__form-element b3__form-element--register">
+                    <label>
+                        <input name="b3_privacy" type="checkbox" id="b3_privacy" value="accept"> <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
+                    </label>
+                </div>
+            <?php } ?>
+
+            <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
+            <div class="b3__form-element b3__form-element--submit">
+                <?php if ( 'request_access' == $registration_type ) { ?>
+                    <input type="submit" name="submit" class="button" value="<?php esc_html_e( 'Request access', 'b3-onboarding' ); ?>"/>
+                <?php } else { ?>
+                    <input type="submit" name="submit" class="button" value="<?php esc_html_e( 'Register', 'b3-onboarding' ); ?>"/>
+                <?php } ?>
+            </div>
+            <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
+    
+            <?php if ( 'request_access' == $registration_type ) { ?>
+                <?php do_action( 'b3_do_after_request_access' ); ?>
+            <?php } ?>
+
         <?php } ?>
     
     </form>
