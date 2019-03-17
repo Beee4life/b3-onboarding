@@ -1,12 +1,12 @@
 # B3 Onboarding plugin
 
-Version: 0.9-beta
+Version: 1.0.0
 
 This plugin focusses on how to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can easily customise a lot of things, if you know your way around [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks). Right now we focus mostly on technique, to make this plugin as customisable as possible. A proper user interface for the less techy will follow later.
+You can easily customise a lot of things, if you know your way around [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks). Also you can use the admin pages.
 
-Note: it's still in beta. Everything should be working, but don't rely on it for the full 100% yet.
+Note: we're still testing. Everything should be working, but this doesn't mean it's 100% bug free yet.
 
 ## Contents
 
@@ -98,6 +98,7 @@ All stored options are removed (unless option to not remove data is selected) an
 ### Notes
 1. It's still under development, use at your own risk.
 1. Not styled for mobile yet.
+1. The link in the reset password email, is not 'custom' yet.
 
 <a name="roadmap"></a>
 ### Roadmap
@@ -107,13 +108,18 @@ These are the things we have planned to add.
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
-* [ ] multi page registration forms
+* [ ] multi-page registration forms
 
 #### What problems does this plugin solve ?
 
 This plugin gives you all the freedom to change/use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want with filters/hooks or through a settings page.
 
 <a name="changelog"></a>
+1.0.0
+* version change to (hopefully) avoid composer issues
+* clean up of unused code
+* clean up of commented code
+
 0.9-beta
 * add more email settings
 * clean up actions/filters
