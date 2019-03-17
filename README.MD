@@ -1,4 +1,4 @@
-# B3 Onboarding plugin
+# B3 Onboarding
 
 Version: 1.0.0
 
