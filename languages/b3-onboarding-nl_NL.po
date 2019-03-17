@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2019-03-17 05:02+0100\n"
-"PO-Revision-Date: 2019-03-17 05:10+0100\n"
+"POT-Creation-Date: 2019-03-17 05:39+0100\n"
+"PO-Revision-Date: 2019-03-17 05:39+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -68,7 +68,7 @@ msgstr ""
 "Je hebt ons gevraagd je wachtwoord te resetten voor je account met het email "
 "adres %s."
 
-#: B3Onboarding.php:1037 includes/functions.php:708
+#: B3Onboarding.php:1037 includes/functions.php:732
 msgid ""
 "If this was a mistake, or you didn't ask for a password reset, just ignore "
 "this email and nothing will happen."
@@ -223,11 +223,11 @@ msgstr "Gebruiker succesvol geweigerd en verwijderd"
 msgid "User ID"
 msgstr "Gebruikers ID"
 
-#: B3Onboarding.php:1538 includes/functions.php:781 templates/account.php:59
+#: B3Onboarding.php:1538 includes/functions.php:805 templates/account.php:59
 msgid "First name"
 msgstr "Voornaam"
 
-#: B3Onboarding.php:1541 includes/functions.php:785 templates/account.php:67
+#: B3Onboarding.php:1541 includes/functions.php:809 templates/account.php:67
 msgid "Last name"
 msgstr "Achternaam"
 
@@ -257,7 +257,7 @@ msgid "Login"
 msgstr "Inloggen"
 
 #: includes/B3SidebarWidget.php:43 includes/do-stuff.php:30
-#: includes/functions.php:948 includes/functions.php:972 includes/tabs.php:199
+#: includes/functions.php:972 includes/functions.php:996 includes/tabs.php:199
 #: templates/register.php:13 templates/register.php:82
 msgid "Register"
 msgstr "Registreren"
@@ -377,8 +377,8 @@ msgctxt "slug"
 msgid "forgotpassword"
 msgstr "wachtwoord-vergeten"
 
-#: includes/do-stuff.php:15 includes/functions.php:943
-#: includes/functions.php:960 templates/lostpassword.php:11
+#: includes/do-stuff.php:15 includes/functions.php:967
+#: includes/functions.php:984 templates/lostpassword.php:11
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
 
@@ -415,7 +415,7 @@ msgstr "Wachtwoord resetten"
 #: includes/emails/new-user-admin.php:23
 #: includes/emails/request-access-admin.php:23
 #: includes/emails/request-access-user.php:9
-#: includes/emails/welcome-email-user.php:9
+#: includes/emails/welcome-email-user.php:11
 msgid "If any field is left empty the placeholder will be used."
 msgstr "Als een veld leeg wordt gelaten wordt de 'placeholder' gebruikt."
 
@@ -432,7 +432,7 @@ msgstr "Als een veld leeg wordt gelaten wordt de 'placeholder' gebruikt."
 #: includes/emails/new-user-admin.php:28 includes/emails/password-changed.php:5
 #: includes/emails/request-access-admin.php:28
 #: includes/emails/request-access-user.php:14
-#: includes/emails/welcome-email-user.php:14 includes/preview.php:52
+#: includes/emails/welcome-email-user.php:16 includes/preview.php:61
 msgid "Email subject"
 msgstr "Email onderwerp"
 
@@ -444,7 +444,7 @@ msgstr "Email onderwerp"
 #: includes/emails/forgot-password.php:22 includes/emails/new-user-admin.php:36
 #: includes/emails/request-access-admin.php:36
 #: includes/emails/request-access-user.php:22
-#: includes/emails/welcome-email-user.php:22
+#: includes/emails/welcome-email-user.php:24
 msgid "Email message"
 msgstr "Email bericht"
 
@@ -452,9 +452,10 @@ msgstr "Email bericht"
 #: includes/emails/account-approved.php:25
 #: includes/emails/email-activation.php:25
 #: includes/emails/email-confirmed.php:25 includes/emails/email-template.php:15
-#: includes/emails/forgot-password.php:24
+#: includes/emails/forgot-password.php:24 includes/emails/new-user-admin.php:38
 #: includes/emails/request-access-admin.php:38
 #: includes/emails/request-access-user.php:24
+#: includes/emails/welcome-email-user.php:26
 #, php-format
 msgid "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Preview</a>"
 msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Preview</a>"
@@ -470,16 +471,15 @@ msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Preview</a>"
 #: includes/emails/ms-user-new-site.php:22
 #: includes/emails/ms-visitor-register-site.php:22
 #: includes/emails/ms-visitor-register.php:22
-#: includes/emails/new-user-admin.php:47
+#: includes/emails/new-user-admin.php:49
 #: includes/emails/password-changed.php:22
 #: includes/emails/request-access-admin.php:47
 #: includes/emails/request-access-user.php:33
-#: includes/emails/welcome-email-user.php:31 includes/tabs.php:293
+#: includes/emails/welcome-email-user.php:35 includes/tabs.php:293
 msgid "Save settings"
 msgstr "Bewaar instellingen"
 
 #: includes/emails/account-rejected.php:26
-#: includes/emails/welcome-email-user.php:25
 #, php-format
 msgid ""
 "Welcome [username], your registration to %s was successful. You can set your "
@@ -494,7 +494,7 @@ msgid "Confirm your email address"
 msgstr "Bevestig je email adres"
 
 #: includes/emails/email-activation.php:28
-#: includes/emails/email-confirmed.php:28 includes/emails/new-user-admin.php:39
+#: includes/emails/email-confirmed.php:28 includes/emails/new-user-admin.php:41
 msgid "Available variables are:"
 msgstr "Beschikbare waarden zijn:"
 
@@ -530,7 +530,7 @@ msgstr "Dit is het default email template."
 msgid "Email template"
 msgstr "E-mail template"
 
-#: includes/emails/forgot-password.php:17 includes/functions.php:692
+#: includes/emails/forgot-password.php:17 includes/functions.php:716
 #, php-format
 msgid "Password reset for %s"
 msgstr "Wachtwoord reset voor %s"
@@ -571,12 +571,12 @@ msgstr ""
 msgid "Email addresses"
 msgstr "Email adressen"
 
-#: includes/emails/new-user-admin.php:31 includes/functions.php:630
+#: includes/emails/new-user-admin.php:31 includes/functions.php:654
 #, php-format
 msgid "New user at %s"
 msgstr "Nieuwe gebruiker op %s"
 
-#: includes/examples.php:99 includes/functions.php:433
+#: includes/examples.php:99 includes/functions.php:447
 #, php-format
 msgid "Welcome to %s"
 msgstr "Welkom op %s"
@@ -586,11 +586,11 @@ msgid "This is a custom text before the request access form."
 msgstr "Dit is een voorbeeld text voor het toegangsverzoek formulier."
 
 #: includes/filters.php:203 includes/form-handling.php:263
-#: includes/functions.php:551
+#: includes/functions.php:577
 msgid "Account approved"
 msgstr "Account goedgekeurd"
 
-#: includes/form-handling.php:265 includes/functions.php:567
+#: includes/form-handling.php:265 includes/functions.php:593
 #, php-format
 msgid ""
 "Welcome to %s. Your account has been approved and you can now set your "
@@ -620,7 +620,7 @@ msgstr ""
 "Als je deze setting handmatig hebt ingeschakeld, weet dan dat deze functie "
 "nog niet werkt."
 
-#: includes/functions.php:18 includes/functions.php:899
+#: includes/functions.php:18 includes/functions.php:923
 #: templates/account.php:80
 msgid "Password"
 msgstr "Wachtwoord"
@@ -705,21 +705,21 @@ msgstr "Gewenst (sub) domein"
 msgid "customdomain"
 msgstr "eigendomein"
 
-#: includes/functions.php:384
+#: includes/functions.php:398
 msgid "Activate your account"
 msgstr "Activeer je account"
 
-#: includes/functions.php:402 includes/functions.php:600
+#: includes/functions.php:416 includes/functions.php:465
 #, php-format
 msgid "Welcome %s"
 msgstr "Welkom %s"
 
-#: includes/functions.php:404 includes/functions.php:602
+#: includes/functions.php:418 includes/functions.php:467
 #, php-format
 msgid "your registration to %s was successful."
 msgstr "je registratie op %s was succesvol."
 
-#: includes/functions.php:406
+#: includes/functions.php:420
 #, php-format
 msgid ""
 "You only need to confirm your email address through <a href=\"%s\">this "
@@ -728,18 +728,18 @@ msgstr ""
 "Je hoeft alleen nog maar je email adres te bevestigen via <a href=\"%s"
 "\">deze link</a>."
 
-#: includes/functions.php:408 includes/functions.php:606
-#: includes/functions.php:712
+#: includes/functions.php:422 includes/functions.php:471
+#: includes/functions.php:630 includes/functions.php:736
 msgid "Greetings"
 msgstr "Groeten"
 
-#: includes/functions.php:410 includes/functions.php:608
-#: includes/functions.php:714
+#: includes/functions.php:424 includes/functions.php:473
+#: includes/functions.php:632 includes/functions.php:738
 #, php-format
 msgid "The %s crew"
 msgstr "De %s crew"
 
-#: includes/functions.php:416
+#: includes/functions.php:430
 #, php-format
 msgid ""
 "Welcome %s, your registration to %s was successful. You only need to confirm "
@@ -748,20 +748,17 @@ msgstr ""
 "Welkom %s, je registratie op %s was succesvol. Je hoeft alleen nog maar je "
 "email adres te bevestigen via deze link %s."
 
-#: includes/functions.php:450
-#, php-format
-msgid ""
-"Welcome %s, your registration to %s was successful. You can set your "
-"password here: %s."
-msgstr ""
-"Welkom %s, je registratie op %s was succesvol. Je kan hier je wachtwoord "
-"instellen: %s."
+#: includes/functions.php:469
+#, fuzzy, php-format
+#| msgid "You can also enter your own password"
+msgid "You can set your password here: %s."
+msgstr "Je kan ook je eigen wachtwoord kiezen"
 
-#: includes/functions.php:487
+#: includes/functions.php:513
 msgid "A new user requests access"
 msgstr "Een nieuwe gebruiker vraagt om toegang"
 
-#: includes/functions.php:503
+#: includes/functions.php:529
 #, fuzzy, php-format
 #| msgid ""
 #| "A new user has requested access. You can approve/deny him/her in the User "
@@ -773,12 +770,12 @@ msgstr ""
 "Een nieuwe gebruiker heeft toegang gevraagd. Je kunt hem/haar goedkeuren/"
 "weigeren op de Gebruikers management pagina."
 
-#: includes/functions.php:519
+#: includes/functions.php:545
 #, php-format
 msgid "Request for access confirmed for %s"
 msgstr "Verzoek voor toegang bevestigd voor %s"
 
-#: includes/functions.php:535
+#: includes/functions.php:561
 #, fuzzy, php-format
 #| msgid ""
 #| "You have successfully requested access to %s. We'll inform you by email."
@@ -788,59 +785,64 @@ msgid ""
 msgstr ""
 "Je hebt succesvol toegang verzocht op %s. We zullen je informeren per email."
 
-#: includes/functions.php:583
+#: includes/functions.php:609
 msgid "Account activated"
 msgstr "Account geactiveerd"
 
-#: includes/functions.php:604
+#: includes/functions.php:626
+#, php-format
+msgid "Hi %s"
+msgstr ""
+
+#: includes/functions.php:628
 #, fuzzy, php-format
 #| msgid ""
 #| "You have successfully registered to <strong>%1$s</strong>. You can set "
 #| "your password when you <a href=\"%2$s\">reset it</a>."
 msgid ""
-"You have confirmed your email address and can set your password through <a "
-"href=\"%s\">this link</a>."
+"you have confirmed your email address and can now set your password through "
+"<a href=\"%s\">this link</a>."
 msgstr ""
 "Je hebt je succesvol geregistreerd op <strong>%1$s</strong>. Je kunt je "
 "wachtwoord instellen door het te <a href=\"%2$s\">resetten</a>."
 
-#: includes/functions.php:676
+#: includes/functions.php:700
 #, php-format
 msgid "A new user registered at %s on %s"
 msgstr "Een nieuwe gebruiker heeft zich geregistreerd op %s op %s"
 
-#: includes/functions.php:678
+#: includes/functions.php:702
 #, php-format
 msgid "User name: %s"
 msgstr "Gebruikersnaam: %s"
 
-#: includes/functions.php:680
+#: includes/functions.php:704
 #, php-format
 msgid "IP: %s"
 msgstr "IP: %s"
 
-#: includes/functions.php:704
+#: includes/functions.php:728
 msgid "Hi"
 msgstr "Hi"
 
-#: includes/functions.php:706
+#: includes/functions.php:730
 msgid ""
 "Someone requested a password reset for the account using this email address."
 msgstr ""
 "Iemand heeft een wachtwoord reset aangevraagd voor de account die dit email "
 "adres gebruikt."
 
-#: includes/functions.php:710
+#: includes/functions.php:734
 #, php-format
 msgid "To (re)set your password, go to <a href=\"%s\">this page</a>."
 msgstr ""
 "Om je wachtwoord in te stellen, ga naar <a href=\"%s\">deze pagina</a>."
 
-#: includes/functions.php:817
+#: includes/functions.php:841
 msgid "You have successfully activated your account. You can now log in."
 msgstr "Je hebt succesvol je account bevestigd. Je kan nu inloggen."
 
-#: includes/functions.php:827
+#: includes/functions.php:851
 #, php-format
 msgid ""
 "You have successfully registered to <strong>%s</strong>. We have emailed you "
@@ -849,7 +851,7 @@ msgstr ""
 "Je hebt succesvol geregistreerd op <strong>%1$s</strong>. We hebben een "
 "activatie link naar je email adres gestuurd."
 
-#: includes/functions.php:834
+#: includes/functions.php:858
 #, php-format
 msgid ""
 "You have successfully requested access to <strong>%1$s</strong>. You'll be "
@@ -858,7 +860,7 @@ msgstr ""
 "Je hebt succesvol toegang gevraagd op <strong>%1$s</strong>. Je wordt via "
 "email geïnformeerd over de uitkomst."
 
-#: includes/functions.php:842
+#: includes/functions.php:866
 #, php-format
 msgid ""
 "You have successfully registered to <strong>%1$s</strong>. Please click the "
@@ -867,7 +869,7 @@ msgstr ""
 "Je hebt succesvol geregistreerd op <strong>%1$s</strong>. Klik aub op de "
 "bevestigingslink in je email."
 
-#: includes/functions.php:855
+#: includes/functions.php:879
 #, php-format
 msgid ""
 "You have successfully registered to <strong>%1$s</strong>. You can set your "
@@ -876,27 +878,27 @@ msgstr ""
 "Je hebt je succesvol geregistreerd op <strong>%1$s</strong>. Je kunt je "
 "wachtwoord instellen door het te <a href=\"%2$s\">resetten</a>."
 
-#: includes/functions.php:869
+#: includes/functions.php:893
 msgid "Check your email for a link to reset your password."
 msgstr "Controleer je e-mail voor de reset link."
 
-#: includes/functions.php:877
+#: includes/functions.php:901
 msgid "You are logged out."
 msgstr "Je bent uitgelogd."
 
-#: includes/functions.php:884
+#: includes/functions.php:908
 msgid "Your password has been changed. You can login now."
 msgstr "Je wachtwoord is gewijzigd. Je kan nu inloggen."
 
-#: includes/functions.php:891 templates/account.php:28
+#: includes/functions.php:915 templates/account.php:28
 msgid "Email address"
 msgstr "Email adres"
 
-#: includes/functions.php:908
+#: includes/functions.php:932
 msgid "Remember Me"
 msgstr "Onthoud mij"
 
-#: includes/functions.php:956 includes/functions.php:967 includes/tabs.php:204
+#: includes/functions.php:980 includes/functions.php:991 includes/tabs.php:204
 #: templates/login.php:6
 msgid "Log In"
 msgstr "Aanmelden"
@@ -1222,6 +1224,13 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "http://www.berryplasman.com"
 msgstr "http://www.berryplasman.com"
+
+#~ msgid ""
+#~ "Welcome %s, your registration to %s was successful. You can set your "
+#~ "password here: %s."
+#~ msgstr ""
+#~ "Welkom %s, je registratie op %s was succesvol. Je kan hier je wachtwoord "
+#~ "instellen: %s."
 
 #, fuzzy
 #~| msgid "<a href=\"%s\">Click here</a> for more info."

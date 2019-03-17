@@ -35,6 +35,10 @@
                     $content = str_replace( '%email_message%', b3_get_new_user_message( $blog_name, $user ), $content );
                     $subject = b3_get_new_user_subject( $blog_name );
                     break;
+                case 'welcome-user':
+                    $content = str_replace( '%email_message%', b3_get_new_user_message( $blog_name, $user ), $content );
+                    $subject = b3_get_new_user_subject( $blog_name );
+                    break;
                 case 'forgotpass':
                     $content = str_replace( '%email_message%', b3_default_forgot_password_message(), $content );
                     $subject = b3_default_forgot_password_subject();

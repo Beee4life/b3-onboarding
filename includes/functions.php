@@ -461,7 +461,19 @@
         if ( $b3_welcome_user_message ) {
             return $b3_welcome_user_message;
         } else {
-            return sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You can set your password here: %s.', 'b3-onboarding' ), $user->user_login, $blogname, b3_get_forgotpass_url() );
+    
+            $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+            $message .= '<br /><br />' . "\n";
+            $message .= sprintf( __( 'your registration to %s was successful.', 'b3-onboarding' ), $blogname ) . "\n";
+            $message .= '<br /><br />' . "\n";
+            $message .= sprintf( esc_html__( 'You can set your password here: %s.', 'b3-onboarding' ), b3_get_forgotpass_url() ) . "\n";
+            $message .= '<br /><br />' . "\n";
+            $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
+            $message .= '<br /><br />' . "\n";
+            $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+            $message .= '<br /><br />' . "\n";
+    
+            return $message;
         }
     }
     
