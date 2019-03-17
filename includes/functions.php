@@ -201,10 +201,6 @@
                 'id'    => 'forgot_password',
                 'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
             ),
-            // array(
-            //     'id'    => 'password_changed',
-            //     'title' => esc_html__( 'Reset password email', 'b3-onboarding' ),
-            // ),
         );
         $styling_boxes = array();
         if ( false != get_option( 'b3_custom_emails', false ) && ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) ) {
@@ -221,10 +217,6 @@
         }
         $email_boxes = array_merge( $settings_box, $request_access_box, $activate_email_boxes, $welcome_user_boxes, $new_user_boxes, $default_boxes2, $styling_boxes );
     
-        if ( is_multisite() ) {
-            // $email_boxes = array_merge( $email_boxes, $default_boxes2 );
-        }
-        
         return $email_boxes;
     
     }
@@ -266,6 +258,7 @@
                 'label' => esc_html__( 'Request access (admin approval)', 'b3-onboarding' ),
             ),
         );
+        
         $multisite_options2 = array(
             array(
                 'value' => 'request_access_subdomain',
