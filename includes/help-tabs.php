@@ -9,8 +9,6 @@
      */
     function b3_help_tabs( $old_help, $screen_id, $screen ) {
         
-        // echo '<pre>'; var_dump($screen_id); echo '</pre>'; exit;
-        
         $screen_array = array(
             'toplevel_page_b3-onboarding',
         );
