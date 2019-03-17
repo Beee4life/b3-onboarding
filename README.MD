@@ -49,7 +49,7 @@ All stored options are removed (unless option to not remove data is selected) an
   * forgot password
   * reset password
   * account
-* styled according to [BEM](https://en.bem.info) technology
+* (mostly) styled according to [BEM](https://en.bem.info) procedure
 * add custom fields through hooks
 * WPML prepared (partially)
 * Multisite prepared (partially)
@@ -71,9 +71,10 @@ All stored options are removed (unless option to not remove data is selected) an
 * b3_new_user_activated_by_admin
 * b3_new_user_rejected
 
+... there are more, we still need to index them all properly
+
 <a name="filters"></a>
 ### Filters
-... list is not complete yet
 
 * b3_filter_hidden_fields_values
 * b3_do_filter_hidden_fields_values
@@ -82,6 +83,7 @@ All stored options are removed (unless option to not remove data is selected) an
 * b3_welcome_user_subject
 * b3_welcome_user_message
 
+... there are more, we still need to index them all properly
 
 <a name="shortcodes"></a>
 ### Shortcodes
