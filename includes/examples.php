@@ -110,7 +110,7 @@
     function b3_override_welcome_user_message( $message, $user ) {
         return 'This is test content';
     }
-    add_filter( 'b3_welcome_user_message', 'b3_override_welcome_user_message', 10, 2 );
+    // add_filter( 'b3_welcome_user_message', 'b3_override_welcome_user_message', 10, 2 );
 
     /**
      * Filter for message before request access
