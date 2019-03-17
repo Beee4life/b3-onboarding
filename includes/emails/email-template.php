@@ -1,17 +1,21 @@
-<?php $email_template = get_option( 'b3_email_template', false ); ?>
+<?php
+    $stored_email_template = get_option( 'b3_email_template', false );
+?>
 <table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
     <tbody>
     <tr>
         <td colspan="2">
-            <?php esc_html_e( 'If any field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
+            <?php echo __( 'This is the default email template.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
         <th class="align-top">
             <label for="b3__input--email-template" class=""><?php esc_html_e( 'Email template', 'b3-onboarding' ); ?></label>
+            <br /><br />
+            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=template' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--email-template" name="b3_email_template" rows="4"><?php if ( $email_template ) { echo $email_template; } ?></textarea>
+            <textarea id="b3__input--email-template" name="b3_email_template" placeholder="<?php echo esc_textarea( b3_default_email_template() ); ?>" rows="4"><?php if ( $stored_email_template ) { echo $stored_email_template; } ?></textarea>
         </td>
     </tr>
     <tr>

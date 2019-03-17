@@ -24,6 +24,15 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit; // Exit if accessed directly
     }
+    
+    if ( false == get_option( 'b3_approval_page_id' ) && true == get_option( 'b3_front_end_approval' ) ) {
+        add_action( 'admin_notices', function () {
+            echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),
+                esc_html__( 'here', 'b3-onboarding' )
+            );
+        } );
+    }
 
     if ( ! class_exists( 'B3Onboarding' ) ) {
     
@@ -39,6 +48,20 @@
              *  A dummy constructor to ensure plugin is only initialized once
              */
             function __construct() {
+                if ( ! defined( 'B3_PLUGIN_URL' ) ) {
+                    $plugin_url = plugins_url( '', __FILE__ );
+                    define( 'B3_PLUGIN_URL', $plugin_url );
+                }
+    
+                if ( ! defined( 'B3_PLUGIN_PATH' ) ) {
+                    $plugin_path = trailingslashit( dirname( __FILE__ ) );
+                    define( 'B3_PLUGIN_PATH', $plugin_path );
+                }
+    
+                if ( ! defined( 'B3_PLUGIN_SETTINGS' ) ) {
+                    $plugin_url = admin_url( 'admin.php?page=b3-onboarding' );
+                    define( 'B3_PLUGIN_SETTINGS', $plugin_url );
+                }
             }
     
             function initialize() {
@@ -58,9 +81,11 @@
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
+                add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_init' ) );
+                add_action( 'wp_head',                              array( $this, 'b3_robots' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
@@ -74,7 +99,7 @@
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
                 // add_action( 'wp_print_footer_scripts',              array( $this, 'b3_add_captcha_js_to_footer' ) );
-            
+    
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
                 
                 add_filter( 'display_post_states',                  array( $this, 'b3_add_post_state' ), 10, 2 );
@@ -95,7 +120,6 @@
                 add_shortcode( 'delete-account',               array( $this, 'b3_render_delete_account_page' ) );
     
                 include( 'includes/do-stuff.php' );
-                include( 'includes/dashboard-widget.php' ); // @TODO: add if setting is active
                 include( 'includes/emails.php' );
                 include( 'includes/examples.php' );
                 include( 'includes/filters.php' );
@@ -154,13 +178,19 @@
                             update_blog_option( get_current_blog_id(), 'b3_registration_type', 'ms_register_site_user' );
                         }
                     } else {
-    
                         if ( 'user' == $public_registration ) {
                             update_blog_option( get_current_blog_id(), 'b3_registration_type', 'open' );
                         }
                     }
                 }
                 
+                // update_option( 'b3_request_access_subject_user', '' );
+                // update_option( 'b3_request_access_message_user', '' );
+                // update_option( 'b3_request_access_subject_admin', '' );
+                // update_option( 'b3_request_access_message_admin', '' );
+
+                update_option( 'b3_notification_content_type', 'html' );
+                update_option( 'b3_dashboard_widget', '1' );
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
@@ -170,7 +200,6 @@
                 update_option( 'b3_sidebar_widget', '1' );
                 
                 // 2 use
-                // update_option( 'b3_dashboard_widget', '1' );
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
     
             }
@@ -229,16 +258,26 @@
                     }
                 }
             }
+            
+            public function b3_robots() {
+                if ( is_singular() ) {
+                    $has_meta = get_post_meta( get_the_ID(), '_b3_page', true );
+                    
+                    if ( true == $has_meta && true == get_option( 'blog_public' ) ) {
+                        echo '<meta name="robots" content="noindex,follow" />';
+                    }
+                }
+            }
+            
     
             public function b3_template_redirect() {
     
                 $account_page_id  = get_option( 'b3_account_page_id' );
+                $account_url      = ( false != $account_page_id ) ? get_permalink( $account_page_id ) : admin_url( 'profile.php' );
                 $approval_page_id = get_option( 'b3_approval_page_id' );
                 $login_page_id    = get_option( 'b3_login_page_id' );
+                $login_url        = ( false != $login_page_id ) ? get_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = get_option( 'b3_logout_page_id' );
-
-                $login_url = ( false != $login_page_id ) ? get_permalink( $login_page_id ) : wp_login_url();
-                $account_url = ( false != $account_page_id ) ? get_permalink( $account_page_id ) : admin_url( 'profile.php' );
                 
                 if ( false != $account_page_id && is_page( [ $account_page_id ] ) && ! is_user_logged_in() ) {
                     
@@ -304,8 +343,10 @@
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
                 add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', '', '99' );
-                include( 'includes/user-approval-page.php' ); // content for the settings page
-                add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                    include( 'includes/user-approval-page.php' ); // content for the settings page
+                    add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                }
             }
     
     
@@ -316,6 +357,17 @@
                 if ( true == get_option( 'b3_sidebar_widget' ) ) {
                     include( 'includes/B3SidebarWidget.php' );
                     register_widget( 'B3SidebarWidget' );
+                }
+            }
+    
+    
+            /**
+             * Add dashboard widget
+             */
+            public function b3_add_dashboard_widget() {
+                if ( true == get_option( 'b3_dashboard_widget' ) ) {
+                    include( 'includes/dashboard-widget.php' );
+                    wp_add_dashboard_widget( 'b3-dashboard', 'B3 Onboarding', 'b3_dashboard_widget_function' );
                 }
             }
     
@@ -978,6 +1030,8 @@
              */
             public function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
                 // Create new message
+                error_log( 'public function b3_replace_retrieve_password_message' );
+                die('DIE BITCH');
                 $msg = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
                 $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
                 $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
@@ -997,7 +1051,7 @@
              * @return string               An error message.
              */
             private function b3_get_error_message( $error_code ) {
-                switch ( $error_code ) {
+                switch( $error_code ) {
                 
                     // Login errors
                     case 'empty_username':
@@ -1452,78 +1506,71 @@
              */
             public function b3_render_user_approval_page( $user_variables, $content = null ) {
     
-                // get users which are awaiting approval
-                $user_args = array(
-                    'role' => 'b3_approval'
-                );
-                $users                = get_users( $user_args );
-                // echo '<pre>'; var_dump($users); echo '</pre>'; exit;
                 $show_first_last_name = get_option( 'b3_activate_first_last' );
-                $user_approval_page   = b3_get_user_approval_id();
-                
-                    ?>
-                    <p>
-                        <?php echo __( 'On this page you can approve/deny user requests for access.', 'b3-onboaarding' ); ?>
-                    </p>
-                    <?php
-                if ( is_admin() ) {
-                }
-    
-                if ( ! empty( $_GET[ 'user' ] ) ) {
-                    if ( 'approved' == $_GET[ 'user' ] ) { ?>
-                        <p class="b3_message">
-                            <?php esc_html_e( 'User is successfully approved', 'b3-onboarding' ); ?>
-                        </p>
-                    <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
-                        <p class="b3_message">
-                            <?php esc_html_e( 'User is successfully rejected and user is deleted', 'b3-onboarding' ); ?>
-                        </p>
-                    <?php } ?>
-                <?php } ?>
-                <?php if ( $users ) { ?>
-                    <table class="b3_table b3_table--user" border="0" cellspacing="0" cellpadding="0" style="">
-                        <thead>
-                        <tr>
-                            <th>
-                                <?php esc_html_e( 'User ID', 'b3-onboarding' ); ?>
-                            </th>
-                            <?php if ( false != $show_first_last_name ) { ?>
-                                <th>
-                                    <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
-                                </th>
-                                <th>
-                                    <?php esc_html_e( 'Last name', 'b3-onboarding' ); ?>
-                                </th>
-                            <?php } ?>
-                            <th>
-                                <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
-                            </th>
-                            <th>
-                                <?php esc_html_e( 'Actions', 'b3-onboarding' ); ?>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach( $users as $user ) { ?>
-                            <tr>
-                                <td><?php echo $user->ID; ?></td>
-                                <?php if ( false != $show_first_last_name ) { ?>
-                                    <td><?php echo $user->first_name; ?></td>
-                                    <td><?php echo $user->last_name; ?></td>
-                                <?php } ?>
-                                <td><?php echo $user->user_email; ?></td>
-                                <td>
-                                    <form name="b3_user_management" action="" method="post">
-                                        <input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
-                                        <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
-                                        <input name="b3_approve_user" class="button" type="submit" value="<?php esc_html_e( 'Approve user', 'b3-onboarding' ); ?>" />
-                                        <input name="b3_reject_user" class="button" type="submit" value="<?php esc_html_e( 'Reject user', 'b3-onboarding' ); ?>" />
-                                    </form>
-                                </td>
-                            </tr>
+                $user_args            = array( 'role' => 'b3_approval' );
+                $users                = get_users( $user_args );
+                ?>
+                <p>
+                    <?php echo __( 'On this page you can approve/deny user requests for access.', 'b3-onboaarding' ); ?>
+                </p>
+                <?php
+                    if ( ! empty( $_GET[ 'user' ] ) ) {
+                        if ( 'approved' == $_GET[ 'user' ] ) { ?>
+                            <p class="b3_message">
+                                <?php esc_html_e( 'User is successfully approved', 'b3-onboarding' ); ?>
+                            </p>
+                        <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
+                            <p class="b3_message">
+                                <?php esc_html_e( 'User is successfully rejected and user is deleted', 'b3-onboarding' ); ?>
+                            </p>
                         <?php } ?>
-                        </tbody>
-                    </table>
+                    <?php } ?>
+                <?php if ( $users ) { ?>
+
+                        <table class="b3_table b3_table--user" border="0" cellspacing="0" cellpadding="0" style="">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <?php esc_html_e( 'User ID', 'b3-onboarding' ); ?>
+                                </th>
+                                <?php if ( false != $show_first_last_name ) { ?>
+                                    <th>
+                                        <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
+                                    </th>
+                                    <th>
+                                        <?php esc_html_e( 'Last name', 'b3-onboarding' ); ?>
+                                    </th>
+                                <?php } ?>
+                                <th>
+                                    <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
+                                </th>
+                                <th>
+                                    <?php esc_html_e( 'Actions', 'b3-onboarding' ); ?>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach( $users as $user ) { ?>
+                                <tr>
+                                    <td><?php echo $user->ID; ?></td>
+                                    <?php if ( false != $show_first_last_name ) { ?>
+                                        <td><?php echo $user->first_name; ?></td>
+                                        <td><?php echo $user->last_name; ?></td>
+                                    <?php } ?>
+                                    <td><?php echo $user->user_email; ?></td>
+                                    <td>
+                                        <form name="b3_user_management" action="" method="post">
+                                            <input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
+                                            <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
+                                            <input name="b3_approve_user" class="button" type="submit" value="<?php esc_html_e( 'Approve', 'b3-onboarding' ); ?>" />
+                                            <input name="b3_reject_user" class="button" type="submit" value="<?php esc_html_e( 'Reject', 'b3-onboarding' ); ?>" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </form>
                 <?php } else { ?>
                     <p><?php esc_html_e( 'No (more) users to approve.', 'b3-onboarding' ); ?></p>
                 <?php }

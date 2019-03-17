@@ -7,16 +7,14 @@
 
 <body>
 
-<!-- Main Table -->
-<table id="main" cellpadding="0" style="background: #eeeeee;">
+<table id="b3_email_main" cellpadding="0" cellspacing="0" style="background: #eeeeee;">
     <tr align="center">
         <td>
 
-            <!-- Header -->
-            <table class="contenttable header">
+            <table class="b3_email_content_table b3_email_header">
                 <tr>
                     <td align="center">
-                        <a href="%home_url%"><img src="%logo%" alt="" /></a>
+                        <a href="%home_url%"><img src="%logo%" class="b3_header_image" alt="" /></a>
                     </td>
                 </tr>
                 <tr>
@@ -24,22 +22,17 @@
                 </tr>
             </table>
 
-            <!-- Content -->
-            <table class="contenttable mailcontent" cellpadding="0" cellspacing="0">
+            <table class="b3_email_content_table b3_email_content" cellpadding="0" cellspacing="0">
                 <tr>
                     <td valign="top">
                         %email_message%
-
-                        <br /><br />Greetings,<br /><br />
-
-                        %blog_name% crew<br /><br />
                     </td>
                 </tr>
                 <tr>
                     <td><div class="hr"></div></td>
                 </tr>
                 <tr>
-                    <td class="footer"><small>This is an automated email from the website <a href="%home_url%">%blog_name%</a>.</small></td>
+                    <td class="b3_email_footer"><small>This is an automated email from the website <a href="%home_url%">%blog_name%</a>.</small></td>
                 </tr>
             </table>
         </td>

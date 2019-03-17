@@ -63,9 +63,9 @@
                 
                     // Sidebar widget
                     if ( isset( $_POST[ 'b3_disable_action_links' ] ) ) {
-                        update_option( 'b3_action_links', '1', true );
+                        update_option( 'b3_disable_action_links', '1', true );
                     } else {
-                        delete_option( 'b3_action_links' );
+                        delete_option( 'b3_disable_action_links' );
                     }
                 
                     // Dashboard widget (not in use yet)
@@ -97,6 +97,7 @@
                 exit;
     
             } elseif ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
+                
                 $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=pages' );
                 if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
@@ -142,6 +143,9 @@
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
     
                     if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+                        update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ], true );
+                        update_option( 'b3_account_activated_message', stripslashes( $_POST[ 'b3_account_activated_message' ] ), true );
+
                         update_option( 'b3_new_user_message', stripslashes( $_POST[ 'b3_new_user_message' ] ), true );
                         update_option( 'b3_new_user_notification_addresses', $_POST[ 'b3_new_user_notification_addresses' ], true );
                         update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
@@ -149,12 +153,19 @@
                         update_option( 'b3_welcome_user_subject', $_POST[ 'b3_welcome_user_subject' ], true );
                     }
 
+                    if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
+                        update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ), true );
+                        update_option( 'b3_email_activation_message', stripslashes( $_POST[ 'b3_email_activation_message' ] ), true );
+                    }
+
                     if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                         update_option( 'b3_account_approved_message', $_POST[ 'b3_account_approved_message' ], true );
                         update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ], true );
-                        update_option( 'b3_request_access_message', stripslashes( $_POST[ 'b3_request_access_message' ] ), true );
+                        update_option( 'b3_request_access_message_admin', stripslashes( $_POST[ 'b3_request_access_message_admin' ] ), true );
                         update_option( 'b3_request_access_notification_addresses', $_POST[ 'b3_request_access_notification_addresses' ], true );
-                        update_option( 'b3_request_access_subject', $_POST[ 'b3_request_access_subject' ], true );
+                        update_option( 'b3_request_access_subject_admin', $_POST[ 'b3_request_access_subject_admin' ], true );
+                        update_option( 'b3_request_access_message_user', stripslashes( $_POST[ 'b3_request_access_message_user' ] ), true );
+                        update_option( 'b3_request_access_subject_user', $_POST[ 'b3_request_access_subject_user' ], true );
                     }
     
                     $redirect_url = add_query_arg( 'success', 'emails_saved', $redirect_url );
@@ -249,8 +260,8 @@
                         $blog_name  = get_option( 'blogname' ); // @TODO: add filter
                         $from_email = get_option( 'admin_email' ); // @TODO: add filter
                         $to         = $user_object->user_email;
-                        $subject    = apply_filters( 'b3_account_approved_subject', __( 'Account approved', 'b3-onboarding' ) );
                         $subject    = esc_html__( 'Account approved', 'b3-onboarding' );
+                        $subject    = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
                         $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password on %s.', 'b3-onboarding' ), $blog_name, esc_url( b3_get_forgotpass_url() ) );
                         $headers    = array(
                             'From: ' . $blog_name . ' <' . $from_email . '>',
@@ -259,7 +270,6 @@
                         
                         wp_mail( $to, $subject, $message, $headers );
     
-                        do_action( 'b3_new_user_activated', $user_id );
                         do_action( 'b3_new_user_activated_by_admin', $user_id );
     
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );

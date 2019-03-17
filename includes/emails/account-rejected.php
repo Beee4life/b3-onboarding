@@ -1,4 +1,5 @@
 <?php
+    // not used yet
     $welcome_user_email_subject = get_option( 'b3_welcome_user_subject', false );
     $welcome_user_email_message = get_option( 'b3_welcome_user_message', false );
 ?>

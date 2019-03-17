@@ -25,7 +25,7 @@
             <p>
                 <?php
                     if ( count( $approval_users ) > 0 ) {
-                        echo sprintf( __( 'There %s %d %s waiting approval. <a href="%s">Click here</a> to approve or deny them.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ) );
+                        echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
                     } elseif ( count( $activation_users ) > 0 ) {
                         echo sprintf( esc_html__( 'There %s %d %s awaiting activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
                     } else {
@@ -36,6 +36,9 @@
             
             <?php if ( ! empty( $all_users ) ) { ?>
                 <?php $date_time_format = get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ); ?>
+                <h3>
+                    <?php esc_html_e( 'LAST REGISTERED USERS', 'b3-onboarding' ); ?>
+                </h3>
                 <ul>
                     <?php foreach( $all_users as $user ) { ?>
                         <li>
@@ -50,11 +53,3 @@
         </div>
         <?php
     }
-    
-    // the function which adds the widget
-    function b3_add_dashboard_widget() {
-        if ( true == get_option( 'b3_dashboard_widget' ) ) {
-            wp_add_dashboard_widget( 'b3-dashboard', 'B3 Onboarding', 'b3_dashboard_widget_function' );
-        }
-    }
-    add_action( 'wp_dashboard_setup', 'b3_add_dashboard_widget' );

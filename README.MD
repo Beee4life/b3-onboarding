@@ -113,9 +113,13 @@ This plugin gives you all the freedom to change/use different parts, without bei
 
 <a name="changelog"></a>
 0.9-beta
+* add more email settings
+* clean up actions/filters
+* refactor registration form
 * exclude more user roles from admin
 * remove fallback for existing pages
 * output b3_* option values on debug page
+* add dashboard widget
 
 0.8-beta
 * add first/last name to request access

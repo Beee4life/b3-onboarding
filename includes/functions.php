@@ -97,21 +97,25 @@
             'b3_account_page_id',
             'b3_action_links',
             'b3_activate_first_last',
-            'b3_approval_page_id',
             // 'b3_add_br_html_email', // not used yet
-            // 'b3_dashboard_widget', // not used yet
+            'b3_approval_page_id',
+            'b3_custom_emails',
+            'b3_dashboard_widget',
+            'b3_disable_action_links',
             'b3_email_styling',
             'b3_email_template',
             'b3_first_last_required',
             'b3_forgot_password_message',
             'b3_forgot_password_subject',
             'b3_forgotpass_page_id',
+            'b3_front_end_approval',
             'b3_login_page_id',
             'b3_logout_page_id',
             // 'b3_mail_sending_method', // not used yet
             'b3_new_user_message',
             'b3_new_user_notification_addresses',
             'b3_new_user_subject',
+            'b3_notification_content_type',
             'b3_notification_sender_email',
             'b3_notification_sender_name',
             'b3_register_page_id',
@@ -119,6 +123,7 @@
             'b3_request_access_message',
             'b3_request_access_notification_addresses',
             'b3_request_access_subject',
+            'b3_reset_page_id',
             'b3_restrict_admin',
             'b3_sidebar_widget',
             'b3_themed_profile',
@@ -150,8 +155,12 @@
         if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
             $request_access_box = array(
                 array(
-                    'id'    => 'request_access',
-                    'title' => esc_html__( 'Request access email', 'b3-onboarding' ),
+                    'id'    => 'request_access_user',
+                    'title' => esc_html__( 'Request access email (user)', 'b3-onboarding' ),
+                ),
+                array(
+                    'id'    => 'request_access_admin',
+                    'title' => esc_html__( 'Request access email (admin)', 'b3-onboarding' ),
                 ),
                 array(
                     'id'    => 'account_approved',
@@ -164,6 +173,10 @@
                 array(
                     'id'    => 'email_activation',
                     'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
+                ),
+                array(
+                    'id'    => 'account_activated',
+                    'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
                 ),
             );
         }
@@ -313,13 +326,39 @@
     }
 
 
+    function b3_get_email_styling() {
+        $custom_css = get_option( 'b3_email_styling', false );
+    
+        if ( false != $custom_css ) {
+            $email_style = $custom_css;
+        } else {
+            $email_style = b3_default_email_styling();
+        }
+    
+        return $email_style;
+    }
+
+
+    function b3_get_email_template() {
+        $custom_template = get_option( 'b3_email_template', false );
+        
+        if ( false != $custom_template ) {
+            $email_template = $custom_template;
+        } else {
+            $email_template = b3_default_email_template();
+        }
+        
+        return $email_template;
+    }
+    
+
     /**
      * Return default email styling
      *
      * @return false|string
      */
     function b3_default_email_styling() {
-        $default_css = file_get_contents( dirname(__FILE__) . '/default-styling.css' );
+        $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
         
         return $default_css;
     }
@@ -331,12 +370,68 @@
      * @return false|string
      */
     function b3_default_email_template() {
-        $default_template = file_get_contents( dirname(__FILE__) . '/default-template.html' );
+        $default_template = file_get_contents( dirname(__FILE__) . '/default-email-template.html' );
         
         return $default_template;
     }
     
     
+    function b3_default_email_content() {
+        $default_content = file_get_contents( dirname(__FILE__) . '/default-email-content.html' );
+        
+        return $default_content;
+    }
+    
+    
+    /**
+     * Return email activation subject (user)
+     *
+     * @param $blogname
+     *
+     * @return mixed|string
+     */
+    function b3_get_email_activation_subject( $blogname ) {
+        $b3_email_activation_subject = get_option( 'b3_email_activation_subject', false );
+        if ( $b3_email_activation_subject ) {
+            return $b3_email_activation_subject;
+        } else {
+            return esc_html__( 'Activate your account', 'b3-onboarding' );
+        }
+    }
+    
+    /**
+     * Return email activation message (user)
+     *
+     * @param $blogname
+     * @param $user
+     *
+     * @return mixed|string
+     */
+    function b3_get_email_activation_message( $blogname, $user ) {
+        $b3_email_activation_message = get_option( 'b3_email_activation_message', false );
+        if ( $b3_email_activation_message ) {
+            return $b3_email_activation_message;
+        } else {
+            if ( false == $user ) {
+                $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+                $message .= '<br /><br />' . "\n";
+                $message .= sprintf( __( 'your registration to %s was successful.', 'b3-onboarding' ), $blogname ) . "\n";
+                $message .= '<br /><br />' . "\n";
+                $message .= sprintf( __( 'You only need to confirm your email address through <a href="%s">this link</a>.', 'b3-onboarding' ), '%activation_url%' ) . "\n";
+                $message .= '<br /><br />' . "\n";
+                $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
+                $message .= '<br /><br />' . "\n";
+                $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+                $message .= '<br /><br />' . "\n";
+                
+                return $message;
+
+            } else {
+                return sprintf( esc_html__( 'Welcome %s, your registration to %s was successful. You only need to confirm your email address through this link %s.', 'b3-onboarding' ), $user->user_login, $blogname, b3_get_activation_url( $user ) );
+            }
+        }
+    }
+
     /**
      * Return welcome user subject (user)
      *
@@ -372,6 +467,8 @@
     
     
     /**
+     * Get notification addresses
+     *
      * @param $registration_type
      *
      * @return mixed
@@ -392,6 +489,144 @@
         
     }
     
+    
+    /**
+     * Get email subject for request access (admin)
+     *
+     * @return mixed|string
+     */
+    function b3_request_access_subject_admin() {
+        $subject = get_option( 'b3_request_access_subject_admin', false );
+        if ( ! $subject ) {
+            $subject = esc_html__( 'A new user requests access', 'b3-onboarding' );
+        }
+        
+        return $subject;
+        
+    }
+    
+
+    /**
+     * Get email message for request access (admin)
+     *
+     * @return mixed|string
+     */
+    function b3_request_access_message_admin() {
+        $message = get_option( 'b3_request_access_message_admin', false );
+        if ( ! $message ) {
+            $message = sprintf( __( 'A new user has requested access. You can approve/deny him/her on the "<a href="%s">User approval</a>" page.', 'b3-onboarding' ), esc_url( admin_url( 'admin.php?page=b3-user-approval' ) ) );
+        }
+        
+        return $message;
+        
+    }
+    
+
+    /**
+     * Get email subject for request access (user)
+     *
+     * @return mixed|string
+     */
+    function b3_request_access_subject_user() {
+        $subject = get_option( 'b3_request_access_subject_user', false );
+        if ( ! $subject ) {
+            $subject = sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+        }
+        
+        return $subject;
+        
+    }
+    
+
+    /**
+     * Get email message for request access (user)
+     *
+     * @return mixed|string
+     */
+    function b3_request_access_message_user() {
+        $message = get_option( 'b3_request_access_message_user', false );
+        if ( ! $message ) {
+            $message = sprintf( __( "You have successfully requested access for %s. We'll inform you about the outcome.", "b3-onboarding" ), get_option( "blogname" ) );
+        }
+        
+        return $message;
+        
+    }
+    
+
+    /**
+     * Get email subject for account approved
+     *
+     * @return mixed|string
+     */
+    function b3_get_account_approved_subject() {
+        $subject = get_option( 'b3_account_approved_subject', false );
+        if ( ! $subject ) {
+            $subject = sprintf( __( 'Account approved', 'b3-onboarding' ) );
+        }
+        
+        return $subject;
+        
+    }
+    
+
+    /**
+     * Get email message for account approved
+     *
+     * @return mixed|string
+     */
+    function b3_get_account_approved_message() {
+        $message = get_option( 'b3_account_approved_message', false );
+        if ( ! $message ) {
+            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password on %s.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_forgotpass_url() ) );
+        }
+        
+        return $message;
+        
+    }
+    
+
+    /**
+     * Get email subject for account approved
+     *
+     * @return mixed|string
+     */
+    function b3_get_account_activated_subject() {
+        $subject = get_option( 'b3_account_activated_subject', false );
+        if ( ! $subject ) {
+            $subject = sprintf( __( 'Account activated', 'b3-onboarding' ) );
+        }
+        
+        return $subject;
+        
+    }
+    
+
+    /**
+     * Get email message for account approved
+     *
+     * @return mixed|string
+     */
+    function b3_get_account_activated_message() {
+        $message = get_option( 'b3_account_activated_message', false );
+        if ( ! $message ) {
+    
+            $message = sprintf( esc_html__( 'Hi %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+            $message .= '<br /><br />' . "\n";
+            $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%forgotpass_url%' ) . "\n";
+            $message .= '<br /><br />' . "\n";
+            $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
+            $message .= '<br /><br />' . "\n";
+            $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+            $message .= '<br /><br />' . "\n";
+    
+        }
+        
+        return $message;
+        
+    }
+    
+
     /**
      * Return new user subject (admin)
      *
@@ -426,14 +661,14 @@
             $message = b3_default_new_user_admin_message();
         }
     
-        $email_styling  = get_option( 'b3_email_styling', false );
-        $email_template = get_option( 'b3_email_template', false );
+        $email_styling  = b3_get_email_styling();
+        $email_template = b3_get_email_template();
         if ( false != $email_styling && false != $email_template ) {
             // replace email variables
             $vars = [];
             if ( strpos( $message, '%registration_date%' ) !== false ) {
-                $vars[ 'registration_date' ] = $user->user_registered;
-        
+                $date_time_format            = get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' );
+                $vars[ 'registration_date' ] = date( $date_time_format, strtotime( $user->user_registered ) );
             }
             $message = strtr( $message, b3_replace_email_vars( $vars ) );
         }
@@ -444,53 +679,18 @@
     
     
     /**
-     * Return request access email subject (user)
-     *
-     * @param $blogname
-     *
-     * @return mixed|string
-     */
-    function b3_get_request_access_subject( $blogname ) {
-        $b3_request_access_subject = get_option( 'b3_request_access_subject', false );
-        if ( $b3_request_access_subject ) {
-            return $b3_request_access_subject;
-        } else {
-            // default
-            return sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), $blogname );
-        }
-    }
-    
-    
-    /**
-     * Request access email message (user)
-     *
-     * @param $blogname
-     * @param $user
-     *
-     * @return mixed|string
-     */
-    function b3_get_request_access_message( $blogname, $user ) {
-        $b3_request_access_message = get_option( 'b3_request_access_message', false );
-        if ( $b3_request_access_message ) {
-            return $b3_request_access_message;
-        } else {
-            // default
-            return sprintf( esc_html__( "You have successfully requested access to %s. We'll inform you by email.", "b3-onboarding" ), $blogname );
-
-        }
-    }
-    
-    
-    /**
      * Default new user message (admin)
      *
      * @return string
      */
     function b3_default_new_user_admin_message() {
     
-        $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\r\n\r\n";
-        $admin_message .= sprintf( __( 'Login: %s', 'b3-onboarding' ), '%user_login%' ) . "\r\n\r\n";
-        $admin_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), '%user_ip%' ) . "\r\n\r\n";
+        $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . ".\n";
+        $admin_message .= '<br /><br />' . "\n";
+        $admin_message .= sprintf( __( 'User name: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
+        $admin_message .= '<br /><br />' . "\n";
+        $admin_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), '%user_ip%' ) . "\n";
+        $admin_message .= '<br /><br />' . "\n";
     
         return $admin_message;
     }
@@ -513,12 +713,18 @@
     function b3_default_forgot_password_message() {
         
         // Create new message (text)
-        $default_message = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
-        $default_message .= __( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\r\n\r\n";
-        $default_message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";
-        $default_message .= __( "To reset your password to something you'd like, visit the following address:", "b3-onboarding" ) . "\r\n\r\n";
-        $default_message .= "%reset_url%\r\n\r\n";
-        $default_message .= __( 'Thanks!', 'b3-onboarding' ) . "\r\n";
+        $default_message = __( 'Hi', 'b3-onboarding' ) . ",\n";
+        $default_message .= '<br /><br />' . "\n";
+        $default_message .= __( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\n";
+        $default_message .= '<br /><br />' . "\n";
+        $default_message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+        $default_message .= '<br /><br />' . "\n";
+        $default_message .= sprintf( __( 'To (re)set your password, go to <a href="%s">this page</a>.', 'b3-onboarding' ), b3_get_forgotpass_url() ) . "\n";
+        $default_message .= '<br /><br />' . "\n";
+        $default_message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
+        $default_message .= '<br /><br />' . "\n";
+        $default_message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        // $default_message .= '<br /><br />';
         
         return $default_message;
     
@@ -534,13 +740,17 @@
      */
     function b3_replace_email_vars( $vars ) {
     
+        $user_data = get_userdata( get_current_user_id() );
         $replacements = array(
+            '%activation_url%'    => b3_get_activation_url( $user_data ),
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_styling%'     => ( false != get_option( 'b3_email_styling' ) ) ? get_option( 'b3_email_styling' ) : b3_default_email_styling(),
             '%home_url%'          => get_home_url(),
+            '%logo%'              => apply_filters( 'b3_email_logo', '' ),
             '%registration_date%' => ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : false,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
             '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
+            '%user_login%'        => $user_data->user_login,
         );
         
         return $replacements;
@@ -581,11 +791,11 @@
             <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
             <div class="b3_form-element b3_form-element--register">
                 <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="First name"<?php echo $required; ?>>
+                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'First name' : false; ?>"<?php echo $required; ?>>
             </div>
             <div class="b3_form-element b3_form-element--register">
                 <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="Last name"<?php echo $required; ?>>
+                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
             </div>
         <?php
         $output = ob_get_clean();
@@ -596,11 +806,97 @@
     /**
      * Render login form
      */
-    function b3_render_login_form() {
+    function b3_render_login_form( $attributes ) {
         
         ob_start();
+        $reset_page = get_option( 'b3_resetpass_page_id' );
+        $request_access = get_option( 'b3_registration_type' );
         ?>
+
         <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
+            <?php /* Show errors if there are any */ ?>
+            <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
+                <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
+                    <p class="b3_message">
+                        <?php echo $error; ?>
+                    </p>
+                <?php } ?>
+            <?php } ?>
+        
+            <?php /* Show success message if user successfully activated */ ?>
+            <?php if ( isset( $attributes[ 'user_activate' ] ) ) { ?>
+                <p class="b3_message">
+                    <?php esc_html_e( 'You have successfully activated your account. You can now log in.', 'b3-onboarding' ); ?>
+                </p>
+            <?php } ?>
+        
+            <?php /* Show success message if user successfully registered */ ?>
+            <?php if ( $attributes[ 'registered' ] ) { ?>
+                <p class="b3_message">
+                    <?php
+                        if ( is_multisite() ) {
+                            echo sprintf(
+                                __( 'You have successfully registered to <strong>%s</strong>. We have emailed you an activation link.', 'b3-onboarding' ),
+                                get_bloginfo( 'name' )
+                            );
+                        } else {
+                            if ( 'request_access' == $request_access && ! empty( $_GET[ 'registered' ] ) && 'access_requested' == $_GET[ 'registered' ] ) {
+                            
+                                echo sprintf(
+                                    __( 'You have successfully requested access to <strong>%1$s</strong>. You\'ll be notified by email about the result.', 'b3-onboarding' ),
+                                    get_bloginfo( 'name' )
+                                );
+                                $show_form = false;
+                            
+                            } elseif ( ! empty( $_GET[ 'registered' ] ) && 'confirm_email' == $_GET[ 'registered' ] ) {
+                            
+                                echo sprintf(
+                                    __( 'You have successfully registered to <strong>%1$s</strong>. Please click the confirmation link in your email.', 'b3-onboarding' ),
+                                    get_bloginfo( 'name' )
+                                );
+                                $show_form = false;
+                            
+                            } else {
+                            
+                                if ( false == $reset_page ) {
+                                    $password_reset_url = esc_url( wp_lostpassword_url() );
+                                } else {
+                                    $password_reset_url = esc_url( get_permalink( $reset_page ) );
+                                }
+                                echo sprintf(
+                                    __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-onboarding' ),
+                                    get_bloginfo( 'name' ),
+                                    $password_reset_url
+                                );
+                                $show_form = false;
+                            }
+                        }
+                    ?>
+                </p>
+            <?php } ?>
+        
+            <?php /* Show message if user reset password */ ?>
+            <?php if ( $attributes[ 'lost_password_sent' ] ) { ?>
+                <p class="b3_message">
+                    <?php esc_html_e( 'Check your email for a link to reset your password.', 'b3-onboarding' ); ?>
+                </p>
+                <?php $show_form = false; ?>
+            <?php } ?>
+        
+            <?php /* Show logged out message if user just logged out */ ?>
+            <?php if ( $attributes[ 'logged_out' ] ) { ?>
+                <p class="b3_message">
+                    <?php esc_html_e( 'You are logged out.', 'b3-onboarding' ); ?>
+                </p>
+            <?php } ?>
+        
+            <?php /* Show message if user just reset password */ ?>
+            <?php if ( $attributes[ 'password_updated' ] ) { ?>
+                <p class="b3_message">
+                    <?php esc_html_e( 'Your password has been changed. You can login now.', 'b3-onboarding' ); ?>
+                </p>
+            <?php } ?>
+
             <table class="b3_table b3_table--login" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>
@@ -649,19 +945,19 @@
     function b3_form_links( $current_form ) {
     
         $output = '';
-        if ( true == get_option( 'b3_action_links' ) ) {
+        if ( true != get_option( 'b3_disable_action_links' ) ) {
             $page_types = [];
     
-            switch ( $current_form ) {
+            switch( $current_form ) {
         
                 case 'login':
                     $page_types[ 'forgotpassword' ] = [
-                        'title' => 'Forgot password',
+                        'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
                         'link'  => b3_get_forgotpass_id( true )
                     ];
                     if ( 'closed' != get_option( 'registration_type' ) ) {
                         $page_types[ 'register' ] = [
-                            'title' => __( 'Register', 'b3-onboarding' ),
+                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_id( true )
                         ];
                     }
@@ -669,23 +965,23 @@
         
                 case 'register':
                     $page_types[ 'login' ] = [
-                        'title' => __( 'Log In', 'b3-onboarding' ),
+                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_id( true )
                     ];
                     $page_types[ 'fogotpassword' ] = [
-                        'title' => __( 'Forgot password', 'b3-onboarding' ),
+                        'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
                         'link'  => b3_get_forgotpass_id( true )
                     ];
                     break;
         
                 case 'forgotpassword':
                     $page_types[ 'login' ] = [
-                        'title' => __( 'Log In', 'b3-onboarding' ),
+                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_id( true )
                     ];
                     if ( 'closed' != get_option( 'registration_type' ) ) {
                         $page_types[ 'register' ] = [
-                            'title' => __( 'Register', 'b3-onboarding' ),
+                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_id( true )
                         ];
                     }
@@ -729,8 +1025,28 @@
     }
     
     
-    function b3_get_activation_url() {
-        $url = '';
-        
-        return $url;
+    /**
+     * Get a unique activation url for a user
+     *
+     * @param $user
+     *
+     * @return string
+     */
+    function b3_get_activation_url( $user ) {
+    
+        // Generate an activation key
+        $key = wp_generate_password( 20, false );
+    
+        // Set the activation key for the user
+        global $wpdb;
+        $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user->user_login ) );
+
+        $login_url = wp_login_url();
+        if ( false != b3_get_login_id() ) {
+            $login_url = get_permalink( b3_get_login_id() );
+        }
+    
+        $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user->user_login ) ), $login_url );
+    
+        return $activation_url;
     }

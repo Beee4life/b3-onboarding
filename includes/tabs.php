@@ -10,7 +10,7 @@
     function b3_render_tab_content( $tab ) {
     
         $content = '';
-        switch ( $tab ) {
+        switch( $tab ) {
             case 'settings':
                 $content = b3_render_settings_tab();
                 break;
@@ -48,7 +48,7 @@
      */
     function b3_render_settings_tab() {
     
-        $action_links        = get_option( 'b3_action_links' );
+        $action_links        = get_option( 'b3_disable_action_links' );
         $custom_emails       = get_option( 'b3_custom_emails' );
         $dashboard_widget    = get_option( 'b3_dashboard_widget' );
         $first_last          = get_option( 'b3_activate_first_last' );
@@ -114,10 +114,10 @@
 
             <div class="b3_settings-field">
                 <div class="b3_settings-label">
-                    <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
+                    <label for="b3_activate_custom_emails"><?php esc_html_e( 'Your email styling/template', 'b3-onboarding' ); ?></label>
                 </div>
                 <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom email styling', 'b3-onboarding' ); ?>
+                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling', 'b3-onboarding' ); ?>
                 </div>
             </div>
 
@@ -211,12 +211,12 @@
             ),
             array(
                 'id'      => 'forgotpass_page',
-                'label'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
+                'label'   => esc_html__( 'Forgot Password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_forgotpass_page_id' ),
             ),
             array(
                 'id'      => 'resetpass_page',
-                'label'   => esc_html__( 'Reset password', 'b3-onboarding' ),
+                'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_resetpass_page_id' ),
             ),
             array(

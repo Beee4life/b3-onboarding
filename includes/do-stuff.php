@@ -6,33 +6,33 @@
         
         // Information needed for creating the plugin's pages
         $page_definitions = array(
-            'account' => array(
+            _x( 'account', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Account', 'b3-onboarding' ),
                 'content' => '[account-page]',
                 'meta'    => 'b3_account_page_id'
             ),
-            'forgotpassword' => array(
+            _x( 'forgotpassword', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
                 'content' => '[forgotpass-form]',
                 'meta'    => 'b3_forgotpass_page_id'
             ),
-            'login'           => array(
+            _x( 'login', 'slug', 'b3-onboarding' )           => array(
                 'title'   => esc_html__( 'Login', 'b3-onboarding' ),
                 'content' => '[login-form]',
                 'meta'    => 'b3_login_page_id'
             ),
-            'logout'           => array(
+            _x( 'logout', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
                 'content' => '',
                 'meta'    => 'b3_logout_page_id'
             ),
-            'register'        => array(
+            _x( 'register', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Register', 'b3-onboarding' ),
                 'content' => '[register-form]',
                 'meta'    => 'b3_register_page_id'
             ),
-            'reset-password'  => array(
-                'title'   => esc_html__( 'Reset password', 'b3-onboarding' ),
+            _x( 'reset-password', 'slug', 'b3-onboarding' ) => array(
+                'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
                 'content' => '[resetpass-form]',
                 'meta'    => 'b3_resetpass_page_id'
             ),
@@ -124,3 +124,14 @@
         
         return false;
     }
+    
+    function b3_after_user_activated( $user_id ) {
+        // send email to user
+        $user_data = get_userdata( $user_id );
+        $to = $user_data->user_email;
+        $subject = get_option( 'b3_user_activated_subject' );
+        $message = get_option( 'b3_user_activated_message' );
+        
+        
+    }
+    add_action( 'b3_new_user_activated', 'b3_after_user_activated' );

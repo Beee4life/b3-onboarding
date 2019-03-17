@@ -1,7 +1,7 @@
 <?php
-    $request_access_email_addresses = get_option( 'b3_request_access_notification_addresses', false );
-    $request_access_email_subject   = get_option( 'b3_request_access_subject', false );
-    $request_access_email_message   = get_option( 'b3_request_access_message', false );
+    $request_access_email_addresses     = get_option( 'b3_request_access_notification_addresses', false );
+    $request_access_email_subject_admin = get_option( 'b3_request_access_subject_admin', false );
+    $request_access_email_message_admin = get_option( 'b3_request_access_message_admin', false );
 ?>
 <table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
     <tbody>
@@ -25,18 +25,20 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--request-access-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--request-access-subject-admin" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--request-access-subject" name="b3_request_access_subject" placeholder="@TODO" type="text" value="<?php echo $request_access_email_subject; ?>" />
+            <input class="" id="b3__input--request-access-subject-admin" name="b3_request_access_subject_admin" placeholder="<?php echo b3_request_access_subject_admin(); ?>" type="text" value="<?php echo $request_access_email_subject_admin; ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--request-access-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--request-access-message-admin" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <br /><br />
+            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=request-access-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--request-access-message" name="b3_request_access_message" placeholder="@TODO" rows="4"><?php echo $request_access_email_message; ?></textarea>
+            <textarea id="b3__input--request-access-message-admin" name="b3_request_access_message_admin" placeholder="<?php echo esc_textarea( b3_request_access_message_admin() ); ?>" rows="4"><?php echo $request_access_email_message_admin; ?></textarea>
         </td>
     </tr>
     <tr>

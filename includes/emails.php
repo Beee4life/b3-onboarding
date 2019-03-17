@@ -68,7 +68,7 @@
     
             ob_start();
             $output = '';
-            switch ( $box[ 'id' ] ) {
+            switch( $box[ 'id' ] ) {
                 case 'email_settings':
                     include( 'emails/email-settings.php' );
                     $output = ob_get_clean();
@@ -81,12 +81,20 @@
                     include( 'emails/new-user-admin.php' );
                     $output = ob_get_clean();
                     break;
-                case 'request_access':
-                    include( 'emails/request-access.php' );
+                case 'request_access_user':
+                    include( 'emails/request-access-user.php' );
+                    $output = ob_get_clean();
+                    break;
+                case 'request_access_admin':
+                    include( 'emails/request-access-admin.php' );
                     $output = ob_get_clean();
                     break;
                 case 'email_activation':
                     include( 'emails/email-activation.php' );
+                    $output = ob_get_clean();
+                    break;
+                case 'account_activated':
+                    include( 'emails/account-activated.php' );
                     $output = ob_get_clean();
                     break;
                 case 'account_approved':

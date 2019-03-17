@@ -39,16 +39,16 @@
             
             echo '<ul>';
             if ( ! is_user_logged_in() ) {
-                echo '<li><a href="'.$login_link.'">'.__( 'Login', 'b3-onboarding' ).'</a></li>';
-                echo '<li><a href="'.$register_link.'">'.__( 'Register', 'b3-onboarding' ).'</a></li>';
+                echo '<li><a href="' . $login_link . '">' . esc_html__( 'Login', 'b3-onboarding' ) . '</a></li>';
+                echo '<li><a href="' . $register_link . '">' . esc_html__( 'Register', 'b3-onboarding' ) . '</a></li>';
             } else {
                 if ( false != $account_link ) {
-                    echo '<li><a href="' . $account_link . '">' . __( 'Account', 'b3-onboarding' ) . '</a></li>';
+                    echo '<li><a href="' . $account_link . '">' . esc_html__( 'Account', 'b3-onboarding' ) . '</a></li>';
                 }
                 if ( current_user_can( 'manage_options' ) ) {
-                    echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">' . __( 'Settings', 'b3-onboarding' ) . '</a></li>';
+                    echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a></li>';
                 }
-                echo '<li><a href="' . $logout_link . '">' . __( 'Log Out', 'b3-onboarding' ) . '</a></li>';
+                echo '<li><a href="' . $logout_link . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
             }
             echo '</ul>';
             
