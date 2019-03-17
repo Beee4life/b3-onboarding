@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
 "POT-Creation-Date: 2019-03-17 05:39+0100\n"
-"PO-Revision-Date: 2019-03-17 05:39+0100\n"
+"PO-Revision-Date: 2019-03-17 19:30+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -749,26 +749,22 @@ msgstr ""
 "email adres te bevestigen via deze link %s."
 
 #: includes/functions.php:469
-#, fuzzy, php-format
-#| msgid "You can also enter your own password"
+#, php-format
 msgid "You can set your password here: %s."
-msgstr "Je kan ook je eigen wachtwoord kiezen"
+msgstr "Je kan wachtwoord hier kiezen: %s."
 
 #: includes/functions.php:513
 msgid "A new user requests access"
 msgstr "Een nieuwe gebruiker vraagt om toegang"
 
 #: includes/functions.php:529
-#, fuzzy, php-format
-#| msgid ""
-#| "A new user has requested access. You can approve/deny him/her in the User "
-#| "approval panel."
+#, php-format
 msgid ""
 "A new user has requested access. You can approve/deny him/her on the \"<a "
 "href=\"%s\">User approval</a>\" page."
 msgstr ""
 "Een nieuwe gebruiker heeft toegang gevraagd. Je kunt hem/haar goedkeuren/"
-"weigeren op de Gebruikers management pagina."
+"weigeren op de \"<a href=\"%s\">Gebruikers management</a>\" pagina."
 
 #: includes/functions.php:545
 #, php-format
@@ -776,14 +772,13 @@ msgid "Request for access confirmed for %s"
 msgstr "Verzoek voor toegang bevestigd voor %s"
 
 #: includes/functions.php:561
-#, fuzzy, php-format
-#| msgid ""
-#| "You have successfully requested access to %s. We'll inform you by email."
+#, php-format
 msgid ""
 "You have successfully requested access for %s. We'll inform you about the "
 "outcome."
 msgstr ""
-"Je hebt succesvol toegang verzocht op %s. We zullen je informeren per email."
+"Je hebt succesvol toegang verzocht op %s. We zullen je informeren over de "
+"uitkomst."
 
 #: includes/functions.php:609
 msgid "Account activated"
@@ -792,19 +787,16 @@ msgstr "Account geactiveerd"
 #: includes/functions.php:626
 #, php-format
 msgid "Hi %s"
-msgstr ""
+msgstr "Hi %s"
 
 #: includes/functions.php:628
-#, fuzzy, php-format
-#| msgid ""
-#| "You have successfully registered to <strong>%1$s</strong>. You can set "
-#| "your password when you <a href=\"%2$s\">reset it</a>."
+#, php-format
 msgid ""
 "you have confirmed your email address and can now set your password through "
 "<a href=\"%s\">this link</a>."
 msgstr ""
-"Je hebt je succesvol geregistreerd op <strong>%1$s</strong>. Je kunt je "
-"wachtwoord instellen door het te <a href=\"%2$s\">resetten</a>."
+"je hebt email adres bevestigd en kunt nu je wachtwoord instellen via <a href="
+"\"%s\">deze link</a>."
 
 #: includes/functions.php:700
 #, php-format
