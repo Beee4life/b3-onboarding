@@ -1,7 +1,7 @@
 <?php
     /*
     Plugin Name: B3 - Onboarding
-    Version: 0.9-beta
+    Version: 1.0.0
     Tags: user, management, registration, login, forgot password, reset password, account
     Description: This plugin handles the registration/login process
     Author: Beee
@@ -15,10 +15,6 @@
      / _  / _/   _/   _/
     /____/___/____/____/
 
-    
-    @TODO:
-    - processing through AJAX
-    
     */
 
     if ( ! defined( 'ABSPATH' ) ) {
@@ -67,7 +63,7 @@
             function initialize() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '0.9-beta',
+                    'version' => '1.0.0',
                 );
     
                 // set text domain
@@ -121,7 +117,6 @@
     
                 include( 'includes/do-stuff.php' );
                 include( 'includes/emails.php' );
-                include( 'includes/examples.php' );
                 include( 'includes/filters.php' );
                 include( 'includes/form-handling.php' );
                 include( 'includes/functions.php' );
@@ -184,20 +179,15 @@
                     }
                 }
                 
-                // update_option( 'b3_request_access_subject_user', '' );
-                // update_option( 'b3_request_access_message_user', '' );
-                // update_option( 'b3_request_access_subject_admin', '' );
-                // update_option( 'b3_request_access_message_admin', '' );
-
-                update_option( 'b3_notification_content_type', 'html' );
                 update_option( 'b3_dashboard_widget', '1' );
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
+                update_option( 'b3_notification_content_type', 'html' );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
-                update_option( 'b3_themed_profile', [ 'subscriber' ] );
                 update_option( 'b3_sidebar_widget', '1' );
+                update_option( 'b3_themed_profile', [ 'subscriber' ] );
                 
                 // 2 use
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
