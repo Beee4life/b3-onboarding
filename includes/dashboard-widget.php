@@ -24,7 +24,7 @@
         <div class="b3_widget--dashboard">
             <p>
                 <?php
-                    if ( count( $approval_users ) > 0 ) {
+                    if ( count( $approval_users ) > 0 && 'request_access' == get_option( 'b3_registration_type' ) ) {
                         echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
                     } elseif ( count( $activation_users ) > 0 ) {
                         echo sprintf( esc_html__( 'There %s %d %s awaiting activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
