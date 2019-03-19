@@ -132,7 +132,7 @@
         if ( false != $b3_forgot_password_message ) {
             $message = $b3_forgot_password_message;
         } else {
-            $message = b3_default_forgot_password_message();
+            $message = b3_default_forgot_password_message( $key, $user_login );
         }
     
         if ( false != get_option( 'b3_custom_emails', false ) ) {

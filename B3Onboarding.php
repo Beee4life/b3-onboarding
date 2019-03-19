@@ -573,11 +573,11 @@
                             $meta_data                 = [];
                             $user_login                = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
-                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false;
-                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false;
                             $role                      = apply_filters( 'b3_filter_default_role', get_option( 'default_role' ) );
                             $registration_type         = get_option( 'b3_registration_type' );
                             $meta_data                 = apply_filters( 'b3_check_custom_registration_fields', $meta_data );
+                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false;
+                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false;
                             
                             if ( ! is_multisite() ) {
                                 if ( 'closed' == $registration_type ) {
@@ -793,7 +793,7 @@
                         exit;
                     }
     
-                    $redirect_url = home_url( 'reset-password' );
+                    $redirect_url = b3_get_resetpass_url();
                     $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST[ 'login' ] ), $redirect_url );
                     $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST[ 'key' ] ), $redirect_url );
             
@@ -967,8 +967,7 @@
                         if ( isset( $_POST[ 'pass1' ] ) ) {
                             if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
                                 // Passwords don't match
-                                $redirect_url = home_url( 'password-reset' );
-            
+                                $redirect_url = b3_get_resetpass_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
@@ -979,9 +978,7 @@
         
                             if ( empty( $_POST[ 'pass1' ] ) ) {
                                 // Password is empty
-                                error_log( 'HIT empty pass 1');
-                                $redirect_url = home_url( 'reset-password' );
-            
+                                $redirect_url = b3_get_resetpass_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
@@ -1021,7 +1018,6 @@
             public function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
                 // Create new message
                 error_log( 'public function b3_replace_retrieve_password_message' );
-                die('DIE BITCH');
                 $msg = __( 'Hello!', 'b3-onboarding' ) . "\r\n\r\n";
                 $msg .= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
                 $msg .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\r\n\r\n";

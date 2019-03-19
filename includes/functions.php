@@ -715,7 +715,7 @@
      *
      * @return string
      */
-    function b3_default_forgot_password_message() {
+    function b3_default_forgot_password_message( $key, $user_login ) {
         
         // Create new message (text)
         $default_message = __( 'Hi', 'b3-onboarding' ) . ",\n";
@@ -724,7 +724,7 @@
         $default_message .= '<br /><br />' . "\n";
         $default_message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
         $default_message .= '<br /><br />' . "\n";
-        $default_message .= sprintf( __( 'To (re)set your password, go to <a href="%s">this page</a>.', 'b3-onboarding' ), b3_get_forgotpass_url() ) . "\n";
+        $default_message .= sprintf( __( 'To (re)set your password, go to <a href="%s">this page</a>.', 'b3-onboarding' ), b3_get_password_reset_link( $key, $user_login ) ) . "\n";
         $default_message .= '<br /><br />' . "\n";
         $default_message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $default_message .= '<br /><br />' . "\n";
@@ -814,7 +814,7 @@
     function b3_render_login_form( $attributes ) {
         
         ob_start();
-        $reset_page = get_option( 'b3_resetpass_page_id' );
+        $reset_page     = get_option( 'b3_forgotpass_page_id' );
         $request_access = get_option( 'b3_registration_type' );
         ?>
 
@@ -1026,6 +1026,40 @@
             $url = wp_lostpassword_url();
         }
         
+        return $url;
+    }
+    
+    
+    /**
+     * Return reset pass URL
+     *
+     * @return false|string
+     */
+    function b3_get_resetpass_url() {
+        
+        $reset_password_id = get_option( 'b3_resetpass_page_id' );
+        if ( false != $reset_password_id ) {
+            $url = get_permalink( $reset_password_id );
+        } else {
+            $url = home_url( 'reset-password' );
+        }
+    
+        return $url;
+    }
+    
+    
+    /**
+     * Return unique password reset link
+     *
+     * @param $key
+     * @param $user_login
+     *
+     * @return string
+     */
+    function b3_get_password_reset_link( $key, $user_login ) {
+        // @TODO: make URL nicer
+        $url = network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n\r\n";
+    
         return $url;
     }
     

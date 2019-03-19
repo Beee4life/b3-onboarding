@@ -1,6 +1,6 @@
 # B3 Onboarding
 
-Version: 1.0.0
+Version: 1.0.1
 
 This plugin focusses on how to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
@@ -115,6 +115,10 @@ These are the things we have planned to add.
 This plugin gives you all the freedom to change/use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want with filters/hooks or through a settings page.
 
 <a name="changelog"></a>
+1.0.1
+* change password reset link in password reset email
+* create function to retrieve password reset url/page/link
+ 
 1.0.0
 * version change to (hopefully) avoid composer issues
 * clean up of unused code
