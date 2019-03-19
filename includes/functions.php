@@ -743,11 +743,13 @@
      *
      * @return array
      */
-    function b3_replace_email_vars( $vars ) {
+    function b3_replace_email_vars( $vars, $activation = false ) {
     
-        $user_data = get_userdata( get_current_user_id() );
+        $user_data = false;
+        if ( is_user_logged_in() ) {
+            $user_data = get_userdata( get_current_user_id() );
+        }
         $replacements = array(
-            '%activation_url%'    => b3_get_activation_url( $user_data ),
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_styling%'     => ( false != get_option( 'b3_email_styling' ) ) ? get_option( 'b3_email_styling' ) : b3_default_email_styling(),
             '%home_url%'          => get_home_url(),
@@ -755,8 +757,11 @@
             '%registration_date%' => ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : false,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
             '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
-            '%user_login%'        => $user_data->user_login,
+            '%user_login%'        => ( false != $user_data ) ? $user_data->user_login : false,
         );
+        if ( false != $activation ) {
+            $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
+        }
         
         return $replacements;
     }
@@ -1071,21 +1076,24 @@
      *
      * @return string
      */
-    function b3_get_activation_url( $user ) {
+    function b3_get_activation_url( $user_data ) {
     
         // Generate an activation key
         $key = wp_generate_password( 20, false );
     
         // Set the activation key for the user
         global $wpdb;
-        $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user->user_login ) );
+        $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user_data->user_login ) );
+        error_log( $key );
+        error_log( $user_data->user_login );
+        die();
 
         $login_url = wp_login_url();
         if ( false != b3_get_login_id() ) {
             $login_url = get_permalink( b3_get_login_id() );
         }
     
-        $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user->user_login ) ), $login_url );
+        $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user_data->user_login ) ), $login_url );
     
         return $activation_url;
     }

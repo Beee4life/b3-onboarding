@@ -40,7 +40,7 @@
                     $subject = b3_get_new_user_subject( $blog_name );
                     break;
                 case 'forgotpass':
-                    $content = str_replace( '%email_message%', b3_default_forgot_password_message(), $content );
+                    $content = str_replace( '%email_message%', b3_default_forgot_password_message( 'key', '%user_login%' ), $content );
                     $subject = b3_default_forgot_password_subject();
                     break;
                 default:
