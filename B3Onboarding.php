@@ -313,8 +313,8 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
-                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ) );
-                wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ) );
+                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__, [], $this->settings['version'] ) );
+                wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
             }
         
         
@@ -322,8 +322,8 @@
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
-                wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ) );
-                wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ) );
+                wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->settings['version'] );
+                wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
             }
         
         
