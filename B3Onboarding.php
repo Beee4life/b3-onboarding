@@ -1,7 +1,7 @@
 <?php
     /*
     Plugin Name: B3 - Onboarding
-    Version: 1.0.0
+    Version: 1.0.3
     Tags: user, management, registration, login, forgot password, reset password, account
     Description: This plugin handles the registration/login process
     Author: Beee
@@ -63,7 +63,7 @@
             function initialize() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '1.0.0',
+                    'version' => '1.0.3',
                 );
     
                 // set text domain
