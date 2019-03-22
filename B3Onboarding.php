@@ -471,7 +471,13 @@
              * @return  string
              */
             public function b3_email_content_type( $content_type ) {
-                return 'text/html';
+
+                $html_emails = get_option( 'b3_notification_content_type' );
+                if ( $html_emails ) {
+                    return 'text/html';
+                }
+    
+                return 'text/plain';
             }
     
     
