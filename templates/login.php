@@ -95,42 +95,28 @@
                 <?php esc_html_e( 'Your password has been changed. You can login now.', 'b3-onboarding' ); ?>
             </p>
         <?php } ?>
+        
+        <p class="">
+            <label for="user_login"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
+            <input type="text" name="log" id="user_login" class="input" value="" size="20">
+        </p>
 
-        <table class="b3_table b3_table--login" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td>
-                    <label for="user_login"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
-                </td>
-                <td>
-                    <input type="text" name="log" id="user_login" class="input" value="" size="20">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="user_pass"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
-                </td>
-                <td>
-                    <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
-                </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <?php esc_html_e( 'Remember Me', 'b3-onboarding' ); ?></label>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="Log In">
-                    <input type="hidden" name="redirect_to" value="">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <?php echo b3_form_links( 'login' ); ?>
-                </td>
-            </tr>
-        </table>
+        <p class="">
+            <label for="user_pass"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
+            <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
+        </p>
+
+        <p class="">
+            <label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <?php esc_html_e( 'Remember Me', 'b3-onboarding' ); ?></label>
+        </p>
+
+        <p class="">
+            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="Log In">
+            <input type="hidden" name="redirect_to" value="">
+        </p>
+
+        <?php echo b3_form_links( 'login' ); ?>
+
     </form>
 
 </div>
