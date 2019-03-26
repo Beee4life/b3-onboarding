@@ -1,12 +1,8 @@
-.b3__admin {
-    max-width: 90%
-}
-
 /* TABS */
 .b3_tabs {
     background: white;
     margin-top: 2em;
-    max-width:  80%;
+    max-width:  60%;
 }
 
 .b3_tab-header {
