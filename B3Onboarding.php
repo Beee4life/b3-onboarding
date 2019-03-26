@@ -161,7 +161,6 @@
                 } else {
                     
                     // @TODO: check if settings should be preserved
-                    
                     $public_registration = get_site_option( 'registration' );
                     
                     if ( is_main_site() ) {
