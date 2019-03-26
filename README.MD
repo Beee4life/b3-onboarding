@@ -103,6 +103,7 @@ All stored options are removed (unless option to not remove data is selected) an
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
+* [ ] preset more html emails
 * [ ] make it more responsive
 * [ ] reCAPTCHA
 * [ ] integration with Salesforce
@@ -117,6 +118,8 @@ This plugin gives you all the freedom to change/use different parts, without bei
 <a name="changelog"></a>
 1.0.4
 * protect function in uninstall.php
+* always return html as content type
+* remove table from login form
 
 1.0.3
 * update version
