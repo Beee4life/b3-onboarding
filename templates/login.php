@@ -1,4 +1,8 @@
 <?php
+    $redirect = false;
+    if ( $attributes[ 'redirect' ] ) {
+        $redirect = $attributes[ 'redirect' ];
+    }
 ?>
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
@@ -106,13 +110,16 @@
             <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
         </p>
 
-        <p class="">
-            <label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <?php esc_html_e( 'Remember Me', 'b3-onboarding' ); ?></label>
-        </p>
+        <div class="rememberme-wrap">
+            <p class="rememberme">
+                <input name="rememberme" type="checkbox" id="rememberme" value="forever">
+                <label for="rememberme"><?php esc_html_e( 'Remember Me', 'b3-onboarding' ); ?></label>
+            </p>
+        </div>
 
         <p class="">
             <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="Log In">
-            <input type="hidden" name="redirect_to" value="">
+            <input type="hidden" name="redirect_to" value="<?php echo $redirect; ?>">
         </p>
 
         <?php echo b3_form_links( 'login' ); ?>
