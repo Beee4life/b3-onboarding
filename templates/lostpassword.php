@@ -24,7 +24,7 @@
         </p>
 
         <p class="forgotpassword-submit">
-            <input type="submit" name="submit" class="forgotpassword-button" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
+            <input type="submit" name="submit" class="button button-primary button--forgotpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
         </p>
     
         <?php echo b3_form_links( 'forgotpassword' ); ?>
