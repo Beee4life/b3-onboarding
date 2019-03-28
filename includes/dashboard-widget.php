@@ -42,7 +42,7 @@
                 <ul>
                     <?php foreach( $all_users as $user ) { ?>
                         <li>
-                            <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->user_id ); ?>">
+                            <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->ID ); ?>">
                                 <?php echo $user->user_login; ?>
                             </a>
                             (<?php echo date( $date_time_format, strtotime( $user->user_registered ) ); ?>)
