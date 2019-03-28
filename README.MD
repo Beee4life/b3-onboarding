@@ -117,6 +117,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
 
 <a name="changelog"></a>
 1.0.5
+* fix broken user ID on dashboard
 * update css
 * add redirect to login form
 
