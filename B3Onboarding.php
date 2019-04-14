@@ -106,7 +106,6 @@
                 add_filter( 'wp_mail_charset',                      array( $this, 'b3_email_charset' ) );
                 add_filter( 'page_link',                            array( $this, 'b3_logout_link' ), 10, 2 );
     
-    
                 add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
@@ -827,7 +826,7 @@
              * @return string Redirect URL
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-                $redirect_url = home_url();
+                $redirect_url = get_home_url( '', '' );
         
                 if ( ! isset( $user->ID ) ) {
                     return $redirect_url;
@@ -836,16 +835,27 @@
                 if ( user_can( $user, 'manage_options' ) ) {
                     // Use the redirect_to parameter if one is set, otherwise redirect to admin dashboard.
                     if ( $requested_redirect_to == '' ) {
-                        $redirect_url = admin_url();
+                        $redirect_to = admin_url();
                     } else {
-                        $redirect_url = $requested_redirect_to;
+                        $redirect_to = $requested_redirect_to;
                     }
                 } else {
                     // Non-admin users always go to their account page after login
-                    $redirect_url = home_url( 'account' ); // @TODO: make filterable
+                    // get account page id
+                    $account_page_id = get_option( 'b3_account_page_id' );
+                    if ( false == $account_page_id ) {
+                        $redirect_to = get_permalink( $account_page_id );
+                    } elseif ( $requested_redirect_to ) {
+                        $redirect_to = $requested_redirect_to;
+                    } elseif ( current_user_can( 'read' ) ) {
+                        $redirect_to = get_edit_user_link( get_current_user_id() );
+                    } else {
+                        $redirect_to = get_home_url( '','/' );
+                    }
+                    
                 }
         
-                return wp_validate_redirect( $redirect_url, home_url() );
+                return $redirect_to;
             }
             
             
