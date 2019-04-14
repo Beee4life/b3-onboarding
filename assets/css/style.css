@@ -17,9 +17,10 @@
 .b3_page form label {
 }
 
-.b3_page form input {
+.b3_page form input[type="text"],
+.b3_page form input[type="email"] {
     box-sizing: border-box;
-    width: 100%;
+    width:      100%;
 }
 
 .b3_page .b3_form-label {
@@ -29,6 +30,7 @@
 
 ul.b3_form-links {
     list-style: none;
+    padding-left: 0;
     position:   relative;
 }
 
