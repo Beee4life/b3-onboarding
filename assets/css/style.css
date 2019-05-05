@@ -9,22 +9,24 @@
     word-wrap: initial;
 }
 
-.b3_page form {
-    margin: 0 auto;
-    width:  600px;
+.b3_page {
 }
 
-.b3_page form label {
+.b3_page form {
+    width: 600px;
 }
 
 .b3_page form input {
     box-sizing: border-box;
-    width: 100%;
+}
+
+.b3_page form input#rememberme {
+    margin-left: 0;
 }
 
 .b3_page .b3_form-label {
     display: inline-block;
-    width:   200px;
+    width:   150px;
 }
 
 ul.b3_form-links {
