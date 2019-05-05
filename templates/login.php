@@ -99,16 +99,16 @@
                 <?php esc_html_e( 'Your password has been changed. You can login now.', 'b3-onboarding' ); ?>
             </p>
         <?php } ?>
-        
-        <p class="">
-            <label for="user_login"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
-            <input type="text" name="log" id="user_login" class="input" value="" size="20">
-        </p>
 
-        <p class="">
-            <label for="user_pass"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
+        <div class="b3_form-element">
+            <label class="b3_form-label" for="user_login"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
+            <input type="text" name="log" id="user_login" class="input" value="" size="20">
+        </div>
+
+        <div class="b3_form-element">
+            <label class="b3_form-label" for="user_pass"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
             <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
-        </p>
+        </div>
 
         <div class="rememberme-wrap">
             <p class="rememberme">
