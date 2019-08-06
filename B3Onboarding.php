@@ -637,6 +637,8 @@
                                             $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
         
                                             if ( is_wp_error( $result ) ) {
+                                                // die('OOPS');
+                                                // echo '<pre>'; var_dump($result->get_error_codes()); echo '</pre>'; exit;
                                                 // Parse errors into a string and append as parameter to redirect
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
@@ -870,7 +872,7 @@
     
     
             /**
-             * Initiates user activation
+             * Initiates email activation ('normal site')
              */
             function b3_do_user_activate() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -1215,15 +1217,15 @@
         
             private function b3_register_wpmu_user( $user_name, $user_email, $sub_domain, $meta = array() ) {
     
-                $errors                = new WP_Error();
+                $errors                = false;
                 $main_register_type    = get_site_option( 'registration' );
                 $subsite_register_type = get_option( 'b3_registration_type' );
                 $user_registered       = false;
 
                 if ( is_main_site() ) {
-    
                     if ( in_array( $main_register_type, [ 'all', 'blog' ] ) && in_array( $subsite_register_type, [ 'request_access', 'request_access_subdomain', 'ms_loggedin_register', 'ms_register_user', 'ms_register_site_user' ] )) {
                         if ( false == $sub_domain ) {
+                            // @TODO: throw error if no subdomain is chosen
                             wpmu_signup_user( $user_name, $user_email, $meta );
                             $user_registered = true;
                             do_action( 'b3_after_insert_user' );
@@ -1231,6 +1233,7 @@
                             wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                             // get site id by
                             $site_id = get_id_from_blogname( $sub_domain );
+                            $user_registered = true;
                             do_action( 'b3_after_insert_site', $site_id );
                         }
                     } elseif ( 'none' == $main_register_type ) {
@@ -1239,23 +1242,23 @@
                         // @TODO: add if for if admin needs to activate
                         // wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                     } else {
-                        $errors->add( 'unknown', $this->b3_get_error_message( 'unknown' ) );
+                        $errors = new WP_Error( 'unknown', $this->b3_get_error_message( 'unknown' ) );
                     }
                     
                 } else {
-    
+                    error_log('non main');
                     if ( 'user' == $main_register_type && 'closed' != $subsite_register_type ) {
                         wpmu_signup_user( $user_name, $user_email, $meta );
                         $user_registered = true;
                         do_action( 'b3_after_insert_user' );
                     } else {
-                        $errors->add( 'unknown', $this->b3_get_error_message( 'unknown' ) );
+                        $errors = new WP_Error( 'unknown', $this->b3_get_error_message( 'unknown' ) );
                     }
         
                 }
     
                 if ( true == $user_registered ) {
-                    $errors->add( 'user_registered', $this->b3_get_error_message( 'user_registered' ) );
+                    // $errors = new WP_Error( 'user_registered', $this->b3_get_error_message( 'user_registered' ) );
                 }
             
                 return $errors;
