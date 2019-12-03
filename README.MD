@@ -1,6 +1,6 @@
 # B3 Onboarding
 
-Version: 1.0.5
+Version: 1.0.6
 
 This plugin focusses on how to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
