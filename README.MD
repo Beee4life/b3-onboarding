@@ -116,6 +116,9 @@ These are the things we have planned to add.
 This plugin gives you all the freedom to change/use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want with filters/hooks or through a settings page.
 
 <a name="changelog"></a>
+1.0.6
+* fix incorrect fallback link for forgot password
+
 1.0.5
 * fix broken user ID on dashboard
 * update css
