@@ -4,9 +4,10 @@
 }
 
 .b3_message {
-    border:    1px dashed black;
-    padding:   5px 10px;
-    word-wrap: initial;
+    border:     1px dashed black;
+    box-sizing: border-box;
+    padding:    5px 10px;
+    word-wrap:  initial;
 }
 
 .b3_page {
@@ -23,7 +24,7 @@
 
 .b3_page form input#rememberme {
     margin-left: 0;
-    width:      100%;
+    width:       100%;
 }
 
 .b3_page .b3_form-label {
@@ -32,9 +33,9 @@
 }
 
 ul.b3_form-links {
-    list-style: none;
+    list-style:   none;
     padding-left: 0;
-    position:   relative;
+    position:     relative;
 }
 
 ul.b3_form-links li {
