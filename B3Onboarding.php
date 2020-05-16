@@ -39,9 +39,6 @@
              * To keep the initialization fast, only add filter and action
              * hooks in the constructor.
              */
-            /**
-             *  A dummy constructor to ensure plugin is only initialized once
-             */
             function __construct() {
                 if ( ! defined( 'B3_PLUGIN_URL' ) ) {
                     $plugin_url = plugins_url( '', __FILE__ );
@@ -662,9 +659,8 @@
              * @return Wp_User|Wp_Error The logged in user, or error information if there were errors.
              */
             function b3_maybe_redirect_at_authenticate( $user, $username, $password ) {
-                // Check if the earlier authenticate filter (most likely,
-                // the default WordPress authentication) functions have found errors
-                if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+                // Check if the earlier authenticate filter (most likely, the default WordPress authentication) functions have found errors
+                if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
                     if ( is_wp_error( $user ) ) {
                         $error_codes = join( ',', $user->get_error_codes() );
 
