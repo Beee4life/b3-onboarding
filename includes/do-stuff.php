@@ -38,16 +38,14 @@
             ),
         );
 
-        if ( is_multisite() && ! is_main_site() ) {
-            b3_create_pages( $page_definitions, $create_new_site );
-        } else {
-            $all_sites = get_sites();
-
-            foreach( $all_sites as $site ) {
+        if ( is_multisite() ) {
+            foreach( get_sites() as $site ) {
                 switch_to_blog( $site->blog_id );
                 b3_create_pages( $page_definitions, $create_new_site );
                 restore_current_blog();
             }
+        } else {
+            b3_create_pages( $page_definitions, $create_new_site );
         }
     }
 
