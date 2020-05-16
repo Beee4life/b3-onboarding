@@ -1,22 +1,20 @@
 <?php
-    
+
     /**
      * Add help tabs
      *
-     * @param $old_help  string
-     * @param $screen_id int
      * @param $screen    object
      */
-    function b3_help_tabs( $old_help, $screen_id, $screen ) {
-        
+    function b3_help_tabs( $screen ) {
+
         $screen_array = array(
             'toplevel_page_b3-onboarding',
         );
-        if ( ! in_array( $screen_id, $screen_array ) ) {
+        if ( ! in_array( $screen->id, $screen_array ) ) {
             return false;
         }
-        
-        if ( 'toplevel_page_b3-onboarding' == $screen_id ) {
+
+        if ( 'toplevel_page_b3-onboarding' == $screen->id ) {
             $screen->add_help_tab( array(
                 'id'      => 'b3-email-vars',
                 'title'   => esc_html__( 'Email variables', 'b3-onboarding' ),
@@ -33,7 +31,7 @@
 					</ul>
 					'
             ) );
-    
+
             $screen->add_help_tab( array(
                 'id'      => 'b3-shortcodes',
                 'title'   => esc_html__( 'Shortcodes', 'b3-onboarding' ),
@@ -78,12 +76,12 @@
 					'
             ) );
         }
-        
+
         get_current_screen()->set_help_sidebar(
             '<p><strong>' . esc_html__( 'Author', 'b3-onboarding' ) . '</strong></p>
 			<p><a href="http://www.berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">berryplasman.com</a></p>'
         );
-        
-        return $old_help;
+
+        return false;
     }
-    add_filter( 'contextual_help', 'b3_help_tabs', 5, 3 );
+    add_filter( 'current_screen', 'b3_help_tabs', 5, 3 );
