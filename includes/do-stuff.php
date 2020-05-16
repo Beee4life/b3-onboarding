@@ -2,8 +2,8 @@
     /**
      * Create initial pages upon activation
      */
-    function b3_create_initial_pages() {
-        
+    function b3_setup_initial_pages( $create_new_site = false ) {
+
         // Information needed for creating the plugin's pages
         $page_definitions = array(
             _x( 'account', 'slug', 'b3-onboarding' ) => array(
@@ -37,8 +37,28 @@
                 'meta'    => 'b3_resetpass_page_id'
             ),
         );
-        
-        foreach ( $page_definitions as $slug => $page ) {
+
+        if ( is_multisite() && ! is_main_site() ) {
+            b3_create_pages( $page_definitions, $create_new_site );
+        } else {
+            $all_sites = get_sites();
+
+            foreach( $all_sites as $site ) {
+                switch_to_blog( $site->blog_id );
+                b3_create_pages( $page_definitions, $create_new_site );
+                restore_current_blog();
+            }
+        }
+    }
+
+    /**
+     * Create pages
+     *
+     * @param array $definitions
+     * @param bool  $create_new_site
+     */
+    function b3_create_pages( $definitions = [], $create_new_site = false ) {
+        foreach ( $definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
             $stored_id = get_option( $slug, false );
@@ -50,20 +70,22 @@
             } else {
                 // no stored id, so continue
             }
-    
-            $query   = new WP_Query( 'pagename=' . $slug );
-            if ( ! $query->have_posts() ) {
-    
+
+            $existing_page = [];
+            if ( true != $create_new_site ) {
+                $existing_page = get_posts( 'pagename=' . $slug );
+            }
+            if ( empty( $existing_page ) ) {
                 // Add the page using the data from the array above
                 $result = wp_insert_post( array(
-                        'post_title'     => $page[ 'title' ],
-                        'post_name'      => $slug,
-                        'post_content'   => $page[ 'content' ],
-                        'post_status'    => 'publish',
-                        'post_type'      => 'page',
-                        'ping_status'    => 'closed',
-                        'comment_status' => 'closed',
-                    ),
+                    'post_title'     => $page[ 'title' ],
+                    'post_name'      => $slug,
+                    'post_content'   => $page[ 'content' ],
+                    'post_status'    => 'publish',
+                    'post_type'      => 'page',
+                    'ping_status'    => 'closed',
+                    'comment_status' => 'closed',
+                ),
                     true
                 );
                 // if page doesn't return an error (thus successful)
@@ -74,7 +96,7 @@
             }
         }
     }
-    
+
     /**
      * Render any extra fields
      *
@@ -83,9 +105,9 @@
      * @return bool|false|string
      */
     function b3_render_extra_field( $extra_field = false ) {
-        
+
         if ( false != $extra_field ) {
-            
+
             $container_class   = ( isset( $extra_field[ 'container_class' ] ) && ! empty( $extra_field[ 'container_class' ] ) ) ? $extra_field[ 'container_class' ] : false;
             $input_id          = ( isset( $extra_field[ 'id' ] ) && ! empty( $extra_field[ 'id' ] ) ) ? $extra_field[ 'id' ] : false;
             $input_class       = ( isset( $extra_field[ 'input_class' ] ) && ! empty( $extra_field[ 'input_class' ] ) ) ? ' ' . $extra_field[ 'input_class' ] : false;
@@ -94,9 +116,9 @@
             $input_required    = ( isset( $extra_field[ 'required' ] ) && ! empty( $extra_field[ 'required' ] ) ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
             $input_type        = ( isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
             $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : [];
-            
+
             if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {
-                
+
                 ob_start();
                 ?>
                 <div class="b3_form-element b3_form-element--<?php echo $input_type; ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo $container_class; } ?>">
@@ -119,21 +141,21 @@
                 </div>
                 <?php
                 $output = ob_get_clean();
-                
+
                 return $output;
             }
         }
-        
+
         return false;
     }
-    
+
     function b3_after_user_activated( $user_id ) {
         // send email to user
         $user_data = get_userdata( $user_id );
         $to = $user_data->user_email;
         $subject = get_option( 'b3_user_activated_subject' );
         $message = get_option( 'b3_user_activated_message' );
-        
-        
+
+
     }
     add_action( 'b3_new_user_activated', 'b3_after_user_activated' );
