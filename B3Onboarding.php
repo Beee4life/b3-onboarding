@@ -1,15 +1,14 @@
 <?php
     /*
-    Plugin Name: B3 - Onboarding
-    Version: 1.0.6
-    Tags: user, management, registration, login, forgot password, reset password, account
-    Description: This plugin handles the registration/login process
-    Author: Beee
-    Author URI: http://www.berryplasman.com
-    Text-domain: b3-onboarding
-    License: GNU v3
-
-    http://www.berryplasman.com
+    Plugin Name:    B3 - Onboarding
+    Plugin URI:     https://github.com/Beee4life/b3-onboarding
+    Description:    This plugin gives you more control over the registration/loginprocess (aka onboarding).
+    Version:        1.0.7
+    Author:         Beee
+    Author URI:     https://berryplasman.com
+    Tags:           user, management, registration, login, forgot password, reset password, account
+    Text-domain:    b3-onboarding
+    License:        GNU v3
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
      / _  / _/   _/   _/
