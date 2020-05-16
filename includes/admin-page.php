@@ -1,10 +1,10 @@
 <?php
-    
+
     /**
      * Content for the 'settings page'
      */
     function b3_user_register_settings() {
-        
+
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-login' ) );
         }
@@ -18,7 +18,7 @@
                 </h1>
 
                 <?php include( 'preview.php' ); ?>
-                
+
             <?php } else { ?>
                 <h1 id="b3__admin-title">
                     <?php _e( 'Onboarding settings', 'b3-onboarding' ); ?>
@@ -32,7 +32,8 @@
                         } else {
                             $default_tab = 'settings';
                         }
-            
+                        $default_tab = 'emails';
+
                         $tabs        = array(
                             array(
                                 'id'      => 'settings',
@@ -47,21 +48,21 @@
                                 'icon'    => 'admin-page',
                             ),
                         );
-            
+
                         $tabs[] = array(
                             'id'      => 'emails',
                             'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'emails' ),
                             'icon'    => 'email',
                         );
-            
+
                         $tabs[] = array(
                             'id'      => 'users',
                             'title'   => esc_html__( 'Users', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'users' ),
                             'icon'    => 'admin-users',
                         );
-            
+
                         if ( get_option( 'b3_recaptcha' ) ) {
                             $tabs[] = array(
                                 'id'      => 'recaptcha',
@@ -70,8 +71,8 @@
                                 'icon'    => 'star-filled',
                             );
                         }
-            
-                        if ( defined( 'WP_ENV' ) && 'development' == WP_ENV && $current_user->user_login == 'Beee' ) {
+
+                        if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) {
                             $tabs[] = array(
                                 'id'      => 'addon',
                                 'title'   => esc_html__( 'Add-ons', 'b3-onboarding' ),
@@ -79,20 +80,20 @@
                                 'icon'    => 'plus-alt',
                             );
                         }
-            
+
                         $tabs[] = array(
                             'id'      => 'support',
                             'title'   => esc_html__( 'Support', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'support' ),
-                            'icon'    => 'sos',
+                            'icon'    => 'testimonial',
                         );
-            
+
                         if ( current_user_can( 'manage_options' ) ) {
                             $tabs[] = array(
                                 'id'      => 'debug',
                                 'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'debug' ),
-                                'icon'    => 'shield',
+                                'icon'    => 'sos',
                             );
                         }
                     ?>
