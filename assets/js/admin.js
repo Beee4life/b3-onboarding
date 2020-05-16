@@ -17,7 +17,6 @@ jQuery(document).ready(function() {
         if (jQuery(this).prev().find('i.dashicons').hasClass('dashicons-plus')){
             jQuery(this).prev().find('i.dashicons').removeClass('dashicons-plus');
             jQuery(this).prev().find('i.dashicons').addClass('dashicons-no');
-
         } else if (jQuery(this).prev().find('i.dashicons').hasClass('dashicons-no')){
             jQuery(this).prev().find('i.dashicons').removeClass('dashicons-no');
             jQuery(this).prev().find('i.dashicons').addClass('dashicons-plus');
