@@ -13,7 +13,6 @@ jQuery(document).ready(function() {
             jQuery(this).addClass('open');
         }
 
-        var jQueryicon = '.handlediv i';
         if (jQuery(this).prev().find('i.dashicons').hasClass('dashicons-plus')){
             jQuery(this).prev().find('i.dashicons').removeClass('dashicons-plus');
             jQuery(this).prev().find('i.dashicons').addClass('dashicons-no');
