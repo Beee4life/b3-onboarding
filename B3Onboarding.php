@@ -59,7 +59,7 @@
             function initialize() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '1.0.6',
+                    'version' => '1.0.7',
                 );
 
                 // set text domain
@@ -91,6 +91,7 @@
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
                 // add_action( 'wp_print_footer_scripts',              array( $this, 'b3_add_captcha_js_to_footer' ) );
+                add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
 
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
 
@@ -122,12 +123,26 @@
             }
 
             /**
+             * Do upon new blog
+             *
+             * @param $new_site
+             */
+            public function b3_new_blog( $new_site ) {
+                if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+                    // do activation for $new_site
+                    switch_to_blog( $new_site->blog_id );
+                    b3_setup_initial_pages( true );
+                    restore_current_blog();
+                }
+            }
+
+            /**
              * Do stuff upon plugin activation
              */
             public function b3_plugin_activation() {
 
                 // create necessary pages
-                b3_create_initial_pages();
+                b3_setup_initial_pages();
 
                 $this->b3_set_default_settings();
 
@@ -193,6 +208,7 @@
              * Do stuff upon plugin activation
              */
             public function b3_plugin_deactivation() {
+                // nothing yet
             }
 
             public function b3_init() {
@@ -356,37 +372,37 @@
 
                 $title_suffix = false;
                 if ( $post->ID == b3_get_account_id() ) {
-                    if ( $post->post_title != 'Account' ) {
+                    if ( $post->post_title == 'Account' ) {
                         $title_suffix = ': Account';
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_register_id() ) {
-                    if ( $post->post_title != 'Register' ) {
+                    if ( $post->post_title == 'Register' ) {
                         $title_suffix = ': Register';
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_login_id() ) {
-                    if ( $post->post_title != 'Login' ) {
+                    if ( $post->post_title == 'Login' ) {
                         $title_suffix = ': Login';
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_logout_id() ) {
-                    if ( $post->post_title != 'Log Out' ) {
+                    if ( $post->post_title == 'Log Out' ) {
                         $title_suffix = ': Log out';
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_forgotpass_id() ) {
-                    if ( $post->post_title != 'Forgot password' ) {
+                    if ( $post->post_title == 'Forgot password' ) {
                         $title_suffix = ': Forgot password';
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_resetpass_id() ) {
-                    if ( $post->post_title != 'Reset password' ) {
+                    if ( $post->post_title == 'Reset Password' ) {
                         $title_suffix = ': Reset password';
                     }
                     $post_states[] = 'B3' . $title_suffix;
                 } elseif ( $post->ID == b3_get_user_approval_id() ) {
-                    if ( $post->post_title != 'User approval' ) {
+                    if ( $post->post_title == 'User approval' ) {
                         $title_suffix = ': User approval';
                     }
                     $post_states[] = 'B3' . $title_suffix;
