@@ -196,19 +196,6 @@
              * Do stuff upon plugin activation
              */
             public function b3_plugin_deactivation() {
-
-                $meta_keys = b3_get_all_custom_meta_keys();
-                foreach ( $meta_keys as $key ) {
-                    delete_option( $key );
-                }
-
-                $roles = array(
-                    'b3_activation',
-                    'b3_approval',
-                );
-                foreach( $roles as $role ) {
-                    remove_role( $role );
-                }
             }
 
             public function b3_init() {
@@ -330,7 +317,7 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', '', '99' );
+                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', 'dashicons-shield', '99' );
                 if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                     include( 'includes/user-approval-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );
