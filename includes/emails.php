@@ -1,5 +1,5 @@
 <?php
-    
+
     /**
      * Render email settings field
      *
@@ -8,19 +8,19 @@
      * @return false|mixed|string
      */
     function b3_render_email_settings_field( $box = false ) {
-        
+
         if ( false != $box ) {
-            
+
             $basic_output = b3_basic_email_settings_field( $box );
             $basic_output = str_replace( '##FOLDOUTCONTENT##', b3_foldout_content( $box ), $basic_output );
-            
+
             return $basic_output;
         }
-        
+
         return '<h4>Oops, no content yet...</h4>';
     }
-    
-    
+
+
     /**
      * Content for an email settings field
      *
@@ -29,19 +29,17 @@
      * @return false|string
      */
     function b3_basic_email_settings_field( $box = false ) {
-    
+
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
         ?>
         <div class="metabox-handler">
-            <div class="postbox" id="">
-                <div class="handlediv" title="">
-                    <i class="dashicons dashicons-plus"></i>
-                </div>
+            <div class="b3__postbox">
                 <div class="b3_foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? ' open' : false; ?>">
                     <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
+                    <i class="dashicons dashicons-plus"></i>
                 </div>
-                
+
                 <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
                     ##FOLDOUTCONTENT##
                 </div>
@@ -50,11 +48,11 @@
         <?php
         }
         $output = ob_get_clean();
-        
+
         return $output;
     }
-    
-    
+
+
     /**
      * Load fold out content
      *
@@ -63,9 +61,9 @@
      * @return bool|false|string
      */
     function b3_foldout_content( $box = false ) {
-        
+
         if ( false != $box ) {
-    
+
             ob_start();
             $output = '';
             switch( $box[ 'id' ] ) {
@@ -138,10 +136,10 @@
                 default:
                     $output = ob_get_clean();
             }
-            
+
             return $output;
-    
+
         }
-        
+
         return false;
     }

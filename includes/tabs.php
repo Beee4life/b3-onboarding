@@ -87,7 +87,9 @@
                 <?php if ( ! empty( $options ) ) { ?>
                     <?php foreach( $options as $option ) { ?>
                         <div class="b3_settings-input b3_settings-input--radio">
-                            <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                            <div>
+                                <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                            </div>
                         </div>
                     <?php } ?>
                 <?php } else { ?>
@@ -280,9 +282,14 @@
                     </div>
 
                     <?php if ( false != get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
+                        <div class="b3_select-page__edit">
+                            <a href="<?php echo get_edit_post_link( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>">
+                                <?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>
+                            </a>
+                        </div>
                         <div class="b3_select-page__link">
-                            <a href="<?php echo get_the_permalink( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener">
-                                <?php esc_html_e( 'Visit page', 'b3-onboarding' ); ?>
+                            <a href="<?php echo get_the_permalink( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Visit', 'b3-onboarding' ); ?>">
+                                <?php esc_html_e( 'Visit', 'b3-onboarding' ); ?>
                             </a>
                         </div>
                     <?php } ?>
@@ -362,7 +369,7 @@
         <?php } ?>
 
         <p>
-            <?php esc_html_e( 'This page contains all the user settings.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'This page contains restrictions settings for users.', 'b3-onboarding' ); ?>
         </p>
 
         <form action="" method="post">
@@ -377,14 +384,17 @@
                         <?php _e( 'Which users do <b>not</b> have access to the Wordpress admin ?', 'b3-onboarding' ); ?>
                     </p>
                     <?php
-                        $disallowed_roles = [ 'administrator' ];
+                        $disallowed_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
                         $stored_roles     = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
+                        // echo '<pre>'; var_dump($stored_roles); echo '</pre>'; exit;
                         foreach( $roles as $name => $capabilities ) {
                             if ( ! in_array( $name, $disallowed_roles ) ) {
                             ?>
-                                <label for="b3_restrict_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
-                                <input type="checkbox" id="b3_restrict_<?php echo $name; ?>" name="b3_restrict_admin[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?>/> <?php echo $name; ?>
-                                <br />
+                                <div>
+                                    <label for="b3_restrict_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
+                                    <input type="checkbox" id="b3_restrict_<?php echo $name; ?>" name="b3_restrict_admin[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?> /> <?php echo $name; ?>
+                                </div>
+                                <!--<br />-->
                             <?php
                             }
                         }
@@ -406,9 +416,10 @@
                         foreach( $roles as $name => $capabilities ) {
                             if ( ! in_array( $name, $disallowed_roles ) ) {
                             ?>
-                                <label for="b3_themed_profile_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
-                                <input type="checkbox" id="b3_themed_profile_<?php echo $name; ?>" name="b3_themed_profile[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?>/> <?php echo $name; ?>
-                                <br />
+                                <div>
+                                    <label for="b3_themed_profile_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
+                                    <input type="checkbox" id="b3_themed_profile_<?php echo $name; ?>" name="b3_themed_profile[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?>/> <?php echo $name; ?>
+                                </div>
                             <?php
                             }
                         }

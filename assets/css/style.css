@@ -24,7 +24,6 @@
 
 .b3_page form input#rememberme {
     margin-left: 0;
-    width:       100%;
 }
 
 .b3_page .b3_form-label {
@@ -75,6 +74,7 @@ ul.b3_form-links li:last-child {
     text-align: left;
 }
 
+/* Password strength */
 #pass-strength-result.short {
     background-color: #f1adad;
     border-color:     #e35b5b;

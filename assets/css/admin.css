@@ -49,19 +49,16 @@
 }
 
 .b3_foldout--header {
-    background:      #F8F8F8;
-    display:         flex;
-    flex-flow:       row nowrap;
-    justify-content: space-between;
-    font-weight:     bold;
+    background:  #F8F8F8;
+    font-weight: bold;
 }
 
-.b3 .handlediv {
-    background:     #F8F8F8;
-    text-align:     center;
-    vertical-align: middle;
-    padding-top:    10px;
-    box-sizing:     border-box;
+.b3_foldout--header::after {
+    clear: left;
+}
+
+.b3_foldout--header i.dashicons {
+    float: right;
 }
 
 .b3__expand {
@@ -107,29 +104,12 @@
 }
 
 .b3_message {
+    border:          1px dashed black;
+    box-sizing:      border-box;
     display:         flex;
     flex-flow:       row nowrap;
     justify-content: space-between;
-    border:          1px dashed black;
     padding:         5px 10px;
-}
-
-/* Pages pages */
-.b3_select-page {
-    width:         100%;
-    margin-bottom: 1em;
-    display:       flex;
-    flex-flow:     row nowrap;
-}
-
-.b3_select-page__label {
-    font-weight:  bold;
-    margin-right: 1em;
-    min-width:    200px;
-}
-
-.b3_select-page__selector {
-    min-width: 250px;
 }
 
 /* Dashboard widget */
@@ -160,19 +140,58 @@
     margin-bottom: 0.5em;
 }
 
-.b3_settings-input {
-}
-
 .b3_settings-input--checkbox,
 .b3_settings-input--radio {
-    margin-bottom: 0.5em;
+    /*margin-bottom: 0.5em;*/
 }
 
-.b3_settings-input--checkbox input {
-    margin-top: 0.25em;
+.b3_settings-input div {
+    margin-bottom: 0.25em;
+}
+
+/* Pages pages */
+.b3_select-page {
+    display:       flex;
+    flex-flow:     row nowrap;
+    margin-bottom: 1em;
+    width:         100%;
+}
+
+.b3_select-page__label {
+    font-weight:  bold;
+    margin-right: 1em;
+    min-width:    200px;
+}
+
+.b3_select-page__selector {
+    min-width: 250px;
+}
+
+.b3_select-page__edit,
+.b3_select-page__link {
+    align-self:     center;
+    margin-left:    1em;
+    vertical-align: middle;
+}
+
+.b3_select-page__edit a,
+.b3_select-page__link a {
+    text-decoration: none;
 }
 
 /* Emails page */
+.b3__postbox {
+    /* copy of .postbox */
+    background:    #fff;
+    border:        1px solid #ccd0d4;
+    box-shadow:    0 1px 1px rgba(0, 0, 0, 0.04);
+    line-height:   1;
+    margin-bottom: 20px;
+    min-width:     255px;
+    padding:       0;
+    position:      relative;
+}
+
 .b3 table.b3_table--emails th {
     padding-top: 0.5em;
     width:       200px;
@@ -290,7 +309,7 @@ ul.b3_addons--list {
 .b3 input[type="text"],
 .b3 input[type="url"],
 .b3 textarea {
-    padding: 8px;
+    padding: 6px;
     width:   100%;
 }
 
