@@ -826,6 +826,7 @@
     function b3_form_links( $current_form ) {
 
         $output = '';
+        error_log(get_option( 'b3_disable_action_links' ));
         if ( true != get_option( 'b3_disable_action_links' ) ) {
             $page_types = [];
 

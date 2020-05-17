@@ -20,6 +20,9 @@
             case 'emails':
                 $content = b3_render_emails_tab();
                 break;
+            case 'loginpage':
+                $content = b3_render_loginpage_tab();
+                break;
             case 'users':
                 $content = b3_render_users_tab();
                 break;
@@ -49,6 +52,7 @@
     function b3_render_settings_tab() {
 
         $action_links        = get_option( 'b3_disable_action_links' );
+        $custom_login_page   = get_option( 'b3_custom_login_page' );
         $custom_emails       = get_option( 'b3_custom_emails' );
         $dashboard_widget    = get_option( 'b3_dashboard_widget' );
         $first_last          = get_option( 'b3_activate_first_last' );
@@ -72,17 +76,17 @@
         <?php } ?>
 
         <p>
-            <?php esc_html_e( 'Here you can set some global settings for the plugin.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can set various global settings for the plugin.', 'b3-onboarding' ); ?>
         </p>
 
         <form name="" class="" action="" method="post">
             <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
 
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
-                <div class="b3_settings-field">
-                    <div class="b3_settings-label">
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
                         <label for="b3_registration_types"><?php esc_html_e( 'Registration options', 'b3-onboarding' ); ?></label>
-                    </div>
+                    <?php b3_get_close(); ?>
                     <?php if ( is_multisite() && is_main_site() ) { ?>
                         <p>
                             <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
@@ -105,94 +109,108 @@
                     <?php } else { ?>
                         <div class="b3_settings-input b3_settings-input--radio">
                             <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
-                            <?php if ( is_multisite() && is_main_site() ) {
-                                // echo sprintf( __( '<a href="%s">Click here</a> to change this.','b3-onboarding' ), network_admin_url( 'settings.php' ) );
-                            } ?>
                         </div>
                     <?php } ?>
-                </div>
+                <?php b3_get_close(); ?>
 
                 <?php if ( ! is_multisite() ) { ?>
-                    <div class="b3_settings-field">
-                        <div class="b3_settings-label">
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
                             <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
-                        </div>
+                        <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration', 'b3-onboarding' ); ?>
                         </div>
-                        <?php if ( $first_last ) { ?>
-                            <div class="b3_settings-input b3_settings-input--checkbox">
-                                <label for="b3_first_last_required" class="screen-reader-text"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
-                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?>
-                            </div>
-                        <?php } ?>
-                    </div>
+                    <?php b3_get_close(); ?>
 
-                    <div class="b3_settings-field">
-                        <div class="b3_settings-label">
-                            <label for="b3_activate_custom_emails"><?php esc_html_e( 'Your email styling/template', 'b3-onboarding' ); ?></label>
-                        </div>
+                    <?php if ( $first_last ) { ?>
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
+                    <?php } ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling', 'b3-onboarding' ); ?>
                         </div>
-                    </div>
+                        <?php if ( $custom_emails ) { ?>
+                            <div class="b3_below_input"><?php esc_html_e( 'Styling can be set on the emails tab.', 'b3-onboarding' ); ?></div>
+                        <?php } ?>
+                    <?php b3_get_close(); ?>
 
-                    <div class="b3_settings-field">
-                        <div class="b3_settings-label">
-                            <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_custom_login_page"><?php esc_html_e( 'Custom login page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_custom_login_page" name="b3_custom_login_page" value="1" <?php if ( $custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom settings for the login page.', 'b3-onboarding' ); ?>
                         </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
                         </div>
-                    </div>
+                    <?php b3_get_close(); ?>
                 <?php } ?>
 
                 <?php // @TODO: check for filter for MS ?>
-                <div class="b3_settings-field">
-                    <div class="b3_settings-label">
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
                         <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
-                    </div>
+                    <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on forms', 'b3-onboarding' ); ?>
                     </div>
-                </div>
+                <?php b3_get_close(); ?>
             <?php } ?>
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_dashboard_widget"><?php esc_html_e( 'Dashboard widget', 'b3-onboarding' ); ?></label>
-                </div>
+                <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_dashboard_widget" name="b3_activate_dashboard_widget" value="1" <?php if ( $dashboard_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate the dashboard widget', 'b3-onboarding' ); ?>
                 </div>
-            </div>
+            <?php b3_get_close(); ?>
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_sidebar_widget"><?php esc_html_e( 'Sidebar widget', 'b3-onboarding' ); ?></label>
-                </div>
+                <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_sidebar_widget" name="b3_activate_sidebar_widget" value="1" <?php if ( $sidebar_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate the sidebar widget', 'b3-onboarding' ); ?>
                 </div>
-            </div>
+            <?php b3_get_close(); ?>
 
-<!--            <div class="b3_settings-field">-->
-<!--                <div class="b3_settings-label">-->
+<!--            <?php // b3_get_settings_field_open(); ?>-->
+<!--                <?php // b3_get_label_field_open(); ?>-->
 <!--                    <label for="b3_activate_recaptcha">--><?php //esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?><!--</label>-->
-<!--                </div>-->
+<!--                <?php // b3_get_close(); ?>-->
 <!--                <div class="b3_settings-input b3_settings-input--checkbox">-->
 <!--                    <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" --><?php //if ( $recaptcha ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate reCAPTCHA', 'b3-onboarding' ); ?>
 <!--                </div>-->
-<!--            </div>-->
+<!--            <?php // b3_get_close(); ?>-->
 
-<!--            <div class="b3_settings-field">-->
-<!--                <div class="b3_settings-label">-->
+<!--            <?php // b3_get_settings_field_open(); ?>-->
+<!--                <?php // b3_get_label_field_open(); ?>-->
 <!--                    <label for="b3_activate_privacy">--><?php //esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?><!--</label>-->
-<!--                </div>-->
+<!--                <?php // b3_get_close(); ?>-->
 <!--                <div class="b3_settings-input b3_settings-input--checkbox">-->
 <!--                    <input type="checkbox" id="b3_activate_privacy" name="b3_activate_privacy" value="1" --><?php //if ( $privacy ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate a privacy checkbox', 'b3-onboarding' ); ?>
 <!--                </div>-->
-<!--            </div>-->
+<!--            <?php // b3_get_close(); ?>-->
 
             <br />
             <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save options', 'b3-onboarding' ); ?>" />
@@ -284,9 +302,9 @@
 
             <?php foreach( $b3_pages as $page ) { ?>
                 <div class="b3_select-page">
-                    <div class="b3_select-page__label">
+                    <?php b3_get_label_field_open(); ?>
                         <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo $page[ 'label' ]; ?></label>
-                    </div>
+                    <?php b3_get_close(); ?>
 
                     <div class="b3_select-page__selector">
                         <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
@@ -364,6 +382,91 @@
 
 
     /**
+     * Render login page design tab
+     *
+     * @return false|string
+     */
+    function b3_render_loginpage_tab() {
+
+        ob_start();
+        $background_color    = get_option( 'b3_loginpage_bg_color' );
+        $font_family         = get_option( 'b3_loginpage_font_family' );
+        $font_size           = get_option( 'b3_loginpage_font_size' );
+        $logo                = get_option( 'b3_loginpage_logo' );
+        ?>
+        <h2>
+            <?php esc_html_e( 'Login page', 'b3-onboarding' ); ?>
+        </h2>
+
+        <?php if ( isset( $_GET[ 'success' ] ) && 'loginpage_saved' == $_GET[ 'success' ] ) { ?>
+            <p class="b3_message">
+                <?php esc_html_e( 'Login page settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+            </p>
+        <?php } ?>
+
+        <p>
+            <?php // @TODO: set if for if custom login page is set ?>
+            <?php esc_html_e( 'Here you can style the (default) WordPress login page.', 'b3-onboarding' ); ?>
+        </p>
+
+        <form action="" method="post">
+            <input name="b3_loginpage_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-loginpage-nonce' ); ?>">
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_loginpage_logo">LOGO</label>
+                <?php b3_get_close(); ?>
+
+                <?php
+                    echo '<div id="tgm-new-media-settings">';
+                    echo '<p><a href="#" class="b3-open-media button button-primary" title="' . esc_attr__( 'Choose logo', 'b3-onboarding' ) . '">' . __( 'Choose logo', 'b3-onboarding' ) . '</a></p>';
+                    echo '<p><label for="tgm-new-media-image">' . __( 'Logo url', 'b3-onboarding' ) . '</label> <input type="text" name="b3_loginpage_logo" id="b3_loginpage_logo" value="' . $logo . '" /></p>';
+                    echo '</div>';
+                ?>
+
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_loginpage_bg_color">Background color</label>
+                <?php b3_get_close(); ?>
+                <?php // @TODO: n2h colorpicker ?>
+                <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="Example #FF0000">
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_loginpage_font_family">Font family</label>
+                <?php b3_get_close(); ?>
+                <select name="b3_loginpage_font_family" id="b3_loginpage_font_family">
+                    <option value=""><?php esc_html_e( 'Select a font', 'b3-onboarding' ); ?></option>
+                    <option value="">Arial</option>
+                    <option value="">Tahoma</option>
+                    <option value="">Verdana</option>
+                </select>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_loginpage_font_size">Font size</label>
+                <?php b3_get_close(); ?>
+                <select name="b3_loginpage_font_size" id="b3_loginpage_font_size">
+                    <option value=""><?php esc_html_e( 'Select a font size', 'b3-onboarding' ); ?></option>
+                    <option value="10">10</option>
+                </select>
+            <?php b3_get_close(); ?>
+
+            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>" />
+        </form>
+
+        <?php
+        $result = ob_get_clean();
+
+        return $result;
+    }
+
+
+    /**
      * Render emails tab
      *
      * @return false|string
@@ -392,10 +495,10 @@
         <form action="" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
-                </div>
+                <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <p>
                         <?php _e( 'Which users do <b>not</b> have access to the Wordpress admin ?', 'b3-onboarding' ); ?>
@@ -417,12 +520,12 @@
                         }
                     ?>
                 </div>
-            </div>
+            <?php b3_get_close(); ?>
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
                     <label><?php esc_html_e( 'Themed profile', 'b3-onboarding' ); ?></label>
-                </div>
+                <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <p>
                         <?php esc_html_e( 'Which users see a front-end account page ?', 'b3-onboarding' ); ?>
@@ -442,7 +545,7 @@
                         }
                     ?>
                 </div>
-            </div>
+            <?php b3_get_close(); ?>
 
             <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save all user settings', 'b3-onboarding' ); ?>" />
         </form>
@@ -482,23 +585,23 @@
         <form name="" class="" action="" method="post">
             <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
                     <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
-                </div>
+                <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
                     <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" value="<?php if ( $public_key ) { echo $public_key; } ?>" />
                 </div>
-            </div>
+            <?php b3_get_close(); ?>
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
                     <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
-                </div>
+                <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
                     <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" value="<?php if ( $secret_key ) { echo $secret_key; } ?>" />
                 </div>
-            </div>
+            <?php b3_get_close(); ?>
 
             <br />
             <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save options', 'b3-onboarding' ); ?>" />

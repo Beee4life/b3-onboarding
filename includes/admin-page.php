@@ -31,8 +31,8 @@
                             $default_tab = $_GET[ 'tab' ];
                         } else {
                             $default_tab = 'settings';
+                            $default_tab = 'loginpage';
                         }
-                        // $default_tab = 'emails';
 
                         $tabs        = array(
                             array(
@@ -48,6 +48,15 @@
                                 'icon'    => 'admin-page',
                             ),
                         );
+
+                        if ( 1 == get_option( 'b3_custom_login_page' ) ) {
+                            $tabs[] = array(
+                                'id'      => 'loginpage',
+                                'title'   => esc_html__( 'Login page', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'loginpage' ),
+                                'icon'    => 'art',
+                            );
+                        }
 
                         $tabs[] = array(
                             'id'      => 'emails',

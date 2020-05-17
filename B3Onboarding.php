@@ -120,8 +120,8 @@
                 include( 'includes/functions.php' );
                 include( 'includes/get-stuff.php' );
                 include( 'includes/help-tabs.php' );
+                include( 'includes/styling.php' );
                 include( 'includes/tabs.php' );
-                error_log(plugin_basename( __FILE__ ));
             }
 
             /**
@@ -131,7 +131,6 @@
              */
             public function b3_new_blog( $new_site ) {
                 if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
-                    // do activation for $new_site
                     switch_to_blog( $new_site->blog_id );
                     b3_setup_initial_pages( true );
                     restore_current_blog();
@@ -327,7 +326,7 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
-                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__, [], $this->settings['version'] ) );
+                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__), [], $this->settings['version'] );
                 wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
             }
 
@@ -338,6 +337,26 @@
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->settings['version'] );
                 wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
+
+                // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
+                // Bail out early if we are not on a page add/edit screen.
+                // echo '<pre>'; var_dump(get_current_screen()); echo '</pre>'; exit;
+                if ( ! ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) ) {
+                    return;
+                }
+
+                // This function loads in the required media files for the media manager.
+                wp_enqueue_media();
+
+                // Register, localize and enqueue our custom JS.
+                wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
+                wp_localize_script( 'b3-media', 'b3_media',
+                    array(
+                        'title'     => __( 'Upload or choose your custom logo', 'b3-onboarding' ),  // This will be used as the title
+                        'button'    => __( 'Insert logo', 'b3-onboarding' )                         // This will be used as the button text
+                    )
+                );
+                wp_enqueue_script( 'b3-media' );
             }
 
 
@@ -364,7 +383,6 @@
                     </script>
                     <?php
                 } else {
-                }
                     ?>
                     <script type="text/javascript">
                         jQuery(document).ready(function () {
@@ -372,6 +390,7 @@
                         });
                     </script>
                     <?php
+                }
             }
 
 

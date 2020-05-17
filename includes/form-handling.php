@@ -44,6 +44,11 @@
                                 update_site_option( 'registration', $registration_type );
                             }
                         } else {
+                            if ( 'closed' == $_POST[ 'b3_registration_type' ] ) {
+                                update_option( 'users_can_register', 0, true );
+                            } else {
+                                update_option( 'users_can_register', 1, true );
+                            }
                             update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], true );
                         }
                     }
@@ -65,52 +70,59 @@
 
                     // Custom emails
                     if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
-                        update_option( 'b3_custom_emails', '1', true );
+                        update_option( 'b3_custom_emails', 1, true );
                     } else {
-                        delete_option( 'b3_custom_emails' );
+                        update_option( 'b3_custom_emails', 0, true );
                     }
 
-                    // Custom emails
-                    if ( isset( $_POST[ 'b3_activate_frontend_approval' ] ) ) {
-                        update_option( 'b3_front_end_approval', '1', true );
+                    // Custom login page
+                    if ( isset( $_POST[ 'b3_custom_login_page' ] ) ) {
+                        update_option( 'b3_custom_login_page', 1, true );
                     } else {
-                        delete_option( 'b3_front_end_approval' );
+                        update_option( 'b3_custom_login_page', 0, true );
+                    }
+
+                    // Front-end approval
+                    if ( isset( $_POST[ 'b3_activate_frontend_approval' ] ) ) {
+                        update_option( 'b3_front_end_approval', 1, true );
+                    } else {
+                        update_option( 'b3_front_end_approval', 0, true );
                         delete_option( 'b3_approval_page_id' );
                     }
 
                     // Sidebar widget
                     if ( isset( $_POST[ 'b3_activate_sidebar_widget' ] ) ) {
-                        update_option( 'b3_sidebar_widget', '1', true );
+                        update_option( 'b3_sidebar_widget', 1, true );
                     } else {
-                        delete_option( 'b3_sidebar_widget' );
+                        update_option( 'b3_sidebar_widget', 0, true );
                     }
 
                     // Sidebar widget
                     if ( isset( $_POST[ 'b3_disable_action_links' ] ) ) {
-                        update_option( 'b3_disable_action_links', '1', true );
+                        update_option( 'b3_disable_action_links', 1, true );
                     } else {
-                        delete_option( 'b3_disable_action_links' );
+                        update_option( 'b3_disable_action_links', 0, true );
                     }
 
                     // Dashboard widget (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) ) {
-                        update_option( 'b3_dashboard_widget', '1', true );
+                        update_option( 'b3_dashboard_widget', 1, true );
                     } else {
-                        delete_option( 'b3_dashboard_widget' );
+                        update_option( 'b3_dashboard_widget', 0, true );
                     }
 
                     // reCAPTCHA (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) ) {
-                        update_option( 'b3_recaptcha', '1', true );
+                        update_option( 'b3_recaptcha', 1, true );
                     } else {
-                        delete_option( 'b3_recaptcha' );
+                        update_option( 'b3_recaptcha', 0, true );
                     }
 
                     // Privacy (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_privacy' ] ) ) {
-                        update_option( 'b3_privacy', '1', true );
+                        update_option( 'b3_privacy', 1, true );
                     } else {
-                        delete_option( 'b3_privacy' );
+                        update_option( 'b3_privacy', 0, true );
                     }
 
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
@@ -146,6 +158,23 @@
                     }
 
                     $redirect_url = add_query_arg( 'success', 'pages_saved', $redirect_url );
+                }
+
+                wp_redirect( $redirect_url );
+                exit;
+
+            } elseif ( isset( $_POST[ 'b3_loginpage_nonce' ] ) ) {
+
+                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=loginpage' );
+                if ( ! wp_verify_nonce( $_POST[ "b3_loginpage_nonce" ], 'b3-loginpage-nonce' ) ) {
+                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
+                } else {
+                    update_option( 'b3_loginpage_bg_color', $_POST[ 'b3_loginpage_bg_color' ] );
+                    update_option( 'b3_loginpage_font_family', $_POST[ 'b3_loginpage_font_family' ] );
+                    update_option( 'b3_loginpage_font_size', $_POST[ 'b3_loginpage_font_size' ] );
+                    update_option( 'b3_loginpage_logo', $_POST[ 'b3_loginpage_logo' ] );
+
+                    $redirect_url = add_query_arg( 'success', 'loginpage_saved', $redirect_url );
                 }
 
                 wp_redirect( $redirect_url );

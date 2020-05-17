@@ -45,7 +45,7 @@
 
 .b3_tab-content h2,
 .b3_tab-content h3 {
-    margin: 0 0 1.5em 0;
+    margin: 0 0 1em 0;
 }
 
 .b3_foldout--header {
@@ -140,6 +140,15 @@
     margin-bottom: 0.5em;
 }
 
+.b3_select-page .b3_settings-label {
+    min-width: 200px;
+}
+
+.b3_below_input {
+    margin-top: 0.5em;
+    color: #666;
+}
+
 .b3_settings-input--checkbox,
 .b3_settings-input--radio {
     /*margin-bottom: 0.5em;*/
@@ -177,6 +186,11 @@
 .b3_select-page__edit a,
 .b3_select-page__link a {
     text-decoration: none;
+}
+
+/* Login page */
+input#b3_loginpage_bg_color {
+    width: 150px;
 }
 
 /* Emails page */
