@@ -2,8 +2,9 @@
     /**
      *
      */
-    function b3_get_settings_field_open() {
-        echo '<div class="b3_settings-field">';
+    function b3_get_settings_field_open( $hide = false ) {
+        $hide_class = ( $hide != false ) ? ' hidden' : false;
+        echo '<div class="b3_settings-field' . $hide_class . '">';
     }
 
     /**

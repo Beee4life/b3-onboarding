@@ -70,6 +70,7 @@
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
+                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_login_styling' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
@@ -78,8 +79,7 @@
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_init' ) );
-                add_action( 'wp_head',                              array( $this, 'b3_robots' ) );
-                add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
+                // add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
@@ -262,14 +262,14 @@
                 }
             }
 
-            public function b3_robots() {
-                if ( is_singular() ) {
-                    $has_meta = get_post_meta( get_the_ID(), '_b3_page', true );
 
-                    if ( true == $has_meta && true == get_option( 'blog_public' ) ) {
-                        echo '<meta name="robots" content="noindex,follow" />';
-                    }
-                }
+            /**
+             * Add login styling
+             */
+            public function b3_add_login_styling() {
+                // @TODO: check if values are set
+                // enqueue values as dynamic php/css file
+                wp_enqueue_style( 'b3-ob-custom', plugins_url( 'includes/style-login.php', __FILE__), [], $this->settings['version'] );
             }
 
 
@@ -793,12 +793,13 @@
 
                     // The rest are redirected to the login page
                     $login_url = home_url( 'login' ); // get from constant
+                    $login_url = wp_login_url(); // get from constant
                     if ( ! empty( $redirect_to ) ) {
                         $login_url = add_query_arg( 'redirect_to', $redirect_to, $login_url );
                     }
 
-                    wp_redirect( $login_url );
-                    exit;
+                    // wp_redirect( $login_url );
+                    // exit;
                 }
             }
 

@@ -26,14 +26,11 @@
             case 'users':
                 $content = b3_render_users_tab();
                 break;
-            case 'recaptcha':
-                $content = b3_render_recaptcha_tab();
-                break;
             case 'support':
                 $content = b3_render_support_tab();
                 break;
-            case 'addons':
-                $content = b3_render_addons_tab();
+            case 'integrations':
+                $content = b3_render_integrations_tab();
                 break;
             case 'debug':
                 $content = b3_render_debug_tab();
@@ -171,7 +168,7 @@
                         <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on forms', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on (custom) forms', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
             <?php } ?>
@@ -194,23 +191,23 @@
                 </div>
             <?php b3_get_close(); ?>
 
-<!--            <?php // b3_get_settings_field_open(); ?>-->
-<!--                <?php // b3_get_label_field_open(); ?>-->
-<!--                    <label for="b3_activate_recaptcha">--><?php //esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?><!--</label>-->
-<!--                <?php // b3_get_close(); ?>-->
-<!--                <div class="b3_settings-input b3_settings-input--checkbox">-->
-<!--                    <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" --><?php //if ( $recaptcha ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate reCAPTCHA', 'b3-onboarding' ); ?>
-<!--                </div>-->
-<!--            <?php // b3_get_close(); ?>-->
+            <?php b3_get_settings_field_open( 1 ); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA', 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
 
-<!--            <?php // b3_get_settings_field_open(); ?>-->
-<!--                <?php // b3_get_label_field_open(); ?>-->
-<!--                    <label for="b3_activate_privacy">--><?php //esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?><!--</label>-->
-<!--                <?php // b3_get_close(); ?>-->
-<!--                <div class="b3_settings-input b3_settings-input--checkbox">-->
-<!--                    <input type="checkbox" id="b3_activate_privacy" name="b3_activate_privacy" value="1" --><?php //if ( $privacy ) { ?><!--checked="checked"--><?php //} ?><!--/> --><?php //esc_html_e( 'Check this box to activate a privacy checkbox', 'b3-onboarding' ); ?>
-<!--                </div>-->
-<!--            <?php // b3_get_close(); ?>-->
+            <?php b3_get_settings_field_open( 1 ); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_activate_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_privacy" name="b3_activate_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox', 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
 
             <br />
             <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save options', 'b3-onboarding' ); ?>" />
@@ -402,6 +399,12 @@
             <p class="b3_message">
                 <?php esc_html_e( 'Login page settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
+        <?php } elseif ( isset( $_GET[ 'errors' ] ) ) { ?>
+            <?php if ( isset( $_GET[ 'errors' ] ) ) { ?>
+                <p class="b3_message">
+                    <?php esc_html_e( 'Error: hex codes must be 3 or 6 chracters in length', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
+                </p>
+            <?php } ?>
         <?php } ?>
 
         <p>
@@ -431,10 +434,10 @@
                     <label for="b3_loginpage_bg_color">Background color</label>
                 <?php b3_get_close(); ?>
                 <?php // @TODO: n2h colorpicker ?>
-                <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="Example #FF0000">
+                # <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="Example FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters', 'b3-onboarding' ); ?>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_settings_field_open(); ?>
+            <?php b3_get_settings_field_open( 1 ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_loginpage_font_family">Font family</label>
                 <?php b3_get_close(); ?>
@@ -446,7 +449,7 @@
                 </select>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_settings_field_open(); ?>
+            <?php b3_get_settings_field_open( 1 ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_loginpage_font_size">Font size</label>
                 <?php b3_get_close(); ?>
@@ -644,21 +647,84 @@
      *
      * @return false|string
      */
-    function b3_render_addons_tab() {
+    function b3_render_integrations_tab() {
 
         ob_start();
+        $public_key = get_option( 'b3_recaptcha_public' );
+        $secret_key = get_option( 'b3_recaptcha_secret' );
+        $version    = get_option( 'b3_recaptcha_version' );
+        $show_recaptcha = false;
+
+        if ( get_option( 'b3_recaptcha' ) ) {
+            $show_recaptcha = true;
+        }
         ?>
         <h2>
-            <?php esc_html_e( 'Add-ons', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Integrations', 'b3-onboarding' ); ?>
         </h2>
+        <p>
+            <?php esc_html_e( 'On this page you can add 3rd party integrations.', 'b3-onboarding' ); ?>
+        </p>
 
-        <div class="addons">
-            <p>
-                We don't have any add-ons yet... but we do understand there might be a need for them.
-                <br />
-                We'll look into creating an add-on for the ones below soon.
+        <?php if ( $show_recaptcha ) { ?>
+            <h3>
+                <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
+            </h3>
+        <?php } ?>
+
+
+        <?php if ( isset( $_GET[ 'success' ] ) && 'recaptcha_saved' == $_GET[ 'success' ] ) { ?>
+            <p class="b3_message">
+                <?php esc_html_e( 'Recaptcha settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
+        <?php } ?>
 
+        <p>
+            <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
+        </p>
+
+        <form name="" class="" action="" method="post">
+            <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--text">
+                    <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key ) { echo $public_key; } ?>" />
+                </div>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--text">
+                    <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key ) { echo $secret_key; } ?>" />
+                </div>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_version"><?php esc_html_e( 'reCaptcha version', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--text">
+                    <select name="b3_recaptcha_version" id="b3_recaptcha_version">
+                        <option value="">Choose</option>
+                        <option value="2"<?php echo ( 2 == $version ) ? ' selected="selected"' : false; ?>>v2</option>
+                        <option value="3"<?php echo ( 3 == $version ) ? ' selected="selected"' : false; ?>>v3</option>
+                    </select>
+                </div>
+            <?php b3_get_close(); ?>
+
+            <br />
+            <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save options', 'b3-onboarding' ); ?>" />
+        </form>
+
+        <?php $current_user = wp_get_current_user(); ?>
+        <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) { ?>
+
+            <?php b3_get_settings_field_open(); ?>
             <?php
                 $modules = [
                     [
@@ -681,21 +747,33 @@
                     ],
                 ];
             ?>
-            <ul class="b3_addons--list"><!--
-                <?php foreach( $modules as $module ) { ?>
-                --><li class="b3_addons--list-item b3_addons--list-item--<?php echo $module['id']; ?>">
-                    <div class="b3_addon__container">
-                        <div class="b3_addon__image">
-                            <img src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module['logo']; ?>" alt="<?php echo $module['name']; ?>" />
+            <div class="integrations">
+                <h3>
+                    More integrations
+                </h3>
+                <p>
+                    We understand there might be a need for more integrations.
+                    <br />
+                    If we'll add more, the ones below are the first ones wer're gonna explore.
+                </p>
+
+                <ul class="b3_integrations--list"><!--
+                    <?php foreach( $modules as $module ) { ?>
+                    --><li class="b3_integrations--list-item b3_integrations--list-item--<?php echo $module['id']; ?>">
+                        <div class="b3_integration__container">
+                            <div class="b3_integration__image">
+                                <img src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module['logo']; ?>" alt="<?php echo $module['name']; ?>" />
+                            </div>
+                            <div class="b3_integration__name">
+                                <?php echo $module['name']; ?>
+                            </div>
                         </div>
-                        <div class="b3_addon__name">
-                            <?php echo $module['name']; ?>
-                        </div>
-                    </div>
-                </li><!--
-                <?php } ?>
-            --></ul>
-        </div>
+                    </li><!--
+                    <?php } ?>
+                --></ul>
+                </div>
+        <?php b3_get_close(); ?>
+        <?php } ?>
 
         <?php
         $result = ob_get_clean();

@@ -169,7 +169,22 @@
                 if ( ! wp_verify_nonce( $_POST[ "b3_loginpage_nonce" ], 'b3-loginpage-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
-                    update_option( 'b3_loginpage_bg_color', $_POST[ 'b3_loginpage_bg_color' ] );
+
+                    if ( ! empty( $_POST[ 'b3_loginpage_bg_color' ] ) ) {
+                        $color = $_POST[ 'b3_loginpage_bg_color' ];
+                        if ( '#' == substr( $_POST[ 'b3_loginpage_bg_color' ], 0, 1 ) ) {
+                            $color = substr( $_POST[ 'b3_loginpage_bg_color' ], 1 );
+                        }
+                        $length = strlen($color);
+                        if ( 3 != $length && 6 != $length ) {
+                            $redirect_url = add_query_arg( 'errors', 'wrong_hexlength', $redirect_url );
+                            wp_redirect( $redirect_url );
+                            exit;
+                        } else {
+                            update_option( 'b3_loginpage_bg_color', $color );
+                        }
+                    }
+
                     update_option( 'b3_loginpage_font_family', $_POST[ 'b3_loginpage_font_family' ] );
                     update_option( 'b3_loginpage_font_size', $_POST[ 'b3_loginpage_font_size' ] );
                     update_option( 'b3_loginpage_logo', $_POST[ 'b3_loginpage_logo' ] );
@@ -257,7 +272,7 @@
 
             } elseif ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
 
-                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' );
+                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=addon' );
 
                 if ( ! wp_verify_nonce( $_POST[ "b3_recaptcha_nonce" ], 'b3-recaptcha-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
@@ -265,6 +280,7 @@
 
                     update_option( 'b3_recaptcha_public', $_POST[ 'b3_recaptcha_public' ], true );
                     update_option( 'b3_recaptcha_secret', $_POST[ 'b3_recaptcha_secret' ], true );
+                    update_option( 'b3_recaptcha_version', $_POST[ 'b3_recaptcha_version' ], true );
 
                     $redirect_url = add_query_arg( 'success', 'recaptcha_saved', $redirect_url );
                 }

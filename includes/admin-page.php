@@ -31,7 +31,7 @@
                             $default_tab = $_GET[ 'tab' ];
                         } else {
                             $default_tab = 'settings';
-                            $default_tab = 'loginpage';
+                            // $default_tab = 'integrations';
                         }
 
                         $tabs        = array(
@@ -72,20 +72,11 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( get_option( 'b3_recaptcha' ) ) {
+                        if ( get_option( 'b3_recaptcha' ) || ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) ) {
                             $tabs[] = array(
-                                'id'      => 'recaptcha',
-                                'title'   => esc_html__( 'Recaptcha', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'recaptcha' ),
-                                'icon'    => 'star-filled',
-                            );
-                        }
-
-                        if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) {
-                            $tabs[] = array(
-                                'id'      => 'addon',
-                                'title'   => esc_html__( 'Add-ons', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'addons' ),
+                                'id'      => 'integrations',
+                                'title'   => esc_html__( 'Integrations', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'integrations' ),
                                 'icon'    => 'plus-alt',
                             );
                         }
