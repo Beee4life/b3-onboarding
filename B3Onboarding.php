@@ -72,6 +72,7 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
+                add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
@@ -120,6 +121,7 @@
                 include( 'includes/get-stuff.php' );
                 include( 'includes/help-tabs.php' );
                 include( 'includes/tabs.php' );
+                error_log(plugin_basename( __FILE__ ));
             }
 
             /**
@@ -141,6 +143,20 @@
              */
             public function b3_plugin_activation() {
 
+                if ( is_multisite() ) {
+                    // @TODO: test this
+                    if ( ( defined( 'WP_TESTING' ) && 1 != WP_TESTING ) || ! defined( 'WP_TESTING' ) ) {
+                        $deactivate = true;
+                    }
+                }
+                if ( isset( $deactivate ) && true === $deactivate ) {
+                    deactivate_plugins( plugin_basename( __FILE__ ) );
+                    add_action( 'admin_notices', function () {
+                        echo '<div class="error"><p>'. __( 'This plugin does not work properly in a Multisite. Sorry...', 'b3-onboarding' ) . '.</p></div>';
+                    } );
+
+                    return;
+                }
                 // create necessary pages
                 b3_setup_initial_pages();
 
@@ -335,6 +351,27 @@
                     include( 'includes/user-approval-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                 }
+            }
+
+
+            public function b3_add_js_head() {
+                if ( is_multisite() ) {
+                    ?>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function () {
+                            jQuery('.form-table input[name="registration"]').prop('disabled', true);
+                        });
+                    </script>
+                    <?php
+                } else {
+                }
+                    ?>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function () {
+                            jQuery('.form-table input[name="users_can_register"]').prop('disabled', true);
+                        });
+                    </script>
+                    <?php
             }
 
 

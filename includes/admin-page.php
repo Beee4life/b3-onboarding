@@ -32,7 +32,7 @@
                         } else {
                             $default_tab = 'settings';
                         }
-                        $default_tab = 'emails';
+                        // $default_tab = 'emails';
 
                         $tabs        = array(
                             array(

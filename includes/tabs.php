@@ -78,68 +78,85 @@
         <form name="" class="" action="" method="post">
             <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
-                    <label for="b3_registration_types"><?php esc_html_e( 'Registration options', 'b3-onboarding' ); ?></label>
-                </div>
+            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+                <div class="b3_settings-field">
+                    <div class="b3_settings-label">
+                        <label for="b3_registration_types"><?php esc_html_e( 'Registration options', 'b3-onboarding' ); ?></label>
+                    </div>
+                    <?php if ( is_multisite() && is_main_site() ) { ?>
+                        <p>
+                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
+                        </p>
+                    <?php } else if ( ! is_multisite() ) { ?>
+                        <p>
+                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), admin_url( 'options-general.php' ) ); ?>
+                        </p>
+                    <?php } ?>
 
-                <?php $options = b3_registration_types(); ?>
-                <?php if ( ! empty( $options ) ) { ?>
-                    <?php foreach( $options as $option ) { ?>
-                        <div class="b3_settings-input b3_settings-input--radio">
-                            <div>
-                                <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                    <?php $options = b3_registration_types(); ?>
+                    <?php if ( ! empty( $options ) ) { ?>
+                        <?php foreach( $options as $option ) { ?>
+                            <div class="b3_settings-input b3_settings-input--radio">
+                                <div>
+                                    <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                </div>
                             </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div class="b3_settings-input b3_settings-input--radio">
+                            <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
+                            <?php if ( is_multisite() && is_main_site() ) {
+                                // echo sprintf( __( '<a href="%s">Click here</a> to change this.','b3-onboarding' ), network_admin_url( 'settings.php' ) );
+                            } ?>
                         </div>
                     <?php } ?>
-                <?php } else { ?>
-                    <div class="b3_settings-input b3_settings-input--radio">
-                        <?php esc_html_e( 'The network owner has disabled registrations.','b3-onboarding' ); ?>
+                </div>
+
+                <?php if ( ! is_multisite() ) { ?>
+                    <div class="b3_settings-field">
+                        <div class="b3_settings-label">
+                            <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
+                        </div>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration', 'b3-onboarding' ); ?>
+                        </div>
+                        <?php if ( $first_last ) { ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <label for="b3_first_last_required" class="screen-reader-text"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+
+                    <div class="b3_settings-field">
+                        <div class="b3_settings-label">
+                            <label for="b3_activate_custom_emails"><?php esc_html_e( 'Your email styling/template', 'b3-onboarding' ); ?></label>
+                        </div>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling', 'b3-onboarding' ); ?>
+                        </div>
+                    </div>
+
+                    <div class="b3_settings-field">
+                        <div class="b3_settings-label">
+                            <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
+                        </div>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
+                        </div>
                     </div>
                 <?php } ?>
-            </div>
 
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
-                    <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
-                </div>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration', 'b3-onboarding' ); ?>
-                </div>
-                <?php if ( $first_last ) { ?>
+                <?php // @TODO: check for filter for MS ?>
+                <div class="b3_settings-field">
+                    <div class="b3_settings-label">
+                        <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
+                    </div>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <label for="b3_first_last_required" class="screen-reader-text"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
-                        <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on forms', 'b3-onboarding' ); ?>
                     </div>
-                <?php } ?>
-            </div>
-
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
-                    <label for="b3_activate_custom_emails"><?php esc_html_e( 'Your email styling/template', 'b3-onboarding' ); ?></label>
                 </div>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling', 'b3-onboarding' ); ?>
-                </div>
-            </div>
-
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
-                    <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
-                </div>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
-                </div>
-            </div>
-
-            <div class="b3_settings-field">
-                <div class="b3_settings-label">
-                    <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
-                </div>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on forms', 'b3-onboarding' ); ?>
-                </div>
-            </div>
+            <?php } ?>
 
             <div class="b3_settings-field">
                 <div class="b3_settings-label">
