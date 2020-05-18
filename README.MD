@@ -7,9 +7,9 @@
 - [Installation](#installation)
 - [Activation](#activate)
 - [Features](#features)
+- [Shortcodes](#shortcodes)
 - [Hooks](#hooks)
 - [Filters](#filters)
-- [Shortcodes](#shortcodes)
 - [Uninstall](#uninstall)
 - [Disclaimer](#disclaimer)
 - [Roadmap](#roadmap)
@@ -59,6 +59,14 @@ If you activate this plugin the following will be done:
 * (mostly) styled using [BEM](https://en.bem.info) methodology
 * add custom fields through hooks
 
+<a name="shortcodes"></a>
+### Shortcodes
+* [account-page] = renders account page
+* [forgotpass-form] = renders forgot password form
+* [login-form] = renders login form
+* [register-form] = renders regster form
+* [resetpass-form] = renders reset password form
+* [user-management] = renders user management page
 
 <a name="hooks"></a>
 ### Hooks
@@ -90,15 +98,6 @@ If you activate this plugin the following will be done:
 
 ... there are more, we still need to index them all properly
 
-<a name="shortcodes"></a>
-### Shortcodes
-* [account-page] = renders account page
-* [forgotpass-form] = renders forgot password form
-* [login-form] = renders login form
-* [register-form] = renders regster form
-* [resetpass-form] = renders reset password form
-* [user-management] = renders user management page
-
 <a name="uninstall"></a>
 ### Uninstall
 
@@ -111,19 +110,20 @@ If you activate this plugin the following will be done:
 1. It's still under development, use at your own risk.
 1. Not styled for mobile yet.
 1. The link in the reset password email, is not 'custom' yet.
+1. site owner receives new notification for approval when added manually 
 
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
 * [ ] make it work with Multisite
-* [ ] add email sending method
+* [ ] add more email sending methods
 * [ ] preset more html emails
 * [ ] make it more responsive
-* [ ] reCAPTCHA
+* [ ] add reCAPTCHA
+* [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
-* [ ] multi-page registration forms
 
 <a name="changelog"></a>
 1.0.7
