@@ -284,14 +284,15 @@
                     $recaptcha_secret  = $_POST[ 'b3_recaptcha_secret' ];
                     $recaptcha_version = $_POST[ 'b3_recaptcha_version' ];
 
+                    // @TODO
                     if ( ! $recaptcha_public ) {
-                        error_log('no public');
+                        // error_log('no public');
                     }
                     if ( ! $recaptcha_secret ) {
-                        error_log('no secret');
+                        // error_log('no secret');
                     }
                     if ( ! $recaptcha_version ) {
-                        error_log('no version');
+                        // error_log('no version');
                     }
 
 
