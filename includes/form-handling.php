@@ -280,6 +280,21 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
 
+                    $recaptcha_public  = $_POST[ 'b3_recaptcha_public' ];
+                    $recaptcha_secret  = $_POST[ 'b3_recaptcha_secret' ];
+                    $recaptcha_version = $_POST[ 'b3_recaptcha_version' ];
+
+                    if ( ! $recaptcha_public ) {
+                        error_log('no public');
+                    }
+                    if ( ! $recaptcha_secret ) {
+                        error_log('no secret');
+                    }
+                    if ( ! $recaptcha_version ) {
+                        error_log('no version');
+                    }
+
+
                     update_option( 'b3_recaptcha_public', $_POST[ 'b3_recaptcha_public' ], true );
                     update_option( 'b3_recaptcha_secret', $_POST[ 'b3_recaptcha_secret' ], true );
                     update_option( 'b3_recaptcha_version', $_POST[ 'b3_recaptcha_version' ], true );
