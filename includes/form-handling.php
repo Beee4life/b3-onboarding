@@ -82,12 +82,11 @@
                         update_option( 'b3_custom_login_page', 0, true );
                     }
 
-                    // Front-end approval
-                    if ( isset( $_POST[ 'b3_activate_frontend_approval' ] ) ) {
-                        update_option( 'b3_front_end_approval', 1, true );
+                    // Custom login page
+                    if ( isset( $_POST[ 'b3_force_custom_login_page' ] ) ) {
+                        update_option( 'b3_force_custom_login_page', 1, true );
                     } else {
-                        update_option( 'b3_front_end_approval', 0, true );
-                        delete_option( 'b3_approval_page_id' );
+                        update_option( 'b3_force_custom_login_page', 0, true );
                     }
 
                     // Sidebar widget
@@ -188,6 +187,8 @@
                     update_option( 'b3_loginpage_font_family', $_POST[ 'b3_loginpage_font_family' ] );
                     update_option( 'b3_loginpage_font_size', $_POST[ 'b3_loginpage_font_size' ] );
                     update_option( 'b3_loginpage_logo', $_POST[ 'b3_loginpage_logo' ] );
+                    update_option( 'b3_loginpage_logo_width', $_POST[ 'b3_loginpage_logo_width' ] );
+                    update_option( 'b3_loginpage_logo_height', $_POST[ 'b3_loginpage_logo_height' ] );
 
                     $redirect_url = add_query_arg( 'success', 'loginpage_saved', $redirect_url );
                 }
@@ -250,18 +251,19 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch' );
                 } else {
 
+                    // Front-end approval
+                    if ( isset( $_POST[ 'b3_activate_frontend_approval' ] ) ) {
+                        update_option( 'b3_front_end_approval', 1, true );
+                    } else {
+                        update_option( 'b3_front_end_approval', 0, true );
+                        delete_option( 'b3_approval_page_id' );
+                    }
+
                     // Restrict admin
                     if ( isset( $_POST[ 'b3_restrict_admin' ] ) ) {
                         update_option( 'b3_restrict_admin', $_POST[ 'b3_restrict_admin' ], true );
                     } else {
                         delete_option( 'b3_restrict_admin' );
-                    }
-
-                    // Custom pages
-                    if ( isset( $_POST[ 'b3_themed_profile' ] ) ) {
-                        update_option( 'b3_themed_profile', $_POST[ 'b3_themed_profile' ], true );
-                    } else {
-                        delete_option( 'b3_themed_profile' );
                     }
 
                     $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
@@ -272,7 +274,7 @@
 
             } elseif ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
 
-                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=addon' );
+                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=integrations' );
 
                 if ( ! wp_verify_nonce( $_POST[ "b3_recaptcha_nonce" ], 'b3-recaptcha-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );

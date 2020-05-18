@@ -70,7 +70,7 @@
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
-                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_login_styling' ) );
+                add_action( 'login_head',                           array( $this, 'b3_add_login_styling' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
@@ -103,7 +103,9 @@
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
                 add_filter( 'wp_mail_charset',                      array( $this, 'b3_email_charset' ) );
                 add_filter( 'page_link',                            array( $this, 'b3_logout_link' ), 10, 2 );
-
+                // add_filter( 'login_form_defaults',                  array( $this, 'b3_loginform_defaults' ), 1 );
+                add_filter( 'login_form_top',                       array( $this, 'b3_loginform_top' ), 10, 2 );
+                // add_filter( 'login_form_bottom',                    array( $this, 'b3_loginform_footer' ), 10, 2 );
 
                 add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
@@ -212,7 +214,7 @@
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
                 update_option( 'b3_sidebar_widget', '1' );
-                update_option( 'b3_themed_profile', [ 'subscriber' ] );
+                // update_option( 'b3_themed_profile', [ 'subscriber' ] );
 
                 // 2 use
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
@@ -267,9 +269,34 @@
              * Add login styling
              */
             public function b3_add_login_styling() {
-                // @TODO: check if values are set
-                // enqueue values as dynamic php/css file
-                wp_enqueue_style( 'b3-ob-custom', plugins_url( 'includes/style-login.php', __FILE__), [], $this->settings['version'] );
+
+                $bg_color    = get_option( 'b3_loginpage_bg_color' );
+                $logo        = get_option( 'b3_loginpage_logo' );
+                $logo_height = get_option( 'b3_loginpage_logo_height' );
+                $logo_width  = get_option( 'b3_loginpage_logo_width' );
+
+                echo '<style type="text/css">';
+                if ( $bg_color ) {
+                    echo "\nbody { background: #" . $bg_color . "; }\n";
+                }
+                if ( $logo ) {
+                    echo '.login h1 a {';
+                    echo 'background-image: url(' . $logo . '); ';
+                    echo 'background-image: none, url(' . $logo . '); ';
+                    echo 'background-repeat: no-repeat; ';
+                    echo 'padding: 0; ';
+                    if ( $logo_width ) {
+                        echo 'background-size: ' . $logo_width . 'px; ';
+                        echo 'width: ' . $logo_width . 'px; ';
+                    }
+                    if ( $logo_height ) {
+                        echo 'height: ' . $logo_height . 'px; ';
+                    }
+                    echo 'max-width: 320px; ';
+                    echo 'max-height: 150px;';
+                    echo '}';
+                }
+                echo '</style>';
             }
 
 
@@ -563,6 +590,30 @@
             }
 
 
+            public function b3_loginform_defaults( $defaults ) {
+
+                echo '<pre>'; var_dump($defaults); echo '</pre>'; exit;
+
+                return $defaults;
+            }
+
+
+            public function b3_loginform_top( $content, $args ) {
+
+                echo '<pre>'; var_dump($args); echo '</pre>'; exit;
+
+                return $content;
+            }
+
+
+            public function b3_loginform_footer( $content, $args ) {
+
+                echo '<pre>'; var_dump($content); echo '</pre>'; exit;
+
+                return $content;
+            }
+
+
             /**
              * An action function used to include the reCAPTCHA JavaScript file
              * at the end of the page.
@@ -779,10 +830,10 @@
 
 
             /**
-             * Redirect the user to the custom login page instead of wp-login.php.
+             * Force user to custom login page instead of wp-login.php.
              */
             function b3_redirect_to_custom_login() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page ' ) ) {
 
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
 
@@ -792,14 +843,13 @@
                     }
 
                     // The rest are redirected to the login page
-                    $login_url = home_url( 'login' ); // get from constant
-                    $login_url = wp_login_url(); // get from constant
+                    $login_url = wp_login_url();
                     if ( ! empty( $redirect_to ) ) {
                         $login_url = add_query_arg( 'redirect_to', $redirect_to, $login_url );
                     }
 
-                    // wp_redirect( $login_url );
-                    // exit;
+                    wp_redirect( $login_url );
+                    exit;
                 }
             }
 

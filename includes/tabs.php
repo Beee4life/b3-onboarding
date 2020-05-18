@@ -48,17 +48,17 @@
      */
     function b3_render_settings_tab() {
 
-        $action_links        = get_option( 'b3_disable_action_links' );
-        $custom_login_page   = get_option( 'b3_custom_login_page' );
-        $custom_emails       = get_option( 'b3_custom_emails' );
-        $dashboard_widget    = get_option( 'b3_dashboard_widget' );
-        $first_last          = get_option( 'b3_activate_first_last' );
-        $first_last_required = get_option( 'b3_first_last_required' );
-        $front_end_approval  = get_option( 'b3_front_end_approval' );
-        $privacy             = get_option( 'b3_privacy' );
-        $recaptcha           = get_option( 'b3_recaptcha' );
-        $registration_type   = get_option( 'b3_registration_type' );
-        $sidebar_widget      = get_option( 'b3_sidebar_widget' );
+        $action_links            = get_option( 'b3_disable_action_links' );
+        $custom_login_page       = get_option( 'b3_custom_login_page' );
+        $custom_emails           = get_option( 'b3_custom_emails' );
+        $dashboard_widget        = get_option( 'b3_dashboard_widget' );
+        $first_last              = get_option( 'b3_activate_first_last' );
+        $first_last_required     = get_option( 'b3_first_last_required' );
+        $force_custom_login_page = get_option( 'b3_force_custom_login_page' );
+        $privacy                 = get_option( 'b3_privacy' );
+        $recaptcha               = get_option( 'b3_recaptcha' );
+        $registration_type       = get_option( 'b3_registration_type' );
+        $sidebar_widget          = get_option( 'b3_sidebar_widget' );
 
         ob_start();
         ?>
@@ -99,7 +99,8 @@
                         <?php foreach( $options as $option ) { ?>
                             <div class="b3_settings-input b3_settings-input--radio">
                                 <div>
-                                    <input type="radio" id="b3_registration_types" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                    <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                    <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
                                 </div>
                             </div>
                         <?php } ?>
@@ -154,10 +155,10 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
+                            <label for="b3_force_custom_login_page"><?php esc_html_e( 'Force custom login page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_force_custom_login_page" name="b3_force_custom_login_page" value="1" <?php if ( $force_custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to force using your custom page and disable wp-login.php.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -172,6 +173,13 @@
                     </div>
                 <?php b3_get_close(); ?>
             <?php } ?>
+
+
+            <hr />
+
+            <h2>
+                <?php esc_html_e( 'Widget settings', 'b3-onboarding' ); ?>
+            </h2>
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
@@ -386,10 +394,12 @@
     function b3_render_loginpage_tab() {
 
         ob_start();
-        $background_color    = get_option( 'b3_loginpage_bg_color' );
-        $font_family         = get_option( 'b3_loginpage_font_family' );
-        $font_size           = get_option( 'b3_loginpage_font_size' );
-        $logo                = get_option( 'b3_loginpage_logo' );
+        $background_color = get_option( 'b3_loginpage_bg_color' );
+        $font_family      = get_option( 'b3_loginpage_font_family' );
+        $font_size        = get_option( 'b3_loginpage_font_size' );
+        $logo             = get_option( 'b3_loginpage_logo' );
+        $logo_height      = get_option( 'b3_loginpage_logo_height' );
+        $logo_width       = get_option( 'b3_loginpage_logo_width' );
         ?>
         <h2>
             <?php esc_html_e( 'Login page', 'b3-onboarding' ); ?>
@@ -419,14 +429,26 @@
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_loginpage_logo">LOGO</label>
                 <?php b3_get_close(); ?>
-
                 <?php
                     echo '<div id="tgm-new-media-settings">';
                     echo '<p><a href="#" class="b3-open-media button button-primary" title="' . esc_attr__( 'Choose logo', 'b3-onboarding' ) . '">' . __( 'Choose logo', 'b3-onboarding' ) . '</a></p>';
-                    echo '<p><label for="tgm-new-media-image">' . __( 'Logo url', 'b3-onboarding' ) . '</label> <input type="text" name="b3_loginpage_logo" id="b3_loginpage_logo" value="' . $logo . '" /></p>';
+                    echo '<p><input type="text" name="b3_loginpage_logo" id="b3_loginpage_logo" value="' . $logo . '" /></p>';
                     echo '</div>';
                 ?>
+            <?php b3_get_close(); ?>
 
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_loginpage_logo_width">Logo width</label>
+                <?php b3_get_close(); ?>
+                <input name="b3_loginpage_logo_width" id="b3_loginpage_logo_width" type="number" value="<?php echo $logo_width; ?>" placeholder=""> <?php esc_html_e( 'Max 320 px.', 'b3-onboarding' ); ?>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_loginpage_logo_height">Logo height</label>
+                <?php b3_get_close(); ?>
+                <input name="b3_loginpage_logo_height" id="b3_loginpage_logo_height" type="number" value="<?php echo $logo_height; ?>" placeholder=""> <?php esc_html_e( 'Max 150 px.', 'b3-onboarding' ); ?>
             <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open(); ?>
@@ -434,7 +456,7 @@
                     <label for="b3_loginpage_bg_color">Background color</label>
                 <?php b3_get_close(); ?>
                 <?php // @TODO: n2h colorpicker ?>
-                # <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="Example FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters', 'b3-onboarding' ); ?>
+                <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="Example FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (without hashtag)', 'b3-onboarding' ); ?>
             <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open( 1 ); ?>
@@ -476,7 +498,8 @@
      */
     function b3_render_users_tab() {
 
-        $roles = get_editable_roles();
+        $front_end_approval = get_option( 'b3_front_end_approval' );
+        $roles              = get_editable_roles();
         asort( $roles );
 
         ob_start();
@@ -500,6 +523,16 @@
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
+                    <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval', 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
+
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
@@ -509,39 +542,12 @@
                     <?php
                         $disallowed_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
                         $stored_roles     = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
-                        // echo '<pre>'; var_dump($stored_roles); echo '</pre>'; exit;
-                        foreach( $roles as $name => $capabilities ) {
+                        foreach( $roles as $name => $values ) {
                             if ( ! in_array( $name, $disallowed_roles ) ) {
                             ?>
                                 <div>
                                     <label for="b3_restrict_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
-                                    <input type="checkbox" id="b3_restrict_<?php echo $name; ?>" name="b3_restrict_admin[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?> /> <?php echo $name; ?>
-                                </div>
-                                <!--<br />-->
-                            <?php
-                            }
-                        }
-                    ?>
-                </div>
-            <?php b3_get_close(); ?>
-
-            <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label><?php esc_html_e( 'Themed profile', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <p>
-                        <?php esc_html_e( 'Which users see a front-end account page ?', 'b3-onboarding' ); ?>
-                    </p>
-                    <?php
-                        $disallowed_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
-                        $stored_roles     = ( is_array( get_option( 'b3_themed_profile' ) ) ) ? get_option( 'b3_themed_profile' ) : [ 'subscriber' ];
-                        foreach( $roles as $name => $capabilities ) {
-                            if ( ! in_array( $name, $disallowed_roles ) ) {
-                            ?>
-                                <div>
-                                    <label for="b3_themed_profile_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
-                                    <input type="checkbox" id="b3_themed_profile_<?php echo $name; ?>" name="b3_themed_profile[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?>/> <?php echo $name; ?>
+                                    <input type="checkbox" id="b3_restrict_<?php echo $name; ?>" name="b3_restrict_admin[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?> /> <?php echo $values[ 'name' ]; ?>
                                 </div>
                             <?php
                             }
@@ -718,11 +724,11 @@
             <?php b3_get_close(); ?>
 
             <br />
-            <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save options', 'b3-onboarding' ); ?>" />
+            <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save reCaptcha', 'b3-onboarding' ); ?>" />
         </form>
 
         <?php $current_user = wp_get_current_user(); ?>
-        <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) { ?>
+        <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'xBeee' ) { ?>
 
             <?php b3_get_settings_field_open(); ?>
             <?php
@@ -749,23 +755,25 @@
             ?>
             <div class="integrations">
                 <h3>
-                    More integrations
+                    <?php esc_html_e( 'More integrations', 'b3-onboarding' ); ?>
                 </h3>
                 <p>
-                    We understand there might be a need for more integrations.
+                    <?php esc_html_e( 'We understand there might be a need for more integrations.', 'b3-onboarding' ); ?>
                     <br />
-                    If we'll add more, the ones below are the first ones wer're gonna explore.
+                    <?php esc_html_e( "If we'll add more, the ones below are the first ones wer're gonna explore.", 'b3-onboarding' ); ?>
                 </p>
 
                 <ul class="b3_integrations--list"><!--
                     <?php foreach( $modules as $module ) { ?>
-                    --><li class="b3_integrations--list-item b3_integrations--list-item--<?php echo $module['id']; ?>">
+                    --><li class="b3_integrations--list-item b3_integrations--list-item--<?php echo $module[ 'id' ]; ?>">
                         <div class="b3_integration__container">
                             <div class="b3_integration__image">
-                                <img src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module['logo']; ?>" alt="<?php echo $module['name']; ?>" />
+                                <img
+                                    src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module[ 'logo' ]; ?>"
+                                    alt="<?php echo $module[ 'name' ]; ?>"/>
                             </div>
                             <div class="b3_integration__name">
-                                <?php echo $module['name']; ?>
+                                <?php echo $module[ 'name' ]; ?>
                             </div>
                         </div>
                     </li><!--

@@ -91,6 +91,7 @@
      */
     function b3_get_all_custom_meta_keys() {
 
+        // @TODO: update this list
         $meta_keys = array(
             'b3_account_approved_message',
             'b3_account_approved_subject',
@@ -126,7 +127,7 @@
             'b3_reset_page_id',
             'b3_restrict_admin',
             'b3_sidebar_widget',
-            'b3_themed_profile',
+            // 'b3_themed_profile', // @TODO: remove
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
         );

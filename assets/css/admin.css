@@ -45,7 +45,14 @@
 
 .b3_tab-content h2,
 .b3_tab-content h3 {
-    margin: 0 0 1em 0;
+    color:       #444;
+    font-size:   1.35em;
+    margin:      0 0 1em 0;
+    font-weight: bold;
+}
+
+.b3 hr + h2 {
+    margin-top: 1em;
 }
 
 .b3_foldout--header {
@@ -193,12 +200,14 @@
 }
 
 /* Login page */
+.b3 input#b3_loginpage_logo_width,
+.b3 input#b3_loginpage_logo_height,
 .b3 input#b3_loginpage_bg_color {
-    width: 150px;
+    width: 80px;
 }
 
 .b3 input#b3_loginpage_logo {
-    width: 300px;
+    width: 500px;
 }
 
 /* Emails page */
@@ -322,6 +331,7 @@ ul.b3_integrations--list {
 
 /* Form styling */
 .b3 input[type="text"],
+.b3 input[type="number"],
 .b3 input[type="password"],
 .b3 input[type="checkbox"],
 .b3 input[type="email"],
@@ -337,12 +347,13 @@ ul.b3_integrations--list {
 }
 
 .b3 input[type="text"],
+.b3 input[type="number"],
 .b3 input[type="password"],
 .b3 input[type="email"],
 .b3 input[type="text"],
 .b3 input[type="url"],
 .b3 textarea {
-    padding: 6px;
+    padding: 4px;
     width:   100%;
 }
 

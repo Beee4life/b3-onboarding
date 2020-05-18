@@ -81,21 +81,21 @@
                             );
                         }
 
-                        $tabs[] = array(
-                            'id'      => 'support',
-                            'title'   => esc_html__( 'Support', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'support' ),
-                            'icon'    => 'testimonial',
-                        );
+                        // $tabs[] = array(
+                        //     'id'      => 'support',
+                        //     'title'   => esc_html__( 'Support', 'b3-onboarding' ),
+                        //     'content' => b3_render_tab_content( 'support' ),
+                        //     'icon'    => 'testimonial',
+                        // );
 
-                        if ( current_user_can( 'manage_options' ) ) {
-                            $tabs[] = array(
-                                'id'      => 'debug',
-                                'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'debug' ),
-                                'icon'    => 'sos',
-                            );
-                        }
+                        // if ( current_user_can( 'manage_options' ) ) {
+                        //     $tabs[] = array(
+                        //         'id'      => 'debug',
+                        //         'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
+                        //         'content' => b3_render_tab_content( 'debug' ),
+                        //         'icon'    => 'sos',
+                        //     );
+                        // }
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
