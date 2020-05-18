@@ -158,10 +158,19 @@
                             <label for="b3_force_custom_login_page"><?php esc_html_e( 'Force custom login page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_force_custom_login_page" name="b3_force_custom_login_page" value="1" <?php if ( $force_custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to force using your custom page and disable wp-login.php.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_force_custom_login_page" name="b3_force_custom_login_page" value="1" <?php if ( $force_custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to disable wp-login.php and force using your custom page.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
+
+                <?php b3_get_settings_field_open( 1 ); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA', 'b3-onboarding' ); ?>
+                    </div>
+                <?php b3_get_close(); ?>
 
                 <?php // @TODO: check for filter for MS ?>
                 <?php b3_get_settings_field_open(); ?>
@@ -198,16 +207,6 @@
                     <input type="checkbox" id="b3_activate_sidebar_widget" name="b3_activate_sidebar_widget" value="1" <?php if ( $sidebar_widget ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate the sidebar widget', 'b3-onboarding' ); ?>
                 </div>
             <?php b3_get_close(); ?>
-
-            <?php b3_get_settings_field_open( 1 ); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA', 'b3-onboarding' ); ?>
-                </div>
-            <?php b3_get_close(); ?>
-
             <?php b3_get_settings_field_open( 1 ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
@@ -429,12 +428,10 @@
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_loginpage_logo">LOGO</label>
                 <?php b3_get_close(); ?>
-                <?php
-                    echo '<div id="tgm-new-media-settings">';
-                    echo '<p><a href="#" class="b3-open-media button button-primary" title="' . esc_attr__( 'Choose logo', 'b3-onboarding' ) . '">' . __( 'Choose logo', 'b3-onboarding' ) . '</a></p>';
-                    echo '<p><input type="text" name="b3_loginpage_logo" id="b3_loginpage_logo" value="' . $logo . '" /></p>';
-                    echo '</div>';
-                ?>
+                <div id="b3-new-media-settings">
+                    <p><a href="#" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>"><?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?></a></p>
+                    <p><input type="text" name="b3_loginpage_logo" id="b3_loginpage_logo" value="<?php echo $logo; ?>" /></p>
+                </div>
             <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open(); ?>
@@ -656,9 +653,9 @@
     function b3_render_integrations_tab() {
 
         ob_start();
-        $public_key = get_option( 'b3_recaptcha_public' );
-        $secret_key = get_option( 'b3_recaptcha_secret' );
-        $version    = get_option( 'b3_recaptcha_version' );
+        $public_key     = get_option( 'b3_recaptcha_public' );
+        $secret_key     = get_option( 'b3_recaptcha_secret' );
+        $version        = get_option( 'b3_recaptcha_version' );
         $show_recaptcha = false;
 
         if ( get_option( 'b3_recaptcha' ) ) {
@@ -669,13 +666,13 @@
             <?php esc_html_e( 'Integrations', 'b3-onboarding' ); ?>
         </h2>
         <p>
-            <?php esc_html_e( 'On this page you can add 3rd party integrations.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'On this page you can add 3rd party integrations. Right now we only have a reCaptcha but more can be expected in the future.', 'b3-onboarding' ); ?>
         </p>
 
-        <?php if ( $show_recaptcha ) { ?>
             <h3>
                 <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
             </h3>
+        <?php if ( $show_recaptcha ) { ?>
         <?php } ?>
 
 
@@ -686,7 +683,7 @@
         <?php } ?>
 
         <p>
-            <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can set the reCaptcha settings. All settings must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
         </p>
 
         <form name="" class="" action="" method="post">
