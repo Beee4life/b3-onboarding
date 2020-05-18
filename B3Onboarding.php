@@ -214,7 +214,6 @@
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
                 update_option( 'b3_sidebar_widget', '1' );
-                // update_option( 'b3_themed_profile', [ 'subscriber' ] );
 
                 // 2 use
                 // update_option( 'b3_mail_sending_method', 'wpmail' );
