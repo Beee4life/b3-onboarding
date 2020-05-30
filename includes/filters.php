@@ -246,11 +246,11 @@
      */
     function b3_login_url( $login_url ) {
 
-        if ( 1 == get_option( 'b3_force_custom_login_page ' ) ) {
+        if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page ' ) ) {
             // get custom
-            $meta      = get_option( 'b3_login_page_id', true );
-            if ( false != $meta ) {
-                $login_url = get_the_permalink( $meta );
+            $page_id = get_option( 'b3_login_page_id', true );
+            if ( false != $page_id ) {
+                $login_url = get_the_permalink( $page_id );
             }
         }
 
