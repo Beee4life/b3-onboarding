@@ -276,6 +276,8 @@
             public function b3_add_login_styling() {
 
                 $bg_color    = get_option( 'b3_loginpage_bg_color' );
+                $font_family = get_option( 'b3_loginpage_font_family' );
+                $font_size   = get_option( 'b3_loginpage_font_size' );
                 $logo        = get_option( 'b3_loginpage_logo' );
                 $logo_height = get_option( 'b3_loginpage_logo_height' );
                 $logo_width  = get_option( 'b3_loginpage_logo_width' );
@@ -284,8 +286,23 @@
                 if ( $bg_color ) {
                     echo "\nbody { background: #" . $bg_color . "; }\n";
                 }
+                if ( $font_family || $font_size ) {
+                    echo '#login { ';
+                    if ( $font_family ) {
+                        echo 'font-family: ' . $font_family . ';';
+                    }
+                    if ( $font_size ) {
+                        echo 'font-size: ' . $font_size . 'px;';
+                    }
+                    echo " }\n";
+                    if ( $font_size ) {
+                        echo '.login label { font-size: ' . $font_size . 'px; }';
+                        echo "\n";
+                    }
+
+                }
                 if ( $logo ) {
-                    echo '.login h1 a {';
+                    echo '.login h1 a { ';
                     echo 'background-image: url(' . $logo . '); ';
                     echo 'background-image: none, url(' . $logo . '); ';
                     echo 'background-repeat: no-repeat; ';
@@ -299,9 +316,10 @@
                     }
                     echo 'max-width: 320px; ';
                     echo 'max-height: 150px;';
-                    echo '}';
+                    echo ' }';
                 }
                 echo '</style>';
+                echo "\n";
             }
 
 
@@ -876,7 +894,7 @@
              * Force user to custom login page instead of wp-login.php.
              */
             function b3_redirect_to_custom_login() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page ' ) ) {
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
 
                     if ( is_user_logged_in() ) {
@@ -884,8 +902,13 @@
                         exit;
                     }
 
-                    // The rest are redirected to the login page
+                    // The rest is redirected to the login page
                     $login_url = wp_login_url();
+                    $page_id   = get_option( 'b3_login_page_id' );
+                    if ( false != $page_id ) {
+                        $login_url = get_permalink( $page_id );
+                    }
+
                     if ( ! empty( $redirect_to ) ) {
                         $login_url = add_query_arg( 'redirect_to', $redirect_to, $login_url );
                     }
