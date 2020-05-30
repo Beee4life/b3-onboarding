@@ -195,13 +195,26 @@
                         } else {
                             update_option( 'b3_loginpage_bg_color', $color );
                         }
+                    } else {
+                        delete_option( 'b3_loginpage_bg_color' );
                     }
 
                     update_option( 'b3_loginpage_font_family', $_POST[ 'b3_loginpage_font_family' ] );
                     update_option( 'b3_loginpage_font_size', $_POST[ 'b3_loginpage_font_size' ] );
                     update_option( 'b3_loginpage_logo', $_POST[ 'b3_loginpage_logo' ] );
-                    update_option( 'b3_loginpage_logo_width', $_POST[ 'b3_loginpage_logo_width' ] );
-                    update_option( 'b3_loginpage_logo_height', $_POST[ 'b3_loginpage_logo_height' ] );
+
+                    $max_width  = 320;
+                    $max_height = 150;
+                    if ( $_POST[ 'b3_loginpage_logo_width' ] >= $max_width ) {
+                        update_option( 'b3_loginpage_logo_width', $max_width );
+                    } else {
+                        update_option( 'b3_loginpage_logo_width', $_POST[ 'b3_loginpage_logo_width' ] );
+                    }
+                    if ( $_POST[ 'b3_loginpage_logo_height' ] >= $max_height ) {
+                        update_option( 'b3_loginpage_logo_height', $max_height );
+                    } else {
+                        update_option( 'b3_loginpage_logo_height', $_POST[ 'b3_loginpage_logo_height' ] );
+                    }
 
                     $redirect_url = add_query_arg( 'success', 'loginpage_saved', $redirect_url );
                 }
@@ -217,8 +230,13 @@
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
 
-                    update_option( 'b3_email_styling', $_POST[ 'b3_email_styling' ], true );
-                    update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), true );
+                    if ( isset( $_POST[ 'b3_email_styling' ] ) ) {
+                        update_option( 'b3_email_styling', $_POST[ 'b3_email_styling' ], true );
+                    }
+                    if ( isset( $_POST[ 'b3_email_template' ] ) ) {
+                        update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), true );
+                    }
+
                     update_option( 'b3_forgot_password_message', stripslashes( $_POST[ 'b3_forgot_password_message' ] ), true );
                     update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
                     update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
