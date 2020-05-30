@@ -235,7 +235,12 @@
                     $themed_users = [ 'subscriber' ];
                     $redirect_to  = '';
                     if ( in_array( $themed_users, $current_user->roles ) ) {
-                        $redirect_to = home_url( 'account' ); // @TODO: make dynamic
+                        $page_id = get_option( 'b3_account_page_id' );
+                        if ( false != $page_id ) {
+                            $redirect_to = get_permalink( $page_id );
+                        } else {
+                            $redirect_to = home_url( 'account' );
+                        }
                     }
 
                     $user_role = reset( $current_user->roles );
@@ -366,7 +371,6 @@
 
                 // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // Bail out early if we are not on a page add/edit screen.
-                // echo '<pre>'; var_dump(get_current_screen()); echo '</pre>'; exit;
                 if ( ! ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) ) {
                     return;
                 }
@@ -391,7 +395,7 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', 'dashicons-shield', '99' );
+                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', 'dashicons-groups', '99' );
                 if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                     include( 'includes/user-approval-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );
@@ -708,7 +712,7 @@
                                         $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                     } else {
                                         // Success, redirect to login page.
-                                        $redirect_url = home_url( 'login' ); // @TODO: make dynamic
+                                        $redirect_url = wp_login_url();
                                         $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
                                     }
 
@@ -748,7 +752,7 @@
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                             } else {
                                                 // Success, redirect to login page.
-                                                $redirect_url = home_url( 'login' ); // @TODO: make dynamic
+                                                $redirect_url = wp_login_url();
                                                 $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
                                             }
                                         }
@@ -785,9 +789,8 @@
                 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
                     if ( is_wp_error( $user ) ) {
                         $error_codes = join( ',', $user->get_error_codes() );
-
-                        $login_url = home_url( 'login' );
-                        $login_url = add_query_arg( 'login', $error_codes, $login_url );
+                        $login_url   = wp_login_url();
+                        $login_url   = add_query_arg( 'login', $error_codes, $login_url );
 
                         wp_redirect( $login_url );
                         exit;
@@ -805,25 +808,33 @@
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_register() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page ' ) ) {
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                     } else {
-                        wp_redirect( home_url( 'register' ) );
+                        $page_id = get_option( 'b3_register_page_id' );
+                        if ( false != $page_id ) {
+                            wp_redirect( get_permalink( $page_id ) );
+                        } else {
+                            wp_redirect( wp_registration_url() );
+                        }
+                        exit;
                     }
-                    exit;
                 }
             }
 
 
             /**
-             * Redirects the user to the custom registration page instead
+             * Redirects the user to the custom MU registration page instead
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_wpmu_register() {
                 if ( '/wp-signup.php' == $_SERVER[ 'REQUEST_URI' ] ) {
-                    wp_redirect( home_url( 'register' ) ); // @TODO: get from function
-                    exit;
+                    $page_id = get_option( 'b3_register_page_id' );
+                    if ( false != $page_id ) {
+                        wp_redirect( get_permalink( $page_id ) );
+                        exit;
+                    }
                 }
             }
 
@@ -832,8 +843,7 @@
              * Force user to custom login page instead of wp-login.php.
              */
             function b3_redirect_to_custom_login() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page ' ) ) {
-
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
 
                     if ( is_user_logged_in() ) {
@@ -868,7 +878,7 @@
                         wp_redirect( get_permalink( b3_get_forgotpass_id() ) );
                         exit;
                     } else {
-                        wp_redirect( home_url( 'forgotpassword' ) ); // @TODO: make filterable
+                        wp_redirect( home_url( 'forgotpassword' ) );
                         exit;
                     }
                 }
@@ -918,6 +928,7 @@
                 } else {
                     wp_redirect( home_url() );
                 }
+                exit;
             }
 
 
@@ -1003,8 +1014,7 @@
 
                         if ( is_wp_error( $errors ) ) {
                             // Errors found
-
-                            $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), home_url( 'login' ) ); // @TODO: make dynamic
+                            $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), wp_login_url() );
                         } else {
 
                             if ( false != b3_get_forgotpass_id() ) {
@@ -1044,7 +1054,7 @@
                         $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
                     } else {
                         // Email sent
-                        $redirect_url = home_url( 'login' );
+                        $redirect_url = wp_login_url();
                         $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
                     }
 
@@ -1310,7 +1320,8 @@
                     if ( 'request_access' == $registration_type || get_option( 'b3_new_user_message', false ) ) {
                         $inform = 'both';
                     }
-                    wp_new_user_notification( $user_id, null, $inform ); // @TODO: make notify 'changable' for admin notice
+                    // @TODO: make notify 'changable' for admin notice
+                    wp_new_user_notification( $user_id, null, $inform );
                 }
                 // @TODO: add if for if user needs to activate
                 // @TODO: add if for if admin needs to activate
