@@ -20,14 +20,14 @@
             case 'emails':
                 $content = b3_render_emails_tab();
                 break;
+            case 'register':
+                $content = b3_render_registration_tab();
+                break;
             case 'loginpage':
                 $content = b3_render_loginpage_tab();
                 break;
             case 'users':
                 $content = b3_render_users_tab();
-                break;
-            case 'support':
-                $content = b3_render_support_tab();
                 break;
             case 'integrations':
                 $content = b3_render_integrations_tab();
@@ -386,6 +386,15 @@
 
 
     /**
+     * Render registration tab
+     *
+     * @return false|string
+     */
+    function b3_render_registration_tab() {
+    }
+
+
+    /**
      * Render login page design tab
      *
      * @return false|string
@@ -453,7 +462,7 @@
                     <label for="b3_loginpage_bg_color">Background color</label>
                 <?php b3_get_close(); ?>
                 <?php // @TODO: n2h colorpicker ?>
-                <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="Example FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (without hashtag)', 'b3-onboarding' ); ?>
+                <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (without hashtag)', 'b3-onboarding' ); ?>
             <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open( 1 ); ?>
@@ -621,32 +630,7 @@
 
 
     /**
-     * Render support tab
-     *
-     * @return false|string
-     */
-    function b3_render_support_tab() {
-        ob_start();
-        ?>
-        <h2>
-            <?php esc_html_e( 'Support', 'b3-onboarding' ); ?>
-        </h2>
-
-        <p>
-            <?php echo sprintf( __( 'Please read the <a href="%s">README</a> on Github first and the <a href="%s">Wiki</a>. Those explain a lot already.', 'b3-onboarding' ), esc_url( 'https://github.com/Beee4life/b3-onboarding' ), esc_url( 'https://github.com/Beee4life/b3-onboarding/wiki' ) ); ?>
-        </p>
-        <p>
-            <?php echo sprintf( __( 'If you need support, plese turn to the <a href="%s">issues section</a>.', 'b3-onboarding' ), esc_url( 'https://github.com/Beee4life/b3-onboarding/issues' ) ); ?>
-        </p>
-        <?php
-        $result = ob_get_clean();
-
-        return $result;
-    }
-
-
-    /**
-     * Render add-ons tab
+     * Render integrations tab
      *
      * @return false|string
      */

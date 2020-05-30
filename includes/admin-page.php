@@ -49,6 +49,13 @@
                             ),
                         );
 
+                        $tabs[] = array(
+                            'id'      => 'registration',
+                            'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
+                            'content' => b3_render_tab_content( 'registration' ),
+                            'icon'    => 'shield',
+                        );
+
                         if ( 1 == get_option( 'b3_custom_login_page' ) ) {
                             $tabs[] = array(
                                 'id'      => 'loginpage',
@@ -72,7 +79,7 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( get_option( 'b3_recaptcha' ) || ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) ) {
+                        if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) {
                             $tabs[] = array(
                                 'id'      => 'integrations',
                                 'title'   => esc_html__( 'Integrations', 'b3-onboarding' ),
@@ -81,21 +88,14 @@
                             );
                         }
 
-                        // $tabs[] = array(
-                        //     'id'      => 'support',
-                        //     'title'   => esc_html__( 'Support', 'b3-onboarding' ),
-                        //     'content' => b3_render_tab_content( 'support' ),
-                        //     'icon'    => 'testimonial',
-                        // );
-
-                        // if ( current_user_can( 'manage_options' ) ) {
-                        //     $tabs[] = array(
-                        //         'id'      => 'debug',
-                        //         'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
-                        //         'content' => b3_render_tab_content( 'debug' ),
-                        //         'icon'    => 'sos',
-                        //     );
-                        // }
+                        if ( current_user_can( 'manage_options' ) ) {
+                            $tabs[] = array(
+                                'id'      => 'debug',
+                                'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'debug' ),
+                                'icon'    => 'sos',
+                            );
+                        }
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
