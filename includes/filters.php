@@ -221,6 +221,11 @@
     add_filter( 'logout_redirect', 'b3_logout_redirect', 10, 3 );
 
 
+    /**
+     * Return account approved subject
+     *
+     * @return string|void
+     */
     function b3_account_approved_subject() {
 
         $subject = __( 'Account approved', 'b3-onboarding' );
@@ -230,3 +235,25 @@
         return $subject;
     }
     add_filter( 'b3_account_approved_subject', 'b3_account_approved_subject' );
+
+
+    /**
+     * Filter for login_url
+     *
+     * @param $login_url
+     *
+     * @return bool|false|string|WP_Error
+     */
+    function b3_login_url( $login_url ) {
+
+        if ( 1 == get_option( 'b3_force_custom_login_page ' ) ) {
+            // get custom
+            $meta      = get_option( 'b3_login_page_id', true );
+            if ( false != $meta ) {
+                $login_url = get_the_permalink( $meta );
+            }
+        }
+
+        return $login_url;
+    }
+    add_filter( 'login_url', 'b3_login_url' );
