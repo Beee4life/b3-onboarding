@@ -7,9 +7,17 @@
             $content   = b3_default_email_content();
             $preview   = $_GET[ 'preview' ];
             $user      = get_userdata( get_current_user_id() );
-            
+
+            $lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit iaculis enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.
+            <br /><br />
+            Quisque quis nibh gravida, condimentum nibh sed, facilisis ligula. Phasellus placerat, metus a ultricies vulputate, arcu massa ullamcorper enim, id iaculis nisl augue eu dolor. Aliquam vel nisi at lacus ultrices fringilla. In cursus mattis lectus, non ultricies orci vulputate nec. Fusce non vestibulum nulla. Cras libero metus, fermentum sit amet venenatis sit amet, vestibulum vitae lectus. Donec interdum volutpat blandit.
+            <br /><br />
+            Morbi vehicula metus vestibulum, eleifend arcu quis, rutrum massa. Sed porttitor pellentesque convallis. Suspendisse potenti. Nam dapibus vitae tortor a egestas. Ut at lobortis tortor. Sed tellus sem, pulvinar sit amet posuere non, vulputate vitae mi. Vestibulum ac massa suscipit, placerat risus ut, rutrum turpis. Integer in risus ac turpis dapibus viverra. Nulla facilisi. Nam ut cursus felis. Pellentesque congue scelerisque nisl, nec ultricies ex. Vivamus id ex ac dolor porttitor tempus. Maecenas pulvinar porta nunc, in mollis erat egestas et.';
+
             switch( $preview ) {
                 case 'template':
+                    // break;
+                    $content = str_replace( '%email_message%', $lorem_ipsum, $content );
                     break;
                 case 'request-access-admin':
                     $content = str_replace( '%email_message%', b3_request_access_message_admin(), $content );
@@ -45,15 +53,15 @@
                     break;
                 default:
                     $content = '';
-                
+
             }
             $content = strtr( $content, b3_replace_email_vars( [] ) );
-            
+
         }
     ?>
 
     <p>
-        This is what the email will look like (approximately).
+        <?php esc_html_e( 'This is what the email will look like (approximately).', 'b3-onboarding' ); ?>
     </p>
 
     <?php if ( false != $subject ) { ?>
@@ -65,7 +73,7 @@
     <style type="text/css">
         <?php echo include( 'default-email-styling.css' ); // @TODO: use custom css if entered ?>
     </style>
-    
+
     <?php echo $content; ?>
-    
+
 </div>
