@@ -70,8 +70,24 @@
             }
 
             $existing_page = [];
-            if ( true != $create_new_site ) {
-                $existing_page = get_posts( 'pagename=' . $slug );
+            if ( false == $create_new_site ) {
+                error_log('check existing page ' . $slug);
+                $existing_page_args = [
+                    'post_type'      => 'page',
+                    'posts_per_page' => 1,
+                    'pagename'       => $slug,
+                ];
+                $existing_page = get_posts( $existing_page_args );
+            }
+            if ( ! empty( $existing_page ) ) {
+                error_log('existing page');
+                // check for meta
+                $post_id = $existing_page[ 0 ]->ID;
+                // if meta exists
+                $meta = get_post_meta( $post_id, '_b3_page', true );
+                if ( false == $meta ) {
+                    // @TODO: pass to add new
+                }
             }
             if ( empty( $existing_page ) ) {
                 // Add the page using the data from the array above
