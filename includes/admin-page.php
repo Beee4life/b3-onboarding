@@ -26,12 +26,11 @@
 
                 <div class="b3_tabs">
                     <?php
-                        $current_user = wp_get_current_user();
                         if ( isset( $_GET[ 'tab' ] ) ) {
                             $default_tab = $_GET[ 'tab' ];
                         } else {
                             $default_tab = 'settings';
-                            // $default_tab = 'integrations';
+                            $default_tab = 'registration';
                         }
 
                         $tabs        = array(
@@ -79,7 +78,7 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'Beee' ) {
+                        if ( 1 == get_option( 'b3_recaptcha' ) && defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
                             $tabs[] = array(
                                 'id'      => 'integrations',
                                 'title'   => esc_html__( 'Integrations', 'b3-onboarding' ),
