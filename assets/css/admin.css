@@ -159,13 +159,13 @@
     color:      #666;
 }
 
-.b3_settings-input--checkbox,
-.b3_settings-input--radio {
-    /*margin-bottom: 0.5em;*/
-}
-
 .b3_settings-input div {
     margin-bottom: 0.5em;
+}
+
+.b3_settings-input--description {
+    color:      #AAA;
+    margin-top: 0.5em;
 }
 
 /* Pages pages */
@@ -180,10 +180,6 @@
     font-weight:  bold;
     margin-right: 1em;
     min-width:    200px;
-}
-
-.b3_select-page__selector {
-    /*min-width: 250px;*/
 }
 
 .b3_select-page__edit,
