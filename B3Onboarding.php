@@ -1595,10 +1595,10 @@
             /**
              * Render user/account page
              *
-             * @param $user_variables
+             * @param      $user_variables
              * @param null $content
              *
-             * @return bool|string
+             * @return string
              */
             public function b3_render_account_page( $user_variables, $content = null ) {
 
@@ -1631,12 +1631,9 @@
                     return $this->get_template_html( $attributes[ 'template' ], $attributes );
 
                 } else {
-                    // @TODO: redirect
-                    error_log('redirect visitor');
+                    wp_redirect( home_url() );
+                    exit;
                 }
-
-                return false;
-
             }
 
 

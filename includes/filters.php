@@ -107,8 +107,7 @@
 
         }
         if ( true == $send_manual_mail ) {
-            // create email template for manual adding of user
-            error_log('HIT2');
+            // @TODO: create email template for manual adding of user
         }
 
         return $wp_new_user_notification_email;

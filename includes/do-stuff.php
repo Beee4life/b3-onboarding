@@ -71,7 +71,6 @@
 
             $existing_page = [];
             if ( false == $create_new_site ) {
-                error_log('check existing page ' . $slug);
                 $existing_page_args = [
                     'post_type'      => 'page',
                     'posts_per_page' => 1,
@@ -80,7 +79,6 @@
                 $existing_page = get_posts( $existing_page_args );
             }
             if ( ! empty( $existing_page ) ) {
-                error_log('existing page');
                 // check for meta
                 $post_id = $existing_page[ 0 ]->ID;
                 // if meta exists

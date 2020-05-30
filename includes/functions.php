@@ -146,7 +146,6 @@
         $new_user_boxes       = [];
         $registration_type    = get_option( 'b3_registration_type' );
         $welcome_user_boxes   = [];
-        // error_log($registration_type);
 
         $settings_box = array(
             array(
@@ -278,7 +277,6 @@
             $registration_options = array_merge( $closed_option, $registration_options, $normal_options );
         } else {
             $mu_registration = get_site_option( 'registration' );
-            // error_log($mu_registration);
             if ( ! is_main_site() ) {
                 if ( 'none' != $mu_registration ) {
                     $registration_options = $normal_options;
@@ -827,7 +825,6 @@
     function b3_form_links( $current_form ) {
 
         $output = '';
-        error_log(get_option( 'b3_disable_action_links' ));
         if ( true != get_option( 'b3_disable_action_links' ) ) {
             $page_types = [];
 
@@ -957,15 +954,11 @@
         // Set the activation key for the user
         global $wpdb;
         $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user_data->user_login ) );
-        error_log( $key );
-        error_log( $user_data->user_login );
-        die();
+        // error_log( $key );
+        // error_log( $user_data->user_login );
+        // die();
 
-        $login_url = wp_login_url();
-        if ( false != b3_get_login_id() ) {
-            $login_url = get_permalink( b3_get_login_id() );
-        }
-
+        $login_url      = wp_login_url();
         $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user_data->user_login ) ), $login_url );
 
         return $activation_url;
