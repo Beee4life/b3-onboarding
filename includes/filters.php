@@ -234,25 +234,3 @@
         return $subject;
     }
     add_filter( 'b3_account_approved_subject', 'b3_account_approved_subject' );
-
-
-    /**
-     * Filter for login_url
-     *
-     * @param $login_url
-     *
-     * @return bool|false|string|WP_Error
-     */
-    function b3_login_url( $login_url ) {
-
-        if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page ' ) ) {
-            // get custom
-            $page_id = get_option( 'b3_login_page_id', true );
-            if ( false != $page_id ) {
-                $login_url = get_the_permalink( $page_id );
-            }
-        }
-
-        return $login_url;
-    }
-    add_filter( 'login_url', 'b3_login_url' );
