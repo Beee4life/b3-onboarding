@@ -559,7 +559,7 @@
             <?php esc_html_e( 'Users', 'b3-onboarding' ); ?>
         </h2>
 
-        <?php if ( isset( $_GET[ 'success' ] ) && 'settings_saved' == $_GET[ 'success' ] ) { ?>
+        <?php if ( isset( $_GET[ 'success' ] ) && 'user_settings_saved' == $_GET[ 'success' ] ) { ?>
             <p class="b3_message">
                 <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
             </p>
@@ -618,63 +618,6 @@
 
 
     /**
-     * Render recaptcha tab
-     *
-     * @return false|string
-     */
-    function b3_render_recaptcha_tab() {
-
-        ob_start();
-        $public_key = get_option( 'b3_recaptcha_public' );
-        $secret_key = get_option( 'b3_recaptcha_secret' );
-        ?>
-        <h2>
-            <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
-        </h2>
-
-        <?php if ( isset( $_GET[ 'success' ] ) && 'recaptcha_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Recaptcha saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-            </p>
-        <?php } ?>
-
-        <p>
-            <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
-        </p>
-
-        <form name="" class="" action="" method="post">
-            <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
-
-            <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--text">
-                    <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" value="<?php if ( $public_key ) { echo $public_key; } ?>" />
-                </div>
-            <?php b3_get_close(); ?>
-
-            <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--text">
-                    <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" value="<?php if ( $secret_key ) { echo $secret_key; } ?>" />
-                </div>
-            <?php b3_get_close(); ?>
-
-            <br />
-            <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save options', 'b3-onboarding' ); ?>" />
-        </form>
-
-        <?php
-        $result = ob_get_clean();
-
-        return $result;
-    }
-
-
-    /**
      * Render integrations tab
      *
      * @return false|string
@@ -684,7 +627,7 @@
         ob_start();
         $public_key     = get_option( 'b3_recaptcha_public' );
         $secret_key     = get_option( 'b3_recaptcha_secret' );
-        $version        = get_option( 'b3_recaptcha_version' );
+        $recaptcha_version = get_option( 'b3_recaptcha_version' );
         $show_recaptcha = false;
 
         if ( get_option( 'b3_recaptcha' ) ) {
@@ -703,7 +646,6 @@
             </h3>
         <?php if ( $show_recaptcha ) { ?>
         <?php } ?>
-
 
         <?php if ( isset( $_GET[ 'success' ] ) && 'recaptcha_saved' == $_GET[ 'success' ] ) { ?>
             <p class="b3_message">
@@ -742,9 +684,11 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
                     <select name="b3_recaptcha_version" id="b3_recaptcha_version">
-                        <option value="">Choose</option>
-                        <option value="2"<?php echo ( 2 == $version ) ? ' selected="selected"' : false; ?>>v2</option>
-                        <option value="3"<?php echo ( 3 == $version ) ? ' selected="selected"' : false; ?>>v3</option>
+                        <option value=""><?php esc_html_e( 'Choose', 'b3-onboarding' ); ?></option>
+                        <?php $versions = [ 2, 3 ]; ?>
+                        <?php foreach( $versions as $version ) { ?>
+                            <option value="<?php echo $version; ?>"<?php echo ( $recaptcha_version == $version ) ? ' selected="selected"' : false; ?>>v<?php echo $version; ?></option>
+                        <?php } ?>
                     </select>
                 </div>
             <?php b3_get_close(); ?>
