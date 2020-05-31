@@ -16,6 +16,19 @@
 
         if ( 'toplevel_page_b3-onboarding' == $screen->id ) {
             $screen->add_help_tab( array(
+                'id'      => 'b3-settings',
+                'title'   => esc_html__( 'Main settings', 'b3-onboarding' ),
+                'content' => '<h3>' . esc_html__( 'Main settings', 'b3-onboarding' ) . '</h3>
+                    <p><b>' . esc_html__( 'Custom email styling/template', 'b3-onboarding' ) . '</b>
+                    <br />This checkbox makes new options \'visible\' to override the default email styling/template.
+                    </p>
+                    <p><b>' . esc_html__( 'Custom login page', 'b3-onboarding' ) . '</b>
+                    <br />This checkbox makes a new tab \'visible\' with settings for the Wordpress login pages.
+                    </p>
+                    '
+            ) );
+
+            $screen->add_help_tab( array(
                 'id'      => 'b3-email-vars',
                 'title'   => esc_html__( 'Email variables', 'b3-onboarding' ),
                 'content' => '<h3>' . esc_html__( 'Email variables', 'b3-onboarding' ) . '</h3>
@@ -28,6 +41,18 @@
                         <li>%reset_url% (only available in reset password email)</li>
                         <li>%user_ip% (only available in admin notification)</li>
                         <li>%user_login%</li>
+                    </ul>
+                    '
+            ) );
+
+            $screen->add_help_tab( array(
+                'id'      => 'b3-registration',
+                'title'   => esc_html__( 'Registration options', 'b3-onboarding' ),
+                'content' => '<h3>' . esc_html__( 'Registration options', 'b3-onboarding' ) . '</h3>
+                    <p>' . esc_html__( 'Here you can style the default Wordpress register/login page.', 'b3-onboarding' ) . '</p>
+                    <ul>
+                        <li>%blog_name% = ' . get_option( 'blogname' ) . '</li>
+                        <li>%home_url% = ' . get_home_url() . '</li>
                     </ul>
                     '
             ) );
