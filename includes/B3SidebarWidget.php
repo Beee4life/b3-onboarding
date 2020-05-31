@@ -89,7 +89,7 @@
                         if ( ! empty( $instance[ 'title' ] ) ) {
                             echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
                         }
-                        echo '<p class="widget-no-settings">' . sprintf( __( 'You haven\'t entered any widget settings. Set them <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( admin_url( 'widgets.php' ) ) ) . '</p>';
+                        echo '<p class="widget-no-settings">' . sprintf( __( 'You haven\'t set any widget settings. Configure them <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( admin_url( 'widgets.php' ) ) ) . '</p>';
                         echo $args[ 'after_widget' ];
                     }
                 }
