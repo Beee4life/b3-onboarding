@@ -108,8 +108,8 @@
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
                 add_filter( 'wp_mail_charset',                      array( $this, 'b3_email_charset' ) );
-                add_filter( 'login_form_defaults',                  array( $this, 'b3_loginform_defaults' ), 1 );
 
+                // add_filter( 'login_form_defaults',                  array( $this, 'b3_loginform_defaults' ), 1 );
                 // add_filter( 'login_form_top',                       array( $this, 'b3_loginform_top' ), 10, 2 );
                 // add_filter( 'login_form_middle',                    array( $this, 'b3_loginform_middle' ), 10, 2 );
                 // add_filter( 'login_form_bottom',                    array( $this, 'b3_loginform_footer' ), 10, 2 );
@@ -571,7 +571,6 @@
              */
             public function b3_loginform_defaults( $defaults ) {
 
-                // echo '<pre>'; var_dump($defaults); echo '</pre>'; exit;
                 $new_defaults = [
                     'echo'           => true,
                     'redirect'       => wp_login_url(),

@@ -50,7 +50,6 @@
                     break;
                 case 'request-access-user':
                     $content = str_replace( '%email_message%', b3_request_access_message_user(), $content );
-                    // echo '<pre>'; var_dump(stripslashes($content)); echo '</pre>'; exit;
                     $subject = b3_request_access_subject_user();
                     break;
                 case 'welcome-user':
