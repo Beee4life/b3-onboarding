@@ -3,7 +3,7 @@
     $request_access_email_subject_admin = get_option( 'b3_request_access_subject_admin', false );
     $request_access_email_message_admin = get_option( 'b3_request_access_message_admin', false );
 ?>
-<table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
+<table class="b3_table b3_table--emails">
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">

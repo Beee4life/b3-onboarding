@@ -4,7 +4,7 @@
     $welcome_user_email_subject = get_option( 'b3_welcome_user_subject', false );
     $welcome_user_email_message = get_option( 'b3_welcome_user_message', false );
 ?>
-<table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
+<table class="b3_table b3_table--emails">
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
