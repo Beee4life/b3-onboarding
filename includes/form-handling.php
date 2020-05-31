@@ -297,7 +297,7 @@
                         delete_option( 'b3_restrict_admin' );
                     }
 
-                    $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
+                    $redirect_url = add_query_arg( 'success', 'user_settings_saved', $redirect_url );
                 }
 
                 wp_redirect( $redirect_url );
