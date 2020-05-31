@@ -202,6 +202,10 @@
     width: 80px;
 }
 
+.b3 select#b3_recaptcha_version {
+    width: 100px;
+}
+
 .b3 select#b3_loginpage_font_family {
     width: 150px;
 }
