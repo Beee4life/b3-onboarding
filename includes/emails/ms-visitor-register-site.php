@@ -13,7 +13,7 @@
             <label for="b3__input--password-changed-content" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <textarea id="b3__input--password-changed-content" name="b3_input_password_change_content" rows="4"></textarea>
+            <textarea id="b3__input--password-changed-content" name="b3_input_password_change_content" rows="6"></textarea>
         </td>
     </tr>
     <tr>

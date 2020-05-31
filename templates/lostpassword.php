@@ -6,16 +6,25 @@
             </p>
         <?php } ?>
     <?php } ?>
-    
+
     <?php if ( $attributes[ 'title' ] ) { ?>
-        <h3><?php esc_html_e( 'Forgot password', 'b3-onboarding' ); ?></h3>
+        <h3>
+            <?php echo $attributes[ 'title' ]; ?>
+        </h3>
     <?php } ?>
-    
+
     <form id="forgotpasswordform" class="b3_form b3_form--register" action="<?php echo wp_lostpassword_url(); ?>" method="post">
         <input name="b3_forgot_pass" value="<?php echo wp_create_nonce( 'b3-forgot-pass' ); ?>" type="hidden" />
 
         <p class="b3_message">
-            <?php esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-onboarding' ); ?>
+            <?php if ( isset( $attributes[ 'registered' ] ) && 'success' == $attributes[ 'registered' ] ) { ?>
+                <?php echo sprintf(
+                    __( 'You have successfully registered to %s. Enter your email address to set your password.', 'b3-onboarding' ),
+                    get_bloginfo( 'name' )
+                ); ?>
+            <?php } else { ?>
+                <?php esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-onboarding' ); ?>
+            <?php } ?>
         </p>
 
         <p class="form-row">
@@ -26,7 +35,7 @@
         <p class="forgotpassword-submit">
             <input type="submit" name="submit" class="button button-primary button--forgotpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
         </p>
-    
+
         <?php echo b3_form_links( 'forgotpassword' ); ?>
     </form>
 

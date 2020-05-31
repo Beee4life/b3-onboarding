@@ -30,6 +30,7 @@
                             $default_tab = $_GET[ 'tab' ];
                         } else {
                             $default_tab = 'settings';
+                            $default_tab = 'emails';
                         }
 
                         $tabs        = array(

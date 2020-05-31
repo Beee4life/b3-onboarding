@@ -10,7 +10,9 @@
 ?>
 <div id="b3-register" class="b3_page b3_page--register">
     <?php if ( $attributes[ 'title' ] ) { ?>
-        <h3><?php esc_html_e( 'Register', 'b3-onboarding' ); ?></h3>
+        <h3>
+            <?php echo $attributes[ 'title' ]; ?>
+        </h3>
     <?php } ?>
 
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>

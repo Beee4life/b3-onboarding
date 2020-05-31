@@ -16,12 +16,12 @@
         } elseif ( true == $return_link ) {
             return wp_registration_url();
         }
-        
+
         return $id;
-        
+
     }
-    
-    
+
+
     /**
      * Return login page id
      *
@@ -39,12 +39,12 @@
         } elseif ( true == $return_link ) {
             return wp_login_url();
         }
-        
+
         return $id;
-        
+
     }
-    
-    
+
+
     /**
      * Return logout page id
      *
@@ -62,12 +62,12 @@
         } elseif ( true == $return_link ) {
             return wp_login_url();
         }
-        
+
         return $id;
-        
+
     }
-    
-    
+
+
     /**
      * Get page id for account page
      *
@@ -83,12 +83,12 @@
                 return get_permalink( $id );
             }
         }
-        
+
         return $id;
-        
+
     }
-    
-    
+
+
     /**
      * Return forgot pass page id (for current language if WPML is active)
      *
@@ -106,11 +106,11 @@
         } elseif ( true == $return_link ) {
             return wp_lostpassword_url();
         }
-    
+
         return $id;
-        
+
     }
-    
+
     /**
      * Return reset pass page id (for current language if WPML is active)
      *
@@ -123,24 +123,24 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
         }
-        
+
         return $id;
-        
+
     }
-    
-    function b3_get_user_approval_id() {
+
+    function b3_get_user_approval_id( $return_link = false ) {
         $id = get_option( 'b3_approval_page_id', false );
         if ( false != $id && get_post( $id ) ) {
             if ( class_exists( 'Sitepress' ) ) {
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
         }
-        
+
         return $id;
-        
+
     }
-    
-    
+
+
     /**
      * Returns current url
      *
@@ -149,11 +149,11 @@
     function b3_get_current_url() {
         // @TODO: look into these
         $url = remove_query_arg( array( 'instance', 'action', 'checkemail', 'error', 'loggedout', 'registered', 'redirect_to', 'updated', 'key', '_wpnonce', 'reauth', 'login', 'updated' ) );
-        
+
         return $url;
     }
-    
-    
+
+
     /**
      * Returns used protocol
      *
@@ -161,7 +161,7 @@
      */
     function b3_get_protocol() {
         $protocol = ( isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] != 'off' ) ? 'https' : 'http';
-        
+
         return $protocol;
     }
-    
+

@@ -11,7 +11,7 @@
             <label for="b3__input--email-styling" class=""><?php esc_html_e( 'Email styling', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo b3_default_email_styling(); ?>" rows="4"><?php if ( $email_styling ) { echo $email_styling; } ?></textarea>
+            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo b3_default_email_styling(); ?>" rows="6"><?php if ( $email_styling ) { echo $email_styling; } ?></textarea>
         </td>
     </tr>
     <tr>

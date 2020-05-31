@@ -5,12 +5,15 @@ body {
 }
 
 table {
-    border-spacing: 0;
+    border-spacing:  0;
+    border-collapse: collapse;
+    width:           100%;
 }
 
+
 table#b3_email_main {
-    width:  100%;
-    height: 100%;
+    font-size: 14px;
+    height:    100%;
 }
 
 table td {
@@ -34,6 +37,10 @@ table.b3_email_content_table:last-child {
 
 table td.b3_email_footer {
     padding-top: 10px;
+}
+
+table td.b3_email_content {
+    vertical-align: top;
 }
 
 .b3_email_header img {

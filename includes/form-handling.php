@@ -57,7 +57,7 @@
 
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
@@ -88,7 +88,7 @@
                     $redirect_url = add_query_arg( 'success', 'pages_saved', $redirect_url );
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
@@ -182,7 +182,7 @@
 
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_loginpage_nonce' ] ) ) {
@@ -200,7 +200,7 @@
                         $length = strlen($color);
                         if ( 3 != $length && 6 != $length ) {
                             $redirect_url = add_query_arg( 'errors', 'wrong_hexlength', $redirect_url );
-                            wp_redirect( $redirect_url );
+                            wp_safe_redirect( $redirect_url );
                             exit;
                         } else {
                             update_option( 'b3_loginpage_bg_color', $color );
@@ -229,7 +229,7 @@
                     $redirect_url = add_query_arg( 'success', 'loginpage_saved', $redirect_url );
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
@@ -254,41 +254,72 @@
                         update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), true );
                     }
 
-                    update_option( 'b3_forgot_password_message', stripslashes( $_POST[ 'b3_forgot_password_message' ] ), true );
+                    update_option( 'b3_forgot_password_message', htmlspecialchars( $_POST[ 'b3_forgot_password_message' ] ), true );
                     update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
                     update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
 
-                    if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
-                        update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ], true );
-                        update_option( 'b3_account_activated_message', stripslashes( $_POST[ 'b3_account_activated_message' ] ), true );
-
-                        update_option( 'b3_new_user_message', stripslashes( $_POST[ 'b3_new_user_message' ] ), true );
-                        update_option( 'b3_new_user_notification_addresses', $_POST[ 'b3_new_user_notification_addresses' ], true );
-                        update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
-                        update_option( 'b3_welcome_user_message', stripslashes( $_POST[ 'b3_welcome_user_message' ] ), true );
-                        update_option( 'b3_welcome_user_subject', $_POST[ 'b3_welcome_user_subject' ], true );
+                    if ( isset( $_POST[ 'b3_disable_admin_notification_password_change' ] ) ) {
+                        update_option( 'b3_disable_admin_notification_password_change', 1, true );
+                    } else {
+                        update_option( 'b3_disable_admin_notification_password_change', 0, true );
                     }
 
-                    if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
-                        update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ), true );
-                        update_option( 'b3_email_activation_message', stripslashes( $_POST[ 'b3_email_activation_message' ] ), true );
+                    if ( isset( $_POST[ 'b3_disable_admin_notification_new_user' ] ) ) {
+                        update_option( 'b3_disable_admin_notification_new_user', 1, true );
+                    } else {
+                        update_option( 'b3_disable_admin_notification_new_user', 0, true );
+                    }
+
+                    if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+                        if ( isset( $_POST[ 'b3_account_activated_subject' ] ) ) {
+                            update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ], true );
+                        }
+                        if ( isset( $_POST[ 'b3_account_activated_message' ] ) ) {
+                            update_option( 'b3_account_activated_message', htmlspecialchars( $_POST[ 'b3_account_activated_message' ] ), true );
+                        }
+
+                        update_option( 'b3_new_user_message', htmlspecialchars( $_POST[ 'b3_new_user_message' ] ), true );
+                        update_option( 'b3_new_user_notification_addresses', $_POST[ 'b3_new_user_notification_addresses' ], true );
+                        update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
+
+                        if ( isset( $_POST[ 'b3_welcome_user_message' ] ) ) {
+                            update_option( 'b3_welcome_user_message', htmlspecialchars( $_POST[ 'b3_welcome_user_message' ] ), true );
+                        }
+                        if ( isset( $_POST[ 'b3_welcome_user_subject' ] ) ) {
+                            update_option( 'b3_welcome_user_subject', stripslashes( $_POST[ 'b3_welcome_user_subject' ] ), true );
+                        }
+
+                        if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
+                            update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ), true );
+                            update_option( 'b3_email_activation_message', htmlspecialchars( $_POST[ 'b3_email_activation_message' ] ), true );
+                        }
+
                     }
 
                     if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                        update_option( 'b3_account_approved_message', $_POST[ 'b3_account_approved_message' ], true );
+                        update_option( 'b3_account_approved_message', htmlspecialchars( $_POST[ 'b3_account_approved_message' ], ENT_QUOTES ), true );
                         update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ], true );
-                        update_option( 'b3_request_access_message_admin', stripslashes( $_POST[ 'b3_request_access_message_admin' ] ), true );
+                        update_option( 'b3_request_access_message_admin', htmlspecialchars( $_POST[ 'b3_request_access_message_admin' ] ), true );
+                        update_option( 'b3_request_access_message_user', htmlspecialchars( $_POST[ 'b3_request_access_message_user' ] ), true );
                         update_option( 'b3_request_access_notification_addresses', $_POST[ 'b3_request_access_notification_addresses' ], true );
                         update_option( 'b3_request_access_subject_admin', $_POST[ 'b3_request_access_subject_admin' ], true );
-                        update_option( 'b3_request_access_message_user', stripslashes( $_POST[ 'b3_request_access_message_user' ] ), true );
                         update_option( 'b3_request_access_subject_user', $_POST[ 'b3_request_access_subject_user' ], true );
+                        update_option( 'b3_account_rejected_message', htmlspecialchars( $_POST[ 'b3_account_rejected_message' ], ENT_QUOTES ), true );
+                        update_option( 'b3_account_rejected_subject', $_POST[ 'b3_account_rejected_subject' ], true );
+
+                        if ( isset( $_POST[ 'b3_disable_delete_user_email' ] ) ) {
+                            update_option( 'b3_disable_delete_user_email', 1, true );
+                        } else {
+                            update_option( 'b3_disable_delete_user_email', 0, true );
+                        }
+
                     }
 
                     $redirect_url = add_query_arg( 'success', 'emails_saved', $redirect_url );
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
@@ -317,7 +348,7 @@
                     $redirect_url = add_query_arg( 'success', 'user_settings_saved', $redirect_url );
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
@@ -351,7 +382,7 @@
                     $redirect_url = add_query_arg( 'success', 'recaptcha_saved', $redirect_url );
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
 
             }
@@ -366,68 +397,33 @@
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
 
-                if ( is_admin() ) {
-                    $redirect_url = network_admin_url( 'admin.php?page=b3-user-approval' );
-                } else {
-                    if ( false != b3_get_user_approval_id() ) {
-                        $redirect_url = get_permalink( b3_get_user_approval_id() );
-                    } else {
-                        $redirect_url = '';
+                $redirect_url = network_admin_url( 'admin.php?page=b3-user-approval' );
+                if ( ! is_admin() ) {
+                    $approval_link = b3_get_user_approval_id( true );
+                    if ( false != $approval_link ) {
+                        $redirect_url = $approval_link;
                     }
                 }
 
-                if ( ! wp_verify_nonce( $_POST[ "b3_manage_users_nonce" ], 'b3-manage-users-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
 
-                    $approve   = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? $_POST[ 'b3_approve_user' ] : false;
-                    $reject    = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? $_POST[ 'b3_reject_user' ] : false;
-                    $user_id   = ( isset( $_POST[ 'b3_user_id' ] ) ) ? $_POST[ 'b3_user_id' ] : false;
+                    $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? $_POST[ 'b3_approve_user' ] : false;
+                    $reject      = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? $_POST[ 'b3_reject_user' ] : false;
+                    $user_id     = ( isset( $_POST[ 'b3_user_id' ] ) ) ? $_POST[ 'b3_user_id' ] : false;
                     $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
                     if ( false != $approve && isset( $user_object->ID ) ) {
-
                         // activate user
-                        $user_object = new WP_User( $user_id );
-                        $user_object->set_role( get_option( 'default_role' ) );
-
-                        // send mail
-                        $blog_name  = get_option( 'blogname' ); // @TODO: add filter
-                        $from_email = get_option( 'admin_email' ); // @TODO: add filter
-                        $to         = $user_object->user_email;
-                        $subject    = esc_html__( 'Account approved', 'b3-onboarding' );
-                        $subject    = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
-                        $message    = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password on %s.', 'b3-onboarding' ), $blog_name, esc_url( b3_get_forgotpass_url() ) );
-                        $headers    = array(
-                            'From: ' . $blog_name . ' <' . $from_email . '>',
-                            'Content-Type: text/plain; charset=UTF-8',
-                        );
-
-                        wp_mail( $to, $subject, $message, $headers );
-
                         do_action( 'b3_new_user_activated_by_admin', $user_id );
-
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
 
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
 
-                        require_once(ABSPATH.'wp-admin/includes/user.php' );
-                        // do reject user
+                        require_once( ABSPATH . 'wp-admin/includes/user.php' );
+                        // reject user
                         if ( true == wp_delete_user( $user_id ) ) {
-                            // send mail
-                            $blog_name  = get_option( 'blogname' ); // @TODO: add filter
-                            $from_email = get_option( 'admin_email' ); // @TODO: add filter
-                            $to         = $user_object->user_email;
-                            $subject    = sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), $blog_name );
-                            $message    = sprintf( esc_html__( "We're sorry to have to inform you, but your request for access to %s was rejected.", "b3-onboarding" ), $blog_name );
-                            $headers    = array(
-                                'From: ' . $blog_name . ' <' . $from_email . '>',
-                                'Content-Type: text/plain; charset=UTF-8',
-                            );
-                            wp_mail( $to, $subject, $message, $headers );
-
-                            do_action( 'b3_new_user_rejected', $user_id );
-
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         } else {
                             // @TODO: add error
@@ -437,7 +433,7 @@
                     }
                 }
 
-                wp_redirect( $redirect_url );
+                wp_safe_redirect( $redirect_url );
                 exit;
             }
         }
@@ -469,7 +465,7 @@
                     if ( ! is_wp_error( $errors ) ) {
                         $args     = array( 'updated' => 'true' );
                         $redirect = add_query_arg( $args );
-                        wp_redirect( $redirect );
+                        wp_safe_redirect( $redirect );
                         exit;
                     } else {
                         error_log('error in profile form handling');

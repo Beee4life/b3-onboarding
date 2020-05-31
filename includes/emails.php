@@ -35,12 +35,12 @@
         ?>
         <div class="metabox-handler">
             <div class="b3__postbox">
-                <div class="b3_foldout--header foldout__toggle<?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? ' open' : false; ?>">
+                <div class="b3_foldout--header foldout__toggle">
                     <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
                     <i class="dashicons dashicons-plus"></i>
                 </div>
 
-                <div class="b3__inside <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>foldout__content <?php echo ( isset( $box[ 'id' ] ) && 'xrequest_access' == $box[ 'id' ] ) ? 'x' : false; ?>hidden">
+                <div class="b3__inside foldout__content">
                     ##FOLDOUTCONTENT##
                 </div>
             </div>
@@ -99,11 +99,16 @@
                     include( 'emails/account-approved.php' );
                     $output = ob_get_clean();
                     break;
+                case 'account_rejected':
+                    include( 'emails/account-rejected.php' );
+                    $output = ob_get_clean();
+                    break;
                 case 'forgot_password':
                     include( 'emails/forgot-password.php' );
                     $output = ob_get_clean();
                     break;
                 case 'password_changed':
+                    // @TODO: check this
                     include( 'emails/password-changed.php' );
                     $output = ob_get_clean();
                     break;

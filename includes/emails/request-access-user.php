@@ -1,6 +1,6 @@
 <?php
-    $request_access_email_subject_user   = get_option( 'b3_request_access_subject_user', false );
-    $request_access_email_message_user   = get_option( 'b3_request_access_message_user', false );
+    $request_access_email_subject_user   = get_option( 'b3_request_access_subject_user' );
+    $request_access_email_message_user   = get_option( 'b3_request_access_message_user' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -24,7 +24,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=request-access-user' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--request-access-message-user" name="b3_request_access_message_user" placeholder="<?php echo esc_textarea( b3_request_access_message_user() ); ?>" rows="4"><?php echo $request_access_email_message_user; ?></textarea>
+            <textarea id="b3__input--request-access-message-user" name="b3_request_access_message_user" placeholder="<?php echo esc_textarea( b3_request_access_message_user() ); ?>" rows="6"><?php echo stripslashes( $request_access_email_message_user ); ?></textarea>
         </td>
     </tr>
     <tr>

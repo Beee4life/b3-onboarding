@@ -15,7 +15,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=template' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--email-template" name="b3_email_template" placeholder="<?php echo esc_textarea( b3_default_email_template() ); ?>" rows="4"><?php if ( $stored_email_template ) { echo $stored_email_template; } ?></textarea>
+            <textarea id="b3__input--email-template" name="b3_email_template" placeholder="<?php echo esc_textarea( b3_default_email_template() ); ?>" rows="6"><?php if ( $stored_email_template ) { echo $stored_email_template; } ?></textarea>
         </td>
     </tr>
     <tr>

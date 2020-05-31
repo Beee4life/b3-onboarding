@@ -1,8 +1,8 @@
 <?php
     $current_user = get_userdata( get_current_user_id() );
-    $required     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
+    $required     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false;
+?>
 <div class="" id="">
-    
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
         <p class="b3_message">
             <?php echo esc_html__( 'Profile saved', 'b3-onboarding' ); ?>
@@ -10,7 +10,6 @@
     <?php } ?>
 
     <form id="" name="" action="<?php echo get_permalink( get_the_ID() ); ?>" method="post">
-
         <input name="b3_profile_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-profile-nonce' ); ?>" />
         <input type="hidden" name="admin_bar_front" id="admin_bar_front" value="<?php echo get_user_meta( $current_user->ID, 'show_admin_bar_front', true ); ?>" />
 
@@ -19,9 +18,9 @@
         <input type="hidden" name="checkuser_id" value="<?php echo $current_user->ID; ?>" />
         <input type="hidden" name="nickname" id="nickname" value="<?php echo ( isset( $current_user->nickname ) ) ? esc_attr( $current_user->nickname ) : esc_attr( $current_user->user_login ); ?>" class="regular-text" />
 
-        <h2>
+        <h3>
             <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
-        </h2>
+        </h3>
         <table class="b3_table b3_table--account">
             <tr class="">
                 <td>
@@ -50,9 +49,9 @@
             </tr>
         </table>
 
-        <h2>
+        <h3>
             <?php esc_html_e( 'Name', 'b3-onboarding' ); ?>
-        </h2>
+        </h3>
         <table class="b3_table b3_table--account">
             <tr class="">
                 <td>
@@ -76,9 +75,9 @@
             $show_password_fields = apply_filters( 'show_password_fields', true, $current_user );
             if ( $show_password_fields ) :
         ?>
-        <h2>
+        <h3>
             <?php esc_html_e( 'Password', 'b3-onboarding' ); ?>
-        </h2>
+        </h3>
         <table class="b3_table b3_table--account">
             <tr id="password" class="user-pass1-wrap">
                 <td><label for="pass1"><?php esc_html_e( 'New password', 'b3-onboarding' ); ?></label></td>
@@ -121,13 +120,13 @@
             </tr>
         </table>
         <?php endif; ?>
-    
+
         <div>
             <input type="hidden" name="action" value="profile" />
             <input type="hidden" name="instance" value="1" />
             <input type="hidden" name="user_id" id="user_id" value="<?php echo $current_user->ID; ?>" />
             <input type="submit" class="button button--small" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" name="submit" id="submit" />
         </div>
-        
+
     </form>
 </div>

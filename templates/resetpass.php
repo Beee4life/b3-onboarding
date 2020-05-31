@@ -1,12 +1,14 @@
 <div id="b3-resetpass" class="b3">
-    <?php if ( $attributes['title'] ) : ?>
-        <h3><?php esc_html_e( 'Pick a New Password', 'b3-onboarding' ); ?></h3>
+    <?php if ( $attributes[ 'title' ] ) : ?>
+        <h3>
+            <?php echo $attributes[ 'title' ]; ?>
+        </h3>
     <?php endif; ?>
 
     <form name="resetpassform" id="resetpassform" action="<?php echo site_url( 'wp-login.php?action=resetpass' ); ?>" method="post" autocomplete="off">
         <input name="rp_login" type="hidden" value="<?php echo esc_attr( $attributes[ 'login' ] ); ?>" autocomplete="off"/>
         <input name="rp_key" type="hidden" value="<?php echo esc_attr( $attributes[ 'key' ] ); ?>"/>
-    
+
         <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
             <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
                 <p class="b3_message">

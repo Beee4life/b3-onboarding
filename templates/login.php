@@ -6,9 +6,9 @@
 ?>
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
-        <h2>
-            <?php _e( 'Log In', 'b3-onboarding' ); ?>
-        </h2>
+        <h3>
+            <?php echo $attributes[ 'title' ]; ?>
+        </h3>
     <?php } ?>
 
     <?php
@@ -46,7 +46,7 @@
                         if ( 'request_access' == $request_access && ! empty( $_GET[ 'registered' ] ) && 'access_requested' == $_GET[ 'registered' ] ) {
 
                             echo sprintf(
-                                __( 'You have successfully requested access to <strong>%1$s</strong>. You\'ll be notified by email about the result.', 'b3-onboarding' ),
+                                __( "You have successfully requested access to <strong>%1$s</strong>. You'll be notified by email about the result.", 'b3-onboarding' ),
                                 get_bloginfo( 'name' )
                             );
                             $show_form = false;
@@ -67,7 +67,7 @@
                                 $password_reset_url = esc_url( get_permalink( $reset_page ) );
                             }
                             echo sprintf(
-                                __( 'You have successfully registered to <strong>%1$s</strong>. You can set your password when you <a href="%2$s">reset it</a>.', 'b3-onboarding' ),
+                                __( 'You have successfully registered to <strong>%1$s</strong>. Set your password <a href="%2$s">here</a>.', 'b3-onboarding' ),
                                 get_bloginfo( 'name' ),
                                 $password_reset_url
                             );

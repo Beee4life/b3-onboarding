@@ -1,7 +1,8 @@
 <?php
-    $new_user_email_addresses = get_option( 'b3_new_user_notification_addresses', false );
-    $new_user_email_subject   = get_option( 'b3_new_user_subject', false );
-    $new_user_email_message   = get_option( 'b3_new_user_message', false );
+    $disable_admin_notification = get_option( 'b3_disable_admin_notification_new_user', false );
+    $new_user_email_addresses   = get_option( 'b3_new_user_notification_addresses', false );
+    $new_user_email_subject     = get_option( 'b3_new_user_subject', false );
+    $new_user_email_message     = get_option( 'b3_new_user_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -28,7 +29,7 @@
             <label for="b3__input--new-user-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) ); ?>" type="text" value="<?php echo $new_user_email_subject; ?>" />
+            <input class="" id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo sprintf( esc_attr( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) ); ?>" type="text" value="<?php echo $new_user_email_subject; ?>" />
         </td>
     </tr>
     <tr>
@@ -40,7 +41,15 @@
         <td>
             <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %blog_name%, %home_url%, %site_url%, %user_ip%, %user_login%
             <br /><br />
-            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo b3_default_new_user_admin_message(); ?>" rows="4"><?php echo $new_user_email_message; ?></textarea>
+            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_default_new_user_admin_message() ); ?>" rows="6"><?php echo stripslashes( $new_user_email_message ); ?></textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>&nbsp;</th>
+        <td>
+            <label>
+                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php if ( 1 == $disable_admin_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable admin notification on new user', 'b3-onboarding' ); ?>
+            </label>
         </td>
     </tr>
     <tr>

@@ -160,14 +160,3 @@
 
         return false;
     }
-
-    function b3_after_user_activated( $user_id ) {
-        // send email to user
-        $user_data = get_userdata( $user_id );
-        $to = $user_data->user_email;
-        $subject = get_option( 'b3_user_activated_subject' );
-        $message = get_option( 'b3_user_activated_message' );
-
-
-    }
-    add_action( 'b3_new_user_activated', 'b3_after_user_activated' );

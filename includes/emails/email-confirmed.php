@@ -27,7 +27,8 @@
         <td>
             <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %activation_url%, %blog_name%, %home_url%, %site_url%, %user_ip%, %user_login%
             <br /><br />
-            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_textarea( b3_get_email_activation_message( $blog_name, false ) ); ?>" rows="4"><?php echo $email_activation_message; ?></textarea>
+            <?php // @TODO: check b3_get_email_activation_message ?>
+            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_textarea( b3_get_email_activation_message_user() ); ?>" rows="6"><?php echo $email_activation_message; ?></textarea>
         </td>
     </tr>
     <tr>
