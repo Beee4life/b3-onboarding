@@ -20,7 +20,7 @@
             </p>
         <?php } ?>
     <?php } ?>
-    
+
     <?php if ( 'request_access' == $registration_type ) { ?>
         <?php do_action( 'b3_do_before_request_access' ); ?>
     <?php } ?>
@@ -28,7 +28,7 @@
     <form id="b3-register-form" class="b3_form b3_form--register" action="<?php echo wp_registration_url(); ?>" method="post">
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
         <?php b3_hidden_fields_registration_form(); ?>
-        
+
         <?php if ( 'closed' != $registration_type ) { ?>
 
             <?php if ( 'request_access' == $registration_type ) { ?>
@@ -39,7 +39,7 @@
                     </p>
                 <?php } ?>
             <?php } ?>
-    
+
             <div class="b3_form-element b3_form-element--login">
                 <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
                 <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'username' : ''; ?>" required>
@@ -50,23 +50,23 @@
                 <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'test@xxx.com' : ''; ?>" required>
             </div>
 
-            <?php if ( $show_first_last_name == true ) { b3_first_last_name_fields(); } ?>
-    
+            <?php if ( true == $show_first_last_name ) { b3_first_last_name_fields(); } ?>
+
             <?php // this function is not in use yet ?>
-            <?php if ( $show_custom_passwords == true ) { echo b3_show_password_fields(); } ?>
-    
+            <?php if ( true == $show_custom_passwords ) { echo b3_show_password_fields(); } ?>
+
             <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
-    
+
             <?php do_action( 'b3_add_custom_fields_registration' ); ?>
             <?php b3_extra_fields_registration(); ?>
-    
+
             <?php // this function is not in use yet ?>
-            <?php if ( $show_recaptcha == true && $recaptcha_public ) { ?>
+            <?php if ( true == $show_recaptcha && $recaptcha_public ) { ?>
                 <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public ); } ?>
             <?php } ?>
-    
+
             <?php // this function is not in use yet ?>
-            <?php if ( $show_privacy == true ) { ?>
+            <?php if ( true == $show_privacy ) { ?>
                 <div class="b3_form-element b3_form-element--register">
                     <label>
                         <input name="b3_privacy" type="checkbox" id="b3_privacy" value="accept"> <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
@@ -83,15 +83,15 @@
                 <?php } ?>
             </div>
             <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
-    
+
             <?php if ( 'request_access' == $registration_type ) { ?>
                 <?php do_action( 'b3_do_after_request_access' ); ?>
             <?php } ?>
 
         <?php } ?>
-    
+
         <?php echo b3_form_links( 'register' ); ?>
 
     </form>
-    
+
 </div>

@@ -16,15 +16,10 @@
 
         if ( 'toplevel_page_b3-onboarding' == $screen->id ) {
             $screen->add_help_tab( array(
-                'id'      => 'b3-settings',
-                'title'   => esc_html__( 'Main settings', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Main settings', 'b3-onboarding' ) . '</h3>
-                    <p><b>' . esc_html__( 'Custom email styling/template', 'b3-onboarding' ) . '</b>
-                    <br />This checkbox makes new options \'visible\' to override the default email styling/template.
-                    </p>
-                    <p><b>' . esc_html__( 'Custom login page', 'b3-onboarding' ) . '</b>
-                    <br />This checkbox makes a new tab \'visible\' with settings for the Wordpress login pages.
-                    </p>
+                'id'      => 'b3-loginpage',
+                'title'   => esc_html__( 'Login page design', 'b3-onboarding' ),
+                'content' => '<h3>' . esc_html__( 'Login page design', 'b3-onboarding' ) . '</h3>
+                    <p>' . esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a proper logo, max 320px wide.', 'b3-onboarding' ) . '</p>
                     '
             ) );
 
@@ -34,38 +29,15 @@
                 'content' => '<h3>' . esc_html__( 'Email variables', 'b3-onboarding' ) . '</h3>
                     <p>' . esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) . '</p>
                     <ul>
-                        <li>%blog_name% = ' . get_option( 'blogname' ) . '</li>
+                        <li>%blog_name%</li>
                         <li>%email_styling%</li>
-                        <li>%home_url% = ' . get_home_url() . '</li>
-                        <li>%registration_date% (only available in admin notification)</li>
-                        <li>%reset_url% (only available in reset password email)</li>
-                        <li>%user_ip% (only available in admin notification)</li>
+                        <li>%home_url%</li>
+                        <li>%registration_date% <sup>&sup1;</sup></li>
+                        <li>%reset_url% <sup>&sup1;</sup></li>
+                        <li>%user_ip% <sup>&sup1;</sup></li>
                         <li>%user_login%</li>
                     </ul>
-                    '
-            ) );
-
-            $screen->add_help_tab( array(
-                'id'      => 'b3-registration',
-                'title'   => esc_html__( 'Registration options', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Registration options', 'b3-onboarding' ) . '</h3>
-                    <p>' . esc_html__( 'Here you can style the default Wordpress register/login page.', 'b3-onboarding' ) . '</p>
-                    <ul>
-                        <li>%blog_name% = ' . get_option( 'blogname' ) . '</li>
-                        <li>%home_url% = ' . get_home_url() . '</li>
-                    </ul>
-                    '
-            ) );
-
-            $screen->add_help_tab( array(
-                'id'      => 'b3-loginpage',
-                'title'   => esc_html__( 'Login page design', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Login page design', 'b3-onboarding' ) . '</h3>
-                    <p>' . esc_html__( 'Here you can style the default Wordpress register/login page.', 'b3-onboarding' ) . '</p>
-                    <ul>
-                        <li>%blog_name% = ' . get_option( 'blogname' ) . '</li>
-                        <li>%home_url% = ' . get_home_url() . '</li>
-                    </ul>
+                    <sup>&sup1;</sup> ' . __( 'only available in admin notification', 'b3-onboarding' ) . '
                     '
             ) );
 
@@ -110,13 +82,18 @@
                         ' . esc_html__( 'This renders the delete account page.', 'b3-onboarding' ) . '
                     </li>
                     </ul>
+                    <p>
+                    ' . sprintf( __( 'More info about the use of shortcodes and their variables, please see <a href="%s">here</a>.', 'b3-onboarding'  ), B3_PLUGIN_SITE . '/documentation/shortcodes/' ) . '
+                    </p>
                     '
             ) );
         }
 
         get_current_screen()->set_help_sidebar(
             '<p><strong>' . esc_html__( 'Author', 'b3-onboarding' ) . '</strong></p>
-            <p><a href="http://www.berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">berryplasman.com</a></p>'
+            <p><a href="https://berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">berryplasman.com</a></p>
+            <p><strong>' . esc_html__( 'More info', 'b3-onboarding' ) . '</strong></p>
+            <p><a href="https://b3onboarding.berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">' . __( 'Official site', 'b3-onboarding' ) . '</a></p>'
         );
 
         return false;

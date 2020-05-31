@@ -256,6 +256,12 @@
             }
         }
 
+        if ( 1 == get_option( 'b3_privacy' ) ) {
+            if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
+                $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onbaording' ), __( 'You must include a first name.', 'b3-onbaording' ) ) );
+            }
+        }
+
         return $errors;
     }
     add_filter( 'registration_errors', 'b3_registration_errors', 10, 3 );

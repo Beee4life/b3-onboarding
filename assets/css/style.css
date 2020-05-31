@@ -141,6 +141,11 @@ ul.b3_form-links li:last-child {
     display: inline-block;
 }
 
+.widget .widget-no-settings {
+    border: 1px dashed red;
+    padding: 5px 10px;
+}
+
 .hide,
 .hidden {
     display: none;

@@ -194,6 +194,17 @@
     text-decoration: none;
 }
 
+/* Registration */
+.b3 input#b3_privacy_page {
+    width:     100%;
+    max-width: 300px;
+}
+
+.b3 input#b3_privacy_text {
+    width:     100%;
+    max-width: 500px;
+}
+
 /* Login page */
 .b3 input#b3_loginpage_font_size,
 .b3 input#b3_loginpage_logo_width,

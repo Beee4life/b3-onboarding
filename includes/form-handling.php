@@ -19,13 +19,6 @@
                         delete_option( 'b3_custom_passwords' );
                     }
 
-                    // Custom emails
-                    if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
-                        update_option( 'b3_custom_emails', 1, true );
-                    } else {
-                        update_option( 'b3_custom_emails', 0, true );
-                    }
-
                     // Custom login page
                     if ( isset( $_POST[ 'b3_custom_login_page' ] ) ) {
                         update_option( 'b3_custom_login_page', 1, true );
@@ -33,11 +26,17 @@
                         update_option( 'b3_custom_login_page', 0, true );
                     }
 
-                    // Custom login page
+                    // Force custom login page
                     if ( isset( $_POST[ 'b3_force_custom_login_page' ] ) ) {
                         update_option( 'b3_force_custom_login_page', 1, true );
                     } else {
                         update_option( 'b3_force_custom_login_page', 0, true );
+                    }
+
+                    if ( isset( $_POST[ 'b3_debug_info' ] ) ) {
+                        update_option( 'b3_debug_info', 1, true );
+                    } else {
+                        update_option( 'b3_debug_info', 0, true );
                     }
 
                     // Sidebar widget
@@ -45,13 +44,6 @@
                         update_option( 'b3_sidebar_widget', 1, true );
                     } else {
                         update_option( 'b3_sidebar_widget', 0, true );
-                    }
-
-                    // Sidebar widget
-                    if ( isset( $_POST[ 'b3_disable_action_links' ] ) ) {
-                        update_option( 'b3_disable_action_links', 1, true );
-                    } else {
-                        update_option( 'b3_disable_action_links', 0, true );
                     }
 
                     // Dashboard widget (not in use yet)
@@ -168,6 +160,24 @@
                         update_option( 'b3_privacy', 0, true );
                     }
 
+                    if ( isset( $_POST[ 'b3_privacy_page' ] ) ) {
+                        if ( filter_var( $_POST[ 'b3_privacy_page' ], FILTER_VALIDATE_URL ) === false ) {
+                            // @TODO: do something if url is invalid
+                        }
+                        update_option( 'b3_privacy_page', $_POST[ 'b3_privacy_page' ], true );
+                    }
+
+                    if ( isset( $_POST[ 'b3_privacy_text' ] ) ) {
+                        update_option( 'b3_privacy_text', $_POST[ 'b3_privacy_text' ], true );
+                    }
+
+                    // Action links
+                    if ( isset( $_POST[ 'b3_disable_action_links' ] ) ) {
+                        update_option( 'b3_disable_action_links', 1, true );
+                    } else {
+                        update_option( 'b3_disable_action_links', 0, true );
+                    }
+
                     $redirect_url = add_query_arg( 'success', 'registration_settings_saved', $redirect_url );
 
                 }
@@ -229,6 +239,13 @@
                 if ( ! wp_verify_nonce( $_POST[ "b3_emails_nonce" ], 'b3-emails-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
+
+                    // Custom emails
+                    if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) ) {
+                        update_option( 'b3_custom_emails', 1, true );
+                    } else {
+                        update_option( 'b3_custom_emails', 0, true );
+                    }
 
                     if ( isset( $_POST[ 'b3_email_styling' ] ) ) {
                         update_option( 'b3_email_styling', $_POST[ 'b3_email_styling' ], true );

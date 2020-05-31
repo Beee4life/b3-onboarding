@@ -43,14 +43,19 @@
             <?php if ( ! empty( $all_users ) ) { ?>
                 <?php $date_time_format = get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ); ?>
                 <h3>
-                    <?php esc_html_e( 'LAST REGISTERED USERS', 'b3-onboarding' ); ?>
+                    <?php esc_html_e( 'Last registered users', 'b3-onboarding' ); ?>
                 </h3>
                 <ul>
                     <?php foreach( $all_users as $user ) { ?>
                         <li>
-                            <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->ID ); ?>">
-                                <?php echo $user->user_login; ?>
-                            </a>
+                            <?php if ( current_user_can( 'edit_users' ) ) { ?>
+                                <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->ID ); ?>">
+                            <?php } ?>
+                            <?php echo $user->user_login; ?>
+                            <?php if ( current_user_can( 'edit_users' ) ) { ?>
+                                </a>
+                            <?php } ?>
+
                             (<?php echo date( $date_time_format, strtotime( $user->user_registered ) ); ?>)
                         </li>
                     <?php } ?>

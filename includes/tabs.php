@@ -49,8 +49,8 @@
     function b3_render_settings_tab() {
 
         $custom_login_page       = get_option( 'b3_custom_login_page' );
-        $custom_emails           = get_option( 'b3_custom_emails' );
         $dashboard_widget        = get_option( 'b3_dashboard_widget' );
+        $debug_info              = get_option( 'b3_debug_info' );
         $force_custom_login_page = get_option( 'b3_force_custom_login_page' );
         $sidebar_widget          = get_option( 'b3_sidebar_widget' );
 
@@ -77,22 +77,10 @@
                 <?php if ( ! is_multisite() ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
-                        <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling', 'b3-onboarding' ); ?>
-                        </div>
-                        <?php if ( $custom_emails ) { ?>
-                            <div class="b3_below_input"><?php esc_html_e( 'Styling can be set on the emails tab.', 'b3-onboarding' ); ?></div>
-                        <?php } ?>
-                    <?php b3_get_close(); ?>
-
-                    <?php b3_get_settings_field_open(); ?>
-                        <?php b3_get_label_field_open(); ?>
                             <label for="b3_custom_login_page"><?php esc_html_e( 'Custom login page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_custom_login_page" name="b3_custom_login_page" value="1" <?php if ( $custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom settings for the login page.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_custom_login_page" name="b3_custom_login_page" value="1" <?php if ( $custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom settings for the default login page.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -102,6 +90,17 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_force_custom_login_page" name="b3_force_custom_login_page" value="1" <?php if ( $force_custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to disable wp-login.php and force using your custom page.', 'b3-onboarding' ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+                <?php } ?>
+
+                <?php if ( current_user_can( 'manage_options' ) ) { ?>
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_debug_info" name="b3_debug_info" value="1" <?php if ( $debug_info ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to \'show\' the debug page.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -269,7 +268,8 @@
      */
     function b3_render_emails_tab() {
 
-        $email_boxes = b3_get_email_boxes();
+        $custom_emails = get_option( 'b3_custom_emails' );
+        $email_boxes   = b3_get_email_boxes();
         ob_start();
         ?>
         <h2>
@@ -288,6 +288,16 @@
 
         <form action="" method="post">
             <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling and template', 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
+
             <?php foreach( $email_boxes as $box ) { ?>
                 <?php echo b3_render_email_settings_field( $box ); ?>
             <?php } ?>
@@ -309,12 +319,15 @@
      */
     function b3_render_registration_tab() {
 
-        $action_links            = get_option( 'b3_disable_action_links' );
-        $privacy                 = get_option( 'b3_privacy' );
-        $recaptcha               = get_option( 'b3_recaptcha' );
-        $first_last              = get_option( 'b3_activate_first_last' );
-        $first_last_required     = get_option( 'b3_first_last_required' );
-        $registration_type       = get_option( 'b3_registration_type' );
+        $action_links             = get_option( 'b3_disable_action_links' );
+        $first_last               = get_option( 'b3_activate_first_last' );
+        $first_last_required      = get_option( 'b3_first_last_required' );
+        $privacy                  = get_option( 'b3_privacy' );
+        $privacy_page             = get_option( 'b3_privacy_page' );
+        $privacy_page_placeholder = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
+        $privacy_text             = get_option( 'b3_privacy_text' );
+        $recaptcha                = get_option( 'b3_recaptcha' );
+        $registration_type        = get_option( 'b3_registration_type' );
 
         ob_start();
         ?>
@@ -401,6 +414,41 @@
                     </div>
                 <?php b3_get_close(); ?>
 
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_activate_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_activate_privacy" name="b3_activate_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox', 'b3-onboarding' ); ?>
+                    </div>
+                <?php b3_get_close(); ?>
+
+                <?php if ( 1 == get_option( 'b3_privacy' ) ) { ?>
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_html( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo $privacy_text; } ?>"/>
+                            <div class="b3_settings-input--description">
+                                <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
+                            </div>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <input type="text" id="b3_privacy_page" name="b3_privacy_page" value="<?php if ( $privacy_page ) { echo $privacy_page; } ?>"/>
+                            <div class="b3_settings-input--description">
+                                <?php esc_html_e( 'Must be a valid URL (incl. http(s)://)', 'b3-onboarding' ); ?>
+                            </div>
+                        </div>
+                    <?php b3_get_close(); ?>
+                <?php } ?>
+
                 <?php // @TODO: check for filter for MS ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
@@ -408,15 +456,6 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on (custom) forms', 'b3-onboarding' ); ?>
-                    </div>
-                <?php b3_get_close(); ?>
-
-                <?php b3_get_settings_field_open( 1 ); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_activate_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_privacy" name="b3_activate_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -588,7 +627,7 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <p>
-                        <?php _e( 'Which users do <b>not</b> have access to the Wordpress admin ?', 'b3-onboarding' ); ?>
+                        <?php _e( 'Which user roles do <b>not</b> have access to the Wordpress admin ?', 'b3-onboarding' ); ?>
                     </p>
                     <?php
                         $disallowed_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
@@ -625,14 +664,10 @@
     function b3_render_integrations_tab() {
 
         ob_start();
-        $public_key     = get_option( 'b3_recaptcha_public' );
-        $secret_key     = get_option( 'b3_recaptcha_secret' );
+        $public_key        = get_option( 'b3_recaptcha_public' );
         $recaptcha_version = get_option( 'b3_recaptcha_version' );
-        $show_recaptcha = false;
-
-        if ( get_option( 'b3_recaptcha' ) ) {
-            $show_recaptcha = true;
-        }
+        $secret_key        = get_option( 'b3_recaptcha_secret' );
+        $show_recaptcha    = ( true == get_option( 'b3_recaptcha' ) ) ? true : false;
         ?>
         <h2>
             <?php esc_html_e( 'Integrations', 'b3-onboarding' ); ?>
@@ -644,8 +679,6 @@
             <h3>
                 <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
             </h3>
-        <?php if ( $show_recaptcha ) { ?>
-        <?php } ?>
 
         <?php if ( isset( $_GET[ 'success' ] ) && 'recaptcha_saved' == $_GET[ 'success' ] ) { ?>
             <p class="b3_message">
@@ -653,8 +686,14 @@
             </p>
         <?php } ?>
 
+        <?php if ( $show_recaptcha ) { ?>
+        <?php } ?>
+
         <p>
-            <?php esc_html_e( 'Here you can set the reCaptcha settings. All settings must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can set the v2 reCaptcha settings. V3 is not working (yet).', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'All settings must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
+            <br />
+            Get your (free) reCaptcha keys <a href="https://www.google.com/recaptcha/admin#list" target="_blank" rel="noopener">here</a>.
         </p>
 
         <form name="" class="" action="" method="post">
@@ -678,7 +717,7 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_settings_field_open(); ?>
+            <?php b3_get_settings_field_open(1); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_recaptcha_version"><?php esc_html_e( 'reCaptcha version', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
@@ -697,8 +736,7 @@
             <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save reCaptcha', 'b3-onboarding' ); ?>" />
         </form>
 
-        <?php $current_user = wp_get_current_user(); ?>
-        <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING && $current_user->user_login == 'xBeee' ) { ?>
+        <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) { ?>
 
             <?php b3_get_settings_field_open(); ?>
             <?php

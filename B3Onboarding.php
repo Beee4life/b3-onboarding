@@ -51,8 +51,13 @@
                 }
 
                 if ( ! defined( 'B3_PLUGIN_SETTINGS' ) ) {
-                    $plugin_url = admin_url( 'admin.php?page=b3-onboarding' );
-                    define( 'B3_PLUGIN_SETTINGS', $plugin_url );
+                    $settings_url = admin_url( 'admin.php?page=b3-onboarding' );
+                    define( 'B3_PLUGIN_SETTINGS', $settings_url );
+                }
+
+                if ( ! defined( 'B3_PLUGIN_SITE' ) ) {
+                    $plugin_site = 'https://b3onboarding.berryplasman.com';
+                    define( 'B3_PLUGIN_SITE', $plugin_site );
                 }
             }
 
@@ -91,7 +96,7 @@
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
-                // add_action( 'wp_print_footer_scripts',              array( $this, 'b3_add_captcha_js_to_footer' ) );
+                add_action( 'wp_print_footer_scripts',              array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
 
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );

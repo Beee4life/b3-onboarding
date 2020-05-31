@@ -77,7 +77,7 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( 1 == get_option( 'b3_recaptcha' ) && defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
+                        if ( true == get_option( 'b3_recaptcha' ) && defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
                             $tabs[] = array(
                                 'id'      => 'integrations',
                                 'title'   => esc_html__( 'Integrations', 'b3-onboarding' ),
@@ -86,7 +86,7 @@
                             );
                         }
 
-                        if ( current_user_can( 'manage_options' ) ) {
+                        if ( true == get_option( 'b3_debug_info' ) ) {
                             $tabs[] = array(
                                 'id'      => 'debug',
                                 'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
