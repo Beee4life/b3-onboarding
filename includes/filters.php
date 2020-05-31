@@ -234,3 +234,28 @@
         return $subject;
     }
     add_filter( 'b3_account_approved_subject', 'b3_account_approved_subject' );
+
+    /**
+     * Check for errors on Wordpress' own registration form
+     *
+     * @param $errors
+     * @param $sanitized_user_login
+     * @param $user_email
+     *
+     * @return mixed
+     */
+    function b3_registration_errors( $errors, $sanitized_user_login, $user_email ) {
+
+        if ( 1 == get_option( 'b3_first_last_required' ) ) {
+            if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
+                $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onbaording' ), __( 'You must include a first name.', 'b3-onbaording' ) ) );
+            }
+
+            if ( empty( $_POST[ 'last_name' ] ) || ! empty( $_POST[ 'last_name' ] ) && trim( $_POST[ 'last_name' ] ) == '' ) {
+                $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onbaording' ), __( 'You must include a last name.', 'b3-onbaording' ) ) );
+            }
+        }
+
+        return $errors;
+    }
+    add_filter( 'registration_errors', 'b3_registration_errors', 10, 3 );

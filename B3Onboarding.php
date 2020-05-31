@@ -116,6 +116,7 @@
                 add_shortcode( 'user-management',              array( $this, 'b3_render_user_approval_page' ) );
                 add_shortcode( 'delete-account',               array( $this, 'b3_render_delete_account_page' ) );
 
+                include( 'includes/actions.php' );
                 include( 'includes/do-stuff.php' );
                 include( 'includes/emails.php' );
                 include( 'includes/filters.php' );
