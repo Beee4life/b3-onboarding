@@ -295,8 +295,12 @@
                     <label for="b3_email_format"><?php esc_html_e( 'Email format', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
-                    <input type="radio" id="b3_email_format" name="b3_email_format" value="html" <?php if ( 'html' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'HTML', 'b3-onboarding' ); ?>
-                    <input type="radio" id="b3_email_format" name="b3_email_format" value="text" <?php if ( 'text' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Text', 'b3-onboarding' ); ?>
+                    <label>
+                        <input type="radio" name="b3_email_format" value="html" <?php if ( 'html' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'HTML', 'b3-onboarding' ); ?>
+                    <label>
+                    <label>
+                        <input type="radio" name="b3_email_format" value="text" <?php if ( 'text' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Text', 'b3-onboarding' ); ?>
+                    <label>
                 </div>
             <?php b3_get_close(); ?>
 
@@ -338,6 +342,7 @@
         $privacy_page_placeholder = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
         $privacy_text             = get_option( 'b3_privacy_text' );
         $recaptcha                = get_option( 'b3_recaptcha' );
+        $recaptcha_login          = get_option( 'b3_recaptcha_login' );
         $registration_type        = get_option( 'b3_registration_type' );
 
         ob_start();
@@ -411,7 +416,7 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php b3_get_settings_field_open( 0 ); ?>
+                <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
@@ -425,7 +430,19 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php b3_get_settings_field_open(); ?>
+                <?php if ( get_option( 'b3_recaptcha' ) ) { ?>
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_login" value="1" <?php if ( $recaptcha_login ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to add reCaptcha on the login form.', 'b3-onboarding' ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+                <?php } ?>
+
+
+                <?php b3_get_settings_field_open(1); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_activate_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
@@ -689,6 +706,8 @@
         </h2>
         <p>
             <?php esc_html_e( 'On this page you can add 3rd party integrations. Right now we only have a reCaptcha but more can be expected in the future.', 'b3-onboarding' ); ?>
+            <br />
+            <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
         </p>
 
             <h3>
@@ -705,10 +724,9 @@
         <?php } ?>
 
         <p>
-            <?php esc_html_e( 'Here you can set the v2 reCaptcha settings. V3 is not working (yet).', 'b3-onboarding' ); ?>
-            <?php esc_html_e( 'All settings must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can set the v2 reCaptcha settings, v3 is not working (yet).', 'b3-onboarding' ); ?>
             <br />
-            Get your (free) reCaptcha keys <a href="https://www.google.com/recaptcha/admin#list" target="_blank" rel="noopener">here</a>.
+            <?php esc_html_e( 'Both keys must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
         </p>
 
         <form name="" class="" action="" method="post">
