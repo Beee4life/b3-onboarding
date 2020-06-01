@@ -1,4 +1,5 @@
 <?php
+    include('defaults.php');
 
     /**
      * Output the password fields
@@ -66,7 +67,7 @@
 
 
     /**
-     * Add reCAPTCHA validation (not in use yet)
+     * Add reCAPTCHA check
      *
      * @param $recaptcha_public
      * @param string $form_type
@@ -98,7 +99,6 @@
             'b3_account_page_id',
             'b3_action_links',
             'b3_activate_first_last',
-            // 'b3_add_br_html_email', // not used yet
             'b3_approval_page_id',
             'b3_custom_emails',
             'b3_dashboard_widget',
@@ -112,7 +112,6 @@
             'b3_front_end_approval',
             'b3_login_page_id',
             'b3_logout_page_id',
-            // 'b3_mail_sending_method', // not used yet
             'b3_new_user_message',
             'b3_new_user_notification_addresses',
             'b3_new_user_subject',
@@ -126,7 +125,6 @@
             'b3_reset_page_id',
             'b3_restrict_admin',
             'b3_sidebar_widget',
-            // 'b3_themed_profile', // @TODO: remove
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
         );
@@ -330,7 +328,7 @@
 
 
     /**
-     * Return email styling
+     * Return email styling (not used yet)
      *
      * @return bool|false|mixed|string|void
      */
@@ -348,7 +346,7 @@
 
 
     /**
-     * Return email template
+     * Return email template (not used yet)
      *
      * @return bool|false|mixed|string|void
      */
@@ -362,127 +360,6 @@
         }
 
         return $email_template;
-    }
-
-
-    /**
-     * Return default email styling
-     *
-     * @return false|string
-     */
-    function b3_default_email_styling() {
-        $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
-
-        return $default_css;
-    }
-
-
-    /**
-     * Return default email template
-     *
-     * @return false|string
-     */
-    function b3_default_email_template() {
-        $default_template = file_get_contents( dirname(__FILE__) . '/default-email-template.html' );
-
-        return $default_template;
-    }
-
-
-    function b3_default_email_content() {
-        $default_content = file_get_contents( dirname(__FILE__) . '/default-email-content.html' );
-
-        return $default_content;
-    }
-
-
-    /**
-     * Return email activation subject (user)
-     *
-     * @param $blogname
-     *
-     * @return mixed|string
-     */
-    function b3_get_email_activation_subject_user() {
-        $b3_email_activation_subject = get_option( 'b3_email_activation_subject', false );
-        if ( $b3_email_activation_subject ) {
-            return $b3_email_activation_subject;
-        } else {
-            return esc_html__( 'Confirm your email address', 'b3-onboarding' );
-        }
-    }
-
-    /**
-     * Return email activation message (user)
-     *
-     * @param $blogname
-     * @param $user
-     *
-     * @return mixed|string
-     */
-    function b3_get_email_activation_message_user() {
-        $b3_email_activation_message = get_option( 'b3_email_activation_message', false );
-        if ( $b3_email_activation_message ) {
-            return $b3_email_activation_message;
-        } else {
-
-            $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( __( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( __( 'You only need to confirm your email address through <a href="%s">this link</a>.', 'b3-onboarding' ), '%activation_url%' ) . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
-
-            return $message;
-
-        }
-    }
-
-    /**
-     * Return welcome user subject (user)
-     *
-     * @param $blogname
-     *
-     * @return mixed|string
-     */
-    function b3_get_welcome_user_subject() {
-        $b3_welcome_user_subject = get_option( 'b3_welcome_user_subject', false );
-        if ( $b3_welcome_user_subject ) {
-            return $b3_welcome_user_subject;
-        } else {
-            return sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), get_option( 'blogname' ) );
-        }
-    }
-
-    /**
-     * Return welcome user message (user)
-     *
-     * @param $blogname
-     * @param $user
-     *
-     * @return mixed|string
-     */
-    function b3_get_welcome_user_message() {
-        $b3_welcome_user_message = get_option( 'b3_welcome_user_message', false );
-        if ( $b3_welcome_user_message ) {
-            return $b3_welcome_user_message;
-        } else {
-
-            $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), '%blog_name%' ) . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_forgotpass_url() ) . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
-
-            return $message;
-        }
     }
 
 
@@ -511,6 +388,81 @@
 
 
     /**
+     * Return email activation subject (user)
+     *
+     * @param $blogname
+     *
+     * @return mixed|string
+     */
+    function b3_get_email_activation_subject_user() {
+        $b3_email_activation_subject = get_option( 'b3_email_activation_subject', false );
+        if ( $b3_email_activation_subject ) {
+            $subject = $b3_email_activation_subject;
+        } else {
+            $subject = b3_default_email_activation_subject();
+        }
+
+        return $subject;
+    }
+
+    /**
+     * Return email activation message (user)
+     *
+     * @param $blogname
+     * @param $user
+     *
+     * @return mixed|string
+     */
+    function b3_get_email_activation_message_user() {
+        $b3_email_activation_message = get_option( 'b3_email_activation_message', false );
+        if ( $b3_email_activation_message ) {
+            $message = $b3_email_activation_message;
+        } else {
+            $message = b3_default_email_activation_message();
+        }
+
+        return $message;
+    }
+
+    /**
+     * Return welcome user subject (user)
+     *
+     * @param $blogname
+     *
+     * @return mixed|string
+     */
+    function b3_get_welcome_user_subject() {
+        $b3_welcome_user_subject = get_option( 'b3_welcome_user_subject', false );
+        if ( $b3_welcome_user_subject ) {
+            $message = $b3_welcome_user_subject;
+        } else {
+            $message = b3_default_welcome_user_subject();
+        }
+
+        return $message;
+    }
+
+    /**
+     * Return welcome user message (user)
+     *
+     * @param $blogname
+     * @param $user
+     *
+     * @return mixed|string
+     */
+    function b3_get_welcome_user_message() {
+        $b3_welcome_user_message = get_option( 'b3_welcome_user_message', false );
+        if ( $b3_welcome_user_message ) {
+            $message = $b3_welcome_user_message;
+        } else {
+            $message = b3_default_welcome_user_message();
+        }
+
+        return $message;
+    }
+
+
+    /**
      * Get email subject for request access (admin)
      *
      * @return mixed|string
@@ -518,7 +470,7 @@
     function b3_request_access_subject_admin() {
         $subject = get_option( 'b3_request_access_subject_admin', false );
         if ( ! $subject ) {
-            $subject = esc_html__( 'A new user requests access', 'b3-onboarding' );
+            $subject = b3_default_request_access_subject_admin();
         }
 
         return $subject;
@@ -534,7 +486,7 @@
     function b3_request_access_message_admin() {
         $message = get_option( 'b3_request_access_message_admin', false );
         if ( ! $message ) {
-            $message = sprintf( __( 'A new user has requested access. You can approve/deny him/her on the "<a href="%s">User approval</a>" page.', 'b3-onboarding' ), esc_url( admin_url( 'admin.php?page=b3-user-approval' ) ) );
+            $message = b3_default_request_access_message_admin();
         }
 
         return $message;
@@ -550,7 +502,7 @@
     function b3_request_access_subject_user() {
         $subject = get_option( 'b3_request_access_subject_user', false );
         if ( ! $subject ) {
-            $subject = sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+            $subject = b3_default_request_access_subject_user();
         }
 
         return $subject;
@@ -566,7 +518,7 @@
     function b3_request_access_message_user() {
         $message = get_option( 'b3_request_access_message_user', false );
         if ( ! $message ) {
-            $message = sprintf( __( "You have successfully requested access for %s. We'll inform you about the outcome. <a href=\"#\">XXX</a>", "b3-onboarding" ), get_option( "blogname" ) );
+            $message = b3_default_request_access_message_user();
         }
 
         return $message;
@@ -582,7 +534,7 @@
     function b3_get_account_approved_subject() {
         $subject = get_option( 'b3_account_approved_subject', false );
         if ( ! $subject ) {
-            $subject = sprintf( __( 'Account approved', 'b3-onboarding' ) );
+            $subject = b3_default_account_approved_subject();
         }
 
         return $subject;
@@ -598,7 +550,7 @@
     function b3_get_account_approved_message() {
         $message = get_option( 'b3_account_approved_message', false );
         if ( ! $message ) {
-            $message = sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password on <a href="%s">%s</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_forgotpass_url() ), esc_url( b3_get_forgotpass_url() ) );
+            $message = b3_default_account_approved_message();
         }
 
         return $message;
@@ -614,7 +566,7 @@
     function b3_get_account_activated_subject_user() {
         $subject = get_option( 'b3_account_activated_subject', false );
         if ( ! $subject ) {
-            $subject = sprintf( __( 'Account activated', 'b3-onboarding' ) );
+            $subject = b3_default_account_activated_subject();
         }
 
         return $subject;
@@ -632,15 +584,7 @@
     function b3_get_account_activated_message_user() {
         $message = get_option( 'b3_account_activated_message', false );
         if ( ! $message ) {
-
-            $message = sprintf( esc_html__( 'Hi %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%forgotpass_url%' ) . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-            $message .= '<br /><br />' . "\n";
-            $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
-
+            $message = b3_default_account_activated_message();
         }
 
         return $message;
@@ -656,7 +600,7 @@
     function b3_get_account_rejected_subject() {
         $subject = get_option( 'b3_account_rejected_subject', false );
         if ( ! $subject ) {
-            $subject = sprintf( __( 'Account rejected', 'b3-onboarding' ) );
+            $subject = b3_default_account_rejected_subject() . "\n";
         }
 
         return $subject;
@@ -672,9 +616,7 @@
     function b3_get_account_rejected_message() {
         $message = get_option( 'b3_account_rejected_message', false );
         if ( ! $message ) {
-
-            $message = esc_html__( 'Your account request has been rejected.', 'b3-onboarding' ) . "\n";
-
+            $message = b3_default_account_rejected_message() . "\n";
         }
 
         return $message;
@@ -683,7 +625,7 @@
 
 
     /**
-     * Get account rejected subject (user)
+     * Get password subject (user)
      *
      * @return bool|mixed|string|void
      */
@@ -726,7 +668,7 @@
         if ( $b3_new_user_subject ) {
             $message = $b3_new_user_subject;
         } else {
-            $message = sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+            $message = b3_default_new_user_admin_subject() . "\n";
         }
 
         return $message;
@@ -756,59 +698,6 @@
 
 
     /**
-     * Default new user message (admin)
-     *
-     * @return string
-     */
-    function b3_default_new_user_admin_message() {
-
-        $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . ".\n";
-        $admin_message .= '<br /><br />' . "\n";
-        $admin_message .= sprintf( __( 'User name: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
-        $admin_message .= '<br /><br />' . "\n";
-        $admin_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), '%user_ip%' ) . "\n";
-
-        return $admin_message;
-    }
-
-
-    /**
-     * Default forgot password subject (user)
-     *
-     * @return string
-     */
-    function b3_default_forgot_password_subject() {
-        // @TODO: retrieve option first
-        return sprintf( esc_html__( 'Password reset for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
-    }
-
-
-    /**
-     * Default forgot password message (user)
-     *
-     * @return string
-     */
-    function b3_default_forgot_password_message() {
-
-        // Create new message (text)
-        $default_message = __( 'Hi', 'b3-onboarding' ) . ",\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( 'To (re)set your password, go to <a href="%reset_url%">this page</a>.', 'b3-onboarding' ) . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
-
-        return $default_message;
-
-    }
-
-
-    /**
      * Replace vars in email
      *
      * @param $vars
@@ -829,7 +718,7 @@
         // @TODO: replace user_registered with stored date format
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
-            '%email_styling%'     => ( false != get_option( 'b3_email_styling' ) ) ? get_option( 'b3_email_styling' ) : b3_default_email_styling(),
+            '%email_styling%'     => get_option( 'b3_email_styling', b3_default_email_styling() ),
             '%home_url%'          => get_home_url(),
             '%logo%'              => apply_filters( 'b3_email_logo', '' ),
             '%registration_date%' => ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false,
