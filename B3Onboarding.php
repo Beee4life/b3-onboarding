@@ -108,6 +108,7 @@
                 add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
+                add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
 
                 // Multisite specific
                 add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
@@ -120,6 +121,10 @@
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
+
+
+                add_filter( 'login_headerurl',              array( $this, 'b3_login_logo_url' ) );
+                add_filter( 'login_headertext',             array( $this, 'b3_login_logo_url_title' ) );
 
                 // for wp_login_form
                 // add_filter( 'login_form_defaults',                  array( $this, 'b3_loginform_defaults' ), 1 );
@@ -291,62 +296,66 @@
              */
             public function b3_add_login_styling() {
 
-                $bg_color    = get_option( 'b3_loginpage_bg_color' );
-                $font_family = get_option( 'b3_loginpage_font_family' );
-                $font_size   = get_option( 'b3_loginpage_font_size' );
-                $logo        = get_option( 'b3_loginpage_logo' );
-                $logo_height = get_option( 'b3_loginpage_logo_height' );
-                $logo_width  = get_option( 'b3_loginpage_logo_width' );
-                $recaptcha   = get_option( 'b3_recaptcha' );
+                $bg_color        = get_option( 'b3_loginpage_bg_color' );
+                $font_family     = get_option( 'b3_loginpage_font_family' );
+                $font_size       = get_option( 'b3_loginpage_font_size' );
+                $logo            = get_option( 'b3_loginpage_logo', B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png' );
+                $logo_height     = get_option( 'b3_loginpage_logo_height' );
+                $logo_width      = get_option( 'b3_loginpage_logo_width' );
+                $recaptcha       = get_option( 'b3_recaptcha' );
+                $recaptcha_login = get_option( 'b3_recaptcha_login' );
+                $style_pages     = get_option( 'b3_style_default_pages' );
 
-                echo '<style type="text/css">';
-                echo "\n";
-                if ( $bg_color ) {
-                    echo "\nbody { background: #" . $bg_color . "; }\n";
+                if ( $style_pages || $recaptcha || $recaptcha_login ) {
+                    echo '<style type="text/css">';
+                    echo "\n";
+                    if ( $bg_color ) {
+                        echo "\nbody { background: #" . $bg_color . "; }\n";
+                    }
+                    if ( $font_family || $font_size || $recaptcha || $recaptcha_login ) {
+                        echo '#login { ';
+                        if ( $font_family ) {
+                            echo 'font-family: ' . $font_family . ';';
+                        }
+                        if ( $font_size ) {
+                            echo 'font-size: ' . $font_size . 'px;';
+                        }
+                        if ( $recaptcha || $recaptcha_login ) {
+                            echo 'min-width: 352px;';
+                        }
+                        echo " }\n";
+                        if ( $recaptcha || $recaptcha_login ) {
+                            echo '.recaptcha-container {';
+                            echo 'margin: 0 0 1rem 0;';
+                            echo '}';
+                            echo "\n";
+                        }
+                        if ( $font_size ) {
+                            echo '.login label { font-size: ' . $font_size . 'px; }';
+                            echo "\n";
+                        }
+                    }
+                    if ( $logo ) {
+                        echo '.login h1 a { ';
+                        echo 'background-image: url(' . $logo . '); ';
+                        echo 'background-image: none, url(' . $logo . '); ';
+                        echo 'background-repeat: no-repeat; ';
+                        echo 'padding: 0; ';
+                        if ( $logo_width ) {
+                            echo 'background-size: ' . $logo_width . 'px; ';
+                            echo 'width: ' . $logo_width . 'px; ';
+                        }
+                        if ( $logo_height ) {
+                            echo 'height: ' . $logo_height . 'px; ';
+                        }
+                        echo 'max-width: 320px; ';
+                        echo 'max-height: 150px;';
+                        echo ' }';
+                    }
+                    echo "\n";
+                    echo '</style>';
+                    echo "\n";
                 }
-                if ( $font_family || $font_size || $recaptcha ) {
-                    echo '#login { ';
-                    if ( $font_family ) {
-                        echo 'font-family: ' . $font_family . ';';
-                    }
-                    if ( $font_size ) {
-                        echo 'font-size: ' . $font_size . 'px;';
-                    }
-                    if ( $recaptcha ) {
-                        echo 'min-width: 352px;';
-                    }
-                    echo " }\n";
-                    if ( $recaptcha ) {
-                        echo '.recaptcha-container {';
-                        echo 'margin: 0 0 1rem 0;';
-                        echo '}';
-                        echo "\n";
-                    }
-                    if ( $font_size ) {
-                        echo '.login label { font-size: ' . $font_size . 'px; }';
-                        echo "\n";
-                    }
-                }
-                if ( $logo ) {
-                    echo '.login h1 a { ';
-                    echo 'background-image: url(' . $logo . '); ';
-                    echo 'background-image: none, url(' . $logo . '); ';
-                    echo 'background-repeat: no-repeat; ';
-                    echo 'padding: 0; ';
-                    if ( $logo_width ) {
-                        echo 'background-size: ' . $logo_width . 'px; ';
-                        echo 'width: ' . $logo_width . 'px; ';
-                    }
-                    if ( $logo_height ) {
-                        echo 'height: ' . $logo_height . 'px; ';
-                    }
-                    echo 'max-width: 320px; ';
-                    echo 'max-height: 150px;';
-                    echo ' }';
-                }
-                echo "\n";
-                echo '</style>';
-                echo "\n";
             }
 
 
@@ -1742,6 +1751,46 @@
             }
 
 
+            /**
+             * Check post values of saved options
+             */
+            public function b3_check_options_post() {
+                // @TODO: check nonce
+                if ( isset( $_POST[ 'option_page' ] ) ) {
+                    if ( ! isset( $_POST[ 'users_can_register' ] ) ) {
+                        if ( 'closed' != get_option( 'b3_registration_type' ) ) {
+                            $_POST[ 'users_can_register' ] = 1;
+                        }
+                    } else {
+                        if ( 'closed' == get_option( 'b3_registration_type' ) ) {
+                            $_POST[ 'users_can_register' ] = 0;
+                        }
+                    }
+                }
+            }
+
+
+            /**
+             * For filter 'login_headerurl', replaces the url of the logo on the login page
+             */
+            public function b3_login_logo_url() {
+                return get_home_url();
+            }
+
+            /**
+             * For filter 'login_headertitle', replaces the page-title on the login page
+             *
+             * @return string
+             */
+            public function b3_login_logo_url_title() {
+                $title            = get_bloginfo( 'name', 'display' );
+                $site_description = get_bloginfo( 'description', 'display' );
+                if ( $site_description ) {
+                    $title = sprintf( '%s | %s', $title, $site_description );
+                }
+
+                return $title;
+            }
         }
 
         /**
