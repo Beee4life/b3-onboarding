@@ -39,11 +39,24 @@
         );
 
         if ( is_multisite() ) {
-            foreach( get_sites() as $site ) {
-                switch_to_blog( $site->blog_id );
-                b3_create_pages( $page_definitions, $create_new_site );
-                restore_current_blog();
+            if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+                error_log('network active');
+            } else {
+                error_log('not network active');
             }
+
+            if ( is_main_site() ) {
+                error_log('main');
+                foreach( get_sites() as $site ) {
+                    error_log('Site: ' . $site->blog_id);
+                    switch_to_blog( $site->blog_id );
+                    b3_create_pages( $page_definitions, $create_new_site );
+                    restore_current_blog();
+                }
+            } else {
+                error_log('not main');
+            }
+
         } else {
             b3_create_pages( $page_definitions, $create_new_site );
         }
