@@ -1,4 +1,5 @@
 <?php
+    // default/fallback values
     include('defaults.php');
 
     /**
@@ -744,7 +745,6 @@
     function b3_replace_template_styling( $message = false ) {
 
         if ( false != $message ) {
-            // get $message from function
             $email_styling  = get_option( 'b3_email_styling', b3_default_email_styling() );
             $email_template = get_option( 'b3_email_template', b3_default_email_template() );
 
@@ -849,46 +849,6 @@
         }
 
         return $output;
-    }
-
-
-    /**
-     * Return lost pass URL
-     *
-     * @return false|string
-     */
-    function b3_get_forgotpass_url() {
-
-        // @TODO: replace with function
-        $lost_password_id = get_option( 'b3_forgotpass_page_id' );
-        if ( $lost_password_id ) {
-            $url = get_permalink( $lost_password_id );
-        } else {
-            $url = wp_lostpassword_url();
-        }
-
-        return $url;
-    }
-
-
-    /**
-     * Return reset pass URL
-     *
-     * @TODO: make this into ID and link return
-     *
-     * @return false|string
-     */
-    function b3_get_resetpass_url() {
-
-        // @TODO: replace with function
-        $reset_password_id = get_option( 'b3_resetpass_page_id' );
-        if ( false != $reset_password_id ) {
-            $url = get_permalink( $reset_password_id );
-        } else {
-            $url = home_url( 'reset-password' );
-        }
-
-        return $url;
     }
 
 

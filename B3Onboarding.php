@@ -932,7 +932,7 @@
                         exit;
                     }
 
-                    $redirect_url = b3_get_resetpass_url();
+                    $redirect_url = b3_get_resetpass_id( true );
                     $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST[ 'login' ] ), $redirect_url );
                     $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST[ 'key' ] ), $redirect_url );
 
@@ -1124,7 +1124,7 @@
                         if ( isset( $_POST[ 'pass1' ] ) ) {
                             if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
                                 // Passwords don't match
-                                $redirect_url = b3_get_resetpass_url();
+                                $redirect_url = b3_get_resetpass_id( true );
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
@@ -1135,7 +1135,7 @@
 
                             if ( empty( $_POST[ 'pass1' ] ) ) {
                                 // Password is empty
-                                $redirect_url = b3_get_resetpass_url();
+                                $redirect_url = b3_get_resetpass_id( true );
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );

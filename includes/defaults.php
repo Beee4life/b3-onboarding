@@ -135,7 +135,7 @@
      * @return string
      */
     function b3_default_account_approved_message() {
-        return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password on <a href="%s">%s</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_forgotpass_url() ), esc_url( b3_get_forgotpass_url() ) );
+        return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password on <a href="%s">%s</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_forgotpass_id( true ) ), esc_url( b3_get_forgotpass_id( true ) ) );
     }
 
 
@@ -208,7 +208,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), '%blog_name%' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_forgotpass_url() ) . "\n";
+        $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_forgotpass_id( true ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";

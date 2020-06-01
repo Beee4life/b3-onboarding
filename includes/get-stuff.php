@@ -60,7 +60,7 @@
                 return get_permalink( $id );
             }
         } elseif ( true == $return_link ) {
-            return wp_login_url();
+            return wp_logout_url();
         }
 
         return $id;
@@ -122,6 +122,11 @@
             if ( class_exists( 'Sitepress' ) ) {
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
+            if ( true == $return_link ) {
+                return get_permalink( $id );
+            }
+        } elseif ( true == $return_link ) {
+            // @TODO: create fallback
         }
 
         return $id;
