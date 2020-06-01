@@ -88,6 +88,21 @@
 
 
     /**
+     * Add recaptcha to login form
+     *
+     * @param $user_id
+     */
+    function b3_add_login_form_fields() {
+        $recaptcha_public = get_option( 'b3_recaptcha_public' );
+        $show_recaptcha   = get_option( 'b3_recaptcha_login' );
+        if ( $show_recaptcha && $recaptcha_public ) {
+            if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public ); }
+        }
+    }
+    add_action( 'login_form', 'b3_add_login_form_fields' );
+
+
+    /**
      * Do stuff afer manual activation by admin
      *
      * @param $user_id
@@ -171,8 +186,6 @@
             $to      = $user->user_email;
             $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
             $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
-            // $message = str_replace( '%email_message%', $message, $template );
-            // $message = str_replace( '%email_styling%', $styling, $message );
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
