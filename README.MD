@@ -18,9 +18,11 @@
 <a name="introduction"></a>
 ### Introduction
 
-This plugin focusses on how to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
+This plugin was built to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can customise a lot of things, with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks) or you can use the admin pages.
+You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website. 
+
+There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
 
 **What problems does this plugin solve ?**
 
@@ -28,7 +30,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
 
 <a name="version"></a>
 ### Version
-1.1.0 - released xx.xx.20
+1.1.0 - released xx.06.20
 
 <a name="installation"></a>
 ### Installation
@@ -36,7 +38,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
 1. Download the [latest release](https://github.com/Beee4life/b3-onboarding/archive/master.zip).
 1. Copy the `b3-onboarding` folder into your `wp-content/plugins` folder.
 1. Activate the `B3 Onboarding` plugin via the plugins admin page.
-1. (optional) Change default settings.
+1. (optional) Change any setting you want.
 
 <a name="activate"></a>
 ### Activation 
@@ -45,7 +47,7 @@ If you activate this plugin the following will be done:
 * the necessary pages are created
 * default setting/limits are set
 * 2 new user roles are created: b3_approval, b3_activation
-* access to admin is restricted for subscribers (can be changed)
+* access to admin is restricted for subscribers
 
 <a name="features"></a>
 ### Features
@@ -53,11 +55,12 @@ If you activate this plugin the following will be done:
 * custom forms/pages
   * register
   * login
+  * log out
   * forgot password
   * reset password
   * account
 * (mostly) styled using [BEM](https://en.bem.info) methodology
-* add custom fields through hooks
+* change various settings on the fly with the use of hooks/filters.
 
 <a name="shortcodes"></a>
 ### Shortcodes
@@ -73,9 +76,9 @@ If you activate this plugin the following will be done:
 
 * b3_add_custom_fields_registration
 * b3_after_insert_user
-* b3_after_recaptcha_{form_type} (not used yet)
+* b3_after_recaptcha_{form_type}
 * b3_after_{template_name}
-* b3_before_recaptcha_{form_type} (not used yet)
+* b3_before_recaptcha_{form_type}
 * b3_before_{template_name}
 * b3_do_after_request_access
 * b3_do_before_registration_form
@@ -85,6 +88,8 @@ If you activate this plugin the following will be done:
 * b3_new_user_rejected
 
 ... there are A LOT more, we still need to index them all properly
+
+They will become available on the official website (soon).
 
 <a name="filters"></a>
 ### Filters
@@ -96,12 +101,14 @@ If you activate this plugin the following will be done:
 * b3_welcome_user_subject
 * b3_welcome_user_message
 
-... there are A LOT more, we still need to index them all properly
+... there are A LOT more, we still need to index them all properly.
+
+They will become available on the official website (soon).
 
 <a name="uninstall"></a>
 ### Uninstall
 
-1. All stored options are removed (unless option to not remove data is selected).
+1. All stored options are removed.
 1. The plugin is removed.
 
 <a name="disclaimer"></a>
@@ -119,6 +126,7 @@ These are the things we have planned to add.
 * [ ] make it work with Multisite
 * [ ] make it more responsive
 * [ ] multi-page registration forms
+* [ ] let user delete account
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
@@ -130,6 +138,7 @@ These are the things we have planned to add.
 * more emails to set
 * style default Wordpress login page
 * force use own pages
+* added recaptcha (optional) for registration/login pages 
 
 
 1.0.6
