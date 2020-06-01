@@ -972,7 +972,9 @@
              * @return string Redirect URL
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
+
                 $redirect_url = get_home_url();
+                $stored_roles = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
 
                 if ( ! isset( $user->ID ) ) {
                     return $redirect_url;
@@ -980,27 +982,30 @@
 
                 if ( user_can( $user, 'manage_options' ) ) {
                     // Use the redirect_to parameter if one is set, otherwise redirect to admin dashboard.
-                    if ( $requested_redirect_to == '' ) {
-                        $redirect_to = admin_url();
-                    } else {
-                        $redirect_to = $requested_redirect_to;
+                    $redirect_url = admin_url();
+                    if ( $requested_redirect_to != '' ) {
+                        $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
                     }
                 } else {
+
                     // Non-admin users always go to their account page after login, if defined
                     $account_page_url = b3_get_account_id( true );
                     if ( false != $account_page_url ) {
-                        $redirect_to = $account_page_url;
+                        if ( ! in_array( $stored_roles, $user->roles ) ) {
+                            $redirect_url = $account_page_url;
+                        } else {
+                            // non-admin logged in
+                            // $redirect_url set at start
+                        }
                     } elseif ( $requested_redirect_to ) {
-                        $redirect_to = $requested_redirect_to;
+                        $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
                     } elseif ( current_user_can( 'read' ) ) {
-                        $redirect_to = get_edit_user_link( get_current_user_id() );
-                    } else {
-                        $redirect_to = get_home_url();
+                        $redirect_url = get_edit_user_link( get_current_user_id() );
                     }
 
                 }
 
-                return $redirect_to;
+                return $redirect_url;
             }
 
 
@@ -1008,7 +1013,14 @@
              * Redirect to custom login page after the user has been logged out.
              */
             function b3_redirect_after_logout() {
-                $redirect_url = home_url( 'login?logged_out=true' );
+                $login_url = b3_get_login_id( true );
+                if ( false != $login_url ) {
+                    $redirect_url = $login_url;
+                    $redirect_url = add_query_arg( 'logged_out', 'true', $redirect_url );
+                } else {
+                    $redirect_url = wp_login_url();
+                    $redirect_url = add_query_arg( 'logged_out', 'true', $redirect_url );
+                }
                 wp_safe_redirect( $redirect_url );
                 exit;
             }
