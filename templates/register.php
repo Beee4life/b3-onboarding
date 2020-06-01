@@ -78,10 +78,11 @@
             <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
             <div class="b3_form-element b3_form-element--submit">
                 <?php if ( 'request_access' == $registration_type ) { ?>
-                    <input type="submit" name="submit" class="button" value="<?php esc_html_e( 'Request access', 'b3-onboarding' ); ?>"/>
+                    <?php $submit_label = esc_html__( 'Request access', 'b3-onboarding' ); ?>
                 <?php } else { ?>
-                    <input type="submit" name="submit" class="button" value="<?php esc_html_e( 'Register', 'b3-onboarding' ); ?>"/>
+                    <?php $submit_label = esc_html__( 'Register', 'b3-onboarding' ); ?>
                 <?php } ?>
+                <input type="submit" name="submit" class="button" value="<?php echo $submit_label; ?>"/>
             </div>
             <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
 
