@@ -1,7 +1,6 @@
 <?php
-    $account_activated_email_subject = b3_get_account_activated_subject_user();
-    $account_activated_email_message = b3_get_account_activated_message_user();
-    $blog_name                      = get_bloginfo( 'name' );
+    $account_activated_email_subject = get_option( 'b3_account_activated_subject', false );
+    $account_activated_email_message = get_option( 'b3_account_activated_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

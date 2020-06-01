@@ -1,7 +1,7 @@
 <?php
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_password_change', false );
-    $forgot_password_subject    = b3_get_password_reset_subject();
-    $forgot_password_message    = b3_get_password_reset_message();
+    $forgot_password_subject    = get_option( 'b3_forgot_password_subject', false );
+    $forgot_password_message    = get_option( 'b3_forgot_password_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

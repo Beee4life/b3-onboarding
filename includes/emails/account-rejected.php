@@ -1,7 +1,7 @@
 <?php
     $disable_admin_notification = get_option( 'b3_disable_delete_user_email', false );
-    $reject_user_email_subject  = b3_get_account_rejected_subject();
-    $reject_user_email_message  = b3_get_account_rejected_message();
+    $reject_user_email_subject  = get_option( 'b3_account_rejected_subject', false );
+    $reject_user_email_message  = get_option( 'b3_account_rejected_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

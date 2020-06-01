@@ -9,7 +9,7 @@
             <label for="b3_notification_sender_name" class="b3__label"><?php esc_html_e( 'Notification sender name', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="b3_input b3_input--text" id="b3_notification_sender_name" name="b3_notification_sender_name" placeholder="<?php echo get_bloginfo( 'name' ); ?>" size="50" type="text" value="<?php if ( $notification_sender_name ) { echo $notification_sender_name; } ?>" />
+            <input class="b3_input b3_input--text" id="b3_notification_sender_name" name="b3_notification_sender_name" placeholder="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" size="50" type="text" value="<?php echo esc_attr( $notification_sender_name ); ?>" />
         </td>
     </tr>
     <tr class="b3__description-row">
@@ -25,7 +25,7 @@
             <label for="b3_notification_sender_email" class="b3__label"><?php esc_html_e( 'Notification sender email', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="b3_input b3_input--text" id="b3_notification_sender_email" name="b3_notification_sender_email" placeholder="<?php echo get_bloginfo( 'admin_email' ); ?>" size="60" type="email" value="<?php if ( $notification_sender_email ) { echo $notification_sender_email; } ?>" />
+            <input class="b3_input b3_input--text" id="b3_notification_sender_email" name="b3_notification_sender_email" placeholder="<?php echo esc_attr( get_bloginfo( 'admin_email' ) ); ?>" size="60" type="email" value="<?php echo esc_attr( $notification_sender_email ); ?>" />
         </td>
     </tr>
     <tr class="b3__description-row">

@@ -1,7 +1,7 @@
 <?php
     $user                       = get_userdata( get_current_user_id() );
-    $welcome_user_email_subject = b3_get_welcome_user_subject();
-    $welcome_user_email_message = b3_get_welcome_user_message();
+    $welcome_user_email_subject = get_option( 'b3_welcome_user_subject', false );
+    $welcome_user_email_message = get_option( 'b3_welcome_user_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -15,7 +15,7 @@
             <label for="b3__input--welcome-user" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--welcome-user" name="b3_welcome_user_subject" placeholder="<?php echo esc_attr( $welcome_user_email_subject ); ?>" type="text" value="<?php echo esc_attr( $welcome_user_email_subject ); ?>" />
+            <input class="" id="b3__input--welcome-user" name="b3_welcome_user_subject" placeholder="<?php echo esc_attr( b3_default_welcome_user_subject() ); ?>" type="text" value="<?php echo esc_attr( $welcome_user_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -25,7 +25,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=welcome-user' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--new-user" name="b3_welcome_user_message" placeholder="<?php echo esc_textarea( $welcome_user_email_message ); ?>" rows="6"><?php echo stripslashes( $welcome_user_email_message ); ?></textarea>
+            <textarea id="b3__input--new-user" name="b3_welcome_user_message" placeholder="<?php echo esc_textarea( b3_default_welcome_user_message() ); ?>" rows="6"><?php echo stripslashes( $welcome_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

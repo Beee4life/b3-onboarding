@@ -1,6 +1,6 @@
 <?php
-    $account_approved_email_subject = b3_get_account_approved_subject();
-    $account_approved_email_message = b3_get_account_approved_message();
+    $account_approved_email_subject = get_option( 'b3_account_approved_subject', false );
+    $account_approved_email_message = get_option( 'b3_account_approved_message', false );;
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

@@ -1,8 +1,8 @@
 <?php
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_new_user', false );
     $new_user_email_addresses   = get_option( 'b3_new_user_notification_addresses', false );
-    $new_user_email_subject     = b3_get_new_user_subject();
-    $new_user_email_message     = b3_get_new_user_message();
+    $new_user_email_subject     = get_option( 'b3_new_user_subject', false );
+    $new_user_email_message     = get_option( 'b3_new_user_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -48,7 +48,7 @@
         <th>&nbsp;</th>
         <td>
             <label>
-                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php if ( 1 == $disable_admin_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable admin notification on new user', 'b3-onboarding' ); ?>
+                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php if ( 1 == $disable_admin_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' ); ?>
             </label>
         </td>
     </tr>

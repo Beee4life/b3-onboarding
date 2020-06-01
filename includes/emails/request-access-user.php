@@ -1,6 +1,6 @@
 <?php
-    $request_access_email_subject_user   = b3_request_access_subject_user();
-    $request_access_email_message_user   = b3_request_access_message_user();
+    $request_access_email_subject_user   = get_option( 'b3_request_access_subject_user', false );;
+    $request_access_email_message_user   = get_option( 'b3_request_access_message_user', false );;
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

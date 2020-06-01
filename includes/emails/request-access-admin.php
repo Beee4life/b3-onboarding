@@ -1,7 +1,7 @@
 <?php
     $request_access_email_addresses     = get_option( 'b3_request_access_notification_addresses', false );
-    $request_access_email_subject_admin = b3_request_access_subject_admin();
-    $request_access_email_message_admin = b3_request_access_message_admin();
+    $request_access_email_subject_admin = get_option( 'b3_request_access_subject_admin', false );
+    $request_access_email_message_admin = get_option( 'b3_request_access_message_admin', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

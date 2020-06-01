@@ -1,7 +1,6 @@
 <?php
-    $email_activation_subject = b3_get_email_activation_subject_user();
-    $email_activation_message = b3_get_email_activation_message_user();
-    $blog_name                = get_bloginfo( 'name' );
+    $email_activation_subject = get_option( 'b3_email_activation_subject', false );
+    $email_activation_message = get_option( 'b3_email_activation_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
