@@ -75,9 +75,9 @@
      */
     function b3_add_captcha_registration( $recaptcha_public, $form_type = 'register' ) {
 
-        $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
+        $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
         do_action( 'b3_before_recaptcha_' . $form_type );
-        if ( 2 == $recaptcha_version ) {
+        if ( '2' == $recaptcha_version ) {
         ?>
             <div class="recaptcha-container">
                 <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
@@ -750,7 +750,7 @@
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_styling%'     => get_option( 'b3_email_styling', b3_default_email_styling() ),
             '%home_url%'          => get_home_url(),
-            '%logo%'              => apply_filters( 'b3_email_logo', '' ),
+            '%logo%'              => get_option( 'b3_email_logo', B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png' ),
             '%registration_date%' => ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
             '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
@@ -773,7 +773,7 @@
      */
     function b3_replace_template_styling( $message = false ) {
 
-        if ( false != $message ) {
+        if ( false != $message && 1 == get_option( 'b3_custom_emails' ) ) {
             $email_styling  = get_option( 'b3_email_styling', b3_default_email_styling() );
             $email_template = get_option( 'b3_email_template', b3_default_email_template() );
 
