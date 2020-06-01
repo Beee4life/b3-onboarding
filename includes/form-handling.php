@@ -152,11 +152,21 @@
                         delete_option( 'b3_first_last_required' );
                     }
 
-                    // reCAPTCHA (not in use yet)
+                    // reCAPTCHA
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
                         update_option( 'b3_recaptcha', 1, true );
                     } else {
                         delete_option( 'b3_recaptcha' );
+                    }
+
+                    // reCAPTCHA
+                    if ( isset( $_POST[ 'b3_recaptcha_login' ] ) && 1 == $_POST[ 'b3_recaptcha_login' ] ) {
+                        update_option( 'b3_recaptcha_login', 1, true );
+                        if ( ! isset( $_POST[ 'b3_activate_recaptcha' ] ) || 0 == $_POST[ 'b3_activate_recaptcha' ] ) {
+                            delete_option( 'b3_recaptcha_login' );
+                        }
+                    } else {
+                        delete_option( 'b3_recaptcha_login' );
                     }
 
                     // Privacy (not in use yet)
