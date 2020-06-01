@@ -20,10 +20,10 @@
                     }
 
                     // Custom login page
-                    if ( isset( $_POST[ 'b3_custom_login_page' ] ) ) {
-                        update_option( 'b3_custom_login_page', 1, true );
+                    if ( isset( $_POST[ 'b3_style_default_pages' ] ) ) {
+                        update_option( 'b3_style_default_pages', 1, true );
                     } else {
-                        update_option( 'b3_custom_login_page', 0, true );
+                        update_option( 'b3_style_default_pages', 0, true );
                     }
 
                     // Force custom login page
@@ -31,6 +31,12 @@
                         update_option( 'b3_force_custom_login_page', 1, true );
                     } else {
                         update_option( 'b3_force_custom_login_page', 0, true );
+                    }
+
+                    if ( isset( $_POST[ 'b3_style_default_pages' ] ) && isset( $_POST[ 'b3_force_custom_login_page' ] ) ) {
+                        // can't be at same time
+                        update_option( 'b3_force_custom_login_page', 1, true );
+                        update_option( 'b3_style_default_pages', 0, true );
                     }
 
                     if ( isset( $_POST[ 'b3_debug_info' ] ) ) {

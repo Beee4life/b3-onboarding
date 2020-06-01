@@ -48,7 +48,7 @@
      */
     function b3_render_settings_tab() {
 
-        $custom_login_page       = get_option( 'b3_custom_login_page' );
+        $style_default_pages     = get_option( 'b3_style_default_pages' );
         $dashboard_widget        = get_option( 'b3_dashboard_widget' );
         $debug_info              = get_option( 'b3_debug_info' );
         $force_custom_login_page = get_option( 'b3_force_custom_login_page' );
@@ -77,10 +77,10 @@
                 <?php if ( ! is_multisite() ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_custom_login_page"><?php esc_html_e( 'Custom login page', 'b3-onboarding' ); ?></label>
+                            <label for="b3_style_default_pages"><?php esc_html_e( 'Style default pages', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_custom_login_page" name="b3_custom_login_page" value="1" <?php if ( $custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom settings for the default login page.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_style_default_pages" name="b3_style_default_pages" value="1" <?php if ( $style_default_pages ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' default login page.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -89,7 +89,7 @@
                             <label for="b3_force_custom_login_page"><?php esc_html_e( 'Force custom login page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_force_custom_login_page" name="b3_force_custom_login_page" value="1" <?php if ( $force_custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to disable wp-login.php and force using your custom page.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_force_custom_login_page" name="b3_force_custom_login_page" value="1" <?php if ( $force_custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to disable WordPress' own pages and force using your custom pages.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>

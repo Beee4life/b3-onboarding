@@ -103,6 +103,8 @@
             'b3_account_approved_message',
             'b3_account_approved_subject',
             'b3_account_page_id', // set on activate
+            'b3_account_rejected_message',
+            'b3_account_rejected_subject',
             'b3_action_links',
             'b3_activate_first_last',
             'b3_approval_page_id',
@@ -110,7 +112,6 @@
             'b3_disable_admin_notification_new_user',
             'b3_disable_delete_user_email',
             'b3_custom_emails', // @TODO: look into this one
-            'b3_custom_login_page',
             'b3_custom_passwords', // not in use yet
             'b3_dashboard_widget', // set on activate
             'b3_debug_info',
@@ -142,8 +143,6 @@
             'b3_recaptcha',
             'b3_register_page_id', // set on activate
             'b3_registration_type', // set on activate
-            'b3_account_rejected_message',
-            'b3_account_rejected_subject',
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
             'b3_recaptcha_version',
@@ -155,6 +154,7 @@
             'b3_reset_page_id', // set on activate
             'b3_restrict_admin', // set on activate
             'b3_sidebar_widget', // set on activate
+            'b3_style_default_pages',
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
         );

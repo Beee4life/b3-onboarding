@@ -54,7 +54,7 @@
                             'icon'    => 'shield',
                         );
 
-                        if ( 1 == get_option( 'b3_custom_login_page' ) ) {
+                        if ( 1 == get_option( 'b3_style_default_pages' ) ) {
                             $tabs[] = array(
                                 'id'      => 'loginpage',
                                 'title'   => esc_html__( 'Login page', 'b3-onboarding' ),
