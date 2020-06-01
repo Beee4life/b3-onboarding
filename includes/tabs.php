@@ -270,6 +270,7 @@
 
         $custom_emails = get_option( 'b3_custom_emails' );
         $email_boxes   = b3_get_email_boxes();
+        $email_format  = get_option( 'b3_email_format' );
         ob_start();
         ?>
         <h2>
@@ -288,6 +289,16 @@
 
         <form action="" method="post">
             <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
+
+            <?php b3_get_settings_field_open(1); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_email_format"><?php esc_html_e( 'Email format', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--radio">
+                    <input type="radio" id="b3_email_format" name="b3_email_format" value="html" <?php if ( 'html' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'HTML', 'b3-onboarding' ); ?>
+                    <input type="radio" id="b3_email_format" name="b3_email_format" value="text" <?php if ( 'text' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Text', 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
