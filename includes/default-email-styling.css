@@ -12,8 +12,9 @@ table {
 
 
 table#b3_email_main {
-    font-size: 14px;
-    height:    100%;
+    font-size:  14px;
+    height:     100%;
+    text-align: center;
 }
 
 table td {
