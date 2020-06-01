@@ -1,5 +1,7 @@
 <?php
-    $redirect = false;
+    $recaptcha_public = get_option( 'b3_recaptcha_public' );
+    $redirect         = false;
+    $show_recaptcha   = get_option( 'b3_recaptcha_login' );
     if ( $attributes[ 'redirect' ] ) {
         $redirect = $attributes[ 'redirect' ];
     }
@@ -46,7 +48,7 @@
                         if ( 'request_access' == $request_access && ! empty( $_GET[ 'registered' ] ) && 'access_requested' == $_GET[ 'registered' ] ) {
 
                             echo sprintf(
-                                __( "You have successfully requested access to <strong>%1$s</strong>. You'll be notified by email about the result.", 'b3-onboarding' ),
+                                __( "You have successfully requested access to <strong>%s</strong>. You'll be notified by email about the result.", 'b3-onboarding' ),
                                 get_bloginfo( 'name' )
                             );
                             $show_form = false;
@@ -109,6 +111,10 @@
             <label class="b3_form-label" for="user_pass"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
             <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
         </div>
+
+        <?php if ( true == $show_recaptcha && $recaptcha_public ) { ?>
+            <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public, 'login' ); } ?>
+        <?php } ?>
 
         <div class="rememberme-wrap">
             <p class="rememberme">
