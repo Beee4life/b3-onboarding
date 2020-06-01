@@ -109,7 +109,7 @@
                     break;
                 case 'password_changed':
                     // @TODO: check this
-                    include( 'emails/password-changed.php' );
+                    // include( 'emails/password-changed.php' );
                     $output = ob_get_clean();
                     break;
                 case 'visitor_register':
