@@ -24,6 +24,15 @@
             ) );
 
             $screen->add_help_tab( array(
+                'id'      => 'b3-emails',
+                'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
+                'content' => '<h3>' . esc_html__( 'Emails', 'b3-onboarding' ) . '</h3>
+                    <p>' . esc_html__( 'You can add any HTML you want in the email messages. Be sure to use the preview mode, before using it.', 'b3-onboarding' ) . '</p>
+                    <p>' . esc_html__( 'Save yourself a lot of work per email and use the template option. This is then wrapped around each message.', 'b3-onboarding' ) . '</p>
+                    '
+            ) );
+
+            $screen->add_help_tab( array(
                 'id'      => 'b3-email-vars',
                 'title'   => esc_html__( 'Email variables', 'b3-onboarding' ),
                 'content' => '<h3>' . esc_html__( 'Email variables', 'b3-onboarding' ) . '</h3>
@@ -89,11 +98,16 @@
             ) );
         }
 
+        if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
+            $site = '<p><strong>' . esc_html__( 'More info', 'b3-onboarding' ) . '</strong></p>
+            <p><a href="https://b3onboarding.berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">' . __( 'Official site', 'b3-onboarding' ) . '</a></p>';
+        } else {
+            $site = false;
+        }
         get_current_screen()->set_help_sidebar(
             '<p><strong>' . esc_html__( 'Author', 'b3-onboarding' ) . '</strong></p>
             <p><a href="https://berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">berryplasman.com</a></p>
-            <p><strong>' . esc_html__( 'More info', 'b3-onboarding' ) . '</strong></p>
-            <p><a href="https://b3onboarding.berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">' . __( 'Official site', 'b3-onboarding' ) . '</a></p>'
+            ' . $site
         );
 
         return false;
