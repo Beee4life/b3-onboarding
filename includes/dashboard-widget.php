@@ -34,8 +34,6 @@
 
                     } elseif ( count( $activation_users ) > 0 ) {
                         echo sprintf( esc_html__( 'There %s %d %s awaiting activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
-                    } else {
-                        esc_html_e( 'All done. No users to approve.', 'b3-onboarding' );
                     }
                 ?>
             </p>
