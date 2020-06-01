@@ -28,7 +28,11 @@
 
 .b3_page .b3_form-label {
     display: inline-block;
-    width:   150px;
+    width:   180px;
+}
+
+.b3_page .b3_form-label--email {
+    width: 150px;
 }
 
 ul.b3_form-links {
@@ -142,7 +146,7 @@ ul.b3_form-links li:last-child {
 }
 
 .widget .widget-no-settings {
-    border: 1px dashed red;
+    border:  1px dashed red;
     padding: 5px 10px;
 }
 
