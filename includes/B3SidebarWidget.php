@@ -104,8 +104,12 @@
 
                 echo '<ul>';
                 if ( ! is_user_logged_in() ) {
-                    echo '<li><a href="' . $login_link . '">' . esc_html__( 'Login', 'b3-onboarding' ) . '</a></li>';
-                    echo '<li><a href="' . $register_link . '">' . esc_html__( 'Register', 'b3-onboarding' ) . '</a></li>';
+                    if ( $show_login ) {
+                        echo '<li><a href="' . $login_link . '">' . esc_html__( 'Login', 'b3-onboarding' ) . '</a></li>';
+                    }
+                    if ( $show_register ) {
+                        echo '<li><a href="' . $register_link . '">' . esc_html__( 'Register', 'b3-onboarding' ) . '</a></li>';
+                    }
                 } else {
                     if ( isset( $account_link ) && false != $account_link ) {
                         echo '<li><a href="' . $account_link . '">' . esc_html__( 'Account', 'b3-onboarding' ) . '</a></li>';
