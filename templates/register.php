@@ -54,7 +54,7 @@
 
             <?php if ( true == $show_first_last_name ) { b3_first_last_name_fields(); } ?>
 
-            <?php // this function is not in use yet ?>
+            <?php // this function is not in use (yet) ?>
             <?php if ( true == $show_custom_passwords ) { echo b3_show_password_fields(); } ?>
 
             <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
@@ -62,7 +62,6 @@
             <?php do_action( 'b3_add_custom_fields_registration' ); ?>
             <?php b3_extra_fields_registration(); ?>
 
-            <?php // this function is not in use yet ?>
             <?php if ( true == $show_recaptcha && $recaptcha_public ) { ?>
                 <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public ); } ?>
             <?php } ?>

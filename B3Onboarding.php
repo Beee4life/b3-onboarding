@@ -96,7 +96,8 @@
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
-                add_action( 'wp_print_footer_scripts',              array( $this, 'b3_add_captcha_js_to_footer' ) );
+                add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
+                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
 
 
@@ -295,12 +296,14 @@
                 $logo        = get_option( 'b3_loginpage_logo' );
                 $logo_height = get_option( 'b3_loginpage_logo_height' );
                 $logo_width  = get_option( 'b3_loginpage_logo_width' );
+                $recaptcha   = get_option( 'b3_recaptcha' );
 
                 echo '<style type="text/css">';
+                echo "\n";
                 if ( $bg_color ) {
                     echo "\nbody { background: #" . $bg_color . "; }\n";
                 }
-                if ( $font_family || $font_size ) {
+                if ( $font_family || $font_size || $recaptcha ) {
                     echo '#login { ';
                     if ( $font_family ) {
                         echo 'font-family: ' . $font_family . ';';
@@ -308,12 +311,20 @@
                     if ( $font_size ) {
                         echo 'font-size: ' . $font_size . 'px;';
                     }
+                    if ( $recaptcha ) {
+                        echo 'min-width: 352px;';
+                    }
                     echo " }\n";
+                    if ( $recaptcha ) {
+                        echo '.recaptcha-container {';
+                        echo 'margin: 0 0 1rem 0;';
+                        echo '}';
+                        echo "\n";
+                    }
                     if ( $font_size ) {
                         echo '.login label { font-size: ' . $font_size . 'px; }';
                         echo "\n";
                     }
-
                 }
                 if ( $logo ) {
                     echo '.login h1 a { ';
@@ -332,6 +343,7 @@
                     echo 'max-height: 150px;';
                     echo ' }';
                 }
+                echo "\n";
                 echo '</style>';
                 echo "\n";
             }
@@ -622,7 +634,7 @@
              * at the end of the page.
              */
             public function b3_add_captcha_js_to_footer() {
-                echo "<script src='https://www.google.com/recaptcha/api.js'></script>";
+                wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [], false, true );
             }
 
 
@@ -631,12 +643,10 @@
              * request is valid.
              *
              * @return bool True if the CAPTCHA is OK, otherwise false.
-             * is private function
              */
-            private function b3_verify_recaptcha() {
-                // This field is set by the recaptcha widget if check is successful
-                if ( isset ( $_POST['g-recaptcha-response'] ) ) {
-                    $captcha_response = $_POST['g-recaptcha-response'];
+            public function b3_verify_recaptcha() {
+                if ( isset ( $_POST[ 'g-recaptcha-response' ] ) ) {
+                    $captcha_response = $_POST[ 'g-recaptcha-response' ];
                 } else {
                     return false;
                 }
@@ -646,15 +656,18 @@
                     'https://www.google.com/recaptcha/api/siteverify',
                     array(
                         'body' => array(
-                            'secret' => get_option( 'b3-onboarding-recaptcha-secret-key' ),
+                            'secret' => get_option( 'b3_recaptcha_secret' ),
                             'response' => $captcha_response
                         )
                     )
                 );
 
-                $success = false;
-                if ( $response && is_array( $response ) ) {
-                    $decoded_response = json_decode( $response[ 'body' ] );
+                $response_body = wp_remote_retrieve_body( $response );
+                $response_code = wp_remote_retrieve_response_code( $response );
+                $success       = false;
+
+                if ( 200 == $response_code && $response && is_array( $response ) ) {
+                    $decoded_response = json_decode( $response_body );
                     $success          = $decoded_response->success;
                 }
 

@@ -334,12 +334,14 @@
                 $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a last name.', 'b3-onboarding' ) ) );
             }
         }
-
-        if ( 1 == get_option( 'b3_privacy' ) ) {
-            if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
-                $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a first name.', 'b3-onboarding' ) ) );
+        if ( 1 == get_option( 'b3_recaptcha' ) ) {
+            $b3ob = new B3Onboarding();
+            if ( ! $b3ob->b3_verify_recaptcha() ) {
+                $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'Recaptcha failed.', 'b3-onboarding' ) ) );
             }
         }
+
+
 
         return $errors;
     }
