@@ -29,6 +29,17 @@
         } );
     }
 
+    if ( isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
+        add_action( 'network_admin_notices', function () {
+            echo sprintf( '<div class="error"><p>'. __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>',
+                esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ),
+                esc_html__( 'here', 'b3-onboarding' )
+            );
+        } );
+
+        return;
+    }
+
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
         class B3Onboarding {
@@ -143,7 +154,6 @@
             public function b3_plugin_activation() {
 
                 // create necessary pages
-                // @TODO: check for multisite
                 b3_setup_initial_pages();
 
                 // @TODO: check where these are stored
