@@ -27,10 +27,10 @@
             <?php } ?>
         </p>
 
-        <p class="form-row">
-            <label for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
+        <div class="b3_form-element">
+            <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
             <input type="text" name="user_login" id="b3_user_email" value="<?php echo ( defined( 'WP_TESTING' ) && true == WP_TESTING ) ? 'test@xxx.com' : false; ?>" required>
-        </p>
+        </div>
 
         <p class="forgotpassword-submit">
             <input type="submit" name="submit" class="button button-primary button--forgotpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
