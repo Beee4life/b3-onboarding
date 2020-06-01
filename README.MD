@@ -28,7 +28,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
 
 <a name="version"></a>
 ### Version
-1.0.7 - released xx.xx.20
+1.1.0 - released xx.xx.20
 
 <a name="installation"></a>
 ### Installation
@@ -84,7 +84,7 @@ If you activate this plugin the following will be done:
 * b3_new_user_activated_by_admin
 * b3_new_user_rejected
 
-... there are more, we still need to index them all properly
+... there are A LOT more, we still need to index them all properly
 
 <a name="filters"></a>
 ### Filters
@@ -96,7 +96,7 @@ If you activate this plugin the following will be done:
 * b3_welcome_user_subject
 * b3_welcome_user_message
 
-... there are more, we still need to index them all properly
+... there are A LOT more, we still need to index them all properly
 
 <a name="uninstall"></a>
 ### Uninstall
@@ -106,28 +106,31 @@ If you activate this plugin the following will be done:
 
 <a name="disclaimer"></a>
 ### Disclaimer
-1. Not entirely ready for multisite yet
+1. Not entirely ready for multisite yet, we're working on it.
 1. It's still under development, use at your own risk.
-1. Not styled for mobile yet.
+1. Not styled for mobile admin yet (might work, but no guarantees).
 1. The link in the reset password email, is not 'custom' yet.
-1. site owner receives new notification for approval when added manually 
 
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
+* [X] add reCAPTCHA
+* [X] preset more html emails
 * [ ] make it work with Multisite
-* [ ] add more email sending methods
-* [ ] preset more html emails
 * [ ] make it more responsive
-* [ ] add reCAPTCHA
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
 
 <a name="changelog"></a>
-1.0.7
+1.1.0
 * replaced deprecated contextual_help
+* escape user input for storage
+* more emails to set
+* style default Wordpress login page
+* force use own pages
+
 
 1.0.6
 * fix incorrect fallback link for forgot password
