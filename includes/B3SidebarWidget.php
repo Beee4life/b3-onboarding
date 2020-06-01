@@ -187,7 +187,6 @@
          * @return array Updated safe values to be saved.
          */
         public function update( $new_instance, $old_instance ) {
-            error_log($new_instance[ 'show_register' ]);
             $instance                    = array();
             $instance[ 'show_account' ]  = ( ! empty( $new_instance[ 'show_account' ] ) ) ? $new_instance[ 'show_account' ] : '';
             $instance[ 'show_approval' ] = ( ! empty( $new_instance[ 'show_approval' ] ) ) ? $new_instance[ 'show_approval' ] : '';
