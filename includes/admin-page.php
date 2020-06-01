@@ -32,7 +32,7 @@
                             $default_tab = 'settings';
                         }
 
-                        $tabs        = array(
+                        $tabs = array(
                             array(
                                 'id'      => 'settings',
                                 'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
