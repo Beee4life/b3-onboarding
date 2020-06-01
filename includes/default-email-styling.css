@@ -10,15 +10,18 @@ table {
     width:           100%;
 }
 
-
-table#b3_email_main {
-    font-size:  14px;
-    height:     100%;
-    text-align: center;
-}
-
 table td {
     padding: 0;
+}
+
+table#b3_email_main {
+    background: #eeeeee;
+    font-size:  14px;
+    height:     100%;
+}
+
+.wp-admin table#b3_email_main {
+    border: 1px solid #444;
 }
 
 table.b3_email_content_table:first-child {
@@ -27,13 +30,21 @@ table.b3_email_content_table:first-child {
 
 table.b3_email_content_table {
     width:      600px;
-    padding:    20px 20px 0 20px;
+    margin:     0 auto;
     background: #ffffff;
 }
 
 table.b3_email_content_table:last-child {
-    margin-bottom:  20px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+table.b3_email_content_table td {
+    padding: 0 10px;
+}
+
+table.b3_email_header td {
+    padding-bottom: 10px;
+    text-align: center;
 }
 
 table td.b3_email_footer {
@@ -45,15 +56,8 @@ table td.b3_email_content {
 }
 
 .b3_email_header img {
-    max-width:     200px;
-    height:        auto;
-    margin-bottom: 20px;
-}
-
-img.b3_header_image {
-    max-width:     200px;
-    height:        auto;
-    margin-bottom: 15px;
+    max-width: 150px;
+    height:    auto;
 }
 
 .underline {
