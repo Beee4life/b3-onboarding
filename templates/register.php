@@ -82,7 +82,7 @@
                 <?php } else { ?>
                     <?php $submit_label = esc_html__( 'Register', 'b3-onboarding' ); ?>
                 <?php } ?>
-                <input type="submit" name="submit" class="button" value="<?php echo $submit_label; ?>"/>
+                <input type="submit" name="submit" class="button" value="<?php echo $submit_label; ?>" />
             </div>
             <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
 
