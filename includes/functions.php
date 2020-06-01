@@ -75,13 +75,16 @@
      */
     function b3_add_captcha_registration( $recaptcha_public, $form_type = 'register' ) {
 
+        $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
         do_action( 'b3_before_recaptcha_' . $form_type );
+        if ( 2 == $recaptcha_version ) {
         ?>
-        <div class="recaptcha-container">
-            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-        </div>
-        <p></p>
+            <div class="recaptcha-container">
+                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+            </div>
+            <p></p>
         <?php
+        }
         do_action( 'b3_after_recaptcha_' . $form_type );
     }
 
