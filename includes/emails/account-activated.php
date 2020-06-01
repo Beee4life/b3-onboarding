@@ -1,6 +1,6 @@
 <?php
-    $account_activated_email_subject = get_option( 'b3_account_activated_subject', false );
-    $account_activated_email_message = get_option( 'b3_account_activated_message', false );
+    $account_activated_email_subject = b3_get_account_activated_subject_user();
+    $account_activated_email_message = b3_get_account_activated_message_user();
     $blog_name                      = get_bloginfo( 'name' );
 ?>
 <table class="b3_table b3_table--emails">
@@ -15,7 +15,7 @@
             <label for="b3__input--account-activated__subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--account-activated__subject" name="b3_account_activated_subject" placeholder="<?php echo b3_get_account_activated_subject_user(); ?>" type="text" value="<?php echo $account_activated_email_subject; ?>" />
+            <input id="b3__input--account-activated__subject" name="b3_account_activated_subject" placeholder="<?php echo esc_attr( b3_default_account_activated_subject() ); ?>" type="text" value="<?php echo esc_attr( $account_activated_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -25,7 +25,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-activated' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-activated__message" name="b3_account_activated_message" placeholder="<?php echo esc_textarea( b3_get_account_activated_message_user() ); ?>" rows="6"><?php echo $account_activated_email_message; ?></textarea>
+            <textarea id="b3__input--account-activated__message" name="b3_account_activated_message" placeholder="<?php echo esc_textarea( b3_default_account_activated_message() ); ?>" rows="6"><?php echo stripslashes( $account_activated_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

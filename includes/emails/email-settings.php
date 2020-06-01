@@ -1,7 +1,4 @@
 <?php
-    $add_br_html_email         = get_option( 'b3_add_br_html_email' );
-    $mail_sending_method       = get_option( 'b3_mail_sending_method' );
-    $html_emails               = get_option( 'b3_html_emails' );
     $notification_sender_email = get_option( 'b3_notification_sender_email' );
     $notification_sender_name  = get_option( 'b3_notification_sender_name' );
 ?>
@@ -39,43 +36,6 @@
             </div>
         </td>
     </tr>
-
-<!--    <tr class="">-->
-<!--        <th>-->
-<!--            <label for="b3_mail_sending_method" class="b3__label">--><?php //esc_html_e( 'Mail sending method', 'b3-onboarding' ); ?><!--</label>-->
-<!--        </th>-->
-<!--        <td>-->
-<!--            <select id="b3_mail_sending_method" name="b3_mail_sending_method">-->
-<!--                <option value="smtp"--><?php //if ( 'smtp' == $mail_sending_method ) { echo ' selected="selected"'; } ?><!--SMTP-->
-<!--                <option value="phpmail"--><?php //if ( 'phpmail' == $mail_sending_method ) { echo ' selected="selected"'; } ?><!--PHP Mail-->
-<!--                <option value="wpmail"--><?php //if ( 'wpmail' == $mail_sending_method ) { echo ' selected="selected"'; } ?><!--WP Mail-->
-<!--            </select>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <th>-->
-<!--            <label for="b3_notification_email_html" class="b3__label">--><?php //esc_html_e( 'Send HTML emails', 'b3-onboarding' ); ?><!--</label>-->
-<!--        </th>-->
-<!--        <td>-->
-<!--            <label for="b3_html_emails_yes" class="screen-reader-text">--><?php //esc_html_e( 'Yes', 'b3-onboarding' ); ?><!--</label>-->
-<!--            <input class="b3_input b3_input--radio" id="b3_html_emails_yes" name="b3_html_emails" type="radio" value="1"--><?php //if ( '1' == $html_emails ) { echo ' checked="checked"'; } ?><!-- /> YES-->
-<!--            &nbsp;&nbsp;&nbsp;-->
-<!--            <label for="b3_html_emails_no" class="screen-reader-text">--><?php //esc_html_e( 'No', 'b3-onboarding' ); ?><!--</label>-->
-<!--            <input class="b3_input b3_input--radio" id="b3_html_emails_no" name="b3_html_emails" type="radio" value="0"--><?php //if ( '0' == $html_emails ) { echo ' checked="checked"'; } ?><!-- /> NO-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <th>-->
-<!--            <label for="b3_notification_email_br" class="b3__label">--><?php //esc_html_e( 'Add br tags to HTML emails ?', 'b3-onboarding' ); ?><!--</label>-->
-<!--        </th>-->
-<!--        <td>-->
-<!--            <label for="b3_notification_email_br_yes" class="screen-reader-text">--><?php //esc_html_e( 'Yes', 'b3-onboarding' ); ?><!--</label>-->
-<!--            <input class="b3_input b3_input--radio" id="b3_notification_email_br_yes" name="b3_add_br_html_email" type="radio" value="1"--><?php //if ( '1' == $add_br_html_email ) { echo ' checked="checked"'; } ?><!-- /> YES-->
-<!--            &nbsp;&nbsp;&nbsp;-->
-<!--            <label for="b3_notification_email_br_no" class="screen-reader-text">--><?php //esc_html_e( 'No', 'b3-onboarding' ); ?><!--</label>-->
-<!--            <input class="b3_input b3_input--radio" id="b3_notification_email_br_no" name="b3_add_br_html_email" type="radio" value="0"--><?php //if ( '0' == $add_br_html_email ) { echo ' checked="checked"'; } ?><!-- /> NO-->
-<!--        </td>-->
-<!--    </tr>-->
     <tr>
         <th>&nbsp;</th>
         <td>

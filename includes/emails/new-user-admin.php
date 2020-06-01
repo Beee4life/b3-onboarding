@@ -1,8 +1,8 @@
 <?php
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_new_user', false );
     $new_user_email_addresses   = get_option( 'b3_new_user_notification_addresses', false );
-    $new_user_email_subject     = get_option( 'b3_new_user_subject', false );
-    $new_user_email_message     = get_option( 'b3_new_user_message', false );
+    $new_user_email_subject     = b3_get_new_user_subject();
+    $new_user_email_message     = b3_get_new_user_message();
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -16,7 +16,7 @@
             <label for="b3__input--new-user-notification-addresses" class=""><?php esc_html_e( 'Email addresses', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--new-user-notification-addresses" name="b3_new_user_notification_addresses" placeholder="<?php echo get_option( 'admin_email' ); ?>" type="text" value="<?php echo $new_user_email_addresses; ?>" />
+            <input class="" id="b3__input--new-user-notification-addresses" name="b3_new_user_notification_addresses" placeholder="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_addresses ); ?>" />
         </td>
     </tr>
     <tr>
@@ -29,7 +29,7 @@
             <label for="b3__input--new-user-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo sprintf( esc_attr( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) ); ?>" type="text" value="<?php echo $new_user_email_subject; ?>" />
+            <input class="" id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo esc_attr( b3_default_new_user_admin_subject() ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_subject ); ?>" />
         </td>
     </tr>
     <tr>

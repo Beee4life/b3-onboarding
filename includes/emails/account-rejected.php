@@ -1,7 +1,7 @@
 <?php
     $disable_admin_notification = get_option( 'b3_disable_delete_user_email', false );
-    $reject_user_email_subject  = get_option( 'b3_account_rejected_subject', false );
-    $reject_user_email_message  = get_option( 'b3_account_rejected_message', false );
+    $reject_user_email_subject  = b3_get_account_rejected_subject();
+    $reject_user_email_message  = b3_get_account_rejected_message();
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -12,20 +12,20 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--account-rejected__subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--account-rejected__subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--account-rejected__subject" name="b3_account_rejected_subject" placeholder="<?php echo b3_get_account_rejected_subject(); ?>" type="text" value="<?php echo stripslashes( $reject_user_email_subject ); ?>" />
+            <input id="b3__input--account-rejected__subject" name="b3_account_rejected_subject" placeholder="<?php echo esc_attr( b3_default_account_rejected_subject() ); ?>" type="text" value="<?php echo esc_attr( $reject_user_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--account-rejected__message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--account-rejected__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br /><br />
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-rejected' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-rejected__message" name="b3_account_rejected_message" placeholder="<?php echo esc_textarea( b3_get_account_rejected_message() ); ?>" rows="6"><?php echo stripslashes( $reject_user_email_message ); ?></textarea>
+            <textarea id="b3__input--account-rejected__message" name="b3_account_rejected_message" placeholder="<?php echo esc_textarea( b3_default_account_rejected_message() ); ?>" rows="6"><?php echo stripslashes( $reject_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

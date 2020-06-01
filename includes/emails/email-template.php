@@ -1,6 +1,4 @@
-<?php
-    $stored_email_template = get_option( 'b3_email_template', false );
-?>
+<?php $stored_email_template = get_option( 'b3_email_template', false ); ?>
 <table class="b3_table b3_table--emails">
     <tbody>
     <tr>

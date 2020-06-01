@@ -1,7 +1,7 @@
 <?php
     $request_access_email_addresses     = get_option( 'b3_request_access_notification_addresses', false );
-    $request_access_email_subject_admin = get_option( 'b3_request_access_subject_admin', false );
-    $request_access_email_message_admin = get_option( 'b3_request_access_message_admin', false );
+    $request_access_email_subject_admin = b3_request_access_subject_admin();
+    $request_access_email_message_admin = b3_request_access_message_admin();
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -15,7 +15,7 @@
             <label for="b3__input--request-access-notification-addresses" class=""><?php esc_html_e( 'Email addresses', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--request-access-notification-addresses" name="b3_request_access_notification_addresses" placeholder="<?php echo get_option( 'admin_email' ); ?>" type="text" value="<?php echo $request_access_email_addresses; ?>" />
+            <input class="" id="b3__input--request-access-notification-addresses" name="b3_request_access_notification_addresses" placeholder="<?php echo get_option( 'admin_email' ); ?>" type="text" value="<?php echo esc_attr( $request_access_email_addresses ); ?>" />
         </td>
     </tr>
     <tr>
@@ -28,7 +28,7 @@
             <label for="b3__input--request-access-subject-admin" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--request-access-subject-admin" name="b3_request_access_subject_admin" placeholder="<?php echo b3_request_access_subject_admin(); ?>" type="text" value="<?php echo $request_access_email_subject_admin; ?>" />
+            <input class="" id="b3__input--request-access-subject-admin" name="b3_request_access_subject_admin" placeholder="<?php echo esc_attr( b3_default_request_access_subject_admin( ) ); ?>" type="text" value="<?php echo esc_attr( $request_access_email_subject_admin ); ?>" />
         </td>
     </tr>
     <tr>
@@ -38,7 +38,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=request-access-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--request-access-message-admin" name="b3_request_access_message_admin" placeholder="<?php echo esc_textarea( b3_request_access_message_admin() ); ?>" rows="6"><?php echo stripslashes( $request_access_email_message_admin ); ?></textarea>
+            <textarea id="b3__input--request-access-message-admin" name="b3_request_access_message_admin" placeholder="<?php echo esc_textarea( b3_default_request_access_message_admin() ); ?>" rows="6"><?php echo stripslashes( $request_access_email_message_admin ); ?></textarea>
         </td>
     </tr>
     <tr>

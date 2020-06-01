@@ -1,7 +1,6 @@
 <?php
-    $account_approved_email_subject = get_option( 'b3_account_approved_subject', false );
-    $account_approved_email_message = get_option( 'b3_account_approved_message', false );
-    $blog_name                      = get_bloginfo( 'name' );
+    $account_approved_email_subject = b3_get_account_approved_subject();
+    $account_approved_email_message = b3_get_account_approved_message();
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -15,7 +14,7 @@
             <label for="b3__input--account-approved__subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--account-approved__subject" name="b3_account_approved_subject" placeholder="<?php echo b3_get_account_approved_subject(); ?>" type="text" value="<?php echo esc_attr( $account_approved_email_subject ); ?>" />
+            <input class="" id="b3__input--account-approved__subject" name="b3_account_approved_subject" placeholder="<?php echo esc_attr( b3_default_account_approved_subject() ); ?>" type="text" value="<?php echo esc_attr( $account_approved_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -25,7 +24,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-approved' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_textarea( b3_get_account_approved_message() ); ?>" rows="6"><?php echo stripslashes( $account_approved_email_message ); ?></textarea>
+            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_textarea( b3_default_account_approved_message() ); ?>" rows="6"><?php echo stripslashes( $account_approved_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

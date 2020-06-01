@@ -1,7 +1,7 @@
 <?php
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_password_change', false );
-    $forgot_password_subject    = get_option( 'b3_forgot_password_subject', false );
-    $forgot_password_message    = get_option( 'b3_forgot_password_message', false );
+    $forgot_password_subject    = b3_get_password_reset_subject();
+    $forgot_password_message    = b3_get_password_reset_message();
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -15,7 +15,7 @@
             <label for="b3__input--forgot-password-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--forgot-password-subject" name="b3_forgot_password_subject" type="text" placeholder="<?php echo sprintf( esc_html__( 'Password reset for %s', 'b3-onboarding' ), get_option( 'blogname' ) ); ?>" value="<?php if ( $forgot_password_subject ) { echo $forgot_password_subject; } ?>" />
+            <input class="" id="b3__input--forgot-password-subject" name="b3_forgot_password_subject" type="text" placeholder="<?php echo esc_attr( b3_default_forgot_password_subject() ); ?>" value="<?php echo esc_attr( $forgot_password_subject ); ?>" />
         </td>
     </tr>
     <tr>

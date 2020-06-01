@@ -1,6 +1,6 @@
 <?php
-    $email_activation_subject = get_option( 'b3_email_activation_subject', false );
-    $email_activation_message = get_option( 'b3_email_activation_message', false );
+    $email_activation_subject = b3_get_email_activation_subject_user();
+    $email_activation_message = b3_get_email_activation_message_user();
     $blog_name                = get_bloginfo( 'name' );
 ?>
 <table class="b3_table b3_table--emails">
@@ -15,7 +15,7 @@
             <label for="b3__input--email-activation__subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--email-activation__subject" name="b3_email_activation_subject" placeholder="<?php echo esc_attr( 'Confirm your email address', 'b3-onboarding' ); ?>" type="text" value="<?php echo $email_activation_subject; ?>" />
+            <input class="" id="b3__input--email-activation__subject" name="b3_email_activation_subject" placeholder="<?php echo esc_attr( b3_default_email_activation_subject() ); ?>" type="text" value="<?php echo esc_attr( $email_activation_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -27,7 +27,7 @@
         <td>
             <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %activation_url%, %blog_name%, %home_url%, %site_url%, %user_ip%, %user_login%
             <br /><br />
-            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_textarea( b3_get_email_activation_message_user() ); ?>" rows="6"><?php echo stripslashes( $email_activation_message ); ?></textarea>
+            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_textarea( b3_default_email_activation_message() ); ?>" rows="6"><?php echo stripslashes( $email_activation_message ); ?></textarea>
         </td>
     </tr>
     <tr>
