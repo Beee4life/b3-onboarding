@@ -8,37 +8,6 @@
     }
 
     /**
-     * Filter lost password URL
-     *
-     * @TODO: check this
-     *
-     * @param $lostpassword_url
-     * @param $redirect
-     *
-     * @return false|mixed|string
-     */
-    function b3_lost_password_page_url( $lostpassword_url, $redirect ) {
-
-        $lost_password_page_id = b3_get_forgotpass_id();
-        if ( false != $lost_password_page_id ) {
-            $lost_pass_url = esc_url( get_permalink( $lost_password_page_id ) );
-            if ( class_exists( 'SitePress' ) ) {
-                $lost_pass_url = esc_url( get_permalink( apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true ) ) );
-            }
-            if ( false != $redirect ) {
-                return $lost_pass_url . '?redirect_to=' . $redirect;
-            }
-
-            return $lost_pass_url;
-
-        }
-
-        return $lostpassword_url;
-    }
-    // add_filter( 'lostpassword_url', 'b3_lost_password_page_url', 10, 2 );
-
-
-    /**
      * Override new user notification for admin
      *
      * @param $wp_new_user_notification_email_admin
@@ -90,10 +59,6 @@
 
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
 
-            } elseif ( 'xopen' == $registration_type ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
-                $wp_new_user_notification_email_admin[ 'message' ] = apply_filters( 'b3_new_user_mesage', b3_get_new_user_message() );
             }
         }
 
@@ -208,10 +173,12 @@
 
         $b3_forgot_password_subject = get_option( 'b3_forgot_password_subject', false );
         if ( false != $b3_forgot_password_subject ) {
-            return $b3_forgot_password_subject;
+            $subject = $b3_forgot_password_subject;
+        } else {
+            $subject = b3_default_forgot_password_subject();
         }
 
-        return b3_default_forgot_password_subject();
+        return $subject;
 
     }
     add_filter( 'retrieve_password_title', 'b3_replace_retrieve_password_subject', 10, 3 );
@@ -250,69 +217,6 @@
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
 
-    /**
-     * Redirect user after successful login.
-     *
-     * @param string $redirect_to URL to redirect to.
-     * @param string $request URL the user is coming from.
-     * @param object $user Logged user's data.
-     * @return string
-     */
-    function b3_login_redirect( $redirect_to, $request, $user ) {
-        // is there a user to check?
-        if ( isset( $user->roles ) && is_array( $user->roles ) ) {
-            // check for users who are not allowed
-            $stored_roles = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
-
-            if ( in_array( $stored_roles, $user->roles ) ) {
-                // redirect them to another URL
-                $login_id = b3_get_login_id();
-                if ( false != $login_id ) {
-                    $redirect_to = get_permalink( $login_id );
-                }
-            }
-        }
-
-        return $redirect_to;
-    }
-    add_filter( 'login_redirect', 'b3_login_redirect', 10, 3 );
-
-    /**
-     * Redirect after logout
-     *
-     * @param $redirect_to
-     * @param $request
-     * @param $user
-     *
-     * @return string
-     */
-    function b3_logout_redirect( $redirect_to, $request, $user ) {
-
-        // Make sure we're not trying to redirect to an admin URL
-        if ( false !== strpos( $redirect_to, 'wp-admin' ) ) {
-            $redirect_to = add_query_arg( 'loggedout', 'true', wp_login_url() );
-        }
-
-        // Return the redirect URL for the user
-        return $redirect_to;
-    }
-    add_filter( 'logout_redirect', 'b3_logout_redirect', 10, 3 );
-
-
-    /**
-     * Return account approved subject
-     *
-     * @return string|void
-     */
-    function b3_account_approved_subject() {
-
-        $subject = __( 'Account approved', 'b3-onboarding' );
-        // get from db
-        // if false return default
-
-        return $subject;
-    }
-    add_filter( 'b3_account_approved_subject', 'b3_account_approved_subject' );
 
     /**
      * Check for errors on Wordpress' own registration form
@@ -411,7 +315,7 @@
      */
     function b3_logout_link( $permalink, $post_id ) {
 
-        if ( get_option( 'b3_logout_page_id' ) == $post_id ) {
+        if ( b3_get_logout_id() == $post_id ) {
             $permalink = add_query_arg( '_wpnonce', wp_create_nonce( 'log-out' ), $permalink );
         }
 
