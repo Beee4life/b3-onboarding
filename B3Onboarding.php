@@ -142,23 +142,11 @@
              */
             public function b3_plugin_activation() {
 
-                if ( is_multisite() ) {
-                    // @TODO: test this
-                    if ( ( defined( 'WP_TESTING' ) && 1 != WP_TESTING ) || ! defined( 'WP_TESTING' ) ) {
-                        $deactivate = true;
-                    }
-                }
-                if ( isset( $deactivate ) && true === $deactivate ) {
-                    deactivate_plugins( plugin_basename( __FILE__ ) );
-                    add_action( 'admin_notices', function () {
-                        echo '<div class="error"><p>'. __( 'This plugin does not work properly in a Multisite. Sorry...', 'b3-onboarding' ) . '.</p></div>';
-                    } );
-
-                    return;
-                }
                 // create necessary pages
+                // @TODO: check for multisite
                 b3_setup_initial_pages();
 
+                // @TODO: check where these are stored
                 $this->b3_set_default_settings();
 
                 /**
