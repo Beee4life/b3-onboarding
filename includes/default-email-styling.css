@@ -20,6 +20,10 @@ table#b3_email_main {
     height:     100%;
 }
 
+table#b3_email_main td.all-content {
+    /*background: #ffffff;*/
+}
+
 .wp-admin table#b3_email_main {
     border: 1px solid #444;
 }
@@ -43,6 +47,7 @@ table.b3_email_content_table td {
 }
 
 table.b3_email_header td {
+    padding-top:    10px;
     padding-bottom: 10px;
     text-align:     center;
 }

@@ -6,10 +6,7 @@
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_settings_nonce' ] ) ) {
 
-                // $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=settings' );
-
                 if ( ! wp_verify_nonce( $_POST[ 'b3_settings_nonce' ], 'b3-settings-nonce' ) ) {
-                    // $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -62,22 +59,15 @@
                         delete_option( 'b3_dashboard_widget' );
                     }
 
-                    // $redirect_url = add_query_arg( 'success', 'settings_saved', $redirect_url );
-
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
 
                     return;
 
                 }
 
-                // wp_safe_redirect( $redirect_url );
-                // exit;
-
             } elseif ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
 
-                // $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=pages' );
                 if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
-                    // $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -101,20 +91,13 @@
                         update_post_meta( $_POST[ $page ], '_b3_page', true );
                     }
 
-                    // $redirect_url = add_query_arg( 'success', 'pages_saved', $redirect_url );
-
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Pages settings saved', 'b3-onboarding' ) );
 
                     return;
                 }
 
-                // wp_safe_redirect( $redirect_url );
-                // exit;
-
             } elseif ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
-                // $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=registration' );
                 if ( ! wp_verify_nonce( $_POST[ "b3_registration_nonce" ], 'b3-registration-nonce' ) ) {
-                    // $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -213,22 +196,15 @@
                         delete_option( 'b3_disable_action_links' );
                     }
 
-                    // $redirect_url = add_query_arg( 'success', 'registration_settings_saved', $redirect_url );
-
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Registration settings saved', 'b3-onboarding' ) );
 
                     return;
 
                 }
 
-                // wp_safe_redirect( $redirect_url );
-                // exit;
-
             } elseif ( isset( $_POST[ 'b3_loginpage_nonce' ] ) ) {
 
-                // $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=loginpage' );
                 if ( ! wp_verify_nonce( $_POST[ "b3_loginpage_nonce" ], 'b3-loginpage-nonce' ) ) {
-                    // $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -241,13 +217,9 @@
                         }
                         $length = strlen($color);
                         if ( 3 != $length && 6 != $length ) {
-                            // $redirect_url = add_query_arg( 'errors', 'wrong_hexlength', $redirect_url );
-                            // wp_safe_redirect( $redirect_url );
-                            // exit;
                             B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Then length of your hex code is incorrect.', 'b3-onboarding' ) );
 
                             return;
-
                         } else {
                             update_option( 'b3_loginpage_bg_color', $color );
                         }
@@ -272,24 +244,17 @@
                         update_option( 'b3_loginpage_logo_height', $_POST[ 'b3_loginpage_logo_height' ] );
                     }
 
-                    // $redirect_url = add_query_arg( 'success', 'loginpage_saved', $redirect_url );
-
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
 
                     return;
 
                 }
 
-                // wp_safe_redirect( $redirect_url );
-                // exit;
-
             } elseif ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
-                // @TODO: add real errors here
-
-                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=emails' );
-
                 if ( ! wp_verify_nonce( $_POST[ "b3_emails_nonce" ], 'b3-emails-nonce' ) ) {
-                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
+                    B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
+
+                    return;
                 } else {
 
                     // Custom emails
@@ -368,19 +333,17 @@
 
                     }
 
-                    $redirect_url = add_query_arg( 'success', 'emails_saved', $redirect_url );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
+
+                    return;
                 }
 
-                wp_safe_redirect( $redirect_url );
-                exit;
-
             } elseif ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
-                // @TODO: add real errors here
-
-                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=users' );
 
                 if ( ! wp_verify_nonce( $_POST[ "b3_users_nonce" ], 'b3-users-nonce' ) ) {
-                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch' );
+                    B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
+
+                    return;
                 } else {
 
                     // Front-end approval
@@ -398,34 +361,27 @@
                         delete_option( 'b3_restrict_admin' );
                     }
 
-                    $redirect_url = add_query_arg( 'success', 'user_settings_saved', $redirect_url );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
+
+                    return;
                 }
 
-                wp_safe_redirect( $redirect_url );
-                exit;
-
             } elseif ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
-                // @TODO: add real errors here
-
-                $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=integrations' );
 
                 if ( ! wp_verify_nonce( $_POST[ "b3_recaptcha_nonce" ], 'b3-recaptcha-nonce' ) ) {
-                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
-                } else {
+                    B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
-                    $recaptcha_public  = $_POST[ 'b3_recaptcha_public' ];
-                    $recaptcha_secret  = $_POST[ 'b3_recaptcha_secret' ];
-                    $recaptcha_version = $_POST[ 'b3_recaptcha_version' ];
+                    return;
+                } else {
 
                     update_option( 'b3_recaptcha_public', $_POST[ 'b3_recaptcha_public' ], true );
                     update_option( 'b3_recaptcha_secret', $_POST[ 'b3_recaptcha_secret' ], true );
                     update_option( 'b3_recaptcha_version', $_POST[ 'b3_recaptcha_version' ], true );
 
-                    $redirect_url = add_query_arg( 'success', 'recaptcha_saved', $redirect_url );
-                }
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
 
-                wp_safe_redirect( $redirect_url );
-                exit;
+                    return;
+                }
 
             }
         }
@@ -439,6 +395,7 @@
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
 
+                // @TODO: check for real errors here
                 $redirect_url = network_admin_url( 'admin.php?page=b3-user-approval' );
                 if ( ! is_admin() ) {
                     $approval_link = b3_get_user_approval_id( true );
@@ -447,9 +404,10 @@
                     }
                 }
 
-                // @TODO: add real errors here
                 if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
-                    $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
+
+                    return;
                 } else {
 
                     $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? $_POST[ 'b3_approve_user' ] : false;

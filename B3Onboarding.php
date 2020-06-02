@@ -162,7 +162,6 @@
                 // create necessary pages
                 b3_setup_initial_pages();
 
-                // @TODO: check where these are stored
                 $this->b3_set_default_settings();
 
                 /**
@@ -234,12 +233,12 @@
              * Do stuff upon plugin activation
              */
             public function b3_plugin_deactivation() {
-                // nothing yet
-
                 // set registration option accordingly
                 $registration_type = get_option( 'b3_registration_type', false );
                 if ( 'closed' != $registration_type ) {
                     update_option( 'users_can_register', '1' );
+                } else {
+                    update_option( 'users_can_register', '0' );
                 }
             }
 
@@ -299,7 +298,7 @@
                 $bg_color        = get_option( 'b3_loginpage_bg_color', false );
                 $font_family     = get_option( 'b3_loginpage_font_family', false );
                 $font_size       = get_option( 'b3_loginpage_font_size', false );
-                $logo            = apply_filters( 'b3_email_logo', b3_get_email_logo() );
+                $logo            = apply_filters( 'b3_login_logo', b3_get_email_logo() );
                 $logo_height     = get_option( 'b3_loginpage_logo_height', false );
                 $logo_width      = get_option( 'b3_loginpage_logo_width', false );
                 $recaptcha       = get_option( 'b3_recaptcha', false );

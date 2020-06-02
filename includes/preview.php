@@ -60,8 +60,10 @@
                     $content = '';
 
             }
+            // echo '<pre>'; var_dump($content); echo '</pre>'; exit;
             $content = htmlspecialchars_decode( $content );
             $content = strtr( $content, b3_replace_email_vars( [] ) );
+            // echo '<pre>'; var_dump($content); echo '</pre>'; exit;
 
         }
     ?>

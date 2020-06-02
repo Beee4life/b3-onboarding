@@ -191,14 +191,6 @@
                     'id'    => 'account_activated',
                     'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
                 ),
-                array(
-                    'id'    => 'welcome_email_user',
-                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-                ),
-                // array(
-                //     'id'    => 'account_rejected',
-                //     'title' => esc_html__( 'Account rejected email (user)', 'b3-onboarding' ),
-                // ),
             );
         }
         if ( in_array( $registration_type, [ 'open' ] ) ) {
@@ -207,10 +199,6 @@
                     'id'    => 'welcome_email_user',
                     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
                 ),
-                // array(
-                //     'id'    => 'account_rejected',
-                //     'title' => esc_html__( 'Account deleted email (user)', 'b3-onboarding' ),
-                // ),
             );
         }
         if ( in_array( $registration_type, [ 'open', 'email_activation' ] ) ) {
@@ -358,15 +346,29 @@
      * @return bool|false|mixed|string|void
      */
     function b3_get_email_logo() {
-        $custom_template = get_option( 'b3_email_logo', false );
+        $custom_logo = get_option( 'b3_email_logo', false );
 
-        if ( false != $custom_template ) {
-            $email_template = $custom_template;
+        if ( false != $custom_logo ) {
+            $email_logo = $custom_logo;
         } else {
-            $email_template = b3_default_email_logo();
+            $email_logo = b3_default_email_logo();
         }
 
-        return $email_template;
+        return $email_logo;
+    }
+
+
+    /**
+     * Return default email footer
+     *
+     * @TODO: fix user option
+     *
+     * @return bool|false|mixed|string|void
+     */
+    function b3_get_email_footer() {
+        $email_logo = b3_default_email_footer();
+
+        return $email_logo;
     }
 
 

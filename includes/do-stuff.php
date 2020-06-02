@@ -194,7 +194,7 @@
 
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
-            '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_default_email_footer() ), // @TODO: maybe create user input ?
+            '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
             '%email_styling%'     => apply_filters( 'b3_email_styling', b3_get_email_styling() ),
             '%home_url%'          => get_home_url(),
             '%logo%'              => apply_filters( 'b3_email_logo', b3_get_email_logo() ),
@@ -203,6 +203,10 @@
             '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
             '%user_login%'        => ( false != $user_data ) ? $user_data->user_login : false,
         );
+        // Replace %blog_name% again if used in the footer
+        if ( strpos( $replacements[ '%email_footer%' ], '%' ) !== false ) {
+            $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
+        }
         if ( false != $activation ) {
             $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
         }
@@ -221,7 +225,7 @@
     function b3_replace_template_styling( $message = false ) {
 
         if ( false != $message && 1 == get_option( 'b3_custom_emails', false ) ) {
-            $email_footer   = apply_filters( 'b3_email_footer_text', b3_default_email_footer() );
+            $email_footer   = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
             $email_styling  = apply_filters( 'b3_email_styling', b3_get_email_styling() );
             $email_template = apply_filters( 'b3_email_template', b3_get_email_template() );
 
