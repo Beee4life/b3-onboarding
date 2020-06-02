@@ -12,7 +12,7 @@
         // Do stuff when user is activated by admin
         $user_object = get_userdata( $user_id );
         $user_object->set_role( get_option( 'default_role' ) );
-        $blog_name   = get_option( 'blogname' ); // @TODO: add filter for sender name
+        $from_name   = get_option( 'blogname' ); // @TODO: add filter for sender name
         $from_email  = get_option( 'admin_email' ); // @TODO: add filter for sender email
         $to          = $user_object->user_email;
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
@@ -21,7 +21,7 @@
         $message     = strtr( $message, b3_replace_email_vars( [] ) );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
         $headers     = array(
-            'From: ' . $blog_name . ' <' . $from_email . '>',
+            'From: ' . $from_name . ' <' . $from_email . '>',
             'Content-Type: text/html; charset=UTF-8',
         );
 
@@ -41,7 +41,7 @@
         }
         // send activate email to user
         if ( 'email_activation' == get_option( 'b3_registration_type', false ) ) {
-            $blog_name  = get_option( 'blogname' ); // @TODO: add filter for sender name
+            $from_name  = get_option( 'blogname' ); // @TODO: add filter for sender name
             $from_email = get_option( 'admin_email' ); // @TODO: add filter for sender email
             $user       = get_userdata( $user_id );
             $to         = $user->user_email;
@@ -52,7 +52,7 @@
             $message    = htmlspecialchars_decode( stripslashes( $message ) );
 
             $headers = array(
-                'From: ' . $blog_name . ' <' . $from_email . '>',
+                'From: ' . $from_name . ' <' . $from_email . '>',
                 'Content-Type: text/html; charset=UTF-8',
             );
             wp_mail( $to, $subject, $message, $headers );

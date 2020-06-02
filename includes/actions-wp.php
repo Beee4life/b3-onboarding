@@ -106,7 +106,7 @@
     function b3_new_user_rejected( $user_id ) {
         if ( false == get_option( 'b3_disable_delete_user_email', false ) ) {
             $user_object = get_userdata( $user_id );
-            $blog_name   = get_option( 'blogname' ); // @TODO: add filter for sender name
+            $from_name   = get_option( 'blogname' ); // @TODO: add filter for sender name
             $from_email  = get_option( 'admin_email' ); // @TODO: add filter for sender email
             $message     = apply_filters( 'b3_get_account_rejected_message', b3_get_account_rejected_message() );
             $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
@@ -117,7 +117,7 @@
                 $message = strtr( $message, b3_replace_email_vars( [] ) );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
                 $headers = array(
-                    'From: ' . $blog_name . ' <' . $from_email . '>',
+                    'From: ' . $from_name . ' <' . $from_email . '>',
                     'Content-Type: text/html; charset=UTF-8',
                 );
                 wp_mail( $to, $subject, $message, $headers );
