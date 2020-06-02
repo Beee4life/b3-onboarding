@@ -7,7 +7,20 @@
     border:     1px dashed black;
     box-sizing: border-box;
     padding:    5px 10px;
+    position:   relative;
     word-wrap:  initial;
+}
+
+.b3_message .error__close {
+    position:      absolute;
+    font-size:     80%;
+    top:           0;
+    right:         0;
+    padding-top:   0.5em;
+    padding-right: 1em;
+}
+.b3_message .error__close:hover {
+    cursor: pointer;
 }
 
 .b3_page {

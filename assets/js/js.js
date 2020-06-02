@@ -4,8 +4,8 @@ jQuery(document).ready(function () {
 
 jQuery(function($){
 
-    $("span.b3_message-close").click(function(e){
-
+    $("span.error__close").click(function(e){
+        console.log('CLICK');
         $(".b3_message").fadeOut(750);
 
     });
