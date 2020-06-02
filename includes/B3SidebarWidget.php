@@ -26,8 +26,10 @@
          */
         public function widget( $args, $instance ) {
             $count_setting = 0;
-            $show_widget   = true;
             $show_account  = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
+            $show_widget   = true;
+            $show_settings = false;
+
             if ( $show_account ) {
                 $account_id   = b3_get_account_id();
                 $account_link = ( false != $account_id ) ? get_permalink( $account_id ) : false;
