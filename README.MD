@@ -4,9 +4,9 @@
 
 - [Introduction](#introduction)
 - [Version](#version)
+- [Features](#features)
 - [Installation](#installation)
 - [Activation](#activate)
-- [Features](#features)
 - [Shortcodes](#shortcodes)
 - [Hooks](#hooks)
 - [Filters](#filters)
@@ -32,6 +32,19 @@ This plugin gives you all the freedom to change/use different parts, without bei
 ### Version
 1.1.0 - released xx.06.20
 
+<a name="features"></a>
+### Features
+
+* custom forms/pages
+  * register
+  * login
+  * log out
+  * forgot password
+  * reset password
+  * account
+* (mostly) styled using [BEM](https://en.bem.info) methodology
+* change various settings on the fly with the use of hooks/filters
+
 <a name="installation"></a>
 ### Installation
 
@@ -48,19 +61,6 @@ If you activate this plugin the following will be done:
 * default setting/limits are set
 * 2 new user roles are created: b3_approval, b3_activation
 * access to admin is restricted for subscribers
-
-<a name="features"></a>
-### Features
-
-* custom forms/pages
-  * register
-  * login
-  * log out
-  * forgot password
-  * reset password
-  * account
-* (mostly) styled using [BEM](https://en.bem.info) methodology
-* change various settings on the fly with the use of hooks/filters.
 
 <a name="shortcodes"></a>
 ### Shortcodes
@@ -123,10 +123,10 @@ They will become available on the official website (soon).
 These are the things we have planned to add.
 * [X] add reCAPTCHA
 * [X] preset more html emails
+* [X] let user delete account
 * [ ] make it work with Multisite
 * [ ] make it more responsive
 * [ ] multi-page registration forms
-* [ ] let user delete account
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
@@ -139,7 +139,8 @@ These are the things we have planned to add.
 * style default Wordpress login page
 * force use own pages
 * added recaptcha (optional) for registration/login pages 
-
+* added option to delete user account
+* added option to add/change/remove logo from email header
 
 1.0.6
 * fix incorrect fallback link for forgot password
