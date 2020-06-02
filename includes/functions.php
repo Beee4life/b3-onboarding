@@ -76,7 +76,7 @@
      */
     function b3_get_all_custom_meta_keys() {
 
-        // @TODO: update this list
+        // @TODO: keep this list updated
         $meta_keys = array(
             'b3_account_activated_subject',
             'b3_account_activated_message',
@@ -114,6 +114,7 @@
             'b3_loginpage_logo_height',
             'b3_login_page_id', // set on activate
             'b3_logout_page_id', // set on activate
+            'b3_logo_in_email', // set on activate
             'b3_new_user_message',
             'b3_new_user_notification_addresses',
             'b3_new_user_subject',
@@ -361,7 +362,7 @@
     /**
      * Return default email footer
      *
-     * @TODO: fix user option
+     * @TODO: add user input option
      *
      * @return bool|false|mixed|string|void
      */
