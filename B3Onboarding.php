@@ -185,7 +185,7 @@
             private function b3_set_default_settings() {
 
                 if ( ! is_multisite() ) {
-                    update_option( 'users_can_register', '0' );
+                    update_option( 'users_can_register', 0 );
                     update_option( 'b3_registration_type', 'open' );
                 } else {
 
@@ -207,13 +207,14 @@
                     }
                 }
 
-                update_option( 'b3_dashboard_widget', '1' );
+                update_option( 'b3_dashboard_widget', 1 );
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
+                update_option( 'b3_logo_in_email', 1 );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
-                update_option( 'b3_sidebar_widget', '1' );
+                update_option( 'b3_sidebar_widget', 1 );
             }
 
             /**
@@ -972,7 +973,7 @@
                     $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
                     if ( ! $user || is_wp_error( $user ) ) {
                         if ( $user && $user->get_error_code() === 'expired_key' ) {
-                            // @TODO: maybe change page link
+                            // @TODO: maybe change link
                             wp_safe_redirect( home_url( 'login?login=expiredkey' ) );
                         } else {
                             wp_safe_redirect( home_url( 'login?login=invalidkey' ) );
@@ -1161,7 +1162,7 @@
                         $user = check_password_reset_key( $rp_key, $rp_login );
                         if ( ! $user || is_wp_error( $user ) ) {
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
-                                // @TODO: maybe change url
+                                // @TODO: maybe change link
                                 wp_safe_redirect( home_url( 'login?login=expiredkey' ) );
                             } else {
                                 wp_safe_redirect( home_url( 'login?login=invalidkey' ) );
@@ -1466,7 +1467,6 @@
                 );
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
-                // @TODO: IF ??
                 // Retrieve recaptcha key
                 $attributes[ 'recaptcha_site_key' ] = get_option( 'b3-onboarding-recaptcha-public-key', null );
 
@@ -1808,7 +1808,7 @@
              * Check post values of saved options
              */
             public function b3_check_options_post() {
-                // @TODO: check nonce
+                // @TODO: add nonce check
                 if ( isset( $_POST[ 'option_page' ] ) ) {
                     if ( ! isset( $_POST[ 'users_can_register' ] ) ) {
                         if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
