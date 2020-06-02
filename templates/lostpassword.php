@@ -23,7 +23,7 @@
                     get_bloginfo( 'name' )
                 ); ?>
             <?php } else { ?>
-                <?php esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-onboarding' ); ?>
+                <?php esc_html_e( "Enter your email address and we'll send you a link to set a password.", 'b3-onboarding' ); ?>
             <?php } ?>
         </p>
 
