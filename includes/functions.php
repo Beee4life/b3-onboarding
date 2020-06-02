@@ -444,10 +444,8 @@
     function b3_get_email_activation_message_user() {
         $b3_email_activation_message = get_option( 'b3_email_activation_message', false );
         if ( $b3_email_activation_message ) {
-            error_log('has message');
             $message = $b3_email_activation_message;
         } else {
-            error_log('not has message');
             $message = b3_default_email_activation_message();
         }
 
