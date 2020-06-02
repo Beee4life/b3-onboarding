@@ -182,6 +182,7 @@
     min-width:    200px;
 }
 
+.b3_select-page__create,
 .b3_select-page__edit,
 .b3_select-page__link {
     align-self:     center;
@@ -189,6 +190,7 @@
     vertical-align: middle;
 }
 
+.b3_select-page__create a,
 .b3_select-page__edit a,
 .b3_select-page__link a {
     text-decoration: none;

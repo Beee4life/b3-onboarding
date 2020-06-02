@@ -87,6 +87,13 @@
                         </select>
                     </div>
 
+                    <?php if ( false == $page[ 'page_id' ] ) { ?>
+                        <div class="b3_select-page__create">
+                            <a href="<?php echo admin_url( '/post-new.php?post_type=page' ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Add new', 'b3-onboarding' ); ?>">
+                                <?php esc_html_e( 'Add new', 'b3-onboarding' ); ?>
+                            </a>
+                        </div>
+                    <?php } ?>
                     <?php if ( false != get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
                         <div class="b3_select-page__edit">
                             <a href="<?php echo get_edit_post_link( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>">
