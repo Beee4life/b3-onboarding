@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-06-02 04:57+0200\n"
-"PO-Revision-Date: 2020-06-02 04:58+0200\n"
+"POT-Creation-Date: 2020-06-02 05:36+0200\n"
+"PO-Revision-Date: 2020-06-02 05:36+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -348,11 +348,11 @@ msgstr "Onboard instellingen"
 msgid "Pages"
 msgstr "Pagina's"
 
-#: includes/admin-page.php:55 includes/tabs.php:333
+#: includes/admin-page.php:55 includes/tabs.php:319
 msgid "Registration"
 msgstr "Registratie"
 
-#: includes/admin-page.php:63 includes/tabs.php:501
+#: includes/admin-page.php:63 includes/tabs.php:487
 msgid "Login page"
 msgstr "Login pagina"
 
@@ -361,11 +361,11 @@ msgstr "Login pagina"
 msgid "Emails"
 msgstr "Emails"
 
-#: includes/admin-page.php:78 includes/tabs.php:590
+#: includes/admin-page.php:78 includes/tabs.php:576
 msgid "Users"
 msgstr "Gebruikers"
 
-#: includes/admin-page.php:86 includes/tabs.php:662
+#: includes/admin-page.php:86 includes/tabs.php:648
 msgid "Integrations"
 msgstr "Integraties"
 
@@ -681,7 +681,7 @@ msgstr "Email bericht"
 #: includes/emails/welcome-email-user.php:25
 #, php-format
 msgid "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Preview</a>"
-msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Preview</a>"
+msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Bekijken</a>"
 
 #: includes/emails/account-activated.php:33
 #: includes/emails/account-approved.php:33
@@ -698,7 +698,7 @@ msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Preview</a>"
 #: includes/emails/request-access-admin.php:47
 #: includes/emails/request-access-user.php:33
 #: includes/emails/welcome-email-user.php:34 includes/tabs.php:243
-#: includes/tabs.php:467 includes/tabs.php:566
+#: includes/tabs.php:453 includes/tabs.php:552
 msgid "Save settings"
 msgstr "Bewaar instellingen"
 
@@ -1069,16 +1069,16 @@ msgid "Dashboard widget"
 msgstr "Dashboard widget"
 
 #: includes/tabs.php:116
-msgid "Check this box to activate the dashboard widget"
-msgstr "Selecteer deze checkbox om de dashboard widget te activeren"
+msgid "Check this box to activate the dashboard widget."
+msgstr "Selecteer deze checkbox om de dashboard widget te activeren."
 
 #: includes/tabs.php:122
 msgid "Sidebar widget"
 msgstr "Zijbalk widget"
 
 #: includes/tabs.php:125
-msgid "Check this box to activate the sidebar widget"
-msgstr "Selecteer deze checkbox om de zijbalk widget te activeren"
+msgid "Check this box to activate the sidebar widget."
+msgstr "Selecteer deze checkbox om de zijbalk widget te activeren."
 
 #: includes/tabs.php:130
 msgid "Save options"
@@ -1119,42 +1119,30 @@ msgid "Here you can set default email settings."
 msgstr "Hier kan je een standaard email opties instellen."
 
 #: includes/tabs.php:277
-msgid "Email format"
-msgstr "Email formaat"
-
-#: includes/tabs.php:281
-msgid "HTML"
-msgstr "HTML"
-
-#: includes/tabs.php:284
-msgid "Text"
-msgstr "Tekst"
-
-#: includes/tabs.php:291
 msgid "Custom email styling/template"
 msgstr "Eigen email stijl/template"
 
-#: includes/tabs.php:294
+#: includes/tabs.php:280
 msgid "Check this box to activate your own email styling and template."
 msgstr "Selecteer deze checkbox om je eigen emails/styling te activeren."
 
-#: includes/tabs.php:302
+#: includes/tabs.php:288
 msgid "Save all email settings"
 msgstr "Bewaar alle email instellingen"
 
-#: includes/tabs.php:324
+#: includes/tabs.php:310
 msgid "<a href=\"\">Click here</a> for more info."
 msgstr "<a href=\"\">Klik hier</a> voor meer informatie."
 
-#: includes/tabs.php:337
+#: includes/tabs.php:323
 msgid "Here you can set the main registration settings."
 msgstr "Hier kan je de registratie opties instellen."
 
-#: includes/tabs.php:346
+#: includes/tabs.php:332
 msgid "Registration options"
 msgstr "Registratie opties"
 
-#: includes/tabs.php:350
+#: includes/tabs.php:336
 #, php-format
 msgid ""
 "These settings are now the global settings and 'control' the values on the "
@@ -1163,7 +1151,7 @@ msgstr ""
 "Deze instellingen zijn globaal en beheren de waardes op de <a href=\"%s"
 "\">Netwerk beheer</a> pagina."
 
-#: includes/tabs.php:354
+#: includes/tabs.php:340
 #, php-format
 msgid ""
 "These settings are now the global settings and 'control' the values on the "
@@ -1172,156 +1160,156 @@ msgstr ""
 "Deze instellingen zijn globaal en beheren de waardes op de <a href=\"%s"
 "\">Instellingen</a> pagina."
 
-#: includes/tabs.php:370
+#: includes/tabs.php:356
 msgid "Registrations are disabled."
 msgstr "Registraties zijn uitgeschakeld."
 
-#: includes/tabs.php:377
+#: includes/tabs.php:363
 msgid "Activate first and last name"
 msgstr "Activeer voor- en achternaam"
 
-#: includes/tabs.php:380
+#: includes/tabs.php:366
 msgid "Check this box to activate first and last name during registration."
 msgstr ""
 "Selecteer deze checkbox om voor- en achternaam te activeren tijdens "
 "registratie."
 
-#: includes/tabs.php:387
+#: includes/tabs.php:373
 msgid "Make first and last name required"
 msgstr "Maak voor- en achternaam verplicht"
 
-#: includes/tabs.php:390
+#: includes/tabs.php:376
 msgid "Check this box to make first and last name required."
 msgstr "Selecteer deze checkbox om voor- en achternaam verplicht te maken."
 
-#: includes/tabs.php:397
+#: includes/tabs.php:383
 msgid "reCAPTCHA"
 msgstr "reCAPTCHA"
 
-#: includes/tabs.php:400
+#: includes/tabs.php:386
 msgid "Check this box to activate reCAPTCHA."
 msgstr "Selecteer deze checkbox om reCaptcha te activeren."
 
-#: includes/tabs.php:403
+#: includes/tabs.php:389
 msgid "See tab integrations"
 msgstr "Zie de Integraties tab"
 
-#: includes/tabs.php:412
+#: includes/tabs.php:398
 msgid "Add reCaptcha on login page"
 msgstr "Voeg reCaptcha toe op de login pagina"
 
-#: includes/tabs.php:415
+#: includes/tabs.php:401
 msgid "Check this box to add reCaptcha on the login form."
 msgstr "Selecteer deze checkbox om reCaptcha te activeren op de login pagina."
 
-#: includes/tabs.php:423
+#: includes/tabs.php:409
 msgid "Privacy checkbox"
 msgstr "Privacy checkbox"
 
-#: includes/tabs.php:426
+#: includes/tabs.php:412
 msgid "Check this box to activate a privacy checkbox"
 msgstr "Selecteer deze checkbox om een privacy optie te activeren"
 
-#: includes/tabs.php:433
+#: includes/tabs.php:419
 msgid "Privacy text"
 msgstr "Privacy tekst"
 
-#: includes/tabs.php:438
+#: includes/tabs.php:424
 msgid "Links are allowed."
 msgstr "Links zijn toegestaan."
 
-#: includes/tabs.php:445
+#: includes/tabs.php:431
 msgid "Privacy page"
 msgstr "Privacy pagina"
 
-#: includes/tabs.php:450
+#: includes/tabs.php:436
 msgid "Must be a valid URL (incl. http(s)://)"
 msgstr "Moet een geldige URL zijn (incl. http(s)://)"
 
-#: includes/tabs.php:459
+#: includes/tabs.php:445
 msgid "Disable action links"
 msgstr "Schakel actie links uit"
 
-#: includes/tabs.php:462
+#: includes/tabs.php:448
 msgid "Check this box to hide the action links on (custom) forms."
 msgstr ""
 "Selecteer deze checkbox om de actie links te verbergen op jouw formulieren."
 
-#: includes/tabs.php:506
+#: includes/tabs.php:492
 msgid "Here you can style the (default) WordPress login page."
 msgstr "Hier kan je een de (default) Wordpress pagina aanpassen."
 
-#: includes/tabs.php:517
+#: includes/tabs.php:503
 msgid "Choose a logo"
 msgstr "Kies een logo"
 
-#: includes/tabs.php:524
+#: includes/tabs.php:510
 msgid "Logo width"
 msgstr "Logo breedte"
 
-#: includes/tabs.php:526
+#: includes/tabs.php:512
 msgid "Default = 84 px. Max 320 px."
 msgstr "Standaard = 84 px. Max 320 px."
 
-#: includes/tabs.php:531
+#: includes/tabs.php:517
 msgid "Logo height"
 msgstr "Logo hoogte"
 
-#: includes/tabs.php:533
+#: includes/tabs.php:519
 msgid "Max 150 px."
 msgstr "Max 150 px."
 
-#: includes/tabs.php:538
+#: includes/tabs.php:524
 msgid "Background color"
 msgstr "Achtergrondkleur"
 
-#: includes/tabs.php:541
+#: includes/tabs.php:527
 msgid "Must be a hex value of 3 or 6 characters (without hashtag)"
 msgstr "Moet een het waarden zijn van 3 of 6 karakters (zonder hashtag)"
 
-#: includes/tabs.php:546
+#: includes/tabs.php:532
 msgid "Font size (in px)"
 msgstr "Lettergrootte (in px)"
 
-#: includes/tabs.php:548
+#: includes/tabs.php:534
 msgid "Default = 14px"
 msgstr "Standaard = 14px"
 
-#: includes/tabs.php:553
+#: includes/tabs.php:539
 msgid "Font family"
 msgstr "Lettertype"
 
-#: includes/tabs.php:556
+#: includes/tabs.php:542
 msgid "Select a font"
 msgstr "Selecteer een lettertype"
 
-#: includes/tabs.php:594
+#: includes/tabs.php:580
 msgid "This page contains restrictions settings for users."
 msgstr "Deze pagina bevat beperkingsinstellingen voor gebruikers."
 
-#: includes/tabs.php:602
+#: includes/tabs.php:588
 msgid "Front-end user approval"
 msgstr "Front-end gebruiker goedkeuring"
 
-#: includes/tabs.php:605
+#: includes/tabs.php:591
 msgid "Check this box to activate front-end user approval."
 msgstr ""
 "Selecteer deze checkbox om gebruikersmanagement op de front-end te activeren."
 
-#: includes/tabs.php:612
+#: includes/tabs.php:598
 msgid "Restrict admin access"
 msgstr "Beperk admin toegang"
 
-#: includes/tabs.php:620
+#: includes/tabs.php:606
 msgid "Which user roles do <b>not</b> have access to the Wordpress admin ?"
 msgstr ""
 "Welke gebruikersrollen hebben <b>geen</b> toegang tot de Wordpress admin ?"
 
-#: includes/tabs.php:639
+#: includes/tabs.php:625
 msgid "Save all user settings"
 msgstr "Bewaar alle gebruikersinstellingen"
 
-#: includes/tabs.php:665
+#: includes/tabs.php:651
 msgid ""
 "On this page you can add 3rd party integrations. Right now we only have a "
 "reCaptcha but more can be expected in the future."
@@ -1329,7 +1317,7 @@ msgstr ""
 "Op deze pagina kan je externe integraties toevoegen. Voorlopig hebben we "
 "alleen reCaptcha, maar meer kunnen worden verwacht in de toekomst."
 
-#: includes/tabs.php:667
+#: includes/tabs.php:653
 #, php-format
 msgid ""
 "Get your (free) reCaptcha keys <a href=\"%s\" target=\"_blank\" rel="
@@ -1338,47 +1326,47 @@ msgstr ""
 "Haal je (gratis) reCaptcha sleutels <a href=\"%s\" target=\"_blank\" rel="
 "\"noopener\">hier</a>."
 
-#: includes/tabs.php:671
+#: includes/tabs.php:657
 msgid "Recaptcha"
 msgstr "Recaptcha"
 
-#: includes/tabs.php:675
+#: includes/tabs.php:661
 msgid "Here you can set the v2 reCaptcha settings, v3 is not working (yet)."
 msgstr "Hier kan je reCaptcha v2 instellen, v3 werkt (nog) niet."
 
-#: includes/tabs.php:677
+#: includes/tabs.php:663
 msgid "Both keys must be entered, for reCaptcha to work."
 msgstr "Beide sleutels moeten worden ingevuld, om reCaptcha te laten werken."
 
-#: includes/tabs.php:685
+#: includes/tabs.php:671
 msgid "Public key"
 msgstr "Publieke sleutel"
 
-#: includes/tabs.php:694
+#: includes/tabs.php:680
 msgid "Secret key"
 msgstr "Prive sleutel"
 
-#: includes/tabs.php:703
+#: includes/tabs.php:689
 msgid "reCaptcha version"
 msgstr "reCaptcha versie"
 
-#: includes/tabs.php:707
+#: includes/tabs.php:693
 msgid "Choose"
 msgstr "Kiezen"
 
-#: includes/tabs.php:717
+#: includes/tabs.php:703
 msgid "Save reCaptcha"
 msgstr "reCaptcha opslaan"
 
-#: includes/tabs.php:747
+#: includes/tabs.php:733
 msgid "More integrations"
 msgstr "Meer integraties"
 
-#: includes/tabs.php:750
+#: includes/tabs.php:736
 msgid "We understand there might be a need for more integrations."
 msgstr "We begrijpen dat er mogelijk een wens is voor meer integraties."
 
-#: includes/tabs.php:752
+#: includes/tabs.php:738
 msgid ""
 "If we'll add more, the ones below are the first ones wer're gonna explore."
 msgstr ""
@@ -1575,6 +1563,15 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "Email format"
+#~ msgstr "Email formaat"
+
+#~ msgid "HTML"
+#~ msgstr "HTML"
+
+#~ msgid "Text"
+#~ msgstr "Tekst"
 
 #~ msgid "Add-ons"
 #~ msgstr "Add-ons"

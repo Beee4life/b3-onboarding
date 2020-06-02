@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-06-02 04:18+0200\n"
+"POT-Creation-Date: 2020-06-02 05:36+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -299,7 +299,7 @@ msgid "Admin only"
 msgstr ""
 
 #: includes/B3SidebarWidget.php:173
-msgid "Show user approval link"
+msgid "Show user management link"
 msgstr ""
 
 #: includes/B3SidebarWidget.php:178
@@ -335,11 +335,11 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
-#: includes/admin-page.php:55 includes/tabs.php:333
+#: includes/admin-page.php:55 includes/tabs.php:319
 msgid "Registration"
 msgstr ""
 
-#: includes/admin-page.php:63 includes/tabs.php:501
+#: includes/admin-page.php:63 includes/tabs.php:487
 msgid "Login page"
 msgstr ""
 
@@ -348,11 +348,11 @@ msgstr ""
 msgid "Emails"
 msgstr ""
 
-#: includes/admin-page.php:78 includes/tabs.php:590
+#: includes/admin-page.php:78 includes/tabs.php:576
 msgid "Users"
 msgstr ""
 
-#: includes/admin-page.php:86 includes/tabs.php:662
+#: includes/admin-page.php:86 includes/tabs.php:648
 msgid "Integrations"
 msgstr ""
 
@@ -666,7 +666,7 @@ msgstr ""
 #: includes/emails/request-access-admin.php:47
 #: includes/emails/request-access-user.php:33
 #: includes/emails/welcome-email-user.php:34 includes/tabs.php:243
-#: includes/tabs.php:467 includes/tabs.php:566
+#: includes/tabs.php:453 includes/tabs.php:552
 msgid "Save settings"
 msgstr ""
 
@@ -1017,7 +1017,7 @@ msgid "Dashboard widget"
 msgstr ""
 
 #: includes/tabs.php:116
-msgid "Check this box to activate the dashboard widget"
+msgid "Check this box to activate the dashboard widget."
 msgstr ""
 
 #: includes/tabs.php:122
@@ -1025,7 +1025,7 @@ msgid "Sidebar widget"
 msgstr ""
 
 #: includes/tabs.php:125
-msgid "Check this box to activate the sidebar widget"
+msgid "Check this box to activate the sidebar widget."
 msgstr ""
 
 #: includes/tabs.php:130
@@ -1061,257 +1061,245 @@ msgid "Links open in new window/tab."
 msgstr ""
 
 #: includes/tabs.php:269
-msgid "Here you can set some default email settings."
+msgid "Here you can set default email settings."
 msgstr ""
 
 #: includes/tabs.php:277
-msgid "Email format"
-msgstr ""
-
-#: includes/tabs.php:281
-msgid "HTML"
-msgstr ""
-
-#: includes/tabs.php:284
-msgid "Text"
-msgstr ""
-
-#: includes/tabs.php:291
 msgid "Custom email styling/template"
 msgstr ""
 
-#: includes/tabs.php:294
-msgid "Check this box to activate your own email styling and template"
+#: includes/tabs.php:280
+msgid "Check this box to activate your own email styling and template."
 msgstr ""
 
-#: includes/tabs.php:302
+#: includes/tabs.php:288
 msgid "Save all email settings"
 msgstr ""
 
-#: includes/tabs.php:324
+#: includes/tabs.php:310
 msgid "<a href=\"\">Click here</a> for more info."
 msgstr ""
 
-#: includes/tabs.php:337
+#: includes/tabs.php:323
 msgid "Here you can set the main registration settings."
 msgstr ""
 
-#: includes/tabs.php:346
+#: includes/tabs.php:332
 msgid "Registration options"
 msgstr ""
 
-#: includes/tabs.php:350
+#: includes/tabs.php:336
 #, php-format
 msgid ""
 "These settings are now the global settings and 'control' the values on the "
 "<a href=\"%s\">Network admin</a> page."
 msgstr ""
 
-#: includes/tabs.php:354
+#: includes/tabs.php:340
 #, php-format
 msgid ""
 "These settings are now the global settings and 'control' the values on the "
 "<a href=\"%s\">Settings page</a>."
 msgstr ""
 
-#: includes/tabs.php:370
+#: includes/tabs.php:356
 msgid "Registrations are disabled."
 msgstr ""
 
-#: includes/tabs.php:377
+#: includes/tabs.php:363
 msgid "Activate first and last name"
 msgstr ""
 
-#: includes/tabs.php:380
-msgid "Check this box to activate first and last name during registration"
+#: includes/tabs.php:366
+msgid "Check this box to activate first and last name during registration."
 msgstr ""
 
-#: includes/tabs.php:387
+#: includes/tabs.php:373
 msgid "Make first and last name required"
 msgstr ""
 
-#: includes/tabs.php:390
-msgid "Check this box to make first and last name required"
+#: includes/tabs.php:376
+msgid "Check this box to make first and last name required."
 msgstr ""
 
-#: includes/tabs.php:397
+#: includes/tabs.php:383
 msgid "reCAPTCHA"
 msgstr ""
 
-#: includes/tabs.php:400
-msgid "Check this box to activate reCAPTCHA"
+#: includes/tabs.php:386
+msgid "Check this box to activate reCAPTCHA."
 msgstr ""
 
-#: includes/tabs.php:403
+#: includes/tabs.php:389
 msgid "See tab integrations"
 msgstr ""
 
-#: includes/tabs.php:412
+#: includes/tabs.php:398
 msgid "Add reCaptcha on login page"
 msgstr ""
 
-#: includes/tabs.php:415
+#: includes/tabs.php:401
 msgid "Check this box to add reCaptcha on the login form."
 msgstr ""
 
-#: includes/tabs.php:423
+#: includes/tabs.php:409
 msgid "Privacy checkbox"
 msgstr ""
 
-#: includes/tabs.php:426
+#: includes/tabs.php:412
 msgid "Check this box to activate a privacy checkbox"
 msgstr ""
 
-#: includes/tabs.php:433
+#: includes/tabs.php:419
 msgid "Privacy text"
 msgstr ""
 
-#: includes/tabs.php:438
+#: includes/tabs.php:424
 msgid "Links are allowed."
 msgstr ""
 
-#: includes/tabs.php:445
+#: includes/tabs.php:431
 msgid "Privacy page"
 msgstr ""
 
-#: includes/tabs.php:450
+#: includes/tabs.php:436
 msgid "Must be a valid URL (incl. http(s)://)"
 msgstr ""
 
-#: includes/tabs.php:459
+#: includes/tabs.php:445
 msgid "Disable action links"
 msgstr ""
 
-#: includes/tabs.php:462
-msgid "Check this box to hide the action links on (custom) forms"
+#: includes/tabs.php:448
+msgid "Check this box to hide the action links on (custom) forms."
 msgstr ""
 
-#: includes/tabs.php:506
+#: includes/tabs.php:492
 msgid "Here you can style the (default) WordPress login page."
 msgstr ""
 
-#: includes/tabs.php:517
+#: includes/tabs.php:503
 msgid "Choose a logo"
 msgstr ""
 
-#: includes/tabs.php:524
+#: includes/tabs.php:510
 msgid "Logo width"
 msgstr ""
 
-#: includes/tabs.php:526
+#: includes/tabs.php:512
 msgid "Default = 84 px. Max 320 px."
 msgstr ""
 
-#: includes/tabs.php:531
+#: includes/tabs.php:517
 msgid "Logo height"
 msgstr ""
 
-#: includes/tabs.php:533
+#: includes/tabs.php:519
 msgid "Max 150 px."
 msgstr ""
 
-#: includes/tabs.php:538
+#: includes/tabs.php:524
 msgid "Background color"
 msgstr ""
 
-#: includes/tabs.php:541
+#: includes/tabs.php:527
 msgid "Must be a hex value of 3 or 6 characters (without hashtag)"
 msgstr ""
 
-#: includes/tabs.php:546
+#: includes/tabs.php:532
 msgid "Font size (in px)"
 msgstr ""
 
-#: includes/tabs.php:548
+#: includes/tabs.php:534
 msgid "Default = 14px"
 msgstr ""
 
-#: includes/tabs.php:553
+#: includes/tabs.php:539
 msgid "Font family"
 msgstr ""
 
-#: includes/tabs.php:556
+#: includes/tabs.php:542
 msgid "Select a font"
 msgstr ""
 
-#: includes/tabs.php:594
+#: includes/tabs.php:580
 msgid "This page contains restrictions settings for users."
 msgstr ""
 
-#: includes/tabs.php:602
+#: includes/tabs.php:588
 msgid "Front-end user approval"
 msgstr ""
 
-#: includes/tabs.php:605
-msgid "Check this box to activate front-end user approval"
+#: includes/tabs.php:591
+msgid "Check this box to activate front-end user approval."
 msgstr ""
 
-#: includes/tabs.php:612
+#: includes/tabs.php:598
 msgid "Restrict admin access"
 msgstr ""
 
-#: includes/tabs.php:620
+#: includes/tabs.php:606
 msgid "Which user roles do <b>not</b> have access to the Wordpress admin ?"
 msgstr ""
 
-#: includes/tabs.php:639
+#: includes/tabs.php:625
 msgid "Save all user settings"
 msgstr ""
 
-#: includes/tabs.php:665
+#: includes/tabs.php:651
 msgid ""
 "On this page you can add 3rd party integrations. Right now we only have a "
 "reCaptcha but more can be expected in the future."
 msgstr ""
 
-#: includes/tabs.php:667
+#: includes/tabs.php:653
 #, php-format
 msgid ""
 "Get your (free) reCaptcha keys <a href=\"%s\" target=\"_blank\" rel="
 "\"noopener\">here</a>."
 msgstr ""
 
-#: includes/tabs.php:671
+#: includes/tabs.php:657
 msgid "Recaptcha"
 msgstr ""
 
-#: includes/tabs.php:675
+#: includes/tabs.php:661
 msgid "Here you can set the v2 reCaptcha settings, v3 is not working (yet)."
 msgstr ""
 
-#: includes/tabs.php:677
+#: includes/tabs.php:663
 msgid "Both keys must be entered, for reCaptcha to work."
 msgstr ""
 
-#: includes/tabs.php:685
+#: includes/tabs.php:671
 msgid "Public key"
 msgstr ""
 
-#: includes/tabs.php:694
+#: includes/tabs.php:680
 msgid "Secret key"
 msgstr ""
 
-#: includes/tabs.php:703
+#: includes/tabs.php:689
 msgid "reCaptcha version"
 msgstr ""
 
-#: includes/tabs.php:707
+#: includes/tabs.php:693
 msgid "Choose"
 msgstr ""
 
-#: includes/tabs.php:717
+#: includes/tabs.php:703
 msgid "Save reCaptcha"
 msgstr ""
 
-#: includes/tabs.php:747
+#: includes/tabs.php:733
 msgid "More integrations"
 msgstr ""
 
-#: includes/tabs.php:750
+#: includes/tabs.php:736
 msgid "We understand there might be a need for more integrations."
 msgstr ""
 
-#: includes/tabs.php:752
+#: includes/tabs.php:738
 msgid ""
 "If we'll add more, the ones below are the first ones wer're gonna explore."
 msgstr ""
