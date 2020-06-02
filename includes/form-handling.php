@@ -229,7 +229,7 @@
 
                     update_option( 'b3_loginpage_font_family', $_POST[ 'b3_loginpage_font_family' ] );
                     update_option( 'b3_loginpage_font_size', $_POST[ 'b3_loginpage_font_size' ] );
-                    update_option( 'b3_loginpage_logo', $_POST[ 'b3_loginpage_logo' ] );
+                    update_option( 'b3_login_logo', $_POST[ 'b3_login_logo' ] );
 
                     $max_width  = 320;
                     $max_height = 150;
@@ -257,6 +257,11 @@
                     return;
                 } else {
 
+                    update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
+                    update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
+                    update_option( 'b3_forgot_password_message', htmlspecialchars( $_POST[ 'b3_forgot_password_message' ] ), true );
+                    update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
+
                     if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == $_POST[ 'b3_activate_custom_emails' ] ) {
                         update_option( 'b3_custom_emails', 1, true );
                     } else {
@@ -269,17 +274,18 @@
                         delete_option( 'b3_logo_in_email' );
                     }
 
+                    if ( isset( $_POST[ 'b3_email_logo' ] ) && ! empty( $_POST[ 'b3_email_logo' ] ) ) {
+                        update_option( 'b3_email_logo', $_POST[ 'b3_email_logo' ], true );
+                    } else {
+                        delete_option( 'b3_email_logo' );
+                    }
+
                     if ( isset( $_POST[ 'b3_email_styling' ] ) ) {
                         update_option( 'b3_email_styling', $_POST[ 'b3_email_styling' ], true );
                     }
                     if ( isset( $_POST[ 'b3_email_template' ] ) ) {
                         update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), true );
                     }
-
-                    update_option( 'b3_forgot_password_message', htmlspecialchars( $_POST[ 'b3_forgot_password_message' ] ), true );
-                    update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
-                    update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
-                    update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
 
                     if ( isset( $_POST[ 'b3_disable_admin_notification_password_change' ] ) && 1 == $_POST[ 'b3_disable_admin_notification_password_change' ] ) {
                         update_option( 'b3_disable_admin_notification_password_change', 1, true );

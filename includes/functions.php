@@ -109,7 +109,7 @@
             'b3_loginpage_bg_color',
             'b3_loginpage_font_family',
             'b3_loginpage_font_size',
-            'b3_loginpage_logo',
+            'b3_login_logo',
             'b3_loginpage_logo_width',
             'b3_loginpage_logo_height',
             'b3_login_page_id', // set on activate
@@ -353,6 +353,24 @@
             $email_logo = $custom_logo;
         } else {
             $email_logo = b3_default_email_logo();
+        }
+
+        return $email_logo;
+    }
+
+
+    /**
+     * Return user email logo and default logo if false
+     *
+     * @return bool|false|mixed|string|void
+     */
+    function b3_get_login_logo() {
+        $custom_logo = get_option( 'b3_login_logo', false );
+
+        if ( false != $custom_logo ) {
+            $email_logo = $custom_logo;
+        } else {
+            $email_logo = b3_default_login_logo();
         }
 
         return $email_logo;

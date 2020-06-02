@@ -221,21 +221,25 @@
     width: 150px;
 }
 
-.b3 input#b3_loginpage_logo {
+.b3 input#b3_login_logo {
     width: 500px;
 }
 
 /* Emails page */
 .b3__postbox {
-    /* copy of .postbox */
+    /* copy of .postbox with margin change bottom to top */
     background:    #fff;
     border:        1px solid #ccd0d4;
     box-shadow:    0 1px 1px rgba(0, 0, 0, 0.04);
     line-height:   1;
-    margin-bottom: 20px;
+    margin-top:    20px;
     min-width:     255px;
     padding:       0;
     position:      relative;
+}
+
+.b3__postbox:last-child {
+    margin-bottom: 20px;
 }
 
 .b3 table.b3_table--emails th {

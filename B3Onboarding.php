@@ -211,6 +211,7 @@
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_logo_in_email', 1 );
+                update_option( 'b3_login_logo', b3_default_login_logo() );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
@@ -299,7 +300,7 @@
                 $bg_color        = get_option( 'b3_loginpage_bg_color', false );
                 $font_family     = get_option( 'b3_loginpage_font_family', false );
                 $font_size       = get_option( 'b3_loginpage_font_size', false );
-                $logo            = apply_filters( 'b3_login_logo', b3_get_email_logo() );
+                $logo            = apply_filters( 'b3_login_logo', b3_get_login_logo() );
                 $logo_height     = get_option( 'b3_loginpage_logo_height', false );
                 $logo_width      = get_option( 'b3_loginpage_logo_width', false );
                 $recaptcha       = get_option( 'b3_recaptcha', false );
