@@ -70,7 +70,7 @@
             <?php esc_html_e( 'Here you can set various global settings for the plugin.', 'b3-onboarding' ); ?>
         </p>
 
-        <form name="" class="" action="" method="post">
+        <form action="" method="post">
             <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
 
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
@@ -204,7 +204,7 @@
 
         ob_start();
         ?>
-        <form action="" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=pages" method="post">
             <input name="b3_pages_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>" />
             <h2>
                 <?php esc_html_e( 'Pages', 'b3-onboarding' ); ?>
@@ -252,7 +252,7 @@
                 </div>
             <?php } ?>
             <p><small><?php esc_html_e( 'Links open in new window/tab.', 'b3-onboarding' ); ?></small></p>
-            <input type="submit" class="button button-primary" name="" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>">
+            <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>">
         </form>
         <?php
         $result = ob_get_clean();
@@ -287,7 +287,7 @@
             <?php esc_html_e( 'Here you can set some default email settings.', 'b3-onboarding' ); ?>
         </p>
 
-        <form action="" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=emails" method="post">
             <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
 
             <?php b3_get_settings_field_open(1); ?>
@@ -361,7 +361,7 @@
             <?php esc_html_e( 'Here you can set the main registration settings.', 'b3-onboarding' ); ?>
         </p>
 
-        <form name="" class="" action="" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=registration" method="post">
             <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
 
@@ -542,7 +542,7 @@
             <?php esc_html_e( 'Here you can style the (default) WordPress login page.', 'b3-onboarding' ); ?>
         </p>
 
-        <form action="" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=loginpage" method="post">
             <input name="b3_loginpage_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-loginpage-nonce' ); ?>">
 
             <?php b3_get_settings_field_open(); ?>
@@ -636,7 +636,7 @@
             <?php esc_html_e( 'This page contains restrictions settings for users.', 'b3-onboarding' ); ?>
         </p>
 
-        <form action="" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=users" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
             <?php b3_get_settings_field_open(); ?>
@@ -729,7 +729,7 @@
             <?php esc_html_e( 'Both keys must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
         </p>
 
-        <form name="" class="" action="" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=integrations" method="post">
             <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
 
             <?php b3_get_settings_field_open(); ?>
