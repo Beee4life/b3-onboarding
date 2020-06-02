@@ -3,8 +3,8 @@
         $content = false;
         $subject = false;
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $blog_name = get_option( 'blogname' );
-            $content   = b3_default_email_content();
+            $hide_logo = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $content   = b3_default_email_content( $hide_logo );
             $preview   = $_GET[ 'preview' ];
             $user      = get_userdata( get_current_user_id() );
 
@@ -79,7 +79,8 @@
     <?php } ?>
 
     <style type="text/css">
-        <?php echo include( 'default-email-styling.css' ); // @TODO: use custom css if entered ?>
+        <?php // @TODO: use custom css if entered ?>
+        <?php echo include( 'default-email-styling.css' ); ?>
     </style>
 
     <?php echo $content; ?>

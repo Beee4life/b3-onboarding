@@ -16,8 +16,12 @@
      *
      * @return false|string
      */
-    function b3_default_email_template() {
+    function b3_default_email_template( $hide_logo = false ) {
         $default_template = file_get_contents( dirname(__FILE__) . '/default-email-template.html' );
+
+        if ( true == $hide_logo ) {
+            $default_template = file_get_contents( dirname(__FILE__) . '/default-email-template-no-logo.html' );
+        }
 
         return $default_template;
     }
@@ -27,8 +31,12 @@
      *
      * @return false|string
      */
-    function b3_default_email_content() {
+    function b3_default_email_content( $hide_logo = false ) {
         $default_content = file_get_contents( dirname(__FILE__) . '/default-email-content.html' );
+
+        if ( true == $hide_logo ) {
+            $default_content = file_get_contents( dirname(__FILE__) . '/default-email-content-no-logo.html' );
+        }
 
         return $default_content;
     }

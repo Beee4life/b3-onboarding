@@ -257,11 +257,16 @@
                     return;
                 } else {
 
-                    // Custom emails
                     if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == $_POST[ 'b3_activate_custom_emails' ] ) {
                         update_option( 'b3_custom_emails', 1, true );
                     } else {
                         delete_option( 'b3_custom_emails' );
+                    }
+
+                    if ( isset( $_POST[ 'b3_logo_in_email' ] ) && 1 == $_POST[ 'b3_logo_in_email' ] ) {
+                        update_option( 'b3_logo_in_email', 1, true );
+                    } else {
+                        delete_option( 'b3_logo_in_email' );
                     }
 
                     if ( isset( $_POST[ 'b3_email_styling' ] ) ) {
@@ -333,7 +338,7 @@
 
                     }
 
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Email settings saved', 'b3-onboarding' ) );
 
                     return;
                 }
@@ -361,7 +366,7 @@
                         delete_option( 'b3_restrict_admin' );
                     }
 
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'User settings saved', 'b3-onboarding' ) );
 
                     return;
                 }
@@ -378,7 +383,7 @@
                     update_option( 'b3_recaptcha_secret', $_POST[ 'b3_recaptcha_secret' ], true );
                     update_option( 'b3_recaptcha_version', $_POST[ 'b3_recaptcha_version' ], true );
 
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );
 
                     return;
                 }
@@ -405,7 +410,7 @@
                 }
 
                 if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
                 } else {

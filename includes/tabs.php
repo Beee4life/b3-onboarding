@@ -258,6 +258,7 @@
 
         $custom_emails = get_option( 'b3_custom_emails', false );
         $email_boxes   = b3_get_email_boxes();
+        $logo_in_email = get_option( 'b3_logo_in_email', false );
         ob_start();
         ?>
         <h2>
@@ -277,6 +278,15 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_logo_in_email"><?php esc_html_e( 'Add logo in email', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php if ( $logo_in_email ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a logo in the email header.', 'b3-onboarding' ); ?>
                 </div>
             <?php b3_get_close(); ?>
 
