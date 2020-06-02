@@ -42,7 +42,7 @@
                                     <?php
                                         printf(
                                             esc_html__( 'There is a pending change of your e-mail to %1$s. <a href="%2$s">Cancel</a>', 'b3-onboarding' ),
-                                            '<code>' . $new_email['newemail'] . '</code>',
+                                            '<code>' . $new_email[ 'newemail' ] . '</code>',
                                             esc_url( self_admin_url( 'profile.php?dismiss=' . $current_user->ID . '_new_email' ) )
                                         );
                                     ?>
