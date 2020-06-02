@@ -53,11 +53,20 @@
     }
 
     /**
-     * Default email footer
+     * Default email logo
      *
      * @return false|string
      */
     function b3_default_email_logo() {
+        return B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png';
+    }
+
+    /**
+     * Default login logo
+     *
+     * @return false|string
+     */
+    function b3_default_login_logo() {
         return B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png';
     }
 
