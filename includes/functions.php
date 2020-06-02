@@ -78,8 +78,8 @@
 
         // @TODO: keep this list updated
         $meta_keys = array(
-            'b3_account_activated_subject',
             'b3_account_activated_message',
+            'b3_account_activated_subject',
             'b3_account_approved_message',
             'b3_account_approved_subject',
             'b3_account_page_id', // set on activate
@@ -96,8 +96,8 @@
             'b3_dashboard_widget', // set on activate
             'b3_debug_info',
             'b3_disable_action_links',
-            'b3_email_activation_subject',
             'b3_email_activation_message',
+            'b3_email_activation_subject',
             'b3_email_styling', // set on activate
             'b3_email_template', // set on activate
             'b3_first_last_required',
@@ -106,15 +106,15 @@
             'b3_forgot_password_subject',
             'b3_forgotpass_page_id', // set on activate
             'b3_front_end_approval',
+            'b3_login_logo',
+            'b3_login_page_id', // set on activate
             'b3_loginpage_bg_color',
             'b3_loginpage_font_family',
             'b3_loginpage_font_size',
-            'b3_login_logo',
             'b3_loginpage_logo_width',
             'b3_loginpage_logo_height',
-            'b3_login_page_id', // set on activate
-            'b3_logout_page_id', // set on activate
             'b3_logo_in_email', // set on activate
+            'b3_logout_page_id', // set on activate
             'b3_new_user_message',
             'b3_new_user_notification_addresses',
             'b3_new_user_subject',
@@ -122,11 +122,11 @@
             'b3_notification_sender_name', // set on activate
             'b3_privacy_page',
             'b3_recaptcha',
-            'b3_register_page_id', // set on activate
-            'b3_registration_type', // set on activate
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
             'b3_recaptcha_version',
+            'b3_register_page_id', // set on activate
+            'b3_registration_type', // set on activate
             'b3_request_access_message_admin',
             'b3_request_access_message_user',
             'b3_request_access_notification_addresses',
@@ -136,6 +136,7 @@
             'b3_restrict_admin', // set on activate
             'b3_sidebar_widget', // set on activate
             'b3_style_default_pages',
+            'b3_users_may_delete',
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
         );
