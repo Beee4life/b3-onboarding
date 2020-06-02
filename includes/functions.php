@@ -310,13 +310,13 @@
      *
      * @return bool|false|mixed|string|void
      */
-    function b3_get_email_styling() {
+    function b3_get_email_styling( $link_color = false ) {
         $custom_css = get_option( 'b3_email_styling', false );
 
         if ( false != $custom_css ) {
             $email_style = $custom_css;
         } else {
-            $email_style = b3_default_email_styling();
+            $email_style = b3_default_email_styling( $link_color );
         }
 
         return $email_style;
@@ -368,12 +368,12 @@
         $custom_logo = get_option( 'b3_login_logo', false );
 
         if ( false != $custom_logo ) {
-            $email_logo = $custom_logo;
+            $login_logo = $custom_logo;
         } else {
-            $email_logo = b3_default_login_logo();
+            $login_logo = b3_default_login_logo();
         }
 
-        return $email_logo;
+        return $login_logo;
     }
 
 

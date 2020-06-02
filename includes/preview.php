@@ -3,10 +3,11 @@
         $content = false;
         $subject = false;
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
-            $content   = b3_default_email_content( $hide_logo );
-            $preview   = $_GET[ 'preview' ];
-            $user      = get_userdata( get_current_user_id() );
+            $hide_logo  = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $content    = b3_default_email_content( $hide_logo );
+            $link_color = apply_filters( 'b3_email_link_color', get_option( 'b3_email_link_color', false ) );
+            $preview    = $_GET[ 'preview' ];
+            $user       = get_userdata( get_current_user_id() );
 
             $lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit iaculis enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.
             <br /><br />
@@ -77,7 +78,7 @@
     <?php } ?>
 
     <style type="text/css">
-        <?php echo b3_get_email_styling(); ?>
+        <?php echo b3_get_email_styling( $link_color ); ?>
     </style>
 
     <?php echo $content; ?>

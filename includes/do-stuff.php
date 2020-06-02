@@ -155,7 +155,7 @@
 
 
     /**
-     * Replace vars in email
+     * Replace vars in email message
      *
      * @param $vars
      *
@@ -195,7 +195,7 @@
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
-            '%email_styling%'     => apply_filters( 'b3_email_styling', b3_get_email_styling() ),
+            // '%email_styling%'     => apply_filters( 'b3_email_styling', b3_get_email_styling() ),
             '%home_url%'          => get_home_url(),
             '%logo%'              => apply_filters( 'b3_email_logo', b3_get_email_logo() ),
             '%registration_date%' => $registration_date,
@@ -224,10 +224,11 @@
      */
     function b3_replace_template_styling( $message = false ) {
 
-        if ( false != $message && 1 == get_option( 'b3_custom_emails', false ) ) {
-            $email_footer   = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
-            $email_styling  = apply_filters( 'b3_email_styling', b3_get_email_styling() );
-            $email_template = apply_filters( 'b3_email_template', b3_get_email_template() );
+        if ( false != $message ) {
+            $email_footer     = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
+            $email_link_color = apply_filters( 'b3_email_link_color', b3_get_login_logo() );
+            $email_styling    = apply_filters( 'b3_email_styling', b3_get_email_styling( $email_link_color ) );
+            $email_template   = apply_filters( 'b3_email_template', b3_get_email_template() );
 
             if ( false != $email_styling && false != $email_template ) {
                 $replace_vars = [

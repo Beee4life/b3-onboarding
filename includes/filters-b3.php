@@ -28,3 +28,18 @@
         return $footer_text;
     }
     // add_filter( 'b3_email_footer_text', 'b3_email_footer_text' );
+
+    /**
+     * Override link color in email
+     *
+     * @param $link_color
+     *
+     * @return string
+     */
+    function b3_email_link_color( $link_color ) {
+
+        $link_color = '6d32a8'; // purple
+
+        return $link_color;
+    }
+    // add_filter( 'b3_email_link_color', 'b3_email_link_color' );
