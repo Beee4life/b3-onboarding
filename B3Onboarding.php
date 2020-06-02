@@ -151,6 +151,16 @@
                 include( 'includes/get-stuff.php' );
                 include( 'includes/help-tabs.php' );
                 include( 'includes/tabs.php' );
+                
+                // add_action( 'init', array( $this, 'b3_test' ) );
+            }
+
+
+            public function b3_test() {
+
+                $style = b3_default_email_styling( $link_color = 'FFA' );
+                echo '<pre>'; var_dump($style); echo '</pre>'; exit;
+
             }
 
 
