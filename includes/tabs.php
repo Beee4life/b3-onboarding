@@ -60,12 +60,6 @@
             <?php esc_html_e( 'Settings', 'b3-onboarding' ); ?>
         </h2>
 
-        <?php if ( isset( $_GET[ 'success' ] ) && 'settings_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-            </p>
-        <?php } ?>
-
         <p>
             <?php esc_html_e( 'Here you can set various global settings for the plugin.', 'b3-onboarding' ); ?>
         </p>
@@ -210,12 +204,6 @@
                 <?php esc_html_e( 'Pages', 'b3-onboarding' ); ?>
             </h2>
 
-            <?php if ( isset( $_GET[ 'success' ] ) && 'pages_saved' == $_GET[ 'success' ] ) { ?>
-                <p class="b3_message">
-                    <?php esc_html_e( 'Pages saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-                </p>
-            <?php } ?>
-
             <p>
                 <?php esc_html_e( "Here you can set which pages are assigned for the various 'actions'.", "b3-onboarding" ); ?>
             </p>
@@ -276,12 +264,6 @@
         <h2>
             <?php esc_html_e( 'Emails', 'b3-onboarding' ); ?>
         </h2>
-
-        <?php if ( isset( $_GET[ 'success' ] ) && 'emails_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Email settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-            </p>
-        <?php } ?>
 
         <p>
             <?php esc_html_e( 'Here you can set some default email settings.', 'b3-onboarding' ); ?>
@@ -350,12 +332,6 @@
         <h2>
             <?php esc_html_e( 'Registration', 'b3-onboarding' ); ?>
         </h2>
-
-        <?php if ( isset( $_GET[ 'success' ] ) && 'registration_settings_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Registration settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-            </p>
-        <?php } ?>
 
         <p>
             <?php esc_html_e( 'Here you can set the main registration settings.', 'b3-onboarding' ); ?>
@@ -525,18 +501,6 @@
             <?php esc_html_e( 'Login page', 'b3-onboarding' ); ?>
         </h2>
 
-        <?php if ( isset( $_GET[ 'success' ] ) && 'loginpage_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Login page settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-            </p>
-        <?php } elseif ( isset( $_GET[ 'errors' ] ) ) { ?>
-            <?php if ( isset( $_GET[ 'errors' ] ) ) { ?>
-                <p class="b3_message">
-                    <?php esc_html_e( 'Error: hex codes must be 3 or 6 chracters in length', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-                </p>
-            <?php } ?>
-        <?php } ?>
-
         <p>
             <?php // @TODO: set if for if custom login page is set ?>
             <?php esc_html_e( 'Here you can style the (default) WordPress login page.', 'b3-onboarding' ); ?>
@@ -626,12 +590,6 @@
             <?php esc_html_e( 'Users', 'b3-onboarding' ); ?>
         </h2>
 
-        <?php if ( isset( $_GET[ 'success' ] ) && 'user_settings_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-            </p>
-        <?php } ?>
-
         <p>
             <?php esc_html_e( 'This page contains restrictions settings for users.', 'b3-onboarding' ); ?>
         </p>
@@ -699,7 +657,6 @@
         $public_key        = get_option( 'b3_recaptcha_public' );
         $recaptcha_version = get_option( 'b3_recaptcha_version' );
         $secret_key        = get_option( 'b3_recaptcha_secret' );
-        $show_recaptcha    = ( true == get_option( 'b3_recaptcha' ) ) ? true : false;
         ?>
         <h2>
             <?php esc_html_e( 'Integrations', 'b3-onboarding' ); ?>
@@ -710,18 +667,9 @@
             <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
         </p>
 
-            <h3>
-                <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
-            </h3>
-
-        <?php if ( isset( $_GET[ 'success' ] ) && 'recaptcha_saved' == $_GET[ 'success' ] ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Recaptcha settings saved', 'b3-onboarding' ); ?> <span class="b3_message-close"><?php esc_html_e( 'Close', 'b3-onboarding' ); ?></span>
-            </p>
-        <?php } ?>
-
-        <?php if ( $show_recaptcha ) { ?>
-        <?php } ?>
+        <h3>
+            <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
+        </h3>
 
         <p>
             <?php esc_html_e( 'Here you can set the v2 reCaptcha settings, v3 is not working (yet).', 'b3-onboarding' ); ?>
