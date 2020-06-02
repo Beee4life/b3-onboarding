@@ -5,8 +5,17 @@
      *
      * @return false|string
      */
-    function b3_default_email_styling() {
+    function b3_default_email_styling( $link_color = false ) {
         $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
+
+        if ( false != $link_color ) {
+            $default_css .= "\n";
+            $default_css .= '#b3_email_main a:link,' . "\n";
+            $default_css .= '#b3_email_main a:visited,' . "\n";
+            $default_css .= '#b3_email_main a:active {' . "\n";
+            $default_css .= '    color: #' . $link_color . ";\n";
+            $default_css .= '}' . "\n";
+        }
 
         return $default_css;
     }
