@@ -284,6 +284,7 @@
                 // exit;
 
             } elseif ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
+                // @TODO: add real errors here
 
                 $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=emails' );
 
@@ -322,7 +323,7 @@
                         delete_option( 'b3_disable_admin_notification_new_user' );
                     }
 
-                    if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+                    if ( in_array( get_option( 'b3_registration_type', [] ), [ 'open', 'email_activation' ] ) ) {
                         if ( isset( $_POST[ 'b3_account_activated_subject' ] ) ) {
                             update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ], true );
                         }
@@ -348,7 +349,7 @@
 
                     }
 
-                    if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                    if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
                         update_option( 'b3_account_approved_message', htmlspecialchars( $_POST[ 'b3_account_approved_message' ], ENT_QUOTES ), true );
                         update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ], true );
                         update_option( 'b3_request_access_message_admin', htmlspecialchars( $_POST[ 'b3_request_access_message_admin' ] ), true );
@@ -374,6 +375,7 @@
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
+                // @TODO: add real errors here
 
                 $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=users' );
 
@@ -403,6 +405,7 @@
                 exit;
 
             } elseif ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
+                // @TODO: add real errors here
 
                 $redirect_url = admin_url( 'admin.php?page=b3-onboarding&tab=integrations' );
 
@@ -444,6 +447,7 @@
                     }
                 }
 
+                // @TODO: add real errors here
                 if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
                     $redirect_url = add_query_arg( 'errors', 'nonce_mismatch', $redirect_url );
                 } else {
@@ -513,4 +517,3 @@
         }
     }
     add_action( 'init', 'b3_profile_form_handling' );
-

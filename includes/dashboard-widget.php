@@ -26,7 +26,7 @@
                 <?php
                     if ( count( $approval_users ) > 0 ) {
 
-                        if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                        if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
                             echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
                         } else {
                             echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type and thus also the user approval page.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ) );
@@ -62,3 +62,4 @@
         </div>
         <?php
     }
+    wp_add_dashboard_widget( 'b3-dashboard', 'B3 Onboarding', 'b3_dashboard_widget_function' );

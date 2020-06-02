@@ -48,11 +48,11 @@
      */
     function b3_render_settings_tab() {
 
-        $style_default_pages     = get_option( 'b3_style_default_pages' );
-        $dashboard_widget        = get_option( 'b3_dashboard_widget' );
-        $debug_info              = get_option( 'b3_debug_info' );
-        $force_custom_login_page = get_option( 'b3_force_custom_login_page' );
-        $sidebar_widget          = get_option( 'b3_sidebar_widget' );
+        $style_default_pages     = get_option( 'b3_style_default_pages', false );
+        $dashboard_widget        = get_option( 'b3_dashboard_widget', false );
+        $debug_info              = get_option( 'b3_debug_info', false );
+        $force_custom_login_page = get_option( 'b3_force_custom_login_page', false );
+        $sidebar_widget          = get_option( 'b3_sidebar_widget', false );
 
         ob_start();
         ?>
@@ -148,42 +148,42 @@
             array(
                 'id'      => 'register_page',
                 'label'   => esc_html__( 'Register', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_register_page_id' ),
+                'page_id' => get_option( 'b3_register_page_id', false ),
             ),
             array(
                 'id'      => 'login_page',
                 'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_login_page_id' ),
+                'page_id' => get_option( 'b3_login_page_id', false ),
             ),
             array(
                 'id'      => 'logout_page',
                 'label'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_logout_page_id' ),
+                'page_id' => get_option( 'b3_logout_page_id', false ),
             ),
             array(
                 'id'      => 'forgotpass_page',
                 'label'   => esc_html__( 'Forgot Password', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_forgotpass_page_id' ),
+                'page_id' => get_option( 'b3_forgotpass_page_id', false ),
             ),
             array(
                 'id'      => 'resetpass_page',
                 'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_resetpass_page_id' ),
+                'page_id' => get_option( 'b3_resetpass_page_id', false ),
             ),
             array(
                 'id'      => 'account_page',
                 'label'   => esc_html__( 'Account', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_account_page_id' ),
+                'page_id' => get_option( 'b3_account_page_id', false ),
             ),
         );
 
         $front_end_approval = array(
             'id'      => 'approval_page',
             'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
-            'page_id' => get_option( 'b3_approval_page_id' ),
+            'page_id' => get_option( 'b3_approval_page_id', false ),
         );
 
-        if ( true == get_option( 'b3_front_end_approval' ) ) {
+        if ( true == get_option( 'b3_front_end_approval', false ) ) {
             $b3_pages[] = $front_end_approval;
         }
 
@@ -256,9 +256,8 @@
      */
     function b3_render_emails_tab() {
 
-        $custom_emails = get_option( 'b3_custom_emails' );
+        $custom_emails = get_option( 'b3_custom_emails', false );
         $email_boxes   = b3_get_email_boxes();
-        $email_format  = get_option( 'b3_email_format' );
         ob_start();
         ?>
         <h2>
@@ -302,16 +301,16 @@
      */
     function b3_render_registration_tab() {
 
-        $action_links             = get_option( 'b3_disable_action_links' );
-        $first_last               = get_option( 'b3_activate_first_last' );
-        $first_last_required      = get_option( 'b3_first_last_required' );
-        $privacy                  = get_option( 'b3_privacy' );
-        $privacy_page             = get_option( 'b3_privacy_page' );
+        $action_links             = get_option( 'b3_disable_action_links', false );
+        $first_last               = get_option( 'b3_activate_first_last', false );
+        $first_last_required      = get_option( 'b3_first_last_required', false );
+        $privacy                  = get_option( 'b3_privacy', false );
+        $privacy_page             = get_option( 'b3_privacy_page', false );
         $privacy_page_placeholder = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
-        $privacy_text             = get_option( 'b3_privacy_text' );
-        $recaptcha                = get_option( 'b3_recaptcha' );
-        $recaptcha_login          = get_option( 'b3_recaptcha_login' );
-        $registration_type        = get_option( 'b3_registration_type' );
+        $privacy_text             = get_option( 'b3_privacy_text', false );
+        $recaptcha                = get_option( 'b3_recaptcha', false );
+        $recaptcha_login          = get_option( 'b3_recaptcha_login', false );
+        $registration_type        = get_option( 'b3_registration_type', false );
 
         ob_start();
         ?>
@@ -341,7 +340,7 @@
                         </p>
                     <?php } ?>
 
-                    <?php $options = b3_registration_types(); ?>
+                    <?php $options = b3_get_registration_types(); ?>
                     <?php if ( ! empty( $options ) ) { ?>
                         <?php foreach( $options as $option ) { ?>
                             <div class="b3_settings-input b3_settings-input--radio">
@@ -384,7 +383,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
-                        <?php if ( 1 == get_option( 'b3_recaptcha' ) ) { ?>
+                        <?php if ( 1 == get_option( 'b3_recaptcha', false ) ) { ?>
                             <div class="b3_settings-input--description">
                                 <?php esc_html_e( 'See tab integrations', 'b3-onboarding' ); ?>
                             </div>
@@ -392,7 +391,7 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php if ( get_option( 'b3_recaptcha' ) ) { ?>
+                <?php if ( get_option( 'b3_recaptcha', false ) ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
@@ -413,7 +412,7 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php if ( 1 == get_option( 'b3_privacy' ) ) { ?>
+                <?php if ( 1 == get_option( 'b3_privacy', false ) ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
@@ -475,12 +474,12 @@
         ];
 
         ob_start();
-        $background_color = get_option( 'b3_loginpage_bg_color' );
-        $font_family      = get_option( 'b3_loginpage_font_family' );
-        $font_size        = get_option( 'b3_loginpage_font_size' );
-        $logo             = get_option( 'b3_loginpage_logo' );
-        $logo_height      = get_option( 'b3_loginpage_logo_height' );
-        $logo_width       = get_option( 'b3_loginpage_logo_width' );
+        $background_color = get_option( 'b3_loginpage_bg_color', false );
+        $font_family      = get_option( 'b3_loginpage_font_family', false );
+        $font_size        = get_option( 'b3_loginpage_font_size', false );
+        $logo             = get_option( 'b3_loginpage_logo', false );
+        $logo_height      = get_option( 'b3_loginpage_logo_height', false );
+        $logo_width       = get_option( 'b3_loginpage_logo_width', false );
 
         ?>
         <h2>
@@ -566,7 +565,7 @@
      */
     function b3_render_users_tab() {
 
-        $front_end_approval = get_option( 'b3_front_end_approval' );
+        $front_end_approval = get_option( 'b3_front_end_approval', false );
         $roles              = get_editable_roles();
         asort( $roles );
 
@@ -607,7 +606,7 @@
                     </p>
                     <?php
                         $dont_show_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
-                        $stored_roles     = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'b3_activation', 'b3_approval' ];
+                        $stored_roles     = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'b3_activation', 'b3_approval' ];
                         foreach( $roles as $name => $values ) {
                             if ( ! in_array( $name, $dont_show_roles ) ) {
                             ?>
@@ -640,9 +639,9 @@
     function b3_render_integrations_tab() {
 
         ob_start();
-        $public_key        = get_option( 'b3_recaptcha_public' );
-        $recaptcha_version = get_option( 'b3_recaptcha_version' );
-        $secret_key        = get_option( 'b3_recaptcha_secret' );
+        $public_key        = get_option( 'b3_recaptcha_public', false );
+        $recaptcha_version = get_option( 'b3_recaptcha_version', false );
+        $secret_key        = get_option( 'b3_recaptcha_secret', false );
         ?>
         <h2>
             <?php esc_html_e( 'Integrations', 'b3-onboarding' ); ?>

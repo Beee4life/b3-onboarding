@@ -36,7 +36,7 @@
             <input type="submit" name="submit" class="button button-primary button--forgotpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
         </p>
 
-        <?php echo b3_form_links( 'forgotpassword' ); ?>
+        <?php echo b3_get_form_links( 'forgotpassword' ); ?>
     </form>
 
 </div>

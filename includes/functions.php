@@ -3,10 +3,8 @@
     include('defaults.php');
 
     /**
-     * Output the password fields
-     * Not used
-     *
-     * Do I still need this ?
+     * Output the password fields (not in use yet)
+     * To be used on register form
      */
     function b3_show_password_fields() {
 
@@ -33,6 +31,8 @@
 
     /**
      * Output any hidden fields
+     *
+     * @TODO: check if filter can be used
      */
     function b3_hidden_fields_registration_form() {
 
@@ -40,7 +40,7 @@
         $hidden_field_values = apply_filters( 'b3_do_filter_hidden_fields_values', [] );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             foreach( $hidden_field_values as $key => $value ) {
-                $hidden_fields .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
+                $hidden_fields .= '<input type="hidden" name="' . $key . '" value="' . $value . '">' . "\n";
             }
         }
 
@@ -51,6 +51,8 @@
 
     /**
      * Output any extra request fields
+     *
+     * @TODO: check this filter
      */
     function b3_extra_fields_registration() {
 
@@ -64,28 +66,6 @@
 
         echo $extra_fields;
 
-    }
-
-
-    /**
-     * Add reCAPTCHA check
-     *
-     * @param $recaptcha_public
-     * @param string $form_type
-     */
-    function b3_add_captcha_registration( $recaptcha_public, $form_type = 'register' ) {
-
-        $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
-        do_action( 'b3_before_recaptcha_' . $form_type );
-        if ( '2' == $recaptcha_version ) {
-        ?>
-            <div class="recaptcha-container">
-                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-            </div>
-            <p></p>
-        <?php
-        }
-        do_action( 'b3_after_recaptcha_' . $form_type );
     }
 
 
@@ -171,7 +151,7 @@
 
         $activate_email_boxes = [];
         $new_user_boxes       = [];
-        $registration_type    = get_option( 'b3_registration_type' );
+        $registration_type    = get_option( 'b3_registration_type', false );
         $request_access_box   = [];
         $welcome_user_boxes   = [];
 
@@ -272,7 +252,7 @@
      *
      * @return array
      */
-    function b3_registration_types() {
+    function b3_get_registration_types() {
         $registration_options = [];
         $closed_option = array(
             array(
@@ -335,30 +315,9 @@
         return $registration_options;
     }
 
-    /**
-     * Add field for subdomain when WPMU is active
-     */
-    function b3_add_subdomain_field() {
-
-        if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type') , [ 'request_access_subdomain', 'ms_register_site_user' ] ) ) {
-            ob_start();
-            ?>
-            <?php // @TODO: add more fields for Multisite ?>
-            <div class="b3_form-element b3_form-element--register">
-                <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
-            </div>
-            <?php
-            $output = ob_get_clean();
-
-            echo $output;
-        }
-
-    }
-
 
     /**
-     * Return email styling (not used yet)
+     * Return email styling and default styling if false
      *
      * @return bool|false|mixed|string|void
      */
@@ -376,7 +335,7 @@
 
 
     /**
-     * Return email template (not used yet)
+     * Return user email template and default template if false
      *
      * @return bool|false|mixed|string|void
      */
@@ -394,6 +353,24 @@
 
 
     /**
+     * Return user email logo and default logo if false
+     *
+     * @return bool|false|mixed|string|void
+     */
+    function b3_get_email_logo() {
+        $custom_template = get_option( 'b3_email_logo', false );
+
+        if ( false != $custom_template ) {
+            $email_template = $custom_template;
+        } else {
+            $email_template = b3_default_email_logo();
+        }
+
+        return $email_template;
+    }
+
+
+    /**
      * Get notification addresses
      *
      * @param $registration_type
@@ -403,11 +380,11 @@
     function b3_get_notification_addresses( $registration_type ) {
         $email_addresses = get_option( 'admin_email' );
         if ( 'request_access' == $registration_type ) {
-            if ( false != get_option( 'b3_request_access_notification_addresses' ) ) {
+            if ( false != get_option( 'b3_request_access_notification_addresses', false ) ) {
                 $email_addresses = get_option( 'b3_request_access_notification_addresses' );
             }
         } elseif ( 'open' == $registration_type ) {
-            if ( false != get_option( 'b3_new_user_notification_addresses' ) ) {
+            if ( false != get_option( 'b3_new_user_notification_addresses', false ) ) {
                 $email_addresses = get_option( 'b3_new_user_notification_addresses' );
             }
         }
@@ -446,8 +423,10 @@
     function b3_get_email_activation_message_user() {
         $b3_email_activation_message = get_option( 'b3_email_activation_message', false );
         if ( $b3_email_activation_message ) {
+            error_log('has message');
             $message = $b3_email_activation_message;
         } else {
+            error_log('not has message');
             $message = b3_default_email_activation_message();
         }
 
@@ -728,98 +707,14 @@
 
 
     /**
-     * Replace vars in email
-     *
-     * @param $vars
-     *
-     * @return array
-     */
-    function b3_replace_email_vars( $vars, $activation = false ) {
-
-        $user_data = false;
-        if ( is_user_logged_in() ) {
-            $user_data = get_userdata( get_current_user_id() );
-            if ( false != $user_data ) {
-                $vars[ 'user_data' ] = $user_data;
-            }
-        } elseif ( isset( $vars[ 'user_data' ] ) ) {
-            $user_data = $vars[ 'user_data' ];
-        }
-        // @TODO: replace user_registered with stored date format
-        $replacements = array(
-            '%blog_name%'         => get_option( 'blogname' ),
-            '%email_styling%'     => get_option( 'b3_email_styling', b3_default_email_styling() ),
-            '%home_url%'          => get_home_url(),
-            '%logo%'              => get_option( 'b3_email_logo', B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png' ),
-            '%registration_date%' => ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false,
-            '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
-            '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
-            '%user_login%'        => ( false != $user_data ) ? $user_data->user_login : false,
-        );
-        if ( false != $activation ) {
-            $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
-        }
-
-        return $replacements;
-    }
-
-
-    /**
-     * Replace vars in email template
-     *
-     * @param bool $message
-     *
-     * @return bool|string
-     */
-    function b3_replace_template_styling( $message = false ) {
-
-        if ( false != $message && 1 == get_option( 'b3_custom_emails' ) ) {
-            $email_styling  = get_option( 'b3_email_styling', b3_default_email_styling() );
-            $email_template = get_option( 'b3_email_template', b3_default_email_template() );
-
-            if ( false != $email_styling && false != $email_template ) {
-                // replace email_template + styling
-                $replace_vars = [
-                    '%email_styling%' => $email_styling,
-                    '%email_message%' => $message,
-                ];
-                $message = strtr( $email_template, $replace_vars );
-            }
-        }
-
-        return $message;
-    }
-
-
-    /**
-     * Output for first/last name fields
-     */
-    function b3_first_last_name_fields() {
-
-        ob_start();
-        ?>
-            <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
-            <div class="b3_form-element b3_form-element--register">
-                <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'First name' : false; ?>"<?php echo $required; ?>>
-            </div>
-            <div class="b3_form-element b3_form-element--register">
-                <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
-            </div>
-        <?php
-        $output = ob_get_clean();
-
-        echo $output;
-    }
-
-    /**
      * Return links below a (public) form
+     *
+     * @TODO: show with use of filter (next to setting)
      */
-    function b3_form_links( $current_form ) {
+    function b3_get_form_links( $current_form ) {
 
         $output = '';
-        if ( true != get_option( 'b3_disable_action_links' ) ) {
+        if ( true != get_option( 'b3_disable_action_links', false ) ) {
             $page_types = [];
 
             switch( $current_form ) {
@@ -829,7 +724,7 @@
                         'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
                         'link'  => b3_get_forgotpass_id( true )
                     ];
-                    if ( 'closed' != get_option( 'registration_type' ) ) {
+                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_id( true )
@@ -853,7 +748,7 @@
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_id( true )
                     ];
-                    if ( 'closed' != get_option( 'registration_type' ) ) {
+                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_id( true )
@@ -883,6 +778,8 @@
 
     /**
      * Return unique password reset link
+     *
+     * @TODO: check where this was intended to use
      *
      * @param $key
      * @param $user_login
@@ -917,4 +814,64 @@
         $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user_data->user_login ) ), $login_url );
 
         return $activation_url;
+    }
+
+    /**
+     * Get sender email
+     *
+     * @return bool|mixed|void
+     */
+    function b3_get_notification_sender_email() {
+
+        $sender_email = get_option( 'b3_notification_sender_email', false );
+        if ( false == $sender_email ) {
+            $admin_email = get_option( 'admin_email' );
+            if ( false != $admin_email ) {
+                $sender_email = $admin_email;
+            }
+        }
+
+        return $sender_email;
+    }
+
+    /**
+     * Get sender name
+     *
+     * @return bool|mixed|void
+     */
+    function b3_get_notification_sender_name() {
+
+        $sender_name = get_option( 'b3_notification_sender_name', false );
+        if ( false == $sender_name ) {
+            $blog_name = get_option( 'blogname' );
+            if ( false != $blog_name ) {
+                $sender_name = $blog_name;
+            }
+        }
+
+        return $sender_name;
+    }
+
+    /**
+     * General opening of settings field
+     */
+    function b3_get_settings_field_open( $hide = false ) {
+        $hide_class = ( $hide != false ) ? ' hidden' : false;
+        echo '<div class="b3_settings-field' . $hide_class . '">';
+    }
+
+    /**
+     * General opening of settings label
+     */
+    function b3_get_label_field_open( $hide = false ) {
+        $hide_class = ( $hide != false ) ? ' hidden' : false;
+        echo '<div class="b3_settings-label' . $hide_class . '">';
+    }
+
+    /**
+     * Close a div.
+     * This function is not really needed, but it prevents PhpStorm from throwing a ton of errors
+     */
+    function b3_get_close() {
+        echo '</div>';
     }

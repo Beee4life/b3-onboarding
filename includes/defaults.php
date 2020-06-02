@@ -34,6 +34,26 @@
     }
 
     /**
+     * Default email footer
+     *
+     * @return false|string
+     */
+    function b3_default_email_footer() {
+        $default_content = __( 'This is an automated email from the website <a href="%home_url%">%blog_name%</a>.', 'b3-onboarding' );
+
+        return $default_content;
+    }
+
+    /**
+     * Default email footer
+     *
+     * @return false|string
+     */
+    function b3_default_email_logo() {
+        return B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png';
+    }
+
+    /**
      * Default new user subject (admin)
      *
      * @return string
@@ -98,7 +118,11 @@
      * @return string
      */
     function b3_default_request_access_message_admin() {
-        return sprintf( __( 'A new user has requested access. You can approve/deny him/her on the "<a href="%s">User approval</a>" page.', 'b3-onboarding' ), esc_url( admin_url( 'admin.php?page=b3-user-approval' ) ) );
+        $approval_link                = b3_get_user_approval_id( true );
+        $user_approval_page           = ( false != $approval_link ) ? $approval_link : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
+        $request_access_message_admin = sprintf( __( 'A new user has requested access. You can approve/deny him/her on the "<a href="%s">User approval</a>" page.', 'b3-onboarding' ), $user_approval_page );
+
+        return $request_access_message_admin;
     }
 
     /**
@@ -116,7 +140,7 @@
      * @return string
      */
     function b3_default_request_access_message_user() {
-        return sprintf( __( "You have successfully requested access for %s. We'll inform you about the outcome.", "b3-onboarding" ), get_option( "blogname" ) );
+        return sprintf( __( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
 
@@ -135,7 +159,7 @@
      * @return string
      */
     function b3_default_account_approved_message() {
-        return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password on <a href="%s">%s</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_forgotpass_id( true ) ), esc_url( b3_get_forgotpass_id( true ) ) );
+        return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_forgotpass_id( true ) ) );
     }
 
 

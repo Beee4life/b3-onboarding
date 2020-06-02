@@ -6,7 +6,7 @@
     function b3_user_register_settings() {
 
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-login' ) );
+            wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-onboarding' ) );
         }
         ?>
 
@@ -57,7 +57,7 @@
                             'icon'    => 'shield',
                         );
 
-                        if ( 1 == get_option( 'b3_style_default_pages' ) ) {
+                        if ( 1 == get_option( 'b3_style_default_pages', false ) ) {
                             $tabs[] = array(
                                 'id'      => 'loginpage',
                                 'title'   => esc_html__( 'Login page', 'b3-onboarding' ),
@@ -80,7 +80,7 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( true == get_option( 'b3_recaptcha' ) && defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
+                        if ( true == get_option( 'b3_recaptcha', false ) && defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
                             $tabs[] = array(
                                 'id'      => 'integrations',
                                 'title'   => esc_html__( 'Integrations', 'b3-onboarding' ),
@@ -89,7 +89,7 @@
                             );
                         }
 
-                        if ( true == get_option( 'b3_debug_info' ) ) {
+                        if ( true == get_option( 'b3_debug_info', false ) ) {
                             $tabs[] = array(
                                 'id'      => 'debug',
                                 'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
@@ -118,9 +118,7 @@
                             </div>
                         <?php } ?>
                     </div>
-
                 </div>
             <?php } ?>
-
         </div>
     <?php }

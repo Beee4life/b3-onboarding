@@ -1,5 +1,8 @@
 <?php
 
+    /**
+     * Class B3SidebarWidget
+     */
     class B3SidebarWidget extends WP_Widget {
 
         function __construct() {
@@ -26,7 +29,7 @@
             $show_widget   = true;
             $show_account  = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             if ( $show_account ) {
-                $account_id   = get_option( 'b3_account_page_id' );
+                $account_id   = b3_get_account_id();
                 $account_link = ( false != $account_id ) ? get_permalink( $account_id ) : false;
                 if ( false == $account_link ) {
                     $count_errors[] = 'account';
@@ -36,7 +39,7 @@
 
             $show_login = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : false;
             if ( $show_login ) {
-                $login_id   = get_option( 'b3_login_page_id' );
+                $login_id   = b3_get_login_id();
                 $login_link = ( false != $login_id ) ? get_permalink( $login_id ) : network_site_url( 'wp-login.php' );
                 if ( false == $login_link ) {
                     $count_errors[] = 'login';
@@ -46,7 +49,7 @@
 
             $show_logout = ! empty( $instance[ 'show_logout' ] ) ? $instance[ 'show_logout' ] : false;
             if ( $show_logout ) {
-                $logout_id   = get_option( 'b3_logout_page_id' );
+                $logout_id   = b3_get_logout_id();
                 $logout_link = ( false != $logout_id ) ? get_permalink( $logout_id ) : wp_logout_url();
                 if ( false == $logout_link ) {
                     $count_errors[] = 'logout';
@@ -56,7 +59,7 @@
 
             $show_register = ! empty( $instance[ 'show_register' ] ) ? $instance[ 'show_register' ] : false;
             if ( $show_register ) {
-                $register_id   = get_option( 'b3_register_page_id' );
+                $register_id   = b3_get_register_id();
                 $register_link = ( false != $register_id ) ? get_permalink( $register_id ) : network_site_url( 'wp-login.php?action=register' );
                 if ( false == $register_link ) {
                     $count_errors[] = 'register';
@@ -72,7 +75,7 @@
 
                 $show_user_approval = ! empty( $instance[ 'show_approval' ] ) ? $instance[ 'show_approval' ] : false;
                 if ( $show_user_approval ) {
-                    $approval_id   = get_option( 'b3_approval_page_id' );
+                    $approval_id   = b3_get_user_approval_id();
                     $approval_link = ( false != $approval_id ) ? get_permalink( $approval_id ) : admin_url( '/admin.php?page=b3-user-approval' );
                     if ( false == $approval_link ) {
                         $count_errors[] = 'approval';
@@ -135,7 +138,7 @@
          * @param array $instance Previously saved values from database.
          */
         public function form( $instance ) {
-            $registration_type  = get_option( 'b3_registration_type' );
+            $registration_type  = get_option( 'b3_registration_type', false );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : '';
             $show_login         = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : '';
             $show_logout        = ! empty( $instance[ 'show_logout' ] ) ? $instance[ 'show_logout' ] : '';
@@ -203,3 +206,4 @@
             return $instance;
         }
     }
+    register_widget( 'B3SidebarWidget' );

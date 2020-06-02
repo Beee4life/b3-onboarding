@@ -44,11 +44,13 @@ table.b3_email_content_table td {
 
 table.b3_email_header td {
     padding-bottom: 10px;
-    text-align: center;
+    text-align:     center;
 }
 
 table td.b3_email_footer {
-    padding-top: 10px;
+    font-size:      small;
+    padding-top:    10px;
+    padding-bottom: 10px;
 }
 
 table td.b3_email_content {

@@ -1,7 +1,9 @@
 <?php
-    $recaptcha_public = get_option( 'b3_recaptcha_public' );
+    $recaptcha_public = get_option( 'b3_recaptcha_public', false );
     $redirect         = false;
-    $show_recaptcha   = get_option( 'b3_recaptcha_login' );
+    $request_access = get_option( 'b3_registration_type', false );
+    $reset_page     = get_option( 'b3_forgotpass_page_id', false );
+    $show_recaptcha   = get_option( 'b3_recaptcha_login', false );
     if ( $attributes[ 'redirect' ] ) {
         $redirect = $attributes[ 'redirect' ];
     }
@@ -12,11 +14,6 @@
             <?php echo $attributes[ 'title' ]; ?>
         </h3>
     <?php } ?>
-
-    <?php
-        $reset_page     = get_option( 'b3_forgotpass_page_id' );
-        $request_access = get_option( 'b3_registration_type' );
-    ?>
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
         <?php /* Show errors if there are any */ ?>
@@ -128,7 +125,7 @@
             <input type="hidden" name="redirect_to" value="<?php echo $redirect; ?>">
         </p>
 
-        <?php echo b3_form_links( 'login' ); ?>
+        <?php echo b3_get_form_links( 'login' ); ?>
 
     </form>
 

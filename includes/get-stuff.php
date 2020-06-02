@@ -1,4 +1,6 @@
 <?php
+    // @TODO: maybe merge with functions (or function into here)
+
     /**
      * Return register ID page (for current language if WPML is active)
      *
@@ -133,11 +135,20 @@
 
     }
 
+
+    /**
+     * @param bool $return_link
+     *
+     * @return bool|mixed|void
+     */
     function b3_get_user_approval_id( $return_link = false ) {
         $id = get_option( 'b3_approval_page_id', false );
         if ( false != $id && get_post( $id ) ) {
             if ( class_exists( 'Sitepress' ) ) {
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
+            if ( true == $return_link ) {
+                return get_permalink( $id );
             }
         }
 

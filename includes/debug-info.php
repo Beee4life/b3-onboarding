@@ -29,7 +29,7 @@
             <ul>
                 <li>Main site: <?php echo ( is_main_site() ) ? __( 'Yes', 'b3-onboarding' ) : __( 'No', 'b3-onboarding' ); ?> </li>
                 <li>Main registration: <?php echo ( get_site_option( 'registration' ) ) ? : false; ?> </li>
-                <li>Subsite registration: <?php echo ( get_option( 'b3_registration_type' ) ) ? : false; ?> </li>
+                <li>Subsite registration: <?php echo ( get_option( 'b3_registration_type', false ) ) ? : false; ?> </li>
             </ul>
         </li>
     <?php } ?>

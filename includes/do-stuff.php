@@ -152,3 +152,88 @@
 
         return false;
     }
+
+
+    /**
+     * Replace vars in email
+     *
+     * @param $vars
+     *
+     * @return array
+     */
+    function b3_replace_email_vars( $vars, $activation = false ) {
+
+        $user_data = false;
+        if ( is_user_logged_in() ) {
+            $user_data = get_userdata( get_current_user_id() );
+            if ( false != $user_data ) {
+                $vars[ 'user_data' ] = $user_data;
+            }
+        } elseif ( isset( $vars[ 'user_data' ] ) ) {
+            $user_data = $vars[ 'user_data' ];
+        }
+
+        // @TODO: maybe make function from this
+        $date_format           = get_option( 'date_format' );
+        $gmt_offset            = get_option( 'gmt_offset' );
+        $time_format           = get_option( 'time_format' );
+        $registration_date     = gmdate( $date_format . ' ' . $time_format, time() ); // fallback, returns now in UTC
+        $registration_date_gmt = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
+        $timezone              = get_option( 'timezone_string' );
+        if ( false != $registration_date_gmt ) {
+            if ( ! empty( $timezone ) ) {
+                $new_date = new DateTime( $registration_date_gmt, new DateTimeZone( 'UTC' ) );
+                $new_date->setTimeZone( new DateTimeZone( $timezone ) );
+                $registration_date = $new_date->format( $date_format . ' @ ' . $time_format );
+            } elseif ( false != $gmt_offset ) {
+                $registration_date_gmt_ts = strtotime( $registration_date_gmt );
+                $registration_date_ts     = $registration_date_gmt_ts + ( $gmt_offset * HOUR_IN_SECONDS );
+                $registration_date        = gmdate( $date_format . ' @ ' . $time_format, $registration_date_ts );
+            }
+        }
+
+        $replacements = array(
+            '%blog_name%'         => get_option( 'blogname' ),
+            '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_default_email_footer() ), // @TODO: maybe create user input ?
+            '%email_styling%'     => apply_filters( 'b3_email_styling', b3_get_email_styling() ),
+            '%home_url%'          => get_home_url(),
+            '%logo%'              => apply_filters( 'b3_email_logo', b3_get_email_logo() ),
+            '%registration_date%' => $registration_date,
+            '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
+            '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
+            '%user_login%'        => ( false != $user_data ) ? $user_data->user_login : false,
+        );
+        if ( false != $activation ) {
+            $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
+        }
+
+        return $replacements;
+    }
+
+
+    /**
+     * Replace vars in email template
+     *
+     * @param bool $message
+     *
+     * @return bool|string
+     */
+    function b3_replace_template_styling( $message = false ) {
+
+        if ( false != $message && 1 == get_option( 'b3_custom_emails', false ) ) {
+            $email_footer   = apply_filters( 'b3_email_footer_text', b3_default_email_footer() );
+            $email_styling  = apply_filters( 'b3_email_styling', b3_get_email_styling() );
+            $email_template = apply_filters( 'b3_email_template', b3_get_email_template() );
+
+            if ( false != $email_styling && false != $email_template ) {
+                $replace_vars = [
+                    '%email_footer%'  => $email_footer,
+                    '%email_message%' => $message,
+                    '%email_styling%' => $email_styling,
+                ];
+                $message = strtr( $email_template, $replace_vars );
+            }
+        }
+
+        return $message;
+    }

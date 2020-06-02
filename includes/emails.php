@@ -1,7 +1,7 @@
 <?php
 
     /**
-     * Render email settings field
+     * Render email settings field with fold out
      *
      * @param bool $box
      *

@@ -38,15 +38,21 @@
                 'content' => '<h3>' . esc_html__( 'Email variables', 'b3-onboarding' ) . '</h3>
                     <p>' . esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) . '</p>
                     <ul>
-                        <li>%blog_name%</li>
-                        <li>%email_styling%</li>
-                        <li>%home_url%</li>
+                        <li>%activation_url% (' . __( 'only in user activation email', 'b3-onboarding' ) . ')</li>
+                        <li>%blog_name% <sup>&sup1;</sup></li>
+                        <li>%email_footer% <sup>&sup1;</sup></li>
+                        <li>%email_styling% <sup>&sup1;</sup></li>
+                        <li>%home_url% <sup>&sup1;</sup></li>
                         <li>%registration_date% <sup>&sup1;</sup></li>
-                        <li>%reset_url% <sup>&sup1;</sup></li>
+                        <li>%reset_url% <sup>&sup3;</sup></li>
                         <li>%user_ip% <sup>&sup1;</sup></li>
-                        <li>%user_login%</li>
+                        <li>%user_login% <sup>&sup1;</sup></li>
                     </ul>
-                    <sup>&sup1;</sup> ' . __( 'only available in admin notification', 'b3-onboarding' ) . '
+                    <sup>&sup1;</sup> ' . __( 'available in every email', 'b3-onboarding' ) . '
+                    <br />
+                    <sup>&sup2;</sup> ' . __( 'only available in admin notification', 'b3-onboarding' ) . '
+                    <br />
+                    <sup>&sup3;</sup> ' . __( 'only available in password reset email', 'b3-onboarding' ) . '
                     '
             ) );
 
@@ -106,7 +112,7 @@
         }
         get_current_screen()->set_help_sidebar(
             '<p><strong>' . esc_html__( 'Author', 'b3-onboarding' ) . '</strong></p>
-            <p><a href="https://berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">berryplasman.com</a></p>
+            <p><a href="https://berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">Berry Plasman</a></p>
             ' . $site
         );
 

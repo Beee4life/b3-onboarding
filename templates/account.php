@@ -2,7 +2,7 @@
     $current_user = get_userdata( get_current_user_id() );
     $required     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false;
 ?>
-<div class="" id="">
+<div>
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
         <p class="b3_message">
             <?php
@@ -25,7 +25,7 @@
         </h3>
 
         <table class="b3_table b3_table--account">
-            <tr class="">
+            <tr>
                 <td>
                     <label for="email"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?>
                         <span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span>
@@ -56,7 +56,7 @@
             <?php esc_html_e( 'Name', 'b3-onboarding' ); ?>
         </h3>
         <table class="b3_table b3_table--account">
-            <tr class="">
+            <tr>
                 <td>
                     <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
                 </td>
@@ -64,7 +64,7 @@
                     <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php echo esc_attr( $current_user->first_name ); ?>"<?php echo $required; ?> />
                 </td>
             </tr>
-            <tr class="">
+            <tr>
                 <td>
                     <label for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
                 </td>
@@ -83,7 +83,9 @@
         </h3>
         <table class="b3_table b3_table--account">
             <tr id="password" class="user-pass1-wrap">
-                <td><label for="pass1"><?php esc_html_e( 'New password', 'b3-onboarding' ); ?></label></td>
+                <td>
+                    <label for="pass1"><?php esc_html_e( 'New password', 'b3-onboarding' ); ?></label>
+                </td>
                 <td>
                     <!-- Workaround : https://core.trac.wordpress.org/ticket/24364 -->
                     <input class="hidden" value=" " />
@@ -106,7 +108,9 @@
                 </td>
             </tr>
             <tr class="user-pass2-wrap hide-if-js">
-                <td scope="row"><label for="pass2"><?php esc_html_e( 'Repeat new password', 'b3-onboarding' ); ?></label></td>
+                <td>
+                    <label for="pass2"><?php esc_html_e( 'Repeat new password', 'b3-onboarding' ); ?></label>
+                </td>
                 <td>
                     <input name="pass2" type="password" id="pass2" class="regular-text" value="" autocomplete="off" />
                     <p class="description"><?php esc_html_e( 'Type your new password again.', 'b3-onboarding' ); ?></p>

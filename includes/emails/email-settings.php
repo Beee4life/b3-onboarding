@@ -1,6 +1,6 @@
 <?php
-    $notification_sender_email = get_option( 'b3_notification_sender_email' );
-    $notification_sender_name  = get_option( 'b3_notification_sender_name' );
+    $notification_sender_email = get_option( 'b3_notification_sender_email', false );
+    $notification_sender_name  = get_option( 'b3_notification_sender_name', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

@@ -1,12 +1,12 @@
 <?php
-    $send_password_by_mail    = get_option( 'b3_send_pass_mail' );
+    $send_password_by_mail    = get_option( 'b3_send_pass_mail', false );
     $show_custom_passwords    = false;
-    $show_first_last_name     = get_option( 'b3_activate_first_last' );
-    $first_last_name_required = get_option( 'b3_first_last_required' );
-    $show_privacy             = get_option( 'b3_privacy' );
-    $show_recaptcha           = get_option( 'b3_recaptcha' );
-    $recaptcha_public         = get_option( 'b3_recaptcha_public' );
-    $registration_type        = get_option( 'b3_registration_type' );
+    $show_first_last_name     = get_option( 'b3_activate_first_last', false );
+    $first_last_name_required = get_option( 'b3_first_last_required', false );
+    $show_privacy             = get_option( 'b3_privacy', false );
+    $show_recaptcha           = get_option( 'b3_recaptcha', false );
+    $recaptcha_public         = get_option( 'b3_recaptcha_public', false );
+    $registration_type        = get_option( 'b3_registration_type', false );
 ?>
 <div id="b3-register" class="b3_page b3_page--register">
     <?php if ( $attributes[ 'title' ] ) { ?>
@@ -92,7 +92,7 @@
 
         <?php } ?>
 
-        <?php echo b3_form_links( 'register' ); ?>
+        <?php echo b3_get_form_links( 'register' ); ?>
 
     </form>
 
