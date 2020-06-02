@@ -48,7 +48,7 @@
                         if ( 'request_access' == $request_access && ! empty( $_GET[ 'registered' ] ) && 'access_requested' == $_GET[ 'registered' ] ) {
 
                             echo sprintf(
-                                __( "You have successfully requested access to <strong>%s</strong>. You'll be notified by email about the result.", 'b3-onboarding' ),
+                                __( "You have successfully requested access to <strong>%s</strong>. You'll be notified by email about your request.", 'b3-onboarding' ),
                                 get_bloginfo( 'name' )
                             );
                             $show_form = false;
