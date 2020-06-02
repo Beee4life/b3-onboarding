@@ -56,6 +56,11 @@
                     '
             ) );
 
+            if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
+                $shortcode_info = '<p>' . sprintf( __( 'More info about the use of shortcodes and their variables, please see <a href="%s">here</a>.', 'b3-onboarding'  ), B3_PLUGIN_SITE . '/documentation/shortcodes/' ) . '</p>';
+            } else {
+                $shortcode_info = false;
+            }
             $screen->add_help_tab( array(
                 'id'      => 'b3-shortcodes',
                 'title'   => esc_html__( 'Shortcodes', 'b3-onboarding' ),
@@ -97,10 +102,7 @@
                         ' . esc_html__( 'This renders the delete account page.', 'b3-onboarding' ) . '
                     </li>
                     </ul>
-                    <p>
-                    ' . sprintf( __( 'More info about the use of shortcodes and their variables, please see <a href="%s">here</a>.', 'b3-onboarding'  ), B3_PLUGIN_SITE . '/documentation/shortcodes/' ) . '
-                    </p>
-                    '
+                    ' . $shortcode_info
             ) );
         }
 
