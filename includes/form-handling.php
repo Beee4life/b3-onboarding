@@ -494,7 +494,7 @@
         wp_enqueue_script( 'user-profile' );
         $current_user = wp_get_current_user();
 
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
             check_admin_referer( 'update-user_' . $current_user->ID );
 
             if ( ! current_user_can( 'edit_user', $current_user->ID ) ) {
