@@ -1,4 +1,4 @@
-<div id="b3-resetpass" class="b3">
+<div id="b3-resetpass" class="b3 b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) : ?>
         <h3>
             <?php echo $attributes[ 'title' ]; ?>
