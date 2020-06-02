@@ -170,7 +170,7 @@
             <?php if ( 'request_access' == $registration_type ) { ?>
                 <p>
                     <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_approval' ) ); ?>" type="checkbox" value="1"<?php if ( 1 == $show_user_approval ) { echo ' checked="checked"'; } ?>>
-                    <label for="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>"><?php esc_attr_e( 'Show user approval link', 'b3-onboarding' ); ?></label>
+                    <label for="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>"><?php esc_attr_e( 'Show user management link', 'b3-onboarding' ); ?></label>
                 </p>
             <?php } ?>
             <p>
