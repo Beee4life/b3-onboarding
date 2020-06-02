@@ -262,6 +262,23 @@
                     update_option( 'b3_forgot_password_message', htmlspecialchars( $_POST[ 'b3_forgot_password_message' ] ), true );
                     update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
 
+                    if ( ! empty( $_POST[ 'b3_email_link_color' ] ) ) {
+                        $color = $_POST[ 'b3_email_link_color' ];
+                        if ( '#' == substr( $_POST[ 'b3_email_link_color' ], 0, 1 ) ) {
+                            $color = substr( $_POST[ 'b3_email_link_color' ], 1 );
+                        }
+                        $length = strlen($color);
+                        if ( 3 != $length && 6 != $length ) {
+                            B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Then length of your hex code is incorrect.', 'b3-onboarding' ) );
+
+                            return;
+                        } else {
+                            update_option( 'b3_email_link_color', $color );
+                        }
+                    } else {
+                        delete_option( 'b3_email_link_color' );
+                    }
+
                     if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == $_POST[ 'b3_activate_custom_emails' ] ) {
                         update_option( 'b3_custom_emails', 1, true );
                     } else {

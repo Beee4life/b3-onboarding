@@ -6,9 +6,10 @@
      */
     function b3_render_emails_tab() {
 
-        $custom_emails = get_option( 'b3_custom_emails', false );
-        $email_boxes   = b3_get_email_boxes();
-        $logo_in_email = get_option( 'b3_logo_in_email', false );
+        $custom_emails    = get_option( 'b3_custom_emails', false );
+        $email_boxes      = b3_get_email_boxes();
+        $email_link_color = get_option( 'b3_email_link_color', false );
+        $logo_in_email    = get_option( 'b3_logo_in_email', false );
         ob_start();
         ?>
         <h2>
@@ -38,6 +39,14 @@
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php if ( $logo_in_email ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
                 </div>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_email_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <?php // @TODO: n2h colorpicker ?>
+                <input name="b3_email_link_color" id="b3_email_link_color" type="text" value="<?php echo $email_link_color; ?>" placeholder="FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (without hashtag)', 'b3-onboarding' ); ?>
             <?php b3_get_close(); ?>
 
             <?php foreach( $email_boxes as $box ) { ?>
