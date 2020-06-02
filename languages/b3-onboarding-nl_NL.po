@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-06-02 05:36+0200\n"
-"PO-Revision-Date: 2020-06-02 05:36+0200\n"
+"POT-Creation-Date: 2020-06-03 01:13+0200\n"
+"PO-Revision-Date: 2020-06-03 01:17+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -43,52 +43,60 @@ msgstr ""
 "Deze plugin is (nog) niet bedoeld voor netwerk activatie. Aub deactiveer de "
 "plugin <a href=\"%s\">%s</a> en activeer de plugin per site"
 
-#: B3Onboarding.php:172
+#: B3Onboarding.php:181
 msgid "Awaiting activation"
 msgstr "In afwachting van activatie"
 
-#: B3Onboarding.php:176
+#: B3Onboarding.php:185
 msgid "Awaiting approval"
 msgstr "In behandeling"
 
-#: B3Onboarding.php:446
+#: B3Onboarding.php:452
 msgid "Upload or choose your custom logo"
 msgstr "Upload of kies je logo"
 
-#: B3Onboarding.php:447
+#: B3Onboarding.php:453
 msgid "Insert logo"
 msgstr "Logo invoegen"
 
-#: B3Onboarding.php:521 includes/B3SidebarWidget.php:118
-#: includes/admin-page.php:41 includes/tabs.php:60
+#: B3Onboarding.php:525 includes/B3SidebarWidget.php:123
+#: includes/admin-page.php:41 includes/tabs/tab-settings.php:19
 msgid "Settings"
 msgstr "Instellingen"
 
-#: B3Onboarding.php:650 B3Onboarding.php:659
+#: B3Onboarding.php:655 B3Onboarding.php:664
 msgid "Error"
 msgstr "Fout"
 
-#: B3Onboarding.php:653
+#: B3Onboarding.php:658
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: B3Onboarding.php:672
+#: B3Onboarding.php:677
 msgid "Dismiss this notice"
 msgstr "Verberg deze melding"
 
-#: B3Onboarding.php:1090 B3Onboarding.php:1094 B3Onboarding.php:1101
+#: B3Onboarding.php:742 includes/form-handling.php:10
+#: includes/form-handling.php:71 includes/form-handling.php:101
+#: includes/form-handling.php:208 includes/form-handling.php:255
+#: includes/form-handling.php:372 includes/form-handling.php:406
+#: includes/form-handling.php:442
+msgid "Something went wrong, please try again."
+msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
+
+#: B3Onboarding.php:1100 B3Onboarding.php:1104 B3Onboarding.php:1111
 msgid "Invalid key"
 msgstr "Ongeldige code"
 
-#: B3Onboarding.php:1228
+#: B3Onboarding.php:1237
 msgid "Please enter a user name"
 msgstr "Vul een gebruikersnaam in"
 
-#: B3Onboarding.php:1231
+#: B3Onboarding.php:1240
 msgid "You need to enter a password to login."
 msgstr "Je moet een wachtwoord invullen om in te loggen."
 
-#: B3Onboarding.php:1234
+#: B3Onboarding.php:1243
 msgid ""
 "We don't have any users with that email address. Maybe you used a different "
 "one when signing up?"
@@ -96,7 +104,7 @@ msgstr ""
 "We hebben geen gebruikers met dat email adres. Misschien heb je een andere "
 "gebruikt toen je registreerde?"
 
-#: B3Onboarding.php:1237
+#: B3Onboarding.php:1246
 #, php-format
 msgid ""
 "The password you entered wasn't quite right. <a href='%s'>Did you forget "
@@ -105,27 +113,27 @@ msgstr ""
 "Het wachtwoord dat je invulde was niet correct. <a href='%s'>Heb je je "
 "wachtwoord vergeten</a>?"
 
-#: B3Onboarding.php:1243
+#: B3Onboarding.php:1252
 msgid "This username is already in use."
 msgstr "De ingevoerde gebruikersnaam is al in gebruik."
 
-#: B3Onboarding.php:1246
+#: B3Onboarding.php:1255
 msgid "The email address you entered is not valid."
 msgstr "Dit email adres is niet geldig."
 
-#: B3Onboarding.php:1249
+#: B3Onboarding.php:1258
 msgid "An account already exists with this email address."
 msgstr "Een account bestaat al met dit email adres."
 
-#: B3Onboarding.php:1252 B3Onboarding.php:1479
+#: B3Onboarding.php:1261 B3Onboarding.php:1484
 msgid "Registering new users is currently not allowed."
 msgstr "Het registreren van nieuwe gebruikers is niet mogelijk op dit moment."
 
-#: B3Onboarding.php:1255
+#: B3Onboarding.php:1264
 msgid "The Google reCAPTCHA check failed. Are you a robot?"
 msgstr "De Google reCAPTCHA controle is mislukt. Ben je een robot?"
 
-#: B3Onboarding.php:1258
+#: B3Onboarding.php:1267
 msgid ""
 "You have sucessfully requested access. An administrator will check your "
 "request."
@@ -133,121 +141,121 @@ msgstr ""
 "Je hebt succesvol toegang aangevraagd. Een administrator zal je verzoek "
 "beoordelen."
 
-#: B3Onboarding.php:1261
+#: B3Onboarding.php:1270
 msgid "You have sucessfully registered but need to confirm your email first."
 msgstr ""
 "Je hebt succesvol geregistreerd maar je moet je eerst je email bevestigen."
 
-#: B3Onboarding.php:1266
+#: B3Onboarding.php:1275
 msgid "There are no users registered with this email address."
 msgstr "Er is geen gebruiker geregistreer met dit email adres."
 
-#: B3Onboarding.php:1269
+#: B3Onboarding.php:1278
 msgid "You have to get approved first."
 msgstr "Je account moet eerst goedgekeurd worden."
 
-#: B3Onboarding.php:1272
+#: B3Onboarding.php:1281
 msgid "You have to confirm your email first."
 msgstr "Je moet eerst je email bevestigen."
 
-#: B3Onboarding.php:1276
+#: B3Onboarding.php:1285
 msgid "You have succesfully confirmed your email."
 msgstr "Je hebt succesvol je email bevestigd."
 
-#: B3Onboarding.php:1279
+#: B3Onboarding.php:1288
 msgid "The activation link you used is not valid."
 msgstr "De activatie link is niet geldig."
 
-#: B3Onboarding.php:1284
+#: B3Onboarding.php:1293
 msgid "The password reset link you used is not valid anymore."
 msgstr "De wachtwoord reset link die je hebt gebruikt is niet meer geldig."
 
-#: B3Onboarding.php:1287
+#: B3Onboarding.php:1296
 msgid "The two passwords you entered don't match."
 msgstr "De wachtwoorden die je hebt ingevuld komen niet overeen."
 
-#: B3Onboarding.php:1290
+#: B3Onboarding.php:1299
 msgid "Sorry, we don't accept empty passwords."
 msgstr "Sorry, we accepteren geen lege wachtwoorden."
 
-#: B3Onboarding.php:1294
+#: B3Onboarding.php:1303
 msgid "Sorry, this subdomain has already been taken."
 msgstr "Sorry, dit subdomein is al bezet."
 
-#: B3Onboarding.php:1297
+#: B3Onboarding.php:1306
 msgid ""
 "You have successfully registered. Please check your email for an activation "
 "link."
 msgstr ""
 "Je hebt succesvol geregistreerd. Bekijk aub je email voor een activatie link."
 
-#: B3Onboarding.php:1303
+#: B3Onboarding.php:1312
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
-#: B3Onboarding.php:1309
+#: B3Onboarding.php:1318
 msgid "An unknown error occurred. Please try again later."
 msgstr "Er is een onbekende fout opgetreden. Probeer later nog eens."
 
-#: B3Onboarding.php:1477 B3Onboarding.php:1515 B3Onboarding.php:1608
+#: B3Onboarding.php:1482 B3Onboarding.php:1520
 msgid "You are already signed in."
 msgstr "Je bent al ingelogd."
 
-#: B3Onboarding.php:1571
+#: B3Onboarding.php:1577 B3Onboarding.php:1614
 msgid "You are already logged in."
 msgstr "Je bent al ingelogd."
 
-#: B3Onboarding.php:1627
+#: B3Onboarding.php:1633
 msgid "Invalid password reset link."
 msgstr "Ongeldige wachtwoord reset link."
 
-#: B3Onboarding.php:1690
+#: B3Onboarding.php:1697
 msgid "On this page you can approve/deny user requests for access."
 msgstr "Op deze pagina kan je verzoeken van gebruikers goedkeuren of weigeren."
 
-#: B3Onboarding.php:1696
+#: B3Onboarding.php:1703
 msgid "User is successfully approved"
 msgstr "Gebruiker succesvol goedgekeurd"
 
-#: B3Onboarding.php:1700
+#: B3Onboarding.php:1707
 msgid "User is successfully rejected and user is deleted"
 msgstr "Gebruiker succesvol geweigerd en verwijderd"
 
-#: B3Onboarding.php:1711
+#: B3Onboarding.php:1718
 msgid "User ID"
 msgstr "Gebruikers ID"
 
-#: B3Onboarding.php:1715 includes/actions.php:25 includes/functions.php:803
-#: templates/account.php:61
+#: B3Onboarding.php:1722 includes/actions-b3.php:123 includes/actions-wp.php:28
+#: templates/account.php:62
 msgid "First name"
 msgstr "Voornaam"
 
-#: B3Onboarding.php:1718 includes/actions.php:31 includes/functions.php:807
-#: templates/account.php:69
+#: B3Onboarding.php:1725 includes/actions-b3.php:127 includes/actions-wp.php:34
+#: templates/account.php:70
 msgid "Last name"
 msgstr "Achternaam"
 
-#: B3Onboarding.php:1722 templates/account.php:24 templates/register.php:51
+#: B3Onboarding.php:1729 templates/account.php:25 templates/register.php:51
 msgid "Email"
 msgstr "Email"
 
-#: B3Onboarding.php:1725
+#: B3Onboarding.php:1732
 msgid "Actions"
 msgstr "Acties"
 
-#: B3Onboarding.php:1742
+#: B3Onboarding.php:1749
 msgid "Approve"
 msgstr "Goedkeuren"
 
-#: B3Onboarding.php:1743
+#: B3Onboarding.php:1750
 msgid "Reject"
 msgstr "Weigeren"
 
-#: B3Onboarding.php:1751
+#: B3Onboarding.php:1758
 msgid "No (more) users to approve."
 msgstr "Geen gebruikers (meer) om goed te keuren."
 
-#: includes/B3SidebarWidget.php:92
+#: includes/B3SidebarWidget.php:97
 #, php-format
 msgid ""
 "You haven't set any widget settings. Configure them <a href=\"%s\">here</a>."
@@ -255,79 +263,87 @@ msgstr ""
 "Je hebt nog geen pagina ingesteld voor front-end gebruikersgoedkeuring. Stel "
 "dit <a href=\"%s\">hier</a> in."
 
-#: includes/B3SidebarWidget.php:108 includes/do-stuff.php:20
+#: includes/B3SidebarWidget.php:113 includes/do-stuff.php:20
 msgid "Login"
 msgstr "Inloggen"
 
-#: includes/B3SidebarWidget.php:111 includes/do-stuff.php:30
-#: includes/functions.php:834 includes/functions.php:858 includes/tabs.php:150
-#: templates/register.php:83
+#: includes/B3SidebarWidget.php:116 includes/do-stuff.php:30
+#: includes/functions.php:749 includes/functions.php:773
+#: includes/tabs/tab-pages.php:13 templates/register.php:83
 msgid "Register"
 msgstr "Registreren"
 
-#: includes/B3SidebarWidget.php:115 includes/do-stuff.php:10
-#: includes/tabs.php:175
+#: includes/B3SidebarWidget.php:120 includes/do-stuff.php:10
+#: includes/tabs/tab-pages.php:38
 msgid "Account"
 msgstr "Account"
 
-#: includes/B3SidebarWidget.php:121 includes/do-stuff.php:25
-#: includes/tabs.php:160
+#: includes/B3SidebarWidget.php:126 includes/do-stuff.php:25
+#: includes/tabs/tab-pages.php:23
 msgid "Log Out"
 msgstr "Uitloggen"
 
-#: includes/B3SidebarWidget.php:145
+#: includes/B3SidebarWidget.php:150
 msgid "User menu"
 msgstr "Gebruikers menu"
 
-#: includes/B3SidebarWidget.php:148
+#: includes/B3SidebarWidget.php:153
 msgid "Title:"
 msgstr "Titel:"
 
-#: includes/B3SidebarWidget.php:151
+#: includes/B3SidebarWidget.php:156
 msgid "Logged Out"
 msgstr "Uitgelogd"
 
-#: includes/B3SidebarWidget.php:154
+#: includes/B3SidebarWidget.php:159
 msgid "Show register link"
 msgstr "Toon registratie link"
 
-#: includes/B3SidebarWidget.php:158
+#: includes/B3SidebarWidget.php:163
 msgid "Show login link"
 msgstr "Toon login link"
 
-#: includes/B3SidebarWidget.php:160
+#: includes/B3SidebarWidget.php:165
 msgid "Logged In"
 msgstr "Ingelogd"
 
-#: includes/B3SidebarWidget.php:163
+#: includes/B3SidebarWidget.php:168
 msgid "Show account link"
 msgstr "Toon account link"
 
-#: includes/B3SidebarWidget.php:167
+#: includes/B3SidebarWidget.php:172
 msgid "Show log out link"
 msgstr "Toon log out link"
 
-#: includes/B3SidebarWidget.php:169
+#: includes/B3SidebarWidget.php:174
 msgid "Admin only"
 msgstr "Alleen voor beheerders"
 
-#: includes/B3SidebarWidget.php:173
+#: includes/B3SidebarWidget.php:178
 msgid "Show user management link"
 msgstr "Toon gebruikersmanagement pagina"
 
-#: includes/B3SidebarWidget.php:178
+#: includes/B3SidebarWidget.php:183
 msgid "Show settings link"
 msgstr "Toon instellingen link"
 
-#: includes/actions.php:25 includes/actions.php:31
+#: includes/actions-b3.php:101
+msgid "Desired (sub) domain"
+msgstr "Gewenst (sub) domein"
+
+#: includes/actions-b3.php:102
+msgid "customdomain"
+msgstr "eigendomein"
+
+#: includes/actions-wp.php:28 includes/actions-wp.php:34
 msgid "required"
 msgstr "verplicht"
 
-#: includes/actions.php:53 templates/register.php:73
+#: includes/actions-wp.php:56 templates/register.php:73
 msgid "Accept privacy settings"
 msgstr "Accepteer privacy instellingen"
 
-#: includes/actions.php:56
+#: includes/actions-wp.php:59
 #, php-format
 msgid "<a href=\"%s\">Click here</a> for more info."
 msgstr "<a href=\"%s\">Klik hier</a> voor meer informatie."
@@ -344,28 +360,28 @@ msgstr "Email preview"
 msgid "Onboarding settings"
 msgstr "Onboard instellingen"
 
-#: includes/admin-page.php:47 includes/tabs.php:204
+#: includes/admin-page.php:47 includes/tabs/tab-pages.php:67
 msgid "Pages"
 msgstr "Pagina's"
 
-#: includes/admin-page.php:55 includes/tabs.php:319
+#: includes/admin-page.php:55 includes/tabs/tab-registration.php:23
 msgid "Registration"
 msgstr "Registratie"
 
-#: includes/admin-page.php:63 includes/tabs.php:487
+#: includes/admin-page.php:63 includes/tabs/tab-loginpage.php:26
 msgid "Login page"
 msgstr "Login pagina"
 
 #: includes/admin-page.php:71 includes/help-tabs.php:28
-#: includes/help-tabs.php:29 includes/tabs.php:265
+#: includes/help-tabs.php:29 includes/tabs/tab-emails.php:16
 msgid "Emails"
 msgstr "Emails"
 
-#: includes/admin-page.php:78 includes/tabs.php:576
+#: includes/admin-page.php:78 includes/tabs/tab-users.php:17
 msgid "Users"
 msgstr "Gebruikers"
 
-#: includes/admin-page.php:86 includes/tabs.php:648
+#: includes/admin-page.php:86 includes/tabs/tab-integrations.php:15
 msgid "Integrations"
 msgstr "Integraties"
 
@@ -431,36 +447,44 @@ msgstr "Nee"
 msgid "empty"
 msgstr "leeg"
 
-#: includes/defaults.php:42
+#: includes/defaults.php:59
+msgid ""
+"This is an automated email from the website <a href=\"%home_url%\">%blog_name"
+"%</a>."
+msgstr ""
+"Dit is een geautomatiseerde email van de website <a href=\"%home_url%\">"
+"%blog_name%</a>."
+
+#: includes/defaults.php:88
 #, php-format
 msgid "New user at %s"
 msgstr "Nieuwe gebruiker op %s"
 
-#: includes/defaults.php:51
+#: includes/defaults.php:97
 #, php-format
 msgid "A new user registered at %s on %s"
 msgstr "Een nieuwe gebruiker heeft zich geregistreerd op %s op %s"
 
-#: includes/defaults.php:53
+#: includes/defaults.php:99
 #, php-format
 msgid "User name: %s"
 msgstr "Gebruikersnaam: %s"
 
-#: includes/defaults.php:55
+#: includes/defaults.php:101
 #, php-format
 msgid "IP: %s"
 msgstr "IP: %s"
 
-#: includes/defaults.php:66
+#: includes/defaults.php:112
 msgid "Account activated"
 msgstr "Account geactiveerd"
 
-#: includes/defaults.php:75
+#: includes/defaults.php:121
 #, php-format
 msgid "Hi %s"
 msgstr "Hi %s"
 
-#: includes/defaults.php:77
+#: includes/defaults.php:123
 #, php-format
 msgid ""
 "you have confirmed your email address and can now set your password through "
@@ -469,22 +493,22 @@ msgstr ""
 "je hebt email adres bevestigd en kunt nu je wachtwoord instellen via <a href="
 "\"%s\">deze link</a>."
 
-#: includes/defaults.php:79 includes/defaults.php:184 includes/defaults.php:213
-#: includes/defaults.php:242
+#: includes/defaults.php:125 includes/defaults.php:234
+#: includes/defaults.php:263 includes/defaults.php:292
 msgid "Greetings"
 msgstr "Groeten"
 
-#: includes/defaults.php:81 includes/defaults.php:186 includes/defaults.php:215
-#: includes/defaults.php:244
+#: includes/defaults.php:127 includes/defaults.php:236
+#: includes/defaults.php:265 includes/defaults.php:294
 #, php-format
 msgid "The %s crew"
 msgstr "De %s crew"
 
-#: includes/defaults.php:92
+#: includes/defaults.php:138
 msgid "A new user requests access"
 msgstr "Een nieuwe gebruiker vraagt om toegang"
 
-#: includes/defaults.php:101
+#: includes/defaults.php:149
 #, php-format
 msgid ""
 "A new user has requested access. You can approve/deny him/her on the \"<a "
@@ -493,12 +517,12 @@ msgstr ""
 "Een nieuwe gebruiker heeft toegang gevraagd. Je kunt hem/haar goedkeuren/"
 "weigeren op de \"<a href=\"%s\">Gebruikers management</a>\" pagina."
 
-#: includes/defaults.php:110
+#: includes/defaults.php:160
 #, php-format
 msgid "Request for access confirmed for %s"
 msgstr "Verzoek voor toegang bevestigd voor %s"
 
-#: includes/defaults.php:119
+#: includes/defaults.php:169
 #, php-format
 msgid ""
 "You have successfully requested access for %s. We'll inform you about the "
@@ -507,44 +531,44 @@ msgstr ""
 "Je hebt succesvol toegang verzocht op %s. We zullen je informeren over de "
 "uitkomst."
 
-#: includes/defaults.php:129
+#: includes/defaults.php:179
 msgid "Account approved"
 msgstr "Account goedgekeurd"
 
-#: includes/defaults.php:138
+#: includes/defaults.php:188
 #, php-format
 msgid ""
 "Welcome to %s. Your account has been approved and you can now set your "
-"password on <a href=\"%s\">%s</a>."
+"password <a href=\"%s\">here</a>."
 msgstr ""
-"Welkom op %s. Je account is goedgekeurd en je kan je wachtwoord instellen op "
-"<a href=\"%s\">%s</a>."
+"Welkom op %s. Je account is goedgekeurd en je kan je wachtwoord <a href=\"%s"
+"\">hier</a> instellen."
 
-#: includes/defaults.php:148
+#: includes/defaults.php:198
 msgid "Account rejected"
 msgstr "Account geweigerd"
 
-#: includes/defaults.php:157
+#: includes/defaults.php:207
 msgid "Your account request has been rejected."
 msgstr "Je aanvraag is geweigerd."
 
-#: includes/defaults.php:166
+#: includes/defaults.php:216
 #, php-format
 msgid "Password reset for %s"
 msgstr "Wachtwoord reset voor %s"
 
-#: includes/defaults.php:176
+#: includes/defaults.php:226
 msgid "Hi"
 msgstr "Hi"
 
-#: includes/defaults.php:178
+#: includes/defaults.php:228
 msgid ""
 "Someone requested a password reset for the account using this email address."
 msgstr ""
 "Iemand heeft een wachtwoord reset aangevraagd voor de account die dit email "
 "adres gebruikt."
 
-#: includes/defaults.php:180
+#: includes/defaults.php:230
 msgid ""
 "If this was a mistake, or you didn't ask for a password reset, just ignore "
 "this email and nothing will happen."
@@ -552,36 +576,36 @@ msgstr ""
 "Als dit per ongeluk was of je hebt niet gevraagd om een wachtwoord reset, "
 "dan kan je deze email negeren en gebeurt er niks."
 
-#: includes/defaults.php:182
+#: includes/defaults.php:232
 msgid "To (re)set your password, go to <a href=\"%reset_url%\">this page</a>."
 msgstr ""
 "Om je wachtwoord te resetten, ga naar <a href=\"%reset_url%”>deze pagina</a>."
 
-#: includes/defaults.php:198
+#: includes/defaults.php:248
 #, php-format
 msgid "Welcome to %s"
 msgstr "Welkom op %s"
 
-#: includes/defaults.php:207 includes/defaults.php:236
+#: includes/defaults.php:257 includes/defaults.php:286
 #, php-format
 msgid "Welcome %s"
 msgstr "Welkom %s"
 
-#: includes/defaults.php:209 includes/defaults.php:238
+#: includes/defaults.php:259 includes/defaults.php:288
 #, php-format
 msgid "your registration to %s was successful."
 msgstr "je registratie op %s was succesvol."
 
-#: includes/defaults.php:211
+#: includes/defaults.php:261
 #, php-format
 msgid "You can set your password <a href=\"%s\">here</a>."
 msgstr "Je kan je wachtwoord <a href=\"%s\">hier</a> instellen."
 
-#: includes/defaults.php:227
+#: includes/defaults.php:277
 msgid "Confirm your email address"
 msgstr "Bevestig je email adres"
 
-#: includes/defaults.php:240
+#: includes/defaults.php:290
 #, php-format
 msgid ""
 "You only need to confirm your email address through <a href=\"%s\">this "
@@ -600,8 +624,8 @@ msgctxt "slug"
 msgid "forgotpassword"
 msgstr "wachtwoord-vergeten"
 
-#: includes/do-stuff.php:15 includes/functions.php:829
-#: includes/functions.php:846
+#: includes/do-stuff.php:15 includes/functions.php:744
+#: includes/functions.php:761
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
 
@@ -625,8 +649,8 @@ msgctxt "slug"
 msgid "reset-password"
 msgstr "reset-wachtwoord"
 
-#: includes/do-stuff.php:35 includes/tabs.php:170 templates/lostpassword.php:36
-#: templates/resetpass.php:32
+#: includes/do-stuff.php:35 includes/tabs/tab-pages.php:33
+#: templates/lostpassword.php:36 templates/resetpass.php:32
 msgid "Reset Password"
 msgstr "Wachtwoord resetten"
 
@@ -654,7 +678,7 @@ msgstr "Als een veld leeg wordt gelaten wordt de 'placeholder' gebruikt."
 #: includes/emails/new-user-admin.php:29
 #: includes/emails/request-access-admin.php:28
 #: includes/emails/request-access-user.php:14
-#: includes/emails/welcome-email-user.php:15 includes/preview.php:75
+#: includes/emails/welcome-email-user.php:15 includes/preview.php:76
 msgid "Email subject"
 msgstr "Email onderwerp"
 
@@ -687,7 +711,7 @@ msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Bekijken</a>"
 #: includes/emails/account-approved.php:33
 #: includes/emails/account-rejected.php:42
 #: includes/emails/email-activation.php:35
-#: includes/emails/email-confirmed.php:35 includes/emails/email-settings.php:42
+#: includes/emails/email-confirmed.php:35 includes/emails/email-settings.php:70
 #: includes/emails/email-styling.php:20 includes/emails/email-template.php:22
 #: includes/emails/forgot-password.php:46
 #: includes/emails/ms-user-delete-site.php:22
@@ -697,8 +721,8 @@ msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Bekijken</a>"
 #: includes/emails/new-user-admin.php:58
 #: includes/emails/request-access-admin.php:47
 #: includes/emails/request-access-user.php:33
-#: includes/emails/welcome-email-user.php:34 includes/tabs.php:243
-#: includes/tabs.php:453 includes/tabs.php:552
+#: includes/emails/welcome-email-user.php:34 includes/tabs/tab-loginpage.php:91
+#: includes/tabs/tab-pages.php:113 includes/tabs/tab-registration.php:157
 msgid "Save settings"
 msgstr "Bewaar instellingen"
 
@@ -711,27 +735,39 @@ msgstr "Stuur geen email wanneer een gebruiker wordt verwijderd/geweigerd"
 msgid "Available variables are:"
 msgstr "Beschikbare waarden zijn:"
 
-#: includes/emails/email-settings.php:9
+#: includes/emails/email-settings.php:11
 msgid "Notification sender name"
 msgstr "Naam berichtafzender"
 
-#: includes/emails/email-settings.php:19
+#: includes/emails/email-settings.php:21
 msgid "This is the name which is used to send emails from."
 msgstr "Dit is de naam welke gebruikt wordt als afzender voor de emails."
 
-#: includes/emails/email-settings.php:25
+#: includes/emails/email-settings.php:27
 msgid "Notification sender email"
 msgstr "Email afzender"
 
-#: includes/emails/email-settings.php:35
+#: includes/emails/email-settings.php:37
 msgid "This is the email address from which all emails will be sent."
 msgstr "Dit is het email adres dat gebruikt wordt als afzender voor de emails."
+
+#: includes/emails/email-settings.php:44
+msgid "Logo in emails"
+msgstr "Logo in emails"
+
+#: includes/emails/email-settings.php:50 includes/tabs/tab-loginpage.php:42
+msgid "Choose a logo"
+msgstr "Kies een logo"
+
+#: includes/emails/email-settings.php:62
+msgid "This is the image url for the logo sent in all emails."
+msgstr "Dit is de url van de afbeelding voor het logo in alle emails."
 
 #: includes/emails/email-styling.php:6
 msgid "If left empty the default styling will be used."
 msgstr "Indien niet ingevuld, dan wordt de default styling gebruikt."
 
-#: includes/emails/email-styling.php:11 includes/functions.php:255
+#: includes/emails/email-styling.php:11 includes/functions.php:225
 msgid "Email styling"
 msgstr "E-mail stijl"
 
@@ -739,7 +775,7 @@ msgstr "E-mail stijl"
 msgid "This is the default email template."
 msgstr "Dit is het default email template."
 
-#: includes/emails/email-template.php:11 includes/functions.php:259
+#: includes/emails/email-template.php:11 includes/functions.php:229
 msgid "Email template"
 msgstr "E-mail template"
 
@@ -786,144 +822,144 @@ msgstr "Email adressen"
 msgid "Disable admin notification on new user registration"
 msgstr "Deactiveer admin notificatie bij nieuwe gebruiker registratie"
 
-#: includes/filters.php:222 includes/filters.php:226 includes/filters.php:232
+#: includes/filters-wp.php:205 includes/filters-wp.php:209
+#: includes/filters-wp.php:215
 msgid "ERROR"
 msgstr "FOUT"
 
-#: includes/filters.php:222
+#: includes/filters-wp.php:205
 msgid "You must include a first name."
 msgstr "Je moet een voornaam invullen."
 
-#: includes/filters.php:226
+#: includes/filters-wp.php:209
 msgid "You must include a last name."
 msgstr "Je moet een achternaam invullen."
 
-#: includes/filters.php:232
+#: includes/filters-wp.php:215
 msgid "Recaptcha failed."
 msgstr "Recaptcha mislukt."
 
-#: includes/form-handling.php:13 includes/form-handling.php:81
-#: includes/form-handling.php:118 includes/form-handling.php:232
-msgid "Something went wrong, please try again."
-msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
-
-#: includes/form-handling.php:67
+#: includes/form-handling.php:62
 msgid "General settings saved"
 msgstr "Algemene instellingen opgeslagen"
 
-#: includes/form-handling.php:106
+#: includes/form-handling.php:94
 msgid "Pages settings saved"
 msgstr "Pagina instellingen opgeslagen"
 
-#: includes/form-handling.php:218
+#: includes/form-handling.php:199
 msgid "Registration settings saved"
 msgstr "Registratie instellingen opgeslagen"
 
-#: includes/form-handling.php:247
+#: includes/form-handling.php:220 includes/form-handling.php:272
 msgid "Then length of your hex code is incorrect."
 msgstr "De lengte van je het code is incorrect."
 
-#: includes/form-handling.php:277
+#: includes/form-handling.php:247
 msgid "Login page settings saved"
 msgstr "Login pagina instellingen opgeslagen"
 
-#: includes/form-handling.php:501
+#: includes/form-handling.php:364
+msgid "Email settings saved"
+msgstr "Email instellingen opgeslagen"
+
+#: includes/form-handling.php:398
+msgid "User settings saved"
+msgstr "Gebruikersinstellingen opgeslagen"
+
+#: includes/form-handling.php:415
+msgid "reCaptcha settings saved"
+msgstr "reCaptcha instellingen opgeslagen"
+
+#: includes/form-handling.php:497
 msgid "You do not have permission to edit this user."
 msgstr "Je hebt niet voldoende rechten om deze gebruiker te bewerken."
 
-#: includes/functions.php:16
+#: includes/functions.php:14
 msgid ""
 "If you triggered this setting manually, be aware that it's not working yet."
 msgstr ""
 "Als je deze setting handmatig hebt ingeschakeld, weet dan dat deze functie "
 "nog niet werkt."
 
-#: includes/functions.php:20 templates/account.php:82 templates/login.php:111
+#: includes/functions.php:18 templates/account.php:84 templates/login.php:115
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: includes/functions.php:25
+#: includes/functions.php:23
 msgid "Confirm Password"
 msgstr "Wachtwoord bevestigen"
 
-#: includes/functions.php:181
+#: includes/functions.php:163
 msgid "Global email settings"
 msgstr "Globale email instellingen"
 
-#: includes/functions.php:188
+#: includes/functions.php:170
 msgid "Request access email (user)"
 msgstr "Verzoek toegangsemail (gebruiker)"
 
-#: includes/functions.php:192
+#: includes/functions.php:174
 msgid "Request access email (admin)"
 msgstr "Verzoek toegangsemail (admin)"
 
-#: includes/functions.php:196
+#: includes/functions.php:178
 msgid "Account approved email (user)"
 msgstr "Account goedgekeurd email (gebruiker)"
 
-#: includes/functions.php:200
+#: includes/functions.php:182
 msgid "Account rejected email (user)"
 msgstr "Account geweigerd email (gebruiker)"
 
-#: includes/functions.php:208
+#: includes/functions.php:190
 msgid "Email activation (user)"
 msgstr "Email activatie (gebruiker)"
 
-#: includes/functions.php:212
+#: includes/functions.php:194
 msgid "Account activated (user)"
 msgstr "Account geactiveerd (gebruiker)"
 
-#: includes/functions.php:216 includes/functions.php:228
+#: includes/functions.php:202
 msgid "Welcome email (user)"
 msgstr "Welkom email (gebruiker)"
 
-#: includes/functions.php:240
+#: includes/functions.php:210
 msgid "New user (admin)"
 msgstr "Nieuwe gebruiker (admin)"
 
-#: includes/functions.php:247
+#: includes/functions.php:217
 msgid "Forgot password email"
 msgstr "Wachtwoord vergeten email"
 
-#: includes/functions.php:280
+#: includes/functions.php:250
 msgid "Closed (for everyone)"
 msgstr "Gesloten (voor iedereen)"
 
-#: includes/functions.php:287
+#: includes/functions.php:257
 msgid "Request access (admin approval)"
 msgstr "Verzoek toegang (admin goedkeuring)"
 
-#: includes/functions.php:291
+#: includes/functions.php:261
 msgid "Open (user needs to confirm email)"
 msgstr "Open (gebruiker moet email bevestigen)"
 
-#: includes/functions.php:295
+#: includes/functions.php:265
 msgid "Open (user is instantly active)"
 msgstr "Open (gebruiker is direct actief)"
 
-#: includes/functions.php:306
+#: includes/functions.php:276
 msgid "Logged in user may register a site"
 msgstr "Ingelogde gebruiker mag een site registreren"
 
-#: includes/functions.php:310
+#: includes/functions.php:280
 msgid "Visitor may register user"
 msgstr "Gebruiker mag registreren voor een account"
 
-#: includes/functions.php:314
+#: includes/functions.php:284
 msgid "Visitor may register user + site"
 msgstr "Gebruiker mag registreren voor een account + site"
 
-#: includes/functions.php:348
-msgid "Desired (sub) domain"
-msgstr "Gewenst (sub) domein"
-
-#: includes/functions.php:349
-msgid "customdomain"
-msgstr "eigendomein"
-
-#: includes/functions.php:842 includes/functions.php:853 includes/tabs.php:155
-#: templates/login-new.php:10
+#: includes/functions.php:757 includes/functions.php:768
+#: includes/tabs/tab-pages.php:18 templates/login-new.php:10
 msgid "Log In"
 msgstr "Aanmelden"
 
@@ -964,43 +1000,23 @@ msgstr "Email variabelen"
 msgid "These are the available variables in emails."
 msgstr "Dit zijn de beschikbare variabelen in emails."
 
-#: includes/help-tabs.php:49
+#: includes/help-tabs.php:41
+msgid "only in user activation email"
+msgstr "alleen in gebruikersactivatie email"
+
+#: includes/help-tabs.php:51
+msgid "available in every email"
+msgstr "beschikbaar in elke email"
+
+#: includes/help-tabs.php:53
 msgid "only available in admin notification"
 msgstr "alleen beschikbaar in notificaties voor beheerders"
 
-#: includes/help-tabs.php:55 includes/help-tabs.php:56
-msgid "Shortcodes"
-msgstr "Shortcodes"
+#: includes/help-tabs.php:55
+msgid "only available in password reset email"
+msgstr "alleen beschikbaar in wachtwoord reset email"
 
-#: includes/help-tabs.php:61
-msgid "This renders the registration page."
-msgstr "Dit rendert de registratie pagina."
-
-#: includes/help-tabs.php:66
-msgid "This renders the login page."
-msgstr "Dit rendert de login pagina."
-
-#: includes/help-tabs.php:71
-msgid "This renders the forgot password page."
-msgstr "Dit rendert de wachtwoord vergeten pagina."
-
-#: includes/help-tabs.php:76
-msgid "This renders the reset password page."
-msgstr "Dit rendert de wachtwoord reset pagina."
-
-#: includes/help-tabs.php:81
-msgid "This renders the account page."
-msgstr "Dit rendert de account pagina."
-
-#: includes/help-tabs.php:86
-msgid "This renders the user management page."
-msgstr "Dit rendert de gebruikersgoedkeuring pagina."
-
-#: includes/help-tabs.php:91
-msgid "This renders the delete account page."
-msgstr "Dit rendert de account verwijderen pagina."
-
-#: includes/help-tabs.php:95
+#: includes/help-tabs.php:60
 #, php-format
 msgid ""
 "More info about the use of shortcodes and their variables, please see <a "
@@ -1009,307 +1025,91 @@ msgstr ""
 "Meer info over het gebruik van shortcodes en hun variabelen, kijk aub <a "
 "href=\"%s\">hier</a>."
 
+#: includes/help-tabs.php:66 includes/help-tabs.php:67
+msgid "Shortcodes"
+msgstr "Shortcodes"
+
+#: includes/help-tabs.php:72
+msgid "This renders the registration page."
+msgstr "Dit rendert de registratie pagina."
+
+#: includes/help-tabs.php:77
+msgid "This renders the login page."
+msgstr "Dit rendert de login pagina."
+
+#: includes/help-tabs.php:82
+msgid "This renders the forgot password page."
+msgstr "Dit rendert de wachtwoord vergeten pagina."
+
+#: includes/help-tabs.php:87
+msgid "This renders the reset password page."
+msgstr "Dit rendert de wachtwoord reset pagina."
+
+#: includes/help-tabs.php:92
+msgid "This renders the account page."
+msgstr "Dit rendert de account pagina."
+
+#: includes/help-tabs.php:97
+msgid "This renders the user management page."
+msgstr "Dit rendert de gebruikersgoedkeuring pagina."
+
 #: includes/help-tabs.php:102
+msgid "This renders the delete account page."
+msgstr "Dit rendert de account verwijderen pagina."
+
+#: includes/help-tabs.php:110
 msgid "More info"
 msgstr "Meer informatie"
 
-#: includes/help-tabs.php:103
+#: includes/help-tabs.php:111
 msgid "Official site"
 msgstr "Officiële site"
 
-#: includes/help-tabs.php:108
+#: includes/help-tabs.php:116
 msgid "Author"
 msgstr "Auteur"
 
-#: includes/preview.php:70
+#: includes/preview.php:71
 msgid "This is what the email will look like (approximately)."
 msgstr "Dit is hoe de email er (ongeveer) uit ziet."
 
-#: includes/tabs.php:64
-msgid "Here you can set various global settings for the plugin."
-msgstr "Hier kun je algemene instellingen vinden voor de plugin."
-
-#: includes/tabs.php:74
-msgid "Style default pages"
-msgstr "Style standaard pagina's"
-
-#: includes/tabs.php:77
-msgid ""
-"Check this box to activate custom settings for WordPress' default login page."
-msgstr ""
-"Selecteer deze checkbox om instellingen te activeren voor Wordpress' default "
-"pagina’s."
-
-#: includes/tabs.php:83
-msgid "Force custom login page"
-msgstr "Forceer gebruik van jouw pagina’s"
-
-#: includes/tabs.php:86
-msgid ""
-"Check this box to disable WordPress' own pages and force using your custom "
-"pages."
-msgstr ""
-"Selecteer deze checkbox om WordPress’ eigen pagina’s uit te schakelen en "
-"forceer het gebruik van jouw pagina’s."
-
-#: includes/tabs.php:94
-msgid "Activate debug info page"
-msgstr "Activeer debug info pagina"
-
-#: includes/tabs.php:97
-msgid "Check this box to 'show' the debug page."
-msgstr "Selecteer deze checkbox om de debug pagina te activeren."
-
-#: includes/tabs.php:108
-msgid "Widget settings"
-msgstr "Widget instellingen"
-
-#: includes/tabs.php:113
-msgid "Dashboard widget"
-msgstr "Dashboard widget"
-
-#: includes/tabs.php:116
-msgid "Check this box to activate the dashboard widget."
-msgstr "Selecteer deze checkbox om de dashboard widget te activeren."
-
-#: includes/tabs.php:122
-msgid "Sidebar widget"
-msgstr "Zijbalk widget"
-
-#: includes/tabs.php:125
-msgid "Check this box to activate the sidebar widget."
-msgstr "Selecteer deze checkbox om de zijbalk widget te activeren."
-
-#: includes/tabs.php:130
-msgid "Save options"
-msgstr "Opslaan"
-
-#: includes/tabs.php:165
-msgid "Forgot Password"
-msgstr "Wachtwoord Vergeten"
-
-#: includes/tabs.php:182
-msgid "Approval page"
-msgstr "Gebruiker goedkeuringspagina"
-
-#: includes/tabs.php:208
-msgid "Here you can set which pages are assigned for the various 'actions'."
-msgstr ""
-"Hier kan je instellen welke pagina's worden gebruikt voor de diverse "
-"'acties'."
-
-#: includes/tabs.php:219
-msgid "Select a page"
-msgstr "Selecteer een pagina"
-
-#: includes/tabs.php:229 includes/tabs.php:230
-msgid "Edit"
-msgstr "Wijzigen"
-
-#: includes/tabs.php:234 includes/tabs.php:235
-msgid "Visit"
-msgstr "Bezoek"
-
-#: includes/tabs.php:242
-msgid "Links open in new window/tab."
-msgstr "Links openen in een nieuw venster of tab."
-
-#: includes/tabs.php:269
+#: includes/tabs/tab-emails.php:20
 msgid "Here you can set default email settings."
 msgstr "Hier kan je een standaard email opties instellen."
 
-#: includes/tabs.php:277
+#: includes/tabs/tab-emails.php:28
 msgid "Custom email styling/template"
 msgstr "Eigen email stijl/template"
 
-#: includes/tabs.php:280
+#: includes/tabs/tab-emails.php:31
 msgid "Check this box to activate your own email styling and template."
 msgstr "Selecteer deze checkbox om je eigen emails/styling te activeren."
 
-#: includes/tabs.php:288
-msgid "Save all email settings"
-msgstr "Bewaar alle email instellingen"
+#: includes/tabs/tab-emails.php:37
+msgid "Add logo in email"
+msgstr "Voeg logo toe in email"
 
-#: includes/tabs.php:310
-msgid "<a href=\"\">Click here</a> for more info."
-msgstr "<a href=\"\">Klik hier</a> voor meer informatie."
-
-#: includes/tabs.php:323
-msgid "Here you can set the main registration settings."
-msgstr "Hier kan je de registratie opties instellen."
-
-#: includes/tabs.php:332
-msgid "Registration options"
-msgstr "Registratie opties"
-
-#: includes/tabs.php:336
-#, php-format
+#: includes/tabs/tab-emails.php:40
 msgid ""
-"These settings are now the global settings and 'control' the values on the "
-"<a href=\"%s\">Network admin</a> page."
+"Check this box to activate a logo in the email header (of the default "
+"template)."
 msgstr ""
-"Deze instellingen zijn globaal en beheren de waardes op de <a href=\"%s"
-"\">Netwerk beheer</a> pagina."
+"Selecteer deze checkbox om een logo te activeren in de email header (van het "
+"default template)."
 
-#: includes/tabs.php:340
-#, php-format
-msgid ""
-"These settings are now the global settings and 'control' the values on the "
-"<a href=\"%s\">Settings page</a>."
-msgstr ""
-"Deze instellingen zijn globaal en beheren de waardes op de <a href=\"%s"
-"\">Instellingen</a> pagina."
+#: includes/tabs/tab-emails.php:46
+msgid "Link color"
+msgstr "Link kleur"
 
-#: includes/tabs.php:356
-msgid "Registrations are disabled."
-msgstr "Registraties zijn uitgeschakeld."
-
-#: includes/tabs.php:363
-msgid "Activate first and last name"
-msgstr "Activeer voor- en achternaam"
-
-#: includes/tabs.php:366
-msgid "Check this box to activate first and last name during registration."
-msgstr ""
-"Selecteer deze checkbox om voor- en achternaam te activeren tijdens "
-"registratie."
-
-#: includes/tabs.php:373
-msgid "Make first and last name required"
-msgstr "Maak voor- en achternaam verplicht"
-
-#: includes/tabs.php:376
-msgid "Check this box to make first and last name required."
-msgstr "Selecteer deze checkbox om voor- en achternaam verplicht te maken."
-
-#: includes/tabs.php:383
-msgid "reCAPTCHA"
-msgstr "reCAPTCHA"
-
-#: includes/tabs.php:386
-msgid "Check this box to activate reCAPTCHA."
-msgstr "Selecteer deze checkbox om reCaptcha te activeren."
-
-#: includes/tabs.php:389
-msgid "See tab integrations"
-msgstr "Zie de Integraties tab"
-
-#: includes/tabs.php:398
-msgid "Add reCaptcha on login page"
-msgstr "Voeg reCaptcha toe op de login pagina"
-
-#: includes/tabs.php:401
-msgid "Check this box to add reCaptcha on the login form."
-msgstr "Selecteer deze checkbox om reCaptcha te activeren op de login pagina."
-
-#: includes/tabs.php:409
-msgid "Privacy checkbox"
-msgstr "Privacy checkbox"
-
-#: includes/tabs.php:412
-msgid "Check this box to activate a privacy checkbox"
-msgstr "Selecteer deze checkbox om een privacy optie te activeren"
-
-#: includes/tabs.php:419
-msgid "Privacy text"
-msgstr "Privacy tekst"
-
-#: includes/tabs.php:424
-msgid "Links are allowed."
-msgstr "Links zijn toegestaan."
-
-#: includes/tabs.php:431
-msgid "Privacy page"
-msgstr "Privacy pagina"
-
-#: includes/tabs.php:436
-msgid "Must be a valid URL (incl. http(s)://)"
-msgstr "Moet een geldige URL zijn (incl. http(s)://)"
-
-#: includes/tabs.php:445
-msgid "Disable action links"
-msgstr "Schakel actie links uit"
-
-#: includes/tabs.php:448
-msgid "Check this box to hide the action links on (custom) forms."
-msgstr ""
-"Selecteer deze checkbox om de actie links te verbergen op jouw formulieren."
-
-#: includes/tabs.php:492
-msgid "Here you can style the (default) WordPress login page."
-msgstr "Hier kan je een de (default) Wordpress pagina aanpassen."
-
-#: includes/tabs.php:503
-msgid "Choose a logo"
-msgstr "Kies een logo"
-
-#: includes/tabs.php:510
-msgid "Logo width"
-msgstr "Logo breedte"
-
-#: includes/tabs.php:512
-msgid "Default = 84 px. Max 320 px."
-msgstr "Standaard = 84 px. Max 320 px."
-
-#: includes/tabs.php:517
-msgid "Logo height"
-msgstr "Logo hoogte"
-
-#: includes/tabs.php:519
-msgid "Max 150 px."
-msgstr "Max 150 px."
-
-#: includes/tabs.php:524
-msgid "Background color"
-msgstr "Achtergrondkleur"
-
-#: includes/tabs.php:527
+#: includes/tabs/tab-emails.php:49 includes/tabs/tab-loginpage.php:66
 msgid "Must be a hex value of 3 or 6 characters (without hashtag)"
 msgstr "Moet een het waarden zijn van 3 of 6 karakters (zonder hashtag)"
 
-#: includes/tabs.php:532
-msgid "Font size (in px)"
-msgstr "Lettergrootte (in px)"
+#: includes/tabs/tab-emails.php:56
+msgid "Save all email settings"
+msgstr "Bewaar alle email instellingen"
 
-#: includes/tabs.php:534
-msgid "Default = 14px"
-msgstr "Standaard = 14px"
-
-#: includes/tabs.php:539
-msgid "Font family"
-msgstr "Lettertype"
-
-#: includes/tabs.php:542
-msgid "Select a font"
-msgstr "Selecteer een lettertype"
-
-#: includes/tabs.php:580
-msgid "This page contains restrictions settings for users."
-msgstr "Deze pagina bevat beperkingsinstellingen voor gebruikers."
-
-#: includes/tabs.php:588
-msgid "Front-end user approval"
-msgstr "Front-end gebruiker goedkeuring"
-
-#: includes/tabs.php:591
-msgid "Check this box to activate front-end user approval."
-msgstr ""
-"Selecteer deze checkbox om gebruikersmanagement op de front-end te activeren."
-
-#: includes/tabs.php:598
-msgid "Restrict admin access"
-msgstr "Beperk admin toegang"
-
-#: includes/tabs.php:606
-msgid "Which user roles do <b>not</b> have access to the Wordpress admin ?"
-msgstr ""
-"Welke gebruikersrollen hebben <b>geen</b> toegang tot de Wordpress admin ?"
-
-#: includes/tabs.php:625
-msgid "Save all user settings"
-msgstr "Bewaar alle gebruikersinstellingen"
-
-#: includes/tabs.php:651
+#: includes/tabs/tab-integrations.php:18
 msgid ""
 "On this page you can add 3rd party integrations. Right now we only have a "
 "reCaptcha but more can be expected in the future."
@@ -1317,7 +1117,7 @@ msgstr ""
 "Op deze pagina kan je externe integraties toevoegen. Voorlopig hebben we "
 "alleen reCaptcha, maar meer kunnen worden verwacht in de toekomst."
 
-#: includes/tabs.php:653
+#: includes/tabs/tab-integrations.php:20
 #, php-format
 msgid ""
 "Get your (free) reCaptcha keys <a href=\"%s\" target=\"_blank\" rel="
@@ -1326,73 +1126,349 @@ msgstr ""
 "Haal je (gratis) reCaptcha sleutels <a href=\"%s\" target=\"_blank\" rel="
 "\"noopener\">hier</a>."
 
-#: includes/tabs.php:657
+#: includes/tabs/tab-integrations.php:24
 msgid "Recaptcha"
 msgstr "Recaptcha"
 
-#: includes/tabs.php:661
+#: includes/tabs/tab-integrations.php:28
 msgid "Here you can set the v2 reCaptcha settings, v3 is not working (yet)."
 msgstr "Hier kan je reCaptcha v2 instellen, v3 werkt (nog) niet."
 
-#: includes/tabs.php:663
+#: includes/tabs/tab-integrations.php:30
 msgid "Both keys must be entered, for reCaptcha to work."
 msgstr "Beide sleutels moeten worden ingevuld, om reCaptcha te laten werken."
 
-#: includes/tabs.php:671
+#: includes/tabs/tab-integrations.php:38
 msgid "Public key"
 msgstr "Publieke sleutel"
 
-#: includes/tabs.php:680
+#: includes/tabs/tab-integrations.php:47
 msgid "Secret key"
 msgstr "Prive sleutel"
 
-#: includes/tabs.php:689
+#: includes/tabs/tab-integrations.php:56
 msgid "reCaptcha version"
 msgstr "reCaptcha versie"
 
-#: includes/tabs.php:693
+#: includes/tabs/tab-integrations.php:60
 msgid "Choose"
 msgstr "Kiezen"
 
-#: includes/tabs.php:703
+#: includes/tabs/tab-integrations.php:70
 msgid "Save reCaptcha"
 msgstr "reCaptcha opslaan"
 
-#: includes/tabs.php:733
+#: includes/tabs/tab-integrations.php:100
 msgid "More integrations"
 msgstr "Meer integraties"
 
-#: includes/tabs.php:736
+#: includes/tabs/tab-integrations.php:103
 msgid "We understand there might be a need for more integrations."
 msgstr "We begrijpen dat er mogelijk een wens is voor meer integraties."
 
-#: includes/tabs.php:738
+#: includes/tabs/tab-integrations.php:105
 msgid ""
 "If we'll add more, the ones below are the first ones wer're gonna explore."
 msgstr ""
 "Als we meer toevoegen zijn onderstaande de eerste die we gaan verkennen."
 
+#: includes/tabs/tab-loginpage.php:31
+msgid "Here you can style the (default) WordPress login page."
+msgstr "Hier kan je een de (default) Wordpress pagina aanpassen."
+
+#: includes/tabs/tab-loginpage.php:49
+msgid "Logo width"
+msgstr "Logo breedte"
+
+#: includes/tabs/tab-loginpage.php:51
+msgid "Default = 84 px. Max 320 px."
+msgstr "Standaard = 84 px. Max 320 px."
+
+#: includes/tabs/tab-loginpage.php:56
+msgid "Logo height"
+msgstr "Logo hoogte"
+
+#: includes/tabs/tab-loginpage.php:58
+msgid "Max 150 px."
+msgstr "Max 150 px."
+
+#: includes/tabs/tab-loginpage.php:63
+msgid "Background color"
+msgstr "Achtergrondkleur"
+
+#: includes/tabs/tab-loginpage.php:71
+msgid "Font size (in px)"
+msgstr "Lettergrootte (in px)"
+
+#: includes/tabs/tab-loginpage.php:73
+msgid "Default = 14px"
+msgstr "Standaard = 14px"
+
+#: includes/tabs/tab-loginpage.php:78
+msgid "Font family"
+msgstr "Lettertype"
+
+#: includes/tabs/tab-loginpage.php:81
+msgid "Select a font"
+msgstr "Selecteer een lettertype"
+
+#: includes/tabs/tab-pages.php:28
+msgid "Forgot Password"
+msgstr "Wachtwoord Vergeten"
+
+#: includes/tabs/tab-pages.php:45
+msgid "Approval page"
+msgstr "Gebruiker goedkeuringspagina"
+
+#: includes/tabs/tab-pages.php:71
+msgid "Here you can set which pages are assigned for the various 'actions'."
+msgstr ""
+"Hier kan je instellen welke pagina's worden gebruikt voor de diverse "
+"'acties'."
+
+#: includes/tabs/tab-pages.php:82
+msgid "Select a page"
+msgstr "Selecteer een pagina"
+
+#: includes/tabs/tab-pages.php:92 includes/tabs/tab-pages.php:93
+msgid "Add new"
+msgstr "Nieuwe toevoegen"
+
+#: includes/tabs/tab-pages.php:99 includes/tabs/tab-pages.php:100
+msgid "Edit"
+msgstr "Wijzigen"
+
+#: includes/tabs/tab-pages.php:104 includes/tabs/tab-pages.php:105
+msgid "Visit"
+msgstr "Bezoek"
+
+#: includes/tabs/tab-pages.php:112
+msgid "Links open in new window/tab."
+msgstr "Links openen in een nieuw venster of tab."
+
+#: includes/tabs/tab-registration.php:14
+msgid "<a href=\"\">Click here</a> for more info."
+msgstr "<a href=\"\">Klik hier</a> voor meer informatie."
+
+#: includes/tabs/tab-registration.php:27
+msgid "Here you can set the main registration settings."
+msgstr "Hier kan je de registratie opties instellen."
+
+#: includes/tabs/tab-registration.php:36
+msgid "Registration options"
+msgstr "Registratie opties"
+
+#: includes/tabs/tab-registration.php:40
+#, php-format
+msgid ""
+"These settings are now the global settings and 'control' the values on the "
+"<a href=\"%s\">Network admin</a> page."
+msgstr ""
+"Deze instellingen zijn globaal en beheren de waardes op de <a href=\"%s"
+"\">Netwerk beheer</a> pagina."
+
+#: includes/tabs/tab-registration.php:44
+#, php-format
+msgid ""
+"These settings are now the global settings and 'control' the values on the "
+"<a href=\"%s\">Settings page</a>."
+msgstr ""
+"Deze instellingen zijn globaal en beheren de waardes op de <a href=\"%s"
+"\">Instellingen</a> pagina."
+
+#: includes/tabs/tab-registration.php:60
+msgid "Registrations are disabled."
+msgstr "Registraties zijn uitgeschakeld."
+
+#: includes/tabs/tab-registration.php:67
+msgid "Activate first and last name"
+msgstr "Activeer voor- en achternaam"
+
+#: includes/tabs/tab-registration.php:70
+msgid "Check this box to activate first and last name during registration."
+msgstr ""
+"Selecteer deze checkbox om voor- en achternaam te activeren tijdens "
+"registratie."
+
+#: includes/tabs/tab-registration.php:77
+msgid "Make first and last name required"
+msgstr "Maak voor- en achternaam verplicht"
+
+#: includes/tabs/tab-registration.php:80
+msgid "Check this box to make first and last name required."
+msgstr "Selecteer deze checkbox om voor- en achternaam verplicht te maken."
+
+#: includes/tabs/tab-registration.php:87
+msgid "reCAPTCHA"
+msgstr "reCAPTCHA"
+
+#: includes/tabs/tab-registration.php:90
+msgid "Check this box to activate reCAPTCHA."
+msgstr "Selecteer deze checkbox om reCaptcha te activeren."
+
+#: includes/tabs/tab-registration.php:93
+msgid "See tab integrations"
+msgstr "Zie de Integraties tab"
+
+#: includes/tabs/tab-registration.php:102
+msgid "Add reCaptcha on login page"
+msgstr "Voeg reCaptcha toe op de login pagina"
+
+#: includes/tabs/tab-registration.php:105
+msgid "Check this box to add reCaptcha on the login form."
+msgstr "Selecteer deze checkbox om reCaptcha te activeren op de login pagina."
+
+#: includes/tabs/tab-registration.php:113
+msgid "Privacy checkbox"
+msgstr "Privacy checkbox"
+
+#: includes/tabs/tab-registration.php:116
+msgid "Check this box to activate a privacy checkbox"
+msgstr "Selecteer deze checkbox om een privacy optie te activeren"
+
+#: includes/tabs/tab-registration.php:123
+msgid "Privacy text"
+msgstr "Privacy tekst"
+
+#: includes/tabs/tab-registration.php:128
+msgid "Links are allowed."
+msgstr "Links zijn toegestaan."
+
+#: includes/tabs/tab-registration.php:135
+msgid "Privacy page"
+msgstr "Privacy pagina"
+
+#: includes/tabs/tab-registration.php:140
+msgid "Must be a valid URL (incl. http(s)://)"
+msgstr "Moet een geldige URL zijn (incl. http(s)://)"
+
+#: includes/tabs/tab-registration.php:149
+msgid "Disable action links"
+msgstr "Schakel actie links uit"
+
+#: includes/tabs/tab-registration.php:152
+msgid "Check this box to hide the action links on (custom) forms."
+msgstr ""
+"Selecteer deze checkbox om de actie links te verbergen op jouw formulieren."
+
+#: includes/tabs/tab-settings.php:23
+msgid "Here you can set various global settings for the plugin."
+msgstr "Hier kun je algemene instellingen vinden voor de plugin."
+
+#: includes/tabs/tab-settings.php:33
+msgid "Style default pages"
+msgstr "Style standaard pagina's"
+
+#: includes/tabs/tab-settings.php:36
+msgid ""
+"Check this box to activate custom settings for WordPress' default login page."
+msgstr ""
+"Selecteer deze checkbox om instellingen te activeren voor Wordpress' default "
+"pagina’s."
+
+#: includes/tabs/tab-settings.php:42
+msgid "Force custom login page"
+msgstr "Forceer gebruik van jouw pagina’s"
+
+#: includes/tabs/tab-settings.php:45
+msgid ""
+"Check this box to disable WordPress' own pages and force using your custom "
+"pages."
+msgstr ""
+"Selecteer deze checkbox om WordPress’ eigen pagina’s uit te schakelen en "
+"forceer het gebruik van jouw pagina’s."
+
+#: includes/tabs/tab-settings.php:53
+msgid "Activate debug info page"
+msgstr "Activeer debug info pagina"
+
+#: includes/tabs/tab-settings.php:56
+msgid "Check this box to 'show' the debug page."
+msgstr "Selecteer deze checkbox om de debug pagina te activeren."
+
+#: includes/tabs/tab-settings.php:67
+msgid "Widget settings"
+msgstr "Widget instellingen"
+
+#: includes/tabs/tab-settings.php:72
+msgid "Dashboard widget"
+msgstr "Dashboard widget"
+
+#: includes/tabs/tab-settings.php:75
+msgid "Check this box to activate the dashboard widget."
+msgstr "Selecteer deze checkbox om de dashboard widget te activeren."
+
+#: includes/tabs/tab-settings.php:81
+msgid "Sidebar widget"
+msgstr "Zijbalk widget"
+
+#: includes/tabs/tab-settings.php:84
+msgid "Check this box to activate the sidebar widget."
+msgstr "Selecteer deze checkbox om de zijbalk widget te activeren."
+
+#: includes/tabs/tab-settings.php:89
+msgid "Save options"
+msgstr "Opslaan"
+
+#: includes/tabs/tab-users.php:21
+msgid "This page contains restrictions settings for users."
+msgstr "Deze pagina bevat beperkingsinstellingen voor gebruikers."
+
+#: includes/tabs/tab-users.php:29
+msgid "Front-end user approval"
+msgstr "Front-end gebruiker goedkeuring"
+
+#: includes/tabs/tab-users.php:32
+msgid "Check this box to activate front-end user approval."
+msgstr ""
+"Selecteer deze checkbox om gebruikersmanagement op de front-end te activeren."
+
+#: includes/tabs/tab-users.php:38
+msgid "User may delete account"
+msgstr "Gebruiker mag account verwijderen"
+
+#: includes/tabs/tab-users.php:41
+msgid ""
+"Check this box to allow the user to delete his/her account (through custom "
+"pages)."
+msgstr ""
+"Selecteer deze checkbox om de gebruiker zijn/haar account te laten "
+"verwijderen (via custom pagina’s)."
+
+#: includes/tabs/tab-users.php:47
+msgid "Restrict admin access"
+msgstr "Beperk admin toegang"
+
+#: includes/tabs/tab-users.php:55
+msgid "Which user roles do <b>not</b> have access to the Wordpress admin ?"
+msgstr ""
+"Welke gebruikersrollen hebben <b>geen</b> toegang tot de Wordpress admin ?"
+
+#: includes/tabs/tab-users.php:74
+msgid "Save all user settings"
+msgstr "Bewaar alle gebruikersinstellingen"
+
 #: includes/user-approval-page.php:16
 msgid "User approval"
 msgstr "Goedkeuring gebruiker"
 
-#: templates/account.php:9
+#: templates/account.php:10
 msgid "Profile saved"
 msgstr "Profiel opgeslagen"
 
-#: templates/account.php:10
+#: templates/account.php:11
 msgid "close"
 msgstr "sluiten"
 
-#: templates/account.php:30 templates/lostpassword.php:31
+#: templates/account.php:31 templates/lostpassword.php:31
 msgid "Email address"
 msgstr "Email adres"
 
-#: templates/account.php:31 templates/account.php:61 templates/account.php:69
+#: templates/account.php:32 templates/account.php:62 templates/account.php:70
 msgid "(required)"
 msgstr "(verplicht)"
 
-#: templates/account.php:43
+#: templates/account.php:44
 #, php-format
 msgid ""
 "There is a pending change of your e-mail to %1$s. <a href=\"%2$s\">Cancel</a>"
@@ -1400,63 +1476,71 @@ msgstr ""
 "Er is een wijziging om je email adres te wijzigen naar %1$s welke nog niet "
 "bevestigd is. <a href=\"%2$s\">Annuleren</a>"
 
-#: templates/account.php:56
+#: templates/account.php:57
 msgid "Name"
 msgstr "Naam"
 
-#: templates/account.php:86 templates/resetpass.php:21
+#: templates/account.php:89 templates/resetpass.php:21
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
-#: templates/account.php:90
+#: templates/account.php:94
 msgid "Generate Password"
 msgstr "Wachtwoord genereren"
 
-#: templates/account.php:95
+#: templates/account.php:99
 msgid "You can also enter your own password"
 msgstr "Je kan ook je eigen wachtwoord kiezen"
 
-#: templates/account.php:98
+#: templates/account.php:102
 msgid "Hide password"
 msgstr "Verberg wachtwoord"
 
-#: templates/account.php:100
+#: templates/account.php:104
 msgid "Hide"
 msgstr "Verbergen"
 
-#: templates/account.php:102
+#: templates/account.php:106
 msgid "Cancel password change"
 msgstr "Annuleer wijzigen wachtwoord"
 
-#: templates/account.php:103
+#: templates/account.php:107
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: templates/account.php:109 templates/resetpass.php:25
+#: templates/account.php:114 templates/resetpass.php:25
 msgid "Repeat new password"
 msgstr "Nieuw wachtwoord herhalen"
 
-#: templates/account.php:112
+#: templates/account.php:118
 msgid "Type your new password again."
 msgstr "Type je nieuwe wachtwoord nogmaals."
 
-#: templates/account.php:116
+#: templates/account.php:122
 msgid "Confirm password"
 msgstr "Wachtwoord bevestigen"
 
-#: templates/account.php:120
+#: templates/account.php:126
 msgid "Confirm use of weak password"
 msgstr "Bevestig zwak wachtwoord"
 
-#: templates/account.php:131
+#: templates/account.php:135
+msgid "Delete account"
+msgstr "Account verwijderen"
+
+#: templates/account.php:142
+msgid "If you select this option, your entire user profile will be deleted."
+msgstr "Als je deze optie selecteer, wordt je hele account verwijderd."
+
+#: templates/account.php:153
 msgid "Update profile"
 msgstr "Profiel bijwerken"
 
-#: templates/login.php:34
+#: templates/login.php:31
 msgid "You have successfully activated your account. You can now log in."
 msgstr "Je hebt succesvol je account bevestigd. Je kan nu inloggen."
 
-#: templates/login.php:44
+#: templates/login.php:41
 #, php-format
 msgid ""
 "You have successfully registered to <strong>%s</strong>. We have emailed you "
@@ -1465,7 +1549,7 @@ msgstr ""
 "Je hebt succesvol geregistreerd op <strong>%1$s</strong>. We hebben een "
 "activatie link naar je email adres gestuurd."
 
-#: templates/login.php:51
+#: templates/login.php:48
 #, php-format
 msgid ""
 "You have successfully requested access to <strong>%s</strong>. You'll be "
@@ -1474,7 +1558,7 @@ msgstr ""
 "Je hebt succesvol toegang gevraagd op <strong>%1$s</strong>. Je wordt via "
 "email geïnformeerd over je aanvraag."
 
-#: templates/login.php:59
+#: templates/login.php:56
 #, php-format
 msgid ""
 "You have successfully registered to <strong>%1$s</strong>. Please click the "
@@ -1483,7 +1567,7 @@ msgstr ""
 "Je hebt succesvol geregistreerd op <strong>%1$s</strong>. Klik aub op de "
 "bevestigingslink in je email."
 
-#: templates/login.php:72
+#: templates/login.php:69
 #, php-format
 msgid ""
 "You have successfully registered to <strong>%1$s</strong>. Set your password "
@@ -1492,23 +1576,27 @@ msgstr ""
 "Je hebt je succesvol geregistreerd op <strong>%1$s</strong>. Je kunt je "
 "wachtwoord <a href=\"%2$s\">hier</a> instellen."
 
-#: templates/login.php:86
+#: templates/login.php:83
 msgid "Check your email for a link to reset your password."
 msgstr "Controleer je e-mail voor de reset link."
 
-#: templates/login.php:94
+#: templates/login.php:91
 msgid "You are logged out."
 msgstr "Je bent uitgelogd."
 
-#: templates/login.php:101
+#: templates/login.php:98
 msgid "Your password has been changed. You can login now."
 msgstr "Je wachtwoord is gewijzigd. Je kan nu inloggen."
 
-#: templates/login.php:106
+#: templates/login.php:105
+msgid "Your account has been deleted."
+msgstr "Je account is verwijderd."
+
+#: templates/login.php:110
 msgid "Username or Email address"
 msgstr "Gebruikersnaam of email adres"
 
-#: templates/login.php:122
+#: templates/login.php:126
 msgid "Remember Me"
 msgstr "Onthoud mij"
 
@@ -1522,11 +1610,10 @@ msgstr ""
 "wachtwoord in te stellen."
 
 #: templates/lostpassword.php:26
-msgid ""
-"Enter your email address and we'll send you a link you can use to pick a new "
-"password."
+msgid "Enter your email address and we'll send you a link to set a password."
 msgstr ""
-"Vul je email adres in en we sturen je een link om je wachtwoord te resetten."
+"Vul je email adres in en we sturen je een link om je wachtwoord in te "
+"stellen."
 
 #: templates/register.php:37
 msgid "You have to request access for this website."
@@ -1782,10 +1869,6 @@ msgstr "https://berryplasman.com"
 
 #~ msgid "Sign In"
 #~ msgstr "Inloggen"
-
-#, fuzzy
-#~ msgid "Add ons"
-#~ msgstr "Evenement toevoegen"
 
 #, fuzzy
 #~ msgid "SMTP"
