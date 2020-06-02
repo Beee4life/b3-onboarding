@@ -135,7 +135,7 @@
      * @param $user_id
      */
     function b3_new_user_rejected( $user_id ) {
-        if ( false != get_option( 'b3_disable_delete_user_email' ) ) {
+        if ( false == get_option( 'b3_disable_delete_user_email' ) ) {
             $user_object = get_userdata( $user_id );
             $blog_name   = get_option( 'blogname' ); // @TODO: add filter for sender name
             $from_email  = get_option( 'admin_email' ); // @TODO: add filter for sender email
@@ -143,20 +143,21 @@
             $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
             $to          = $user_object->user_email;
 
-            if ( ! in_array( 'b3_approval', $user_object->roles ) && ! in_array( 'b3_activation', $user_object->roles ) && false == get_option( 'b3_account_rejected_message' ) ) {
-                $subject = str_replace( 'rejected', 'deleted', $subject );
-                $message = str_replace( 'request ', '', $message );
-                $message = str_replace( 'rejected', 'deleted', $message );
+            if ( in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
+                $message = b3_replace_template_styling( $message );
+                $message = strtr( $message, b3_replace_email_vars( [] ) );
+                $message = htmlspecialchars_decode( stripslashes( $message ) );
+                $headers = array(
+                    'From: ' . $blog_name . ' <' . $from_email . '>',
+                    'Content-Type: text/html; charset=UTF-8',
+                );
+                wp_mail( $to, $subject, $message, $headers );
+            } elseif ( ! in_array( 'b3_approval', $user_object->roles ) && ! in_array( 'b3_activation', $user_object->roles ) && false == get_option( 'b3_account_rejected_message' ) ) {
+                // $subject = str_replace( 'rejected', 'deleted', $subject );
+                // $message = str_replace( 'request ', '', $message );
+                // $message = str_replace( 'rejected', 'deleted', $message );
             }
 
-            $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_replace_email_vars( [] ) );
-            $message = htmlspecialchars_decode( stripslashes( $message ) );
-            $headers = array(
-                'From: ' . $blog_name . ' <' . $from_email . '>',
-                'Content-Type: text/html; charset=UTF-8',
-            );
-            wp_mail( $to, $subject, $message, $headers );
 
         }
     }
@@ -176,27 +177,21 @@
         if ( 'email_activation' == get_option( 'b3_registration_type' ) ) {
             $blog_name  = get_option( 'blogname' ); // @TODO: add filter for sender name
             $from_email = get_option( 'admin_email' ); // @TODO: add filter for sender email
-            $styling    = false;
-            $template   = false;
-            if ( 1 == get_option( 'b3_custom_emails' ) ) {
-                $styling  = get_option( 'b3_email_styling' );
-                $template = get_option( 'b3_email_template' );
-            }
-            $user    = get_userdata( $user_id );
-            $to      = $user->user_email;
-            $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-            $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
-            $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
-            $message = htmlspecialchars_decode( stripslashes( $message ) );
+            $user       = get_userdata( $user_id );
+            $to         = $user->user_email;
+            $subject    = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
+            $message    = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
+            $message    = b3_replace_template_styling( $message );
+            $message    = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $message    = htmlspecialchars_decode( stripslashes( $message ) );
 
             $headers = array(
                 'From: ' . $blog_name . ' <' . $from_email . '>',
                 'Content-Type: text/html; charset=UTF-8',
             );
             wp_mail( $to, $subject, $message, $headers );
-            if ( $styling && $template ) {
-            }
+            // if ( $styling && $template ) {
+            // }
         }
     }
     add_action( 'b3_new_user_activated', 'b3_after_user_activated' );
