@@ -36,6 +36,10 @@
     box-sizing: border-box;
 }
 
+.b3_page form input[name="b3_delete_account"] {
+    vertical-align: middle;
+}
+
 .b3_page form input#rememberme {
     margin-left: 0;
 }

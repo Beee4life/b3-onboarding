@@ -99,6 +99,13 @@
             </p>
         <?php } ?>
 
+        <?php /* Show message if user just deleted account */ ?>
+        <?php if ( $attributes[ 'account_remove' ] ) { ?>
+            <p class="b3_message">
+                <?php esc_html_e( 'Your account has been deleted.', 'b3-onboarding' ); ?>
+            </p>
+        <?php } ?>
+
         <div class="b3_form-element">
             <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php esc_html_e( 'Username or Email address', 'b3-onboarding' ); ?></label>
             <input type="text" name="log" id="user_login" class="input" value="" size="20">

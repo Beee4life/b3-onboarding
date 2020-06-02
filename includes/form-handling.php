@@ -382,6 +382,12 @@
                         delete_option( 'b3_approval_page_id' );
                     }
 
+                    if ( isset( $_POST[ 'b3_user_may_delete' ] ) && 1 == $_POST[ 'b3_user_may_delete' ] ) {
+                        update_option( 'b3_user_may_delete', 1, true );
+                    } else {
+                        delete_option( 'b3_user_may_delete' );
+                    }
+
                     // Restrict admin
                     if ( isset( $_POST[ 'b3_restrict_admin' ] ) ) {
                         update_option( 'b3_restrict_admin', $_POST[ 'b3_restrict_admin' ], true );
@@ -490,15 +496,24 @@
             if ( ! current_user_can( 'edit_user', $current_user->ID ) ) {
                 wp_die( __( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
             }
-
-            $errors = edit_user( $current_user->ID );
-
-            if ( ! is_wp_error( $errors ) ) {
-                wp_safe_redirect( add_query_arg( 'updated', 'true' ) );
+            if ( isset( $_POST[ 'b3_delete_account' ] ) && 1 == $_POST[ 'b3_delete_account' ] ) {
+                $user_id      = $_POST[ 'checkuser_id' ];
+                $redirect_url = b3_get_login_id( true );
+                if ( true == wp_delete_user( $user_id ) ) {
+                    $redirect_url = add_query_arg( 'account', 'removed', $redirect_url );
+                }
+                wp_safe_redirect( $redirect_url );
                 exit;
             } else {
-                // @TODO: add proper error
-                error_log('error in profile form handling');
+                $errors = edit_user( $current_user->ID );
+
+                if ( ! is_wp_error( $errors ) ) {
+                    wp_safe_redirect( add_query_arg( 'updated', 'true' ) );
+                    exit;
+                } else {
+                    // @TODO: add proper error
+                    error_log('error in profile form handling');
+                }
             }
         }
     }

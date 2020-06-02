@@ -1,8 +1,9 @@
 <?php
     $current_user = get_userdata( get_current_user_id() );
     $required     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false;
+    $user_delete  = get_option( 'b3_user_may_delete', false );
 ?>
-<div>
+<div id="b3-account" class="b3_page b3_page--account">
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
         <p class="b3_message">
             <?php
@@ -75,6 +76,7 @@
         </table>
 
         <?php
+            // @TODO: check why this IF
             $show_password_fields = apply_filters( 'show_password_fields', true, $current_user );
             if ( $show_password_fields ) :
         ?>
@@ -127,6 +129,22 @@
             </tr>
         </table>
         <?php endif; ?>
+
+        <?php if ( $user_delete ) { ?>
+            <h3>
+                <?php esc_html_e( 'Delete account', 'b3-onboarding' ); ?>
+            </h3>
+            <table class="b3_table b3_table--account">
+                <tr>
+                    <td colspan="2">
+                        <label>
+                            <input type="checkbox" name="b3_delete_account" value="1" />
+                            <?php esc_html_e( 'If you select this option, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        <?php } ?>
 
         <div>
             <input type="hidden" name="action" value="profile" />
