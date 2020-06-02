@@ -10,10 +10,8 @@
     <?php } ?>
 
     <form id="" name="" action="<?php echo get_permalink( get_the_ID() ); ?>" method="post">
-        <input name="b3_profile_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-profile-nonce' ); ?>" />
-        <input type="hidden" name="admin_bar_front" id="admin_bar_front" value="<?php echo get_user_meta( $current_user->ID, 'show_admin_bar_front', true ); ?>" />
-
         <?php wp_nonce_field( 'update-user_' . $current_user->ID ); ?>
+        <input type="hidden" name="admin_bar_front" id="admin_bar_front" value="<?php echo get_user_meta( $current_user->ID, 'show_admin_bar_front', true ); ?>" />
         <input type="hidden" name="from" value="profile" />
         <input type="hidden" name="checkuser_id" value="<?php echo $current_user->ID; ?>" />
         <input type="hidden" name="nickname" id="nickname" value="<?php echo ( isset( $current_user->nickname ) ) ? esc_attr( $current_user->nickname ) : esc_attr( $current_user->user_login ); ?>" class="regular-text" />
@@ -21,6 +19,7 @@
         <h3>
             <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
         </h3>
+
         <table class="b3_table b3_table--account">
             <tr class="">
                 <td>
