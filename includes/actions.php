@@ -34,39 +34,32 @@
         </p>
         <?php } ?>
 
-        <?php
-            if ( true == $recaptcha ) {
-                do_action( 'b3_before_recaptcha_register' );
-                ?>
-                <div class="recaptcha-container">
-                    <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-                </div>
-                <p></p>
-                <?php
-                do_action( 'b3_after_recaptcha_regsiter' );
-            }
-        ?>
+        <?php if ( true == $recaptcha ) { ?>
+            <?php do_action( 'b3_before_recaptcha_register' ); ?>
+            <div class="recaptcha-container">
+                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+            </div>
+            <p></p>
+            <?php do_action( 'b3_after_recaptcha_regsiter' ); ?>
+        <?php } ?>
 
         <?php if ( true == $privacy_checkbox ) { ?>
             <p>
                 <label>
                     <input name="accept_privacy" type="checkbox" id="accept_privacy" value="1">
-                    <?php
-                        if ( false != get_option( 'b3_privacy_text' ) ) {
-                            echo get_option( 'b3_privacy_text' );
-                        } else {
-                            esc_html_e( 'Accept privacy settings', 'b3-onboarding' );
-                            if ( true == $privacy_page ) {
-                                echo '&nbsp;-&nbsp;';
-                                echo sprintf( __( '<a href="%s">Click here</a> for more info.', 'b3-onboarding' ), esc_url( $privacy_page ) );
-                            }
-                        }
-                    ?>
+                    <?php if ( false != get_option( 'b3_privacy_text' ) ) { ?>
+                        <?php echo get_option( 'b3_privacy_text' ); ?>
+                    <?php } else { ?>
+                        <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
+                        <?php if ( true == $privacy_page ) { ?>
+                            <?php echo '&nbsp;-&nbsp;'; ?>
+                            <?php echo sprintf( __( '<a href="%s">Click here</a> for more info.', 'b3-onboarding' ), esc_url( $privacy_page ) ); ?>
+                        <?php } ?>
+                    <?php } ?>
                 </label>
             </p>
             <br class="clear">
         <?php } ?>
-
     <?php
     }
     add_action( 'register_form', 'b3_add_registration_fields' );
@@ -157,8 +150,6 @@
                 // $message = str_replace( 'request ', '', $message );
                 // $message = str_replace( 'rejected', 'deleted', $message );
             }
-
-
         }
     }
     add_action( 'delete_user', 'b3_new_user_rejected' );
