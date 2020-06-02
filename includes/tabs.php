@@ -64,7 +64,7 @@
             <?php esc_html_e( 'Here you can set various global settings for the plugin.', 'b3-onboarding' ); ?>
         </p>
 
-        <form action="" method="post">
+        <form action="admin.php?page=b3-onboarding" method="post">
             <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
 
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
