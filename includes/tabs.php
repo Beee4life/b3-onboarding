@@ -272,20 +272,6 @@
         <form action="admin.php?page=b3-onboarding&tab=emails" method="post">
             <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
 
-            <?php b3_get_settings_field_open(1); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label for="b3_email_format"><?php esc_html_e( 'Email format', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--radio">
-                    <label>
-                        <input type="radio" name="b3_email_format" value="html" <?php if ( 'html' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'HTML', 'b3-onboarding' ); ?>
-                    <label>
-                    <label>
-                        <input type="radio" name="b3_email_format" value="text" <?php if ( 'text' == $email_format ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Text', 'b3-onboarding' ); ?>
-                    <label>
-                </div>
-            <?php b3_get_close(); ?>
-
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
