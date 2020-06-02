@@ -19,6 +19,7 @@
     padding-top:   0.5em;
     padding-right: 1em;
 }
+
 .b3_message .error__close:hover {
     cursor: pointer;
 }
@@ -41,7 +42,7 @@
 
 .b3_page .b3_form-label {
     display: inline-block;
-    width: 200px;
+    width:   220px;
 }
 
 /* Password reset input */
