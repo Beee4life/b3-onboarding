@@ -20,9 +20,12 @@
                 <?php include( 'preview.php' ); ?>
 
             <?php } else { ?>
+
                 <h1 id="b3__admin-title">
                     <?php _e( 'Onboarding settings', 'b3-onboarding' ); ?>
                 </h1>
+
+                <?php B3Onboarding::b3_show_admin_notices(); ?>
 
                 <div class="b3_tabs">
                     <?php

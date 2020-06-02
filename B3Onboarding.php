@@ -620,6 +620,62 @@
             }
 
 
+            /*
+             * Error function
+             *
+             * @return WP_Error
+             */
+            public static function b3_errors() {
+                static $wp_error; // Will hold global variable safely
+
+                return isset( $wp_error ) ? $wp_error : ( $wp_error = new WP_Error( null, null, null ) );
+            }
+
+            /*
+             * Displays error messages from form submissions
+             */
+            public static function b3_show_admin_notices() {
+                if ( $codes = B3Onboarding::b3_errors()->get_error_codes() ) {
+                    if ( is_wp_error( B3Onboarding::b3_errors() ) ) {
+
+                        // Loop error codes and display errors
+                        $notice_class = false;
+                        $prefix       = false;
+                        foreach ( $codes as $code ) {
+                            if ( strpos( $code, 'success' ) !== false ) {
+                                $notice_class = 'updated notice ';
+                                $prefix     = false;
+                            } elseif ( strpos( $code, 'error' ) !== false ) {
+                                $notice_class = 'notice notice-error error ';
+                                $prefix       = esc_html__( 'Error', 'action-logger' );
+                            } elseif ( strpos( $code, 'warning' ) !== false ) {
+                                $notice_class = 'notice notice-warning ';
+                                $prefix       = esc_html__( 'Warning', 'action-logger' );
+                            } elseif ( strpos( $code, 'info' ) !== false ) {
+                                $notice_class = 'notice notice-info ';
+                                $prefix       = false;
+                            } else {
+                                $notice_class = 'notice--error ';
+                                $prefix       = esc_html__( 'Error', 'action-logger' );
+                            }
+                        }
+                        echo '<div class="' . $notice_class . 'is-dismissible">';
+                        foreach ( $codes as $code ) {
+                            $message = B3Onboarding::b3_errors()->get_error_message( $code );
+                            echo '<p>';
+                            if ( true == $prefix ) {
+                                echo '<strong>' . $prefix . ':</strong> ';
+                            }
+                            echo $message;
+                            echo '</p>';
+                        }
+                        echo '<button type="button" class="notice-dismiss"><span class="screen-reader-text">' . esc_html__( 'Dismiss this notice', 'b3-onboarding' ) . '</span></button>';
+                        echo '</div>';
+                    }
+                }
+            }
+
+
             /**
              * An action function used to include the reCAPTCHA JavaScript file
              * at the end of the page.
