@@ -5,9 +5,7 @@ jQuery(document).ready(function () {
 jQuery(function($){
 
     $("span.error__close").click(function(e){
-        console.log('CLICK');
         $(".b3_message").fadeOut(750);
-
     });
 
 });
