@@ -60,10 +60,8 @@
                     $content = '';
 
             }
-            // echo '<pre>'; var_dump($content); echo '</pre>'; exit;
             $content = htmlspecialchars_decode( $content );
             $content = strtr( $content, b3_replace_email_vars( [] ) );
-            // echo '<pre>'; var_dump($content); echo '</pre>'; exit;
 
         }
     ?>
@@ -79,8 +77,7 @@
     <?php } ?>
 
     <style type="text/css">
-        <?php // @TODO: use custom css if entered ?>
-        <?php echo include( 'default-email-styling.css' ); ?>
+        <?php echo b3_get_email_styling(); ?>
     </style>
 
     <?php echo $content; ?>
