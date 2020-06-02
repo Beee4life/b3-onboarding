@@ -79,6 +79,10 @@ ul.b3_form-links li:last-child {
     text-align: left;
 }
 
+.b3_table--account tr td:first-child {
+    width: 175px;
+}
+
 /* Password strength */
 #pass-strength-result.short {
     background-color: #f1adad;
