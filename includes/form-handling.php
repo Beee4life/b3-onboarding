@@ -481,11 +481,11 @@
         define( 'IS_PROFILE_PAGE', true );
         load_textdomain( 'default', WP_LANG_DIR . '/admin-' . get_locale() . '.mo' );
         register_admin_color_schemes();
-        wp_enqueue_script( 'user-profile' );
         $current_user = wp_get_current_user();
 
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
             check_admin_referer( 'update-user_' . $current_user->ID );
+            wp_enqueue_script( 'user-profile' );
 
             if ( ! current_user_can( 'edit_user', $current_user->ID ) ) {
                 wp_die( __( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
