@@ -172,6 +172,7 @@
         $activate_email_boxes = [];
         $new_user_boxes       = [];
         $registration_type    = get_option( 'b3_registration_type' );
+        $request_access_box   = [];
         $welcome_user_boxes   = [];
 
         $settings_box = array(
@@ -180,7 +181,6 @@
                 'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
             ),
         );
-        $request_access_box = [];
         if ( in_array( $registration_type, [ 'request_access', 'request_access_subdomain' ] ) ) {
             $request_access_box = array(
                 array(
@@ -217,7 +217,7 @@
                 ),
                 // array(
                 //     'id'    => 'account_rejected',
-                //     'title' => esc_html__( 'Account deleted email (user)', 'b3-onboarding' ),
+                //     'title' => esc_html__( 'Account rejected email (user)', 'b3-onboarding' ),
                 // ),
             );
         }
@@ -260,7 +260,7 @@
                 ),
             );
         }
-        $email_boxes = array_merge( $settings_box, $request_access_box, $activate_email_boxes, $welcome_user_boxes, $new_user_boxes, $default_boxes2, $styling_boxes );
+        $email_boxes = array_merge( $settings_box, $new_user_boxes, $request_access_box, $activate_email_boxes, $welcome_user_boxes, $default_boxes2, $styling_boxes );
 
         return $email_boxes;
 
