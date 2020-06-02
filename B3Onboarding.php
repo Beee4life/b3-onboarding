@@ -138,7 +138,6 @@
                 add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
                 add_shortcode( 'account-page',                 array( $this, 'b3_render_account_page' ) );
                 add_shortcode( 'user-management',              array( $this, 'b3_render_user_approval_page' ) );
-                add_shortcode( 'delete-account',               array( $this, 'b3_render_delete_account_page' ) );
 
                 include( 'includes/actions-wp.php' );
                 include( 'includes/actions-b3.php' );
@@ -1381,8 +1380,6 @@
                     unset( $meta[ 'last_name' ] );
                 }
 
-                // return 160878; // for testing
-
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
                     do_action( 'b3_after_insert_user' );
@@ -1523,9 +1520,8 @@
                     return esc_html__( 'You are already signed in.', 'b3-onboarding' );
                 }
 
-                // Pass the redirect parameter to the WordPress login functionality: by default,
-                // don't specify a redirect, but if a valid redirect URL has been passed as
-                // request parameter, use it.
+                // Pass the redirect parameter to the WordPress login functionality: but
+                // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'redirect' ] = '';
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
@@ -1762,20 +1758,6 @@
                         <p><?php esc_html_e( 'No (more) users to approve.', 'b3-onboarding' ); ?></p>
                     <?php }
                 } // endif user can promote_users
-            }
-
-
-            /**
-             * Delete account option (not in use yet)
-             *
-             * @param $user_variables
-             * @param null $content
-             */
-            public function b3_render_delete_account_page( $user_variables, $content = null ) {
-
-                if ( is_user_logged_in() ) {
-                    echo 'This needs to be rendered into a button (from B3 Onboarding)';
-                }
             }
 
 
