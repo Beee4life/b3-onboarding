@@ -8,7 +8,7 @@
      */
     function b3_email_logo( $logo ) {
 
-        $logo = B3_PLUGIN_URL . '/assets/images/logo-mailchimp.png';
+        $logo = B3_PLUGIN_URL . '/assets/images/logo-salesforce.png';
 
         return $logo;
     }
@@ -23,7 +23,7 @@
      */
     function b3_email_footer_text( $footer_text ) {
 
-        $footer_text = 'Some testing text with a <a href="https://nu.nl">LINK</a>.';
+        $footer_text = 'Some test text with a <a href="https://nu.nl">LINK</a>.';
 
         return $footer_text;
     }
