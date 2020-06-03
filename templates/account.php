@@ -152,7 +152,7 @@
             <input type="hidden" name="action" value="profile" />
             <input type="hidden" name="instance" value="1" />
             <input type="hidden" name="user_id" id="user_id" value="<?php echo $current_user->ID; ?>" />
-            <input type="submit" class="button button--small" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" name="submit" id="submit" />
+            <input type="submit" class="button button--small" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
         </div>
 
     </form>
