@@ -150,3 +150,32 @@
         }
     }
     add_action( 'delete_user', 'b3_new_user_rejected' );
+
+
+    /**
+     * Add approval to admin bar
+     *
+     * @param $wp_admin_bar
+     */
+    function b3_add_toolbar( $wp_admin_bar ) {
+        if ( current_user_can( 'manage_options' ) ) {
+            if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                $approval_args  = array( 'role' => 'b3_approval' );
+                $approval_users = get_users( $approval_args );
+                if ( 0 < count( $approval_users ) ) {
+                    $page_link      = b3_get_user_approval_id( true );
+                    if ( false == $page_link ) {
+                        $page_link = admin_url( '/admin.php?page=b3-user-approval' );
+                    }
+                    $approval_args = array(
+                        'id'    => 'approval',
+                        'title' => '&rarr; ' . __( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
+                        'href'  => $page_link,
+                        'meta'  => array( 'class' => 'topbar_approve_user' ),
+                    );
+                    $wp_admin_bar->add_node( $approval_args );
+                }
+            }
+        }
+    }
+    add_action( 'admin_bar_menu', 'b3_add_toolbar', 9999 );
