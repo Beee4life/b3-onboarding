@@ -1361,6 +1361,8 @@
                     return $errors;
                 }
 
+                do_action( 'b3_verify_custom_fields' );
+
                 $user_data = array(
                     'user_login' => $user_login,
                     'user_email' => $user_email,

@@ -216,6 +216,8 @@
             }
         }
 
+        do_action( 'b3_verify_custom_fields' );
+
         return $errors;
     }
     add_filter( 'registration_errors', 'b3_registration_errors', 10, 3 );
