@@ -113,19 +113,39 @@
                 'label'           => 'radio',
                 'options'         => [
                     [
+                        'input_class' => 'input_class1',
+                        'label'      => 'option label 1',
+                        'name'       => 'name1',
+                        'value'       => 'value1',
+                    ],
+                ],
+                'required'        => false,
+                'type'            => 'radio',
+            ],
+            [
+                'container_class' => 'container_class',
+                'id'              => 'id5',
+                'input_class'     => 'input_class',
+                'label'           => 'checkbox',
+                'options'         => [
+                    [
                         'input_class' => 'input_class',
-                        'label'      => 'option label',
+                        'label'      => 'checkbox1',
+                        'name'       => 'name',
+                        'value'       => 'value',
+                    ],
+                    [
+                        'input_class' => 'input_class',
+                        'label'      => 'checkbox2',
                         'name'       => 'name',
                         'value'       => 'value',
                     ],
                 ],
-                'placeholder'     => 'placeholder',
                 'required'        => false,
-                'type'            => 'radio',
+                'type'            => 'checkbox',
             ],
         ];
 
         return $fields;
     }
-    add_filter( 'b3_add_filter_extra_fields_values', 'b3_add_filter_extra_fields_values' );
-
+    // add_filter( 'b3_add_filter_extra_fields_values', 'b3_add_filter_extra_fields_values' );
