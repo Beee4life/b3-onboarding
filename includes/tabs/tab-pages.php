@@ -110,7 +110,8 @@
                 </div>
             <?php } ?>
             <p><small><?php esc_html_e( 'Links open in new window/tab.', 'b3-onboarding' ); ?></small></p>
-            <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>">
+            <?php b3_submit_button(); ?>
+
         </form>
         <?php
         $result = ob_get_clean();

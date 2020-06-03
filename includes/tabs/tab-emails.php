@@ -53,7 +53,7 @@
                 <?php echo b3_render_email_settings_field( $box ); ?>
             <?php } ?>
 
-            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save all email settings', 'b3-onboarding' ); ?>" />
+            <?php b3_submit_button(); ?>
         </form>
 
         <?php

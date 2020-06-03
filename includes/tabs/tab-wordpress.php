@@ -78,7 +78,7 @@
                 </select>
             <?php b3_get_close(); ?>
 
-            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>" />
+            <?php b3_submit_button(); ?>
         </form>
 
         <?php

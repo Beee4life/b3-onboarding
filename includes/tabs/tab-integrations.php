@@ -67,7 +67,8 @@
             <?php b3_get_close(); ?>
 
             <br />
-            <input type="submit" class="button button-primary" value="<?php esc_html_e( 'Save reCaptcha', 'b3-onboarding' ); ?>" />
+            <?php b3_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
+
         </form>
 
         <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) { ?>

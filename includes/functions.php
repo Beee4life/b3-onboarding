@@ -845,3 +845,15 @@
     function b3_get_close() {
         echo '</div>';
     }
+
+    /**
+     * Return submit button
+     *
+     * @param bool $submit_value
+     */
+    function b3_submit_button( $submit_value = false ) {
+        if ( false == $submit_value ) {
+            $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
+        }
+        echo '<input class="button button-primary" type="submit" value="' . $submit_value . '" />';
+    }

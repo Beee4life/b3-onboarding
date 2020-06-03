@@ -71,7 +71,7 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save all user settings', 'b3-onboarding' ); ?>" />
+            <?php b3_submit_button( esc_attr__( 'Save all user settings', 'b3-onboarding' ) ); ?>
         </form>
 
         <?php

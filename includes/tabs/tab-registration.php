@@ -135,20 +135,10 @@
                             <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <?php
-                                $page_args = [
-                                    'post_type'      => 'page',
-                                    'posts_per_page' => -1,
-                                    'orderby'        => 'title',
-                                    'order'          => 'ASC',
-                                ];
-                                $all_pages = get_posts( $page_args );
-
-                                // echo '<pre>'; var_dump($privacy_page); echo '</pre>'; exit;
-                            ?>
-
+                            <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ); ?>
+                            <?php $all_pages = get_posts( $page_args ); ?>
                             <select name="b3_privacy_page" id="b3_privacy_page">
-                                <option value=""><?php echo esc_attr( 'Select a page', 'b3-onboarding' ); ?></option>
+                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
                                 <?php foreach( $all_pages as $page ) { ?>
                                     <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
                                     <option value="<?php echo $page->ID; ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
@@ -169,7 +159,9 @@
                 <?php b3_get_close(); ?>
 
             <?php } ?>
-            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>" />
+
+            <?php b3_submit_button(); ?>
+
         </form>
 
         <?php
