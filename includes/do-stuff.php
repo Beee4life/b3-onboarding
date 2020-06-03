@@ -132,7 +132,7 @@
                         <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form--input<?php echo $input_class; ?>"<?php if ( $input_placeholder && 'text' == $extra_field[ 'type' ] ) { echo $input_placeholder; } ?>value=""<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php } elseif ( 'textarea' == $input_type ) { ?>
                         <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form--input<?php echo $input_class; ?>" value=""<?php if ( $input_placeholder ) { echo $input_placeholder; } ?><?php if ( $input_required ) { echo ' required'; }; ?>></textarea>
-                    <?php } elseif ( 'radio' == $input_type ) { ?>
+                    <?php } elseif ( in_array( $input_type, [ 'radio', 'checkbox' ] ) ) { ?>
                         <?php if ( $input_options ) { ?>
                             <?php $counter = 1; ?>
                             <?php foreach( $input_options as $option ) { ?>
