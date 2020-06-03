@@ -60,7 +60,7 @@
                         if ( 1 == get_option( 'b3_style_default_pages', false ) ) {
                             $tabs[] = array(
                                 'id'      => 'wordpress',
-                                'title'   => esc_html__( 'WordPress', 'b3-onboarding' ),
+                                'title'   => 'WordPress',
                                 'content' => b3_render_tab_content( 'wordpress' ),
                                 'icon'    => 'art',
                             );

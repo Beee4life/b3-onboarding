@@ -8,7 +8,19 @@
 
         $fonts = [
             'Arial',
+            'Arial Narrow',
+            'Calibri',
+            'Cambria',
+            'Candara',
+            'Courier',
+            'Courier New',
+            'Garamond',
+            'Geneva',
+            'Helvetica',
+            'Optima',
+            'Perpetua',
             'Tahoma',
+            'Times',
             'Times New Roman',
             'Verdana',
         ];
@@ -17,13 +29,12 @@
         $background_color = get_option( 'b3_loginpage_bg_color', false );
         $font_family      = get_option( 'b3_loginpage_font_family', false );
         $font_size        = get_option( 'b3_loginpage_font_size', false );
-        $logo             = get_option( 'b3_login_logo', false );
         $logo_height      = get_option( 'b3_loginpage_logo_height', false );
         $logo_width       = get_option( 'b3_loginpage_logo_width', false );
 
         ?>
         <h2>
-            <?php esc_html_e( 'Wordpress forms', 'b3-onboarding' ); ?>
+            WordPress <?php esc_html_e( 'forms', 'b3-onboarding' ); ?>
         </h2>
 
         <p>
