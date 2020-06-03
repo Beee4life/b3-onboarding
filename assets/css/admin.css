@@ -234,7 +234,7 @@
     background:    #fff;
     border:        1px solid #ccd0d4;
     box-shadow:    0 1px 1px rgba(0, 0, 0, 0.04);
-    line-height:   1;
+    line-height:   2;
     margin-top:    20px;
     min-width:     255px;
     padding:       0;
@@ -252,7 +252,7 @@
 
 .b3 table.b3_table--emails th,
 .b3 table.b3_table--emails td {
-    padding-top: 2em;
+    padding-top: 1em;
 }
 
 .b3__intro {
@@ -390,6 +390,10 @@ ul.b3_integrations--list {
     padding:     8px 12px;
     margin:      0;
     line-height: 1.4;
+}
+
+#wpadminbar .topbar_approve_user a.ab-item {
+    color: #ee6102;
 }
 
 .hidden {
