@@ -89,6 +89,12 @@
             }
         }
 
+        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );
+        if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
+            foreach( $hidden_field_values as $meta_key => $meta_value ) {
+                update_user_meta( $user_id, $meta_key, $meta_value );
+            }
+        }
     }
     add_action( 'user_register', 'b3_update_user_register_fields' );
 

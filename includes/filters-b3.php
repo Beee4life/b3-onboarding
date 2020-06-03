@@ -56,7 +56,7 @@
 
         return $fields;
     }
-    // add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );
+    add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );
 
     /**
      * Add cusstom fields to form
