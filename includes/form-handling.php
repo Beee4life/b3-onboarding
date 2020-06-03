@@ -472,15 +472,17 @@
      */
     function b3_profile_form_handling() {
 
-        require_once( ABSPATH . 'wp-admin/includes/user.php' );
-        require_once( ABSPATH . 'wp-admin/includes/misc.php' );
-
-        define( 'IS_PROFILE_PAGE', true );
-        load_textdomain( 'default', WP_LANG_DIR . '/admin-' . get_locale() . '.mo' );
-        register_admin_color_schemes();
-        $current_user = wp_get_current_user();
+        $account_page_id = b3_get_account_id();
+        if ( is_page( $account_page_id ) && is_user_logged_in() ) {
+            require_once( ABSPATH . 'wp-admin/includes/user.php' );
+            require_once( ABSPATH . 'wp-admin/includes/misc.php' );
+            define( 'IS_PROFILE_PAGE', true );
+            // load_textdomain( 'default', WP_LANG_DIR . '/admin-' . get_locale() . '.mo' );
+            // register_admin_color_schemes();
+        }
 
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
+            $current_user = wp_get_current_user();
             check_admin_referer( 'update-user_' . $current_user->ID );
             wp_enqueue_script( 'user-profile' );
 
@@ -508,4 +510,4 @@
             }
         }
     }
-    add_action( 'init', 'b3_profile_form_handling' );
+    add_action( 'template_redirect', 'b3_profile_form_handling' );
