@@ -57,3 +57,75 @@
         return $fields;
     }
     // add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );
+
+    /**
+     * Add cusstom fields to form
+     *
+     * @param $fields
+     *
+     * @return array
+     */
+    function b3_add_filter_extra_fields_values( $fields ) {
+        $fields = [
+            [
+                'container_class' => 'container_class',
+                'id'              => 'id1',
+                'input_class'     => 'input_class',
+                'label'           => 'text',
+                'options'         => [],
+                'placeholder'     => 'placeholder',
+                'required'        => false,
+                'type'            => 'text',
+            ],
+            [
+                'container_class' => 'container_class',
+                'id'              => 'id2',
+                'input_class'     => 'input_class',
+                'label'           => 'textarea',
+                'options'         => [],
+                'placeholder'     => 'placeholder',
+                'required'        => false,
+                'type'            => 'textarea',
+            ],
+            [
+                'container_class' => 'container_class',
+                'id'              => 'id3',
+                'input_class'     => 'input_class',
+                'label'           => 'number',
+                'options'         => [],
+                'placeholder'     => 'placeholder',
+                'required'        => false,
+                'type'            => 'number',
+            ],
+            [
+                'container_class' => 'container_class',
+                'id'              => 'id5',
+                'input_class'     => 'input_class',
+                'label'           => 'url',
+                'placeholder'     => 'placeholder',
+                'required'        => false,
+                'type'            => 'url',
+            ],
+            [
+                'container_class' => 'container_class',
+                'id'              => 'id4',
+                'input_class'     => 'input_class',
+                'label'           => 'radio',
+                'options'         => [
+                    [
+                        'input_class' => 'input_class',
+                        'label'      => 'option label',
+                        'name'       => 'name',
+                        'value'       => 'value',
+                    ],
+                ],
+                'placeholder'     => 'placeholder',
+                'required'        => false,
+                'type'            => 'radio',
+            ],
+        ];
+
+        return $fields;
+    }
+    add_filter( 'b3_add_filter_extra_fields_values', 'b3_add_filter_extra_fields_values' );
+

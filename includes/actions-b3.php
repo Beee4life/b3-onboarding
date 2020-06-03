@@ -98,17 +98,20 @@
 
         $recaptcha_public  = get_option( 'b3_recaptcha_public', false );
         $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
+        $show_recaptcha    = get_option( 'b3_recaptcha', false );
 
-        do_action( 'b3_before_recaptcha_' . $form_type );
-        if ( '2' == $recaptcha_version ) {
-            ?>
-            <div class="recaptcha-container">
-                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-            </div>
-            <p></p>
-            <?php
+        if ( false != $show_recaptcha ) {
+            do_action( 'b3_before_recaptcha_' . $form_type );
+            if ( '2' == $recaptcha_version ) {
+                ?>
+                <div class="recaptcha-container">
+                    <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                </div>
+                <p></p>
+                <?php
+            }
+            do_action( 'b3_after_recaptcha_' . $form_type );
         }
-        do_action( 'b3_after_recaptcha_' . $form_type );
     }
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
 
@@ -195,16 +198,12 @@
      */
     function b3_add_custom_fields_registration() {
 
-        $extra_fields       = '';
         $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
         if ( is_array( $extra_field_values ) && ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
                 echo b3_render_extra_field( $extra_field );
             }
         }
-
-        echo $extra_fields;
-
     }
     add_action( 'b3_add_custom_fields_registration', 'b3_add_custom_fields_registration' );
 

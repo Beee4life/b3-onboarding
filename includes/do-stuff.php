@@ -103,6 +103,7 @@
 
     /**
      * Render any extra fields
+     * Options are: text, textarea, number, url, radio
      *
      * @param bool $extra_field
      *
@@ -127,7 +128,7 @@
                 ?>
                 <div class="b3_form-element b3_form-element--<?php echo $input_type; ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo $container_class; } ?>">
                     <label class="b3_form-label" for="<?php echo $input_id; ?>"><?php echo $input_label; ?> <?php echo $input_required; ?></label>
-                    <?php if ( 'text' == $input_type ) { ?>
+                    <?php if ( in_array( $input_type, [ 'text' , 'number', 'url' ] ) ) { ?>
                         <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form--input<?php echo $input_class; ?>"<?php if ( $input_placeholder && 'text' == $extra_field[ 'type' ] ) { echo $input_placeholder; } ?>value=""<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php } elseif ( 'textarea' == $input_type ) { ?>
                         <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form--input<?php echo $input_class; ?>" value=""<?php if ( $input_placeholder ) { echo $input_placeholder; } ?><?php if ( $input_required ) { echo ' required'; }; ?>></textarea>
@@ -141,6 +142,17 @@
                                 <?php $counter++; ?>
                             <?php } ?>
                         <?php } ?>
+                    <?php } else { ?>
+
+                        <?php // @TODO ?>
+                        <?php
+                            if ( 'checkbox' == $input_type ) {
+                                echo 'TODO';
+                            } elseif ( 'select' == $input_type ) {
+                                echo 'TODO';
+                            }
+                        ?>
+
                     <?php } ?>
                 </div>
                 <?php
