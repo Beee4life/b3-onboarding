@@ -81,6 +81,14 @@
         if ( ! empty( $_POST[ 'last_name' ] ) ) {
             update_user_meta( $user_id, 'last_name', sanitize_text_field( $_POST[ 'last_name' ] ) );
         }
+
+        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
+        if ( ! empty( $extra_field_values ) ) {
+            foreach( $extra_field_values as $field ) {
+                update_user_meta( $user_id, $field[ 'id' ], $_POST[ $field[ 'id' ] ] );
+            }
+        }
+
     }
     add_action( 'user_register', 'b3_update_user_register_fields' );
 
