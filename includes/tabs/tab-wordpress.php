@@ -4,7 +4,7 @@
      *
      * @return false|string
      */
-    function b3_render_loginpage_tab() {
+    function b3_render_wordpress_tab() {
 
         $fonts = [
             'Arial',
@@ -23,26 +23,16 @@
 
         ?>
         <h2>
-            <?php esc_html_e( 'Login page', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Wordpress forms', 'b3-onboarding' ); ?>
         </h2>
 
         <p>
             <?php // @TODO: set if for if custom login page is set ?>
-            <?php esc_html_e( 'Here you can style the (default) WordPress login page.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'Here you can style the (default) WordPress pages.', 'b3-onboarding' ); ?>
         </p>
 
         <form action="admin.php?page=b3-onboarding&tab=loginpage" method="post">
             <input name="b3_loginpage_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-loginpage-nonce' ); ?>">
-
-            <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label for="b3_login_logo">LOGO</label>
-                <?php b3_get_close(); ?>
-                <div id="b3-new-media-settings">
-                    <p><a href="#" id="login-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>"><?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?></a></p>
-                    <p><input type="text" name="b3_login_logo" id="b3_login_logo" value="<?php echo $logo; ?>" /></p>
-                </div>
-            <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>

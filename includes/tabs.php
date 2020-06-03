@@ -9,11 +9,11 @@
      */
     include( 'tabs/tab-emails.php' );
     include( 'tabs/tab-integrations.php' );
-    include( 'tabs/tab-loginpage.php' );
     include( 'tabs/tab-pages.php' );
     include( 'tabs/tab-registration.php' );
     include( 'tabs/tab-settings.php' );
     include( 'tabs/tab-users.php' );
+    include( 'tabs/tab-wordpress.php' );
 
     function b3_render_tab_content( $tab ) {
         $content = '';
@@ -30,8 +30,8 @@
             case 'registration':
                 $content = b3_render_registration_tab();
                 break;
-            case 'loginpage':
-                $content = b3_render_loginpage_tab();
+            case 'wordpress':
+                $content = b3_render_wordpress_tab();
                 break;
             case 'users':
                 $content = b3_render_users_tab();

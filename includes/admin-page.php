@@ -59,9 +59,9 @@
 
                         if ( 1 == get_option( 'b3_style_default_pages', false ) ) {
                             $tabs[] = array(
-                                'id'      => 'loginpage',
-                                'title'   => esc_html__( 'Login page', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'loginpage' ),
+                                'id'      => 'wordpress',
+                                'title'   => esc_html__( 'WordPress', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'wordpress' ),
                                 'icon'    => 'art',
                             );
                         }
