@@ -27,7 +27,7 @@
         <td>
             <?php esc_html_e( "Be sure to include %reset_url% in your email, otherwise the user can't reset his/her password.", "b3-onboarding" ); ?>
             <br /><br />
-            <?php esc_html_e( "Other available variables are:", "b3-onboarding" ); ?> %blog_name%, %home_url%, %logo%, %site_url%, %email_footer%
+            <?php esc_html_e( "Other available variables are:", "b3-onboarding" ); ?> %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %site_url%, %user_ip%, %user_login%
             <br /><br />
             <textarea id="b3__input--forgot-password-message" name="b3_forgot_password_message" placeholder="<?php echo esc_textarea( b3_default_forgot_password_message() ); ?>" rows="6"><?php echo stripslashes( $forgot_password_message ); ?></textarea>
         </td>
