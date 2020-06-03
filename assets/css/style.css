@@ -173,6 +173,10 @@ ul.b3_form-links li:last-child {
     padding: 5px 10px;
 }
 
+#wpadminbar .topbar_approve_user a.ab-item {
+    color: #ee6102;
+}
+
 .hide,
 .hidden {
     display: none;
