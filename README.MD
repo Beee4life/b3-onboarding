@@ -102,6 +102,9 @@ This info + settings will become available on the official website (soon).
 
 ... there are more, we still need to index them all properly.
 
+If you use hooks, you have more settings available than if you use the admin.
+Some functions are not (yet) available through the admin pages.
+
 They will become available on the official website (soon).
 
 <a name="uninstall"></a>
