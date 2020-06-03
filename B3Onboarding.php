@@ -465,7 +465,7 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', 'dashicons-groups', '99' );
+                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  '/assets/images/logo-b3onboarding-small.png', '99' );
                 if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
                     include( 'includes/user-approval-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );

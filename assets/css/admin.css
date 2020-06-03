@@ -231,14 +231,14 @@
 /* Emails page */
 .b3__postbox {
     /* copy of .postbox with margin change bottom to top */
-    background:    #fff;
-    border:        1px solid #ccd0d4;
-    box-shadow:    0 1px 1px rgba(0, 0, 0, 0.04);
-    line-height:   2;
-    margin-top:    20px;
-    min-width:     255px;
-    padding:       0;
-    position:      relative;
+    background:  #fff;
+    border:      1px solid #ccd0d4;
+    box-shadow:  0 1px 1px rgba(0, 0, 0, 0.04);
+    line-height: 2;
+    margin-top:  20px;
+    min-width:   255px;
+    padding:     0;
+    position:    relative;
 }
 
 .b3__postbox:last-child {
@@ -398,6 +398,11 @@ ul.b3_integrations--list {
 
 .wp-core-ui .button--submit {
     margin-top: 0.5em;
+}
+
+#adminmenu .toplevel_page_b3-onboarding .wp-menu-image img {
+    max-width: 26px;
+    padding:   3px 0 0 0;
 }
 
 .hidden {
