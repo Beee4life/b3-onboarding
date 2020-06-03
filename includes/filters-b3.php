@@ -189,7 +189,7 @@
      */
     function b3_add_privacy_text( $privacy_text ) {
 
-        $privacy_text = '<a href="">Klik hier</a> voor meer info';
+        $privacy_text = '<a href="#">Klik ergens</a> voor meer info';
 
         return $privacy_text;
     }

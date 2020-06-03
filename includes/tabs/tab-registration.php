@@ -109,48 +109,63 @@
 
 
                 <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                <label for="b3_activate_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_privacy" name="b3_activate_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox.', 'b3-onboarding' ); ?>
-                </div>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox.', 'b3-onboarding' ); ?>
+                    </div>
                 <?php b3_get_close(); ?>
 
                 <?php if ( 1 == get_option( 'b3_privacy', false ) ) { ?>
                     <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                    <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--text">
-                        <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_html( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo $privacy_text; } ?>"/>
-                        <div class="b3_settings-input--description">
-                            <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo stripslashes( $privacy_text ); } ?>"/>
+                            <div class="b3_settings-input--description">
+                                <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
+                            </div>
                         </div>
-                    </div>
                     <?php b3_get_close(); ?>
 
                     <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                    <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--text">
-                        <input type="text" id="b3_privacy_page" name="b3_privacy_page" value="<?php if ( $privacy_page ) { echo $privacy_page; } ?>"/>
-                        <div class="b3_settings-input--description">
-                            <?php esc_html_e( 'Must be a valid URL (incl. http(s)://)', 'b3-onboarding' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <?php
+                                $page_args = [
+                                    'post_type'      => 'page',
+                                    'posts_per_page' => -1,
+                                    'orderby'        => 'title',
+                                    'order'          => 'ASC',
+                                ];
+                                $all_pages = get_posts( $page_args );
+
+                                // echo '<pre>'; var_dump($privacy_page); echo '</pre>'; exit;
+                            ?>
+
+                            <select name="b3_privacy_page" id="b3_privacy_page">
+                                <option value=""><?php echo esc_attr( 'Select a page', 'b3-onboarding' ); ?></option>
+                                <?php foreach( $all_pages as $page ) { ?>
+                                    <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
+                                    <option value="<?php echo $page->ID; ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
-                    </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
                 <?php // @TODO: check for filter for MS ?>
                 <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on (custom) forms.', 'b3-onboarding' ); ?>
-                </div>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on (custom) forms.', 'b3-onboarding' ); ?>
+                    </div>
                 <?php b3_get_close(); ?>
 
             <?php } ?>

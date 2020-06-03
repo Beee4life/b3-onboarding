@@ -185,6 +185,7 @@
         $message = strtr( $message, b3_replace_email_vars( $vars ) );
 
         return $message;
+
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
 

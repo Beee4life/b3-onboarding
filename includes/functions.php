@@ -666,7 +666,7 @@
 
         $privacy_text = get_option( 'b3_privacy_text', false );
         if ( false != $privacy_text ) {
-            $message = $privacy_text;
+            $message = stripslashes( $privacy_text );
         } else {
             $message = b3_default_privacy_text();
         }

@@ -295,5 +295,16 @@
      * @return string
      */
     function b3_default_privacy_text() {
-        return __( 'Accept privacy settings', 'b3-onboarding' );
+        $message      = __( 'Accept privacy settings', 'b3-onboarding' );
+        $privacy_page = get_option( 'b3_privacy_page' );
+
+        if ( false != $privacy_page ) {
+            $privacy_page_object = get_post( $privacy_page );
+            if ( is_object( $privacy_page_object ) ) {
+                $link = get_the_permalink( $privacy_page_object );
+                $message = sprintf( __( 'Accept <a href="%s" target="_blank" rel="noopener">privacy settings</a>', 'b3-onboarding' ), esc_url( $link ) );
+            }
+        }
+
+        return $message;
     }

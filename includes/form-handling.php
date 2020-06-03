@@ -171,24 +171,20 @@
                         delete_option( 'b3_recaptcha_login' );
                     }
 
-                    // Privacy (not in use yet)
-                    if ( isset( $_POST[ 'b3_activate_privacy' ] ) && 1 == $_POST[ 'b3_activate_privacy' ] ) {
+                    if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
                         update_option( 'b3_privacy', 1, true );
                     } else {
                         delete_option( 'b3_privacy' );
                     }
 
                     if ( isset( $_POST[ 'b3_privacy_page' ] ) ) {
-                        if ( filter_var( $_POST[ 'b3_privacy_page' ], FILTER_VALIDATE_URL ) === false ) {
-                            // @TODO: do something if url is invalid
-                        }
                         update_option( 'b3_privacy_page', $_POST[ 'b3_privacy_page' ], true );
                     } else {
                         delete_option( 'b3_privacy_page' );
                     }
 
                     if ( isset( $_POST[ 'b3_privacy_text' ] ) ) {
-                        update_option( 'b3_privacy_text', $_POST[ 'b3_privacy_text' ], true );
+                        update_option( 'b3_privacy_text', htmlspecialchars( $_POST[ 'b3_privacy_text' ] ), true );
                     }
 
                     // Action links
