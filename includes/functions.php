@@ -52,7 +52,8 @@
     /**
      * Output any extra request fields
      *
-     * @TODO: check this filter
+     * @TODO: make into a hook
+     * @TODO: check this
      */
     function b3_extra_fields_registration() {
 
@@ -67,6 +68,7 @@
         echo $extra_fields;
 
     }
+    do_action( 'b3_add_custom_fields_registration', 'b3_extra_fields_registration' );
 
 
     /**
