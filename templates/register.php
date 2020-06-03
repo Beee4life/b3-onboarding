@@ -7,6 +7,8 @@
     $show_recaptcha           = get_option( 'b3_recaptcha', false );
     $recaptcha_public         = get_option( 'b3_recaptcha_public', false );
     $registration_type        = get_option( 'b3_registration_type', false );
+
+    // @TODO: add form type
 ?>
 <div id="b3-register" class="b3_page b3_page--register">
     <?php if ( $attributes[ 'title' ] ) { ?>
@@ -21,10 +23,6 @@
                 <?php echo $error; ?>
             </p>
         <?php } ?>
-    <?php } ?>
-
-    <?php if ( 'request_access' == $registration_type ) { ?>
-        <?php do_action( 'b3_do_before_request_access' ); ?>
     <?php } ?>
 
     <form id="b3-register-form" class="b3_form b3_form--register" action="<?php echo wp_registration_url(); ?>" method="post">
@@ -52,23 +50,28 @@
                 <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'test@xxx.com' : ''; ?>" required>
             </div>
 
+            <?php // @TODO: add this function to a hook ?>
             <?php if ( true == $show_first_last_name ) { b3_first_last_name_fields(); } ?>
 
+            <?php // @TODO: add this function to a hook ?>
             <?php // this function is not in use (yet) ?>
             <?php if ( true == $show_custom_passwords ) { echo b3_show_password_fields(); } ?>
 
+            <?php // @TODO: add this function to a hook ?>
             <?php if ( is_multisite() ) { b3_add_subdomain_field(); } ?>
 
             <?php do_action( 'b3_add_custom_fields_registration' ); ?>
-            <?php b3_extra_fields_registration(); ?>
+            <?php // @TODO: probably delete ?>
+            <?php //b3_extra_fields_registration(); ?>
 
+            <?php // @TODO: add this function to a hook ?>
             <?php if ( true == $show_recaptcha && $recaptcha_public ) { ?>
                 <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public ); } ?>
             <?php } ?>
 
             <?php // this function is not in use yet ?>
             <?php if ( true == $show_privacy ) { ?>
-                <div class="b3_form-element b3_form-element--register">
+                <div class="b3_form-element b3_form-element--privacy">
                     <label>
                         <input name="b3_privacy" type="checkbox" id="b3_privacy" value="accept"> <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
                     </label>
@@ -76,6 +79,7 @@
             <?php } ?>
 
             <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
+
             <div class="b3_form-element b3_form-element--submit">
                 <?php if ( 'request_access' == $registration_type ) { ?>
                     <?php $submit_label = esc_html__( 'Request access', 'b3-onboarding' ); ?>
@@ -85,10 +89,6 @@
                 <input type="submit" name="submit" class="button" value="<?php echo $submit_label; ?>" />
             </div>
             <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
-
-            <?php if ( 'request_access' == $registration_type ) { ?>
-                <?php do_action( 'b3_do_after_request_access' ); ?>
-            <?php } ?>
 
         <?php } ?>
 
