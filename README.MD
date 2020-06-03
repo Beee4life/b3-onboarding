@@ -76,7 +76,6 @@ If you activate this plugin the following will be done:
 
 * b3_add_custom_fields_registration
 * b3_after_insert_site, $site_id
-* b3_after_insert_user
 * b3_after_recaptcha_{$form_type}
 * b3_after_recaptcha_register
 * b3_before_recaptcha_{$form_type}
