@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-06-03 21:08+0200\n"
+"POT-Creation-Date: 2020-06-04 00:23+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -48,203 +48,203 @@ msgstr ""
 msgid "Awaiting approval"
 msgstr ""
 
-#: B3Onboarding.php:452
+#: B3Onboarding.php:455
 msgid "Upload or choose your custom logo"
 msgstr ""
 
-#: B3Onboarding.php:453
+#: B3Onboarding.php:456
 msgid "Insert logo"
 msgstr ""
 
-#: B3Onboarding.php:525 includes/B3SidebarWidget.php:123
-#: includes/admin-page.php:41 includes/tabs/tab-settings.php:19
+#: B3Onboarding.php:528 includes/B3SidebarWidget.php:123
+#: includes/admin-page.php:41 includes/tabs/tab-settings.php:20
 msgid "Settings"
 msgstr ""
 
-#: B3Onboarding.php:655 B3Onboarding.php:664
+#: B3Onboarding.php:658 B3Onboarding.php:667
 msgid "Error"
 msgstr ""
 
-#: B3Onboarding.php:658
+#: B3Onboarding.php:661
 msgid "Warning"
 msgstr ""
 
-#: B3Onboarding.php:677
+#: B3Onboarding.php:680
 msgid "Dismiss this notice"
 msgstr ""
 
-#: B3Onboarding.php:742 includes/form-handling.php:10
-#: includes/form-handling.php:71 includes/form-handling.php:101
-#: includes/form-handling.php:208 includes/form-handling.php:255
-#: includes/form-handling.php:372 includes/form-handling.php:406
-#: includes/form-handling.php:442
+#: B3Onboarding.php:745 includes/form-handling.php:10
+#: includes/form-handling.php:73 includes/form-handling.php:103
+#: includes/form-handling.php:206 includes/form-handling.php:252
+#: includes/form-handling.php:363 includes/form-handling.php:397
+#: includes/form-handling.php:433
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: B3Onboarding.php:1098 B3Onboarding.php:1102 B3Onboarding.php:1109
+#: B3Onboarding.php:1101 B3Onboarding.php:1105 B3Onboarding.php:1112
 msgid "Invalid key"
 msgstr ""
 
-#: B3Onboarding.php:1235
+#: B3Onboarding.php:1238
 msgid "Please enter a user name"
 msgstr ""
 
-#: B3Onboarding.php:1238
+#: B3Onboarding.php:1241
 msgid "You need to enter a password to login."
 msgstr ""
 
-#: B3Onboarding.php:1241
+#: B3Onboarding.php:1244
 msgid ""
 "We don't have any users with that email address. Maybe you used a different "
 "one when signing up?"
 msgstr ""
 
-#: B3Onboarding.php:1244
+#: B3Onboarding.php:1247
 #, php-format
 msgid ""
 "The password you entered wasn't quite right. <a href='%s'>Did you forget "
 "your password</a>?"
 msgstr ""
 
-#: B3Onboarding.php:1250
+#: B3Onboarding.php:1253
 msgid "This username is already in use."
 msgstr ""
 
-#: B3Onboarding.php:1253
+#: B3Onboarding.php:1256
 msgid "The email address you entered is not valid."
 msgstr ""
 
-#: B3Onboarding.php:1256
+#: B3Onboarding.php:1259
 msgid "An account already exists with this email address."
 msgstr ""
 
-#: B3Onboarding.php:1259 B3Onboarding.php:1476
+#: B3Onboarding.php:1262 B3Onboarding.php:1479
 msgid "Registering new users is currently not allowed."
 msgstr ""
 
-#: B3Onboarding.php:1262
+#: B3Onboarding.php:1265
 msgid "The Google reCAPTCHA check failed. Are you a robot?"
 msgstr ""
 
-#: B3Onboarding.php:1265 includes/filters-wp.php:221
+#: B3Onboarding.php:1268 includes/filters-wp.php:222
 msgid "You have to accept the privacy statement."
 msgstr ""
 
-#: B3Onboarding.php:1268
+#: B3Onboarding.php:1271
 msgid ""
 "You have sucessfully requested access. An administrator will check your "
 "request."
 msgstr ""
 
-#: B3Onboarding.php:1271
+#: B3Onboarding.php:1274
 msgid "You have sucessfully registered but need to confirm your email first."
 msgstr ""
 
-#: B3Onboarding.php:1276
+#: B3Onboarding.php:1279
 msgid "There are no users registered with this email address."
 msgstr ""
 
-#: B3Onboarding.php:1279
+#: B3Onboarding.php:1282
 msgid "You have to get approved first."
 msgstr ""
 
-#: B3Onboarding.php:1282
+#: B3Onboarding.php:1285
 msgid "You have to confirm your email first."
 msgstr ""
 
-#: B3Onboarding.php:1286
+#: B3Onboarding.php:1289
 msgid "You have succesfully confirmed your email."
 msgstr ""
 
-#: B3Onboarding.php:1289
+#: B3Onboarding.php:1292
 msgid "The activation link you used is not valid."
 msgstr ""
 
-#: B3Onboarding.php:1294
+#: B3Onboarding.php:1297
 msgid "The password reset link you used is not valid anymore."
 msgstr ""
 
-#: B3Onboarding.php:1297
+#: B3Onboarding.php:1300
 msgid "The two passwords you entered don't match."
 msgstr ""
 
-#: B3Onboarding.php:1300
+#: B3Onboarding.php:1303
 msgid "Sorry, we don't accept empty passwords."
 msgstr ""
 
-#: B3Onboarding.php:1304
+#: B3Onboarding.php:1307
 msgid "Sorry, this subdomain has already been taken."
 msgstr ""
 
-#: B3Onboarding.php:1307
+#: B3Onboarding.php:1310
 msgid ""
 "You have successfully registered. Please check your email for an activation "
 "link."
 msgstr ""
 
-#: B3Onboarding.php:1313
+#: B3Onboarding.php:1316
 msgid "Settings saved"
 msgstr ""
 
-#: B3Onboarding.php:1319
+#: B3Onboarding.php:1322
 msgid "An unknown error occurred. Please try again later."
 msgstr ""
 
-#: B3Onboarding.php:1474 B3Onboarding.php:1512
+#: B3Onboarding.php:1477 B3Onboarding.php:1515
 msgid "You are already signed in."
 msgstr ""
 
-#: B3Onboarding.php:1569 B3Onboarding.php:1606
+#: B3Onboarding.php:1572 B3Onboarding.php:1609
 msgid "You are already logged in."
 msgstr ""
 
-#: B3Onboarding.php:1625
+#: B3Onboarding.php:1628
 msgid "Invalid password reset link."
 msgstr ""
 
-#: B3Onboarding.php:1689
+#: B3Onboarding.php:1692
 msgid "On this page you can approve/deny user requests for access."
 msgstr ""
 
-#: B3Onboarding.php:1695
+#: B3Onboarding.php:1698
 msgid "User is successfully approved"
 msgstr ""
 
-#: B3Onboarding.php:1699
+#: B3Onboarding.php:1702
 msgid "User is successfully rejected and user is deleted"
 msgstr ""
 
-#: B3Onboarding.php:1710
+#: B3Onboarding.php:1713
 msgid "User ID"
 msgstr ""
 
-#: B3Onboarding.php:1714 includes/actions-b3.php:151 includes/actions-wp.php:30
+#: B3Onboarding.php:1717 includes/actions-b3.php:151 includes/actions-wp.php:30
 #: templates/account.php:64
 msgid "First name"
 msgstr ""
 
-#: B3Onboarding.php:1717 includes/actions-b3.php:155 includes/actions-wp.php:36
+#: B3Onboarding.php:1720 includes/actions-b3.php:155 includes/actions-wp.php:36
 #: templates/account.php:72
 msgid "Last name"
 msgstr ""
 
-#: B3Onboarding.php:1721 includes/actions-b3.php:19 templates/account.php:27
+#: B3Onboarding.php:1724 includes/actions-b3.php:19 templates/account.php:27
 msgid "Email"
 msgstr ""
 
-#: B3Onboarding.php:1724
+#: B3Onboarding.php:1727
 msgid "Actions"
 msgstr ""
 
-#: B3Onboarding.php:1741
+#: B3Onboarding.php:1744 includes/actions-wp.php:174
 msgid "Approve"
 msgstr ""
 
-#: B3Onboarding.php:1742
+#: B3Onboarding.php:1745
 msgid "Reject"
 msgstr ""
 
-#: B3Onboarding.php:1750
+#: B3Onboarding.php:1753
 msgid "No (more) users to approve."
 msgstr ""
 
@@ -347,11 +347,11 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: includes/actions-wp.php:58 includes/defaults.php:307
+#: includes/actions-wp.php:60 includes/defaults.php:298
 msgid "Accept privacy settings"
 msgstr ""
 
-#: includes/actions-wp.php:61
+#: includes/actions-wp.php:63
 #, php-format
 msgid "<a href=\"%s\">Click here</a> for more info."
 msgstr ""
@@ -374,10 +374,6 @@ msgstr ""
 
 #: includes/admin-page.php:55 includes/tabs/tab-registration.php:23
 msgid "Registration"
-msgstr ""
-
-#: includes/admin-page.php:63 includes/tabs/tab-loginpage.php:26
-msgid "Login page"
 msgstr ""
 
 #: includes/admin-page.php:71 includes/help-tabs.php:28
@@ -457,148 +453,154 @@ msgid ""
 "%</a>."
 msgstr ""
 
-#: includes/defaults.php:88
+#: includes/defaults.php:79
 #, php-format
 msgid "New user at %s"
 msgstr ""
 
-#: includes/defaults.php:97
+#: includes/defaults.php:88
 #, php-format
 msgid "A new user registered at %s on %s"
 msgstr ""
 
-#: includes/defaults.php:99
+#: includes/defaults.php:90
 #, php-format
 msgid "User name: %s"
 msgstr ""
 
-#: includes/defaults.php:101
+#: includes/defaults.php:92
 #, php-format
 msgid "IP: %s"
 msgstr ""
 
-#: includes/defaults.php:112
+#: includes/defaults.php:103
 msgid "Account activated"
 msgstr ""
 
-#: includes/defaults.php:121
+#: includes/defaults.php:112
 #, php-format
 msgid "Hi %s"
 msgstr ""
 
-#: includes/defaults.php:123
+#: includes/defaults.php:114
 #, php-format
 msgid ""
 "you have confirmed your email address and can now set your password through "
 "<a href=\"%s\">this link</a>."
 msgstr ""
 
-#: includes/defaults.php:125 includes/defaults.php:234
-#: includes/defaults.php:263 includes/defaults.php:292
+#: includes/defaults.php:116 includes/defaults.php:225
+#: includes/defaults.php:254 includes/defaults.php:283
 msgid "Greetings"
 msgstr ""
 
-#: includes/defaults.php:127 includes/defaults.php:236
-#: includes/defaults.php:265 includes/defaults.php:294
+#: includes/defaults.php:118 includes/defaults.php:227
+#: includes/defaults.php:256 includes/defaults.php:285
 #, php-format
 msgid "The %s crew"
 msgstr ""
 
-#: includes/defaults.php:138
+#: includes/defaults.php:129
 msgid "A new user requests access"
 msgstr ""
 
-#: includes/defaults.php:149
+#: includes/defaults.php:140
 #, php-format
 msgid ""
 "A new user has requested access. You can approve/deny him/her on the \"<a "
 "href=\"%s\">User approval</a>\" page."
 msgstr ""
 
-#: includes/defaults.php:160
+#: includes/defaults.php:151
 #, php-format
 msgid "Request for access confirmed for %s"
 msgstr ""
 
-#: includes/defaults.php:169
+#: includes/defaults.php:160
 #, php-format
 msgid ""
 "You have successfully requested access for %s. We'll inform you about the "
 "outcome."
 msgstr ""
 
-#: includes/defaults.php:179
+#: includes/defaults.php:170
 msgid "Account approved"
 msgstr ""
 
-#: includes/defaults.php:188
+#: includes/defaults.php:179
 #, php-format
 msgid ""
 "Welcome to %s. Your account has been approved and you can now set your "
 "password <a href=\"%s\">here</a>."
 msgstr ""
 
-#: includes/defaults.php:198
+#: includes/defaults.php:189
 msgid "Account rejected"
 msgstr ""
 
-#: includes/defaults.php:207
+#: includes/defaults.php:198
 msgid "Your account request has been rejected."
 msgstr ""
 
-#: includes/defaults.php:216
+#: includes/defaults.php:207
 #, php-format
 msgid "Password reset for %s"
 msgstr ""
 
-#: includes/defaults.php:226
+#: includes/defaults.php:217
 msgid "Hi"
 msgstr ""
 
-#: includes/defaults.php:228
+#: includes/defaults.php:219
 msgid ""
 "Someone requested a password reset for the account using this email address."
 msgstr ""
 
-#: includes/defaults.php:230
+#: includes/defaults.php:221
 msgid ""
 "If this was a mistake, or you didn't ask for a password reset, just ignore "
 "this email and nothing will happen."
 msgstr ""
 
-#: includes/defaults.php:232
+#: includes/defaults.php:223
 msgid "To (re)set your password, go to <a href=\"%reset_url%\">this page</a>."
 msgstr ""
 
-#: includes/defaults.php:248
+#: includes/defaults.php:239
 #, php-format
 msgid "Welcome to %s"
 msgstr ""
 
-#: includes/defaults.php:257 includes/defaults.php:286
+#: includes/defaults.php:248 includes/defaults.php:277
 #, php-format
 msgid "Welcome %s"
 msgstr ""
 
-#: includes/defaults.php:259 includes/defaults.php:288
+#: includes/defaults.php:250 includes/defaults.php:279
 #, php-format
 msgid "your registration to %s was successful."
 msgstr ""
 
-#: includes/defaults.php:261
+#: includes/defaults.php:252
 #, php-format
 msgid "You can set your password <a href=\"%s\">here</a>."
 msgstr ""
 
-#: includes/defaults.php:277
+#: includes/defaults.php:268
 msgid "Confirm your email address"
 msgstr ""
 
-#: includes/defaults.php:290
+#: includes/defaults.php:281
 #, php-format
 msgid ""
 "You only need to confirm your email address through <a href=\"%s\">this "
 "link</a>."
+msgstr ""
+
+#: includes/defaults.php:305
+#, php-format
+msgid ""
+"Accept <a href=\"%s\" target=\"_blank\" rel=\"noopener\">privacy settings</a>"
 msgstr ""
 
 #: includes/do-stuff.php:9
@@ -702,7 +704,7 @@ msgstr ""
 #: includes/emails/account-approved.php:33
 #: includes/emails/account-rejected.php:42
 #: includes/emails/email-activation.php:35
-#: includes/emails/email-confirmed.php:35 includes/emails/email-settings.php:70
+#: includes/emails/email-confirmed.php:35 includes/emails/email-settings.php:42
 #: includes/emails/email-styling.php:20 includes/emails/email-template.php:22
 #: includes/emails/forgot-password.php:46
 #: includes/emails/ms-user-delete-site.php:22
@@ -712,8 +714,7 @@ msgstr ""
 #: includes/emails/new-user-admin.php:58
 #: includes/emails/request-access-admin.php:47
 #: includes/emails/request-access-user.php:33
-#: includes/emails/welcome-email-user.php:34 includes/tabs/tab-loginpage.php:91
-#: includes/tabs/tab-pages.php:113 includes/tabs/tab-registration.php:157
+#: includes/emails/welcome-email-user.php:34 includes/functions.php:856
 msgid "Save settings"
 msgstr ""
 
@@ -726,32 +727,20 @@ msgstr ""
 msgid "Available variables are:"
 msgstr ""
 
-#: includes/emails/email-settings.php:11
+#: includes/emails/email-settings.php:9
 msgid "Notification sender name"
 msgstr ""
 
-#: includes/emails/email-settings.php:21
+#: includes/emails/email-settings.php:19
 msgid "This is the name which is used to send emails from."
 msgstr ""
 
-#: includes/emails/email-settings.php:27
+#: includes/emails/email-settings.php:25
 msgid "Notification sender email"
 msgstr ""
 
-#: includes/emails/email-settings.php:37
+#: includes/emails/email-settings.php:35
 msgid "This is the email address from which all emails will be sent."
-msgstr ""
-
-#: includes/emails/email-settings.php:44
-msgid "Logo in emails"
-msgstr ""
-
-#: includes/emails/email-settings.php:50 includes/tabs/tab-loginpage.php:42
-msgid "Choose a logo"
-msgstr ""
-
-#: includes/emails/email-settings.php:62
-msgid "This is the image url for the logo sent in all emails."
 msgstr ""
 
 #: includes/emails/email-styling.php:6
@@ -812,56 +801,56 @@ msgstr ""
 msgid "Placeholder text"
 msgstr ""
 
-#: includes/filters-wp.php:205 includes/filters-wp.php:209
-#: includes/filters-wp.php:215 includes/filters-wp.php:221
+#: includes/filters-wp.php:206 includes/filters-wp.php:210
+#: includes/filters-wp.php:216 includes/filters-wp.php:222
 msgid "ERROR"
 msgstr ""
 
-#: includes/filters-wp.php:205
+#: includes/filters-wp.php:206
 msgid "You must include a first name."
 msgstr ""
 
-#: includes/filters-wp.php:209
+#: includes/filters-wp.php:210
 msgid "You must include a last name."
 msgstr ""
 
-#: includes/filters-wp.php:215
+#: includes/filters-wp.php:216
 msgid "Recaptcha failed."
 msgstr ""
 
-#: includes/form-handling.php:62
+#: includes/form-handling.php:64
 msgid "General settings saved"
 msgstr ""
 
-#: includes/form-handling.php:94
+#: includes/form-handling.php:96
 msgid "Pages settings saved"
 msgstr ""
 
-#: includes/form-handling.php:199
+#: includes/form-handling.php:197
 msgid "Registration settings saved"
 msgstr ""
 
-#: includes/form-handling.php:220 includes/form-handling.php:272
+#: includes/form-handling.php:218 includes/form-handling.php:269
 msgid "Then length of your hex code is incorrect."
 msgstr ""
 
-#: includes/form-handling.php:247
+#: includes/form-handling.php:244
 msgid "Login page settings saved"
 msgstr ""
 
-#: includes/form-handling.php:364
+#: includes/form-handling.php:355
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:398
+#: includes/form-handling.php:389
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:415
+#: includes/form-handling.php:406
 msgid "reCaptcha settings saved"
 msgstr ""
 
-#: includes/form-handling.php:497
+#: includes/form-handling.php:490
 msgid "You do not have permission to edit this user."
 msgstr ""
 
@@ -1065,12 +1054,8 @@ msgstr ""
 msgid "Link color"
 msgstr ""
 
-#: includes/tabs/tab-emails.php:49 includes/tabs/tab-loginpage.php:66
+#: includes/tabs/tab-emails.php:49 includes/tabs/tab-wordpress.php:56
 msgid "Must be a hex value of 3 or 6 characters (without hashtag)"
-msgstr ""
-
-#: includes/tabs/tab-emails.php:56
-msgid "Save all email settings"
 msgstr ""
 
 #: includes/tabs/tab-integrations.php:18
@@ -1118,57 +1103,17 @@ msgstr ""
 msgid "Save reCaptcha"
 msgstr ""
 
-#: includes/tabs/tab-integrations.php:100
+#: includes/tabs/tab-integrations.php:101
 msgid "More integrations"
 msgstr ""
 
-#: includes/tabs/tab-integrations.php:103
+#: includes/tabs/tab-integrations.php:104
 msgid "We understand there might be a need for more integrations."
 msgstr ""
 
-#: includes/tabs/tab-integrations.php:105
+#: includes/tabs/tab-integrations.php:106
 msgid ""
 "If we'll add more, the ones below are the first ones wer're gonna explore."
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:31
-msgid "Here you can style the (default) WordPress login page."
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:49
-msgid "Logo width"
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:51
-msgid "Default = 84 px. Max 320 px."
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:56
-msgid "Logo height"
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:58
-msgid "Max 150 px."
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:63
-msgid "Background color"
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:71
-msgid "Font size (in px)"
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:73
-msgid "Default = 14px"
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:78
-msgid "Font family"
-msgstr ""
-
-#: includes/tabs/tab-loginpage.php:81
-msgid "Select a font"
 msgstr ""
 
 #: includes/tabs/tab-pages.php:28
@@ -1183,7 +1128,7 @@ msgstr ""
 msgid "Here you can set which pages are assigned for the various 'actions'."
 msgstr ""
 
-#: includes/tabs/tab-pages.php:82
+#: includes/tabs/tab-pages.php:82 includes/tabs/tab-registration.php:141
 msgid "Select a page"
 msgstr ""
 
@@ -1289,71 +1234,75 @@ msgstr ""
 msgid "Privacy page"
 msgstr ""
 
-#: includes/tabs/tab-registration.php:140
-msgid "Must be a valid URL (incl. http(s)://)"
-msgstr ""
-
-#: includes/tabs/tab-registration.php:149
+#: includes/tabs/tab-registration.php:154
 msgid "Disable action links"
 msgstr ""
 
-#: includes/tabs/tab-registration.php:152
+#: includes/tabs/tab-registration.php:157
 msgid "Check this box to hide the action links on (custom) forms."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:23
+#: includes/tabs/tab-settings.php:24
 msgid "Here you can set various global settings for the plugin."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:33
+#: includes/tabs/tab-settings.php:34
 msgid "Style default pages"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:36
+#: includes/tabs/tab-settings.php:37
 msgid ""
 "Check this box to activate custom settings for WordPress' default login page."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:42
+#: includes/tabs/tab-settings.php:43
 msgid "Force custom login page"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:45
+#: includes/tabs/tab-settings.php:46
 msgid ""
 "Check this box to disable WordPress' own pages and force using your custom "
 "pages."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:53
+#: includes/tabs/tab-settings.php:54
 msgid "Activate debug info page"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:56
+#: includes/tabs/tab-settings.php:57
 msgid "Check this box to 'show' the debug page."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:67
+#: includes/tabs/tab-settings.php:65
+msgid "Logo"
+msgstr ""
+
+#: includes/tabs/tab-settings.php:71
+msgid "This is the logo used in emails and on Wordpress' default forms."
+msgstr ""
+
+#: includes/tabs/tab-settings.php:74 includes/tabs/tab-settings.php:75
+msgid "Choose a logo"
+msgstr ""
+
+#: includes/tabs/tab-settings.php:92
 msgid "Widget settings"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:72
+#: includes/tabs/tab-settings.php:97
 msgid "Dashboard widget"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:75
+#: includes/tabs/tab-settings.php:100
 msgid "Check this box to activate the dashboard widget."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:81
+#: includes/tabs/tab-settings.php:106
 msgid "Sidebar widget"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:84
+#: includes/tabs/tab-settings.php:109
 msgid "Check this box to activate the sidebar widget."
-msgstr ""
-
-#: includes/tabs/tab-settings.php:89
-msgid "Save options"
 msgstr ""
 
 #: includes/tabs/tab-users.php:21
@@ -1388,6 +1337,50 @@ msgstr ""
 
 #: includes/tabs/tab-users.php:74
 msgid "Save all user settings"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:26
+msgid "forms"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:31
+msgid "Here you can style the (default) WordPress pages."
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:39
+msgid "Logo width"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:41
+msgid "Default = 84 px. Max 320 px."
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:46
+msgid "Logo height"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:48
+msgid "Max 150 px."
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:53
+msgid "Background color"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:61
+msgid "Font size (in px)"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:63
+msgid "Default = 14px"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:68
+msgid "Font family"
+msgstr ""
+
+#: includes/tabs/tab-wordpress.php:71
+msgid "Select a font"
 msgstr ""
 
 #: includes/user-approval-page.php:16
