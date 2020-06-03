@@ -6,13 +6,13 @@
      *
      * @return false|string
      */
-    function b3_email_logo( $logo ) {
+    function b3_main_logo( $logo ) {
 
         $logo = B3_PLUGIN_URL . '/assets/images/logo-salesforce.png';
 
         return $logo;
     }
-    // add_filter( 'b3_email_logo', 'b3_email_logo' );
+    // add_filter( 'b3_main_logo', 'b3_main_logo' );
 
     /**
      * Filter email footer text
@@ -56,7 +56,7 @@
 
         return $fields;
     }
-    add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );
+    // add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );
 
     /**
      * Add cusstom fields to form
@@ -179,3 +179,36 @@
         return $fields;
     }
     // add_filter( 'b3_add_filter_extra_fields_values', 'b3_add_filter_extra_fields_values' );
+
+    /**
+     * Override privacy text
+     *
+     * @param $privacy_text
+     *
+     * @return mixed
+     */
+    function b3_add_privacy_text( $privacy_text ) {
+
+        $privacy_text = '<a href="">Klik hier</a> voor meer info';
+
+        return $privacy_text;
+    }
+    // add_filter( 'b3_add_privacy_text', 'b3_add_privacy_text' );
+
+
+    /**
+     * Verify if privacy checkbox is clicked (when activated)
+     *
+     * @param $errors
+     */
+    function b3_verify_privacy() {
+        $error = false;
+        if ( 1 == get_option( 'b3_privacy', false ) ) {
+            if ( ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
+                $error = true;
+            }
+        }
+
+        return $error;
+
+    }

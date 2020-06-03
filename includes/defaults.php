@@ -62,20 +62,11 @@
     }
 
     /**
-     * Default email logo
+     * Default main logo
      *
      * @return false|string
      */
-    function b3_default_email_logo() {
-        return B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png';
-    }
-
-    /**
-     * Default login logo
-     *
-     * @return false|string
-     */
-    function b3_default_login_logo() {
+    function b3_default_main_logo() {
         return B3_PLUGIN_URL . '/assets/images/logo-b3onboarding.png';
     }
 
@@ -295,4 +286,14 @@
 
         return $message;
 
+    }
+
+
+    /**
+     * Default privacy text
+     *
+     * @return string
+     */
+    function b3_default_privacy_text() {
+        return __( 'Accept privacy settings', 'b3-onboarding' );
     }

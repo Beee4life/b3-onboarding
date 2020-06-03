@@ -216,7 +216,12 @@
             }
         }
 
-        do_action( 'b3_verify_custom_fields' );
+        $privacy_error = b3_verify_privacy();
+        if ( true == $privacy_error ) {
+            $errors->add( 'no_privacy', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You have to accept the privacy statement.', 'b3-onboarding' ) ) );
+
+            return $errors;
+        }
 
         return $errors;
     }

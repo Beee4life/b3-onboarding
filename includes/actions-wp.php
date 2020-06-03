@@ -70,11 +70,11 @@
     add_action( 'register_form', 'b3_add_registration_fields' );
 
     /**
-     * Update usermeta after register
+     * Update usermeta after user register
      *
      * @param $user_id
      */
-    function b3_update_user_register_fields( $user_id ) {
+    function b3_update_user_meta_after_register( $user_id ) {
         if ( ! empty( $_POST[ 'first_name' ] ) ) {
             update_user_meta( $user_id, 'first_name', sanitize_text_field( $_POST[ 'first_name' ] ) );
         }
@@ -95,8 +95,12 @@
                 update_user_meta( $user_id, $meta_key, $meta_value );
             }
         }
+
+        if ( isset( $_POST[ 'b3_privacy_accept' ] ) && 1 == $_POST[ 'b3_privacy_accept' ] ) {
+            update_user_meta( $user_id, 'priacy_accept', true );
+        }
     }
-    add_action( 'user_register', 'b3_update_user_register_fields' );
+    add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
 
     /**

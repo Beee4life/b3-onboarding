@@ -215,7 +215,7 @@
         if ( true == $show_privacy ) { ?>
             <div class="b3_form-element b3_form-element--privacy">
                 <label>
-                    <input name="b3_privacy" type="checkbox" id="b3_privacy" value="accept"> <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
+                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1"> <?php echo apply_filters( 'b3_add_privacy_text', b3_get_privacy_text() ); ?>
                 </label>
             </div>
         <?php }

@@ -9,7 +9,7 @@
 jQuery(document).ready(function($){
     // Prepare the variable that holds our custom media manager.
     var b3_login_logo;
-    var b3_email_logo;
+    var b3_main_logo;
 
     // Bind to our click event in order to open up the new media experience.
     $(document.body).on('click.B3OpenMediaManager', '.b3-open-media', function(e){
@@ -22,8 +22,8 @@ jQuery(document).ready(function($){
             b3_login_logo.open();
             return;
         }
-        if ( b3_email_logo ) {
-            b3_email_logo.open();
+        if ( b3_main_logo ) {
+            b3_main_logo.open();
             return;
         }
 
@@ -100,7 +100,7 @@ jQuery(document).ready(function($){
                 text:  b3_media.button
             }
         });
-        b3_email_logo = wp.media.frames.b3_email_logo = wp.media({
+        b3_main_logo = wp.media.frames.b3_main_logo = wp.media({
             /**
              * We can pass in a custom class name to our frame, so we do
              * it here to provide some extra context for styling our
@@ -205,19 +205,19 @@ jQuery(document).ready(function($){
             $('#b3_login_logo').val(media_attachment.url);
         });
 
-        b3_email_logo.on('select', function(){
+        b3_main_logo.on('select', function(){
             // Grab our attachment selection and construct a JSON representation of the model.
-            var media_attachment = b3_email_logo.state().get('selection').first().toJSON();
+            var media_attachment = b3_main_logo.state().get('selection').first().toJSON();
 
             // Send the attachment URL to our custom input field via jQuery.
-            $('#b3_email_logo').val(media_attachment.url);
+            $('#b3_main_logo').val(media_attachment.url);
         });
 
         // Now that everything has been set, let's open up the frame.
-        if ( 'email-logo' === logo_type ) {
-            b3_email_logo.open();
-        } else if ( 'login-logo' === logo_type ) {
+        if ( 'login-logo' === logo_type ) {
             b3_login_logo.open();
+        } else if ( 'main-logo' === logo_type ) {
+            b3_main_logo.open();
         }
     });
 });

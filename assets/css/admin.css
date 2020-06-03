@@ -221,10 +221,10 @@
 }
 
 .b3 select#b3_loginpage_font_family {
-    width: 150px;
+    width: 200px;
 }
 
-.b3 input#b3_login_logo {
+.b3 input#b3_main_logo {
     width: 500px;
 }
 

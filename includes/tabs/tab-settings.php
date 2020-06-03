@@ -7,11 +7,12 @@
      */
     function b3_render_settings_tab() {
 
-        $style_default_pages     = get_option( 'b3_style_default_pages', false );
         $dashboard_widget        = get_option( 'b3_dashboard_widget', false );
         $debug_info              = get_option( 'b3_debug_info', false );
         $force_custom_login_page = get_option( 'b3_force_custom_login_page', false );
+        $main_logo               = get_option( 'b3_main_logo', false );
         $sidebar_widget          = get_option( 'b3_sidebar_widget', false );
+        $style_default_pages     = get_option( 'b3_style_default_pages', false );
 
         ob_start();
         ?>
@@ -57,6 +58,30 @@
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
+
+                <hr />
+
+                <h2>
+                    <?php esc_html_e( 'Logo', 'b3-onboarding' ); ?>
+                </h2>
+
+                <?php b3_get_settings_field_open(); ?>
+                    <div id="b3-main-logo-settings">
+                        <p>
+                            <?php esc_html_e( "This is the logo used in emails and on Wordpress' default forms.", 'b3-onboarding' ); ?>
+                        </p>
+                        <p>
+                            <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">
+                                <?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?>
+                            </a>
+                        </p>
+                        <p>
+                            <label>
+                                <input type="text" name="b3_main_logo" id="b3_main_logo" value="<?php echo $main_logo; ?>" />
+                            </label>
+                        </p>
+                    </div>
+                <?php b3_get_close(); ?>
 
             <?php } ?>
 

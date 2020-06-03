@@ -220,7 +220,6 @@
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_logo_in_email', 1 );
-                update_option( 'b3_login_logo', b3_default_login_logo() );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
@@ -309,7 +308,7 @@
                 $bg_color        = get_option( 'b3_loginpage_bg_color', false );
                 $font_family     = get_option( 'b3_loginpage_font_family', false );
                 $font_size       = get_option( 'b3_loginpage_font_size', false );
-                $logo            = apply_filters( 'b3_login_logo', b3_get_login_logo() );
+                $logo            = apply_filters( 'b3_main_logo', b3_get_main_logo() );
                 $logo_height     = get_option( 'b3_loginpage_logo_height', false );
                 $logo_width      = get_option( 'b3_loginpage_logo_width', false );
                 $recaptcha       = get_option( 'b3_recaptcha', false );
@@ -744,14 +743,12 @@
                             return;
                         } else {
 
-                            $meta_data                 = [];
                             $user_login                = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role                      = get_option( 'default_role' );
                             $registration_type         = get_option( 'b3_registration_type', false );
-                            $meta_data                 = apply_filters( 'b3_check_custom_registration_fields', $meta_data );
-                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false;
-                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false;
+                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false; // @TODO: do i need this for MS ?
+                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false; // @TODO: do i need this for MS ?
 
                             if ( ! is_multisite() ) {
                                 if ( 'closed' == $registration_type ) {
@@ -775,7 +772,7 @@
                                         $reset_password = true;
                                     }
 
-                                    $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role, $meta_data );
+                                    $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role );
 
                                     if ( is_wp_error( $result ) ) {
                                         // Parse errors into a string and append as parameter to redirect
@@ -1229,7 +1226,7 @@
              *
              * @return string               An error message.
              */
-            private function b3_get_error_message( $error_code ) {
+            public function b3_get_error_message( $error_code ) {
                 switch( $error_code ) {
 
                     // Login errors
@@ -1262,6 +1259,9 @@
 
                     case 'captcha':
                         return esc_html__( 'The Google reCAPTCHA check failed. Are you a robot?', 'b3-onboarding' );
+
+                    case 'no_privacy':
+                        return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
 
                     case 'access_requested':
                         return esc_html__( 'You have sucessfully requested access. An administrator will check your request.', 'b3-onboarding' );
@@ -1324,11 +1324,10 @@
              *
              * @param string $user_login
              * @param string $user_email
-             * @param string array $meta
              *
              * @return int|WP_Error
              */
-            protected function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber', $meta = array() ) {
+            protected function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
                 $errors = new WP_Error();
 
                 if ( username_exists( $user_login ) ) {
@@ -1361,30 +1360,22 @@
                     return $errors;
                 }
 
-                do_action( 'b3_verify_custom_fields' );
+                $privacy_error = b3_verify_privacy();
+                if ( true == $privacy_error ) {
+                    $errors->add( 'no_privacy', $this->b3_get_error_message( 'no_privacy' ) );
+
+                    return $errors;
+                }
 
                 $user_data = array(
                     'user_login' => $user_login,
                     'user_email' => $user_email,
-                    'user_pass'  => '',
+                    'user_pass'  => '', // @TODO: for custom passwords
                     'role'       => $role,
                 );
 
-                $first_name = ( ! empty( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : false;
-                if ( false != $first_name ) {
-                    $user_data[ 'first_name' ] = $first_name;
-                    unset( $meta[ 'first_name' ] );
-                }
-
-                $last_name  = ( ! empty( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : false;
-                if ( false != $first_name ) {
-                    $user_data[ 'last_name' ] = $last_name;
-                    unset( $meta[ 'last_name' ] );
-                }
-
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    do_action( 'b3_after_insert_user' );
                     $inform = 'both';
                     if ( in_array( $registration_type, [ 'email_activation' ] ) ) {
                         if ( 'email_activation' == $registration_type ) {
@@ -1422,7 +1413,6 @@
                             // @TODO: throw error if no subdomain is chosen
                             wpmu_signup_user( $user_name, $user_email, $meta );
                             $user_registered = true;
-                            do_action( 'b3_after_insert_user' );
                         } else {
                             wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                             $site_id         = get_id_from_blogname( $sub_domain );
@@ -1443,7 +1433,6 @@
                     if ( 'user' == $main_register_type && 'closed' != $subsite_register_type ) {
                         wpmu_signup_user( $user_name, $user_email, $meta );
                         $user_registered = true;
-                        do_action( 'b3_after_insert_user' );
                     } else {
                         $errors = new WP_Error( 'unknown', $this->b3_get_error_message( 'unknown' ) );
                     }

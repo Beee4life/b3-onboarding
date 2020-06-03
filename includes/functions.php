@@ -276,42 +276,6 @@
 
 
     /**
-     * Return user email logo and default logo if false
-     *
-     * @return bool|false|mixed|string|void
-     */
-    function b3_get_email_logo() {
-        $custom_logo = get_option( 'b3_email_logo', false );
-
-        if ( false != $custom_logo ) {
-            $email_logo = $custom_logo;
-        } else {
-            $email_logo = b3_default_email_logo();
-        }
-
-        return $email_logo;
-    }
-
-
-    /**
-     * Return user email logo and default logo if false
-     *
-     * @return bool|false|mixed|string|void
-     */
-    function b3_get_login_logo() {
-        $custom_logo = get_option( 'b3_login_logo', false );
-
-        if ( false != $custom_logo ) {
-            $login_logo = $custom_logo;
-        } else {
-            $login_logo = b3_default_login_logo();
-        }
-
-        return $login_logo;
-    }
-
-
-    /**
      * Return default email footer
      *
      * @TODO: add user input option
@@ -652,6 +616,59 @@
             $message = $new_user_message;
         } else {
             $message = b3_default_new_user_admin_message();
+        }
+
+        return $message;
+
+    }
+
+
+    /**
+     * Return user email logo and default logo if false
+     *
+     * @return bool|false|mixed|string|void
+     */
+    function b3_get_login_logo() {
+        $custom_logo = get_option( 'b3_login_logo', false );
+
+        if ( false != $custom_logo ) {
+            $login_logo = $custom_logo;
+        } else {
+            $login_logo = b3_default_login_logo();
+        }
+
+        return $login_logo;
+    }
+
+
+    /**
+     * Return user email logo and default logo if false
+     *
+     * @return bool|false|mixed|string|void
+     */
+    function b3_get_main_logo() {
+        $custom_logo = get_option( 'b3_main_logo', false );
+
+        if ( false != $custom_logo ) {
+            $main_logo = $custom_logo;
+        } else {
+            $main_logo = b3_default_main_logo();
+        }
+
+        return $main_logo;
+    }
+
+
+    /**
+     * @return bool|mixed|string|void
+     */
+    function b3_get_privacy_text() {
+
+        $privacy_text = get_option( 'b3_privacy_text', false );
+        if ( false != $privacy_text ) {
+            $message = $privacy_text;
+        } else {
+            $message = b3_default_privacy_text();
         }
 
         return $message;

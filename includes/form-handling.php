@@ -45,6 +45,8 @@
                         delete_option( 'b3_debug_info' );
                     }
 
+                    update_option( 'b3_main_logo', $_POST[ 'b3_main_logo' ], true );
+
                     // Sidebar widget
                     if ( isset( $_POST[ 'b3_activate_sidebar_widget' ] ) && 1 == $_POST[ 'b3_activate_sidebar_widget' ] ) {
                         update_option( 'b3_sidebar_widget', 1, true );
@@ -229,7 +231,6 @@
 
                     update_option( 'b3_loginpage_font_family', $_POST[ 'b3_loginpage_font_family' ] );
                     update_option( 'b3_loginpage_font_size', $_POST[ 'b3_loginpage_font_size' ] );
-                    update_option( 'b3_login_logo', $_POST[ 'b3_login_logo' ] );
 
                     $max_width  = 320;
                     $max_height = 150;
@@ -289,12 +290,6 @@
                         update_option( 'b3_logo_in_email', 1, true );
                     } else {
                         delete_option( 'b3_logo_in_email' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_email_logo' ] ) && ! empty( $_POST[ 'b3_email_logo' ] ) ) {
-                        update_option( 'b3_email_logo', $_POST[ 'b3_email_logo' ], true );
-                    } else {
-                        delete_option( 'b3_email_logo' );
                     }
 
                     if ( isset( $_POST[ 'b3_email_styling' ] ) ) {
