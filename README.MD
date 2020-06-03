@@ -75,21 +75,20 @@ If you activate this plugin the following will be done:
 ### Hooks
 
 * b3_add_custom_fields_registration
+* b3_after_insert_site, $site_id
 * b3_after_insert_user
-* b3_after_recaptcha_{form_type}
-* b3_after_{template_name}
-* b3_before_recaptcha_{form_type}
-* b3_before_{template_name}
-* b3_do_after_request_access
-* b3_do_before_registration_form
-* b3_do_before_request_access
+* b3_after_recaptcha_{$form_type}
+* b3_after_recaptcha_register
+* b3_before_recaptcha_{$form_type}
+* b3_before_recaptcha_register
+* b3_do_after_{$template_name}
+* b3_do_after_submit_registration_form
+* b3_do_before_{$template_name}
+* b3_do_before_submit_registration_form
 * b3_new_user_activated
 * b3_new_user_activated_by_admin
-* b3_new_user_rejected
 
-... there are A LOT more, we still need to index them all properly
-
-They will become available on the official website (soon).
+This info + settings will become available on the official website (soon).
 
 <a name="filters"></a>
 ### Filters
@@ -101,7 +100,7 @@ They will become available on the official website (soon).
 * b3_welcome_user_subject
 * b3_welcome_user_message
 
-... there are A LOT more, we still need to index them all properly.
+... there are more, we still need to index them all properly.
 
 They will become available on the official website (soon).
 
