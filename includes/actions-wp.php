@@ -43,7 +43,7 @@
                 <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
             </div>
             <p></p>
-            <?php do_action( 'b3_after_recaptcha_regsiter' ); ?>
+            <?php do_action( 'b3_after_recaptcha_register' ); ?>
         <?php } ?>
 
         <?php if ( true == $privacy_checkbox ) { ?>
