@@ -7,6 +7,8 @@
     if ( $attributes[ 'redirect' ] ) {
         $redirect = $attributes[ 'redirect' ];
     }
+
+    // @TODO: add form type
 ?>
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>

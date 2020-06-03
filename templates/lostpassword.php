@@ -1,3 +1,4 @@
+<?php // @TODO: add form type ?>
 <div class="b3_page b3_page--lostpass">
     <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
         <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>

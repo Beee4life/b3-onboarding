@@ -2,6 +2,8 @@
     $current_user = get_userdata( get_current_user_id() );
     $required     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false;
     $user_delete  = get_option( 'b3_user_may_delete', false );
+
+    // @TODO: add form type
 ?>
 <div id="b3-account" class="b3_page b3_page--account">
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
