@@ -110,7 +110,6 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <br />
             <?php b3_submit_button(); ?>
         </form>
         <?php

@@ -855,5 +855,5 @@
         if ( false == $submit_value ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
-        echo '<input class="button button-primary" type="submit" value="' . $submit_value . '" />';
+        echo '<input class="button button-primary button--submit" type="submit" value="' . $submit_value . '" />';
     }

@@ -396,6 +396,10 @@ ul.b3_integrations--list {
     color: #ee6102;
 }
 
+.wp-core-ui .button--submit {
+    margin-top: 0.5em;
+}
+
 .hidden {
     display: none;
 }
