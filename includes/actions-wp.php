@@ -39,6 +39,7 @@
         </p>
         <?php } ?>
 
+        <?php // @TODO: add hook ?>
         <?php if ( true == $recaptcha ) { ?>
             <?php do_action( 'b3_before_recaptcha_register' ); ?>
             <div class="recaptcha-container">
@@ -49,6 +50,7 @@
         <?php } ?>
 
         <?php if ( true == $privacy_checkbox ) { ?>
+            <?php // @TODO: add hook ?>
             <p>
                 <label>
                     <input name="accept_privacy" type="checkbox" id="accept_privacy" value="1">
