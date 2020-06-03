@@ -5,6 +5,8 @@
 
     /**
      * Add custom fields to Wordpress' default register form
+     *
+     * @TODO: use hooks
      */
     function b3_add_registration_fields() {
 
@@ -86,7 +88,7 @@
     /**
      * Add recaptcha to login form
      *
-     * @TODO: check if neds to be on login_form (probably due to WP form)
+     * @TODO: check if needs to be on login_form (probably due to WP form)
      *
      * @param $user_id
      */
