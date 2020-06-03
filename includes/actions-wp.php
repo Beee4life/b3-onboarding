@@ -21,7 +21,7 @@
         $privacy_page        = get_option( 'b3_privacy_page', false );
         $privacy_page_wp     = get_option( 'wp_page_for_privacy_policy' );
         if ( false == $privacy_page && false != $privacy_page_wp ) {
-            $privacy_page = get_permalink( $privacy_page_wp );
+            $privacy_page = get_the_permalink( $privacy_page_wp );
         }
 
         if ( true == $activate_first_last ) {

@@ -15,7 +15,7 @@
         </p>
     <?php } ?>
 
-    <form id="" name="" action="<?php echo get_permalink( get_the_ID() ); ?>" method="post">
+    <form id="" name="" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
         <?php wp_nonce_field( 'update-user_' . $current_user->ID ); ?>
         <input type="hidden" name="admin_bar_front" id="admin_bar_front" value="<?php echo get_user_meta( $current_user->ID, 'show_admin_bar_front', true ); ?>" />
         <input type="hidden" name="from" value="profile" />

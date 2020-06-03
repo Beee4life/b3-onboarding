@@ -13,7 +13,7 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
             if ( true == $return_link ) {
-                return get_permalink( $id );
+                return get_the_permalink( $id );
             }
         } elseif ( true == $return_link ) {
             return wp_registration_url();
@@ -36,7 +36,7 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
             if ( true == $return_link ) {
-                return get_permalink( $id );
+                return get_the_permalink( $id );
             }
         } elseif ( true == $return_link ) {
             return wp_login_url();
@@ -59,7 +59,7 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
             if ( true == $return_link ) {
-                return get_permalink( $id );
+                return get_the_permalink( $id );
             }
         } elseif ( true == $return_link ) {
             return wp_logout_url();
@@ -82,7 +82,7 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
             if ( true == $return_link ) {
-                return get_permalink( $id );
+                return get_the_permalink( $id );
             }
         }
 
@@ -103,7 +103,7 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
             if ( true == $return_link ) {
-                return get_permalink( $id );
+                return get_the_permalink( $id );
             }
         } elseif ( true == $return_link ) {
             return wp_lostpassword_url();
@@ -125,7 +125,7 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
             if ( true == $return_link ) {
-                return get_permalink( $id );
+                return get_the_permalink( $id );
             }
         } elseif ( true == $return_link ) {
             // @TODO: create fallback
@@ -148,7 +148,7 @@
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
             if ( true == $return_link ) {
-                return get_permalink( $id );
+                return get_the_permalink( $id );
             }
         }
 

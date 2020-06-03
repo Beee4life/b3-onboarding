@@ -63,7 +63,7 @@
                             if ( false == $reset_page ) {
                                 $password_reset_url = esc_url( wp_lostpassword_url() );
                             } else {
-                                $password_reset_url = esc_url( get_permalink( $reset_page ) );
+                                $password_reset_url = esc_url( get_the_permalink( $reset_page ) );
                             }
                             echo sprintf(
                                 __( 'You have successfully registered to <strong>%1$s</strong>. Set your password <a href="%2$s">here</a>.', 'b3-onboarding' ),

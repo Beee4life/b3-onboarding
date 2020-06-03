@@ -224,6 +224,10 @@
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
                 update_option( 'b3_sidebar_widget', 1 );
+
+                if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
+                    update_option( 'b3_privacy_page', get_option( 'wp_page_for_privacy_policy' ) );
+                }
             }
 
             /**
@@ -373,10 +377,10 @@
              */
             public function b3_template_redirect() {
                 $account_page_id  = b3_get_account_id();
-                $account_url      = ( false != $account_page_id ) ? get_permalink( $account_page_id ) : admin_url( 'profile.php' );
+                $account_url      = ( false != $account_page_id ) ? get_the_permalink( $account_page_id ) : admin_url( 'profile.php' );
                 $approval_page_id = b3_get_user_approval_id();
                 $login_page_id    = b3_get_login_id();
-                $login_url        = ( false != $login_page_id ) ? get_permalink( $login_page_id ) : wp_login_url();
+                $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_id();
 
                 if ( false != $account_page_id && is_page( [ $account_page_id ] ) && ! is_user_logged_in() ) {
