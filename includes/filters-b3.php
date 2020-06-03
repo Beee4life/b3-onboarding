@@ -43,3 +43,17 @@
         return $link_color;
     }
     // add_filter( 'b3_email_link_color', 'b3_email_link_color' );
+
+    /**
+     * Add hidden fields to form
+     *
+     * @param $fields
+     *
+     * @return array
+     */
+    function b3_filter_hidden_fields_values( $fields ) {
+        $fields[ 'field_id' ] = 'field_value';
+
+        return $fields;
+    }
+    // add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );

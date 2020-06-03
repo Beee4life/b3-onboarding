@@ -1,9 +1,7 @@
 <?php
-    $recaptcha_public = get_option( 'b3_recaptcha_public', false );
     $redirect         = false;
     $request_access = get_option( 'b3_registration_type', false );
     $reset_page     = get_option( 'b3_forgotpass_page_id', false );
-    $show_recaptcha   = get_option( 'b3_recaptcha_login', false );
     if ( $attributes[ 'redirect' ] ) {
         $redirect = $attributes[ 'redirect' ];
     }
@@ -108,6 +106,9 @@
             </p>
         <?php } ?>
 
+        <?php // Output of fields starts here ?>
+
+        <?php // @TODO: maybe hook this to something ? ?>
         <div class="b3_form-element">
             <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php esc_html_e( 'Username or Email address', 'b3-onboarding' ); ?></label>
             <input type="text" name="log" id="user_login" class="input" value="" size="20">
@@ -118,9 +119,7 @@
             <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
         </div>
 
-        <?php if ( true == $show_recaptcha && $recaptcha_public ) { ?>
-            <?php if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public, 'login' ); } ?>
-        <?php } ?>
+        <?php do_action( 'b3_add_recaptcha_fields', $attributes[ 'template' ] ); ?>
 
         <div class="rememberme-wrap">
             <p class="rememberme">
@@ -129,11 +128,13 @@
             </p>
         </div>
 
+        <?php // @TODO: maybe create a hook for this ? ?>
         <p class="">
-            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="Log In">
+            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_html_e( 'Log in', 'b3-onboarding' ); ?>">
             <input type="hidden" name="redirect_to" value="<?php echo $redirect; ?>">
         </p>
 
+        <?php // @TODO: maybe create a hook for this ? ?>
         <?php echo b3_get_form_links( 'login' ); ?>
 
     </form>

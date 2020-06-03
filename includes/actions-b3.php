@@ -3,6 +3,29 @@
      * This file contains functions hooked to the plugin's own hooks
      */
 
+
+    /**
+     * Ouptuts default login/email field
+     */
+    function b3_login_email_fields() {
+        ob_start();
+        ?>
+            <div class="b3_form-element b3_form-element--login">
+                <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'username' : ''; ?>" required>
+            </div>
+
+            <div class="b3_form-element b3_form-element--email">
+                <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'test@xxx.com' : ''; ?>" required>
+            </div>
+        <?php
+        $output = ob_get_clean();
+
+        echo $output;
+    }
+    add_action( 'b3_login_email_fields', 'b3_login_email_fields' );
+
     /**
      * Do stuff afer manual activation by admin
      *
@@ -71,9 +94,11 @@
      * @param $recaptcha_public
      * @param string $form_type
      */
-    function b3_add_captcha_registration( $recaptcha_public, $form_type = 'register' ) {
+    function b3_add_recaptcha_fields( $form_type = 'register' ) {
 
+        $recaptcha_public  = get_option( 'b3_recaptcha_public', false );
         $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
+
         do_action( 'b3_before_recaptcha_' . $form_type );
         if ( '2' == $recaptcha_version ) {
             ?>
@@ -85,51 +110,133 @@
         }
         do_action( 'b3_after_recaptcha_' . $form_type );
     }
+    add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
 
     /**
-     * Add field for subdomain when WPMU is active
-     *
-     * @TODO: hook to action
+     * Add field for subdomain when WPMU is active (not used yet)
      */
     function b3_add_subdomain_field() {
+        if ( is_multisite() ) {
+            $show_subdomain = get_option( 'b3_show_subdomain_field', false );
+            if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ) , [ 'request_access_subdomain', 'ms_register_site_user' ] ) ) {
+                ob_start();
+                ?>
+                <?php // @TODO: add more fields for Multisite ?>
+                <div class="b3_form-element b3_form-element--register">
+                    <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
+                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
+                </div>
+                <?php
+                $output = ob_get_clean();
 
-        if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ) , [ 'request_access_subdomain', 'ms_register_site_user' ] ) ) {
-            ob_start();
-            ?>
-            <?php // @TODO: add more fields for Multisite ?>
-            <div class="b3_form-element b3_form-element--register">
-                <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
-            </div>
-            <?php
-            $output = ob_get_clean();
-
-            echo $output;
+                echo $output;
+            }
         }
-
     }
+    add_action( 'b3_add_subdomain_field', 'b3_add_subdomain_field' );
 
     /**
      * Output for first/last name fields
-     *
-     * @TODO: hook this (properly) to an action
      */
     function b3_first_last_name_fields() {
-
-        ob_start();
-        ?>
-        <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
-        <div class="b3_form-element b3_form-element--register">
-            <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-            <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'First name' : false; ?>"<?php echo $required; ?>>
-        </div>
-        <div class="b3_form-element b3_form-element--register">
-            <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-            <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
-        </div>
-        <?php
-        $output = ob_get_clean();
-
-        echo $output;
+        $show_first_last_name = get_option( 'b3_activate_first_last', false );
+        if ( $show_first_last_name ) {
+            ob_start();
+            ?>
+            <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
+            <div class="b3_form-element b3_form-element--register">
+                <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'First name' : false; ?>"<?php echo $required; ?>>
+            </div>
+            <div class="b3_form-element b3_form-element--register">
+                <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
+            </div>
+            <?php
+            $output = ob_get_clean();
+            echo $output;
+        }
     }
+    add_action( 'b3_add_first_last_name', 'b3_first_last_name_fields' );
 
+    /**
+     * Output the password fields (not in use yet)
+     */
+    function b3_add_password_fields() {
+        $show_custom_passwords = get_option( 'b3_use_custom_passwords', false );
+        if ( $show_custom_passwords ) {
+            ob_start();
+            ?>
+            <p class="b3_message">
+                <?php esc_html_e( "If you triggered this setting manually, be aware that it's not working yet.", "b3-onboarding" ); ?>
+
+            </p>
+            <div class="b3_form-element b3_form-element--register">
+                <label class="b3_form-label" for="pass1"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
+                <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3_form--input" />
+            </div>
+
+            <div class="b3_form-element b3_form-element--register">
+                <label class="b3_form-label" for="pass2"><?php esc_html_e( 'Confirm Password', 'b3-onboarding' ); ?></label>
+                <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3_form--input" />
+            </div>
+            <?php
+            $results = ob_get_clean();
+
+            echo $results;
+        }
+    }
+    add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
+
+    /**
+     * Function to output any extra request fields
+     *
+     * @TODO: test this
+     */
+    function b3_add_custom_fields_registration() {
+
+        $extra_fields       = '';
+        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
+        if ( is_array( $extra_field_values ) && ! empty( $extra_field_values ) ) {
+            foreach( $extra_field_values as $extra_field ) {
+                echo b3_render_extra_field( $extra_field );
+            }
+        }
+
+        echo $extra_fields;
+
+    }
+    add_action( 'b3_add_custom_fields_registration', 'b3_add_custom_fields_registration' );
+
+    /**
+     * Function to output a privacy checkbox
+     */
+    function b3_add_privacy_checkbox() {
+        $show_privacy = get_option( 'b3_privacy', false );
+        if ( true == $show_privacy ) { ?>
+            <div class="b3_form-element b3_form-element--privacy">
+                <label>
+                    <input name="b3_privacy" type="checkbox" id="b3_privacy" value="accept"> <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
+                </label>
+            </div>
+        <?php }
+    }
+    add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
+
+    /**
+     * Output any hidden fields
+     *
+     * @TODO: check if a filter can be added
+     */
+    function b3_hidden_fields_registration_form() {
+
+        $hidden_fields = false;
+        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );
+        if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
+            foreach( $hidden_field_values as $key => $value ) {
+                $hidden_fields .= '<input type="hidden" name="' . $key . '" value="' . $value . '">' . "\n";
+            }
+            echo $hidden_fields;
+        }
+    }
+    add_action( 'b3_hidden_fields_registration_form', 'b3_hidden_fields_registration_form' );

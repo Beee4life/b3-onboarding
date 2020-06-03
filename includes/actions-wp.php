@@ -86,13 +86,14 @@
     /**
      * Add recaptcha to login form
      *
+     * @TODO: check if neds to be on login_form (probably due to WP form)
+     *
      * @param $user_id
      */
     function b3_add_login_form_fields() {
-        $recaptcha_public = get_option( 'b3_recaptcha_public', false );
         $show_recaptcha   = get_option( 'b3_recaptcha_login', false );
-        if ( $show_recaptcha && $recaptcha_public ) {
-            if ( function_exists( 'b3_add_captcha_registration' ) ) { b3_add_captcha_registration( $recaptcha_public ); }
+        if ( $show_recaptcha ) {
+            do_action( 'b3_add_captcha_registration' );
         }
     }
     add_action( 'login_form', 'b3_add_login_form_fields' );
