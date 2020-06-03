@@ -242,10 +242,11 @@
     function b3_replace_template_styling( $message = false ) {
 
         if ( false != $message ) {
+            $hide_logo        = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
             $email_footer     = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
             $email_link_color = apply_filters( 'b3_email_link_color', '' );
             $email_styling    = apply_filters( 'b3_email_styling', b3_get_email_styling( $email_link_color ) );
-            $email_template   = apply_filters( 'b3_email_template', b3_get_email_template() );
+            $email_template   = apply_filters( 'b3_email_template', b3_get_email_template( $hide_logo ) );
 
             if ( false != $email_styling && false != $email_template ) {
                 $replace_vars = [

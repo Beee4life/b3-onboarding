@@ -262,13 +262,13 @@
      *
      * @return bool|false|mixed|string|void
      */
-    function b3_get_email_template() {
+    function b3_get_email_template( $hide_logo = false ) {
         $custom_template = get_option( 'b3_email_template', false );
 
         if ( false != $custom_template ) {
             $email_template = $custom_template;
         } else {
-            $email_template = b3_default_email_template();
+            $email_template = b3_default_email_template( $hide_logo );
         }
 
         return $email_template;
