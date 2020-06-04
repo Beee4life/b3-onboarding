@@ -207,3 +207,21 @@
         return 'none';
     }
     // add_filter( 'b3_custom_register_inform', 'b3_custom_register_inform' );
+
+    /**
+     * Redirect after user register
+     *
+     * @param $url
+     *
+     * @return string
+     */
+    function b3_redirect_after_register( $url ) {
+
+        $login_url = b3_get_login_id( true );
+        if ( false != $login_url ) {
+            $url = add_query_arg( 'registered', 'success', $login_url );
+        }
+
+        return $url;
+    }
+    // add_filter( 'b3_redirect_after_register', 'b3_redirect_after_register' );
