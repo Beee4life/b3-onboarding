@@ -1127,6 +1127,7 @@
                             $user_object = new WP_User( $user->ID );
                             $user_object->set_role( get_option( 'default_role' ) );
 
+                            // @TODO: check if still needed
                             do_action( 'b3_new_user_activated', $user->ID );
 
                         }
