@@ -1,4 +1,5 @@
 <?php
+    $disable_admin_notification         = get_option( 'b3_disable_admin_notification_new_user', false );
     $request_access_email_addresses     = get_option( 'b3_request_access_notification_addresses', false );
     $request_access_email_subject_admin = get_option( 'b3_request_access_subject_admin', false );
     $request_access_email_message_admin = get_option( 'b3_request_access_message_admin', false );
@@ -39,6 +40,14 @@
         </th>
         <td>
             <textarea id="b3__input--request-access-message-admin" name="b3_request_access_message_admin" placeholder="<?php echo esc_textarea( b3_default_request_access_message_admin() ); ?>" rows="6"><?php echo stripslashes( $request_access_email_message_admin ); ?></textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>&nbsp;</th>
+        <td>
+            <label>
+                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php if ( 1 == $disable_admin_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' ); ?>
+            </label>
         </td>
     </tr>
     <tr>
