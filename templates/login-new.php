@@ -1,9 +1,3 @@
-<?php
-    $redirect = false;
-    if ( $attributes[ 'redirect' ] ) {
-        $redirect = $attributes[ 'redirect' ];
-    }
-?>
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
         <h2>
