@@ -16,10 +16,19 @@
 
         if ( 'toplevel_page_b3-onboarding' == $screen->id ) {
             $screen->add_help_tab( array(
-                'id'      => 'b3-loginpage',
-                'title'   => esc_html__( 'Login page design', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Login page design', 'b3-onboarding' ) . '</h3>
-                    <p>' . esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a proper logo, max 320px wide.', 'b3-onboarding' ) . '</p>
+                'id'      => 'b3-settings',
+                'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
+                'content' => '<h3>' . esc_html__( 'Settings', 'b3-onboarding' ) . '</h3>
+                    <p>' . esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) . '</p>
+                    '
+            ) );
+
+            $screen->add_help_tab( array(
+                'id'      => 'b3-registration',
+                'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
+                'content' => '<h3>' . esc_html__( 'Registration', 'b3-onboarding' ) . '</h3>
+                    <p>' . esc_html__( 'If you want to add a reCaptcha verification, make sure you get the v2 keys. V3 is not supported yet.', 'b3-onboarding' ) . '</p>
+                    <p>' . sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ) . '</p>
                     '
             ) );
 
@@ -29,13 +38,6 @@
                 'content' => '<h3>' . esc_html__( 'Emails', 'b3-onboarding' ) . '</h3>
                     <p>' . esc_html__( 'You can add any HTML you want in the email messages. Be sure to use the preview mode, before using it.', 'b3-onboarding' ) . '</p>
                     <p>' . esc_html__( 'Save yourself a lot of work per email and use the template option. This is then wrapped around each message.', 'b3-onboarding' ) . '</p>
-                    '
-            ) );
-
-            $screen->add_help_tab( array(
-                'id'      => 'b3-email-vars',
-                'title'   => esc_html__( 'Email variables', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Email variables', 'b3-onboarding' ) . '</h3>
                     <p>' . esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) . '</p>
                     <ul>
                         <li>%activation_url% (' . __( 'only in user activation email', 'b3-onboarding' ) . ')</li>
