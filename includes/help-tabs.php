@@ -27,6 +27,7 @@
                 'id'      => 'b3-registration',
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                 'content' => '<h3>' . esc_html__( 'Registration', 'b3-onboarding' ) . '</h3>
+                    <p>' . esc_html__( "Your general setting for if 'users can register' can register is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) . '</p>
                     <p>' . esc_html__( 'If you want to add a reCaptcha verification, make sure you get the v2 keys. V3 is not supported yet.', 'b3-onboarding' ) . '</p>
                     <p>' . sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ) . '</p>
                     '
