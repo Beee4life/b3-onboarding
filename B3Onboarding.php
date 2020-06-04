@@ -1387,7 +1387,10 @@
                             $inform = 'user';
                         }
                     }
+                    // @TODO: also apply to wp_register_form
+                    $inform = apply_filters( 'b3_custom_register_inform', $inform );
                     wp_new_user_notification( $user_id, null, $inform );
+                    do_action('b3_after_email_sent', $user_id );
                 }
 
                 return $user_id;
