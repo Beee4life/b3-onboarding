@@ -117,8 +117,6 @@
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
-                do_action( 'b3_after_send_first_mail' );
-
             } else {
                 error_log( 'OOPS' );
             }
