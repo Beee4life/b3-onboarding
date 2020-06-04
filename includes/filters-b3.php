@@ -197,18 +197,13 @@
 
 
     /**
-     * Verify if privacy checkbox is clicked (when activated)
+     * Set who to inform after (custom) user register
      *
-     * @param $errors
+     * @param $inform
+     *
+     * @return string
      */
-    function b3_verify_privacy() {
-        $error = false;
-        if ( 1 == get_option( 'b3_privacy', false ) ) {
-            if ( ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
-                $error = true;
-            }
-        }
-
-        return $error;
-
+    function b3_custom_register_inform( $inform ) {
+        return 'none';
     }
+    // add_filter( 'b3_custom_register_inform', 'b3_custom_register_inform' );

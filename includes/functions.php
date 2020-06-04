@@ -626,6 +626,8 @@
     /**
      * Return user email logo and default logo if false
      *
+     * @TODO: check this
+     *
      * @return bool|false|mixed|string|void
      */
     function b3_get_login_logo() {
@@ -856,4 +858,21 @@
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
         echo '<input class="button button-primary button--submit" type="submit" value="' . $submit_value . '" />';
+    }
+
+    /**
+     * Verify if privacy checkbox is clicked (when activated)
+     *
+     * @param $errors
+     */
+    function b3_verify_privacy() {
+        $error = false;
+        if ( 1 == get_option( 'b3_privacy', false ) ) {
+            if ( ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
+                $error = true;
+            }
+        }
+
+        return $error;
+
     }
