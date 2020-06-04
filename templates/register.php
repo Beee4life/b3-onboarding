@@ -12,17 +12,18 @@
         </h3>
     <?php } ?>
 
-    <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
-        <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
-            <p class="b3_message">
-                <?php echo $error; ?>
-            </p>
-        <?php } ?>
-    <?php } ?>
 
     <form id="b3-register-form" class="b3_form b3_form--register" action="<?php echo wp_registration_url(); ?>" method="post">
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
         <?php do_action( 'b3_hidden_fields_registration_form' ); ?>
+
+        <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
+            <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
+                <p class="b3_message">
+                    <?php echo $error; ?>
+                </p>
+            <?php } ?>
+        <?php } ?>
 
         <?php if ( 'closed' != $registration_type ) { ?>
             <?php if ( 'request_access' == $registration_type ) { ?>

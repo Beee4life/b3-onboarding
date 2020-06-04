@@ -6,15 +6,6 @@
     // @TODO: add form type
 ?>
 <div id="b3-account" class="b3_page b3_page--account">
-    <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
-        <p class="b3_message">
-            <?php
-                echo esc_html__( 'Profile saved', 'b3-onboarding' );
-                echo '<span class="error__close">' . esc_html__( 'close', 'sexdates' ) . '</span>';
-            ?>
-        </p>
-    <?php } ?>
-
     <form id="" name="" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
         <?php wp_nonce_field( 'update-user_' . $current_user->ID ); ?>
         <input type="hidden" name="admin_bar_front" id="admin_bar_front" value="<?php echo get_user_meta( $current_user->ID, 'show_admin_bar_front', true ); ?>" />
@@ -22,6 +13,15 @@
         <input type="hidden" name="action" value="profile" />
         <input type="hidden" name="checkuser_id" value="<?php echo $current_user->ID; ?>" />
         <input type="hidden" name="nickname" id="nickname" value="<?php echo ( isset( $current_user->nickname ) ) ? esc_attr( $current_user->nickname ) : esc_attr( $current_user->user_login ); ?>" class="regular-text" />
+
+        <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
+            <p class="b3_message">
+                <?php
+                    echo esc_html__( 'Profile saved', 'b3-onboarding' );
+                    echo '<span class="error__close">' . esc_html__( 'close', 'sexdates' ) . '</span>';
+                ?>
+            </p>
+        <?php } ?>
 
         <h3>
             <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
