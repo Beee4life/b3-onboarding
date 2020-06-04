@@ -1073,7 +1073,7 @@
                 } else {
                     $redirect_url = wp_login_url();
                 }
-                $redirect_url = add_query_arg( 'logged_out', 'true', $redirect_url );
+                $redirect_url = add_query_arg( 'logout', 'true', $redirect_url );
                 wp_safe_redirect( $redirect_url );
                 exit;
             }
@@ -1235,17 +1235,16 @@
                     case 'empty_password':
                         return esc_html__( 'Please enter a password.', 'b3-onboarding' );
 
+                    // @TODO: not used
                     case 'invalid_username':
                         return esc_html__( "We don't have any users with that email address. Maybe you used a different one when signing up?", 'b3-onboarding' );
 
                     case 'incorrect_password':
-                        $err = __( "The password you entered wasn't quite right. <a href='%s'>Did you forget your password</a>?", 'b3-onboarding' );
+                        $error_message = esc_html__( "The username or password you entered wasn't quite right.", 'b3-onboarding' );
+                        $error_message .= '<br />';
+                        $error_message .= __( 'Did you <a href="%s">forget</a> your password ?', 'b3-onboarding' );
 
-                        return sprintf( $err, wp_lostpassword_url() );
-
-                    // Registration Logged out
-                    case 'logged_out':
-                        return esc_html__( 'You are logged out.', 'b3-onboarding' );
+                        return sprintf( $error_message, wp_lostpassword_url() );
 
                     // Registration errors
                     case 'username_exists':
@@ -1266,9 +1265,11 @@
                     case 'no_privacy':
                         return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
 
+                    // @TODO: check , because technically not an error
                     case 'access_requested':
                         return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
 
+                    // @TODO: check , because technically not an error
                     case 'confirm_email':
                         return esc_html__( 'You have sucessfully registered but need to confirm your email first. Please check your email for an activation link.', 'b3-onboarding' );
 
@@ -1284,16 +1285,20 @@
                     case 'wait_confirmation':
                         return esc_html__( 'You have to confirm your email first.', 'b3-onboarding' );
 
+                    // @TODO: check , because technically not an error
                     case 'password_updated':
                         return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );
 
+                    // @TODO: check , because technically not an error
                     case 'lost_password_sent':
                         return esc_html__( 'Check your email for a link to reset your password.', 'b3-onboarding' );
 
                     // Registration
+                    // @TODO: check , because technically not an error
                     case 'registration_success':
                         return esc_html__( 'You have successfully registered.', 'b3-onboarding' );
 
+                    // @TODO: check , because technically not an error
                     case 'registration_success_enter_password':
                         return sprintf(
                             esc_html__( 'You have successfully registered to %s. Enter your email address to set your password.', 'b3-onboarding' ),
@@ -1301,6 +1306,7 @@
                         );
 
                     // Activation
+                    // @TODO: check , because technically not an error
                     case 'activate_success':
                         return esc_html__( 'You have successfully activated your account. You can set your password below.', 'b3-onboarding' );
 
@@ -1322,20 +1328,24 @@
                     case 'domain_exists':
                         return esc_html__( 'Sorry, this subdomain has already been taken.', 'b3-onboarding' );
 
+                    // @TODO: check , because technically not an error
                     case 'user_registered':
                         return esc_html__( 'You have successfully registered. Please check your email for an activation link.', 'b3-onboarding' );
 
                     // Account remove
+                    // @TODO: check , because technically not an error
                     case 'account_remove':
                         return esc_html__( 'Your account has been deleted.', 'b3-onboarding' );
 
                     // Admin
+                    // @TODO: check , because technically not an error
                     case 'settings_saved':
                     case 'pages_saved':
                     case 'emails_saved':
                         return esc_html__( 'Settings saved', 'b3-onboarding' );
 
                     // Website
+                    // @TODO: check , because technically not an error
                     case 'dummy':
                         return esc_html__( 'You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again.', 'b3-onboarding' );
 
@@ -1406,9 +1416,10 @@
                 if ( ! is_wp_error( $user_id ) ) {
                     $inform = ( 1 == get_option( 'b3_disable_admin_notification_new_user', false ) ) ? 'user' : 'both';
                     if ( 'email_activation' == $registration_type ) {
+                        // never notify an admin if a user hasn't confirmed email yet
                         $inform = 'user';
                     }
-                    $inform = apply_filters( 'b3_custom_register_inform', $inform );
+                    $inform = apply_filters( 'b3_custom_register_inform', $inform ); // @TODO: do i still need this ?
                     wp_new_user_notification( $user_id, null, $inform );
                     do_action('b3_after_email_sent', $user_id );
                 }
