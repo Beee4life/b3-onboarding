@@ -119,7 +119,7 @@
                     $attributes[ 'messages' ][] = $this->b3_get_error_message( 'password_updated' );
                 } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' == $_REQUEST[ 'checkemail' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_error_message( 'lost_password_sent' );
-                } elseif ( isset( $_REQUEST[ 'logout' ] ) && true == $_REQUEST[ 'logout' ] ) {
+                } elseif ( isset( $_REQUEST[ 'logout' ] ) && 'true' == $_REQUEST[ 'logout' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_error_message( 'logged_out' );
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_error_message( 'account_remove' );
