@@ -20,26 +20,6 @@
         exit; // Exit if accessed directly
     }
 
-    if ( false == get_option( 'b3_approval_page_id', false ) && true == get_option( 'b3_front_end_approval', false ) ) {
-        add_action( 'admin_notices', function () {
-            echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
-                esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),
-                esc_html__( 'here', 'b3-onboarding' )
-            );
-        } );
-    }
-
-    if ( isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
-        add_action( 'network_admin_notices', function () {
-            echo sprintf( '<div class="error"><p>'. __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>',
-                esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ),
-                esc_html__( 'here', 'b3-onboarding' )
-            );
-        } );
-
-        return;
-    }
-
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
         class B3Onboarding {
@@ -109,29 +89,32 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
+                add_action( 'admin_notices',                        array( $this, 'b3_no_approval_page' ) );
+
 
                 // Multisite specific
                 add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
+                add_action( 'network_admin_notices',                array( $this, 'b3_not_multisite_ready' ) );
+
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
-
                 add_filter( 'authenticate',                         array( $this, 'b3_maybe_redirect_at_authenticate' ), 101, 3 );
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
 
 
-                add_filter( 'login_headerurl',              array( $this, 'b3_login_logo_url' ) );
-                add_filter( 'login_headertext',             array( $this, 'b3_login_logo_url_title' ) );
-
-                // for wp_login_form
+                // WP Login pages
+                add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
+                add_filter( 'login_headertext',                     array( $this, 'b3_login_logo_url_title' ) );
                 // add_filter( 'login_form_defaults',                  array( $this, 'b3_loginform_defaults' ), 1 );
                 // add_filter( 'login_form_top',                       array( $this, 'b3_loginform_top' ), 10, 2 );
                 // add_filter( 'login_form_middle',                    array( $this, 'b3_loginform_middle' ), 10, 2 );
                 // add_filter( 'login_form_bottom',                    array( $this, 'b3_loginform_footer' ), 10, 2 );
 
+                // @TODO: move to own 'class/file'
                 add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
@@ -158,7 +141,7 @@
             public function b3_test() {
 
                 $style = b3_default_email_styling( $link_color = 'FFA' );
-                echo '<pre>'; var_dump($style); echo '</pre>'; exit;
+                // echo '<pre>'; var_dump($style); echo '</pre>'; exit;
 
             }
 
@@ -1325,14 +1308,14 @@
 
 
             /**
-             * Validates and then completes the user signup process if all went well.
+             * Validates and then completes the (normal) user signup process if all went well.
              *
              * @param string $user_login
              * @param string $user_email
              *
              * @return int|WP_Error
              */
-            protected function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
+            private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
                 $errors = new WP_Error();
 
                 if ( username_exists( $user_login ) ) {
@@ -1768,7 +1751,7 @@
              *
              * @return string               The contents of the template.
              */
-            private function get_template_html( $template_name, $attributes = null ) {
+            public function get_template_html( $template_name, $attributes = null ) {
                 if ( ! $attributes ) {
                     $attributes = array();
                 }
@@ -1839,6 +1822,30 @@
                 }
 
                 return $title;
+            }
+
+            /**
+             * Add network admin message (MS) if plugin is activated
+             */
+            public function b3_not_multisite_ready() {
+                if ( isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
+                    echo sprintf( '<div class="error"><p>'. __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>',
+                        esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ),
+                        esc_html__( 'here', 'b3-onboarding' )
+                    );
+                }
+            }
+
+            /**
+             * Add admin message if front-end approval is set, but no page is selected
+             */
+            public function b3_no_approval_page() {
+                if ( false == get_option( 'b3_approval_page_id', false ) && true == get_option( 'b3_front_end_approval', false ) ) {
+                    echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),
+                        esc_html__( 'here', 'b3-onboarding' )
+                    );
+                }
             }
         }
 
