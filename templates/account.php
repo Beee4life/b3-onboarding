@@ -18,7 +18,7 @@
             <p class="b3_message">
                 <?php
                     echo esc_html__( 'Profile saved', 'b3-onboarding' );
-                    echo '<span class="error__close">' . esc_html__( 'close', 'sexdates' ) . '</span>';
+                    echo '<span class="error__close">' . esc_html__( 'close', 'b3-onboarding' ) . '</span>';
                 ?>
             </p>
         <?php } ?>
