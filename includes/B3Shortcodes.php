@@ -12,7 +12,7 @@
          */
         class B3Shortcodes extends B3Onboarding {
 
-            function __construct() {
+            public function __construct() {
                 parent::__construct();
 
                 add_shortcode( 'register-form',     array( $this, 'b3_render_register_form' ) );
