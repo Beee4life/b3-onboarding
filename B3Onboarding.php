@@ -24,6 +24,9 @@
 
         class B3Onboarding {
 
+            protected $b3_get_template_html;
+            protected $b3_get_error_message;
+
             /**
              * Initializes the plugin.
              *
@@ -115,12 +118,12 @@
                 // add_filter( 'login_form_bottom',                    array( $this, 'b3_loginform_footer' ), 10, 2 );
 
                 // @TODO: move to own 'class/file'
-                add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
-                add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
-                add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
-                add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
-                add_shortcode( 'account-page',                 array( $this, 'b3_render_account_page' ) );
-                add_shortcode( 'user-management',              array( $this, 'b3_render_user_approval_page' ) );
+                // add_shortcode( 'register-form',                array( $this, 'b3_render_register_form' ) );
+                // add_shortcode( 'login-form',                   array( $this, 'b3_render_login_form' ) );
+                // add_shortcode( 'forgotpass-form',              array( $this, 'b3_render_forgot_password_form' ) );
+                // add_shortcode( 'resetpass-form',               array( $this, 'b3_render_reset_password_form' ) );
+                // add_shortcode( 'account-page',                 array( $this, 'b3_render_account_page' ) );
+                // add_shortcode( 'user-management',              array( $this, 'b3_render_user_approval_page' ) );
 
                 include( 'includes/actions-wp.php' );
                 include( 'includes/actions-b3.php' );
@@ -133,6 +136,8 @@
                 include( 'includes/get-stuff.php' );
                 include( 'includes/help-tabs.php' );
                 include( 'includes/tabs.php' );
+
+                include( 'includes/B3Shortcodes.php' );
 
                 // add_action( 'init', array( $this, 'b3_test' ) );
             }
@@ -1222,7 +1227,7 @@
                         return esc_html__( 'Please enter a user name', 'b3-onboarding' );
 
                     case 'empty_password':
-                        return esc_html__( 'You need to enter a password to login.', 'b3-onboarding' );
+                        return esc_html__( 'Please enter a password.', 'b3-onboarding' );
 
                     case 'invalid_username':
                         return esc_html__( "We don't have any users with that email address. Maybe you used a different one when signing up?", 'b3-onboarding' );
@@ -1476,7 +1481,7 @@
                         }
                     }
 
-                    return $this->get_template_html( $attributes[ 'template' ], $attributes );
+                    return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
                 }
             }
 
@@ -1534,7 +1539,7 @@
                 $attributes[ 'account_remove' ] = isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ];
 
                 // Render the login form using an external template
-                return $this->get_template_html( $attributes[ 'template' ], $attributes );
+                return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
 
 
@@ -1572,7 +1577,7 @@
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     $attributes[ 'registered' ] = isset( $_REQUEST[ 'registered' ] ) && $_REQUEST[ 'registered' ] == 'success';
                 }
-                return $this->get_template_html( $attributes[ 'template' ], $attributes );
+                return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
 
 
@@ -1610,7 +1615,7 @@
                         }
                         $attributes[ 'errors' ] = $errors;
 
-                        return $this->get_template_html( $attributes[ 'template' ], $attributes );
+                        return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
                     } else {
                         return esc_html__( 'Invalid password reset link.', 'b3-onboarding' );
                     }
@@ -1654,7 +1659,7 @@
                         $attributes[ 'updated' ] = $this->b3_get_error_message( $_REQUEST[ 'updated' ] );
                     }
 
-                    return $this->get_template_html( $attributes[ 'template' ], $attributes );
+                    return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
                 }
 
@@ -1751,7 +1756,7 @@
              *
              * @return string               The contents of the template.
              */
-            public function get_template_html( $template_name, $attributes = null ) {
+            public function b3_get_template_html( $template_name, $attributes = null ) {
                 if ( ! $attributes ) {
                     $attributes = array();
                 }
