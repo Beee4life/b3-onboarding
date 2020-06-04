@@ -4,13 +4,19 @@
 }
 
 .b3_message {
-    border:     1px dashed black;
-    box-sizing: border-box;
-    padding:    5px 10px;
-    position:   relative;
-    word-wrap:  initial;
+    border:        1px dashed black;
+    box-sizing:    border-box;
+    margin-bottom: 2em;
+    padding:       5px 10px;
+    position:      relative;
+    word-wrap:     initial;
 }
 
+.b3_message p {
+    margin: 0;
+}
+
+/* used on profile only */
 .b3_message .error__close {
     position:      absolute;
     font-size:     80%;

@@ -10,13 +10,7 @@
         <input name="rp_login" type="hidden" value="<?php echo esc_attr( $attributes[ 'login' ] ); ?>" autocomplete="off"/>
         <input name="rp_key" type="hidden" value="<?php echo esc_attr( $attributes[ 'key' ] ); ?>"/>
 
-        <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
-            <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
-                <p class="b3_message">
-                    <?php echo $error; ?>
-                </p>
-            <?php } ?>
-        <?php } ?>
+        <?php do_action( 'b3_show_form_messages', $attributes ); ?>
 
         <div class="b3_form-element">
             <label class="b3_form-label" for="pass1"><?php esc_html_e( 'New password', 'b3-onboarding' ) ?></label>

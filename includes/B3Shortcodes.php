@@ -77,8 +77,9 @@
 
                 // Pass the redirect parameter to the WordPress login functionality: but
                 // only if a valid redirect URL has been passed as request parameter, use it.
-                $attributes[ 'redirect' ] = '';
+                $attributes[ 'redirect' ] = false;
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
+                    error_log('$_REQUEST[ \'redirect_to\' ] is used =' . $_REQUEST[ 'redirect_to' ]);
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
 
@@ -88,23 +89,43 @@
                     $error_codes = explode( ',', $_REQUEST[ 'login' ] );
 
                     foreach ( $error_codes as $code ) {
-                        $errors [] = $this->b3_get_error_message( $code );
+                        $errors[] = $this->b3_get_error_message( $code );
                     }
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) ) {
-                    $attributes[ 'user_activate' ] = isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ];
+                } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
+                    if ( is_multisite() ) {
+                        // @TODO
+                        $attributes[ 'messages' ][] = sprintf(
+                            __( 'You have successfully registered to <strong>%s</strong>. We have emailed you an activation link.', 'b3-onboarding' ),
+                            get_bloginfo( 'name' )
+                        );
+                    } else {
+                        if ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
+                            // access_requested
+                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                        } elseif ( 'confirm_email' == $_REQUEST[ 'registered' ] ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                        } elseif ( 'dummy' == $_REQUEST[ 'registered' ] ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                        } elseif ( 'success' == $_REQUEST[ 'registered' ] ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_error_message( 'registration_success' );
+                        } else {
+                            error_log('FIX ELSE - line 112 B3Shortcodes.php');
+                            $attributes[ 'messages' ][] = $this->b3_get_error_message( '' );
+                        }
+                    }
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'activate_success' );
+                } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' == $_REQUEST[ 'password' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'password_updated' );
+                } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' == $_REQUEST[ 'checkemail' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'lost_password_sent' );
+                } elseif ( isset( $_REQUEST[ 'logout' ] ) && true == $_REQUEST[ 'logout' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'logged_out' );
+                } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'account_remove' );
                 }
-                $attributes[ 'errors' ] = $errors;
 
-                // Check if user just updated password
-                $attributes[ 'password_updated' ] = isset( $_REQUEST[ 'password' ] ) && 'changed' == $_REQUEST[ 'password' ];
-                // Check if the user just requested a new password
-                $attributes[ 'lost_password_sent' ] = isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' == $_REQUEST[ 'checkemail' ];
-                // Check if user just logged out
-                $attributes[ 'logged_out' ] = isset( $_REQUEST[ 'logged_out' ] ) && true == $_REQUEST[ 'logged_out' ];
-                // Check if the user just registered
-                $attributes[ 'registered' ] = isset( $_REQUEST[ 'registered' ] );
-                // Check if the user removed his/her account
-                $attributes[ 'account_remove' ] = isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ];
+                $attributes[ 'errors' ] = $errors;
 
                 // Render the login form using an external template
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
@@ -134,16 +155,19 @@
 
                 // Retrieve possible errors from request parameters
                 $attributes[ 'errors' ] = array();
-                if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                    $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
-
+                if ( isset( $_REQUEST[ 'error' ] ) ) {
+                    $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                     foreach ( $error_codes as $error_code ) {
                         $attributes[ 'errors' ][] = $this->b3_get_error_message( $error_code );
                     }
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) ) {
-                    $attributes[ 'user_activate' ] = isset( $_REQUEST[ 'activate' ] ) && $_REQUEST[ 'activate' ] == 'success';
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ] ) {
+                    // you can now log in... should this be here ?
+                    error_log( 'isset( $_REQUEST[ \'activate\' ] ) && \'success\' == $_REQUEST[ \'activate\' ] is used' );
+                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'activate_success' );
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                    $attributes[ 'registered' ] = isset( $_REQUEST[ 'registered' ] ) && $_REQUEST[ 'registered' ] == 'success';
+                    if ( 'success' == $_REQUEST[ 'registered' ] ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_error_message( 'registration_success_enter_password' );
+                    }
                 }
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
@@ -173,10 +197,9 @@
                         $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
 
                         // Error messages
-                        $errors = array();
-                        if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                            $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
-
+                        $errors = [];
+                        if ( isset( $_REQUEST[ 'error' ] ) ) {
+                            $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                             foreach ( $error_codes as $code ) {
                                 $errors[] = $this->b3_get_error_message( $code );
                             }
@@ -184,8 +207,16 @@
                         $attributes[ 'errors' ] = $errors;
 
                         return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+
                     } else {
-                        return esc_html__( 'Invalid password reset link.', 'b3-onboarding' );
+
+                        $message = esc_html__( 'This is not a valid password reset link.', 'b3-onboarding' );
+                        $message .= '<br />';
+                        $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
+                        $message .= '<br />';
+                        $message .= sprintf( __( "If you haven't received any email, please <a href=\"%s\">click here</a>.", 'b3-onboarding' ), b3_get_forgotpass_id( true ) );
+
+                        return $message;
                     }
                 }
             }
@@ -214,8 +245,8 @@
 
                     // error messages
                     $errors = array();
-                    if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                        $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
+                    if ( isset( $_REQUEST[ 'error' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'error' ] );
 
                         foreach ( $error_codes as $code ) {
                             $errors[] = $this->b3_get_error_message( $code );

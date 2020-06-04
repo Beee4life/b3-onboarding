@@ -54,7 +54,10 @@
 
 
     /**
-     * Do stuff after user activated
+     * Do stuff after user clicked activate link
+     *
+     * @TODO: check for a Wordpress hook to hook to
+     * @TODO: look into filter 'registration_redirect'
      *
      * @param $user_id
      */
@@ -79,8 +82,6 @@
                 'Content-Type: text/html; charset=UTF-8',
             );
             wp_mail( $to, $subject, $message, $headers );
-            // if ( $styling && $template ) {
-            // }
         }
     }
     add_action( 'b3_new_user_activated', 'b3_after_user_activated' );
@@ -88,8 +89,6 @@
 
     /**
      * Add reCAPTCHA check
-     *
-     * @TODO: hook to action
      *
      * @param $recaptcha_public
      * @param string $form_type
@@ -239,3 +238,60 @@
         }
     }
     add_action( 'b3_hidden_fields_registration_form', 'b3_hidden_fields_registration_form' );
+
+
+    /**
+     * Echo error/info message above a (custom) form
+     *
+     * @param bool $attributes
+     *
+     * @return bool
+     */
+    function b3_show_form_messages( $attributes = false ) {
+
+        if ( false != $attributes ) {
+            $messages          = [];
+            $show_errors       = false;
+            $registration_type = get_option( 'b3_registration_type', false );
+
+            if ( isset( $attributes[ 'errors' ] ) && 0 < count( $attributes[ 'errors' ] ) ) {
+                $show_errors = true;
+                foreach ( $attributes[ 'errors' ] as $error ) {
+                    $messages[] = $error;
+                }
+            } elseif ( isset( $attributes[ 'messages' ] ) && 0 < count( $attributes[ 'messages' ] ) ) {
+                $show_errors = true;
+                foreach ( $attributes[ 'messages' ] as $message ) {
+                    $messages[] = $message;
+                }
+            } else {
+                if ( isset( $attributes[ 'template' ] ) && 'lostpassword' == $attributes[ 'template' ] ) {
+                    $show_errors = true;
+                    $messages[] = esc_html__( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+                } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
+                    if ( 'request_access' == $registration_type ) {
+                        $show_errors = true;
+                        $messages[] = apply_filters( 'b3_filter_before_request_access', esc_html__( 'You have to request access for this website.', 'b3-onboarding' ) );
+                    }
+                } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
+                    $show_errors = true;
+                    $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
+                }
+            }
+
+            if ( true == $show_errors && ! empty( $messages ) ) {
+                echo '<div class="b3_message">';
+                foreach ( $messages as $message ) {
+                    echo '<p>';
+                    echo $message;
+                    echo '</p>';
+                }
+                echo '</div>';
+            }
+        }
+
+        return false;
+    }
+    add_action( 'b3_show_form_messages', 'b3_show_form_messages' );
+
+

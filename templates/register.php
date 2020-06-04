@@ -17,23 +17,9 @@
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
         <?php do_action( 'b3_hidden_fields_registration_form' ); ?>
 
-        <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
-            <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
-                <p class="b3_message">
-                    <?php echo $error; ?>
-                </p>
-            <?php } ?>
-        <?php } ?>
+        <?php do_action( 'b3_show_form_messages', $attributes ); ?>
 
         <?php if ( 'closed' != $registration_type ) { ?>
-            <?php if ( 'request_access' == $registration_type ) { ?>
-                <?php $message = apply_filters( 'b3_filter_before_request_access', esc_html__( 'You have to request access for this website.', 'b3-onboarding' ) ); ?>
-                <?php if ( false != $message ) { ?>
-                    <p class="b3_message">
-                        <?php echo $message; ?>
-                    </p>
-                <?php } ?>
-            <?php } ?>
 
             <?php do_action( 'b3_login_email_fields' ); ?>
 
