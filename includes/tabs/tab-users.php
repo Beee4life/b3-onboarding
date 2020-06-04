@@ -7,6 +7,7 @@
     function b3_render_users_tab() {
 
         $front_end_approval = get_option( 'b3_front_end_approval', false );
+        $hide_admin_bar     = get_option( 'b3_hide_admin_bar', false );
         $roles              = get_editable_roles();
         $user_may_delete    = get_option( 'b3_user_may_delete', false );
         asort( $roles );
@@ -68,6 +69,15 @@
                             }
                         }
                     ?>
+                </div>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php if ( $hide_admin_bar ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the admin bar for user who don\'t have admin access.', 'b3-onboarding' ); ?>
                 </div>
             <?php b3_get_close(); ?>
 

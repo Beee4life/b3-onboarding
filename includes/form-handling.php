@@ -386,6 +386,12 @@
                         delete_option( 'b3_restrict_admin' );
                     }
 
+                    if ( isset( $_POST[ 'b3_hide_admin_bar' ] ) ) {
+                        update_option( 'b3_hide_admin_bar', 1, true );
+                    } else {
+                        delete_option( 'b3_hide_admin_bar' );
+                    }
+
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'User settings saved', 'b3-onboarding' ) );
 
                     return;

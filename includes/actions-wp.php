@@ -149,3 +149,20 @@
         }
     }
     add_action( 'admin_bar_menu', 'b3_add_toolbar', 9999 );
+
+    /**
+     * Remove admin bar for users who are not allowed to access admin
+     */
+    function remove_admin_bar() {
+        $hide_admin_bar = get_option( 'b3_hide_admin_bar', false );
+        if ( false != $hide_admin_bar ) {
+            $restricted_roles = get_option( 'b3_restrict_admin' );
+            $user             = wp_get_current_user();
+            $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
+
+            if ( true == $result ) {
+                show_admin_bar( false );
+            }
+        }
+    }
+    add_action( 'after_setup_theme', 'remove_admin_bar' );
