@@ -47,9 +47,8 @@
 
             <?php do_action( 'b3_add_custom_fields_registration' ); ?>
 
-            <?php do_action( 'b3_add_recaptcha_fields', $attributes[ 'template' ] ); ?>
+            <?php do_action( 'b3_add_recaptcha_fields' ); ?>
 
-            <?php // this function is not in use yet ?>
             <?php do_action( 'b3_add_privacy_checkbox' ); ?>
 
             <?php do_action( 'b3_do_before_submit_registration_form' ); ?>

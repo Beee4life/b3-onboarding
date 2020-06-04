@@ -15,14 +15,6 @@
         $first_last_required = get_option( 'b3_first_last_required', false );
         $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : '';
         $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : '';
-        $recaptcha           = get_option( 'b3_recaptcha', false );
-        $recaptcha_public    = get_option( 'b3_recaptcha_public', false );
-        $privacy_checkbox    = get_option( 'b3_privacy', false );
-        $privacy_page        = get_option( 'b3_privacy_page', false );
-        $privacy_page_wp     = get_option( 'wp_page_for_privacy_policy' );
-        if ( false == $privacy_page && false != $privacy_page_wp ) {
-            $privacy_page = get_the_permalink( $privacy_page_wp );
-        }
 
         if ( true == $activate_first_last ) {
         ?>
@@ -39,34 +31,10 @@
         </p>
         <?php } ?>
 
-        <?php // @TODO: add hook ?>
-        <?php if ( true == $recaptcha ) { ?>
-            <?php do_action( 'b3_before_recaptcha_register' ); ?>
-            <div class="recaptcha-container">
-                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-            </div>
-            <p></p>
-            <?php do_action( 'b3_after_recaptcha_register' ); ?>
-        <?php } ?>
+        <?php do_action( 'b3_add_recaptcha_fields' ); ?>
 
-        <?php if ( true == $privacy_checkbox ) { ?>
-            <?php // @TODO: add hook ?>
-            <p>
-                <label>
-                    <input name="accept_privacy" type="checkbox" id="accept_privacy" value="1">
-                    <?php if ( false != get_option( 'b3_privacy_text', false ) ) { ?>
-                        <?php echo get_option( 'b3_privacy_text' ); ?>
-                    <?php } else { ?>
-                        <?php esc_html_e( 'Accept privacy settings', 'b3-onboarding' ); ?>
-                        <?php if ( true == $privacy_page ) { ?>
-                            <?php echo '&nbsp;-&nbsp;'; ?>
-                            <?php echo sprintf( __( '<a href="%s">Click here</a> for more info.', 'b3-onboarding' ), esc_url( $privacy_page ) ); ?>
-                        <?php } ?>
-                    <?php } ?>
-                </label>
-            </p>
-            <br class="clear">
-        <?php } ?>
+        <?php do_action( 'b3_add_privacy_checkbox' ); ?>
+
     <?php
     }
     add_action( 'register_form', 'b3_add_registration_fields' );
