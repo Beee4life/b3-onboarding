@@ -5,6 +5,30 @@
      */
     if ( 1 == get_option( 'b3_disable_admin_notification_password_change', false ) ) {
         add_filter( 'wp_password_change_notification_email', '__return_false' );
+    } else {
+        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email', 10, 3 );
+    }
+
+    /**
+     * Filter password change notification mail (admin)
+     *
+     * @param $wp_password_change_notification_email
+     * @param $user
+     * @param $blogname
+     *
+     * @return mixed
+     */
+    function b3_password_changed_email( $wp_password_change_notification_email, $user, $blogname ) {
+        $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login ); // default: Password changed for user: {username}
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_replace_email_vars( [] ) );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
+        $subject = 'User changed password'; // default: [blog name] Password changed
+
+        $wp_password_change_notification_email[ 'subject' ] = $subject;
+        $wp_password_change_notification_email[ 'message' ] = $message;
+
+        return $wp_password_change_notification_email;
     }
 
     /**
@@ -19,7 +43,8 @@
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
-            // manually added
+            // user is manually added
+            // @TODO: maybe add filter ?
             $wp_new_user_notification_email_admin = false;
         } else {
             $registration_type = get_option( 'b3_registration_type', false );
@@ -83,7 +108,7 @@
         }
 
         if ( true == $send_custom_mail ) {
-            $wp_new_user_notification_email[ 'to' ] = $user->user_email;
+            // $wp_new_user_notification_email[ 'to' ] = $user->user_email;
             if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject', b3_request_access_subject_user() );
