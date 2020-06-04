@@ -777,6 +777,9 @@
                                             if ( false != $reset_password_url ) {
                                                 $redirect_url = $reset_password_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
+                                                // @TODO: also add to wp form register + MU register
+                                                // @TODO: look into filter 'registration_redirect'
+                                                $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                             } else {
                                                 $login_url    = b3_get_login_id( true );
                                                 $redirect_url = $login_url;
@@ -969,20 +972,22 @@
             public function b3_redirect_to_custom_password_reset() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     // Verify key / login combo
-                    $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
-                    if ( ! $user || is_wp_error( $user ) ) {
-                        if ( $user && $user->get_error_code() === 'expired_key' ) {
-                            // @TODO: maybe change link
-                            wp_safe_redirect( home_url( 'login?login=expiredkey' ) );
-                        } else {
-                            wp_safe_redirect( home_url( 'login?login=invalidkey' ) );
-                        }
-                        exit;
-                    }
-
                     $redirect_url = b3_get_resetpass_id( true );
-                    $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST[ 'login' ] ), $redirect_url );
-                    $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST[ 'key' ] ), $redirect_url );
+
+                    if ( isset( $_REQUEST[ 'key' ] ) && isset( $_REQUEST[ 'login' ] ) ) {
+                        $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
+                        if ( ! $user || is_wp_error( $user ) ) {
+                            if ( $user && $user->get_error_code() === 'expired_key' ) {
+                                // @TODO: maybe change link
+                                wp_safe_redirect( home_url( 'login?login=expiredkey' ) );
+                            } else {
+                                wp_safe_redirect( home_url( 'login?login=invalidkey' ) );
+                            }
+                            exit;
+                        }
+                        $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST[ 'login' ] ), $redirect_url );
+                        $redirect_url = add_query_arg( 'key', esc_attr( $_REQUEST[ 'key' ] ), $redirect_url );
+                    }
 
                     wp_safe_redirect( $redirect_url );
                     exit;
@@ -1102,7 +1107,7 @@
 
                         if ( is_wp_error( $errors ) ) {
                             // errors found
-                            $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), wp_login_url() );
+                            $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), wp_login_url() );
                         } else {
 
                             $lostpassword_url = b3_get_forgotpass_id( true );
@@ -1136,7 +1141,7 @@
                     if ( is_wp_error( $errors ) ) {
                         // errors found
                         $redirect_url = b3_get_forgotpass_id( true );
-                        $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
+                        $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
                     } else {
                         // Email sent
                         $redirect_url = b3_get_login_id( true );
@@ -1237,6 +1242,10 @@
 
                         return sprintf( $err, wp_lostpassword_url() );
 
+                    // Registration Logged out
+                    case 'logged_out':
+                        return esc_html__( 'You are logged out.', 'b3-onboarding' );
+
                     // Registration errors
                     case 'username_exists':
                         return esc_html__( 'This username is already in use.', 'b3-onboarding' );
@@ -1257,14 +1266,15 @@
                         return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
 
                     case 'access_requested':
-                        return esc_html__( 'You have sucessfully requested access. An administrator will check your request.', 'b3-onboarding' );
+                        return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
 
                     case 'confirm_email':
-                        return esc_html__( 'You have sucessfully registered but need to confirm your email first.', 'b3-onboarding' );
+                        return esc_html__( 'You have sucessfully registered but need to confirm your email first. Please check your email for an activation link.', 'b3-onboarding' );
 
                     // Lost password
                     case 'invalid_email':
                     case 'invalidcombo':
+                        // @TODO: change this for security reasons
                         return esc_html__( 'There are no users registered with this email address.', 'b3-onboarding' );
 
                     case 'wait_approval':
@@ -1273,9 +1283,25 @@
                     case 'wait_confirmation':
                         return esc_html__( 'You have to confirm your email first.', 'b3-onboarding' );
 
+                    case 'password_updated':
+                        return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );
+
+                    case 'lost_password_sent':
+                        return esc_html__( 'Check your email for a link to reset your password.', 'b3-onboarding' );
+
+                    // Registration
+                    case 'registration_success':
+                        return esc_html__( 'You have successfully registered.', 'b3-onboarding' );
+
+                    case 'registration_success_enter_password':
+                        return sprintf(
+                            esc_html__( 'You have successfully registered to %s. Enter your email address to set your password.', 'b3-onboarding' ),
+                            get_bloginfo( 'name' )
+                        );
+
                     // Activation
                     case 'activate_success':
-                        return esc_html__( 'You have succesfully confirmed your email.', 'b3-onboarding' );
+                        return esc_html__( 'You have successfully activated your account. You can set your password below.', 'b3-onboarding' );
 
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
@@ -1293,16 +1319,24 @@
 
                     // Multisite
                     case 'domain_exists':
-                        return esc_html__( "Sorry, this subdomain has already been taken.", 'b3-onboarding' );
+                        return esc_html__( 'Sorry, this subdomain has already been taken.', 'b3-onboarding' );
 
                     case 'user_registered':
-                        return esc_html__( "You have successfully registered. Please check your email for an activation link.", 'b3-onboarding' );
+                        return esc_html__( 'You have successfully registered. Please check your email for an activation link.', 'b3-onboarding' );
+
+                    // Account remove
+                    case 'account_remove':
+                        return esc_html__( 'Your account has been deleted.', 'b3-onboarding' );
 
                     // Admin
                     case 'settings_saved':
                     case 'pages_saved':
                     case 'emails_saved':
-                        return esc_html__( "Settings saved", 'b3-onboarding' );
+                        return esc_html__( 'Settings saved', 'b3-onboarding' );
+
+                    // Website
+                    case 'dummy':
+                        return esc_html__( 'You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again.', 'b3-onboarding' );
 
                     default:
                         break;
@@ -1369,13 +1403,10 @@
 
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    $inform = 'both';
-                    if ( in_array( $registration_type, [ 'email_activation' ] ) ) {
-                        if ( 'email_activation' == $registration_type ) {
-                            $inform = 'user';
-                        }
+                    $inform = ( 1 == get_option( 'b3_disable_admin_notification_new_user', false ) ) ? 'user' : 'both';
+                    if ( 'email_activation' == $registration_type ) {
+                        $inform = 'user';
                     }
-                    // @TODO: also apply to wp_register_form
                     $inform = apply_filters( 'b3_custom_register_inform', $inform );
                     wp_new_user_notification( $user_id, null, $inform );
                     do_action('b3_after_email_sent', $user_id );
@@ -1566,8 +1597,8 @@
 
                 // Retrieve possible errors from request parameters
                 $attributes[ 'errors' ] = array();
-                if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                    $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
+                if ( isset( $_REQUEST[ 'error' ] ) ) {
+                    $error_codes = explode( ',', $_REQUEST[ 'error' ] );
 
                     foreach ( $error_codes as $error_code ) {
                         $attributes[ 'errors' ][] = $this->b3_get_error_message( $error_code );
@@ -1606,8 +1637,8 @@
 
                         // Error messages
                         $errors = array();
-                        if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                            $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
+                        if ( isset( $_REQUEST[ 'error' ] ) ) {
+                            $error_codes = explode( ',', $_REQUEST[ 'error' ] );
 
                             foreach ( $error_codes as $code ) {
                                 $errors[] = $this->b3_get_error_message( $code );
@@ -1646,8 +1677,8 @@
 
                     // error messages
                     $errors = array();
-                    if ( isset( $_REQUEST[ 'errors' ] ) ) {
-                        $error_codes = explode( ',', $_REQUEST[ 'errors' ] );
+                    if ( isset( $_REQUEST[ 'error' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'error' ] );
 
                         foreach ( $error_codes as $code ) {
                             $errors[] = $this->b3_get_error_message( $code );
