@@ -1502,7 +1502,7 @@
                     }
                     $inform = apply_filters( 'b3_custom_register_inform', $inform );
                     wp_new_user_notification( $user_id, null, $inform );
-                    do_action('b3_after_email_sent', $user_id );
+                    do_action('b3_after_email_sent', $user_id, true );
                 }
 
                 return $user_id;
