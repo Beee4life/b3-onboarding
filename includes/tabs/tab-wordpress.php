@@ -42,7 +42,7 @@
             <?php esc_html_e( 'Here you can style the (default) WordPress pages.', 'b3-onboarding' ); ?>
         </p>
 
-        <form action="admin.php?page=b3-onboarding&tab=loginpage" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=wordpress" method="post">
             <input name="b3_loginpage_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-loginpage-nonce' ); ?>">
 
             <?php b3_get_settings_field_open(); ?>
