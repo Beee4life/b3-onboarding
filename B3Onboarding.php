@@ -306,12 +306,12 @@
                 $recaptcha       = get_option( 'b3_recaptcha', false );
                 $recaptcha_login = get_option( 'b3_recaptcha_login', false );
                 $style_pages     = get_option( 'b3_style_default_pages', false );
+                $extra_fields    = apply_filters( 'b3_add_filter_extra_fields_values', [] );
 
-                if ( $logo || $privacy || $recaptcha || $recaptcha_login || $style_pages ) {
+                if ( ! empty( $extra_fields ) || $logo || $privacy || $recaptcha || $recaptcha_login || $style_pages ) {
                     echo '<style type="text/css">';
                     echo "\n";
                     if ( $style_pages ) {
-
                         $bg_color        = get_option( 'b3_loginpage_bg_color', false );
                         $font_family     = get_option( 'b3_loginpage_font_family', false );
                         $font_size       = get_option( 'b3_loginpage_font_size', false );
@@ -365,8 +365,9 @@
                             echo 'margin-bottom: 1em;';
                             echo ' }';
                         }
-                    } else {
 
+                    } else {
+                        // no custom styling
                         if ( $recaptcha || $recaptcha_login ) {
                             echo '#login { ';
                             echo 'min-width: 352px;';
@@ -380,18 +381,52 @@
                             echo 'background-image: none, url(' . $logo . '); ';
                             echo 'background-repeat: no-repeat; ';
                             echo 'padding: 0; ';
-                            if ( $logo_width ) {
-                                // echo 'background-size: ' . $logo_width . 'px; ';
-                                // echo 'width: ' . $logo_width . 'px; ';
-                            }
-                            if ( $logo_height ) {
-                                // echo 'height: ' . $logo_height . 'px; ';
-                            }
-                            // echo 'max-width: 320px; ';
-                            // echo 'max-height: 150px;';
                             echo ' }';
+                            echo "\n";
                         }
 
+                        if ( ! empty( $extra_fields ) ) {
+                            echo '.b3_form-element { ';
+                            echo 'margin-bottom: 1em;';
+                            echo ' }';
+                            echo "\n";
+
+                            echo '.b3_form-label { ';
+                            echo 'width: 100%;';
+                            echo ' }';
+                            echo "\n";
+
+                            echo '.b3_input-option { ';
+                            echo 'margin-bottom: 0.5em;';
+                            echo ' }';
+                            echo "\n";
+
+                            echo 'input.b3_form-input--number, input.b3_form-input--url { ';
+                            echo 'font-size: 24px;';
+                            echo 'line-height: 1.33333333;';
+                            echo 'padding: 0.1875rem 0.3125rem;';
+                            echo 'width: 100%;';
+                            echo ' }';
+                            echo "\n";
+
+                            echo '.b3_form-input--textarea { ';
+                            echo 'border-width: 0.0625rem;';
+                            echo 'font-size: 24px;';
+                            echo 'line-height: 1.33333333;';
+                            echo 'margin: 0 6px 16px 0;';
+                            echo 'padding: 0.1875rem 0.3125rem;';
+                            echo 'width: 100%;';
+                            echo ' }';
+                            echo "\n";
+
+                            echo '.b3_form-element--select select { ';
+                            // echo 'font-size: 24px;';
+                            echo 'line-height: 1.33333333;';
+                            echo 'padding: 0.1875rem 0.3125rem;';
+                            echo 'width: 100%;';
+                            echo ' }';
+                            echo "\n";
+                        }
 
                         if ( $privacy ) {
                             echo '.b3_form-element--privacy { ';
