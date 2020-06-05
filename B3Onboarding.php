@@ -1330,7 +1330,7 @@
                     case 'username_exists':
                         return esc_html__( 'This username is already in use.', 'b3-onboarding' );
 
-                    case 'email':
+                    case 'invalid_email':
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
 
                     case 'email_exists':
@@ -1456,7 +1456,7 @@
                 }
 
                 if ( ! is_email( $user_email ) ) {
-                    $errors->add( 'email', $this->b3_get_error_message( 'email' ) );
+                    $errors->add( 'email', $this->b3_get_error_message( 'invalid_email' ) );
 
                     return $errors;
                 }
@@ -1468,7 +1468,7 @@
                 }
 
                 if ( ! is_email( $user_email ) ) {
-                    $errors->add( 'email', $this->b3_get_error_message( 'email' ) );
+                    $errors->add( 'email', $this->b3_get_error_message( 'invalid_email' ) );
 
                     return $errors;
                 }
