@@ -79,15 +79,9 @@
 
     <li class="debug-list-part">
         <?php $b3_values = b3_get_all_custom_meta_keys(); ?>
-        <b>B3 values</b>
+        <b>B3 <?php esc_html_e( 'values', 'b3-onboarding' ); ?></b>
         <ul>
             <?php
-                if ( ( $key = array_search( 'b3_email_styling', $b3_values ) ) !== false ) {
-                    unset( $b3_values[ $key ] );
-                }
-                if ( ( $key = array_search( 'b3_email_template', $b3_values ) ) !== false ) {
-                    unset( $b3_values[ $key ] );
-                }
                 foreach( $b3_values as $meta_key ) {
                     echo '<li>';
                     echo $meta_key . ': ';
@@ -95,6 +89,9 @@
                     if ( is_array( $value ) ) {
                         echo 'array( ' . implode( ', ', $value ) . ' )';
                     } else {
+                        if ( 'b3_email_template' == $meta_key ) {
+                            $value = 'Set';
+                        }
                         echo ($value) ? $value : esc_html__( 'empty', 'b3-onboarding');
                     }
                     echo '</li>';
