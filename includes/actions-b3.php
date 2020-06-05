@@ -72,7 +72,6 @@
             $subject    = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
             $message    = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
             $message    = b3_replace_template_styling( $message );
-            error_log('HIT THIS ONE');
             $message    = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
             $message    = htmlspecialchars_decode( stripslashes( $message ) );
             $headers    = array(
