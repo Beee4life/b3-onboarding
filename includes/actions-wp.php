@@ -57,7 +57,9 @@
         $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
-                update_user_meta( $user_id, $field[ 'id' ], $_POST[ $field[ 'id' ] ] );
+                if ( isset( $field[ 'id' ] ) ) {
+                    update_user_meta( $user_id, $field[ 'id' ], $_POST[ $field[ 'id' ] ] );
+                }
             }
         }
 
@@ -84,9 +86,7 @@
             // do nothing
         } else {
             if ( 'open' == $registration_type ) {
-                error_log('Registration open');
             } elseif ( 'request_access' == $registration_type ) {
-                error_log('DO STUFF');
                 // change user role
                 $user_object = new WP_User( $user_id );
                 $user_object->set_role( 'b3_approval' );
