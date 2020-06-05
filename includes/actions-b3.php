@@ -21,7 +21,6 @@
             </div>
         <?php
         $output = ob_get_clean();
-
         echo $output;
     }
     add_action( 'b3_login_email_fields', 'b3_login_email_fields' );
@@ -47,7 +46,6 @@
             'From: ' . $from_name . ' <' . $from_email . '>',
             'Content-Type: text/html; charset=UTF-8',
         );
-
         wp_mail( $to, $subject, $message, $headers );
     }
     add_action( 'b3_new_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
@@ -74,10 +72,10 @@
             $subject    = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
             $message    = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
             $message    = b3_replace_template_styling( $message );
+            error_log('HIT THIS ONE');
             $message    = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
             $message    = htmlspecialchars_decode( stripslashes( $message ) );
-
-            $headers = array(
+            $headers    = array(
                 'From: ' . $from_name . ' <' . $from_email . '>',
                 'Content-Type: text/html; charset=UTF-8',
             );
@@ -94,7 +92,6 @@
      * @param string $form_type
      */
     function b3_add_recaptcha_fields( $form_type = 'register' ) {
-
         $recaptcha_public  = get_option( 'b3_recaptcha_public', false );
         $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
         $show_recaptcha    = get_option( 'b3_recaptcha', false );
@@ -103,10 +100,11 @@
             do_action( 'b3_before_recaptcha_' . $form_type );
             if ( '2' == $recaptcha_version ) {
                 ?>
-                <div class="recaptcha-container">
-                    <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                <div class="b3_form-element b3_form-element--recaptcha">
+                    <div class="recaptcha-container">
+                        <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                    </div>
                 </div>
-                <p></p>
                 <?php
             }
             do_action( 'b3_after_recaptcha_' . $form_type );
@@ -130,7 +128,6 @@
                 </div>
                 <?php
                 $output = ob_get_clean();
-
                 echo $output;
             }
         }
@@ -171,32 +168,30 @@
             ?>
             <p class="b3_message">
                 <?php esc_html_e( "If you triggered this setting manually, be aware that it's not working yet.", "b3-onboarding" ); ?>
-
             </p>
-            <div class="b3_form-element b3_form-element--register">
+
+            <div class="b3_form-element b3_form-element--password">
                 <label class="b3_form-label" for="pass1"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
                 <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3_form--input" />
             </div>
 
-            <div class="b3_form-element b3_form-element--register">
+            <div class="b3_form-element b3_form-element--password">
                 <label class="b3_form-label" for="pass2"><?php esc_html_e( 'Confirm Password', 'b3-onboarding' ); ?></label>
                 <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3_form--input" />
             </div>
             <?php
             $results = ob_get_clean();
-
             echo $results;
         }
     }
     add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
 
     /**
-     * Function to output any extra request fields
+     * Function to output any custom fields
      *
      * @TODO: test this
      */
     function b3_add_custom_fields_registration() {
-
         $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
         if ( is_array( $extra_field_values ) && ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
@@ -227,7 +222,6 @@
      * @TODO: check if a filter can be added
      */
     function b3_hidden_fields_registration_form() {
-
         $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             $hidden_fields = '';
