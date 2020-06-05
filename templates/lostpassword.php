@@ -1,4 +1,3 @@
-<?php // @TODO: add form type ?>
 <div class="b3_page b3_page--lostpass">
     <?php if ( $attributes[ 'title' ] ) { ?>
         <h3>

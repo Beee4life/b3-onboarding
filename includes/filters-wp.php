@@ -44,7 +44,6 @@
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
-            // @TODO: maybe add filter ?
             return false;
         } else {
 

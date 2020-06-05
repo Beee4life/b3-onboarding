@@ -128,7 +128,7 @@
                 return get_the_permalink( $id );
             }
         } elseif ( true == $return_link ) {
-            // @TODO: create fallback
+            // @TODO: add wp page
         }
 
         return $id;

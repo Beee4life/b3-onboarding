@@ -34,8 +34,8 @@
         // Do stuff when user is activated by admin
         $user_object = get_userdata( $user_id );
         $user_object->set_role( get_option( 'default_role' ) );
-        $from_name   = get_option( 'blogname' ); // @TODO: add filter for sender name
-        $from_email  = get_option( 'admin_email' ); // @TODO: add filter for sender email
+        $from_name   = 'Dummy';
+        $from_email  = 'Dummy';
         $to          = $user_object->user_email;
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
         $message     = apply_filters( 'b3_get_account_approved_message', b3_get_account_approved_message() );
@@ -65,8 +65,8 @@
         }
         // send activate email to user
         if ( 'email_activation' == get_option( 'b3_registration_type', false ) ) {
-            $from_name  = get_option( 'blogname' ); // @TODO: add filter for sender name
-            $from_email = get_option( 'admin_email' ); // @TODO: add filter for sender email
+            $from_name  = 'Dummy';
+            $from_email = 'Dummy';
             $user       = get_userdata( $user_id );
             $to         = $user->user_email;
             $subject    = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
@@ -120,7 +120,7 @@
             if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ) , [ 'request_access_subdomain', 'ms_register_site_user' ] ) ) {
                 ob_start();
                 ?>
-                <?php // @TODO: add more fields for Multisite ?>
+                <?php // @TODO: add more fields for Multisite (MS) ?>
                 <div class="b3_form-element b3_form-element--register">
                     <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
                     <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
@@ -187,8 +187,6 @@
 
     /**
      * Function to output any custom fields
-     *
-     * @TODO: test this
      */
     function b3_add_custom_fields_registration() {
         $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
@@ -217,8 +215,6 @@
 
     /**
      * Output any hidden fields
-     *
-     * @TODO: check if a filter can be added
      */
     function b3_hidden_fields_registration_form() {
         $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );

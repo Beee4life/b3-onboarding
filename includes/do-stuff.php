@@ -192,7 +192,7 @@
             $user_data = $vars[ 'user_data' ];
         }
 
-        // @TODO: maybe make function from this
+        // @TODO: make function from this
         $date_format           = get_option( 'date_format' );
         $gmt_offset            = get_option( 'gmt_offset' );
         $time_format           = get_option( 'time_format' );

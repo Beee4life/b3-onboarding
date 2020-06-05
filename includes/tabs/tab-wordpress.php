@@ -38,7 +38,6 @@
         </h2>
 
         <p>
-            <?php // @TODO: set if for if custom login page is set ?>
             <?php esc_html_e( 'Here you can style the (default) WordPress pages.', 'b3-onboarding' ); ?>
         </p>
 

@@ -6,7 +6,7 @@
     /**
      * Add custom fields to Wordpress' default register form
      *
-     * @TODO: use hooks
+     * @TODO: maybe use hooks for first/last name fields
      */
     function b3_add_registration_fields() {
 
@@ -79,7 +79,6 @@
 
 
     function b3_do_stuff_after_wp_register( $user_id ) {
-        // @TODO: distinct between front-end/WP form
         // get registration type
         $registration_type = get_option( 'b3_registration_type', false );
         if ( isset( $_POST[ 'b3_form' ] ) ) {
@@ -123,8 +122,8 @@
     function b3_new_user_rejected( $user_id ) {
         if ( false == get_option( 'b3_disable_delete_user_email', false ) ) {
             $user_object = get_userdata( $user_id );
-            $from_name   = get_option( 'blogname' ); // @TODO: add filter for sender name
-            $from_email  = get_option( 'admin_email' ); // @TODO: add filter for sender email
+            $from_name   = 'Dummy';
+            $from_email  = 'Dummy';
             $message     = apply_filters( 'b3_get_account_rejected_message', b3_get_account_rejected_message() );
             $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
             $to          = $user_object->user_email;

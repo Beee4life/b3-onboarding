@@ -24,7 +24,7 @@
             'b3_disable_admin_notification_password_change',
             'b3_disable_admin_notification_new_user',
             'b3_disable_delete_user_email',
-            'b3_custom_emails', // @TODO: look into this one
+            'b3_custom_emails',
             'b3_custom_passwords', // not in use yet
             'b3_dashboard_widget', // set on activate
             'b3_debug_info',
@@ -219,7 +219,7 @@
         );
 
         if ( ! is_multisite() ) {
-            // @TODO: get registration type
+            // @TODO: get registration type (MS)
             $registration_options = array_merge( $closed_option, $registration_options, $normal_options );
         } else {
             $mu_registration = get_site_option( 'registration' );
@@ -283,9 +283,9 @@
      * @return bool|false|mixed|string|void
      */
     function b3_get_email_footer() {
-        $email_logo = b3_default_email_footer();
+        $email_footer = b3_default_email_footer();
 
-        return $email_logo;
+        return $email_footer;
     }
 
 
@@ -626,26 +626,6 @@
     /**
      * Return user email logo and default logo if false
      *
-     * @TODO: check this
-     *
-     * @return bool|false|mixed|string|void
-     */
-    function b3_get_login_logo() {
-        $custom_logo = get_option( 'b3_login_logo', false );
-
-        if ( false != $custom_logo ) {
-            $login_logo = $custom_logo;
-        } else {
-            $login_logo = b3_default_login_logo();
-        }
-
-        return $login_logo;
-    }
-
-
-    /**
-     * Return user email logo and default logo if false
-     *
      * @return bool|false|mixed|string|void
      */
     function b3_get_main_logo() {
@@ -681,7 +661,7 @@
     /**
      * Return links below a (public) form
      *
-     * @TODO: show with use of filter (next to setting)
+     * @TODO: show with use of filter (next to a setting)
      */
     function b3_get_form_links( $current_form ) {
 
