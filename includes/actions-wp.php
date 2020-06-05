@@ -107,7 +107,7 @@
     function b3_add_login_form_fields() {
         $show_recaptcha   = get_option( 'b3_recaptcha_login', false );
         if ( $show_recaptcha ) {
-            do_action( 'b3_add_captcha_registration' );
+            do_action( 'b3_add_recaptcha_fields' );
         }
     }
     add_action( 'login_form', 'b3_add_login_form_fields' );
