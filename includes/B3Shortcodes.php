@@ -48,6 +48,10 @@
                         foreach ( $error_codes as $error_code ) {
                             $attributes[ 'errors' ][] = $this->b3_get_error_message( $error_code );
                         }
+                    } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
+                        if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                        }
                     }
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
