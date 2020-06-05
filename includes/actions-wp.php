@@ -34,7 +34,6 @@
         <?php do_action( 'b3_hidden_fields_registration_form' ); ?>
         <?php do_action( 'b3_add_custom_fields_registration' ); ?>
         <?php do_action( 'b3_add_recaptcha_fields' ); ?>
-
         <?php do_action( 'b3_add_privacy_checkbox' ); ?>
 
     <?php
