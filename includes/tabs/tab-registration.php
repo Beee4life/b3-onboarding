@@ -102,7 +102,7 @@
                     <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_login" value="1" <?php if ( $recaptcha_login ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to add reCaptcha on the login form.', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_login" value="1" <?php if ( $recaptcha_login ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to add reCaptcha on the custom login form.', 'b3-onboarding' ); ?>
                     </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -154,7 +154,7 @@
                         <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on (custom) forms.', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
