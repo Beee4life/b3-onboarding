@@ -12,7 +12,7 @@
 
         return $logo;
     }
-    // add_filter( 'b3_main_logo', 'b3_main_logo' );
+    add_filter( 'b3_main_logo', 'b3_main_logo' );
 
     /**
      * Filter email footer text
@@ -59,7 +59,7 @@
     // add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );
 
     /**
-     * Add cusstom fields to form
+     * Add custom fields to form
      *
      * @param $fields
      *
@@ -189,7 +189,7 @@
      */
     function b3_add_privacy_text( $privacy_text ) {
 
-        $privacy_text = '<a href="#">Klik ergens</a> voor meer info';
+        $privacy_text = '<a href="#">Click here</a> for more info';
 
         return $privacy_text;
     }
