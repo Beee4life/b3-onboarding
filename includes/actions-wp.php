@@ -123,7 +123,7 @@
             $user_object = get_userdata( $user_id );
             $from_name   = 'Dummy';
             $from_email  = 'Dummy';
-            $message     = apply_filters( 'b3_get_account_rejected_message', b3_get_account_rejected_message() );
+            $message     = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
             $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
             $to          = $user_object->user_email;
 

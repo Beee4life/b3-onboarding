@@ -3,11 +3,13 @@
         $content = false;
         $subject = false;
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo  = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
-            $content    = b3_default_email_content( $hide_logo );
-            $link_color = apply_filters( 'b3_email_link_color', get_option( 'b3_email_link_color', false ) );
-            $preview    = $_GET[ 'preview' ];
-            $user       = get_userdata( get_current_user_id() );
+            $hide_logo      = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $content        = b3_default_email_content( $hide_logo ); // @TODO: remove, if apply_filters doens't break anything
+            $content        = apply_filters( 'b3_template', b3_get_email_template( $hide_logo ) );
+            $email_template = get_option( 'b3_template', false );
+            $link_color     = apply_filters( 'b3_email_link_color', get_option( 'b3_email_link_color', false ) );
+            $preview        = $_GET[ 'preview' ];
+            $user           = get_userdata( get_current_user_id() );
 
             $lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit iaculis enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.
             <br /><br />
@@ -71,6 +73,12 @@
         <?php esc_html_e( 'This is what the email will look like (approximately).', 'b3-onboarding' ); ?>
     </p>
 
+    <?php if ( 'template' == $preview && ! empty( $email_template ) ) { ?>
+        <p>
+            <?php esc_html_e( 'The default template is loaded, not your own (if defined). This due to double html/body tags.', 'b3-onboarding' ); ?>
+        </p>
+    <?php } ?>
+
     <?php if ( false != $subject ) { ?>
         <p>
             <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo $subject; ?>"
@@ -78,7 +86,7 @@
     <?php } ?>
 
     <style type="text/css">
-        <?php echo b3_get_email_styling( $link_color ); ?>
+        <?php echo apply_filters( 'b3_email_styling', b3_get_email_styling( $link_color ) ); ?>
     </style>
 
     <?php echo $content; ?>

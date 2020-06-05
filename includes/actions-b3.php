@@ -38,7 +38,7 @@
         $from_email  = 'Dummy';
         $to          = $user_object->user_email;
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
-        $message     = apply_filters( 'b3_get_account_approved_message', b3_get_account_approved_message() );
+        $message     = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
         $message     = b3_replace_template_styling( $message );
         $message     = strtr( $message, b3_replace_email_vars( [] ) );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
