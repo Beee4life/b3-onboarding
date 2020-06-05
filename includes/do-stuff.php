@@ -212,6 +212,7 @@
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
+            '%forgotpass_url%'    => wp_lostpassword_url(),
             '%home_url%'          => get_home_url(),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
             '%registration_date%' => $registration_date,
