@@ -1,6 +1,6 @@
 <?php
     // default/fallback values
-    include('defaults.php');
+    include( 'defaults.php' );
 
     /**
      * Return all custom meta keys
