@@ -57,6 +57,7 @@
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_request_access_subject_admin() );
 
+                // @TODO: add filter
                 $admin_email = b3_request_access_message_admin();
                 $admin_email = b3_replace_template_styling( $admin_email );
                 $admin_email = strtr( $admin_email, b3_replace_email_vars( [] ) );
