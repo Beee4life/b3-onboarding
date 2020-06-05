@@ -205,6 +205,7 @@
                 }
 
                 update_option( 'b3_dashboard_widget', 1 );
+                update_option( 'b3_force_custom_login_page', 1 );
                 update_option( 'b3_email_styling', b3_default_email_styling() );
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_hide_admin_bar', 1 );
@@ -298,62 +299,116 @@
              */
             public function b3_add_login_styling() {
 
-                $bg_color        = get_option( 'b3_loginpage_bg_color', false );
-                $font_family     = get_option( 'b3_loginpage_font_family', false );
-                $font_size       = get_option( 'b3_loginpage_font_size', false );
                 $logo            = apply_filters( 'b3_main_logo', b3_get_main_logo() );
                 $logo_height     = get_option( 'b3_loginpage_logo_height', false );
                 $logo_width      = get_option( 'b3_loginpage_logo_width', false );
+                $privacy         = get_option( 'b3_privacy', false );
                 $recaptcha       = get_option( 'b3_recaptcha', false );
                 $recaptcha_login = get_option( 'b3_recaptcha_login', false );
                 $style_pages     = get_option( 'b3_style_default_pages', false );
 
-                if ( $style_pages || $recaptcha || $recaptcha_login ) {
+                if ( $logo || $privacy || $recaptcha || $recaptcha_login || $style_pages ) {
                     echo '<style type="text/css">';
                     echo "\n";
-                    if ( $bg_color ) {
-                        echo "\nbody { background: #" . $bg_color . "; }\n";
-                    }
-                    if ( $font_family || $font_size || $recaptcha || $recaptcha_login ) {
-                        echo '#login { ';
-                        if ( $font_family ) {
-                            echo 'font-family: ' . $font_family . ';';
+                    if ( $style_pages ) {
+
+                        $bg_color        = get_option( 'b3_loginpage_bg_color', false );
+                        $font_family     = get_option( 'b3_loginpage_font_family', false );
+                        $font_size       = get_option( 'b3_loginpage_font_size', false );
+
+                        if ( $bg_color ) {
+                            echo "\nbody { background: #" . $bg_color . "; }\n";
                         }
-                        if ( $font_size ) {
-                            echo 'font-size: ' . $font_size . 'px;';
+                        if ( $font_family || $font_size || $recaptcha || $recaptcha_login ) {
+                            echo '#login { ';
+                            if ( $font_family ) {
+                                echo 'font-family: ' . $font_family . ';';
+                            }
+                            if ( $font_size ) {
+                                echo 'font-size: ' . $font_size . 'px;';
+                            }
+                            if ( $recaptcha || $recaptcha_login ) {
+                                echo 'min-width: 352px;';
+                            }
+                            echo " }\n";
+                            // @TODO: check if I need this when pages not styled
+                            if ( $recaptcha || $recaptcha_login ) {
+                                echo '.recaptcha-container {';
+                                echo 'margin: 0 0 1rem 0;';
+                                echo '}';
+                                echo "\n";
+                            }
+                            if ( $font_size ) {
+                                echo '.login label { font-size: ' . $font_size . 'px; }';
+                                echo "\n";
+                            }
                         }
+                        if ( $logo ) {
+                            echo '.login h1 a { ';
+                            echo 'background-image: url(' . $logo . '); ';
+                            echo 'background-image: none, url(' . $logo . '); ';
+                            echo 'background-repeat: no-repeat; ';
+                            echo 'padding: 0; ';
+                            if ( $logo_width ) {
+                                echo 'background-size: ' . $logo_width . 'px; ';
+                                echo 'width: ' . $logo_width . 'px; ';
+                            }
+                            if ( $logo_height ) {
+                                echo 'height: ' . $logo_height . 'px; ';
+                            }
+                            echo 'max-width: 320px; ';
+                            echo 'max-height: 150px;';
+                            echo ' }';
+                        }
+                        if ( $privacy ) {
+                            echo '.b3_form-element--privacy { ';
+                            echo 'margin-bottom: 1em;';
+                            echo ' }';
+                        }
+                    } else {
+
                         if ( $recaptcha || $recaptcha_login ) {
+                            echo '#login { ';
                             echo 'min-width: 352px;';
+                            echo ' }';
+                            echo "\n";
                         }
-                        echo " }\n";
+
+                        if ( $logo ) {
+                            echo '.login h1 a { ';
+                            echo 'background-image: url(' . $logo . '); ';
+                            echo 'background-image: none, url(' . $logo . '); ';
+                            echo 'background-repeat: no-repeat; ';
+                            echo 'padding: 0; ';
+                            if ( $logo_width ) {
+                                // echo 'background-size: ' . $logo_width . 'px; ';
+                                // echo 'width: ' . $logo_width . 'px; ';
+                            }
+                            if ( $logo_height ) {
+                                // echo 'height: ' . $logo_height . 'px; ';
+                            }
+                            // echo 'max-width: 320px; ';
+                            // echo 'max-height: 150px;';
+                            echo ' }';
+                        }
+
+
+                        if ( $privacy ) {
+                            echo '.b3_form-element--privacy { ';
+                            echo 'margin-bottom: 1em;';
+                            echo ' }';
+                            echo "\n";
+                        }
+
                         if ( $recaptcha || $recaptcha_login ) {
                             echo '.recaptcha-container {';
                             echo 'margin: 0 0 1rem 0;';
                             echo '}';
                             echo "\n";
                         }
-                        if ( $font_size ) {
-                            echo '.login label { font-size: ' . $font_size . 'px; }';
-                            echo "\n";
-                        }
+
                     }
-                    if ( $logo ) {
-                        echo '.login h1 a { ';
-                        echo 'background-image: url(' . $logo . '); ';
-                        echo 'background-image: none, url(' . $logo . '); ';
-                        echo 'background-repeat: no-repeat; ';
-                        echo 'padding: 0; ';
-                        if ( $logo_width ) {
-                            echo 'background-size: ' . $logo_width . 'px; ';
-                            echo 'width: ' . $logo_width . 'px; ';
-                        }
-                        if ( $logo_height ) {
-                            echo 'height: ' . $logo_height . 'px; ';
-                        }
-                        echo 'max-width: 320px; ';
-                        echo 'max-height: 150px;';
-                        echo ' }';
-                    }
+
                     echo "\n";
                     echo '</style>';
                     echo "\n";
@@ -909,7 +964,7 @@
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_wpmu_register() {
-                if ( '/wp-signup.php' == $_SERVER[ 'REQUEST_URI' ] ) {
+                if ( '/wp-signup.php' == $_SERVER[ 'REQUEST_URI' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
                     $register_url = b3_get_register_id( true );
                     if ( false != $register_url ) {
                         wp_safe_redirect( $register_url );
@@ -951,12 +1006,13 @@
              * wp-login.php?action=lostpassword.
              */
             public function b3_redirect_to_custom_lostpassword() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                         exit;
                     }
 
+                    // add if force
                     $forgot_password_url = b3_get_forgotpass_id( true );
                     if ( false != $forgot_password_url ) {
                         wp_safe_redirect( $forgot_password_url );
@@ -971,7 +1027,7 @@
              * if there are errors.
              */
             public function b3_redirect_to_custom_password_reset() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
                     // Verify key / login combo
                     $redirect_url = b3_get_resetpass_id( true );
 
@@ -1111,8 +1167,13 @@
                             $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), wp_login_url() );
                         } else {
 
-                            $lostpassword_url = b3_get_forgotpass_id( true );
-                            $redirect_url     = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
+                            // determine which page is used
+                            $lostpassword_url = wp_lostpassword_url();
+                            if ( isset( $_REQUEST[ 'b3_form' ] ) ) {
+                                // it's our custom form, so custom redirect there
+                                $lostpassword_url = b3_get_forgotpass_id( true );
+                            }
+                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
 
                             // remove user_activation_key
                             $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
@@ -1207,11 +1268,8 @@
                             exit;
 
                         } else {
-                            echo "Invalid request.";
+                            echo "Invalid request1.";
                         }
-
-                    } else {
-                        echo "Invalid request.";
                     }
 
                 }
@@ -1245,6 +1303,9 @@
                         $error_message .= __( 'Did you <a href="%s">forget</a> your password ?', 'b3-onboarding' );
 
                         return sprintf( $error_message, wp_lostpassword_url() );
+
+                    case 'logged_out':
+                        return esc_html__( "You are logged out.", 'b3-onboarding' );
 
                     // Registration errors
                     case 'username_exists':
@@ -1308,7 +1369,7 @@
                     // Activation
                     // @TODO: check , because technically not an error
                     case 'activate_success':
-                        return esc_html__( 'You have successfully activated your account. You can set your password below.', 'b3-onboarding' );
+                        return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
 
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
@@ -1414,7 +1475,7 @@
 
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    $inform = ( 1 == get_option( 'b3_disable_admin_notification_new_user', false ) ) ? 'user' : 'both';
+                    $inform = 'both';
                     if ( 'email_activation' == $registration_type ) {
                         // never notify an admin if a user hasn't confirmed email yet
                         $inform = 'user';

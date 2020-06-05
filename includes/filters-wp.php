@@ -45,8 +45,13 @@
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
             // @TODO: maybe add filter ?
-            $wp_new_user_notification_email_admin = false;
+            return false;
         } else {
+
+            if ( false != get_option( 'b3_disable_admin_notification_new_user', false ) ) {
+                return false;
+            }
+
             $registration_type = get_option( 'b3_registration_type', false );
 
             if ( 'request_access' == $registration_type ) {
@@ -60,7 +65,11 @@
 
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
 
-            } elseif ( in_array( $registration_type, [ 'email_activation', 'open' ] ) ) {
+            } elseif ( in_array( $registration_type, [ 'email_activation' ] ) ) {
+                // we don't want the email when a user registers, but only when he activates
+                return false;
+
+            } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_get_new_user_subject', b3_get_new_user_subject() );
 

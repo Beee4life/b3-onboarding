@@ -31,6 +31,8 @@
         </p>
         <?php } ?>
 
+        <?php do_action( 'b3_hidden_fields_registration_form' ); ?>
+        <?php do_action( 'b3_add_custom_fields_registration' ); ?>
         <?php do_action( 'b3_add_recaptcha_fields' ); ?>
 
         <?php do_action( 'b3_add_privacy_checkbox' ); ?>
@@ -67,10 +69,34 @@
         }
 
         if ( isset( $_POST[ 'b3_privacy_accept' ] ) && 1 == $_POST[ 'b3_privacy_accept' ] ) {
-            update_user_meta( $user_id, 'priacy_accept', true );
+            update_user_meta( $user_id, 'privacy_accept', true );
         }
+
     }
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
+
+
+    function b3_do_stuff_after_wp_register( $user_id ) {
+        // @TODO: distinct between front-end/WP form
+        // get registration type
+        $registration_type = get_option( 'b3_registration_type', false );
+        if ( isset( $_POST[ 'b3_form' ] ) ) {
+            // do nothing
+        } else {
+            if ( 'open' == $registration_type ) {
+                error_log('Registration open');
+            } elseif ( 'request_access' == $registration_type ) {
+                error_log('DO STUFF');
+                // change user role
+                $user_object = new WP_User( $user_id );
+                $user_object->set_role( 'b3_approval' );
+            } elseif ( 'email_activation' == $registration_type ) {
+                $user_object = new WP_User( $user_id );
+                $user_object->set_role( 'b3_activation' );
+            }
+        }
+    }
+    add_action( 'user_register', 'b3_do_stuff_after_wp_register' );
 
 
     /**
