@@ -254,7 +254,15 @@
                     return;
                 } else {
 
-                    update_option( 'b3_notification_sender_email', $_POST[ 'b3_notification_sender_email' ], true );
+                    // validate email
+                    if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) && ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
+                        B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
+
+                        return;
+                    } else {
+                        $sender_email = $_POST[ 'b3_notification_sender_email' ];
+                    }
+                    update_option( 'b3_notification_sender_email', $sender_email, true );
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
                     update_option( 'b3_forgot_password_message', htmlspecialchars( $_POST[ 'b3_forgot_password_message' ] ), true );
                     update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
@@ -264,7 +272,7 @@
                         if ( '#' == substr( $_POST[ 'b3_email_link_color' ], 0, 1 ) ) {
                             $color = substr( $_POST[ 'b3_email_link_color' ], 1 );
                         }
-                        $length = strlen($color);
+                        $length = strlen( $color );
                         if ( 3 != $length && 6 != $length ) {
                             B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Then length of your hex code is incorrect.', 'b3-onboarding' ) );
 
@@ -459,9 +467,8 @@
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         } else {
                             // @TODO: add error
-                            // $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                            // $redirect_url = add_query_arg( 'user', 'not-delete', $redirect_url );
                         }
-
                     }
                 }
 
@@ -483,6 +490,7 @@
             require_once( ABSPATH . 'wp-admin/includes/user.php' );
             require_once( ABSPATH . 'wp-admin/includes/misc.php' );
             define( 'IS_PROFILE_PAGE', true );
+            // @TODO: do I need this ?
             // load_textdomain( 'default', WP_LANG_DIR . '/admin-' . get_locale() . '.mo' );
             // register_admin_color_schemes();
         }
