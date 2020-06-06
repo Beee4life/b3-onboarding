@@ -27,7 +27,7 @@
 
         return $footer_text;
     }
-    add_filter( 'b3_email_footer_text', 'b3_email_footer_text' );
+    // add_filter( 'b3_email_footer_text', 'b3_email_footer_text' );
 
     /**
      * Set who to inform after (custom) user register
