@@ -213,14 +213,12 @@
                         if ( '#' == substr( $_POST[ 'b3_loginpage_bg_color' ], 0, 1 ) ) {
                             $color = substr( $_POST[ 'b3_loginpage_bg_color' ], 1 );
                         }
-                        $length = strlen($color);
-                        if ( 3 != $length && 6 != $length ) {
-                            B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Then length of your hex code is incorrect.', 'b3-onboarding' ) );
+                        if ( empty( sanitize_hex_color_no_hash( $color ) ) ) {
+                            B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Your hex code is incorrect.', 'b3-onboarding' ) );
 
                             return;
-                        } else {
-                            update_option( 'b3_loginpage_bg_color', $color );
                         }
+                        update_option( 'b3_loginpage_bg_color', $color );
                     } else {
                         delete_option( 'b3_loginpage_bg_color' );
                     }
@@ -272,14 +270,12 @@
                         if ( '#' == substr( $_POST[ 'b3_email_link_color' ], 0, 1 ) ) {
                             $color = substr( $_POST[ 'b3_email_link_color' ], 1 );
                         }
-                        $length = strlen( $color );
-                        if ( 3 != $length && 6 != $length ) {
-                            B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Then length of your hex code is incorrect.', 'b3-onboarding' ) );
+                        if ( empty( sanitize_hex_color_no_hash( $color ) ) ) {
+                            B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Your hex code is incorrect.', 'b3-onboarding' ) );
 
                             return;
-                        } else {
-                            update_option( 'b3_email_link_color', $color );
                         }
+                        update_option( 'b3_email_link_color', $color );
                     } else {
                         delete_option( 'b3_email_link_color' );
                     }
