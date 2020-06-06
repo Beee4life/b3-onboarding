@@ -1,54 +1,8 @@
 <?php
-    /**
-     * Filter email logo
-     *
-     * @since 2.0.0
-     *
-     * @param $footer_text
-     *
-     * @return false|string
-     */
-    function b3_main_logo( $logo ) {
 
-        $logo = B3_PLUGIN_URL . '/assets/images/logo-salesforce.png';
-
-        return $logo;
-    }
-    add_filter( 'b3_main_logo', 'b3_main_logo' );
-
-    /**
-     * Filter email footer text
-     *
-     * @since 2.0.0
-     *
-     * @param $footer_text
-     *
-     * @return false|string
-     */
-    function b3_email_footer_text( $footer_text ) {
-
-        $footer_text = 'Some test text with a <a href="https://nu.nl">LINK</a>.';
-
-        return $footer_text;
-    }
-    // add_filter( 'b3_email_footer_text', 'b3_email_footer_text' );
-
-    /**
-     * Override link color in email
-     *
-     * @since 2.0.0
-     *
-     * @param $link_color
-     *
-     * @return string
-     */
-    function b3_email_link_color( $link_color ) {
-
-        $link_color = '6d32a8'; // purple
-
-        return $link_color;
-    }
-    // add_filter( 'b3_email_link_color', 'b3_email_link_color' );
+    ##################
+    ## Form filters ##
+    ##################
 
     /**
      * Add hidden fields to form
@@ -208,36 +162,3 @@
     // add_filter( 'b3_add_privacy_text', 'b3_add_privacy_text' );
 
 
-    /**
-     * Set who to inform after (custom) user register
-     *
-     * @since 2.0.0
-     *
-     * @param $inform
-     *
-     * @return string
-     */
-    function b3_custom_register_inform( $inform ) {
-        return 'none';
-    }
-    // add_filter( 'b3_custom_register_inform', 'b3_custom_register_inform' );
-
-    /**
-     * Redirect after user register
-     *
-     * @since 2.0.0
-     *
-     * @param $url
-     *
-     * @return string
-     */
-    function b3_redirect_after_register( $url ) {
-
-        $login_url = b3_get_login_id( true );
-        if ( false != $login_url ) {
-            $url = add_query_arg( 'registered', 'success', $login_url );
-        }
-
-        return $url;
-    }
-    // add_filter( 'b3_redirect_after_register', 'b3_redirect_after_register' );
