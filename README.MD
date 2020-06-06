@@ -30,7 +30,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
 
 <a name="version"></a>
 ### Version
-1.1.0 - released xx.06.20
+2.0.0 - released xx.06.20
 
 <a name="features"></a>
 ### Features
@@ -133,7 +133,7 @@ These are the things we have planned to add.
 * [ ] integration with AWeber
 
 <a name="changelog"></a>
-1.1.0
+2.0.0
 * replaced deprecated contextual_help
 * escape user input for storage
 * more emails to set

@@ -1,5 +1,4 @@
 <?php
-
     /**
      * Get tab content
      *
@@ -39,26 +38,7 @@
             case 'integrations':
                 $content = b3_render_integrations_tab();
                 break;
-            case 'debug':
-                $content = b3_render_debug_tab();
-                break;
         }
 
         return $content;
-    }
-
-
-    /**
-     * Render debug page
-     *
-     * @return false|string
-     */
-    function b3_render_debug_tab() {
-
-        ob_start();
-        include( 'debug-info.php' );
-        $result = ob_get_clean();
-        // @TODO: output $result as json
-
-        return $result;
     }
