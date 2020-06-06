@@ -212,7 +212,7 @@
 .b3 input#b3_loginpage_logo_width,
 .b3 input#b3_loginpage_logo_height,
 .b3 input#b3_loginpage_bg_color,
-.b3 input#b3_email_link_color {
+.b3 input#b3_link_color {
     width: 80px;
 }
 
