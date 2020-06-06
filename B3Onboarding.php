@@ -1782,9 +1782,9 @@
                     echo '<div class="error"><p>'. __( 'The footer text you have set in the filter "b3_email_footer_text" is not a string.', 'b3-onboarding' ) . '</p></div>';
                 }
 
-                $link_color = apply_filters( 'b3_email_link_color', b3_get_link_color() );
+                $link_color = apply_filters( 'b3_link_color', b3_get_link_color() );
                 if ( false == is_string( $link_color ) ) {
-                    echo '<div class="error"><p>'. __( 'The footer text you have set in the filter "b3_email_link_color" is not a string.', 'b3-onboarding' ) . '</p></div>';
+                    echo '<div class="error"><p>'. __( 'The color you set in the filter "b3_link_color" is not valid.', 'b3-onboarding' ) . '</p></div>';
                 }
 
 
