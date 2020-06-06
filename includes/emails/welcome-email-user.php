@@ -26,7 +26,7 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--new-user" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
-            <br /><br />
+            <br />
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=welcome-user' ) ); ?>
         </th>
         <td>
