@@ -26,6 +26,20 @@
 
         ?>
         <div class="b3_widget--dashboard">
+            <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) { ?>
+                <ul>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=template">Template</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=account-approved">Account approved</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=account-activated">Account activated</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=account-rejected">Account rejected</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=email-activation">Email activation</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=forgotpass">Forgot pass</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=new-user-admin">New user (admin)</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=request-access-admin">Request access (admin)</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=request-access-user">Request access (user)</a></li>
+                    <li><a href="http://sandbox.beee/wp/wp-admin/admin.php?page=b3-onboarding&preview=welcome-user">Welcome user</a></li>
+                </ul>
+            <?php } ?>
             <p>
                 <?php
                     if ( count( $approval_users ) > 0 ) {
