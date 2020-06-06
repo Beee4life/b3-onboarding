@@ -769,7 +769,7 @@
                 case 'register':
                     $page_types[ 'login' ] = [
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_id( true ),
+                        'link'  => b3_get_login_url(),
                     ];
                     $page_types[ 'fogotpassword' ] = [
                         'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
@@ -780,7 +780,7 @@
                 case 'forgotpassword':
                     $page_types[ 'login' ] = [
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_id( true ),
+                        'link'  => b3_get_login_url(),
                     ];
                     if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
                         $page_types[ 'register' ] = [
@@ -968,10 +968,15 @@
      *
      * @return bool|string
      */
-    function b3_get_login_id() {
+    function b3_get_login_url( $return_id = false ) {
         $id = get_option( 'b3_login_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( false != $id ) {
+            if ( false != $return_id ) {
+                return $id;
+            }
+            if ( get_post( $id ) ) {
+                return get_the_permalink( $id );
+            }
         }
 
         return wp_login_url();
@@ -986,10 +991,15 @@
      *
      * @return bool|string
      */
-    function b3_get_logout_id() {
+    function b3_get_logout_url( $return_id = false ) {
         $id = get_option( 'b3_logout_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( false != $id ) {
+            if ( false != $return_id ) {
+                return $id;
+            }
+            if ( get_post( $id ) ) {
+                return get_the_permalink( $id );
+            }
         }
 
         return wp_logout_url();
@@ -1004,10 +1014,15 @@
      *
      * @return mixed
      */
-    function b3_get_account_id() {
+    function b3_get_account_url( $return_id = false ) {
         $id = get_option( 'b3_account_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( false != $id ) {
+            if ( false != $return_id ) {
+                return $id;
+            }
+            if ( get_post( $id ) ) {
+                return get_the_permalink( $id );
+            }
         }
 
         // @TODO: admin profile link
@@ -1042,7 +1057,7 @@
      *
      * @return bool|string
      */
-    function b3_get_resetpass_id() {
+    function b3_get_resetpass_url() {
         $id = get_option( 'b3_resetpass_page_id', false );
         if ( false != $id && get_post( $id ) ) {
             return get_the_permalink( $id );

@@ -33,8 +33,7 @@
             $show_settings = false;
 
             if ( $show_account ) {
-                $account_id   = b3_get_account_id();
-                $account_link = ( false != $account_id ) ? get_the_permalink( $account_id ) : false;
+                $account_id   = b3_get_account_url();
                 if ( false == $account_link ) {
                     $count_errors[] = 'account';
                 }
@@ -43,8 +42,7 @@
 
             $show_login = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : false;
             if ( $show_login ) {
-                $login_id   = b3_get_login_id();
-                $login_link = ( false != $login_id ) ? get_the_permalink( $login_id ) : network_site_url( 'wp-login.php' );
+                $login_link = b3_get_login_url();
                 if ( false == $login_link ) {
                     $count_errors[] = 'login';
                 }
@@ -53,8 +51,7 @@
 
             $show_logout = ! empty( $instance[ 'show_logout' ] ) ? $instance[ 'show_logout' ] : false;
             if ( $show_logout ) {
-                $logout_id   = b3_get_logout_id();
-                $logout_link = ( false != $logout_id ) ? get_the_permalink( $logout_id ) : wp_logout_url();
+                $logout_link = b3_get_logout_url();
                 if ( false == $logout_link ) {
                     $count_errors[] = 'logout';
                 }
@@ -63,8 +60,7 @@
 
             $show_register = ! empty( $instance[ 'show_register' ] ) ? $instance[ 'show_register' ] : false;
             if ( $show_register ) {
-                $register_id   = b3_get_register_id();
-                $register_link = ( false != $register_id ) ? get_the_permalink( $register_id ) : network_site_url( 'wp-login.php?action=register' );
+                $register_link = b3_get_register_url();
                 if ( false == $register_link ) {
                     $count_errors[] = 'register';
                 }

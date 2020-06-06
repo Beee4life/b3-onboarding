@@ -299,7 +299,7 @@
                     $themed_users = array( 'subscriber' );
                     $redirect_to  = '';
                     if ( in_array( $themed_users, $current_user->roles ) ) {
-                        $page_link = b3_get_account_id( true );
+                        $page_link = b3_get_account_url();
                         if ( false != $page_link ) {
                             $redirect_to = $page_link;
                         } else {
@@ -495,12 +495,12 @@
              * Protect some pages
              */
             public function b3_template_redirect() {
-                $account_page_id  = b3_get_account_id();
-                $account_url      = ( false != $account_page_id ) ? get_the_permalink( $account_page_id ) : admin_url( 'profile.php' );
+                $account_page_id  = b3_get_account_url( true );
+                $account_url      = b3_get_account_url();
                 $approval_page_id = b3_get_user_approval_id();
-                $login_page_id    = b3_get_login_id();
+                $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
-                $logout_page_id   = b3_get_logout_id();
+                $logout_page_id   = b3_get_logout_url( true );
 
                 if ( false != $account_page_id && is_page( array( $account_page_id ) ) && ! is_user_logged_in() ) {
 
@@ -925,12 +925,12 @@
                                                 // @TODO: look into filter 'registration_redirect'
                                                 $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                             } else {
-                                                $login_url    = b3_get_login_id( true );
+                                                $login_url    = b3_get_login_url();
                                                 $redirect_url = $login_url;
                                             }
                                         } else {
                                             // redirect to login page
-                                            $login_page_url = b3_get_login_id( true );
+                                            $login_page_url = b3_get_login_url();
                                             if ( false != $login_page_url ) {
                                                 $redirect_url = $login_page_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
@@ -1012,7 +1012,7 @@
                 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
                     if ( is_wp_error( $user ) ) {
                         $error_codes = join( ',', $user->get_error_codes() );
-                        $login_url   = b3_get_login_id( true );
+                        $login_url   = b3_get_login_url();
                         $login_url   = add_query_arg( 'login', $error_codes, $login_url );
 
                         wp_safe_redirect( $login_url );
@@ -1076,7 +1076,7 @@
                     }
 
                     // The rest is redirected to the login page
-                    $custom_login_url = b3_get_login_id( true );
+                    $custom_login_url = b3_get_login_url();
                     $login_url        = ( false != $custom_login_url ) ? $custom_login_url : wp_login_url();
 
                     if ( ! empty( $redirect_to ) ) {
@@ -1117,7 +1117,7 @@
             public function b3_redirect_to_custom_password_reset() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
                     // Verify key / login combo
-                    $redirect_url = b3_get_resetpass_id( true );
+                    $redirect_url = b3_get_resetpass_url();
 
                     if ( isset( $_REQUEST[ 'key' ] ) && isset( $_REQUEST[ 'login' ] ) ) {
                         $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
@@ -1189,7 +1189,7 @@
                 } else {
 
                     // Non-admin users always go to their account page after login, if defined
-                    $account_page_url = b3_get_account_id( true );
+                    $account_page_url = b3_get_account_url();
                     if ( false != $account_page_url ) {
                         if ( ! in_array( $stored_roles, $user->roles ) ) {
                             $redirect_url = $account_page_url;
@@ -1215,7 +1215,7 @@
              * @since 1.0.6
              */
             public function b3_redirect_after_logout() {
-                $login_url = b3_get_login_id( true );
+                $login_url = b3_get_login_url();
                 if ( false != $login_url ) {
                     $redirect_url = $login_url;
                 } else {
@@ -1346,7 +1346,7 @@
                         if ( isset( $_POST[ 'pass1' ] ) ) {
                             if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
                                 // Passwords don't match
-                                $redirect_url = b3_get_resetpass_id( true );
+                                $redirect_url = b3_get_resetpass_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
@@ -1357,7 +1357,7 @@
 
                             if ( empty( $_POST[ 'pass1' ] ) ) {
                                 // Password is empty
-                                $redirect_url = b3_get_resetpass_id( true );
+                                $redirect_url = b3_get_resetpass_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
@@ -1368,7 +1368,7 @@
 
                             // Parameter checks OK, reset password
                             reset_password( $user, $_POST[ 'pass1' ] );
-                            $redirect_url = b3_get_login_id( true );
+                            $redirect_url = b3_get_login_url();
                             $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );
 
                             wp_safe_redirect( $redirect_url );

@@ -332,8 +332,7 @@
      * @return string
      */
     function b3_logout_link( $permalink, $post_id ) {
-
-        if ( b3_get_logout_id() == $post_id ) {
+        if ( b3_get_logout_url( true ) == $post_id ) {
             $permalink = add_query_arg( '_wpnonce', wp_create_nonce( 'log-out' ), $permalink );
         }
 
@@ -342,7 +341,7 @@
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
     /**
-     * Style recovery mail
+     * Style recovery mail (not in use yet)
      *
      * @since 2.0.0
      *

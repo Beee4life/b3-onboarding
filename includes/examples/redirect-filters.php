@@ -19,7 +19,7 @@
      */
     function b3_redirect_after_register( $url ) {
 
-        $login_url = b3_get_login_id( true );
+        $login_url = b3_get_login_url();
         if ( false != $login_url ) {
             $url = add_query_arg( 'registered', 'success', $login_url );
         }
