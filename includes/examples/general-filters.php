@@ -7,6 +7,8 @@
     /**
      * Filter main logo
      *
+     * Must be full URL.
+     *
      * @since 2.0.0
      *
      * @param $logo
@@ -19,11 +21,11 @@
 
         return $logo;
     }
-    add_filter( 'b3_main_logo', 'b3_main_logo' );
+    // add_filter( 'b3_main_logo', 'b3_main_logo' );
 
 
     /**
-     * Override main link color
+     * Override main link color - WITH HASHTAG
      *
      * @since 2.0.0
      *
@@ -33,9 +35,9 @@
      */
     function b3_link_color( $link_color ) {
 
-        $link_color = 'ff0000'; // red
-        $link_color = '6d32a8'; // purple
-        $link_color = 'ee6102'; // orange
+        $link_color = '#ff0000'; // red
+        $link_color = '#ee61'; // invalid hex code
+        $link_color = '#6d32a8'; // purple
 
         return $link_color;
     }
