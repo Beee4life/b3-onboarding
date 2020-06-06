@@ -272,10 +272,20 @@
                     if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
                         $color = $_POST[ 'b3_link_color' ];
                         if ( '#' == substr( $_POST[ 'b3_link_color' ], 0, 1 ) ) {
-                            $color = substr( $_POST[ 'b3_link_color' ], 1 );
+                            if ( empty( sanitize_hex_color( $color ) ) ) {
+                                $error_message = esc_html__( 'The length of your hex color is incorrect.', 'b3-onboarding' );
+                                $return_error  = true;
+                            }
+                        } else {
+                            // @TODO: add verification for rgba, hsl, rgb
+                            $error_message = esc_html__( "Your hex color is incorrect, it's missing a hashtag (#).", 'b3-onboarding' );
+                            if ( empty( sanitize_hex_color_no_hash( $color ) ) ) {
+                                $error_message = esc_html__( "Your hex color is incorrect, it's missing a hashtag (#) and the color value is incorrect.", 'b3-onboarding' );
+                            }
+                            $return_error  = true;
                         }
-                        if ( empty( sanitize_hex_color_no_hash( $color ) ) ) {
-                            B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Your hex code is incorrect.', 'b3-onboarding' ) );
+                        if ( isset( $return_error ) && true === $return_error ) {
+                            B3Onboarding::b3_errors()->add( 'error_wrong_hex_color', $error_message );
 
                             return;
                         }
