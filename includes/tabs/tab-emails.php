@@ -48,7 +48,7 @@
                     <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <?php // @TODO: n2h colorpicker ?>
-                <input name="b3_link_color" id="b3_link_color" type="text" value="<?php echo $link_color; ?>" placeholder="FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (without hashtag)', 'b3-onboarding' ); ?>
+                <input name="b3_link_color" id="b3_link_color" type="text" value="<?php echo $link_color; ?>" placeholder="#FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (with hashtag)', 'b3-onboarding' ); ?>
             <?php b3_get_close(); ?>
 
             <?php foreach( $email_boxes as $box ) { ?>
