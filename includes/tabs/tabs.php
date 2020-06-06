@@ -6,13 +6,13 @@
      *
      * @return string
      */
-    include( 'tabs/tab-emails.php' );
-    include( 'tabs/tab-integrations.php' );
-    include( 'tabs/tab-pages.php' );
-    include( 'tabs/tab-registration.php' );
-    include( 'tabs/tab-settings.php' );
-    include( 'tabs/tab-users.php' );
-    include( 'tabs/tab-wordpress.php' );
+    include( 'tab-emails.php' );
+    include( 'tab-integrations.php' );
+    include( 'tab-pages.php' );
+    include( 'tab-registration.php' );
+    include( 'tab-settings.php' );
+    include( 'tab-users.php' );
+    include( 'tab-wordpress.php' );
 
     function b3_render_tab_content( $tab ) {
         $content = '';
