@@ -1,14 +1,18 @@
 <?php
     /*
-    Plugin Name:    B3 - Onboarding
-    Plugin URI:     https://github.com/Beee4life/b3-onboarding
-    Description:    This plugin gives you more control over the registration/loginprocess (aka onboarding).
-    Version:        1.1.0
-    Author:         Beee
-    Author URI:     https://berryplasman.com
-    Tags:           user, management, registration, login, forgot password, reset password, account
-    Text-domain:    b3-onboarding
-    License:        GNU v3
+    Plugin Name:        B3 - Onboarding
+    Plugin URI:         https://github.com/Beee4life/b3-onboarding
+    Description:        This plugin styles the default Wordpress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
+    Version:            2.0.0
+    Requires at least:  4.3
+    Requires PHP:       7.0
+    Author:             Beee
+    Author URI:         https://berryplasman.com
+    Tags:               user, management, registration, login, forgot password, reset password, account
+    Text-domain:        b3-onboarding
+    License:            GPL v2 (or later)
+    License URI:        https://www.gnu.org/licenses/gpl-2.0.html
+    Domain Path:        /languages
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
      / _  / _/   _/   _/
@@ -55,14 +59,15 @@
                 }
             }
 
-            function initialize() {
+            function init() {
                 $this->settings = array(
-                    'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '1.1.0',
+                    'db_version' => '1.0',
+                    'path'       => trailingslashit( dirname( __FILE__ ) ),
+                    'version'    => '2.0.0',
                 );
 
                 // set text domain
-                load_plugin_textdomain( 'b3-onboarding', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+                // load_plugin_textdomain( 'b3-onboarding', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
                 // actions
                 register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
@@ -77,6 +82,7 @@
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
+                add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
@@ -94,12 +100,10 @@
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_no_approval_page' ) );
 
-
                 // Multisite specific
                 add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
                 add_action( 'network_admin_notices',                array( $this, 'b3_not_multisite_ready' ) );
-
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -107,7 +111,6 @@
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
-
 
                 // WP Login pages
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
@@ -127,18 +130,10 @@
                 include( 'includes/functions.php' );
                 include( 'includes/get-stuff.php' );
                 include( 'includes/help-tabs.php' );
-                include( 'includes/tabs.php' );
+
+                include( 'includes/tabs/tabs.php' );
 
                 include( 'includes/B3Shortcodes.php' );
-
-                // add_action( 'init', array( $this, 'b3_test' ) );
-            }
-
-
-            public function b3_test() {
-
-                $style = b3_default_email_styling( $link_color = 'FFA' );
-                // echo '<pre>'; var_dump($style); echo '</pre>'; exit;
 
             }
 
@@ -239,6 +234,12 @@
             }
 
 
+            public function b3_load_plugin_text_domain() {
+                $plugin_folder = dirname( plugin_basename( __FILE__ ) );
+                $locale = apply_filters( 'plugin_locale', get_locale(), $plugin_folder );
+                load_textdomain( $plugin_folder, trailingslashit( WP_LANG_DIR ) . $plugin_folder . '/' . $plugin_folder . '-' . $locale . '.mo' );
+                load_plugin_textdomain( $plugin_folder, FALSE, $plugin_folder . '/languages/' );
+            }
             /**
              * Redirects "profile.php" to custom account page
              */
@@ -536,7 +537,11 @@
                 add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  '/assets/images/logo-b3onboarding-small.png', '99' );
                 if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
                     include( 'includes/user-approval-page.php' ); // content for the settings page
-                    add_submenu_page( 'b3-onboarding', 'User Approval', 'User Approval', 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                    add_submenu_page( 'b3-onboarding', __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                }
+                if ( true == get_option( 'b3_debug_info', false ) ) {
+                    include( 'includes/debug-page.php' ); // content for the settings page
+                    add_submenu_page( 'b3-onboarding', __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                 }
             }
 
@@ -1683,7 +1688,7 @@
 
             if ( ! isset( $b3_onboarding ) ) {
                 $b3_onboarding = new B3Onboarding();
-                $b3_onboarding->initialize();
+                $b3_onboarding->init();
             }
 
             return $b3_onboarding;
