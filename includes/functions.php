@@ -38,7 +38,7 @@
             'b3_forgot_password_subject',
             'b3_forgotpass_page_id', // set on activate
             'b3_front_end_approval',
-            'b3_link_color', // not in use yet
+            'b3_link_color',
             'b3_login_logo',
             'b3_login_page_id', // set on activate
             'b3_loginpage_bg_color',
