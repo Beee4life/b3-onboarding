@@ -358,5 +358,4 @@
 
         return $email;
     }
-    add_filter( 'recovery_mode_email', 'b3_recovery_mail', 5, 2 );
-
+    // add_filter( 'recovery_mode_email', 'b3_recovery_mail', 5, 2 );
