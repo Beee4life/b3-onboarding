@@ -174,7 +174,7 @@
 
 
             /*
-             * Do stuff upon plugin activation
+             * Verify input through filters
              *
              * @since 2.0.0
              */
@@ -1775,21 +1775,7 @@
                     );
                 }
 
-                $from_email = apply_filters( 'b3_notification_sender_email', b3_get_notification_sender_email() );
-                if ( false == is_email( $from_email ) ) {
-                    echo '<div class="error"><p>'. __( 'The email address you have set in the filter "b3_notification_sender_email" is invalid.', 'b3-onboarding' ) . '</p></div>';
-                }
-
-                $footer_text = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
-                if ( false == is_string( $footer_text ) ) {
-                    echo '<div class="error"><p>'. __( 'The footer text you have set in the filter "b3_email_footer_text" is not a string.', 'b3-onboarding' ) . '</p></div>';
-                }
-
-                $link_color = apply_filters( 'b3_link_color', b3_get_link_color() );
-                if ( false == is_string( $link_color ) ) {
-                    echo '<div class="error"><p>'. __( 'The color you set in the filter "b3_link_color" is not valid.', 'b3-onboarding' ) . '</p></div>';
-                }
-
+                do_action( 'b3_verify_filter_input' );
 
             }
         }

@@ -302,3 +302,64 @@
     add_action( 'b3_show_form_messages', 'b3_show_form_messages' );
 
 
+    /**
+     * Get all filtered output and verify it
+     *
+     * @since 2.0.0
+     */
+    function b3_verify_filter_input() {
+
+        $error_messages = array();
+        $from_email     = apply_filters( 'b3_notification_sender_email', 'no_filter_defined' );
+        $footer_text    = apply_filters( 'b3_email_footer_text', 'no_filter_defined' );
+        $link_color     = apply_filters( 'b3_link_color', 'no_filter_defined' );
+        $logo           = apply_filters( 'b3_main_logo', 'no_filter_defined' );
+        $extra_fields   = apply_filters( 'b3_add_filter_extra_fields_values', 'no_filter_defined' );
+
+        if ( 'no_filter_defined' != $from_email ) {
+            if ( false == is_email( $from_email ) ) {
+                $error_messages[] = __( 'The email address you have set in the filter "b3_notification_sender_email" is invalid.', 'b3-onboarding' );
+            }
+        }
+
+        if ( 'no_filter_defined' != $footer_text ) {
+            if ( false == is_string( $footer_text ) ) {
+                $error_messages[] = __( 'The footer text you have set in the filter "b3_email_footer_text" is not a string.', 'b3-onboarding' );
+            }
+        }
+
+        if ( 'no_filter_defined' != $link_color ) {
+            if ( false == is_string( $link_color ) ) {
+                $error_messages[] = __( 'The link color you set in the filter "b3_link_color" is not a string.', 'b3-onboarding' );
+            } elseif ( false == sanitize_hex_color( $link_color ) ) {
+                $error_messages[] = __( 'The link color you set in the filter "b3_link_color" is not valid.', 'b3-onboarding' );
+            }
+        }
+
+        if ( 'no_filter_defined' != $logo ) {
+            if ( false == is_string( $logo ) ) {
+                $error_messages[] = __( 'The logo url you set in the filter "b3_main_logo" is not a string.', 'b3-onboarding' );
+            } elseif ( false === wp_http_validate_url( $logo ) ) {
+                $error_messages[] = __( 'The logo url you set in the filter "b3_main_logo" is not a valid url.', 'b3-onboarding' );
+            } elseif ( ! file_exists( $logo ) ) {
+                $error_messages[] = __( 'The logo url you set in the filter "b3_main_logo" does not exist or is unreachable.', 'b3-onboarding' );
+            }
+        }
+
+        if ( 'no_filter_defined' != $extra_fields ) {
+            // @TODO: add in-depth field validation
+            if ( false == is_array( $extra_fields ) ) {
+                $error_messages[] = __( 'The extra field values you set in the filter "b3_add_filter_extra_fields_values" is not an array.', 'b3-onboarding' );
+            } elseif ( empty( $extra_fields ) ) {
+                $error_messages[] = __( 'The extra field values you set in the filter "b3_add_filter_extra_fields_values" is an empty array.', 'b3-onboarding' );
+            }
+        }
+
+        if ( ! empty( $error_messages ) ) {
+            foreach( $error_messages as $message ) {
+                echo '<div class="error"><p>' . $message . '</p></div>';
+            }
+        }
+
+    }
+    add_action( 'b3_verify_filter_input', 'b3_verify_filter_input' );
