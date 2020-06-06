@@ -57,7 +57,7 @@
             update_user_meta( $user_id, 'last_name', sanitize_text_field( $_POST[ 'last_name' ] ) );
         }
 
-        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
+        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', array() );
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( isset( $field[ 'id' ] ) ) {
@@ -66,7 +66,7 @@
             }
         }
 
-        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );
+        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', array() );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             foreach( $hidden_field_values as $meta_key => $meta_value ) {
                 update_user_meta( $user_id, $meta_key, $meta_value );
@@ -144,7 +144,7 @@
 
             if ( in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
                 $message = b3_replace_template_styling( $message );
-                $message = strtr( $message, b3_replace_email_vars( [] ) );
+                $message = strtr( $message, b3_replace_email_vars( array() ) );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
                 $headers = array(
                     'From: ' . $from_name . ' <' . $from_email . '>',

@@ -42,7 +42,7 @@
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
         $message     = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
         $message     = b3_replace_template_styling( $message );
-        $message     = strtr( $message, b3_replace_email_vars( [] ) );
+        $message     = strtr( $message, b3_replace_email_vars( array() ) );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
         $headers     = array(
             'From: ' . $from_name . ' <' . $from_email . '>',
@@ -203,7 +203,7 @@
      * @since 2.0.0
      */
     function b3_add_custom_fields_registration() {
-        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
+        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', array() );
         if ( is_array( $extra_field_values ) && ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
                 echo b3_render_extra_field( $extra_field );
@@ -233,7 +233,7 @@
      * @since 2.0.0
      */
     function b3_hidden_fields_registration_form() {
-        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );
+        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', array() );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             $hidden_fields = '';
             foreach( $hidden_field_values as $key => $value ) {
@@ -257,7 +257,7 @@
     function b3_show_form_messages( $attributes = false ) {
 
         if ( false != $attributes ) {
-            $messages          = [];
+            $messages          = array();
             $show_errors       = false;
             $registration_type = get_option( 'b3_registration_type', false );
 

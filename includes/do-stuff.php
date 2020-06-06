@@ -53,7 +53,7 @@
      * @param array $definitions
      * @param bool  $create_new_site
      */
-    function b3_create_pages( $definitions = [], $create_new_site = false ) {
+    function b3_create_pages( $definitions = array(), $create_new_site = false ) {
         foreach ( $definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
@@ -67,7 +67,7 @@
                 // no stored id, so continue
             }
 
-            $existing_page = [];
+            $existing_page = array();
             if ( false == $create_new_site ) {
                 $existing_page_args = [
                     'post_type'      => 'page',
@@ -128,7 +128,7 @@
             $input_placeholder = ( isset( $extra_field[ 'placeholder' ] ) && ! empty( $extra_field[ 'placeholder' ] ) ) ? $extra_field[ 'placeholder' ] : false;
             $input_required    = ( isset( $extra_field[ 'required' ] ) && ! empty( $extra_field[ 'required' ] ) ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
             $input_type        = ( isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
-            $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : [];
+            $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : array();
             $field_value       = ( isset( $_POST[ $input_id ] ) ) ? $_POST[ $input_id ] : '';
 
             if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {

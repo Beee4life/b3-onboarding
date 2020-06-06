@@ -217,7 +217,7 @@
                         $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
 
                         // Error messages
-                        $errors = [];
+                        $errors = array();
                         if ( isset( $_REQUEST[ 'error' ] ) ) {
                             $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                             foreach ( $error_codes as $code ) {

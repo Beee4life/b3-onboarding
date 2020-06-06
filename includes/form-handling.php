@@ -315,7 +315,7 @@
                         delete_option( 'b3_disable_admin_notification_new_user' );
                     }
 
-                    if ( in_array( get_option( 'b3_registration_type', [] ), [ 'open', 'email_activation' ] ) ) {
+                    if ( in_array( get_option( 'b3_registration_type', array() ), [ 'open', 'email_activation' ] ) ) {
                         if ( isset( $_POST[ 'b3_account_activated_subject' ] ) ) {
                             update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ], true );
                         }

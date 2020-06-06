@@ -189,11 +189,11 @@
                  */
                 $aw_activation = get_role( 'b3_activation' );
                 if ( ! $aw_activation ) {
-                    add_role( 'b3_activation', __( 'Awaiting activation' ), [] );
+                    add_role( 'b3_activation', __( 'Awaiting activation' ), array() );
                 }
                 $aw_approval = get_role( 'b3_approval' );
                 if ( ! $aw_approval ) {
-                    add_role( 'b3_approval', __( 'Awaiting approval' ), [] );
+                    add_role( 'b3_approval', __( 'Awaiting approval' ), array() );
                 }
 
             }
@@ -337,7 +337,7 @@
                 $recaptcha       = get_option( 'b3_recaptcha', false );
                 $recaptcha_login = get_option( 'b3_recaptcha_login', false );
                 $style_pages     = get_option( 'b3_style_default_pages', false );
-                $extra_fields    = apply_filters( 'b3_add_filter_extra_fields_values', [] );
+                $extra_fields    = apply_filters( 'b3_add_filter_extra_fields_values', array() );
 
                 if ( ! empty( $extra_fields ) || $logo || $privacy || $recaptcha || $recaptcha_login || $style_pages ) {
                     echo '<style type="text/css">';
@@ -536,7 +536,7 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
-                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__), [], $this->settings['version'] );
+                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__), array(), $this->settings['version'] );
                 wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
             }
 
@@ -545,7 +545,7 @@
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
-                wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->settings['version'] );
+                wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings['version'] );
                 wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
 
                 // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
@@ -808,7 +808,7 @@
              * at the end of the page.
              */
             public function b3_add_captcha_js_to_footer() {
-                wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [], false, true );
+                wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
             }
 
 
@@ -1282,6 +1282,10 @@
             public function b3_do_password_lost() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $errors = retrieve_password();
+
+                    if ( isset( $_REQUEST[ 'b3_form' ] ) ) {
+                        // it's our custom form, so custom redirect there
+                    }
                     if ( is_wp_error( $errors ) ) {
                         // errors found
                         $redirect_url = b3_get_forgotpass_id( true );
@@ -1309,11 +1313,16 @@
                     $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
 
                     if ( $rp_key && $rp_login ) {
-
                         $user = check_password_reset_key( $rp_key, $rp_login );
+
+                        // @TODO: check for hidden key b3_form
+                        if ( isset( $_REQUEST[ 'b3_form' ] ) ) {
+                            // it's our custom form, so custom redirect there
+                        }
+
                         if ( ! $user || is_wp_error( $user ) ) {
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
-                                // @TODO: change link to proper login url
+                                // @TODO: change link to proper login url + add query arg
                                 wp_safe_redirect( get_home_url( '', 'login?login=expiredkey' ) );
                             } else {
                                 wp_safe_redirect( get_home_url( '', 'login?login=invalidkey' ) );
@@ -1348,6 +1357,7 @@
                             reset_password( $user, $_POST[ 'pass1' ] );
                             $redirect_url = b3_get_login_id( true );
                             $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );
+
                             wp_safe_redirect( $redirect_url );
                             exit;
 
@@ -1511,7 +1521,14 @@
              * @return int|WP_Error
              */
             private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
-                $errors = new WP_Error();
+                $errors        = new WP_Error();
+                $privacy_error = b3_verify_privacy();
+                $user_data     = array(
+                    'user_login' => $user_login,
+                    'user_email' => $user_email,
+                    'user_pass'  => '', // @TODO: for custom passwords
+                    'role'       => $role,
+                );
 
                 if ( username_exists( $user_login ) ) {
                     $errors->add( 'username_exists', $this->b3_get_error_message( 'username_exists' ) );
@@ -1543,19 +1560,11 @@
                     return $errors;
                 }
 
-                $privacy_error = b3_verify_privacy();
                 if ( true == $privacy_error ) {
                     $errors->add( 'no_privacy', $this->b3_get_error_message( 'no_privacy' ) );
 
                     return $errors;
                 }
-
-                $user_data = array(
-                    'user_login' => $user_login,
-                    'user_email' => $user_email,
-                    'user_pass'  => '', // @TODO: for custom passwords
-                    'role'       => $role,
-                );
 
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
@@ -1589,7 +1598,7 @@
 
                 $errors                = false;
                 $main_register_type    = get_site_option( 'registration' );
-                $subsite_register_type = get_option( 'b3_registration_type', [] );
+                $subsite_register_type = get_option( 'b3_registration_type', array() );
                 $user_registered       = false;
 
                 if ( is_main_site() ) {

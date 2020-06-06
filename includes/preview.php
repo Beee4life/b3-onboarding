@@ -64,7 +64,7 @@
 
             }
             $content = htmlspecialchars_decode( $content );
-            $content = strtr( $content, b3_replace_email_vars( [] ) );
+            $content = strtr( $content, b3_replace_email_vars( array() ) );
 
         }
     ?>

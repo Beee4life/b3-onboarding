@@ -85,11 +85,11 @@
      */
     function b3_get_email_boxes() {
 
-        $activate_email_boxes = [];
-        $new_user_boxes       = [];
+        $activate_email_boxes = array();
+        $new_user_boxes       = array();
         $registration_type    = get_option( 'b3_registration_type', false );
-        $request_access_box   = [];
-        $welcome_user_boxes   = [];
+        $request_access_box   = array();
+        $welcome_user_boxes   = array();
 
         $settings_box = array(
             array(
@@ -179,7 +179,7 @@
      * @return array
      */
     function b3_get_registration_types() {
-        $registration_options = [];
+        $registration_options = array();
         $closed_option = array(
             array(
                 'value' => 'closed',
@@ -726,7 +726,7 @@
 
         $output = '';
         if ( true != get_option( 'b3_disable_action_links', false ) ) {
-            $page_types = [];
+            $page_types = array();
 
             switch( $current_form ) {
 

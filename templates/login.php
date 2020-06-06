@@ -15,6 +15,7 @@
     <?php } ?>
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
+        <input name="b3_form" value="custom" type="hidden" />
 
         <?php do_action( 'b3_show_form_messages', $attributes ); ?>
 

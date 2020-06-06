@@ -23,7 +23,7 @@
     function b3_password_changed_email( $wp_password_change_notification_email, $user, $blogname ) {
         $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login ); // default: Password changed for user: {username}
         $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars( [] ) );
+        $message = strtr( $message, b3_replace_email_vars( array() ) );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
         $subject = 'User changed password'; // default: [blog name] Password changed
 
@@ -63,7 +63,7 @@
 
                 $admin_email = apply_filters( 'b3_request_access_message_admin', b3_request_access_message_admin() );
                 $admin_email = b3_replace_template_styling( $admin_email );
-                $admin_email = strtr( $admin_email, b3_replace_email_vars( [] ) );
+                $admin_email = strtr( $admin_email, b3_replace_email_vars( array() ) );
                 $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
 
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
@@ -129,7 +129,7 @@
 
                 $user_email = b3_request_access_message_user();
                 $user_email = b3_replace_template_styling( $user_email );
-                $user_email = strtr( $user_email, b3_replace_email_vars( [] ) );
+                $user_email = strtr( $user_email, b3_replace_email_vars( array() ) );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;

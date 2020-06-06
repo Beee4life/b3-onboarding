@@ -15,6 +15,7 @@
     <form name="resetpassform" id="resetpassform" action="<?php echo site_url( 'wp-login.php?action=resetpass' ); ?>" method="post" autocomplete="off">
         <input name="rp_login" type="hidden" value="<?php echo esc_attr( $attributes[ 'login' ] ); ?>" autocomplete="off"/>
         <input name="rp_key" type="hidden" value="<?php echo esc_attr( $attributes[ 'key' ] ); ?>"/>
+        <input name="b3_form" value="custom" type="hidden" />
 
         <?php do_action( 'b3_show_form_messages', $attributes ); ?>
 
