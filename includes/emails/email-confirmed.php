@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for 'Email confirmed' email (user)
+     *
+     * @since 1.0.0
+     */
     $email_activation_subject = b3_get_email_activation_subject_user();
     $email_activation_message = b3_get_email_activation_message_user();
 ?>

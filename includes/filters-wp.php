@@ -12,6 +12,8 @@
     /**
      * Filter password change notification mail (admin)
      *
+     * @since 2.0.0
+     *
      * @param $wp_password_change_notification_email
      * @param $user
      * @param $blogname
@@ -33,6 +35,8 @@
 
     /**
      * Override new user notification for admin
+     *
+     * @since 1.0.6
      *
      * @param $wp_new_user_notification_email_admin
      * @param $user
@@ -90,6 +94,8 @@
 
     /**
      * Override new user notification email for user
+     *
+     * @since 1.0.6
      *
      * @param $wp_new_user_notification_email
      * @param $user
@@ -170,6 +176,8 @@
 
     /**
      * Returns the message subject for the password reset mail.
+     *
+     * @since 1.0.6
      *
      * @param $subject
      * @param $user_login

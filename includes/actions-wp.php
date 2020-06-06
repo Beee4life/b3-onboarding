@@ -6,6 +6,8 @@
     /**
      * Add custom fields to Wordpress' default register form
      *
+     * @since 1.0.0
+     *
      * @TODO: maybe use hooks for first/last name fields
      */
     function b3_add_registration_fields() {
@@ -43,6 +45,8 @@
     /**
      * Update usermeta after user register
      *
+     * @since 1.0.0
+     *
      * @param $user_id
      */
     function b3_update_user_meta_after_register( $user_id ) {
@@ -77,6 +81,13 @@
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
 
+    /**
+     * Do stuff after user registers.
+     *
+     * @since 1.0.0
+     *
+     * @param $user_id
+     */
     function b3_do_stuff_after_wp_register( $user_id ) {
         // get registration type
         $registration_type = get_option( 'b3_registration_type', false );
@@ -100,6 +111,8 @@
     /**
      * Add recaptcha to login form
      *
+     * @since 2.0.0
+     *
      * @TODO: check if needs to be on login_form (probably due to WP form)
      *
      * @param $user_id
@@ -115,6 +128,8 @@
 
     /**
      * Do stuff just before deleting the user (and userdata is still available)
+     *
+     * @since 2.0.0
      *
      * @param $user_id
      */
@@ -149,6 +164,8 @@
     /**
      * Add approval to admin bar
      *
+     * @since 2.0.0
+     *
      * @param $wp_admin_bar
      */
     function b3_add_toolbar( $wp_admin_bar ) {
@@ -176,6 +193,8 @@
 
     /**
      * Remove admin bar for users who are not allowed to access admin
+     *
+     * @since 2.0.0
      */
     function remove_admin_bar() {
         $hide_admin_bar = get_option( 'b3_hide_admin_bar', false );

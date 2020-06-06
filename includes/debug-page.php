@@ -1,6 +1,8 @@
 <?php
     /**
      * Content for the 'debug page'
+     *
+     * @since 2.0.0
      */
     function b3_debug_page() {
 

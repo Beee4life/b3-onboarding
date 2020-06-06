@@ -1,3 +1,10 @@
+<?php
+    /**
+     * Ouptuts fields for forgot password form
+     *
+     * @since 1.0.0
+     */
+?>
 <div class="b3_page b3_page--lostpass">
     <?php if ( $attributes[ 'title' ] ) { ?>
         <h3>

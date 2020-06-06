@@ -3,7 +3,7 @@
     /**
      * Class B3SidebarWidget
      */
-    class B3SidebarWidget extends WP_Widget {
+    class B3_Sidebar_Widget extends WP_Widget {
 
         function __construct() {
             parent::__construct(
@@ -18,6 +18,8 @@
 
         /**
          * Front-end display of widget.
+         *
+         * @since 1.0.0
          *
          * @see WP_Widget::widget()
          *
@@ -135,6 +137,8 @@
         /**
          * Back-end widget form.
          *
+         * @since 1.0.0
+         *
          * @see WP_Widget::form()
          *
          * @param array $instance Previously saved values from database.
@@ -188,6 +192,8 @@
         /**
          * Sanitize widget form values as they are saved.
          *
+         * @since 1.0.0
+         *
          * @see WP_Widget::update()
          *
          * @param array $new_instance Values just sent to be saved.
@@ -208,4 +214,4 @@
             return $instance;
         }
     }
-    register_widget( 'B3SidebarWidget' );
+    register_widget( 'B3_Sidebar_Widget' );

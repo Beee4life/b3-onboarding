@@ -120,26 +120,62 @@
                 // add_filter( 'login_form_middle',                    array( $this, 'b3_loginform_middle' ), 10, 2 );
                 // add_filter( 'login_form_bottom',                    array( $this, 'b3_loginform_footer' ), 10, 2 );
 
-                include( 'includes/actions-wp.php' );
+                /*
+                 * This file contains all actions on plugin hooks
+                 */
                 include( 'includes/actions-b3.php' );
+                /*
+                 * This file contains all actions on Wordpress hooks
+                 */
+                include( 'includes/actions-wp.php' );
+                /*
+                 * This file contains functions which 'do' something with a value
+                 */
                 include( 'includes/do-stuff.php' );
+                /*
+                 * Renders admin input fields
+                 */
                 include( 'includes/emails.php' );
-                include( 'includes/filters-wp.php' );
+                /*
+                 * This file contains example filters
+                 */
                 include( 'includes/filters-b3.php' );
+                /*
+                 * This file contains all 'Wordpress' hooks
+                 */
+                include( 'includes/filters-wp.php' );
+                /*
+                 * Processes most forms
+                 */
                 include( 'includes/form-handling.php' );
+                /*
+                 * This file contains simple functions which are called throughout the plugin
+                 */
                 include( 'includes/functions.php' );
+                /*
+                 * This file contains simple functions which are called throughout the plugin
+                 */
                 include( 'includes/get-stuff.php' );
+                /*
+                 * This file contains all content for the help tabs/contextual help
+                 */
                 include( 'includes/help-tabs.php' );
-
+                /*
+                 * Functions + renders for admin pages/tabs
+                 */
                 include( 'includes/tabs/tabs.php' );
-
-                include( 'includes/B3Shortcodes.php' );
+                /*
+                 * Functions + renders for shortcodes/front-end forms
+                 */
+                include( 'includes/class-b3-shortcodes.php' );
 
             }
 
 
-            /**
+            /*
              * Do stuff upon plugin activation
+             *
+             * @since 2.0.0
              */
             public function b3_plugin_activation() {
 
@@ -165,6 +201,8 @@
 
             /**
              * Set default settings
+             *
+             * @since 2.0.0
              */
             private function b3_set_default_settings() {
 
@@ -255,7 +293,7 @@
                         if ( false != $page_link ) {
                             $redirect_to = $page_link;
                         } else {
-                            $redirect_to = home_url();
+                            $redirect_to = get_home_url();
                         }
                     }
 
@@ -287,6 +325,8 @@
 
             /**
              * Add login styling
+             *
+             * @since 2.0.0
              */
             public function b3_add_login_styling() {
 
@@ -441,7 +481,7 @@
             }
 
 
-            /**
+            /*
              * Protect some pages
              */
             public function b3_template_redirect() {
@@ -492,7 +532,7 @@
             }
 
 
-            /**
+            /*
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
@@ -501,7 +541,7 @@
             }
 
 
-            /**
+            /*
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
@@ -529,7 +569,7 @@
             }
 
 
-            /**
+            /*
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
@@ -546,7 +586,7 @@
             }
 
 
-            /**
+            /*
              * Inline js to disable registration option
              */
             public function b3_add_js_head() {
@@ -570,21 +610,27 @@
             }
 
 
-            /**
+            /*
              * Register widgets (if activated)
              */
             public function b3_register_widgets() {
                 if ( true == get_option( 'b3_sidebar_widget', false ) ) {
-                    include( 'includes/B3SidebarWidget.php' );
+                    /*
+                     * Includes sidebar widget function + call
+                     */
+                    include( 'includes/class-b3-sidebar-widget.php' );
                 }
             }
 
 
-            /**
+            /*
              * Add dashboard widget
              */
             public function b3_add_dashboard_widget() {
                 if ( true == get_option( 'b3_dashboard_widget', false ) ) {
+                    /*
+                     * Includes dashboard widget function + call
+                     */
                     include( 'includes/dashboard-widget.php' );
                 }
             }
@@ -728,16 +774,16 @@
                                 $prefix     = false;
                             } elseif ( strpos( $code, 'error' ) !== false ) {
                                 $notice_class = 'notice notice-error error ';
-                                $prefix       = esc_html__( 'Error', 'action-logger' );
+                                $prefix       = esc_html__( 'Error', 'b3-onboarding' );
                             } elseif ( strpos( $code, 'warning' ) !== false ) {
                                 $notice_class = 'notice notice-warning ';
-                                $prefix       = esc_html__( 'Warning', 'action-logger' );
+                                $prefix       = esc_html__( 'Warning', 'b3-onboarding' );
                             } elseif ( strpos( $code, 'info' ) !== false ) {
                                 $notice_class = 'notice notice-info ';
                                 $prefix       = false;
                             } else {
                                 $notice_class = 'notice--error ';
-                                $prefix       = esc_html__( 'Error', 'action-logger' );
+                                $prefix       = esc_html__( 'Error', 'b3-onboarding' );
                             }
                         }
                         echo '<div class="' . $notice_class . 'is-dismissible">';
@@ -1065,9 +1111,9 @@
                         if ( ! $user || is_wp_error( $user ) ) {
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
                                 // @TODO: change link to proper login url
-                                wp_safe_redirect( home_url( 'login?login=expiredkey' ) );
+                                wp_safe_redirect( get_home_url( '', 'login?login=expiredkey' ) );
                             } else {
-                                wp_safe_redirect( home_url( 'login?login=invalidkey' ) );
+                                wp_safe_redirect( get_home_url( '', 'login?login=invalidkey' ) );
                             }
                             exit;
                         }
@@ -1103,6 +1149,8 @@
 
             /**
              * Returns the URL to which the user should be redirected after the (successful) login.
+             *
+             * @since 1.0.6
              *
              * @param string           $redirect_to           The redirect destination URL.
              * @param string           $requested_redirect_to The requested redirect destination URL passed as a parameter.
@@ -1150,8 +1198,10 @@
 
             /**
              * Redirect to custom login page after the user has been logged out.
+             *
+             * @since 1.0.6
              */
-            function b3_redirect_after_logout() {
+            public function b3_redirect_after_logout() {
                 $login_url = b3_get_login_id( true );
                 if ( false != $login_url ) {
                     $redirect_url = $login_url;
@@ -1166,6 +1216,8 @@
 
             /**
              * Initiates email activation ('normal site')
+             *
+             * @since 1.0.6
              */
             function b3_do_user_activate() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -1224,6 +1276,8 @@
 
             /**
              * Initiates password reset.
+             *
+             * @since 1.0.6
              */
             public function b3_do_password_lost() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -1246,6 +1300,8 @@
 
             /**
              * Resets the user's password if the password reset form was submitted (with custom passwords)
+             *
+             * @since 1.0.6
              */
             public function b3_do_password_reset() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -1258,9 +1314,9 @@
                         if ( ! $user || is_wp_error( $user ) ) {
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
                                 // @TODO: change link to proper login url
-                                wp_safe_redirect( home_url( 'login?login=expiredkey' ) );
+                                wp_safe_redirect( get_home_url( '', 'login?login=expiredkey' ) );
                             } else {
-                                wp_safe_redirect( home_url( 'login?login=invalidkey' ) );
+                                wp_safe_redirect( get_home_url( '', 'login?login=invalidkey' ) );
                             }
                             exit;
                         }
@@ -1306,6 +1362,8 @@
 
             /**
              * Finds and returns a matching error message for the given error code.
+             *
+             * @since 1.0.6
              *
              * @param string $error_code The error code to look up.
              *
@@ -1359,8 +1417,7 @@
                         return esc_html__( 'You have sucessfully registered but need to confirm your email first. Please check your email for an activation link.', 'b3-onboarding' );
 
                     // Lost password
-                    // @TODO: check if still used
-                    case 'invalid_email':
+                    // @TODO: check if still used (maybe WP default?)
                     case 'invalidcombo':
                         // @TODO: change this for security reasons
                         return esc_html__( 'There are no users registered with this email address.', 'b3-onboarding' );
@@ -1400,7 +1457,7 @@
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
 
                     // Reset password
-                    case 'expiredkey':
+                    case 'expiredkey':  // same error as next
                     case 'invalidkey':
                         return esc_html__( 'The password reset link you used is not valid anymore.', 'b3-onboarding' );
 
@@ -1425,8 +1482,8 @@
 
                     // Admin
                     // @TODO: check , because technically not an error
-                    case 'settings_saved':
-                    case 'pages_saved':
+                    case 'settings_saved': // same message
+                    case 'pages_saved': // same message
                     case 'emails_saved':
                         return esc_html__( 'Settings saved', 'b3-onboarding' );
 
@@ -1445,6 +1502,8 @@
 
             /**
              * Validates and then completes the (normal) user signup process if all went well.
+             *
+             * @since 1.0.6
              *
              * @param string $user_login
              * @param string $user_email
@@ -1517,6 +1576,8 @@
             /**
              * Validates and then completes WPMU signup process if all went well.
              *
+             * @since 1.0.6
+             *
              * @param       $user_name
              * @param       $user_email
              * @param       $sub_domain
@@ -1575,6 +1636,8 @@
             /**
              * Renders the contents of the given template to a string and returns it.
              *
+             * @since 1.0.6
+             *
              * @param string $template_name The name of the template to render (without .php)
              * @param array $attributes The PHP variables for the template
              *
@@ -1614,6 +1677,8 @@
 
             /**
              * Check post values of saved options
+             *
+             * @since 2.0.0
              */
             public function b3_check_options_post() {
                 // @TODO: add nonce check
@@ -1633,17 +1698,27 @@
 
             /**
              * For filter 'login_headerurl', replaces the url of the logo on the login page
+             *
+             * @since 1.0.6
+             *
+             * @param $login_header_url
+             *
+             * @return string
              */
-            public function b3_login_logo_url() {
+            public function b3_login_logo_url( $login_header_url ) {
                 return get_home_url();
             }
 
             /**
              * For filter 'login_headertitle', replaces the page-title on the login page
              *
-             * @return string
+             * @since 1.0.6
+             *
+             * @param $login_headertext
+             *
+             * @return string|void
              */
-            public function b3_login_logo_url_title() {
+            public function b3_login_logo_url_title( $login_headertext ) {
                 $title            = get_bloginfo( 'name', 'display' );
                 $site_description = get_bloginfo( 'description', 'display' );
                 if ( $site_description ) {
@@ -1655,6 +1730,8 @@
 
             /**
              * Add network admin message (MS) if plugin is activated
+             *
+             * @since 2.0.0
              */
             public function b3_not_multisite_ready() {
                 if ( isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
@@ -1667,6 +1744,8 @@
 
             /**
              * Add admin message if front-end approval is set, but no page is selected
+             *
+             * @since 1.0.6
              */
             public function b3_no_approval_page() {
                 if ( false == get_option( 'b3_approval_page_id', false ) && true == get_option( 'b3_front_end_approval', false ) ) {

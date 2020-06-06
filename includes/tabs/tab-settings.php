@@ -1,7 +1,8 @@
 <?php
-
     /**
      * Render settings tab
+     *
+     * @since 1.0.0
      *
      * @return false|string
      */

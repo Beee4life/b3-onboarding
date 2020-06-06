@@ -1,11 +1,11 @@
 <?php
-    /*
-     * This file contains functions hooked to the plugin's own hooks
-     */
-
+    // This file contains functions hooked to the plugin's own hooks
 
     /**
      * Ouptuts default login/email field
+     *
+     * @since 1.0.0
+     *
      */
     function b3_login_email_fields() {
         ob_start();
@@ -27,6 +27,8 @@
 
     /**
      * Do stuff afer manual activation by admin
+     *
+     * @since 1.0.0
      *
      * @param $user_id
      */
@@ -53,6 +55,8 @@
 
     /**
      * Do stuff after user clicked activate link
+     *
+     * @since 1.0.0
      *
      * @TODO: check for a Wordpress hook to hook to
      * @TODO: look into filter 'registration_redirect'
@@ -87,6 +91,8 @@
     /**
      * Add reCAPTCHA check
      *
+     * @since 2.0.0
+     *
      * @param $recaptcha_public
      * @param string $form_type
      */
@@ -113,6 +119,8 @@
 
     /**
      * Add field for subdomain when WPMU is active (not used yet)
+     *
+     * @since 1.0.0
      */
     function b3_add_subdomain_field() {
         if ( is_multisite() ) {
@@ -135,6 +143,8 @@
 
     /**
      * Output for first/last name fields
+     *
+     * @since 0.8-beta
      */
     function b3_first_last_name_fields() {
         $show_first_last_name = get_option( 'b3_activate_first_last', false );
@@ -159,6 +169,8 @@
 
     /**
      * Output the password fields (not in use yet)
+     *
+     * @since 0.8-beta
      */
     function b3_add_password_fields() {
         $show_custom_passwords = get_option( 'b3_use_custom_passwords', false );
@@ -187,6 +199,8 @@
 
     /**
      * Function to output any custom fields
+     *
+     * @since 2.0.0
      */
     function b3_add_custom_fields_registration() {
         $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', [] );
@@ -215,6 +229,8 @@
 
     /**
      * Output any hidden fields
+     *
+     * @since 2.0.0
      */
     function b3_hidden_fields_registration_form() {
         $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', [] );
@@ -231,6 +247,8 @@
 
     /**
      * Echo error/info message above a (custom) form
+     *
+     * @since 2.0.0
      *
      * @param bool $attributes
      *

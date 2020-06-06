@@ -3,6 +3,8 @@
     /**
      * Return default email styling
      *
+     * @since 1.0.6
+     *
      * @return false|string
      */
     function b3_default_email_styling( $link_color = false ) {
@@ -23,6 +25,8 @@
     /**
      * Return default email template
      *
+     * @since 1.0.6
+     *
      * @return false|string
      */
     function b3_default_email_template( $hide_logo = false ) {
@@ -37,6 +41,8 @@
 
     /**
      * Default email content
+     *
+     * @since 1.0.6
      *
      * @return false|string
      */
@@ -53,6 +59,8 @@
     /**
      * Default email footer
      *
+     * @since 2.0.0
+     *
      * @return false|string
      */
     function b3_default_email_footer() {
@@ -64,6 +72,8 @@
     /**
      * Default main logo
      *
+     * @since 2.0.0
+     *
      * @return false|string
      */
     function b3_default_main_logo() {
@@ -73,6 +83,8 @@
     /**
      * Default new user subject (admin)
      *
+     * @since 1.0.6
+     *
      * @return string
      */
     function b3_default_new_user_admin_subject() {
@@ -81,6 +93,8 @@
 
     /**
      * Default new user message (admin)
+     *
+     * @since 1.0.6
      *
      * @return string
      */
@@ -97,6 +111,8 @@
     /**
      * Default account rejected subject (user)
      *
+     * @since 2.0.0
+     *
      * @return string
      */
     function b3_default_account_activated_subject() {
@@ -105,6 +121,8 @@
 
     /**
      * Default account activated message (user)
+     *
+     * @since 2.0.0
      *
      * @return string
      */
@@ -123,6 +141,8 @@
     /**
      * Default account approved subject (admin)
      *
+     * @since 2.0.0
+     *
      * @return string
      */
     function b3_default_request_access_subject_admin() {
@@ -131,6 +151,8 @@
 
     /**
      * Default account approved message (admin)
+     *
+     * @since 2.0.0
      *
      * @return string
      */
@@ -145,6 +167,8 @@
     /**
      * Default account approved subject (user)
      *
+     * @since 2.0.0
+     *
      * @return string
      */
     function b3_default_request_access_subject_user() {
@@ -153,6 +177,8 @@
 
     /**
      * Default account approved message (user)
+     *
+     * @since 2.0.0
      *
      * @return string
      */
@@ -164,6 +190,8 @@
     /**
      * Default account approved subject (user)
      *
+     * @since 2.0.0
+     *
      * @return string
      */
     function b3_default_account_approved_subject() {
@@ -172,6 +200,8 @@
 
     /**
      * Default account approved message (user)
+     *
+     * @since 2.0.0
      *
      * @return string
      */
@@ -183,6 +213,8 @@
     /**
      * Default account rejected subject (user)
      *
+     * @since 2.0.0
+     *
      * @return string
      */
     function b3_default_account_rejected_subject() {
@@ -191,6 +223,8 @@
 
     /**
      * Default account rejected message (user)
+     *
+     * @since 2.0.0
      *
      * @return string
      */
@@ -201,6 +235,8 @@
     /**
      * Default forgot password subject (user)
      *
+     * @since 2.0.0
+     *
      * @return string
      */
     function b3_default_forgot_password_subject() {
@@ -210,6 +246,8 @@
 
     /**
      * Default forgot password message (user)
+     *
+     * @since 1.0.6
      *
      * @return string
      */
@@ -233,6 +271,8 @@
     /**
      * Default welcome user subject (user)
      *
+     * @since 1.0.6
+     *
      * @return string
      */
     function b3_default_welcome_user_subject() {
@@ -241,6 +281,8 @@
 
     /**
      * Default welcome user message (user)
+     *
+     * @since 1.0.6
      *
      * @return string
      */
@@ -271,6 +313,8 @@
     /**
      * Default welcome user message (user)
      *
+     * @since 1.0.6
+     *
      * @return string
      */
     function b3_default_email_activation_message() {
@@ -291,6 +335,8 @@
 
     /**
      * Default privacy text
+     *
+     * @since 2.0.0
      *
      * @return string
      */

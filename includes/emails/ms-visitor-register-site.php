@@ -1,3 +1,10 @@
+<?php
+    /*
+     * Input fields for 'Visitor registers user + site' (MS)
+     *
+     * @since 1.0.0
+     */
+?>
 <table class="b3_table b3_table--emails">
     <tbody>
     <tr>

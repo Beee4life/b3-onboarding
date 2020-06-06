@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for 'Email activated' email (user)
+     *
+     * @since 1.0.0
+     */
     $email_activation_subject = get_option( 'b3_email_activation_subject', false );
     $email_activation_message = get_option( 'b3_email_activation_message', false );
 ?>

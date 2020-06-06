@@ -3,6 +3,8 @@
     /**
      * Render email settings field with fold out
      *
+     * @since 1.0.6
+     *
      * @param bool $box
      *
      * @return false|mixed|string
@@ -22,6 +24,8 @@
 
     /**
      * Content for an email settings field
+     *
+     * @since 1.0.6
      *
      * @param bool $box
      *
@@ -54,6 +58,8 @@
 
     /**
      * Load fold out content
+     *
+     * @since 1.0.6
      *
      * @param bool $box
      *

@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for 'account approved' email
+     *
+     * @since 1.0.0
+     */
     $account_approved_email_subject = get_option( 'b3_account_approved_subject', false );
     $account_approved_email_message = get_option( 'b3_account_approved_message', false );;
 ?>

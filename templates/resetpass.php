@@ -1,3 +1,10 @@
+<?php
+    /**
+     * Ouptuts fields for reset pass form
+     *
+     * @since 1.0.0
+     */
+?>
 <div id="b3-resetpass" class="b3 b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) : ?>
         <h3>

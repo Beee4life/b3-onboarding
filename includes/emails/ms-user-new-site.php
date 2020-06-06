@@ -1,3 +1,10 @@
+<?php
+    /*
+     * Input fields for 'User registers site' mail (admin)
+     *
+     * @since 1.0.0
+     */
+?>
 <table class="b3_table b3_table--emails">
     <tbody>
     <tr>

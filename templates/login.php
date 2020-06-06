@@ -1,4 +1,9 @@
 <?php
+    /**
+     * Ouptuts fields for login form
+     *
+     * @since 1.0.0
+     */
     $request_access = get_option( 'b3_registration_type', false );
     $reset_page     = get_option( 'b3_forgotpass_page_id', false );
 ?>

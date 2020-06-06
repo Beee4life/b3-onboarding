@@ -2,7 +2,9 @@
     // @TODO: maybe merge with functions (or function into here)
 
     /**
-     * Return register ID page (for current language if WPML is active)
+     * Get register page id/link
+     *
+     * @since 1.0.6
      *
      * @return bool|string
      */
@@ -25,7 +27,9 @@
 
 
     /**
-     * Return login page id
+     * Get login page id/link
+     *
+     * @since 1.0.6
      *
      * @return bool|string
      */
@@ -48,7 +52,9 @@
 
 
     /**
-     * Return logout page id
+     * Get logout page id/link
+     *
+     * @since 1.0.6
      *
      * @return bool|string
      */
@@ -71,7 +77,9 @@
 
 
     /**
-     * Get page id for account page
+     * Get account page page id/link
+     *
+     * @since 1.0.6
      *
      * @return mixed
      */
@@ -92,7 +100,9 @@
 
 
     /**
-     * Return forgot pass page id (for current language if WPML is active)
+     * Get forgot pass page id/link
+     *
+     * @since 1.0.6
      *
      * @return bool|string
      */
@@ -114,7 +124,9 @@
     }
 
     /**
-     * Return reset pass page id (for current language if WPML is active)
+     * Get reset pass page id/link
+     *
+     * @since 1.0.6
      *
      * @return bool|string
      */
@@ -137,6 +149,10 @@
 
 
     /**
+     * Get account page id/link
+     *
+     * @since 1.0.6
+     *
      * @param bool $return_link
      *
      * @return bool|mixed|void
@@ -158,7 +174,9 @@
 
 
     /**
-     * Returns current url
+     * Get current url
+     *
+     * @since 1.0.6
      *
      * @return string
      */
@@ -171,7 +189,9 @@
 
 
     /**
-     * Returns used protocol
+     * Get current protocol
+     *
+     * @since 1.0.6
      *
      * @return string
      */

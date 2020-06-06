@@ -1,4 +1,9 @@
 <?php
+    /**
+     * Ouptuts fields for account page
+     *
+     * @since 1.0.0
+     */
     $current_user = get_userdata( get_current_user_id() );
     $required     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false;
     $user_delete  = get_option( 'b3_user_may_delete', false );

@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for 'XXXX' email
+     *
+     * @since 1.0.0
+     */
     $disable_admin_notification = get_option( 'b3_disable_delete_user_email', false );
     $reject_user_email_subject  = get_option( 'b3_account_rejected_subject', false );
     $reject_user_email_message  = get_option( 'b3_account_rejected_message', false );

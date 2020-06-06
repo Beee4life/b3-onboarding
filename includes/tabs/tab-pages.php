@@ -2,6 +2,8 @@
     /**
      * Render pages tab
      *
+     * @since 1.0.0
+     *
      * @return false|string
      */
     function b3_render_pages_tab() {

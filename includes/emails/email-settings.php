@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for email settings
+     *
+     * @since 1.0.0
+     */
     $notification_sender_email = get_option( 'b3_notification_sender_email', false );
     $notification_sender_name  = get_option( 'b3_notification_sender_name', false );
 ?>

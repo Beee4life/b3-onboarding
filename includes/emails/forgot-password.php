@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for 'Forgot password' email
+     *
+     * @since 1.0.0
+     */
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_password_change', false );
     $forgot_password_subject    = get_option( 'b3_forgot_password_subject', false );
     $forgot_password_message    = get_option( 'b3_forgot_password_message', false );

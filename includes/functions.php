@@ -1,9 +1,8 @@
 <?php
-    // default/fallback values
-    include( 'defaults.php' );
-
     /**
      * Return all custom meta keys
+     *
+     * @since 1.0.0
      *
      * @return array
      */
@@ -79,6 +78,8 @@
 
     /**
      * Create an array of available email 'boxes'
+     *
+     * @since 1.0.0
      *
      * @return array
      */
@@ -173,6 +174,8 @@
     /**
      * Return registration options
      *
+     * @since 1.0.0
+     *
      * @return array
      */
     function b3_get_registration_types() {
@@ -242,6 +245,10 @@
     /**
      * Return email styling and default styling if false
      *
+     * @since 1.0.0
+     *
+     * @param bool $link_color
+     *
      * @return bool|false|mixed|string|void
      */
     function b3_get_email_styling( $link_color = false ) {
@@ -259,6 +266,10 @@
 
     /**
      * Return user email template and default template if false
+     *
+     * @since 1.0.0
+     *
+     * @param bool $hide_logo
      *
      * @return bool|false|mixed|string|void
      */
@@ -278,6 +289,8 @@
     /**
      * Return default email footer
      *
+     * @since 2.0.0
+     *
      * @TODO: add user input option
      *
      * @return bool|false|mixed|string|void
@@ -291,6 +304,8 @@
 
     /**
      * Get notification addresses
+     *
+     * @since 1.0.0
      *
      * @param $registration_type
      *
@@ -316,6 +331,8 @@
     /**
      * Return email activation subject (user)
      *
+     * @since 1.0.0
+     *
      * @param $blogname
      *
      * @return mixed|string
@@ -333,6 +350,8 @@
 
     /**
      * Return email activation message (user)
+     *
+     * @since 1.0.0
      *
      * @param $blogname
      * @param $user
@@ -353,6 +372,8 @@
     /**
      * Return welcome user subject (user)
      *
+     * @since 1.0.0
+     *
      * @param $blogname
      *
      * @return mixed|string
@@ -370,6 +391,8 @@
 
     /**
      * Return welcome user message (user)
+     *
+     * @since 1.0.0
      *
      * @param $blogname
      * @param $user
@@ -391,6 +414,8 @@
     /**
      * Get email subject for request access (admin)
      *
+     * @since 1.0.0
+     *
      * @return mixed|string
      */
     function b3_request_access_subject_admin() {
@@ -406,6 +431,8 @@
 
     /**
      * Get email message for request access (admin)
+     *
+     * @since 1.0.0
      *
      * @return mixed|string
      */
@@ -423,6 +450,8 @@
     /**
      * Get email subject for request access (user)
      *
+     * @since 1.0.0
+     *
      * @return mixed|string
      */
     function b3_request_access_subject_user() {
@@ -438,6 +467,8 @@
 
     /**
      * Get email message for request access (user)
+     *
+     * @since 1.0.0
      *
      * @return mixed|string
      */
@@ -455,6 +486,8 @@
     /**
      * Get email subject for account approved
      *
+     * @since 1.0.0
+     *
      * @return mixed|string
      */
     function b3_get_account_approved_subject() {
@@ -471,6 +504,8 @@
     /**
      * Get email message for account approved
      *
+     * @since 1.0.0
+     *
      * @return mixed|string
      */
     function b3_get_account_approved_message() {
@@ -485,7 +520,9 @@
 
 
     /**
-     * Get email subject for account approved (user)
+     * Get email subject for account activated (user)
+     *
+     * @since 1.0.0
      *
      * @return mixed|string
      */
@@ -501,7 +538,9 @@
 
 
     /**
-     * Get email message for account approved (user)
+     * Get email message for account activated (user)
+     *
+     * @since 1.0.0
      *
      * @TODO: maybe merge with welcome
      *
@@ -521,6 +560,8 @@
     /**
      * Get account rejected subject (user)
      *
+     * @since 1.0.0
+     *
      * @return bool|mixed|string|void
      */
     function b3_get_account_rejected_subject() {
@@ -537,6 +578,8 @@
     /**
      * Get account rejected message (user)
      *
+     * @since 1.0.0
+     *
      * @return bool|mixed|string|void
      */
     function b3_get_account_rejected_message() {
@@ -551,23 +594,9 @@
 
 
     /**
-     * Get password subject (user)
-     *
-     * @return bool|mixed|string|void
-     */
-    function b3_get_password_reset_subject() {
-        $subject = get_option( 'b3_forgot_password_subject', false );
-        if ( ! $subject ) {
-            $subject = b3_default_forgot_password_subject();
-        }
-
-        return $subject;
-
-    }
-
-
-    /**
      * Get account rejected message (user)
+     *
+     * @since 1.0.0
      *
      * @return bool|mixed|string|void
      */
@@ -584,6 +613,8 @@
 
     /**
      * Return new user subject (admin)
+     *
+     * @since 1.0.0
      *
      * @param $blogname
      *
@@ -603,6 +634,8 @@
 
     /**
      * Return new user message (admin)
+     *
+     * @since 1.0.0
      *
      * @param $blogname
      * @param $user
@@ -624,7 +657,27 @@
 
 
     /**
+     * Get password subject (user)
+     *
+     * @since 2.0.0
+     *
+     * @return bool|mixed|string|void
+     */
+    function b3_get_password_reset_subject() {
+        $subject = get_option( 'b3_forgot_password_subject', false );
+        if ( ! $subject ) {
+            $subject = b3_default_forgot_password_subject();
+        }
+
+        return $subject;
+
+    }
+
+
+    /**
      * Return user email logo and default logo if false
+     *
+     * @since 2.0.0
      *
      * @return bool|false|mixed|string|void
      */
@@ -642,6 +695,10 @@
 
 
     /**
+     * Get the privacy text
+     *
+     * @since 1.0.0
+     *
      * @return bool|mixed|string|void
      */
     function b3_get_privacy_text() {
@@ -661,7 +718,9 @@
     /**
      * Return links below a (public) form
      *
-     * @TODO: show with use of filter (next to a setting)
+     * @since 1.0.0
+     *
+     * @TODO: (maybe) show with use of filter (next to a setting)
      */
     function b3_get_form_links( $current_form ) {
 
@@ -731,6 +790,8 @@
     /**
      * Return unique password reset link
      *
+     * @since 1.0.0
+     *
      * @TODO: check where this was intended to use
      *
      * @param $key
@@ -749,7 +810,9 @@
     /**
      * Get a unique activation url for a user
      *
-     * @param $user
+     * @since 1.0.0
+     *
+     * @param $user_data
      *
      * @return string
      */
@@ -771,6 +834,8 @@
     /**
      * Get sender email
      *
+     * @since 1.0.0
+     *
      * @return bool|mixed|void
      */
     function b3_get_notification_sender_email() {
@@ -789,6 +854,8 @@
     /**
      * Get sender name
      *
+     * @since 1.0.0
+     *
      * @return bool|mixed|void
      */
     function b3_get_notification_sender_name() {
@@ -806,6 +873,10 @@
 
     /**
      * General opening of settings field
+     *
+     * @since 2.0.0
+     *
+     * @param bool $hide
      */
     function b3_get_settings_field_open( $hide = false ) {
         $hide_class = ( $hide != false ) ? ' hidden' : false;
@@ -814,6 +885,10 @@
 
     /**
      * General opening of settings label
+     *
+     * @since 2.0.0
+     *
+     * @param bool $hide
      */
     function b3_get_label_field_open( $hide = false ) {
         $hide_class = ( $hide != false ) ? ' hidden' : false;
@@ -823,6 +898,8 @@
     /**
      * Close a div.
      * This function is not really needed, but it prevents PhpStorm from throwing a ton of errors
+     *
+     * @since 2.0.0
      */
     function b3_get_close() {
         echo '</div>';
@@ -830,6 +907,8 @@
 
     /**
      * Return submit button
+     *
+     * @since 2.0.0
      *
      * @param bool $submit_value
      */
@@ -842,6 +921,8 @@
 
     /**
      * Verify if privacy checkbox is clicked (when activated)
+     *
+     * @since 2.0.0
      *
      * @param $errors
      */

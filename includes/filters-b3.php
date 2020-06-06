@@ -2,6 +2,8 @@
     /**
      * Filter email logo
      *
+     * @since 2.0.0
+     *
      * @param $footer_text
      *
      * @return false|string
@@ -16,6 +18,8 @@
 
     /**
      * Filter email footer text
+     *
+     * @since 2.0.0
      *
      * @param $footer_text
      *
@@ -32,6 +36,8 @@
     /**
      * Override link color in email
      *
+     * @since 2.0.0
+     *
      * @param $link_color
      *
      * @return string
@@ -47,6 +53,8 @@
     /**
      * Add hidden fields to form
      *
+     * @since 2.0.0
+     *
      * @param $fields
      *
      * @return array
@@ -60,6 +68,8 @@
 
     /**
      * Add custom fields to form
+     *
+     * @since 2.0.0
      *
      * @param $fields
      *
@@ -183,6 +193,8 @@
     /**
      * Override privacy text
      *
+     * @since 2.0.0
+     *
      * @param $privacy_text
      *
      * @return mixed
@@ -199,6 +211,8 @@
     /**
      * Set who to inform after (custom) user register
      *
+     * @since 2.0.0
+     *
      * @param $inform
      *
      * @return string
@@ -210,6 +224,8 @@
 
     /**
      * Redirect after user register
+     *
+     * @since 2.0.0
      *
      * @param $url
      *

@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for 'New user' mail (admin)
+     *
+     * @since 1.0.0
+     */
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_new_user', false );
     $new_user_email_addresses   = get_option( 'b3_new_user_notification_addresses', false );
     $new_user_email_subject     = get_option( 'b3_new_user_subject', false );

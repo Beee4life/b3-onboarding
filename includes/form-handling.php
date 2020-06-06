@@ -1,6 +1,10 @@
 <?php
 
-    // Admin settings
+    /**
+     * Function which handles admin page settings
+     *
+     * @since 1.0.0
+     */
     function b3_admin_form_handling() {
 
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -424,7 +428,11 @@
     add_action( 'admin_init', 'b3_admin_form_handling' );
 
 
-    // Admin settings
+    /**
+     * Function which handles approve/deny user form
+     *
+     * @since 1.0.0
+     */
     function b3_approve_deny_users() {
 
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -477,7 +485,7 @@
 
 
     /**
-     * Profile form handling (front-end)
+     * Funciton to handle (front-end) profile form editing
      */
     function b3_profile_form_handling() {
 

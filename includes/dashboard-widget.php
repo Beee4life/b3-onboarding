@@ -1,5 +1,9 @@
 <?php
-    // the function which outputs the dashboard widget
+    /**
+     * The function which outputs the dashboard widget
+     *
+     * @since 1.0.0
+     */
     function b3_dashboard_widget_function() {
         // Widget contents
         $approval_args = array(

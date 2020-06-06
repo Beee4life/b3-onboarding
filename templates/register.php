@@ -1,4 +1,9 @@
 <?php
+    /**
+     * Ouptuts fields for register form
+     *
+     * @since 1.0.0
+     */
     $recaptcha_public         = get_option( 'b3_recaptcha_public', false );
     $registration_type        = get_option( 'b3_registration_type', false );
     $send_password_by_mail    = get_option( 'b3_send_pass_mail', false );

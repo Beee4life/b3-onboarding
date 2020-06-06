@@ -2,6 +2,8 @@
     /**
      * Get tab content
      *
+     * @since 1.0.0
+     *
      * @param $tab
      *
      * @return string

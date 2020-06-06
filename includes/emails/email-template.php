@@ -1,4 +1,11 @@
-<?php $stored_email_template = get_option( 'b3_email_template', false ); ?>
+<?php
+    /*
+     * Input fields for email template
+     *
+     * @since 1.0.0
+     */
+    $stored_email_template = get_option( 'b3_email_template', false );
+?>
 <table class="b3_table b3_table--emails">
     <tbody>
     <tr>

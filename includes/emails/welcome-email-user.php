@@ -1,4 +1,9 @@
 <?php
+    /*
+     * Input fields for 'Welcome user' email
+     *
+     * @since 1.0.0
+     */
     $user                       = get_userdata( get_current_user_id() );
     $welcome_user_email_subject = get_option( 'b3_welcome_user_subject', false );
     $welcome_user_email_message = get_option( 'b3_welcome_user_message', false );

@@ -1,6 +1,10 @@
 <?php
     /**
      * Create initial pages upon activation
+     *
+     * @since 1.0.6
+     *
+     * @param bool $create_new_site
      */
     function b3_setup_initial_pages( $create_new_site = false ) {
 
@@ -43,6 +47,8 @@
 
     /**
      * Create pages
+     *
+     * @since 1.0.6
      *
      * @param array $definitions
      * @param bool  $create_new_site
@@ -103,7 +109,9 @@
 
     /**
      * Render any extra fields
-     * Options are: text, textarea, number, url, radio
+     * Options are: text, textarea, number, url, radio, checkbox, select
+     *
+     * @since 1.0.6
      *
      * @param bool $extra_field
      *
@@ -176,6 +184,8 @@
     /**
      * Replace vars in email message
      *
+     * @since 2.0.0
+     *
      * @param $vars
      *
      * @return array
@@ -236,6 +246,8 @@
 
     /**
      * Replace vars in email template
+     *
+     * @since 2.0.0
      *
      * @param bool $message
      *

@@ -1,4 +1,11 @@
-<?php $email_styling = get_option( 'b3_email_styling', false ); ?>
+<?php
+    /*
+     * Input fields for email styling
+     *
+     * @since 1.0.0
+     */
+    $email_styling = get_option( 'b3_email_styling', false );
+?>
 <table class="b3_table b3_table--emails">
     <tbody>
     <tr>

@@ -2,6 +2,8 @@
 
     /**
      * Content for the 'settings page'
+     *
+     * @since 1.0.0
      */
     function b3_user_approval() {
 

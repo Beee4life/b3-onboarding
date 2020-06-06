@@ -10,7 +10,7 @@
         /**
          * Class B3Shortcodes
          */
-        class B3Shortcodes extends B3Onboarding {
+        class B3_Shortcodes extends B3Onboarding {
 
             public function __construct() {
                 parent::__construct();
@@ -23,6 +23,16 @@
                 add_shortcode( 'user-management',   array( $this, 'b3_render_user_approval_page' ) );
             }
 
+            /**
+             * Renders the register form
+             *
+             * @since 1.0.0
+             *
+             * @param      $user_variables
+             * @param null $content
+             *
+             * @return mixed|string|void
+             */
             public function b3_render_register_form( $user_variables, $content = null ) {
                 // Parse shortcode attributes
                 $default_attributes = array(
@@ -60,6 +70,8 @@
 
             /**
              * A shortcode for rendering the login form.
+             *
+             * @since 1.0.0
              *
              * @param  array $attributes Shortcode attributes.
              * @param  string $content The text content for shortcode. Not used.
@@ -113,7 +125,7 @@
                         } elseif ( 'success' == $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_error_message( 'registration_success' );
                         } else {
-                            error_log('FIX ELSE - line 112 B3Shortcodes.php');
+                            error_log('FIX ELSE - line 116 class-b3-shortcodes.php');
                             $attributes[ 'messages' ][] = $this->b3_get_error_message( '' );
                         }
                     }
@@ -137,7 +149,9 @@
 
 
             /**
-             * A shortcode for rendering the form used to initiate the password reset.
+             * A shortcode for rendering the password forgot form.
+             *
+             * @since 1.0.0
              *
              * @param  array $attributes Shortcode attributes.
              * @param  string $content The text content for shortcode. Not used.
@@ -178,7 +192,9 @@
 
 
             /**
-             * A shortcode for rendering the form used to reset a user's password.
+             * A shortcode for rendering the reset password form.
+             *
+             * @since 1.0.0
              *
              * @param  array $attributes Shortcode attributes.
              * @param  string $content The text content for shortcode. Not used.
@@ -229,6 +245,8 @@
             /**
              * Render user/account page
              *
+             * @since 1.0.0
+             *
              * @param      $user_variables
              * @param null $content
              *
@@ -272,6 +290,8 @@
 
             /**
              * Render user management page
+             *
+             * @since 1.0.0
              *
              * @param $user_variables
              * @param null $content
@@ -349,9 +369,8 @@
                     <?php }
                 } // endif user can promote_users
             }
-
         }
 
-        new B3Shortcodes();
+        new B3_Shortcodes();
 
     endif;
