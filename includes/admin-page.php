@@ -88,15 +88,6 @@
                                 'icon'    => 'plus-alt',
                             );
                         }
-
-                        if ( true == get_option( 'b3_debug_info', false ) ) {
-                            $tabs[] = array(
-                                'id'      => 'debug',
-                                'title'   => esc_html__( 'Debug info', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'debug' ),
-                                'icon'    => 'sos',
-                            );
-                        }
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
