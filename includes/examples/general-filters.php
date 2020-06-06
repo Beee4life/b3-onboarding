@@ -19,7 +19,8 @@
 
         return $logo;
     }
-    // add_filter( 'b3_main_logo', 'b3_main_logo' );
+    add_filter( 'b3_main_logo', 'b3_main_logo' );
+
 
     /**
      * Override main link color
@@ -33,7 +34,7 @@
     function b3_link_color( $link_color ) {
 
         $link_color = '6d32a8'; // purple
-        // $link_color = 'ff0000'; // red
+        $link_color = 'ff0000'; // red
 
         return $link_color;
     }
