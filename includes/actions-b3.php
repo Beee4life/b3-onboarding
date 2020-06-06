@@ -12,12 +12,12 @@
         ?>
             <div class="b3_form-element b3_form-element--login">
                 <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'username' : ''; ?>" required>
+                <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) ) ? 'username' : ''; ?>" required>
             </div>
 
             <div class="b3_form-element b3_form-element--email">
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'test@xxx.com' : ''; ?>" required>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) ) ? 'test@xxx.com' : ''; ?>" required>
             </div>
         <?php
         $output = ob_get_clean();
@@ -154,11 +154,11 @@
             <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
             <div class="b3_form-element b3_form-element--register">
                 <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'First name' : false; ?>"<?php echo $required; ?>>
+                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) ) ? 'First name' : false; ?>"<?php echo $required; ?>>
             </div>
             <div class="b3_form-element b3_form-element--register">
                 <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'WP_TESTING' ) ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
+                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
             </div>
             <?php
             $output = ob_get_clean();

@@ -59,7 +59,7 @@
                     '
             ) );
 
-            if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
+            if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
                 $shortcode_info = '<p>' . sprintf( __( 'More info about the use of shortcodes and their variables, please see <a href="%s">here</a>.', 'b3-onboarding'  ), B3_PLUGIN_SITE . '/documentation/shortcodes/' ) . '</p>';
             } else {
                 $shortcode_info = false;
@@ -109,7 +109,7 @@
             ) );
         }
 
-        if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
+        if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
             $site = '<p><strong>' . esc_html__( 'More info', 'b3-onboarding' ) . '</strong></p>
             <p><a href="https://b3onboarding.berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">' . __( 'Official site', 'b3-onboarding' ) . '</a></p>';
         } else {

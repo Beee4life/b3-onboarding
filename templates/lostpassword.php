@@ -20,7 +20,7 @@
 
         <div class="b3_form-element">
             <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
-            <input type="text" name="user_login" id="b3_user_email" value="<?php echo ( defined( 'WP_TESTING' ) && true == WP_TESTING ) ? 'test@xxx.com' : false; ?>" required>
+            <input type="text" name="user_login" id="b3_user_email" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'test@xxx.com' : false; ?>" required>
         </div>
 
         <p class="forgotpassword-submit">

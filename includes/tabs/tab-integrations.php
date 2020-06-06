@@ -73,7 +73,7 @@
 
         </form>
 
-        <?php if ( defined( 'WP_TESTING' ) && 1 == WP_TESTING ) { ?>
+        <?php if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) { ?>
 
             <?php b3_get_settings_field_open(); ?>
             <?php
