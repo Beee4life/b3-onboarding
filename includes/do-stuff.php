@@ -190,7 +190,7 @@
      *
      * @return array
      */
-    function b3_replace_email_vars( $vars, $activation = false ) {
+    function b3_replace_email_vars( $vars = array(), $activation = false ) {
 
         $user_data = false;
         if ( is_user_logged_in() ) {

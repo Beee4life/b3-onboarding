@@ -23,7 +23,7 @@
     function b3_password_changed_email( $wp_password_change_notification_email, $user, $blogname ) {
         $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login ); // default: Password changed for user: {username}
         $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars( array() ) );
+        $message = strtr( $message, b3_replace_email_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
         $subject = 'User changed password'; // default: [blog name] Password changed
 
@@ -63,7 +63,7 @@
 
                 $admin_email = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
                 $admin_email = b3_replace_template_styling( $admin_email );
-                $admin_email = strtr( $admin_email, b3_replace_email_vars( array() ) );
+                $admin_email = strtr( $admin_email, b3_replace_email_vars() );
                 $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
 
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
@@ -129,7 +129,7 @@
 
                 $user_email = apply_filters( 'b3_request_access_message_user', b3_get_request_access_message_user() );
                 $user_email = b3_replace_template_styling( $user_email );
-                $user_email = strtr( $user_email, b3_replace_email_vars( array() ) );
+                $user_email = strtr( $user_email, b3_replace_email_vars() );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
@@ -340,3 +340,24 @@
         return $permalink;
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
+
+    /**
+     * Style recovery mail
+     *
+     * @since 2.0.0
+     *
+     * @param $email
+     * @param $url
+     *
+     * @return string
+     */
+    function b3_recovery_mail( $email, $url ) {
+
+        $email = b3_replace_template_styling( $email );
+        $email = strtr( $email, b3_replace_email_vars() );
+        $email = htmlspecialchars_decode( stripslashes( $email ) );
+
+        return $email;
+    }
+    add_filter( 'recovery_mode_email', 'b3_recovery_mail', 5, 2 );
+

@@ -144,7 +144,7 @@
 
             if ( in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
                 $message = b3_replace_template_styling( $message );
-                $message = strtr( $message, b3_replace_email_vars( array() ) );
+                $message = strtr( $message, b3_replace_email_vars() );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
                 $headers = array(
                     'From: ' . $from_name . ' <' . $from_email . '>',

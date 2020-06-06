@@ -42,7 +42,7 @@
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
         $message     = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
         $message     = b3_replace_template_styling( $message );
-        $message     = strtr( $message, b3_replace_email_vars( array() ) );
+        $message     = strtr( $message, b3_replace_email_vars() );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
         $headers     = array(
             'From: ' . $from_name . ' <' . $from_email . '>',
