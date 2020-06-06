@@ -114,7 +114,7 @@
 
             <p><small><?php esc_html_e( 'Links open in new window/tab.', 'b3-onboarding' ); ?></small></p>
 
-            <?php b3_submit_button(); ?>
+            <?php b3_get_submit_button(); ?>
 
         </form>
         <?php

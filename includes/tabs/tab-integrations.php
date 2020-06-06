@@ -69,7 +69,7 @@
             <?php b3_get_close(); ?>
 
             <br />
-            <?php b3_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
+            <?php b3_get_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
 
         </form>
 

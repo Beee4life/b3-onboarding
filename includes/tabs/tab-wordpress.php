@@ -90,7 +90,7 @@
                 </select>
             <?php b3_get_close(); ?>
 
-            <?php b3_submit_button(); ?>
+            <?php b3_get_submit_button(); ?>
         </form>
 
         <?php
