@@ -55,7 +55,7 @@
         // get all pages
         $all_pages = get_posts( array(
             'post_type'      => 'page',
-            'post_status'    => [ 'publish', 'pending', 'draft' ],
+            'post_status'    => array( 'publish', 'pending', 'draft' ),
             'posts_per_page' => -1,
             'orderby'        => 'title',
             'order'          => 'ASC',

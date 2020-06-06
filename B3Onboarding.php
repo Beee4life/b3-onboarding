@@ -129,6 +129,10 @@
                  */
                 include( 'includes/actions-wp.php' );
                 /*
+                 * This file contains functions which return default values
+                 */
+                include( 'includes/defaults.php' );
+                /*
                  * This file contains functions which 'do' something with a value
                  */
                 include( 'includes/do-stuff.php' );
@@ -137,9 +141,9 @@
                  */
                 include( 'includes/emails.php' );
                 /*
-                 * This file contains example filters
+                 * This file contains functions for various example filters
                  */
-                include( 'includes/filters-b3.php' );
+                include( 'includes/examples.php' );
                 /*
                  * This file contains all 'Wordpress' hooks
                  */
@@ -237,7 +241,7 @@
                 update_option( 'b3_logo_in_email', 1 );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-                update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ] );
+                update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                 update_option( 'b3_sidebar_widget', 1 );
 
                 if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
@@ -285,8 +289,8 @@
                 global $current_user, $pagenow;
                 if ( is_user_logged_in() && is_admin() ) {
 
-                    $allow_admin  = [ 'administrator' ];
-                    $themed_users = [ 'subscriber' ];
+                    $allow_admin  = array( 'administrator' );
+                    $themed_users = array( 'subscriber' );
                     $redirect_to  = '';
                     if ( in_array( $themed_users, $current_user->roles ) ) {
                         $page_link = b3_get_account_id( true );
@@ -492,7 +496,7 @@
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_id();
 
-                if ( false != $account_page_id && is_page( [ $account_page_id ] ) && ! is_user_logged_in() ) {
+                if ( false != $account_page_id && is_page( array( $account_page_id ) ) && ! is_user_logged_in() ) {
 
                     wp_safe_redirect( $login_url );
                     exit;
@@ -508,7 +512,7 @@
                         exit;
                     }
 
-                } elseif ( false != $logout_page_id && is_page( [ $logout_page_id ] ) ) {
+                } elseif ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
 
                     check_admin_referer( 'log-out' );
 
@@ -536,8 +540,8 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
-                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__), array(), $this->settings['version'] );
-                wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
+                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
+                wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
             }
 
 
@@ -545,8 +549,8 @@
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
-                wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings['version'] );
-                wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings['version'] );
+                wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
+                wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
 
                 // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // Bail out early if we are not on a page add/edit screen.
@@ -938,7 +942,7 @@
                                 } elseif ( false != get_option( 'b3_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'captcha', $redirect_url );
-                                } elseif ( in_array( $registration_type, [ 'request_access', 'email_activation', 'ms_register_site_user' ] ) ) {
+                                } elseif ( in_array( $registration_type, array( 'request_access', 'email_activation', 'ms_register_site_user' ) ) ) {
                                     $register = true;
                                 } else {
                                 }
@@ -1161,7 +1165,7 @@
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
 
                 $redirect_url = get_home_url();
-                $stored_roles = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
+                $stored_roles = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
 
                 if ( ! isset( $user->ID ) ) {
                     return $redirect_url;
@@ -1427,9 +1431,7 @@
                         return esc_html__( 'You have sucessfully registered but need to confirm your email first. Please check your email for an activation link.', 'b3-onboarding' );
 
                     // Lost password
-                    // @TODO: check if still used (maybe WP default?)
                     case 'invalidcombo':
-                        // @TODO: change this for security reasons
                         return esc_html__( 'There are no users registered with this email address.', 'b3-onboarding' );
 
                     case 'wait_approval':

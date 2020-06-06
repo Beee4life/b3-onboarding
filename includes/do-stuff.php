@@ -138,13 +138,13 @@
                 <div class="b3_form-element b3_form-element--<?php echo $input_type; ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo $container_class; ?> <?php echo $container_class; } ?>">
 
                     <label class="b3_form-label" for="<?php echo $input_id; ?>"><?php echo $input_label; ?><?php echo $input_required; ?></label>
-                    <?php if ( in_array( $input_type, [ 'text' , 'number', 'url' ] ) ) { ?>
+                    <?php if ( in_array( $input_type, array( 'text' , 'number', 'url' ) ) ) { ?>
                         <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?>value="<?php echo $field_value; ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
 
                     <?php } elseif ( 'textarea' == $input_type ) { ?>
                         <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo $field_value; ?></textarea>
 
-                    <?php } elseif ( in_array( $input_type, [ 'radio', 'checkbox' ] ) ) { ?>
+                    <?php } elseif ( in_array( $input_type, array( 'radio', 'checkbox' ) ) ) { ?>
 
                         <?php if ( $input_options ) { ?>
                             <?php $counter = 1; ?>

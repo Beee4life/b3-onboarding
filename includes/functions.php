@@ -97,7 +97,7 @@
                 'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
             ),
         );
-        if ( in_array( $registration_type, [ 'request_access', 'request_access_subdomain' ] ) ) {
+        if ( in_array( $registration_type, array( 'request_access', 'request_access_subdomain' ) ) ) {
             $request_access_box = array(
                 array(
                     'id'    => 'request_access_user',
@@ -117,7 +117,7 @@
                 ),
             );
         }
-        if ( in_array( $registration_type, [ 'email_activation' ] ) ) {
+        if ( in_array( $registration_type, array( 'email_activation' ) ) ) {
             $activate_email_boxes = array(
                 array(
                     'id'    => 'email_activation',
@@ -129,7 +129,7 @@
                 ),
             );
         }
-        if ( in_array( $registration_type, [ 'open' ] ) ) {
+        if ( in_array( $registration_type, array( 'open' ) ) ) {
             $welcome_user_boxes = array(
                 array(
                     'id'    => 'welcome_email_user',
@@ -137,7 +137,7 @@
                 ),
             );
         }
-        if ( in_array( $registration_type, [ 'open', 'email_activation' ] ) ) {
+        if ( in_array( $registration_type, array( 'open', 'email_activation' ) ) ) {
             $new_user_boxes = array(
                 array(
                     'id'    => 'new_user_admin',
@@ -418,7 +418,7 @@
      *
      * @return mixed|string
      */
-    function b3_request_access_subject_admin() {
+    function b3_get_request_access_subject_admin() {
         $subject = get_option( 'b3_request_access_subject_admin', false );
         if ( ! $subject ) {
             $subject = b3_default_request_access_subject_admin();
@@ -436,7 +436,7 @@
      *
      * @return mixed|string
      */
-    function b3_request_access_message_admin() {
+    function b3_get_request_access_message_admin() {
         $message = get_option( 'b3_request_access_message_admin', false );
         if ( ! $message ) {
             $message = b3_default_request_access_message_admin();
@@ -454,7 +454,7 @@
      *
      * @return mixed|string
      */
-    function b3_request_access_subject_user() {
+    function b3_get_request_access_subject_user() {
         $subject = get_option( 'b3_request_access_subject_user', false );
         if ( ! $subject ) {
             $subject = b3_default_request_access_subject_user();
@@ -472,7 +472,7 @@
      *
      * @return mixed|string
      */
-    function b3_request_access_message_user() {
+    function b3_get_request_access_message_user() {
         $message = get_option( 'b3_request_access_message_user', false );
         if ( ! $message ) {
             $message = b3_default_request_access_message_user();

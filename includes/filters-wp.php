@@ -59,9 +59,9 @@
 
             if ( 'request_access' == $registration_type ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_request_access_subject_admin() );
+                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
 
-                $admin_email = apply_filters( 'b3_request_access_message_admin', b3_request_access_message_admin() );
+                $admin_email = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
                 $admin_email = b3_replace_template_styling( $admin_email );
                 $admin_email = strtr( $admin_email, b3_replace_email_vars( array() ) );
                 $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
@@ -78,7 +78,7 @@
 
                 $admin_email = apply_filters( 'b3_new_user_mesage', b3_get_new_user_message() );
                 $admin_email = b3_replace_template_styling( $admin_email );
-                $admin_email = strtr( $admin_email, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+                $admin_email = strtr( $admin_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
                 $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
 
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
@@ -125,9 +125,9 @@
             // $wp_new_user_notification_email[ 'to' ] = $user->user_email;
             if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
 
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_request_access_subject_user() );
+                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
 
-                $user_email = b3_request_access_message_user();
+                $user_email = apply_filters( 'b3_request_access_message_user', b3_get_request_access_message_user() );
                 $user_email = b3_replace_template_styling( $user_email );
                 $user_email = strtr( $user_email, b3_replace_email_vars( array() ) );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
@@ -140,7 +140,7 @@
 
                 $user_email = apply_filters( 'b3_email_activation_message_user', b3_get_email_activation_message_user() );
                 $user_email = b3_replace_template_styling( $user_email );
-                $user_email = strtr( $user_email, b3_replace_email_vars( [ 'user_data' => $user ], true ) );
+                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ), true ) );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
@@ -151,7 +151,7 @@
 
                 $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
                 $user_email = b3_replace_template_styling( $user_email );
-                $user_email = strtr( $user_email, b3_replace_email_vars( [ 'user_data' => $user ], true ) );
+                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;

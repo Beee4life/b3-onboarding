@@ -315,7 +315,7 @@
                         delete_option( 'b3_disable_admin_notification_new_user' );
                     }
 
-                    if ( in_array( get_option( 'b3_registration_type', array() ), [ 'open', 'email_activation' ] ) ) {
+                    if ( in_array( get_option( 'b3_registration_type', array() ), array( 'open', 'email_activation' ) ) ) {
                         if ( isset( $_POST[ 'b3_account_activated_subject' ] ) ) {
                             update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ], true );
                         }
@@ -334,7 +334,7 @@
                             update_option( 'b3_welcome_user_subject', stripslashes( $_POST[ 'b3_welcome_user_subject' ] ), true );
                         }
 
-                        if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
+                        if ( in_array( get_option( 'b3_registration_type' ), array( 'email_activation' ) ) ) {
                             update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ), true );
                             update_option( 'b3_email_activation_message', htmlspecialchars( $_POST[ 'b3_email_activation_message' ] ), true );
                         }

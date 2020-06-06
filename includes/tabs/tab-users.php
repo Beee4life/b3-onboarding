@@ -50,7 +50,7 @@
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
-                    <?php $hidden_roles = [ 'b3_approval', 'b3_activation' ]; ?>
+                    <?php $hidden_roles = array( 'b3_approval', 'b3_activation' ); ?>
                     <?php foreach( $hidden_roles as $role ) { ?>
                         <input type="hidden" id="b3_restrict_<?php echo $role; ?>" name="b3_restrict_admin[]" value="<?php echo $role; ?>" />
                     <?php } ?>
@@ -58,8 +58,8 @@
                         <?php _e( 'Which user roles do <b>not</b> have access to the Wordpress admin ?', 'b3-onboarding' ); ?>
                     </p>
                     <?php
-                        $dont_show_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
-                        $stored_roles     = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'b3_activation', 'b3_approval' ];
+                        $dont_show_roles  = array( 'administrator', 'b3_approval', 'b3_activation' );
+                        $stored_roles     = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'b3_activation', 'b3_approval' );
                         foreach( $roles as $name => $values ) {
                             if ( ! in_array( $name, $dont_show_roles ) ) {
                                 ?>
