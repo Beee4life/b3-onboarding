@@ -157,10 +157,6 @@
                  */
                 include( 'includes/functions.php' );
                 /*
-                 * This file contains simple functions which are called throughout the plugin
-                 */
-                include( 'includes/get-stuff.php' );
-                /*
                  * This file contains all content for the help tabs/contextual help
                  */
                 include( 'includes/help-tabs.php' );
