@@ -80,7 +80,7 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( true == get_option( 'b3_recaptcha', false ) && defined( 'WP_TESTING' ) && 1 == WP_TESTING ) {
+                        if ( true == get_option( 'b3_recaptcha', false ) && defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
                             $tabs[] = array(
                                 'id'      => 'integrations',
                                 'title'   => esc_html__( 'Integrations', 'b3-onboarding' ),

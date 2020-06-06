@@ -33,8 +33,9 @@
      */
     function b3_link_color( $link_color ) {
 
-        $link_color = '6d32a8'; // purple
         $link_color = 'ff0000'; // red
+        $link_color = '6d32a8'; // purple
+        $link_color = 'ee6102'; // orange
 
         return $link_color;
     }
