@@ -281,37 +281,37 @@
     function b3_add_post_state( $post_states, $post ) {
 
         $title_suffix = false;
-        if ( $post->ID == b3_get_account_id() ) {
+        if ( $post->ID == get_option( 'b3_account_page_id', false ) ) {
             if ( $post->post_title == 'Account' ) {
                 $title_suffix = ': Account';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == b3_get_register_id() ) {
+        } elseif ( $post->ID == get_option( 'b3_register_page_id', false ) ) {
             if ( $post->post_title == 'Register' ) {
                 $title_suffix = ': Register';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == b3_get_login_id() ) {
+        } elseif ( $post->ID == get_option( 'b3_login_page_id', false ) ) {
             if ( $post->post_title == 'Login' ) {
                 $title_suffix = ': Login';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == b3_get_logout_id() ) {
+        } elseif ( $post->ID == get_option( 'b3_logout_page_id', false ) ) {
             if ( $post->post_title == 'Log Out' ) {
                 $title_suffix = ': Log out';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == b3_get_forgotpass_id() ) {
+        } elseif ( $post->ID == get_option( 'b3_forgotpass_page_id', false ) ) {
             if ( $post->post_title == 'Forgot password' ) {
                 $title_suffix = ': Forgot password';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == b3_get_resetpass_id() ) {
+        } elseif ( $post->ID == get_option( 'b3_resetpass_page_id', false ) ) {
             if ( $post->post_title == 'Reset Password' ) {
                 $title_suffix = ': Reset password';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == b3_get_user_approval_id() ) {
+        } elseif ( $post->ID == get_option( 'b3_approval_page_id', false ) ) {
             if ( $post->post_title == 'User approval' ) {
                 $title_suffix = ': User approval';
             }

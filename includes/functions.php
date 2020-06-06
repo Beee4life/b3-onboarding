@@ -756,12 +756,12 @@
                 case 'login':
                     $page_types[ 'forgotpassword' ] = [
                         'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
-                        'link'  => b3_get_forgotpass_id( true )
+                        'link'  => b3_get_forgotpass_url(),
                     ];
                     if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
-                            'link'  => b3_get_register_id( true )
+                            'link'  => b3_get_register_url(),
                         ];
                     }
                     break;
@@ -769,23 +769,23 @@
                 case 'register':
                     $page_types[ 'login' ] = [
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_id( true )
+                        'link'  => b3_get_login_id( true ),
                     ];
                     $page_types[ 'fogotpassword' ] = [
                         'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
-                        'link'  => b3_get_forgotpass_id( true )
+                        'link'  => b3_get_forgotpass_url(),
                     ];
                     break;
 
                 case 'forgotpassword':
                     $page_types[ 'login' ] = [
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_id( true )
+                        'link'  => b3_get_login_id( true ),
                     ];
                     if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
-                            'link'  => b3_get_register_id( true )
+                            'link'  => b3_get_register_url(),
                         ];
                     }
                     break;
@@ -949,20 +949,14 @@
      *
      * @return bool|string
      */
-    function b3_get_register_id( $return_link = false ) {
+    function b3_get_register_url() {
         $id = get_option( 'b3_register_page_id', false );
         if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-            if ( true == $return_link ) {
-                return get_the_permalink( $id );
-            }
-        } elseif ( true == $return_link ) {
-            return wp_registration_url();
+            return get_the_permalink( $id );
         }
 
-        return $id;
+        return wp_registration_url();
+
 
     }
 
@@ -974,20 +968,13 @@
      *
      * @return bool|string
      */
-    function b3_get_login_id( $return_link = false ) {
+    function b3_get_login_id() {
         $id = get_option( 'b3_login_page_id', false );
         if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-            if ( true == $return_link ) {
-                return get_the_permalink( $id );
-            }
-        } elseif ( true == $return_link ) {
-            return wp_login_url();
+            return get_the_permalink( $id );
         }
 
-        return $id;
+        return wp_login_url();
 
     }
 
@@ -999,20 +986,13 @@
      *
      * @return bool|string
      */
-    function b3_get_logout_id( $return_link = false ) {
+    function b3_get_logout_id() {
         $id = get_option( 'b3_logout_page_id', false );
         if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-            if ( true == $return_link ) {
-                return get_the_permalink( $id );
-            }
-        } elseif ( true == $return_link ) {
-            return wp_logout_url();
+            return get_the_permalink( $id );
         }
 
-        return $id;
+        return wp_logout_url();
 
     }
 
@@ -1024,18 +1004,16 @@
      *
      * @return mixed
      */
-    function b3_get_account_id( $return_link = false ) {
+    function b3_get_account_id() {
         $id = get_option( 'b3_account_page_id', false );
         if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-            if ( true == $return_link ) {
-                return get_the_permalink( $id );
-            }
+            return get_the_permalink( $id );
         }
 
-        return $id;
+        // @TODO: admin profile link
+        // @TODO: add filter if user is allowed to go there
+        // @TODO: if not, add message
+        return '';
 
     }
 
@@ -1047,20 +1025,13 @@
      *
      * @return bool|string
      */
-    function b3_get_forgotpass_id( $return_link = false ) {
+    function b3_get_forgotpass_url() {
         $id = get_option( 'b3_forgotpass_page_id', false );
         if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-            if ( true == $return_link ) {
-                return get_the_permalink( $id );
-            }
-        } elseif ( true == $return_link ) {
-            return wp_lostpassword_url();
+            return get_the_permalink( $id );
         }
 
-        return $id;
+        return wp_lostpassword_url();
 
     }
 
@@ -1071,20 +1042,13 @@
      *
      * @return bool|string
      */
-    function b3_get_resetpass_id( $return_link = false ) {
+    function b3_get_resetpass_id() {
         $id = get_option( 'b3_resetpass_page_id', false );
         if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-            if ( true == $return_link ) {
-                return get_the_permalink( $id );
-            }
-        } elseif ( true == $return_link ) {
-            // @TODO: add wp page
+            return get_the_permalink( $id );
         }
 
-        return $id;
+        return false;
 
     }
 
@@ -1098,18 +1062,14 @@
      *
      * @return bool|mixed|void
      */
-    function b3_get_user_approval_id( $return_link = false ) {
+    function b3_get_user_approval_id() {
         $id = get_option( 'b3_approval_page_id', false );
+        // @TODO: check for front-end page id
         if ( false != $id && get_post( $id ) ) {
-            if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
-            }
-            if ( true == $return_link ) {
-                return get_the_permalink( $id );
-            }
+            return get_the_permalink( $id );
         }
 
-        return $id;
+        return false;
 
     }
 
