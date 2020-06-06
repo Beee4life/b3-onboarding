@@ -206,15 +206,15 @@
         $date_format           = get_option( 'date_format' );
         $gmt_offset            = get_option( 'gmt_offset' );
         $time_format           = get_option( 'time_format' );
+        $timezone              = get_option( 'timezone_string' );
         $registration_date     = gmdate( $date_format . ' ' . $time_format, time() ); // fallback, returns now in UTC
         $registration_date_gmt = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
-        $timezone              = get_option( 'timezone_string' );
         if ( false != $registration_date_gmt ) {
             if ( ! empty( $timezone ) ) {
                 $new_date = new DateTime( $registration_date_gmt, new DateTimeZone( 'UTC' ) );
                 $new_date->setTimeZone( new DateTimeZone( $timezone ) );
                 $registration_date = $new_date->format( $date_format . ' @ ' . $time_format );
-            } elseif ( false != $gmt_offset ) {
+            } elseif ( ! empty( $gmt_offset ) ) {
                 $registration_date_gmt_ts = strtotime( $registration_date_gmt );
                 $registration_date_ts     = $registration_date_gmt_ts + ( $gmt_offset * HOUR_IN_SECONDS );
                 $registration_date        = gmdate( $date_format . ' @ ' . $time_format, $registration_date_ts );
@@ -273,4 +273,23 @@
         }
 
         return $message;
+    }
+
+    /**
+     * Verify if privacy checkbox is clicked (when activated)
+     *
+     * @since 2.0.0
+     *
+     * @param $errors
+     */
+    function b3_verify_privacy() {
+        $error = false;
+        if ( 1 == get_option( 'b3_privacy', false ) ) {
+            if ( ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
+                $error = true;
+            }
+        }
+
+        return $error;
+
     }
