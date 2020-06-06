@@ -23,11 +23,11 @@
      */
     function b3_email_footer_text( $footer_text ) {
 
-        $footer_text = [];
+        $footer_text = 'My footer text';
 
         return $footer_text;
     }
-    // add_filter( 'b3_email_footer_text', 'b3_email_footer_text' );
+    add_filter( 'b3_email_footer_text', 'b3_email_footer_text' );
 
     /**
      * Set who to inform after (custom) user register
