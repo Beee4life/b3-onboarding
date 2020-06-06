@@ -4,6 +4,14 @@
     ## Email filters ##
     ###################
 
+    function b3_notification_sender_email( $email ) {
+
+        $email = 'info@xx';
+
+        return $email;
+    }
+    // add_filter( 'b3_notification_sender_email', 'b3_notification_sender_email' );
+
     /**
      * Filter email footer text
      *
@@ -15,29 +23,11 @@
      */
     function b3_email_footer_text( $footer_text ) {
 
-        $footer_text = 'Some test text with a <a href="https://nu.nl">LINK</a>.';
+        $footer_text = [];
 
         return $footer_text;
     }
     // add_filter( 'b3_email_footer_text', 'b3_email_footer_text' );
-
-    /**
-     * Override link color in email
-     *
-     * @since 2.0.0
-     *
-     * @param $link_color
-     *
-     * @return string
-     */
-    function b3_email_link_color( $link_color ) {
-
-        $link_color = '6d32a8'; // purple
-        // $link_color = 'ff0000'; // red
-
-        return $link_color;
-    }
-    add_filter( 'b3_email_link_color', 'b3_email_link_color' );
 
     /**
      * Set who to inform after (custom) user register

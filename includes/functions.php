@@ -38,6 +38,7 @@
             'b3_forgot_password_subject',
             'b3_forgotpass_page_id', // set on activate
             'b3_front_end_approval',
+            'b3_link_color', // not in use yet
             'b3_login_logo',
             'b3_login_page_id', // set on activate
             'b3_loginpage_bg_color',
@@ -257,7 +258,29 @@
         if ( false != $custom_css ) {
             $email_style = $custom_css;
         } else {
-            $email_style = b3_default_email_styling( $link_color );
+            $email_style = b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) );
+        }
+
+        return $email_style;
+    }
+
+
+    /**
+     * Get the color for links
+     *
+     * @TODO: needs user input
+     *
+     * @since 2.0.0
+     *
+     * @return bool|mixed|string|void
+     */
+    function b3_get_link_color() {
+        $color = get_option( 'b3_link_color', false );
+
+        if ( false != $color ) {
+            $email_style = $color;
+        } else {
+            $email_style = b3_default_link_color();
         }
 
         return $email_style;

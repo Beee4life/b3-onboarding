@@ -98,7 +98,8 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
-                add_action( 'admin_notices',                        array( $this, 'b3_no_approval_page' ) );
+                add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
+                add_action( 'admin_init',                           array( $this, 'b3_check_filter_input' ) );
 
                 // Multisite specific
                 add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
@@ -177,6 +178,15 @@
              *
              * @since 2.0.0
              */
+            public function b3_check_filter_input() {
+            }
+
+
+            /*
+             * Do stuff upon plugin activation
+             *
+             * @since 2.0.0
+             */
             public function b3_plugin_activation() {
 
                 // create necessary pages
@@ -231,7 +241,7 @@
 
                 update_option( 'b3_dashboard_widget', 1 );
                 update_option( 'b3_force_custom_login_page', 1 );
-                update_option( 'b3_email_styling', b3_default_email_styling() );
+                update_option( 'b3_email_styling', b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) );
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_hide_admin_bar', 1 );
                 update_option( 'b3_logo_in_email', 1 );
@@ -1750,17 +1760,34 @@
             }
 
             /**
-             * Add admin message if front-end approval is set, but no page is selected
+             * Add admin notices
              *
              * @since 1.0.6
              */
-            public function b3_no_approval_page() {
+            public function b3_admin_notices() {
                 if ( false == get_option( 'b3_approval_page_id', false ) && true == get_option( 'b3_front_end_approval', false ) ) {
                     echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),
                         esc_html__( 'here', 'b3-onboarding' )
                     );
                 }
+
+                $from_email = apply_filters( 'b3_notification_sender_email', b3_get_notification_sender_email() );
+                if ( false == is_email( $from_email ) ) {
+                    echo '<div class="error"><p>'. __( 'The email address you have set in the filter "b3_notification_sender_email" is invalid.', 'b3-onboarding' ) . '</p></div>';
+                }
+
+                $footer_text = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
+                if ( false == is_string( $footer_text ) ) {
+                    echo '<div class="error"><p>'. __( 'The footer text you have set in the filter "b3_email_footer_text" is not a string.', 'b3-onboarding' ) . '</p></div>';
+                }
+
+                $link_color = apply_filters( 'b3_email_link_color', b3_get_link_color() );
+                if ( false == is_string( $link_color ) ) {
+                    echo '<div class="error"><p>'. __( 'The footer text you have set in the filter "b3_email_link_color" is not a string.', 'b3-onboarding' ) . '</p></div>';
+                }
+
+
             }
         }
 

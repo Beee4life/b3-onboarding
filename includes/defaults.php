@@ -69,6 +69,10 @@
         return $default_content;
     }
 
+    function b3_default_link_color() {
+        return '#e0144b';
+    }
+
     /**
      * Default main logo
      *
