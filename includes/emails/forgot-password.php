@@ -34,7 +34,7 @@
             <br /><br />
             <?php esc_html_e( "Other available variables are:", "b3-onboarding" ); ?> %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %site_url%, %user_ip%, %user_login%
             <br /><br />
-            <textarea id="b3__input--forgot-password-message" name="b3_forgot_password_message" placeholder="<?php echo esc_textarea( b3_default_forgot_password_message() ); ?>" rows="6"><?php echo stripslashes( $forgot_password_message ); ?></textarea>
+            <textarea id="b3__input--forgot-password-message" name="b3_forgot_password_message" placeholder="<?php echo esc_attr( b3_default_forgot_password_message() ); ?>" rows="6"><?php echo stripslashes( $forgot_password_message ); ?></textarea>
         </td>
     </tr>
     <tr>

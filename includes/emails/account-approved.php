@@ -29,7 +29,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-approved' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_textarea( b3_default_account_approved_message() ); ?>" rows="6"><?php echo stripslashes( $account_approved_email_message ); ?></textarea>
+            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_attr( b3_default_account_approved_message() ); ?>" rows="6"><?php echo stripslashes( $account_approved_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

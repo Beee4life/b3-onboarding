@@ -30,7 +30,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-rejected' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-rejected__message" name="b3_account_rejected_message" placeholder="<?php echo esc_textarea( b3_default_account_rejected_message() ); ?>" rows="6"><?php echo stripslashes( $reject_user_email_message ); ?></textarea>
+            <textarea id="b3__input--account-rejected__message" name="b3_account_rejected_message" placeholder="<?php echo esc_attr( b3_default_account_rejected_message() ); ?>" rows="6"><?php echo stripslashes( $reject_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>
