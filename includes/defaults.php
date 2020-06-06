@@ -40,23 +40,6 @@
     }
 
     /**
-     * Default email content
-     *
-     * @since 1.0.6
-     *
-     * @return false|string
-     */
-    function b3_default_email_content( $hide_logo = false ) {
-        $default_content = file_get_contents( dirname(__FILE__) . '/default-email-content.html' );
-
-        if ( true == $hide_logo ) {
-            $default_content = file_get_contents( dirname(__FILE__) . '/default-email-content-no-logo.html' );
-        }
-
-        return $default_content;
-    }
-
-    /**
      * Default email footer
      *
      * @since 2.0.0
