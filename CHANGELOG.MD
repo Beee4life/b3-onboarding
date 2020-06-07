@@ -39,7 +39,7 @@ I hope you like all the improvements. See the changelog below for all updates (I
         * [X] all functions
     * [X] faqs
 
-##### Developer goodies
+**Developer goodies**
 
 * [X] added a constant for local development, which 'unlocks' testing/development options
 * [X] added a debug page
