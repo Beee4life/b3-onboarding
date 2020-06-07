@@ -79,15 +79,15 @@
             <?php
             $modules = [
                 [
-                    'id'   => 'salesforce',
-                    'name' => 'Salesforce',
-                    'logo' => 'logo-salesforce.png',
-                    'link' => '#',
-                ],
-                [
                     'id'   => 'mailchimp',
                     'name' => 'Mailchimp',
                     'logo' => 'logo-mailchimp.png',
+                    'link' => '#',
+                ],
+                [
+                    'id'   => 'salesforce',
+                    'name' => 'Salesforce',
+                    'logo' => 'logo-salesforce.png',
                     'link' => '#',
                 ],
                 [
@@ -114,7 +114,7 @@
                         <div class="b3_integration__container">
                             <div class="b3_integration__image">
                                 <img
-                                    src="<?php echo plugins_url( 'assets/images/', dirname( __FILE__ ) ); ?><?php echo $module[ 'logo' ]; ?>"
+                                    src="<?php echo B3_PLUGIN_URL . '/assets/images/'; ?><?php echo $module[ 'logo' ]; ?>"
                                     alt="<?php echo $module[ 'name' ]; ?>"/>
                             </div>
                             <div class="b3_integration__name">
