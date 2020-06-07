@@ -166,6 +166,10 @@
                  */
                 include( 'includes/tabs/tabs.php' );
                 /*
+                 * Functions to verify filtered output
+                 */
+                include( 'includes/verify-filters.php' );
+                /*
                  * Functions + renders for shortcodes/front-end forms
                  */
                 include( 'includes/class-b3-shortcodes.php' );
