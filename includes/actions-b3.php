@@ -103,7 +103,7 @@
 
         if ( false != $show_recaptcha ) {
             do_action( 'b3_before_recaptcha_' . $form_type );
-            if ( '2' == $recaptcha_version ) {
+            if ( '3' != $recaptcha_version ) {
                 ?>
                 <div class="b3_form-element b3_form-element--recaptcha">
                     <div class="recaptcha-container">
