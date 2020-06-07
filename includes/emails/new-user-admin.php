@@ -13,6 +13,11 @@
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
+            <?php _e( '<b>NOTE:</b> This email is sent after the user confirms his/her email address, not on initial registration.', "b3-onboarding" ); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="b3__intro">
             <?php esc_html_e( "Enter the email addresses (searated by comma) which should receive the notification email. If no email is entered, it will be sent to the administrator's email address.", "b3-onboarding" ); ?>
         </td>
     </tr>
