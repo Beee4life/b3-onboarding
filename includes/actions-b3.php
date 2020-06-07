@@ -279,7 +279,7 @@
                 } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
                     if ( 'request_access' == $registration_type ) {
                         $show_errors = true;
-                        $messages[] = apply_filters( 'b3_filter_before_request_access', esc_html__( 'You have to request access for this website.', 'b3-onboarding' ) );
+                        $messages[] = apply_filters( 'b3_before_request_access', esc_html__( 'You have to request access for this website.', 'b3-onboarding' ) );
                     }
                 } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
                     $show_errors = true;
