@@ -74,6 +74,7 @@ table td.b3_email_content {
 a:link,
 a:visited,
 a:active {
+    /* @TODO: probably remove color (defined outside of this) */
     color:           #e0144b;
     text-decoration: none;
 }
