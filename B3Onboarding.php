@@ -174,6 +174,8 @@
                  */
                 include( 'includes/class-b3-shortcodes.php' );
 
+                // echo '<pre>'; var_dump(get_option( 'b3_recaptcha', false )); echo '</pre>'; exit;
+
             }
 
 
@@ -897,7 +899,8 @@
 
                                 } elseif ( false != get_option( 'b3_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
-                                    $redirect_url = add_query_arg( 'registration-error', 'captcha', $redirect_url );
+                                    error_log();
+                                    $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
 
                                 } elseif ( 'closed' != $registration_type ) {
                                     // Registration is not closed
@@ -954,7 +957,7 @@
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
                                 } elseif ( false != get_option( 'b3_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
-                                    $redirect_url = add_query_arg( 'registration-error', 'captcha', $redirect_url );
+                                    $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
                                 } elseif ( in_array( $registration_type, array( 'request_access', 'email_activation', 'ms_register_site_user' ) ) ) {
                                     $register = true;
                                 } else {
@@ -1429,7 +1432,7 @@
                     case 'closed':
                         return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
 
-                    case 'captcha':
+                    case 'recaptcha_failed':
                         return esc_html__( 'The Google reCAPTCHA check failed. Are you a robot?', 'b3-onboarding' );
 
                     case 'no_privacy':
