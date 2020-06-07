@@ -174,7 +174,7 @@
                 $approval_args  = array( 'role' => 'b3_approval' );
                 $approval_users = get_users( $approval_args );
                 if ( 0 < count( $approval_users ) ) {
-                    $page_link      = b3_get_user_approval_id( true );
+                    $page_link      = b3_get_user_approval_link();
                     if ( false == $page_link ) {
                         $page_link = admin_url( '/admin.php?page=b3-user-approval' );
                     }

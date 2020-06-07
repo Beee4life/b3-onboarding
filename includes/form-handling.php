@@ -483,7 +483,7 @@
                 // @TODO: check for real errors here
                 $redirect_url = network_admin_url( 'admin.php?page=b3-user-approval' );
                 if ( ! is_admin() ) {
-                    $approval_link = b3_get_user_approval_id( true );
+                    $approval_link = b3_get_user_approval_link();
                     if ( false != $approval_link ) {
                         $redirect_url = $approval_link;
                     }
@@ -507,10 +507,12 @@
 
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
 
+                        // @TODO: reject user in function
+                        do_action( 'b3_new_user_rejected_by_admin', $user_id );
+                        $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         require_once( ABSPATH . 'wp-admin/includes/user.php' );
                         // reject user
                         if ( true == wp_delete_user( $user_id ) ) {
-                            $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         } else {
                             // @TODO: add error
                             // $redirect_url = add_query_arg( 'user', 'not-delete', $redirect_url );

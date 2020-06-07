@@ -112,6 +112,7 @@
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
+                add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
 
                 // WP Login pages
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
@@ -345,7 +346,6 @@
              * @since 2.0.0
              */
             public function b3_add_login_styling() {
-
                 $logo            = apply_filters( 'b3_main_logo', b3_get_main_logo() );
                 $logo_height     = get_option( 'b3_loginpage_logo_height', false );
                 $logo_width      = get_option( 'b3_loginpage_logo_width', false );
@@ -503,7 +503,7 @@
             public function b3_template_redirect() {
                 $account_page_id  = b3_get_account_url( true );
                 $account_url      = b3_get_account_url();
-                $approval_page_id = b3_get_user_approval_id();
+                $approval_page_id = b3_get_user_approval_link( true );
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
@@ -514,6 +514,7 @@
                     exit;
 
                 } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
+
                     if ( is_user_logged_in() ) {
                         if ( ! current_user_can( 'promote_users' ) ) {
                             wp_safe_redirect( $account_url );
@@ -591,10 +592,8 @@
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
                 add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  '/assets/images/logo-b3onboarding-small.png', '99' );
-                if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
-                    include( 'includes/user-approval-page.php' ); // content for the settings page
-                    add_submenu_page( 'b3-onboarding', __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
-                }
+                include( 'includes/user-approval-page.php' ); // content for the settings page
+                add_submenu_page( 'b3-onboarding', __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                 if ( true == get_option( 'b3_debug_info', false ) ) {
                     include( 'includes/debug-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
@@ -765,6 +764,14 @@
                 return $content;
             }
 
+            public function b3_admin_body_class( $classes ) {
+
+                if ( 'request_access' != get_option( 'b3_registration_type', false ) ) {
+                    $classes .= ' no-approval-page';
+                }
+
+                return $classes;
+            }
 
             /*
              * Error function

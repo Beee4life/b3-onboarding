@@ -33,7 +33,7 @@
             $show_settings = false;
 
             if ( $show_account ) {
-                $account_id   = b3_get_account_url();
+                $account_link = b3_get_account_url();
                 if ( false == $account_link ) {
                     $count_errors[] = 'account';
                 }
@@ -75,8 +75,8 @@
 
                 $show_user_approval = ! empty( $instance[ 'show_approval' ] ) ? $instance[ 'show_approval' ] : false;
                 if ( $show_user_approval ) {
-                    $approval_id   = b3_get_user_approval_id();
-                    $approval_link = ( false != $approval_id ) ? get_the_permalink( $approval_id ) : admin_url( '/admin.php?page=b3-user-approval' );
+                    $approval_link = b3_get_user_approval_link();
+                    $approval_link = ( false != $approval_link ) ? $approval_link : admin_url( '/admin.php?page=b3-user-approval' );
                     if ( false == $approval_link ) {
                         $count_errors[] = 'approval';
                     }

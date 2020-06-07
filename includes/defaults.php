@@ -144,7 +144,7 @@
      * @return string
      */
     function b3_default_request_access_message_admin() {
-        $approval_link                = b3_get_user_approval_id( true );
+        $approval_link                = b3_get_user_approval_link();
         $user_approval_page           = ( false != $approval_link ) ? $approval_link : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
         $request_access_message_admin = sprintf( __( 'A new user has requested access. You can approve/deny him/her on the "<a href="%s">User approval</a>" page.', 'b3-onboarding' ), $user_approval_page );
 

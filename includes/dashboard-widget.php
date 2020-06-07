@@ -17,10 +17,11 @@
         $activation_users = get_users( $activation_args );
 
         $all_args = array(
-            'exclude' => [ '1' ],
-            'number'  => '5',
-            'orderby' => 'registered',
-            'order'   => 'DESC',
+            'exclude'      => [ '1' ], // @TODO: get proper admin ID (can be changed)
+            'number'       => '5',
+            'orderby'      => 'registered',
+            'order'        => 'DESC',
+            'role__not_in' => [ 'b3_activation', 'b3_approval' ],
         );
         $all_users = get_users( $all_args );
 
@@ -34,7 +35,7 @@
                             if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
                                 echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
                             } else {
-                                echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type and thus also the user approval page.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ) );
+                                echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type. That\'s why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it <a href="%s">here</a>.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ) );
                             }
 
                         } elseif ( count( $activation_users ) > 0 ) {
@@ -74,7 +75,7 @@
                     </p>
                 <?php } else { ?>
                     <p>
-                        <?php esc_html_e( "You're the only user right now.", 'b3-onboarding' ); ?>
+                        <?php esc_html_e( "You're the only (activated) user right now.", 'b3-onboarding' ); ?>
                     </p>
                 <?php } ?>
             <?php } ?>
