@@ -275,11 +275,11 @@
             } else {
                 if ( isset( $attributes[ 'template' ] ) && 'lostpassword' == $attributes[ 'template' ] ) {
                     $show_errors = true;
-                    $messages[] = esc_html__( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+                    $messages[] = esc_html__( apply_filters( 'b3_before_password_reset', __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' ) ) );
                 } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
                     if ( 'request_access' == $registration_type ) {
                         $show_errors = true;
-                        $messages[] = apply_filters( 'b3_before_request_access', esc_html__( 'You have to request access for this website.', 'b3-onboarding' ) );
+                        $messages[] = esc_html__( apply_filters( 'b3_before_request_access', __( 'You have to request access for this website.', 'b3-onboarding' ) ) );
                     }
                 } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
                     $show_errors = true;
