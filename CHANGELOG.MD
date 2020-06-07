@@ -12,18 +12,11 @@ I hope you like all the improvements. See the changelog below for all updates (I
 
 #### These are the things that were added (in alphabetical order)
 
-* [X] added constant for local development
-* [X] added debug page
-* [X] added debug widget
+**General goodies**
+
 * [X] added default values for all (relevant) inputs
-* [X] added example filters in a sub-folder
 * [X] added global link color for emails
 * [X] added menu icon in WordPress menu
-* [X] added more filters
-    * [X] added filter to add custom fields to forms
-    * [X] added filter to add hidden fields to forms
-* [X] added more hooks
-    * [X] added more hooks to add custom code to forms
 * [X] added more user input options
 * [X] added notification + counter if users need approval
 * [X] added option to remove logo from email header
@@ -45,6 +38,18 @@ I hope you like all the improvements. See the changelog below for all updates (I
         * [X] all filters
         * [X] all functions
     * [X] faqs
+
+##### Developer goodies
+
+* [X] added a constant for local development, which 'unlocks' testing/development options
+* [X] added a debug page
+* [X] added a debug dashboard widget for quick access to email preview links
+* [X] added example filters in a sub-folder
+* [X] added more filters
+    * [X] added filter to add custom fields to forms
+    * [X] added filter to add hidden fields to forms
+* [X] added more hooks
+    * [X] added more hooks to add custom code to forms
 * [X] rewrote code (parts) to comply with [WordPress Plugin Guidelines][guidelines]
 * [X] sanitized all inputs
 
