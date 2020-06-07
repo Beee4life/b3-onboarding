@@ -69,7 +69,7 @@
                 <?php b3_get_settings_field_open(); ?>
                     <div id="b3-main-logo-settings">
                         <p>
-                            <?php esc_html_e( "This is the logo used in emails and on Wordpress' default forms.", 'b3-onboarding' ); ?>
+                            <?php esc_html_e( "This is the logo used in emails and on WordPress' default forms.", 'b3-onboarding' ); ?>
                         </p>
                         <p>
                             <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">

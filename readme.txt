@@ -9,7 +9,7 @@ License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin styles the default Wordpress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
+This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
 
 == Description ==
 Long description with markup.

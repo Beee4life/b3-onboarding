@@ -2,7 +2,7 @@
     /*
     Plugin Name:        B3 - Onboarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
-    Description:        This plugin styles the default Wordpress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
+    Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
     Version:            2.0.0
     Requires at least:  4.3
     Requires PHP:       7.0
@@ -126,7 +126,7 @@
                  */
                 include( 'includes/actions-b3.php' );
                 /*
-                 * This file contains all actions on Wordpress hooks
+                 * This file contains all actions on WordPress hooks
                  */
                 include( 'includes/actions-wp.php' );
                 /*
@@ -150,7 +150,7 @@
                  */
                 include( 'includes/functions.php' );
                 /*
-                 * This file contains all 'Wordpress' hooks
+                 * This file contains all 'WordPress' hooks
                  */
                 include( 'includes/filters-wp.php' );
                 /*

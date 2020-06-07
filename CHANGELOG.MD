@@ -18,7 +18,7 @@ I hope you like all the improvements. See the changelog below for all updates (I
 * [X] added default values for all (relevant) inputs
 * [X] added example filters in a sub-folder
 * [X] added global link color for emails
-* [X] added menu icon in Wordpress menu
+* [X] added menu icon in WordPress menu
 * [X] added more filters
     * [X] added filter to add custom fields to forms
     * [X] added filter to add hidden fields to forms
@@ -27,17 +27,17 @@ I hope you like all the improvements. See the changelog below for all updates (I
 * [X] added more user input options
 * [X] added notification + counter if users need approval
 * [X] added option to remove logo from email header
-* [X] added option to add a global logo (for emails/default Wordpress forms)
+* [X] added option to add a global logo (for emails/default WordPress forms)
 * [X] added option to add a privacy box
 * [ ] added option to delete user account (through non WP forms) - tbc
 * [X] added option to disable admin notification after user registration
 * [X] added option to disable admin notification after user password change
-* [X] added option to disable Wordpress' own pages
-* [X] added option to remove the Wordpress admin bar for users who don't have admin access
-* [X] added option to set a logo from the Wordpress media library
+* [X] added option to disable WordPress' own pages
+* [X] added option to remove the WordPress admin bar for users who don't have admin access
+* [X] added option to set a logo from the WordPress media library
 * [X] added option to set your own privacy text
 * [X] added reCaptcha for registration/login pages (optional) 
-* [X] added styling options for default Wordpress pages
+* [X] added styling options for default WordPress pages
 * [X] added verification for all custom filter output
 * [X] published an 'official' [website][website] with
     * [X] documentation for
@@ -45,7 +45,7 @@ I hope you like all the improvements. See the changelog below for all updates (I
         * [X] all filters
         * [X] all functions
     * [X] faqs
-* [X] rewrote code (parts) to comply with [Wordpress Plugin Guidelines][guidelines]
+* [X] rewrote code (parts) to comply with [WordPress Plugin Guidelines][guidelines]
 * [X] sanitized all inputs
 
 #### These are the things that were changed

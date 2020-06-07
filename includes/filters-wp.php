@@ -232,7 +232,7 @@
 
 
     /**
-     * Check for errors on Wordpress' own registration form
+     * Check for errors on WordPress' own registration form
      *
      * @param $errors
      * @param $sanitized_user_login

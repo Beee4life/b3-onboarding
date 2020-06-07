@@ -1,10 +1,10 @@
 <?php
     /*
-     * This file contains functions hooked to the Wordpress' hooks
+     * This file contains functions hooked to the WordPress' hooks
      */
 
     /**
-     * Add custom fields to Wordpress' default register form
+     * Add custom fields to WordPress' default register form
      *
      * @since 1.0.0
      *

@@ -129,6 +129,7 @@ These are the things we have planned to add.
 * [ ] disallow certain user names
 * [ ] look more into responsiveness
 * [ ] multi-page registration forms
+* [ ] style all default WordPress mails
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
@@ -138,7 +139,7 @@ These are the things we have planned to add.
 * replaced deprecated contextual_help
 * escape user input for storage
 * more emails to set
-* style default Wordpress login page
+* style default WordPress login page
 * force use own pages
 * added recaptcha (optional) for registration/login pages 
 * added option to delete user account

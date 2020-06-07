@@ -58,7 +58,7 @@
      *
      * @since 1.0.0
      *
-     * @TODO: check for a Wordpress hook to hook to
+     * @TODO: check for a WordPress hook to hook to
      * @TODO: look into filter 'registration_redirect'
      *
      * @param $user_id
