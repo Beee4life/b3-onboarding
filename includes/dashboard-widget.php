@@ -26,21 +26,23 @@
 
         ?>
         <div class="b3_widget--dashboard">
-            <p>
-                <?php
-                    if ( count( $approval_users ) > 0 ) {
+            <?php if ( count( $approval_users ) > 0  || count( $activation_users ) > 0 ) { ?>
+                <p>
+                    <?php
+                        if ( count( $approval_users ) > 0 ) {
 
-                        if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
-                            echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
-                        } else {
-                            echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type and thus also the user approval page.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ) );
+                            if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
+                                echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
+                            } else {
+                                echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type and thus also the user approval page.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ) );
+                            }
+
+                        } elseif ( count( $activation_users ) > 0 ) {
+                            echo sprintf( esc_html__( 'There %s %d %s awaiting activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
                         }
-
-                    } elseif ( count( $activation_users ) > 0 ) {
-                        echo sprintf( esc_html__( 'There %s %d %s awaiting activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
-                    }
-                ?>
-            </p>
+                    ?>
+                </p>
+            <?php } ?>
 
             <?php if ( ! empty( $all_users ) ) { ?>
                 <?php $date_time_format = get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ); ?>
@@ -62,6 +64,19 @@
                         </li>
                     <?php } ?>
                 </ul>
+            <?php } else { ?>
+                <h3>
+                    <?php esc_html_e( 'Last registered users', 'b3-onboarding' ); ?>
+                </h3>
+                <?php if ( 'closed' == get_option( 'b3_registration_type', false ) || false == get_option( 'users_can_register', false ) ) { ?>
+                    <p>
+                        <?php printf( __( "You're the only user right now, but that can be because user registration is not allowed. Change it <a href=\"%s\">here</a>.", 'b3-onboarding' ), B3_PLUGIN_SETTINGS . '&tab=registration' ); ?>
+                    </p>
+                <?php } else { ?>
+                    <p>
+                        <?php esc_html_e( "You're the only user right now.", 'b3-onboarding' ); ?>
+                    </p>
+                <?php } ?>
             <?php } ?>
         </div>
         <?php
