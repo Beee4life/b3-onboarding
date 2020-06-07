@@ -935,11 +935,24 @@
      *
      * @param bool $submit_value
      */
-    function b3_get_submit_button( $submit_value = false ) {
-        if ( false == $submit_value ) {
-            $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
+    function b3_get_submit_button( $submit_value = false, $button_modifier = false ) {
+        $default_value = esc_attr__( 'Save settings', 'b3-onboarding' );
+        // validate user value
+        if ( false != $submit_value ) {
+            if ( is_string( $submit_value ) ) {
+                $submit_value = ' button-submit--' . esc_attr__( $submit_value );
+            } else {
+                $submit_value = $default_value;
+            }
         }
-        echo '<input class="button button-primary button--submit" type="submit" value="' . $submit_value . '" />';
+        if ( false != $button_modifier ) {
+            if ( is_string( $button_modifier ) ) {
+                $button_modifier = ' button-submit--' . esc_attr__( $button_modifier );
+            } else {
+                $button_modifier = false;
+            }
+        }
+        echo '<input class="button button-primary button--submit' . $button_modifier . '" type="submit" value="' . $submit_value . '" />';
     }
 
     /**
