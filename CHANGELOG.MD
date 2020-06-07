@@ -21,6 +21,7 @@ This is a major update. A ton of new features/functions/options have been added
 * [X] added debug widget
 * [X] added default values for all (relevant) inputs
 * [X] added example filters in a sub-folder
+* [X] added global link color for emails
 * [X] added menu icon in Wordpress menu
 * [X] added more filters
     * [X] added filter to add custom fields to forms
@@ -32,11 +33,13 @@ This is a major update. A ton of new features/functions/options have been added
 * [X] added option to remove logo from email header
 * [X] added option to add a global logo (for emails/default Wordpress forms)
 * [X] added option to add a privacy box
-* [X] added option to set your own privacy text
 * [X] added option to delete user account (through non WP forms)
 * [X] added option to disable admin notification after user registration
 * [X] added option to disable admin notification after user password change
 * [X] added option to disable Wordpress' own pages
+* [X] added option to remove the Wordpress admin bar for users who don't have admin access
+* [X] added option to set a logo from the Wordpress media library
+* [X] added option to set your own privacy text
 * [X] added reCaptcha for registration/login pages (optional) 
 * [X] added styling options for default Wordpress pages
 * [X] added verification for all custom filter output
