@@ -650,7 +650,7 @@
                     include( 'includes/dashboard-widget.php' );
                 }
                 if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
-                    // include( 'includes/dashboard-widget-debug.php' );
+                    include( 'includes/dashboard-widget-debug.php' );
                 }
             }
 
