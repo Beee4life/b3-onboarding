@@ -920,7 +920,7 @@
 
     /**
      * Close a div.
-     * This function is not really needed, but it prevents PhpStorm from throwing a ton of errors
+     * This function is not really needed, but it prevents PhpStorm from throwing a ton of errors.
      *
      * @since 2.0.0
      */
@@ -970,7 +970,6 @@
 
         return wp_registration_url();
 
-
     }
 
 
@@ -1019,7 +1018,6 @@
 
     }
 
-
     /**
      * Get account page page id/link
      *
@@ -1044,7 +1042,6 @@
         return '';
 
     }
-
 
     /**
      * Get forgot pass page id/link
@@ -1080,7 +1077,6 @@
 
     }
 
-
     /**
      * Get account page id/link
      *
@@ -1092,7 +1088,6 @@
      */
     function b3_get_user_approval_id() {
         $id = get_option( 'b3_approval_page_id', false );
-        // @TODO: check for front-end page id
         if ( false != $id && get_post( $id ) ) {
             return get_the_permalink( $id );
         }
@@ -1100,7 +1095,6 @@
         return false;
 
     }
-
 
     /**
      * Get current url
