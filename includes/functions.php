@@ -618,13 +618,13 @@
 
 
     /**
-     * Get account rejected message (user)
+     * Get password forgot message (user)
      *
      * @since 1.0.0
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_password_reset_message() {
+    function b3_get_password_forgot_message() {
         $message = get_option( 'b3_forgot_password_message', false );
         if ( ! $message ) {
             $message = b3_default_forgot_password_message() . "\n";
@@ -687,7 +687,7 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_password_reset_subject() {
+    function b3_get_password_forgot_subject() {
         $subject = get_option( 'b3_forgot_password_subject', false );
         if ( ! $subject ) {
             $subject = b3_default_forgot_password_subject();

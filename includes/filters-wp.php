@@ -187,11 +187,9 @@
      */
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
 
-        $b3_forgot_password_subject = get_option( 'b3_forgot_password_subject', false );
+        $b3_forgot_password_subject = apply_filters( 'b3_password_reset_subject', b3_get_password_forgot_subject() );
         if ( false != $b3_forgot_password_subject ) {
             $subject = $b3_forgot_password_subject;
-        } else {
-            $subject = b3_default_forgot_password_subject();
         }
 
         return $subject;
@@ -212,11 +210,9 @@
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
 
-        $b3_forgot_password_message = get_option( 'b3_forgot_password_message', false );
+        $b3_forgot_password_message = apply_filters( 'b3_password_forgot_message', b3_get_password_forgot_message() );
         if ( false != $b3_forgot_password_message ) {
             $message = $b3_forgot_password_message;
-        } else {
-            $message = b3_default_forgot_password_message();
         }
 
         $vars = [

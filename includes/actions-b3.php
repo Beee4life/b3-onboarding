@@ -40,6 +40,7 @@
         $from_email  = 'Dummy';
         $to          = $user_object->user_email;
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+        $subject     = strtr( $subject, b3_replace_subject_vars() );
         $message     = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
         $message     = b3_replace_template_styling( $message );
         $message     = strtr( $message, b3_replace_email_vars() );
@@ -220,7 +221,7 @@
         if ( true == $show_privacy ) { ?>
             <div class="b3_form-element b3_form-element--privacy">
                 <label>
-                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1" /> <?php echo htmlspecialchars_decode( apply_filters( 'b3_add_privacy_text', b3_get_privacy_text() ) ); ?>
+                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1" /> <?php echo htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) ); ?>
                 </label>
             </div>
         <?php }

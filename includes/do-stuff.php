@@ -182,6 +182,36 @@
 
 
     /**
+     * Replace vars in email subject
+     *
+     * @since 2.0.0
+     *
+     * @param $vars
+     *
+     * @return array
+     */
+    function b3_replace_subject_vars( $vars = array() ) {
+
+        $user_data = false;
+        if ( is_user_logged_in() ) {
+            $user_data = get_userdata( get_current_user_id() );
+            if ( false != $user_data ) {
+                $vars[ 'user_data' ] = $user_data;
+            }
+        }
+
+        $replacements = array(
+            '%blog_name%'   => get_option( 'blogname' ),
+            '%user_login%'  => ( false != $user_data ) ? $user_data->user_login : false,
+            '%first_name%'  => ( false != $user_data ) ? $user_data->first_name : false,
+        );
+
+        return $replacements;
+
+    }
+
+
+    /**
      * Replace vars in email message
      *
      * @since 2.0.0

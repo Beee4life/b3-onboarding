@@ -14,7 +14,7 @@
             Morbi vehicula metus vestibulum, eleifend arcu quis, rutrum massa. Sed porttitor pellentesque convallis. Suspendisse potenti. Nam dapibus vitae tortor a egestas. Ut at lobortis tortor. Sed tellus sem, pulvinar sit amet posuere non, vulputate vitae mi. Vestibulum ac massa suscipit, placerat risus ut, rutrum turpis. Integer in risus ac turpis dapibus viverra. Nulla facilisi. Nam ut cursus felis. Pellentesque <a href="">congue scelerisque</a> nisl, nec ultricies ex. Vivamus id ex ac dolor porttitor tempus. Maecenas pulvinar porta nunc, in mollis erat egestas et.';
 
             switch( $preview ) {
-                case 'xtemplate':
+                case 'template':
                     $message = $lorem_ipsum;
                     break;
                 case 'account-approved':
@@ -34,8 +34,8 @@
                     $subject = apply_filters( 'b3_email_activation_subject_user', b3_get_email_activation_subject_user() );
                     break;
                 case 'forgotpass':
-                    $message = apply_filters( 'b3_password_reset_message', b3_get_password_reset_message() ) ;
-                    $subject = apply_filters( 'b3_password_reset_subject', b3_get_password_reset_subject() );
+                    $message = apply_filters( 'b3_password_forgot_message', b3_get_password_forgot_message() ) ;
+                    $subject = apply_filters( 'b3_password_forgot_subject', b3_get_password_forgot_subject() );
                     break;
                 case 'new-user-admin':
                     // @TODO: maybe make new one, don't use b3_get_new_user_message
@@ -54,35 +54,39 @@
                     $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() ) ;
                     $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                     break;
+                case 'styling':
+                    $css = apply_filters( 'b3_email_styling', b3_get_email_styling() ) ;
+                    break;
                 default:
-                    $message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit <a href="">iaculis</a> enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.
-                    <br /><br />
-                    Quisque <a href="">quis nibh</a> gravida, condimentum nibh sed, facilisis ligula. Phasellus placerat, metus a ultricies vulputate, arcu massa ullamcorper enim, id iaculis nisl augue eu dolor. Aliquam vel nisi at lacus ultrices fringilla. In cursus mattis lectus, non ultricies orci vulputate nec. Fusce non vestibulum nulla. Cras libero metus, fermentum sit amet venenatis sit amet, vestibulum vitae lectus. Donec interdum volutpat blandit.
-                    <br /><br />
-                    Morbi vehicula metus vestibulum, eleifend arcu quis, rutrum massa. Sed porttitor pellentesque convallis. Suspendisse potenti. Nam dapibus vitae tortor a egestas. Ut at lobortis tortor. Sed tellus sem, pulvinar sit amet posuere non, vulputate vitae mi. Vestibulum ac massa suscipit, placerat risus ut, rutrum turpis. Integer in risus ac turpis dapibus viverra. Nulla facilisi. Nam ut cursus felis. Pellentesque <a href="">congue scelerisque</a> nisl, nec ultricies ex. Vivamus id ex ac dolor porttitor tempus. Maecenas pulvinar porta nunc, in mollis erat egestas et.';
+                    $message = 'OOPS';
             }
 
-            $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_replace_email_vars() );
-            $message = htmlspecialchars_decode( stripslashes( $message ) );
+            if ( 'styling' !== $_GET[ 'preview' ] ) {
+                $subject = strtr( $subject, b3_replace_subject_vars() );
+                $message = b3_replace_template_styling( $message );
+                $message = strtr( $message, b3_replace_email_vars() );
+                $message = htmlspecialchars_decode( stripslashes( $message ) );
+            ?>
 
-        }
-    ?>
+                <p>
+                    <?php esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' ); ?>
+                </p>
 
-    <p>
-        <?php esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' ); ?>
-    </p>
+                <?php if ( false != $subject ) { ?>
+                    <p>
+                        <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo $subject; ?>"
+                    </p>
+                <?php } ?>
 
-    <?php if ( false != $subject ) { ?>
-        <p>
-            <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo $subject; ?>"
-        </p>
+                <?php echo $message; ?>
+            <?php } else { ?>
+                <p><?php esc_html_e( "These are the email's styling definitions (unformatted).", 'b3-onboarding' ); ?></p>
+                <p><?php esc_html_e( "We'll hope to be able to format them later.", 'b3-onboarding' ); ?></p>
+                <?php // @TODO: format css ?>
+                <pre><?php echo $css; ?></pre>
+            <?php } ?>
+
     <?php } ?>
 
-    <style type="text/css">
-        <?php //echo apply_filters( 'b3_email_styling', b3_get_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) ); ?>
-    </style>
-
-    <?php echo $message; ?>
 
 </div>
