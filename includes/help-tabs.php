@@ -120,7 +120,5 @@
             <p><a href="https://berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">Berry Plasman</a></p>
             ' . $site
         );
-
-        return false;
     }
-    add_filter( 'current_screen', 'b3_help_tabs', 5, 3 );
+    add_action( 'current_screen', 'b3_help_tabs', 5 );
