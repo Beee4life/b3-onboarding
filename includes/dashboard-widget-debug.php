@@ -19,8 +19,8 @@
                     <li><a href="<?php echo $preview_page; ?>email-activation"><?php esc_html_e( 'Email activation (user)', '' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>forgotpass"><?php esc_html_e( 'Forgot pass (user)', '' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>new-user-admin"><?php esc_html_e( 'New user (admin)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>request-access-admin"><?php esc_html_e( 'Requesst access (admin)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>request-access-user"><?php esc_html_e( 'Requesst access (user)', '' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>request-access-admin"><?php esc_html_e( 'Request access (admin)', '' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>request-access-user"><?php esc_html_e( 'Request access (user)', '' ); ?></a></li>
                     <!--<li><a href="--><?php //echo $preview_page; ?><!--styling">--><?php //esc_html_e( 'Styling', '' ); ?><!--</a></li>-->
                     <li><a href="<?php echo $preview_page; ?>template"><?php esc_html_e( 'Template', '' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>welcome-user"><?php esc_html_e( 'Welcome (user)', '' ); ?></a></li>
