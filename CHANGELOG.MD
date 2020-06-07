@@ -15,23 +15,23 @@ I hope you like all the improvements. See the changelog below for all updates (I
 **General goodies**
 
 * [X] added default values for all (relevant) inputs
-* [X] added global link color for emails
-* [X] added menu icon in WordPress menu
+* [X] added a global link color for emails
+* [X] added a menu icon in WordPress menu
 * [X] added more user input options
-* [X] added notification + counter if users need approval
-* [X] added option to remove logo from email header
-* [X] added option to add a global logo (for emails/default WordPress forms)
-* [X] added option to add a privacy box
-* [ ] added option to delete user account (through non WP forms) - tbc
-* [X] added option to disable admin notification after user registration
-* [X] added option to disable admin notification after user password change
-* [X] added option to disable WordPress' own pages
-* [X] added option to remove the WordPress admin bar for users who don't have admin access
-* [X] added option to set a logo from the WordPress media library
-* [X] added option to set your own privacy text
+* [X] added a notification + counter if users need approval
+* [X] added an option to remove logo from email header
+* [X] added an option to add a global logo (for emails/default WordPress forms)
+* [X] added an option to add a privacy box
+* [ ] added an option to delete user account (through non WP forms) - tbc
+* [X] added an option to disable admin notification after user registration
+* [X] added an option to disable admin notification after user password change
+* [X] added an option to disable WordPress' own pages
+* [X] added an option to remove the WordPress admin bar for users who don't have admin access
+* [X] added an option to set a logo from the WordPress media library
+* [X] added an option to set your own privacy text
 * [X] added reCaptcha for registration/login pages (optional) 
 * [X] added styling options for default WordPress pages
-* [X] added verification for all custom filter output
+* [X] added a verification for all custom filter output
 * [X] published an 'official' [website][website] with
     * [X] documentation for
         * [X] all actions/hooks
