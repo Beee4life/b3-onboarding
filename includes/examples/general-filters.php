@@ -17,7 +17,7 @@
      */
     function b3_main_logo( $logo ) {
 
-        $logo = B3_PLUGIN_URL . '/assets/images/logo-salesforce.png';
+        $logo = B3_PLUGIN_URL . 'assets/images/logo-salesforce.png';
 
         return $logo;
     }

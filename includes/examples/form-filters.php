@@ -5,7 +5,7 @@
     ##################
 
     /**
-     * Add hidden fields to form
+     * Add hidden fields to form (filter only)
      *
      * @since 2.0.0
      *
@@ -23,8 +23,9 @@
     }
     add_filter( 'b3_hidden_fields', 'b3_hidden_fields' );
 
+
     /**
-     * Add custom fields to form
+     * Add custom fields to form (filter only)
      *
      * @since 2.0.0
      *
@@ -147,6 +148,42 @@
     }
     // add_filter( 'b3_extra_fields', 'b3_extra_fields' );
 
+
+    /**
+     * Filters message before request access form (filter only)
+     *
+     * @since 2.0.0
+     *
+     * @param $message
+     *
+     * @return string
+     */
+    function b3_before_request_access( $message ) {
+
+        $message = 'Click here';
+
+        return $message;
+    }
+    add_filter( 'b3_before_request_access', 'b3_before_request_access' );
+
+
+    /**
+     * Filters message before password reset form (filter only)
+     * @since 2.0.0
+     *
+     * @param $message
+     *
+     * @return string
+     */
+    function b3_before_password_reset( $message ) {
+
+        $message = '<a href="#">Click</a> here';
+
+        return $message;
+    }
+    add_filter( 'b3_before_password_reset', 'b3_before_password_reset' );
+
+
     /**
      * Override privacy text
      *
@@ -164,8 +201,9 @@
     }
     // add_filter( 'b3_privacy_text', 'b3_privacy_text' );
 
+
     /**
-     * Override closed message
+     * Override registration closed message (filter only)
      *
      * @TODO: create user input
      *
@@ -183,6 +221,7 @@
     }
     // add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message' );
 
+
     /**
      * Override email styling
      *
@@ -199,6 +238,7 @@
         return $email_styling;
     }
     // add_filter( 'b3_email_styling', 'b3_email_styling' );
+
 
     /**
      * Override email template

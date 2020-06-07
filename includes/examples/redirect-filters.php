@@ -4,10 +4,6 @@
     ## Redirect filters ##
     ######################
 
-    ######################
-    ## Redirect filters ##
-    ######################
-
     /**
      * Redirect after user register
      *
