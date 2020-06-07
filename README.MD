@@ -126,6 +126,7 @@ These are the things we have planned to add.
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
 * [ ] disallow certain user names
+* [ ] validate extra fields added through a filter
 * [ ] look more into responsiveness
 * [ ] multi-page registration forms
 * [ ] style all default WordPress mails
