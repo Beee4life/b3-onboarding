@@ -154,6 +154,10 @@
     min-width: 200px;
 }
 
+.b3_select-page__selector {
+    min-width: 150px;
+}
+
 .b3_below_input {
     margin-top: 0.5em;
     color:      #666;
