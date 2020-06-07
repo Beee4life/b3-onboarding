@@ -14,11 +14,14 @@
      * @return array
      */
     function b3_hidden_fields( $fields ) {
+        if ( ! is_array( $fields ) ) {
+            $fields = array();
+        }
         $fields[ 'field_id' ] = 'field_value';
 
         return $fields;
     }
-    // add_filter( 'b3_hidden_fields', 'b3_hidden_fields' );
+    add_filter( 'b3_hidden_fields', 'b3_hidden_fields' );
 
     /**
      * Add custom fields to form
@@ -142,7 +145,7 @@
 
         return $fields;
     }
-    add_filter( 'b3_extra_fields', 'b3_extra_fields' );
+    // add_filter( 'b3_extra_fields', 'b3_extra_fields' );
 
     /**
      * Override privacy text
@@ -162,3 +165,56 @@
     // add_filter( 'b3_add_privacy_text', 'b3_add_privacy_text' );
 
 
+
+    /**
+     * Override closed message
+     *
+     * @TODO: create user input
+     *
+     * @since 2.0.0
+     *
+     * @param $registration_closed_message
+     *
+     * @return mixed
+     */
+    function b3_registration_closed_message( $registration_closed_message ) {
+
+        $registration_closed_message = '<a href="#">Click</a> here';
+
+        return $registration_closed_message;
+    }
+    // add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message' );
+
+    /**
+     * Override email styling
+     *
+     * @since 2.0.0
+     *
+     * @param $email_styling
+     *
+     * @return string
+     */
+    function b3_email_styling( $email_styling ) {
+
+        $email_styling = '<a href="#">Click</a> here';
+
+        return $email_styling;
+    }
+    // add_filter( 'b3_email_styling', 'b3_email_styling' );
+
+    /**
+     * Override email template
+     *
+     * @since 2.0.0
+     *
+     * @param $email_template
+     *
+     * @return string
+     */
+    function b3_email_template( $email_template ) {
+
+        $email_template = '<a href="#">Click</a> here';
+
+        return $email_template;
+    }
+    // add_filter( 'b3_email_template', 'b3_email_template' );
