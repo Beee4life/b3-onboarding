@@ -3,6 +3,7 @@
     display: none;
 }
 
+/* Error message */
 .b3_message {
     border:        1px dashed black;
     box-sizing:    border-box;
@@ -16,7 +17,7 @@
     margin: 0;
 }
 
-/* used on profile only */
+/* used on front-end profile only */
 .b3_message .error__close {
     position:      absolute;
     font-size:     80%;
@@ -30,9 +31,7 @@
     cursor: pointer;
 }
 
-.b3_page {
-}
-
+/* Forms */
 .b3_page form {
     width: 600px;
 }
@@ -51,15 +50,39 @@
 }
 
 .b3_page .b3_form-label {
-    display: inline-block;
-    width:   220px;
+    display:        inline-block;
+    width:          220px;
 }
 
-/* Password reset input */
+.b3_page .b3_form-element--checkbox .b3_form-label,
+.b3_page .b3_form-element--radio .b3_form-label,
+.b3_page .b3_form-element--xtextarea .b3_form-label {
+    vertical-align: top;
+}
+
+.b3_page .b3_form-element--textarea .b3_form-label {
+    margin-top: 10px;
+}
+
+/* Label on password reset input */
 .b3_page .b3_form-label--email {
     width: 150px;
 }
 
+.b3_form-element {
+    /* @TODO: change to margin-top */
+    margin-bottom: 2em;
+}
+
+.b3_form-element--radio {
+}
+
+.b3_input-options {
+    display: inline-block;
+}
+
+
+/* Links in form footer */
 ul.b3_form-links {
     list-style:   none;
     padding-left: 0;
@@ -83,11 +106,16 @@ ul.b3_form-links li:last-child {
     border-right: 0;
 }
 
-.b3_form-element {
-    /* @TODO: change to margin-top */
-    margin-bottom: 2em;
+/* User approval page */
+.b3_table--user th {
+    text-align: left;
 }
 
+.b3_table--account tr td:first-child {
+    width: 175px;
+}
+
+/* Password strength */
 #pass-strength-result {
     background-color: #eee;
     border:           1px solid #ddd;
@@ -100,15 +128,6 @@ ul.b3_form-links li:last-child {
     opacity:          0;
 }
 
-.b3_table--user th {
-    text-align: left;
-}
-
-.b3_table--account tr td:first-child {
-    width: 175px;
-}
-
-/* Password strength */
 #pass-strength-result.short {
     background-color: #f1adad;
     border-color:     #e35b5b;
@@ -175,16 +194,17 @@ ul.b3_form-links li:last-child {
     display: inline-block;
 }
 
+/* Admin topbar notification for user approval */
+#wpadminbar .topbar_approve_user a.ab-item {
+    color: #ee6102;
+}
+
+/* Misc */
 .widget .widget-no-settings {
     border:  1px dashed red;
     padding: 5px 10px;
 }
 
-#wpadminbar .topbar_approve_user a.ab-item {
-    color: #ee6102;
-}
-
-.hide,
 .hidden {
     display: none;
 }

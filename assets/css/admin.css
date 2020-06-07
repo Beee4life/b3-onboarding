@@ -409,6 +409,7 @@ ul.b3_integrations--list {
     padding:   5px 0 0 0;
 }
 
+.no-approval-page #adminmenu .toplevel_page_b3-onboarding ul li:nth-child(3),
 .hidden {
     display: none;
 }
