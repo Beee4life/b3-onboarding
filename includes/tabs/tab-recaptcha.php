@@ -108,7 +108,7 @@
                         <div class="b3_integration__container">
                             <div class="b3_integration__image">
                                 <img
-                                    src="<?php echo B3_PLUGIN_URL . '/assets/images/'; ?><?php echo $module[ 'logo' ]; ?>"
+                                    src="<?php echo B3_PLUGIN_URL . 'assets/images/'; ?><?php echo $module[ 'logo' ]; ?>"
                                     alt="<?php echo $module[ 'name' ]; ?>"/>
                             </div>
                             <div class="b3_integration__name">

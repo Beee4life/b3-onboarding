@@ -39,7 +39,7 @@
              */
             function __construct() {
                 if ( ! defined( 'B3_PLUGIN_URL' ) ) {
-                    $plugin_url = plugins_url( '', __FILE__ );
+                    $plugin_url = plugins_url( '/', __FILE__ );
                     define( 'B3_PLUGIN_URL', $plugin_url );
                 }
 
@@ -591,7 +591,7 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  '/assets/images/logo-b3onboarding-small.png', '99' );
+                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '99' );
                 include( 'includes/user-approval-page.php' ); // content for the settings page
                 add_submenu_page( 'b3-onboarding', __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                 if ( true == get_option( 'b3_debug_info', false ) ) {
@@ -1683,9 +1683,11 @@
                 }
 
                 $template_paths = array(
+                    get_stylesheet_directory() . '/b3-onboarding/',
                     get_stylesheet_directory() . '/plugins/b3-onboarding/',
+                    get_template_directory() . '/b3-onboarding/',
                     get_template_directory() . '/plugins/b3-onboarding/',
-                    plugin_dir_path( __FILE__ ) . 'templates/',
+                    B3_PLUGIN_PATH . 'templates/',
                 );
                 foreach( $template_paths as $possible_location ) {
                     if ( file_exists( $possible_location . $template_name . '.php' )) {
