@@ -124,6 +124,7 @@ They will become available on the official website (soon).
 These are the things we have planned to add.
 * [ ] make it work with Multisite
 * [ ] make it work with WPML
+* [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
 * [ ] disallow certain user names
 * [ ] look more into responsiveness
