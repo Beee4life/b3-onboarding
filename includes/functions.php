@@ -67,6 +67,7 @@
             'b3_request_access_subject_user',
             'b3_reset_page_id', // set on activate
             'b3_restrict_admin', // set on activate
+            'b3_registration_closed_message',
             'b3_sidebar_widget', // set on activate
             'b3_style_default_pages',
             'b3_users_may_delete',
@@ -718,6 +719,28 @@
 
 
     /**
+     * Get the 'registration closed' message
+     *
+     * @since 2.0.0
+     *
+     * @param $registration_closed_message
+     *
+     * @return string
+     */
+    function b3_get_registration_closed_message() {
+
+        $user_input = get_option( 'b3_registration_closed_message', false );
+        if ( false != $user_input ) {
+            $registration_closed_message = htmlspecialchars_decode( $user_input );
+        } else {
+            $registration_closed_message = b3_default_registration_closed_message();
+        }
+
+        return $registration_closed_message;
+    }
+
+
+    /**
      * Get the privacy text
      *
      * @since 1.0.0
@@ -941,9 +964,9 @@
         if ( false != $submit_value ) {
             if ( is_string( $submit_value ) ) {
                 $submit_value = ' button-submit--' . esc_attr__( $submit_value );
-            } else {
-                $submit_value = $default_value;
             }
+        } else {
+            $submit_value = $default_value;
         }
         if ( false != $button_modifier ) {
             if ( is_string( $button_modifier ) ) {
