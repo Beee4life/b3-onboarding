@@ -8,8 +8,6 @@ There's a ton of new hooks/filters/functions/settings/options. Also there's now 
 
 I hope you like all the improvements. See the changelog below for all updates (I might have missed a few due to the large amount).
 
-**Feedback**
-
 Any [feedback][github-issues] is welcome.
 
 ## Changelog 2.0.0
