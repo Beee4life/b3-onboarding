@@ -56,11 +56,11 @@
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
 
                         foreach ( $error_codes as $error_code ) {
-                            $attributes[ 'errors' ][] = $this->b3_get_error_message( $error_code );
+                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                         }
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                         if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         }
                     }
 
@@ -105,7 +105,7 @@
                     $error_codes = explode( ',', $_REQUEST[ 'login' ] );
 
                     foreach ( $error_codes as $code ) {
-                        $errors[] = $this->b3_get_error_message( $code );
+                        $errors[] = $this->b3_get_return_message( $code );
                     }
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( is_multisite() ) {
@@ -117,28 +117,28 @@
                     } else {
                         if ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
                             // access_requested
-                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         } elseif ( 'confirm_email' == $_REQUEST[ 'registered' ] ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         } elseif ( 'dummy' == $_REQUEST[ 'registered' ] ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_error_message( $_REQUEST[ 'registered' ] );
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         } elseif ( 'success' == $_REQUEST[ 'registered' ] ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_error_message( 'registration_success' );
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success' );
                         } else {
                             error_log('FIX ELSE - line 116 class-b3-shortcodes.php');
-                            $attributes[ 'messages' ][] = $this->b3_get_error_message( '' );
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'activate_success' );
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
                 } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' == $_REQUEST[ 'password' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'password_updated' );
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'password_updated' );
                 } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' == $_REQUEST[ 'checkemail' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'lost_password_sent' );
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'lost_password_sent' );
                 } elseif ( isset( $_REQUEST[ 'logout' ] ) && 'true' == $_REQUEST[ 'logout' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'logged_out' );
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'logged_out' );
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'account_remove' );
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
 
                 $attributes[ 'errors' ] = $errors;
@@ -176,15 +176,15 @@
                 if ( isset( $_REQUEST[ 'error' ] ) ) {
                     $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                     foreach ( $error_codes as $error_code ) {
-                        $attributes[ 'errors' ][] = $this->b3_get_error_message( $error_code );
+                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                     }
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ] ) {
                     // you can now log in... should this be here ?
                     error_log( 'isset( $_REQUEST[ \'activate\' ] ) && \'success\' == $_REQUEST[ \'activate\' ] is used' );
-                    $attributes[ 'messages' ][] = $this->b3_get_error_message( 'activate_success' );
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( 'success' == $_REQUEST[ 'registered' ] ) {
-                        $attributes[ 'messages' ][] = $this->b3_get_error_message( 'registration_success_enter_password' );
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success_enter_password' );
                     }
                 }
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
@@ -221,7 +221,7 @@
                         if ( isset( $_REQUEST[ 'error' ] ) ) {
                             $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                             foreach ( $error_codes as $code ) {
-                                $errors[] = $this->b3_get_error_message( $code );
+                                $errors[] = $this->b3_get_return_message( $code );
                             }
                         }
                         $attributes[ 'errors' ] = $errors;
@@ -271,13 +271,13 @@
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
 
                         foreach ( $error_codes as $code ) {
-                            $errors[] = $this->b3_get_error_message( $code );
+                            $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
                     $attributes[ 'errors' ] = $errors;
 
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {
-                        $attributes[ 'updated' ] = $this->b3_get_error_message( $_REQUEST[ 'updated' ] );
+                        $attributes[ 'updated' ] = $this->b3_get_return_message( $_REQUEST[ 'updated' ] );
                     }
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
@@ -311,7 +311,7 @@
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
 
                         foreach ( $error_codes as $code ) {
-                            $errors[] = $this->b3_get_error_message( $code );
+                            $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
                     $attributes[ 'errors' ] = $errors;

@@ -29,7 +29,7 @@
         class B3Onboarding {
 
             protected $b3_get_template_html;
-            protected $b3_get_error_message;
+            protected $b3_get_return_message;
 
             /**
              * Initializes the plugin.
@@ -228,7 +228,6 @@
                     update_option( 'b3_registration_type', 'open' );
                 } else {
 
-                    // @TODO: check if settings should be preserved
                     $public_registration = get_site_option( 'registration' );
 
                     if ( is_main_site() ) {
@@ -901,8 +900,8 @@
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role                      = get_option( 'default_role' );
                             $registration_type         = get_option( 'b3_registration_type', false );
-                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false; // @TODO: do i need this for MS ?
-                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false; // @TODO: do i need this for MS ?
+                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false;
+                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false;
 
                             if ( ! is_multisite() ) {
                                 if ( 'closed' == $registration_type ) {
@@ -1411,10 +1410,10 @@
              *
              * @return string               An error message.
              */
-            public function b3_get_error_message( $error_code ) {
+            public function b3_get_return_message( $error_code ) {
                 switch( $error_code ) {
 
-                    // Login errors
+                    // Return messages
                     case 'empty_username':
                         return esc_html__( 'Please enter a user name', 'b3-onboarding' );
 
@@ -1450,11 +1449,9 @@
                     case 'no_privacy':
                         return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
 
-                    // @TODO: check , because technically not an error
                     case 'access_requested':
                         return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
 
-                    // @TODO: check , because technically not an error
                     case 'confirm_email':
                         return esc_html__( 'You have sucessfully registered but need to confirm your email first. Please check your email for an activation link.', 'b3-onboarding' );
 
@@ -1468,20 +1465,16 @@
                     case 'wait_confirmation':
                         return esc_html__( 'You have to confirm your email first.', 'b3-onboarding' );
 
-                    // @TODO: check , because technically not an error
                     case 'password_updated':
                         return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );
 
-                    // @TODO: check , because technically not an error
                     case 'lost_password_sent':
                         return esc_html__( 'Check your email for a link to reset your password.', 'b3-onboarding' );
 
                     // Registration
-                    // @TODO: check , because technically not an error
                     case 'registration_success':
                         return esc_html__( 'You have successfully registered.', 'b3-onboarding' );
 
-                    // @TODO: check , because technically not an error
                     case 'registration_success_enter_password':
                         return sprintf(
                             esc_html__( 'You have successfully registered to %s. Enter your email address to set your password.', 'b3-onboarding' ),
@@ -1489,7 +1482,6 @@
                         );
 
                     // Activation
-                    // @TODO: check , because technically not an error
                     case 'activate_success':
                         return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
 
@@ -1511,24 +1503,20 @@
                     case 'domain_exists':
                         return esc_html__( 'Sorry, this subdomain has already been taken.', 'b3-onboarding' );
 
-                    // @TODO: check , because technically not an error
                     case 'user_registered':
                         return esc_html__( 'You have successfully registered. Please check your email for an activation link.', 'b3-onboarding' );
 
                     // Account remove
-                    // @TODO: check , because technically not an error
                     case 'account_remove':
                         return esc_html__( 'Your account has been deleted.', 'b3-onboarding' );
 
                     // Admin
-                    // @TODO: check , because technically not an error
                     case 'settings_saved': // same message
                     case 'pages_saved': // same message
                     case 'emails_saved':
                         return esc_html__( 'Settings saved', 'b3-onboarding' );
 
                     // Website
-                    // @TODO: check , because technically not an error
                     case 'dummy':
                         return esc_html__( 'You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again.', 'b3-onboarding' );
 
@@ -1561,37 +1549,37 @@
                 );
 
                 if ( username_exists( $user_login ) ) {
-                    $errors->add( 'username_exists', $this->b3_get_error_message( 'username_exists' ) );
+                    $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
 
                     return $errors;
                 }
 
                 if ( ! is_email( $user_email ) ) {
-                    $errors->add( 'email', $this->b3_get_error_message( 'invalid_email' ) );
+                    $errors->add( 'email', $this->b3_get_return_message( 'invalid_email' ) );
 
                     return $errors;
                 }
 
                 if ( username_exists( $user_email ) || email_exists( $user_email ) ) {
-                    $errors->add( 'email_exists', $this->b3_get_error_message( 'email_exists' ) );
+                    $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
 
                     return $errors;
                 }
 
                 if ( ! is_email( $user_email ) ) {
-                    $errors->add( 'email', $this->b3_get_error_message( 'invalid_email' ) );
+                    $errors->add( 'email', $this->b3_get_return_message( 'invalid_email' ) );
 
                     return $errors;
                 }
 
                 if ( username_exists( $user_email ) || email_exists( $user_email ) ) {
-                    $errors->add( 'email_exists', $this->b3_get_error_message( 'email_exists' ) );
+                    $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
 
                     return $errors;
                 }
 
                 if ( true == $privacy_error ) {
-                    $errors->add( 'no_privacy', $this->b3_get_error_message( 'no_privacy' ) );
+                    $errors->add( 'no_privacy', $this->b3_get_return_message( 'no_privacy' ) );
 
                     return $errors;
                 }
@@ -1650,7 +1638,7 @@
                         // @TODO: add if for if admin needs to activate
                         // wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                     } else {
-                        $errors = new WP_Error( 'unknown', $this->b3_get_error_message( 'unknown' ) );
+                        $errors = new WP_Error( 'unknown', $this->b3_get_return_message( 'unknown' ) );
                     }
 
                 } else {
@@ -1659,13 +1647,13 @@
                         wpmu_signup_user( $user_name, $user_email, $meta );
                         $user_registered = true;
                     } else {
-                        $errors = new WP_Error( 'unknown', $this->b3_get_error_message( 'unknown' ) );
+                        $errors = new WP_Error( 'unknown', $this->b3_get_return_message( 'unknown' ) );
                     }
 
                 }
 
                 if ( true == $user_registered ) {
-                    // $errors = new WP_Error( 'user_registered', $this->b3_get_error_message( 'user_registered' ) );
+                    // $errors = new WP_Error( 'user_registered', $this->b3_get_return_message( 'user_registered' ) );
                 }
 
                 return $errors;
