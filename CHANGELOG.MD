@@ -55,7 +55,6 @@ This is a major update. A ton of new features/functions/options have been added
 * [X] removed the admin notification when manually adding a user
 * [X] replaced deprecated contextual_help
 
-
 #### Feedback
 
 Any [feedback](https://github.com/Beee4life/b3-onboarding/issues) is welcome.
