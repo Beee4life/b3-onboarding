@@ -143,6 +143,14 @@
                         }
                     }
 
+                    if ( 'closed' == get_option( 'b3_registration_type', false ) ) {
+                        if ( isset( $_POST[ 'b3_registration_closed_message' ] ) ) {
+                            update_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ), true );
+                        } else {
+                            delete_option( 'b3_registration_closed_message' );
+                        }
+                    }
+
                     // First/last name
                     if ( isset( $_POST[ 'b3_activate_first_last' ] ) && 1 == $_POST[ 'b3_activate_first_last' ] ) {
                         update_option( 'b3_activate_first_last', $_POST[ 'b3_activate_first_last' ], true );
@@ -310,6 +318,7 @@
                         update_option( 'b3_email_styling', $_POST[ 'b3_email_styling' ], true );
                     }
                     if ( isset( $_POST[ 'b3_email_template' ] ) ) {
+                        // @TODO: check for htmlspecialchars
                         update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), true );
                     }
 
@@ -334,7 +343,30 @@
                         }
 
                         update_option( 'b3_new_user_message', htmlspecialchars( $_POST[ 'b3_new_user_message' ] ), true );
-                        update_option( 'b3_new_user_notification_addresses', $_POST[ 'b3_new_user_notification_addresses' ], true );
+
+                        if ( isset( $_POST[ 'b3_new_user_notification_addresses' ] ) && ! empty( $_POST[ 'b3_new_user_notification_addresses' ] ) ) {
+                            $email_array = explode( ',', $_POST[ 'b3_new_user_notification_addresses' ] );
+                            if ( ! empty( $email_array ) ) {
+                                foreach( $email_array as $email ) {
+                                    $email = trim( $email );
+                                    if ( ! is_email( $email ) ) {
+                                        B3Onboarding::b3_errors()->add( 'error_invalid_email', sprintf( __( '"%s" is not a valid email address.', 'b3-onboarding' ), $email ) );
+
+                                        return;
+                                    } else {
+                                        $emails[] = sanitize_email( $email );
+                                    }
+                                }
+                            }
+                            if ( isset( $emails ) ) {
+                                $email_string = implode( ',', $emails );
+                                update_option( 'b3_new_user_notification_addresses', $email_string, true );
+                            }
+                        } else {
+                            // delete
+                            delete_option( 'b3_new_user_notification_addresses' );
+                        }
+
                         update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ], true );
 
                         if ( isset( $_POST[ 'b3_welcome_user_message' ] ) ) {

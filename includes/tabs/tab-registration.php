@@ -35,7 +35,7 @@
 
                 <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
-                <label for="b3_registration_types"><?php esc_html_e( 'Registration options', 'b3-onboarding' ); ?></label>
+                    <label for="b3_registration_types"><?php esc_html_e( 'Registration options', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <?php if ( is_multisite() && is_main_site() ) { ?>
                     <p>
@@ -64,48 +64,64 @@
                 <?php } ?>
                 <?php b3_get_close(); ?>
 
+                <?php if ( 'closed' == get_option( 'b3_registration_type', false ) ) { ?>
+                    <?php $closed_message = get_option( 'b3_registration_closed_message', false ); ?>
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $closed_message ); ?>" value="<?php if ( $closed_message ) { echo stripslashes( $closed_message ); } ?>"/>
+                            <div class="b3_settings-input--description">
+                                <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
+                            </div>
+                        </div>
+                    <?php b3_get_close(); ?>
+                <?php } ?>
+
+
                 <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
-                </div>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
+                    </div>
                 <?php b3_get_close(); ?>
 
                 <?php if ( $first_last ) { ?>
                     <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                    <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
-                    </div>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
+                        </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
                 <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
-                    <?php if ( 1 == get_option( 'b3_recaptcha', false ) ) { ?>
-                        <div class="b3_settings-input--description">
-                            <?php esc_html_e( 'See tab integrations', 'b3-onboarding' ); ?>
-                        </div>
-                    <?php } ?>
-                </div>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
+                        <?php if ( 1 == get_option( 'b3_recaptcha', false ) ) { ?>
+                            <div class="b3_settings-input--description">
+                                <?php esc_html_e( 'See tab integrations', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php } ?>
+                    </div>
                 <?php b3_get_close(); ?>
 
                 <?php if ( get_option( 'b3_recaptcha', false ) ) { ?>
                     <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                    <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_login" value="1" <?php if ( $recaptcha_login ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to add reCaptcha on the custom login form.', 'b3-onboarding' ); ?>
-                    </div>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_login" value="1" <?php if ( $recaptcha_login ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to add reCaptcha on the custom login form.', 'b3-onboarding' ); ?>
+                        </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
