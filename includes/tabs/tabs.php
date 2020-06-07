@@ -9,7 +9,7 @@
      * @return string
      */
     include( 'tab-emails.php' );
-    include( 'tab-integrations.php' );
+    include( 'tab-recaptcha.php' );
     include( 'tab-pages.php' );
     include( 'tab-registration.php' );
     include( 'tab-settings.php' );
@@ -37,8 +37,8 @@
             case 'users':
                 $content = b3_render_users_tab();
                 break;
-            case 'integrations':
-                $content = b3_render_integrations_tab();
+            case 'recaptcha':
+                $content = b3_render_recaptcha_tab();
                 break;
         }
 

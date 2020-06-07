@@ -82,9 +82,9 @@
 
                         if ( true == get_option( 'b3_recaptcha', false ) && defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
                             $tabs[] = array(
-                                'id'      => 'integrations',
-                                'title'   => esc_html__( 'Integrations', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'integrations' ),
+                                'id'      => 'recaptcha',
+                                'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'recaptcha' ),
                                 'icon'    => 'plus-alt',
                             );
                         }

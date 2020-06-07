@@ -6,7 +6,7 @@
      *
      * @return false|string
      */
-    function b3_render_integrations_tab() {
+    function b3_render_recaptcha_tab() {
 
         ob_start();
         $public_key        = get_option( 'b3_recaptcha_public', false );
@@ -14,58 +14,51 @@
         $secret_key        = get_option( 'b3_recaptcha_secret', false );
         ?>
         <h2>
-            <?php esc_html_e( 'Integrations', 'b3-onboarding' ); ?>
-        </h2>
-        <p>
-            <?php esc_html_e( 'On this page you can add 3rd party integrations. Right now we only have a reCaptcha but more can be expected in the future.', 'b3-onboarding' ); ?>
-            <br />
-            <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
-        </p>
-
-        <h3>
             <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
-        </h3>
+        </h2>
 
         <p>
             <?php esc_html_e( 'Here you can set the v2 reCaptcha settings, v3 is not working (yet).', 'b3-onboarding' ); ?>
             <br />
             <?php esc_html_e( 'Both keys must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
+            <br />
+            <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
         </p>
 
-        <form action="admin.php?page=b3-onboarding&tab=integrations" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=recaptcha" method="post">
             <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
 
             <?php b3_get_settings_field_open(); ?>
-            <?php b3_get_label_field_open(); ?>
-            <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
-            <?php b3_get_close(); ?>
-            <div class="b3_settings-input b3_settings-input--text">
-                <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key ) { echo $public_key; } ?>" />
-            </div>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--text">
+                    <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key ) { echo $public_key; } ?>" />
+                </div>
             <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open(); ?>
-            <?php b3_get_label_field_open(); ?>
-            <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
-            <?php b3_get_close(); ?>
-            <div class="b3_settings-input b3_settings-input--text">
-                <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key ) { echo $secret_key; } ?>" />
-            </div>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--text">
+                    <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key ) { echo $secret_key; } ?>" />
+                </div>
             <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open(1); ?>
-            <?php b3_get_label_field_open(); ?>
-            <label for="b3_recaptcha_version"><?php esc_html_e( 'reCaptcha version', 'b3-onboarding' ); ?></label>
-            <?php b3_get_close(); ?>
-            <div class="b3_settings-input b3_settings-input--text">
-                <select name="b3_recaptcha_version" id="b3_recaptcha_version">
-                    <option value=""><?php esc_html_e( 'Choose', 'b3-onboarding' ); ?></option>
-                    <?php $versions = [ 2, 3 ]; ?>
-                    <?php foreach( $versions as $version ) { ?>
-                        <option value="<?php echo $version; ?>"<?php echo ( $recaptcha_version == $version ) ? ' selected="selected"' : false; ?>>v<?php echo $version; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_version"><?php esc_html_e( 'reCaptcha version', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--text">
+                    <select name="b3_recaptcha_version" id="b3_recaptcha_version">
+                        <option value=""><?php esc_html_e( 'Choose', 'b3-onboarding' ); ?></option>
+                        <?php $versions = [ 2, 3 ]; ?>
+                        <?php foreach( $versions as $version ) { ?>
+                            <option value="<?php echo $version; ?>"<?php echo ( $recaptcha_version == $version ) ? ' selected="selected"' : false; ?>>v<?php echo $version; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
             <?php b3_get_close(); ?>
 
             <br />
