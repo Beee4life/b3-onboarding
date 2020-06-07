@@ -33,7 +33,7 @@ This is a major update. A ton of new features/functions/options have been added
 * [X] added option to remove logo from email header
 * [X] added option to add a global logo (for emails/default Wordpress forms)
 * [X] added option to add a privacy box
-* [X] added option to delete user account (through non WP forms)
+* [ ] added option to delete user account (through non WP forms) - tbc
 * [X] added option to disable admin notification after user registration
 * [X] added option to disable admin notification after user password change
 * [X] added option to disable Wordpress' own pages
