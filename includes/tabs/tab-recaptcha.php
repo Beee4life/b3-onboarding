@@ -10,7 +10,7 @@
 
         ob_start();
         $public_key        = get_option( 'b3_recaptcha_public', false );
-        $recaptcha_version = get_option( 'b3_recaptcha_version', false );
+        $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
         $secret_key        = get_option( 'b3_recaptcha_secret', false );
         ?>
         <h2>
@@ -21,8 +21,6 @@
             <?php esc_html_e( 'Here you can set the v2 reCaptcha settings, v3 is not working (yet).', 'b3-onboarding' ); ?>
             <br />
             <?php esc_html_e( 'Both keys must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
-            <br />
-            <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
         </p>
 
         <form action="admin.php?page=b3-onboarding&tab=recaptcha" method="post">
@@ -46,7 +44,7 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_settings_field_open(1); ?>
+            <?php b3_get_settings_field_open( 1 ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_recaptcha_version"><?php esc_html_e( 'reCaptcha version', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
@@ -61,7 +59,10 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <br />
+            <p>
+                <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
+            </p>
+
             <?php b3_get_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
 
         </form>
