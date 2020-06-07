@@ -8,6 +8,10 @@ There's a ton of new hooks/filters/functions/settings/options. Also there's now 
 
 I hope you like all the improvements. See the changelog below for all updates (I might have missed a few due to the large amount).
 
+**Feedback**
+
+Any [feedback][github-issues] is welcome.
+
 ## Changelog 2.0.0
 
 #### These are the things that were added (in alphabetical order)
@@ -59,9 +63,6 @@ I hope you like all the improvements. See the changelog below for all updates (I
 * [X] removed the admin notification when manually adding a user
 * [X] replaced deprecated contextual_help
 
-#### Feedback
-
-Any [feedback](https://github.com/Beee4life/b3-onboarding/issues) is welcome.
-
-[website]: https://b3onboarding.berryplasman.com
+[github-issues]: https://github.com/Beee4life/b3-onboarding/issues
 [guidelines]: https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/
+[website]: https://b3onboarding.berryplasman.com
