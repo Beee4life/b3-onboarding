@@ -1,7 +1,5 @@
 # B3 Onboarding Release Notes
 
-## Introduction
-
 This is a major update. I hadn't touched the plugin in a while, since it did what it needed to do, plus the lack of time and motivation didn't help.
 
 Recently I've found my motivation back as well as a lot of time so I buckled down and crammed out v2.0.0.
