@@ -81,7 +81,7 @@
         </table>
 
         <?php
-            // @TODO: check why this IF
+            // @TODO: check why I need this IF
             $show_password_fields = apply_filters( 'show_password_fields', true, $current_user );
             if ( $show_password_fields ) :
         ?>
