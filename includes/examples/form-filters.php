@@ -13,12 +13,12 @@
      *
      * @return array
      */
-    function b3_filter_hidden_fields_values( $fields ) {
+    function b3_hidden_fields( $fields ) {
         $fields[ 'field_id' ] = 'field_value';
 
         return $fields;
     }
-    // add_filter( 'b3_filter_hidden_fields_values', 'b3_filter_hidden_fields_values' );
+    // add_filter( 'b3_hidden_fields', 'b3_hidden_fields' );
 
     /**
      * Add custom fields to form
@@ -29,7 +29,7 @@
      *
      * @return array
      */
-    function b3_add_filter_extra_fields_values( $fields ) {
+    function b3_extra_fields( $fields ) {
         $container_class = 'container-class';
         $id              = 'id';
         $input_class     = 'input-class';
@@ -142,7 +142,7 @@
 
         return $fields;
     }
-    // add_filter( 'b3_add_filter_extra_fields_values', 'b3_add_filter_extra_fields_values' );
+    add_filter( 'b3_extra_fields', 'b3_extra_fields' );
 
     /**
      * Override privacy text

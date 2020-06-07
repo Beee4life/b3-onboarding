@@ -351,7 +351,7 @@
                 $recaptcha       = get_option( 'b3_recaptcha', false );
                 $recaptcha_login = get_option( 'b3_recaptcha_login', false );
                 $style_pages     = get_option( 'b3_style_default_pages', false );
-                $extra_fields    = apply_filters( 'b3_add_filter_extra_fields_values', array() );
+                $extra_fields    = apply_filters( 'b3_extra_fields', array() );
 
                 if ( ! empty( $extra_fields ) || $logo || $privacy || $recaptcha || $recaptcha_login || $style_pages ) {
                     echo '<style type="text/css">';

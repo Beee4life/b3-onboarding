@@ -203,7 +203,7 @@
      * @since 2.0.0
      */
     function b3_add_custom_fields_registration() {
-        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', array() );
+        $extra_field_values = apply_filters( 'b3_extra_fields', array() );
         if ( is_array( $extra_field_values ) && ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
                 echo b3_render_extra_field( $extra_field );
@@ -233,7 +233,7 @@
      * @since 2.0.0
      */
     function b3_hidden_fields_registration_form() {
-        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', array() );
+        $hidden_field_values = apply_filters( 'b3_hidden_fields', array() );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             $hidden_fields = '';
             foreach( $hidden_field_values as $key => $value ) {

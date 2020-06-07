@@ -15,14 +15,14 @@
             'b3_account_approved_subject',
             'b3_account_rejected_message',
             'b3_account_rejected_subject',
-            'b3_add_filter_extra_fields_values',
             'b3_custom_register_inform',
             'b3_email_activation_message_user',
             'b3_email_activation_subject_user',
             'b3_email_footer_text',
             'b3_email_styling',
             'b3_email_template',
-            'b3_filter_closed_message',
+            'b3_extra_fields',
+            'b3_registration_closed_message',
             'b3_filter_hidden_fields_values',
             'b3_link_color',
             'b3_main_logo',
@@ -49,7 +49,7 @@
         $email_styling                  = apply_filters( 'b3_email_styling', 'no_filter_defined' );
         $email_template                 = apply_filters( 'b3_email_template', 'no_filter_defined' );
         $error_messages                 = array();
-        $extra_fields                   = apply_filters( 'b3_add_filter_extra_fields_values', 'no_filter_defined' );
+        $extra_fields                   = apply_filters( 'b3_extra_fields', 'no_filter_defined' );
         $from_email                     = apply_filters( 'b3_notification_sender_email', 'no_filter_defined' );
         $footer_text                    = apply_filters( 'b3_email_footer_text', 'no_filter_defined' );
         $link_color                     = apply_filters( 'b3_link_color', 'no_filter_defined' );
@@ -65,8 +65,8 @@
         $welcome_user_subject           = apply_filters( 'b3_welcome_user_subject', 'no_filter_defined' );
 
         // @TODO: add verification for these
-        $closed_message                   = apply_filters( 'b3_filter_closed_message', 'no_filter_defined' );
-        $filter_hidden_fields             = apply_filters( 'b3_filter_hidden_fields_values', 'no_filter_defined' );
+        $closed_message                   = apply_filters( 'b3_registration_closed_message', 'no_filter_defined' );
+        $hidden_fields                    = apply_filters( 'b3_hidden_fields', 'no_filter_defined' );
         $new_user_notifications_addresses = apply_filters( 'b3_new_user_notification_addresses', 'no_filter_defined' );
 
 
@@ -220,9 +220,9 @@
         if ( 'no_filter_defined' != $extra_fields ) {
             // @TODO: add in-depth field validation
             if ( false == is_array( $extra_fields ) ) {
-                $error_messages[] = __( 'The extra field values you set in the filter "b3_add_filter_extra_fields_values" is not an array.', 'b3-onboarding' );
+                $error_messages[] = __( 'The extra field values you set in the filter "b3_extra_fields" is not an array.', 'b3-onboarding' );
             } elseif ( empty( $extra_fields ) ) {
-                $error_messages[] = __( 'The extra field values you set in the filter "b3_add_filter_extra_fields_values" is an empty array.', 'b3-onboarding' );
+                $error_messages[] = __( 'The extra field values you set in the filter "b3_extra_fields" is an empty array.', 'b3-onboarding' );
             }
         }
 

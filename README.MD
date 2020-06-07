@@ -92,10 +92,9 @@ This info + settings will become available on the official website (soon).
 <a name="filters"></a>
 ### Filters
 
-* b3_filter_hidden_fields_values
-* b3_do_filter_hidden_fields_values
-* b3_add_filter_extra_fields_values
-* b3_filter_closed_message
+* b3_extra_fields
+* b3_hidden_fields
+* b3_registration_closed_message
 * b3_welcome_user_subject
 * b3_welcome_user_message
 

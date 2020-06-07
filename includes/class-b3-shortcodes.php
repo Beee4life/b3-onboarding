@@ -47,7 +47,7 @@
                 if ( is_user_logged_in() ) {
                     return esc_html__( 'You are already signed in.', 'b3-onboarding' );
                 } elseif ( 'closed' == get_option( 'b3_registration_type', false ) ) {
-                    return apply_filters( 'b3_filter_closed_message', esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' ) );
+                    return apply_filters( 'b3_registration_closed_message', esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' ) );
                 } else {
 
                     // Retrieve possible errors from request parameters

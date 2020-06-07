@@ -57,7 +57,7 @@
             update_user_meta( $user_id, 'last_name', sanitize_text_field( $_POST[ 'last_name' ] ) );
         }
 
-        $extra_field_values = apply_filters( 'b3_add_filter_extra_fields_values', array() );
+        $extra_field_values = apply_filters( 'b3_extra_fields', array() );
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( isset( $field[ 'id' ] ) ) {
@@ -66,7 +66,7 @@
             }
         }
 
-        $hidden_field_values = apply_filters( 'b3_filter_hidden_fields_values', array() );
+        $hidden_field_values = apply_filters( 'b3_hidden_fields', array() );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             foreach( $hidden_field_values as $meta_key => $meta_value ) {
                 update_user_meta( $user_id, $meta_key, $meta_value );
