@@ -289,12 +289,17 @@
             }
 
 
+            /**
+             * Load plugin text domain
+             */
             public function b3_load_plugin_text_domain() {
                 $plugin_folder = dirname( plugin_basename( __FILE__ ) );
                 $locale = apply_filters( 'plugin_locale', get_locale(), $plugin_folder );
                 load_textdomain( $plugin_folder, trailingslashit( WP_LANG_DIR ) . $plugin_folder . '/' . $plugin_folder . '-' . $locale . '.mo' );
                 load_plugin_textdomain( $plugin_folder, FALSE, $plugin_folder . '/languages/' );
             }
+
+
             /**
              * Redirects "profile.php" to custom account page
              */
