@@ -36,7 +36,8 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_settings_field_open(1); ?>
+            <?php // @TODO: check this ?>
+            <?php b3_get_settings_field_open( 1 ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_user_may_delete"><?php esc_html_e( 'User may delete account', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
