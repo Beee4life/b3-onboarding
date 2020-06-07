@@ -13,17 +13,17 @@
             <div class="b3_widget--dashboard">
                 <h3>Email preview links</h3>
                 <ul>
-                    <li><a href="<?php echo $preview_page; ?>account-approved"><?php esc_html_e( 'Account approved (user)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>account-activated"><?php esc_html_e( 'Account activated (user)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>account-rejected"><?php esc_html_e( 'Account rejected (user)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>email-activation"><?php esc_html_e( 'Email activation (user)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>forgotpass"><?php esc_html_e( 'Forgot pass (user)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>new-user-admin"><?php esc_html_e( 'New user (admin)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>request-access-admin"><?php esc_html_e( 'Request access (admin)', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>request-access-user"><?php esc_html_e( 'Request access (user)', '' ); ?></a></li>
-                    <!--<li><a href="--><?php //echo $preview_page; ?><!--styling">--><?php //esc_html_e( 'Styling', '' ); ?><!--</a></li>-->
-                    <li><a href="<?php echo $preview_page; ?>template"><?php esc_html_e( 'Template', '' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>welcome-user"><?php esc_html_e( 'Welcome (user)', '' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>account-approved"><?php esc_html_e( 'Account approved (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>account-activated"><?php esc_html_e( 'Account activated (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>account-rejected"><?php esc_html_e( 'Account rejected (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>email-activation"><?php esc_html_e( 'Email activation (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>forgotpass"><?php esc_html_e( 'Forgot pass (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>new-user-admin"><?php esc_html_e( 'New user (admin)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>request-access-admin"><?php esc_html_e( 'Request access (admin)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>request-access-user"><?php esc_html_e( 'Request access (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>styling"><?php esc_html_e( 'Styling', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>template"><?php esc_html_e( 'Template', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>welcome-user"><?php esc_html_e( 'Welcome (user)', 'b3-onboarding' ); ?></a></li>
                 </ul>
             </div>
         <?php }
