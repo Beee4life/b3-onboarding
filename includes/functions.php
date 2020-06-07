@@ -1109,10 +1109,15 @@
      *
      * @return bool|mixed|void
      */
-    function b3_get_user_approval_id() {
+    function b3_get_user_approval_link( $return_id = false ) {
         $id = get_option( 'b3_approval_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( false != $id ) {
+            if ( true == $return_id ) {
+                return $id;
+            }
+            if ( get_post( $id ) ) {
+                return get_the_permalink( $id );
+            }
         }
 
         return false;
