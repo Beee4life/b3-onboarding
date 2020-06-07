@@ -122,11 +122,10 @@ They will become available on the official website (soon).
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
-* [X] add reCAPTCHA
-* [X] preset more html emails
-* [X] let user delete account
 * [ ] make it work with Multisite
-* [ ] make it more responsive
+* [ ] make it work with WPML
+* [ ] disallow certain user names
+* [ ] look more into responsiveness
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
