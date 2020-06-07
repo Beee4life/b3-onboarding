@@ -4,7 +4,7 @@ This is a major update. I hadn't touched the plugin in a while, since it did wha
 
 Recently I've found my motivation back as well as a lot of time so I buckled down and crammed out v2.0.0.
 
-There's a ton of new hooks/filters/functions/settings/options. Also there's now a website which documents everything. You can find it here (for now): [https://b3onboarding.berryplasman.com].
+There's a ton of new hooks/filters/functions/settings/options. Also there's now a website which documents everything. You can find it on [https://b3onboarding.berryplasman.com][website] (for now).
 
 I hope you like all the improvements. See the changelog below for all updates (I might have missed a few due to the large amount).
 
@@ -58,6 +58,5 @@ I hope you like all the improvements. See the changelog below for all updates (I
 
 Any [feedback](https://github.com/Beee4life/b3-onboarding/issues) is welcome.
 
-[https://b3onboarding.berryplasman.com]: https://b3onboarding.berryplasman.com
 [website]: https://b3onboarding.berryplasman.com
 [guidelines]: https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/
