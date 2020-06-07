@@ -156,15 +156,13 @@
      *
      * @return mixed
      */
-    function b3_add_privacy_text( $privacy_text ) {
+    function b3_privacy_text( $privacy_text ) {
 
         $privacy_text = '<a href="#">Click here</a> for more info';
 
         return $privacy_text;
     }
-    // add_filter( 'b3_add_privacy_text', 'b3_add_privacy_text' );
-
-
+    // add_filter( 'b3_privacy_text', 'b3_privacy_text' );
 
     /**
      * Override closed message
