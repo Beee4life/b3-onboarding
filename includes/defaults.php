@@ -321,6 +321,21 @@
 
 
     /**
+     * Default registration closed message text
+     *
+     * @since 2.0.0
+     *
+     * @return string
+     */
+    function b3_default_registration_closed_message() {
+        $message = esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
+
+        return $message;
+    }
+
+
+
+    /**
      * Default privacy text
      *
      * @since 2.0.0
