@@ -99,11 +99,6 @@
                         <br />
                         ' . esc_html__( 'This renders the user management page.', 'b3-onboarding' ) . '
                     </li>
-                    <li class="hidden">
-                        <b>[delete-account]</b>
-                        <br />
-                        ' . esc_html__( 'This renders the delete account page.', 'b3-onboarding' ) . '
-                    </li>
                     </ul>
                     ' . $shortcode_info
             ) );
