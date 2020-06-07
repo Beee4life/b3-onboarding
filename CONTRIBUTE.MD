@@ -5,7 +5,7 @@ User feedback is important. You're experiencing an issue, want a new feature, or
 ## Getting Started
 
 * Install the [latest version of B3: Onboarding][latest]
-* Get a [GitHub account][gh] if you don't already have one.
+* Get a [GitHub account][signup] if you don't already have one.
 
 Now you're ready to contribute!
 
@@ -15,5 +15,5 @@ Before reporting an issue, please read [Reporting Issues][report-issue] to ensur
 
 
 [latest]: https://github.com/Beee4life/b3-onboarding
-[gh]: https://github.com/signup/free 
+[signup]: https://github.com/signup/free 
 [report-issue]: https://github.com/Beee4life/b3-onboarding/wiki/Reporting-Issues

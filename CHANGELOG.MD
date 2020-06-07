@@ -6,15 +6,13 @@ This is a major update. I hadn't touched the plugin in a while, since it did wha
 
 Recently I've found my motivation back as well as a lot of time so I buckled down and crammed out v2.0.0.
 
-There's a ton of new functions/options. Also there's now a website which documents all info. You can find it here (for now): https://b3onboarding.berryplasman.com.
+There's a ton of new hooks/filters/functions/settings/options. Also there's now a website which documents everything. You can find it here (for now): [https://b3onboarding.berryplasman.com].
 
 I hope you like all the improvements. See the changelog below for all updates (I might have missed a few due to the large amount).
 
 ## Changelog 2.0.0
 
-This is a major update. A ton of new features/functions/options have been added
-
-#### These are the things that were added (in alphabetical order).
+#### These are the things that were added (in alphabetical order)
 
 * [X] added constant for local development
 * [X] added debug page
@@ -43,16 +41,16 @@ This is a major update. A ton of new features/functions/options have been added
 * [X] added reCaptcha for registration/login pages (optional) 
 * [X] added styling options for default Wordpress pages
 * [X] added verification for all custom filter output
-* [X] published an 'official' [website](https://b3onboarding.berryplasman.com) with
+* [X] published an 'official' [website][website] with
     * [X] documentation for
         * [X] all actions/hooks
         * [X] all filters
         * [X] all functions
     * [X] faqs
-* [X] rewrote code (parts) to comply with [Wordpress Plugin Guidelines](https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/)
+* [X] rewrote code (parts) to comply with [Wordpress Plugin Guidelines][guidelines]
 * [X] sanitized all inputs
 
-#### These are the things that were changed.
+#### These are the things that were changed
 
 * [X] changed the user approval page (in the admin) to show as a visible sub-page
 * [X] removed the admin notification when manually adding a user
@@ -61,3 +59,7 @@ This is a major update. A ton of new features/functions/options have been added
 #### Feedback
 
 Any [feedback](https://github.com/Beee4life/b3-onboarding/issues) is welcome.
+
+[https://b3onboarding.berryplasman.com]: https://b3onboarding.berryplasman.com
+[website]: https://b3onboarding.berryplasman.com
+[guidelines]: https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/
