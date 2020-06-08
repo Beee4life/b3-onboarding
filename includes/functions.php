@@ -1166,3 +1166,27 @@
 
         return $date_time_gmt;
     }
+
+
+    /**
+     * Get the message above registration/login form
+     *
+     * @param $message
+     *
+     * @return bool|mixed|string|void
+     */
+    function b3_get_registration_message() {
+
+        // @TODO: create user option
+        $register_message = get_option( 'b3_register_message', false );
+        if ( false != $register_message ) {
+            $message = $register_message;
+        } else {
+            $message = b3_get_default_registration_message();
+        }
+
+        return $message;
+    }
+    add_filter( 'b3_registration_message', 'b3_get_registration_message' );
+
+

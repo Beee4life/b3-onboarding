@@ -203,6 +203,38 @@
 
 
     /**
+     * Filters message above registration form (filter only)
+     *
+     * @param $registration_message
+     *
+     * @return string
+     */
+    function b3_registration_message( $registration_message ) {
+
+        $registration_message = 'Filter registration text';
+
+        return $registration_message;
+    }
+    // add_filter( 'b3_registration_message', 'b3_registration_message' );
+
+
+    /**
+     * Filters message above login form (filter only)
+     *
+     * @param $login_message
+     *
+     * @return string
+     */
+    function b3_login_message( $login_message ) {
+
+        $login_message = 'Filter login text';
+
+        return $login_message;
+    }
+    // add_filter( 'b3_login_message', 'b3_login_message' );
+
+
+    /**
      * Override registration closed message (filter only)
      *
      * @since 2.0.0

@@ -26,6 +26,7 @@
             'b3_hidden_fields'                   => array( 'array', 'hidden' ),
             'b3_localhost_email'                 => array( 'email' ),
             'b3_localhost_username'              => array( 'string' ),
+            'b3_login_message'                   => array( 'string' ),
             'b3_link_color'                      => array( 'hex_color' ),
             'b3_main_logo'                       => array( 'url', 'file' ),
             'b3_new_user_message'                => array( 'string' ),
@@ -36,6 +37,7 @@
             'b3_password_reset_subject'          => array( 'string' ), // @TODO: only used in preview
             'b3_privacy_text'                    => array( 'string' ),
             'b3_registration_closed_message'     => array( 'string' ),
+            'b3_registration_message'            => array( 'string' ),
             'b3_request_access_message_admin'    => array( 'string' ),
             'b3_request_access_subject_admin'    => array( 'string' ),
             'b3_request_access_message_user'     => array( 'string' ),

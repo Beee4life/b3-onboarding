@@ -341,26 +341,6 @@
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
-    /**
-     * Style recovery mail (not in use yet)
-     *
-     * @since 2.0.0
-     *
-     * @param $email
-     * @param $url
-     *
-     * @return string
-     */
-    function b3_recovery_mail( $email, $url ) {
-
-        $email = b3_replace_template_styling( $email );
-        $email = strtr( $email, b3_replace_email_vars() );
-        $email = htmlspecialchars_decode( stripslashes( $email ) );
-
-        return $email;
-    }
-    // add_filter( 'recovery_mode_email', 'b3_recovery_mail', 5, 2 );
-
 
     /**
      * Filters message on default register form
@@ -369,6 +349,19 @@
      *
      * @return string
      */
-    function b3_login_message( $message ) {
-        return '<p class="message">' . __( 'Register For This Site' ) . '</p>';
+    function wp_login_message( $message ) {
+
+        $page_type = ( empty( $message ) ) ? 'login' : 'register';
+
+        if ( 'register' == $page_type ) {
+            $message = apply_filters( 'b3_registration_message', b3_get_registration_message() );
+        } elseif ( 'login' == $page_type ) {
+            $message = apply_filters( 'b3_login_message', false );
+        }
+        if ( ! empty( $message ) ) {
+            $message = '<p class="message">' . $message . '</p>';
+        }
+
+        return $message;
     }
+    add_filter( 'login_message', 'wp_login_message' );

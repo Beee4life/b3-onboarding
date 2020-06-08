@@ -347,8 +347,9 @@
      *
      * @since 2.0.0
      */
-    function b3_get_login_message() {
-        return __( 'Register For This Site' );
+    function b3_get_default_registration_message() {
+        return __( 'Default register text' );
+        // return __( 'Register For This Site' );
     }
 
 
