@@ -343,6 +343,16 @@
 
 
     /**
+     * Return default login message
+     *
+     * @since 2.0.0
+     */
+    function b3_get_login_message() {
+        return __( 'Register For This Site' );
+    }
+
+
+    /**
      * Return default registration closed message text
      *
      * @since 2.0.0
