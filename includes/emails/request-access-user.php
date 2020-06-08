@@ -29,9 +29,7 @@
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=request-access-user' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--request-access-message-user" name="b3_request_access_message_user" placeholder="<?php echo esc_attr( b3_default_request_access_message_user() ); ?>" rows="6">
-                <?php //echo stripslashes( $request_access_email_message_user ); ?>
-            </textarea>
+            <textarea id="b3__input--request-access-message-user" name="b3_request_access_message_user" placeholder="<?php echo esc_attr( b3_default_request_access_message_user() ); ?>" rows="6"><?php echo stripslashes( $request_access_email_message_user ); ?></textarea>
         </td>
     </tr>
     <tr>
