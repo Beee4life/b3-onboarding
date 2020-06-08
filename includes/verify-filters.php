@@ -2,8 +2,6 @@
     /**
      * Get all filtered output and verify it
      *
-     * @TODO: create array with filter names (maybe type) - loop through it and verify
-     *
      * @since 2.0.0
      */
     function b3_verify_filter_input() {

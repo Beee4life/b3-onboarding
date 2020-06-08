@@ -53,7 +53,9 @@
             'b3_new_user_subject',
             'b3_notification_sender_email', // set on activate
             'b3_notification_sender_name', // set on activate
+            'b3_privacy',
             'b3_privacy_page',
+            'b3_privacy_text',
             'b3_recaptcha',
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
@@ -65,7 +67,7 @@
             'b3_request_access_notification_addresses',
             'b3_request_access_subject_admin',
             'b3_request_access_subject_user',
-            'b3_reset_page_id', // set on activate
+            'b3_resetpass_page_id', // set on activate
             'b3_restrict_admin', // set on activate
             'b3_registration_closed_message',
             'b3_sidebar_widget', // set on activate
@@ -77,6 +79,7 @@
 
         return $meta_keys;
     }
+
 
     /**
      * Create an array of available email 'boxes'
@@ -169,7 +172,6 @@
         $email_boxes = array_merge( $settings_box, $new_user_boxes, $request_access_box, $activate_email_boxes, $welcome_user_boxes, $default_boxes2, $styling_boxes );
 
         return $email_boxes;
-
     }
 
 
@@ -224,7 +226,6 @@
         );
 
         if ( ! is_multisite() ) {
-            // @TODO: get registration type (MS)
             $registration_options = array_merge( $closed_option, $registration_options, $normal_options );
         } else {
             $mu_registration = get_site_option( 'registration' );
@@ -267,7 +268,7 @@
 
 
     /**
-     * Get the color for links
+     * Return link color for emails
      *
      * @TODO: needs user input
      *
@@ -348,7 +349,6 @@
         }
 
         return $email_addresses;
-
     }
 
 
@@ -372,6 +372,7 @@
         return $subject;
     }
 
+
     /**
      * Return email activation message (user)
      *
@@ -393,6 +394,7 @@
         return $message;
     }
 
+
     /**
      * Return welcome user subject (user)
      *
@@ -412,6 +414,7 @@
 
         return $message;
     }
+
 
     /**
      * Return welcome user message (user)
@@ -449,7 +452,6 @@
         }
 
         return $subject;
-
     }
 
 
@@ -467,7 +469,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -485,7 +486,6 @@
         }
 
         return $subject;
-
     }
 
 
@@ -503,7 +503,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -521,7 +520,6 @@
         }
 
         return $subject;
-
     }
 
 
@@ -539,7 +537,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -557,7 +554,6 @@
         }
 
         return $subject;
-
     }
 
 
@@ -577,7 +573,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -595,7 +590,6 @@
         }
 
         return $subject;
-
     }
 
 
@@ -613,7 +607,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -631,7 +624,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -676,7 +668,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -694,7 +685,6 @@
         }
 
         return $subject;
-
     }
 
 
@@ -757,7 +747,6 @@
         }
 
         return $message;
-
     }
 
 
@@ -992,7 +981,6 @@
         }
 
         return wp_registration_url();
-
     }
 
 
@@ -1015,7 +1003,6 @@
         }
 
         return wp_login_url();
-
     }
 
 
@@ -1063,7 +1050,6 @@
         // @TODO: add filter if user is allowed to go there
         // @TODO: if not, add message
         return '';
-
     }
 
     /**
@@ -1080,7 +1066,6 @@
         }
 
         return wp_lostpassword_url();
-
     }
 
     /**
@@ -1097,7 +1082,6 @@
         }
 
         return false;
-
     }
 
     /**
@@ -1121,7 +1105,6 @@
         }
 
         return false;
-
     }
 
     /**

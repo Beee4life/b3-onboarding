@@ -16,7 +16,7 @@
         $meta_keys = array();
         if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
             $meta_keys = b3_get_all_custom_meta_keys();
-            foreach ( $meta_keys as $key ) {
+            foreach( $meta_keys as $key ) {
                 delete_option( $key );
             }
         }

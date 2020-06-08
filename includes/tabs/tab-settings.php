@@ -83,9 +83,7 @@
                         </p>
                     </div>
                 <?php b3_get_close(); ?>
-
             <?php } ?>
-
 
             <hr />
 

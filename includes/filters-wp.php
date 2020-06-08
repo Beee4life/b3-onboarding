@@ -87,7 +87,6 @@
         }
 
         return $wp_new_user_notification_email_admin;
-
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
@@ -156,8 +155,6 @@
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
-            } else {
-                error_log( 'OOPS' );
             }
 
         }
@@ -201,6 +198,8 @@
     /**
      * Returns the message body for the password reset mail.
      *
+     * @since 1.0.6
+     *
      * @param string  $message    Default mail message.
      * @param string  $key        The activation key.
      * @param string  $user_login The username for the user.
@@ -229,6 +228,8 @@
 
     /**
      * Check for errors on WordPress' own registration form
+     *
+     * @since 1.0.0
      *
      * @param $errors
      * @param $sanitized_user_login
@@ -268,6 +269,8 @@
 
     /**
      * Add post states for B3 pages
+     *
+     * @since 1.0.6
      *
      * @param $post_states
      * @param $post
@@ -321,6 +324,8 @@
 
     /**
      * Adds nonce to log out page link
+     *
+     * @since 1.0.0
      *
      * @param $permalink
      * @param $post_id

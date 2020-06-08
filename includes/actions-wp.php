@@ -40,6 +40,7 @@
     }
     add_action( 'register_form', 'b3_add_registration_fields' );
 
+
     /**
      * Update usermeta after user register
      *
@@ -149,10 +150,6 @@
                     'Content-Type: text/html; charset=UTF-8',
                 );
                 wp_mail( $to, $subject, $message, $headers );
-            } elseif ( ! in_array( 'b3_approval', $user_object->roles ) && ! in_array( 'b3_activation', $user_object->roles ) && false == get_option( 'b3_account_rejected_message', false ) ) {
-                // $subject = str_replace( 'rejected', 'deleted', $subject );
-                // $message = str_replace( 'request ', '', $message );
-                // $message = str_replace( 'rejected', 'deleted', $message );
             }
         }
     }
@@ -188,6 +185,7 @@
         }
     }
     add_action( 'admin_bar_menu', 'b3_add_toolbar', 9999 );
+
 
     /**
      * Remove admin bar for users who are not allowed to access admin

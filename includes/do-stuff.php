@@ -8,7 +8,6 @@
      */
     function b3_setup_initial_pages( $create_new_site = false ) {
 
-        // Information needed for creating the plugin's pages
         $page_definitions = array(
             _x( 'account', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Account', 'b3-onboarding' ),
@@ -77,7 +76,6 @@
                 $existing_page = get_posts( $existing_page_args );
             }
             if ( ! empty( $existing_page ) ) {
-                // check for meta
                 $post_id = $existing_page[ 0 ]->ID;
                 // if meta exists
                 $meta = get_post_meta( $post_id, '_b3_page', true );
@@ -86,7 +84,6 @@
                 }
             }
             if ( empty( $existing_page ) ) {
-                // Add the page using the data from the array above
                 $result = wp_insert_post( array(
                     'post_title'     => $page[ 'title' ],
                     'post_name'      => $slug,
@@ -98,7 +95,6 @@
                 ),
                     true
                 );
-                // if page doesn't return an error (thus successful)
                 if ( ! is_wp_error( $result ) ) {
                     update_option( $page[ 'meta' ], $result, true );
                     update_post_meta( $result, '_b3_page', true );
@@ -132,7 +128,6 @@
             $field_value       = ( isset( $_POST[ $input_id ] ) ) ? $_POST[ $input_id ] : '';
 
             if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {
-
                 ob_start();
                 ?>
                 <div class="b3_form-element b3_form-element--<?php echo $input_type; ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo $container_class; ?> <?php echo $container_class; } ?>">
@@ -290,6 +285,7 @@
 
         return $message;
     }
+
 
     /**
      * Verify if privacy checkbox is clicked (when activated)

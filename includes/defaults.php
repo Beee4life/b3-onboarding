@@ -22,6 +22,7 @@
         return $default_css;
     }
 
+
     /**
      * Return default email template
      *
@@ -39,25 +40,33 @@
         return $default_template;
     }
 
+
     /**
-     * Default email footer
+     * Return default email footer
      *
      * @since 2.0.0
      *
      * @return false|string
      */
     function b3_default_email_footer() {
-        $default_content = __( 'This is an automated email from the website <a href="%home_url%">%blog_name%</a>.', 'b3-onboarding' );
-
-        return $default_content;
+        return __( 'This is an automated email from the website <a href="%home_url%">%blog_name%</a>.', 'b3-onboarding' );
     }
 
+
+    /**
+     * Return default link color
+     *
+     * @since 2.0.0
+     *
+     * @return string
+     */
     function b3_default_link_color() {
         return '#e0144b';
     }
 
+
     /**
-     * Default main logo
+     * Return default main logo
      *
      * @since 2.0.0
      *
@@ -67,8 +76,9 @@
         return B3_PLUGIN_URL . 'assets/images/logo-b3onboarding.png';
     }
 
+
     /**
-     * Default new user subject (admin)
+     * Return default new user subject (admin)
      *
      * @since 1.0.6
      *
@@ -78,8 +88,9 @@
         return sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
+
     /**
-     * Default new user message (admin)
+     * Return default new user message (admin)
      *
      * @since 1.0.6
      *
@@ -95,8 +106,9 @@
         return $admin_message;
     }
 
+
     /**
-     * Default account rejected subject (user)
+     * Return default account rejected subject (user)
      *
      * @since 2.0.0
      *
@@ -106,8 +118,9 @@
         return esc_html__( 'Account activated', 'b3-onboarding' );
     }
 
+
     /**
-     * Default account activated message (user)
+     * Return default account activated message (user)
      *
      * @since 2.0.0
      *
@@ -125,8 +138,9 @@
         return $message;
     }
 
+
     /**
-     * Default account approved subject (admin)
+     * Return default account approved subject (admin)
      *
      * @since 2.0.0
      *
@@ -136,8 +150,9 @@
         return esc_html__( 'A new user requests access', 'b3-onboarding' );
     }
 
+
     /**
-     * Default account approved message (admin)
+     * Return default account approved message (admin)
      *
      * @since 2.0.0
      *
@@ -151,8 +166,9 @@
         return $request_access_message_admin;
     }
 
+
     /**
-     * Default account approved subject (user)
+     * Return default account approved subject (user)
      *
      * @since 2.0.0
      *
@@ -162,8 +178,9 @@
         return sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
+
     /**
-     * Default account approved message (user)
+     * Return default account approved message (user)
      *
      * @since 2.0.0
      *
@@ -175,7 +192,7 @@
 
 
     /**
-     * Default account approved subject (user)
+     * Return default account approved subject (user)
      *
      * @since 2.0.0
      *
@@ -185,8 +202,9 @@
         return esc_html__( 'Account approved', 'b3-onboarding' );
     }
 
+
     /**
-     * Default account approved message (user)
+     * Return default account approved message (user)
      *
      * @since 2.0.0
      *
@@ -198,7 +216,7 @@
 
 
     /**
-     * Default account rejected subject (user)
+     * Return default account rejected subject (user)
      *
      * @since 2.0.0
      *
@@ -208,8 +226,9 @@
         return esc_html__( 'Account rejected', 'b3-onboarding' );
     }
 
+
     /**
-     * Default account rejected message (user)
+     * Return default account rejected message (user)
      *
      * @since 2.0.0
      *
@@ -219,8 +238,9 @@
         return esc_html__( 'Your account request has been rejected.', 'b3-onboarding' );
     }
 
+
     /**
-     * Default forgot password subject (user)
+     * Return default forgot password subject (user)
      *
      * @since 2.0.0
      *
@@ -232,7 +252,7 @@
 
 
     /**
-     * Default forgot password message (user)
+     * Return default forgot password message (user)
      *
      * @since 1.0.6
      *
@@ -255,8 +275,9 @@
 
     }
 
+
     /**
-     * Default welcome user subject (user)
+     * Return default welcome user subject (user)
      *
      * @since 1.0.6
      *
@@ -266,8 +287,9 @@
         return sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
+
     /**
-     * Default welcome user message (user)
+     * Return default welcome user message (user)
      *
      * @since 1.0.6
      *
@@ -285,11 +307,11 @@
         $message .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
         return $message;
-
     }
 
+
     /**
-     * Default welcome user subject (user)
+     * Return default welcome user subject (user)
      *
      * @return string
      */
@@ -297,8 +319,9 @@
         return esc_html__( 'Confirm your email address', 'b3-onboarding' );
     }
 
+
     /**
-     * Default welcome user message (user)
+     * Return default welcome user message (user)
      *
      * @since 1.0.6
      *
@@ -316,27 +339,24 @@
         $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
         return $message;
-
     }
 
 
     /**
-     * Default registration closed message text
+     * Return default registration closed message text
      *
      * @since 2.0.0
      *
      * @return string
      */
     function b3_default_registration_closed_message() {
-        $message = esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
-
-        return $message;
+        return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
     }
 
 
 
     /**
-     * Default privacy text
+     * Return default privacy text
      *
      * @since 2.0.0
      *
@@ -349,7 +369,7 @@
         if ( false != $privacy_page ) {
             $privacy_page_object = get_post( $privacy_page );
             if ( is_object( $privacy_page_object ) ) {
-                $link = get_the_permalink( $privacy_page_object );
+                $link    = get_the_permalink( $privacy_page_object );
                 $message = sprintf( __( 'Accept <a href="%s" target="_blank" rel="noopener">privacy settings</a>', 'b3-onboarding' ), esc_url( $link ) );
             }
         }

@@ -5,13 +5,12 @@
      * @since 1.0.0
      */
     function b3_dashboard_widget_debug_function() {
-        // Widget contents
         if ( current_user_can('manage_options' ) ) {
             $preview_page = network_admin_url( 'admin.php?page=b3-onboarding&preview=', '' );
             ?>
 
             <div class="b3_widget--dashboard">
-                <h3>Email preview links</h3>
+                <h3><?php esc_html_e( 'Email preview links', 'b3-onboarding' ); ?></h3>
                 <ul>
                     <li><a href="<?php echo $preview_page; ?>account-approved"><?php esc_html_e( 'Account approved (user)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>account-activated"><?php esc_html_e( 'Account activated (user)', 'b3-onboarding' ); ?></a></li>

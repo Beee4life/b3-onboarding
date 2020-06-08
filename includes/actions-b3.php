@@ -25,6 +25,7 @@
     }
     add_action( 'b3_login_email_fields', 'b3_login_email_fields' );
 
+
     /**
      * Do stuff afer manual activation by admin
      *
@@ -118,6 +119,7 @@
     }
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
 
+
     /**
      * Add field for subdomain when WPMU is active (not used yet)
      *
@@ -140,6 +142,7 @@
         }
     }
     add_action( 'b3_add_subdomain_field', 'b3_add_subdomain_field' );
+
 
     /**
      * Output for first/last name fields
@@ -166,6 +169,7 @@
         }
     }
     add_action( 'b3_add_first_last_name', 'b3_first_last_name_fields' );
+
 
     /**
      * Output the password fields (not in use yet)
@@ -197,6 +201,7 @@
     }
     add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
 
+
     /**
      * Function to output any custom fields
      *
@@ -212,6 +217,7 @@
     }
     add_action( 'b3_add_custom_fields_registration', 'b3_add_custom_fields_registration' );
 
+
     /**
      * Function to output a privacy checkbox
      */
@@ -226,6 +232,7 @@
         <?php }
     }
     add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
+
 
     /**
      * Output any hidden fields

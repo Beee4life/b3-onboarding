@@ -66,9 +66,6 @@
                     'version'    => '2.0.0',
                 );
 
-                // set text domain
-                // load_plugin_textdomain( 'b3-onboarding', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
                 // actions
                 register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
@@ -721,53 +718,12 @@
 
 
             /**
-             * Add stuff to wp_login_form (top)
+             * Add to admin body class
              *
-             * @param $content
-             * @param $args
-             *
-             * @return string
-             */
-            public function b3_loginform_top( $content, $args ) {
-
-                $content = 'top';
-
-                return $content;
-            }
-
-
-            /**
-             * Add stuff to wp_login_form (middle, after password)
-             *
-             * @param $content
-             * @param $args
+             * @param $classes
              *
              * @return string
              */
-            public function b3_loginform_middle( $content, $args ) {
-
-                $content = '<p>Place for possible reCaptcha</p>';
-
-                return $content;
-            }
-
-
-            /**
-             * Add stuff to wp_login_form (bottom)
-             *
-             * @param $content
-             * @param $args
-             *
-             * @return string
-             */
-
-            public function b3_loginform_footer( $content, $args ) {
-
-                $content = 'bottom';
-
-                return $content;
-            }
-
             public function b3_admin_body_class( $classes ) {
 
                 if ( 'request_access' != get_option( 'b3_registration_type', false ) ) {

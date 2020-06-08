@@ -34,15 +34,11 @@
              * @return mixed|string|void
              */
             public function b3_render_register_form( $user_variables, $content = null ) {
-                // Parse shortcode attributes
                 $default_attributes = array(
                     'title'    => false,
                     'template' => 'register',
                 );
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
-
-                // Retrieve recaptcha key
-                $attributes[ 'recaptcha_site_key' ] = get_option( 'b3-onboarding-recaptcha-public-key', null );
 
                 if ( is_user_logged_in() ) {
                     return esc_html__( 'You are already signed in.', 'b3-onboarding' );
@@ -50,8 +46,8 @@
                     return apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() );
                 } else {
 
-                    // Retrieve possible errors from request parameters
-                    $attributes[ 'errors' ] = array();
+                    $attributes[ 'errors' ]             = array();
+                    $attributes[ 'recaptcha_site_key' ] = get_option( 'b3-onboarding-recaptcha-public-key', null );
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
 
@@ -59,14 +55,17 @@
                             $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                         }
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
+                        // this is for demonstration setup
                         if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         }
                     }
 
+                    // Render the registration form using an external template
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
                 }
             }
+
 
             /**
              * A shortcode for rendering the login form.
@@ -80,7 +79,6 @@
              */
             public function b3_render_login_form( $user_variables, $content = null ) {
 
-                // Parse shortcode attributes
                 $default_attributes = array(
                     'title'    => false,
                     'template' => 'login',
@@ -95,11 +93,9 @@
                 // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'redirect' ] = false;
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
-                    error_log('$_REQUEST[ \'redirect_to\' ] is used =' . $_REQUEST[ 'redirect_to' ]);
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
 
-                // Error messages
                 $errors = array();
                 if ( isset( $_REQUEST[ 'login' ] ) ) {
                     $error_codes = explode( ',', $_REQUEST[ 'login' ] );
@@ -159,7 +155,6 @@
              */
             public function b3_render_forgot_password_form( $user_variables, $content = null ) {
 
-                // Parse shortcode attributes
                 $default_attributes = array(
                     'title'    => false,
                     'template' => 'lostpassword',
@@ -170,7 +165,6 @@
                     return esc_html__( 'You are already logged in.', 'b3-onboarding' );
                 }
 
-                // Retrieve possible errors from request parameters
                 $attributes[ 'errors' ] = array();
                 if ( isset( $_REQUEST[ 'error' ] ) ) {
                     $error_codes = explode( ',', $_REQUEST[ 'error' ] );
@@ -179,13 +173,14 @@
                     }
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ] ) {
                     // you can now log in... should this be here ?
-                    error_log( 'isset( $_REQUEST[ \'activate\' ] ) && \'success\' == $_REQUEST[ \'activate\' ] is used' );
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( 'success' == $_REQUEST[ 'registered' ] ) {
                         $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success_enter_password' );
                     }
                 }
+
+                // Render the login form using an external template
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
 
@@ -201,7 +196,6 @@
              * @return string  The shortcode output
              */
             public function b3_render_reset_password_form( $user_variables, $content = null ) {
-                // Parse shortcode attributes
                 $default_attributes = array(
                     'title'    => false,
                     'template' => 'resetpass',
@@ -215,7 +209,6 @@
                         $attributes[ 'login' ] = $_REQUEST[ 'login' ];
                         $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
 
-                        // Error messages
                         $errors = array();
                         if ( isset( $_REQUEST[ 'error' ] ) ) {
                             $error_codes = explode( ',', $_REQUEST[ 'error' ] );
@@ -225,10 +218,12 @@
                         }
                         $attributes[ 'errors' ] = $errors;
 
+                        // Render the password form using an external template
                         return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
                     } else {
 
+                        // error message for password reset
                         $message = esc_html__( 'This is not a valid password reset link.', 'b3-onboarding' );
                         $message .= '<br />';
                         $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
@@ -254,17 +249,13 @@
             public function b3_render_account_page( $user_variables, $content = null ) {
 
                 if ( is_user_logged_in() ) {
-
                     wp_enqueue_script( 'user-profile' );
-
-                    // Parse shortcode attributes
                     $default_attributes = array(
                         'title'    => false,
                         'template' => 'account',
                     );
                     $attributes = shortcode_atts( $default_attributes, $user_variables );
 
-                    // error messages
                     $errors = array();
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
@@ -292,19 +283,19 @@
              *
              * @since 1.0.0
              *
-             * @param $user_variables
+             * @param      $user_variables
              * @param null $content
+             *
+             * @return bool|string
              */
             public function b3_render_user_approval_page( $user_variables, $content = null ) {
                 if ( current_user_can( 'promote_users' ) ) {
-                    // Parse shortcode attributes
                     $default_attributes = array(
                         'title'    => false,
                         'template' => 'user-management',
                     );
                     $attributes = shortcode_atts( $default_attributes, $user_variables );
 
-                    // error messages
                     $errors = array();
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
@@ -318,6 +309,9 @@
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
                 }
+
+                return false;
+
             }
         }
 

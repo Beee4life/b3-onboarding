@@ -1,5 +1,4 @@
 <?php
-
     /*
      * Includes filters for various 'parts'
      */

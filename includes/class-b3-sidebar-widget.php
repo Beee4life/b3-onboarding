@@ -11,7 +11,7 @@
                 'B3: User menu',
                 array(
                     'classname'   => 'b3__widget--user',
-                    'description' => 'Custom user menu'
+                    'description' => __( 'Custom user menu', 'b3-onboarding' ),
                 )
             );
         }

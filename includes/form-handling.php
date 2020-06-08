@@ -16,21 +16,18 @@
                     return;
                 } else {
 
-                    // Custom passwords (not used yet)
                     if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) && 1 == $_POST[ 'b3_activate_custom_passwords' ] ) {
                         update_option( 'b3_custom_passwords', '1', true );
                     } else {
                         delete_option( 'b3_custom_passwords' );
                     }
 
-                    // Custom login page
                     if ( isset( $_POST[ 'b3_style_default_pages' ] ) && 1 == $_POST[ 'b3_style_default_pages' ] ) {
                         update_option( 'b3_style_default_pages', 1, true );
                     } else {
                         delete_option( 'b3_style_default_pages' );
                     }
 
-                    // Force custom login page
                     if ( isset( $_POST[ 'b3_force_custom_login_page' ] ) && 1 == $_POST[ 'b3_force_custom_login_page' ] ) {
                         update_option( 'b3_force_custom_login_page', 1, true );
                     } else {
@@ -51,14 +48,12 @@
 
                     update_option( 'b3_main_logo', $_POST[ 'b3_main_logo' ], true );
 
-                    // Sidebar widget
                     if ( isset( $_POST[ 'b3_activate_sidebar_widget' ] ) && 1 == $_POST[ 'b3_activate_sidebar_widget' ] ) {
                         update_option( 'b3_sidebar_widget', 1, true );
                     } else {
                         delete_option( 'b3_sidebar_widget' );
                     }
 
-                    // Dashboard widget (not in use yet)
                     if ( isset( $_POST[ 'b3_activate_dashboard_widget' ] ) && 1 == $_POST[ 'b3_activate_dashboard_widget' ] ) {
                         update_option( 'b3_dashboard_widget', 1, true );
                     } else {
@@ -109,7 +104,6 @@
                     return;
                 } else {
 
-                    // Registration options
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                         if ( is_multisite() ) {
                             if ( is_main_site() ) {
@@ -151,7 +145,6 @@
                         }
                     }
 
-                    // First/last name
                     if ( isset( $_POST[ 'b3_activate_first_last' ] ) && 1 == $_POST[ 'b3_activate_first_last' ] ) {
                         update_option( 'b3_activate_first_last', $_POST[ 'b3_activate_first_last' ], true );
                     } else {
@@ -159,21 +152,18 @@
                         delete_option( 'b3_first_last_required' );
                     }
 
-                    // First/last name
                     if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
                         update_option( 'b3_first_last_required', $_POST[ 'b3_first_last_required' ], true );
                     } else {
                         delete_option( 'b3_first_last_required' );
                     }
 
-                    // reCAPTCHA
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
                         update_option( 'b3_recaptcha', 1, true );
                     } else {
                         delete_option( 'b3_recaptcha' );
                     }
 
-                    // reCAPTCHA
                     if ( isset( $_POST[ 'b3_recaptcha_login' ] ) && 1 == $_POST[ 'b3_recaptcha_login' ] ) {
                         update_option( 'b3_recaptcha_login', 1, true );
                         if ( ! isset( $_POST[ 'b3_activate_recaptcha' ] ) || 0 == $_POST[ 'b3_activate_recaptcha' ] ) {
@@ -199,7 +189,6 @@
                         update_option( 'b3_privacy_text', htmlspecialchars( $_POST[ 'b3_privacy_text' ] ), true );
                     }
 
-                    // Action links
                     if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
                         update_option( 'b3_disable_action_links', 1, true );
                     } else {
@@ -264,7 +253,6 @@
                     return;
                 } else {
 
-                    // validate email
                     if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) && ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
                         B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
 
@@ -363,7 +351,6 @@
                                 update_option( 'b3_new_user_notification_addresses', $email_string, true );
                             }
                         } else {
-                            // delete
                             delete_option( 'b3_new_user_notification_addresses' );
                         }
 
@@ -415,7 +402,6 @@
                     return;
                 } else {
 
-                    // Front-end approval
                     if ( isset( $_POST[ 'b3_activate_frontend_approval' ] ) && 1 == $_POST[ 'b3_activate_frontend_approval' ] ) {
                         update_option( 'b3_front_end_approval', 1, true );
                     } else {
@@ -429,7 +415,6 @@
                         delete_option( 'b3_user_may_delete' );
                     }
 
-                    // Restrict admin
                     if ( isset( $_POST[ 'b3_restrict_admin' ] ) ) {
                         update_option( 'b3_restrict_admin', $_POST[ 'b3_restrict_admin' ], true );
                     } else {
@@ -463,7 +448,6 @@
 
                     return;
                 }
-
             }
         }
     }
@@ -500,14 +484,10 @@
                     $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
                     if ( false != $approve && isset( $user_object->ID ) ) {
-                        // activate user
                         do_action( 'b3_new_user_activated_by_admin', $user_id );
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
-
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
-
                         require_once( ABSPATH . 'wp-admin/includes/user.php' );
-                        // reject user
                         if ( true != wp_delete_user( $user_id ) ) {
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                             do_action( 'b3_new_user_rejected_by_admin', $user_id );
@@ -526,7 +506,7 @@
 
 
     /**
-     * Funciton to handle (front-end) profile form editing
+     * Function to handle (front-end) profile form editing
      */
     function b3_profile_form_handling() {
 

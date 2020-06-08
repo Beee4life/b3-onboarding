@@ -79,7 +79,6 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
@@ -179,7 +178,6 @@
             <?php b3_get_submit_button(); ?>
 
         </form>
-
         <?php
         $result = ob_get_clean();
 
