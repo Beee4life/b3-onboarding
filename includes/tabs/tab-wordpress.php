@@ -64,7 +64,6 @@
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_loginpage_bg_color"><?php esc_html_e( 'Background color', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
-                <?php // @TODO: n2h colorpicker ?>
                 <input name="b3_loginpage_bg_color" id="b3_loginpage_bg_color" type="text" value="<?php echo $background_color; ?>" placeholder="FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (without hashtag)', 'b3-onboarding' ); ?>
             <?php b3_get_close(); ?>
 

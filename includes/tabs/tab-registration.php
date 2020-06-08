@@ -166,7 +166,6 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php // @TODO: check for filter for MS ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>

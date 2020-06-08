@@ -480,7 +480,6 @@
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
 
-                // @TODO: check for real errors here
                 $redirect_url = network_admin_url( 'admin.php?page=b3-user-approval' );
                 if ( ! is_admin() ) {
                     $approval_link = b3_get_user_approval_link();
@@ -490,7 +489,7 @@
                 }
 
                 if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'error_nonce_mismatch', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
                 } else {
@@ -507,15 +506,13 @@
 
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
 
-                        // @TODO: reject user in function
-                        do_action( 'b3_new_user_rejected_by_admin', $user_id );
-                        $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         require_once( ABSPATH . 'wp-admin/includes/user.php' );
                         // reject user
-                        if ( true == wp_delete_user( $user_id ) ) {
+                        if ( true != wp_delete_user( $user_id ) ) {
+                            $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                            do_action( 'b3_new_user_rejected_by_admin', $user_id );
                         } else {
-                            // @TODO: add error
-                            // $redirect_url = add_query_arg( 'user', 'not-delete', $redirect_url );
+                            $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
                         }
                     }
                 }
@@ -538,9 +535,6 @@
             require_once( ABSPATH . 'wp-admin/includes/user.php' );
             require_once( ABSPATH . 'wp-admin/includes/misc.php' );
             define( 'IS_PROFILE_PAGE', true );
-            // @TODO: do I need this ?
-            // load_textdomain( 'default', WP_LANG_DIR . '/admin-' . get_locale() . '.mo' );
-            // register_admin_color_schemes();
         }
 
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
@@ -567,7 +561,6 @@
                     exit;
                 } else {
                     // @TODO: add proper error
-                    error_log('error in profile form handling');
                 }
             }
         }

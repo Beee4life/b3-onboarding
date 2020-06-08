@@ -82,7 +82,6 @@
             <?php } else { ?>
                 <p><?php esc_html_e( "These are the email's styling definitions (unformatted).", 'b3-onboarding' ); ?></p>
                 <p><?php esc_html_e( "We'll hope to be able to format them later.", 'b3-onboarding' ); ?></p>
-                <?php // @TODO: format css ?>
                 <pre><?php echo $css; ?></pre>
             <?php } ?>
 

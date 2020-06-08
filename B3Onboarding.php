@@ -1140,12 +1140,13 @@
                     if ( isset( $_REQUEST[ 'key' ] ) && isset( $_REQUEST[ 'login' ] ) ) {
                         $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
                         if ( ! $user || is_wp_error( $user ) ) {
+                            $login_url = b3_get_login_url();
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
-                                // @TODO: change link to proper login url
-                                wp_safe_redirect( get_home_url( '', 'login?login=expiredkey' ) );
+                                $redirect_url = add_query_arg( 'login', 'expiredkey', $login_url );
                             } else {
-                                wp_safe_redirect( get_home_url( '', 'login?login=invalidkey' ) );
+                                $redirect_url = add_query_arg( 'login', 'invalidkey', $login_url );
                             }
+                            wp_safe_redirect( $redirect_url );
                             exit;
                         }
                         $redirect_url = add_query_arg( 'login', esc_attr( $_REQUEST[ 'login' ] ), $redirect_url );
@@ -1352,12 +1353,13 @@
                         }
 
                         if ( ! $user || is_wp_error( $user ) ) {
+                            $login_url = b3_get_login_url();
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
-                                // @TODO: change link to proper login url + add query arg
-                                wp_safe_redirect( get_home_url( '', 'login?login=expiredkey' ) );
+                                $redirect_url = add_query_arg( 'login', 'expiredkey', $login_url );
                             } else {
-                                wp_safe_redirect( get_home_url( '', 'login?login=invalidkey' ) );
+                                $redirect_url = add_query_arg( 'login', 'invalidkey', $login_url );
                             }
+                            wp_safe_redirect( $redirect_url );
                             exit;
                         }
 
@@ -1544,7 +1546,7 @@
                 $user_data     = array(
                     'user_login' => $user_login,
                     'user_email' => $user_email,
-                    'user_pass'  => '', // @TODO: for custom passwords
+                    'user_pass'  => '', // for possible/future custom passwords
                     'role'       => $role,
                 );
 

@@ -101,10 +101,6 @@
                 case 'forgot_password':
                     include( 'emails/forgot-password.php' );
                     break;
-                case 'password_changed':
-                    // @TODO: check this
-                    // include( 'emails/password-changed.php' );
-                    break;
                 case 'visitor_register':
                     include( 'emails/ms-visitor-register.php' );
                     break;

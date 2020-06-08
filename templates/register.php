@@ -29,7 +29,7 @@
 
             <?php do_action( 'b3_login_email_fields' ); ?>
 
-            <?php // @TODO: check if this hook can be used - is WP default, normally after email field ?>
+            <?php // @B4R: check if this hook can be used - is WP default, normally after email field ?>
             <?php // do_action( 'register_form' ); ?>
 
             <?php do_action( 'b3_add_first_last_name' ); ?>
@@ -46,7 +46,6 @@
 
             <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
 
-            <?php // @TODO: maybe use function/action for submit button ?>
             <div class="b3_form-element b3_form-element--submit">
                 <?php if ( 'request_access' == $registration_type ) { ?>
                     <?php $submit_label = esc_html__( 'Request access', 'b3-onboarding' ); ?>

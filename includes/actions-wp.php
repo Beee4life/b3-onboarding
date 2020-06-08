@@ -7,8 +7,6 @@
      * Add custom fields to WordPress' default register form
      *
      * @since 1.0.0
-     *
-     * @TODO: maybe use hooks for first/last name fields
      */
     function b3_add_registration_fields() {
 

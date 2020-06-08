@@ -20,7 +20,6 @@
         <?php do_action( 'b3_show_form_messages', $attributes ); ?>
 
         <?php // Output of fields starts here ?>
-        <?php // @TODO: maybe hook this to something ? ?>
         <div class="b3_form-element">
             <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php esc_html_e( 'Username or Email address', 'b3-onboarding' ); ?></label>
             <input type="text" name="log" id="user_login" class="input" value="" size="20">
@@ -40,15 +39,13 @@
             </p>
         </div>
 
-        <?php // @TODO: maybe create a hook for this ? ?>
-        <p class="">
+        <p>
             <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_html_e( 'Log in', 'b3-onboarding' ); ?>">
             <?php if ( false !== $attributes[ 'redirect' ] ) { ?>
                 <input type="hidden" name="redirect_to" value="<?php echo $attributes[ 'redirect' ]; ?>">
             <?php } ?>
         </p>
 
-        <?php // @TODO: maybe create a hook for this ? ?>
         <?php echo b3_get_form_links( 'login' ); ?>
 
     </form>

@@ -164,7 +164,7 @@
 
         return $message;
     }
-    add_filter( 'b3_before_request_access', 'b3_before_request_access' );
+    // add_filter( 'b3_before_request_access', 'b3_before_request_access' );
 
 
     /**
@@ -181,7 +181,7 @@
 
         return $message;
     }
-    add_filter( 'b3_before_password_reset', 'b3_before_password_reset' );
+    // add_filter( 'b3_before_password_reset', 'b3_before_password_reset' );
 
 
     /**
@@ -204,8 +204,6 @@
 
     /**
      * Override registration closed message (filter only)
-     *
-     * @TODO: create user input
      *
      * @since 2.0.0
      *

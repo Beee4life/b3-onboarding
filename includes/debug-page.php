@@ -16,7 +16,6 @@
                 ob_start();
                 include( 'debug-info.php' );
                 echo ob_get_clean();
-                // @TODO: output $result as json
             ?>
         </div>
     <?php }

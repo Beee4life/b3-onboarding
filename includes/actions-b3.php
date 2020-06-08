@@ -129,7 +129,6 @@
             if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ) , array( 'request_access_subdomain', 'ms_register_site_user' ) ) ) {
                 ob_start();
                 ?>
-                <?php // @TODO: add more fields for Multisite (MS) ?>
                 <div class="b3_form-element b3_form-element--register">
                     <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
                     <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
