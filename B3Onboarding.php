@@ -96,7 +96,6 @@
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
-                add_action( 'admin_init',                           array( $this, 'b3_check_filter_input' ) );
 
                 // Multisite specific
                 add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
@@ -140,9 +139,12 @@
                  */
                 include( 'includes/emails.php' );
                 /*
-                 * This file contains functions for various example filters
+                 * This file contains functions/includes for various example filters.
+                 * They're only loaded for testing purposes, when LOCALHOST is defined as true
                  */
-                include( 'includes/examples.php' );
+                if ( defined( 'LOCALHOST' ) && true == 'LOCALHOST' ) {
+                    include( 'includes/examples.php' );
+                }
                 /*
                  * This file contains simple functions which are called throughout the plugin
                  */
@@ -174,15 +176,6 @@
 
                 // echo '<pre>'; var_dump(get_option( 'b3_recaptcha', false )); echo '</pre>'; exit;
 
-            }
-
-
-            /*
-             * Verify input through filters
-             *
-             * @since 2.0.0
-             */
-            public function b3_check_filter_input() {
             }
 
 
