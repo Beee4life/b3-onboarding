@@ -29,9 +29,6 @@
 
             <?php do_action( 'b3_login_email_fields' ); ?>
 
-            <?php // @B4R: check if this hook can be used - is WP default, normally after email field ?>
-            <?php // do_action( 'register_form' ); ?>
-
             <?php do_action( 'b3_add_first_last_name' ); ?>
 
             <?php do_action( 'b3_add_password_fields' ); ?>
