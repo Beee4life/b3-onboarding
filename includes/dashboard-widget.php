@@ -5,7 +5,6 @@
      * @since 1.0.0
      */
     function b3_dashboard_widget_function() {
-        // Widget contents
         $approval_args = array(
             'role' => 'b3_approval'
         );
@@ -31,13 +30,11 @@
                 <p>
                     <?php
                         if ( count( $approval_users ) > 0 ) {
-
                             if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
                                 echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
                             } else {
                                 echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type. That\'s why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it <a href="%s">here</a>.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ) );
                             }
-
                         } elseif ( count( $activation_users ) > 0 ) {
                             echo sprintf( esc_html__( 'There %s %d %s awaiting activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
                         }
@@ -61,7 +58,7 @@
                                 </a>
                             <?php } ?>
 
-                            (<?php echo date( $date_time_format, strtotime( $user->user_registered ) ); ?>)
+                            (<?php echo b3_get_local_date_time( $user->user_registered ); ?>)
                         </li>
                     <?php } ?>
                 </ul>
