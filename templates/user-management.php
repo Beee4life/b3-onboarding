@@ -3,8 +3,9 @@
     $user_args            = array( 'role' => 'b3_approval' );
     $users                = get_users( $user_args );
     if ( current_user_can( 'promote_users' ) ) {
-        $user_approved = esc_html__( 'User is successfully approved.', 'b3-onboarding' );
-        $user_rejected = esc_html__( 'User is successfully rejected and the account is deleted.', 'b3-onboarding' );
+        $user_approved    = esc_html__( 'User is successfully approved.', 'b3-onboarding' );
+        $user_not_deleted = esc_html__( 'User is successfully rejected but there was an error deleting the account.', 'b3-onboarding' );
+        $user_rejected    = esc_html__( 'User is successfully rejected and the account is deleted.', 'b3-onboarding' );
         ?>
 
         <?php if ( ! empty( $_GET[ 'user' ] ) ) { ?>
@@ -12,7 +13,9 @@
                 <?php if ( 'approved' == $_GET[ 'user' ] ) { ?>
                     <?php B3Onboarding::b3_errors()->add( 'success_user_approved', $user_approved ); ?>
                 <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
-                    <?php B3Onboarding::b3_errors()->add( 'error_no_nonce_match', $user_rejected ); ?>
+                    <?php B3Onboarding::b3_errors()->add( 'success_user_rejected', $user_rejected ); ?>
+                <?php } elseif ( 'not-deleted' == $_GET[ 'user' ] ) { ?>
+                    <?php B3Onboarding::b3_errors()->add( 'error_user_delete', $user_not_deleted ); ?>
                 <?php } ?>
                 <?php B3Onboarding::b3_show_admin_notices(); ?>
             <?php } else { ?>
@@ -21,6 +24,8 @@
                         <?php echo $user_approved ?>
                     <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
                         <?php echo $user_rejected; ?>
+                    <?php } elseif ( 'not-deleted' == $_GET[ 'user' ] ) { ?>
+                        <?php echo $user_not_deleted; ?>
                     <?php } ?>
                 </p>
             <?php } ?>
