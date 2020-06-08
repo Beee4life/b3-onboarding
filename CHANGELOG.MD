@@ -24,7 +24,7 @@ Any [feedback][github-issues] is welcome.
 * [X] added an option to remove logo from email header
 * [X] added an option to add a global logo (for emails/default WordPress forms)
 * [X] added an option to add a privacy box
-* [ ] added an option to delete user account (through non WP forms) - tbc
+* [X] added an option to delete user account (through non WP forms)
 * [X] added an option to disable admin notification after user registration
 * [X] added an option to disable admin notification after user password change
 * [X] added an option to disable WordPress' own pages
