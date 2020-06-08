@@ -254,3 +254,39 @@
         return $email_template;
     }
     // add_filter( 'b3_email_template', 'b3_email_template' );
+
+
+    /**
+     * Filter a custom email address for localhost development
+     *
+     * @since 2.0.0
+     *
+     * @param $username
+     *
+     * @return string
+     */
+    function b3_localhost_username( $username ) {
+
+        $username = 'filter dummy';
+
+        return $username;
+    }
+    // add_filter( 'b3_localhost_username', 'b3_localhost_username' );
+
+
+    /**
+     * Filter a custom email address for localhost development
+     *
+     * @since 2.0.0
+     *
+     * @param $email
+     *
+     * @return string
+     */
+    function b3_localhost_email( $email ) {
+
+        $email = 'filter@emailm';
+
+        return $email;
+    }
+    // add_filter( 'b3_localhost_email', 'b3_localhost_email' );
