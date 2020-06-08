@@ -1151,3 +1151,35 @@
 
         return $protocol;
     }
+
+
+    /**
+     * Convert a GMT date/time to local
+     *
+     * @param bool $date_time_gmt
+     *
+     * @return bool|false|string
+     * @throws Exception
+     */
+    function b3_get_local_date_time( $date_time_gmt = false ) {
+        $date_format = get_option( 'date_format' );
+        $gmt_offset  = get_option( 'gmt_offset' );
+        $time_format = get_option( 'time_format' );
+        $timezone    = get_option( 'timezone_string' );
+
+        if ( false != $date_time_gmt ) {
+            if ( ! empty( $timezone ) ) {
+                $new_date = new DateTime( $date_time_gmt, new DateTimeZone( 'UTC' ) );
+                $new_date->setTimeZone( new DateTimeZone( $timezone ) );
+                $registration_date = $new_date->format( $date_format . ' @ ' . $time_format );
+            } elseif ( ! empty( $gmt_offset ) ) {
+                $registration_date_gmt_ts = strtotime( $date_time_gmt );
+                $registration_date_ts     = $registration_date_gmt_ts + ( $gmt_offset * HOUR_IN_SECONDS );
+                $registration_date        = gmdate( $date_format . ' @ ' . $time_format, $registration_date_ts );
+            }
+
+            return $registration_date;
+        }
+
+        return $date_time_gmt;
+    }

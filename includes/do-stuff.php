@@ -234,24 +234,8 @@
             $user_data = $vars[ 'user_data' ];
         }
 
-        // @TODO: make function from this
-        $date_format           = get_option( 'date_format' );
-        $gmt_offset            = get_option( 'gmt_offset' );
-        $time_format           = get_option( 'time_format' );
-        $timezone              = get_option( 'timezone_string' );
-        $registration_date     = gmdate( $date_format . ' ' . $time_format, time() ); // fallback, returns now in UTC
-        $registration_date_gmt = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
-        if ( false != $registration_date_gmt ) {
-            if ( ! empty( $timezone ) ) {
-                $new_date = new DateTime( $registration_date_gmt, new DateTimeZone( 'UTC' ) );
-                $new_date->setTimeZone( new DateTimeZone( $timezone ) );
-                $registration_date = $new_date->format( $date_format . ' @ ' . $time_format );
-            } elseif ( ! empty( $gmt_offset ) ) {
-                $registration_date_gmt_ts = strtotime( $registration_date_gmt );
-                $registration_date_ts     = $registration_date_gmt_ts + ( $gmt_offset * HOUR_IN_SECONDS );
-                $registration_date        = gmdate( $date_format . ' @ ' . $time_format, $registration_date_ts );
-            }
-        }
+        $registration_date_gmt   = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
+        $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
 
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
@@ -259,7 +243,7 @@
             '%forgotpass_url%'    => b3_get_forgotpass_url(),
             '%home_url%'          => get_home_url(),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
-            '%registration_date%' => $registration_date,
+            '%registration_date%' => $local_registration_date,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
             '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
             '%user_login%'        => ( false != $user_data ) ? $user_data->user_login : false,
