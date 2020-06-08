@@ -68,24 +68,20 @@
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
             ?>
 
+            <p>
+                <?php esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' ); ?>
+            </p>
+
+            <?php if ( false != $subject ) { ?>
                 <p>
-                    <?php esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' ); ?>
+                    <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo $subject; ?>"
                 </p>
-
-                <?php if ( false != $subject ) { ?>
-                    <p>
-                        <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo $subject; ?>"
-                    </p>
-                <?php } ?>
-
-                <?php echo $message; ?>
-            <?php } else { ?>
-                <p><?php esc_html_e( "These are the email's styling definitions (unformatted).", 'b3-onboarding' ); ?></p>
-                <p><?php esc_html_e( "We'll hope to be able to format them later.", 'b3-onboarding' ); ?></p>
-                <pre><?php echo $css; ?></pre>
             <?php } ?>
 
+            <?php echo $message; ?>
+        <?php } else { ?>
+            <p><?php esc_html_e( "These are the email's styling definitions.", 'b3-onboarding' ); ?></p>
+            <pre><?php echo $css; ?></pre>
+        <?php } ?>
     <?php } ?>
-
-
 </div>
