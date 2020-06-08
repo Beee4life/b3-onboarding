@@ -360,3 +360,15 @@
         return $email;
     }
     // add_filter( 'recovery_mode_email', 'b3_recovery_mail', 5, 2 );
+
+
+    /**
+     * Filters message on default register form
+     *
+     * @param $message
+     *
+     * @return string
+     */
+    function b3_login_message( $message ) {
+        return '<p class="message">' . __( 'Register For This Site' ) . '</p>';
+    }
