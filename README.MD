@@ -1,4 +1,4 @@
-# B3 Onboarding
+# B3 - Onboarding
 
 ## Contents
 
@@ -144,6 +144,8 @@ These are the things we have planned to add.
 * added recaptcha (optional) for registration/login pages 
 * added option to delete user account
 * added option to add/change/remove logo from email header
+
+Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboarding/blob/master/CHANGELOG.MD).
 
 1.0.6
 * fix incorrect fallback link for forgot password
