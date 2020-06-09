@@ -343,13 +343,12 @@
 
 
     /**
-     * Return default login message
+     * Return default registration message
      *
      * @since 2.0.0
      */
     function b3_get_default_registration_message() {
-        return __( 'Default register text' );
-        // return __( 'Register For This Site' );
+        return __( 'Register For This Site' );
     }
 
 
@@ -364,6 +363,29 @@
         return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
     }
 
+
+    /**
+     * Return default password forgot message
+     *
+     * @since 2.0.0
+     *
+     * @return string
+     */
+    function b3_get_default_password_reset_message() {
+        return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+    }
+
+
+    /**
+     * Return default request access message
+     *
+     * @since 2.0.0
+     *
+     * @return string
+     */
+    function b3_get_default_request_access_message() {
+        return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+    }
 
 
     /**

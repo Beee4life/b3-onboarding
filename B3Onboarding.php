@@ -44,7 +44,7 @@
                 }
 
                 if ( ! defined( 'B3_PLUGIN_PATH' ) ) {
-                    $plugin_path = trailingslashit( dirname( __FILE__ ) );
+                    $plugin_path = dirname( __FILE__ );
                     define( 'B3_PLUGIN_PATH', $plugin_path );
                 }
 
@@ -173,9 +173,6 @@
                  * Functions + renders for shortcodes/front-end forms
                  */
                 include( 'includes/class-b3-shortcodes.php' );
-
-                // echo '<pre>'; var_dump(get_option( 'b3_recaptcha', false )); echo '</pre>'; exit;
-
             }
 
 
@@ -859,7 +856,6 @@
 
                                 } elseif ( false != get_option( 'b3_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
-                                    error_log();
                                     $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
 
                                 } elseif ( 'closed' != $registration_type ) {
@@ -1631,7 +1627,7 @@
                     get_stylesheet_directory() . '/plugins/b3-onboarding/',
                     get_template_directory() . '/b3-onboarding/',
                     get_template_directory() . '/plugins/b3-onboarding/',
-                    B3_PLUGIN_PATH . 'templates/',
+                    B3_PLUGIN_PATH . '/templates/',
                 );
                 foreach( $template_paths as $possible_location ) {
                     if ( file_exists( $possible_location . $template_name . '.php' )) {

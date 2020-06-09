@@ -158,13 +158,13 @@
      *
      * @return string
      */
-    function b3_before_request_access( $message ) {
+    function b3_message_above_request_access( $message ) {
 
         $message = 'Click here';
 
         return $message;
     }
-    // add_filter( 'b3_before_request_access', 'b3_before_request_access' );
+    // add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access' );
 
 
     /**
@@ -175,13 +175,13 @@
      *
      * @return string
      */
-    function b3_before_password_reset( $message ) {
+    function b3_message_above_password_forgot( $message ) {
 
-        $message = '<a href="#">Click</a> here';
+        $message = 'Your message';
 
         return $message;
     }
-    // add_filter( 'b3_before_password_reset', 'b3_before_password_reset' );
+    // add_filter( 'b3_message_above_password_forgot', 'b3_message_above_password_forgot' );
 
 
     /**
@@ -209,13 +209,13 @@
      *
      * @return string
      */
-    function b3_registration_message( $registration_message ) {
+    function b3_message_above_registration( $registration_message ) {
 
         $registration_message = 'Filter registration text';
 
         return $registration_message;
     }
-    // add_filter( 'b3_registration_message', 'b3_registration_message' );
+    // add_filter( 'b3_message_above_registration', 'b3_message_above_registration' );
 
 
     /**
@@ -225,13 +225,13 @@
      *
      * @return string
      */
-    function b3_login_message( $login_message ) {
+    function b3_message_above_login( $login_message ) {
 
         $login_message = 'Filter login text';
 
         return $login_message;
     }
-    // add_filter( 'b3_login_message', 'b3_login_message' );
+    // add_filter( 'b3_message_above_login', 'b3_message_above_login' );
 
 
     /**

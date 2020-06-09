@@ -1169,7 +1169,9 @@
 
 
     /**
-     * Get the message above registration/login form
+     * Get the message above registration form
+     *
+     * @TODO: create user input option (this is preparation)
      *
      * @param $message
      *
@@ -1177,7 +1179,6 @@
      */
     function b3_get_registration_message() {
 
-        // @TODO: create user option
         $register_message = get_option( 'b3_register_message', false );
         if ( false != $register_message ) {
             $message = $register_message;
@@ -1187,6 +1188,66 @@
 
         return $message;
     }
-    add_filter( 'b3_registration_message', 'b3_get_registration_message' );
 
 
+    /**
+     * Get the message above login form
+     *
+     * @TODO: create user input option (this is preparation)
+     *
+     * @param $message
+     *
+     * @return bool|mixed|string|void
+     */
+    function b3_get_login_message() {
+
+        $login_message = get_option( 'b3_login_message', false );
+        if ( false != $login_message ) {
+            return $login_message;
+        }
+
+    }
+
+
+    /**
+     * Get the message above password forgot form
+     *
+     * @TODO: create user input option (this is preparation)
+     *
+     * @param $message
+     *
+     * @return bool|mixed|string|void
+     */
+    function b3_get_password_reset_message() {
+
+        $password_message = get_option( 'b3_password_reset_message', false );
+        if ( false != $password_message ) {
+            $message = $password_message;
+        } else {
+            $message = b3_get_default_password_reset_message();
+        }
+
+        return $message;
+    }
+
+
+    /**
+     * Get the message above registration form
+     *
+     * @TODO: create user input option (this is preparation)
+     *
+     * @param $message
+     *
+     * @return bool|mixed|string|void
+     */
+    function b3_get_request_access_message() {
+
+        $password_message = get_option( 'b3_request_access_message', false );
+        if ( false != $password_message ) {
+            $message = $password_message;
+        } else {
+            $message = b3_get_default_request_access_message();
+        }
+
+        return $message;
+    }

@@ -76,7 +76,8 @@
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
 
-                $admin_email = apply_filters( 'b3_new_user_mesage', b3_get_new_user_message() );
+                // @TODO: check if this is used in preview
+                $admin_email = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
                 $admin_email = b3_replace_template_styling( $admin_email );
                 $admin_email = strtr( $admin_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
                 $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
@@ -354,9 +355,9 @@
         $page_type = ( empty( $message ) ) ? 'login' : 'register';
 
         if ( 'register' == $page_type ) {
-            $message = apply_filters( 'b3_registration_message', b3_get_registration_message() );
+            $message = apply_filters( 'b3_message_above_registration', b3_get_registration_message() );
         } elseif ( 'login' == $page_type ) {
-            $message = apply_filters( 'b3_login_message', false );
+            $message = apply_filters( 'b3_message_above_login', b3_get_login_message() );
         }
         if ( ! empty( $message ) ) {
             $message = '<p class="message">' . $message . '</p>';
