@@ -27,9 +27,9 @@
 
         <?php if ( 'closed' != $registration_type ) { ?>
 
-            <?php do_action( 'b3_login_email_fields' ); ?>
+            <?php do_action( 'b3_add_username_email_fields' ); ?>
 
-            <?php do_action( 'b3_add_first_last_name' ); ?>
+            <?php do_action( 'b3_add_first_last_name_fields' ); ?>
 
             <?php do_action( 'b3_add_password_fields' ); ?>
 
@@ -41,6 +41,7 @@
 
             <?php do_action( 'b3_add_privacy_checkbox' ); ?>
 
+            <?php // @TODO: isn't this (partially) covered by b3_do_before_{template_name} ?>
             <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
 
             <div class="b3_form-element b3_form-element--submit">
@@ -51,6 +52,7 @@
                 <?php } ?>
                 <input type="submit" class="button" value="<?php echo $submit_label; ?>" />
             </div>
+            <?php // @TODO: isn't this (partially) covered by b3_do_after_{template_name} ?>
             <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
 
         <?php } ?>

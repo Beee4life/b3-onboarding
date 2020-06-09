@@ -1577,7 +1577,7 @@
                             wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                             $site_id         = get_id_from_blogname( $sub_domain );
                             $user_registered = true;
-                            do_action( 'b3_after_insert_site', $site_id );
+                            do_action( 'b3_do_after_insert_site', $site_id );
                         }
                     } elseif ( 'none' == $main_register_type ) {
                         // @TODO: add if for user or user + site (MS)

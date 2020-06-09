@@ -7,7 +7,7 @@
      * @since 1.0.0
      *
      */
-    function b3_login_email_fields() {
+    function b3_add_username_email_fields() {
         ob_start();
         ?>
             <div class="b3_form-element b3_form-element--login">
@@ -23,7 +23,7 @@
         $output = ob_get_clean();
         echo $output;
     }
-    add_action( 'b3_login_email_fields', 'b3_login_email_fields' );
+    add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
 
 
     /**
@@ -168,7 +168,7 @@
             echo $output;
         }
     }
-    add_action( 'b3_add_first_last_name', 'b3_first_last_name_fields' );
+    add_action( 'b3_add_first_last_name_fields', 'b3_first_last_name_fields' );
 
 
     /**
