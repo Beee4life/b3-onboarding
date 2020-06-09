@@ -36,10 +36,10 @@ Any [feedback][github-issues] is welcome.
 * [X] added a verification for all custom filter output
 * [X] published an 'official' [website][website] with
     * [X] documentation for
-        * [X] all actions/hooks
-        * [X] all filters
-        * [X] all functions
-    * [X] faqs
+        * [X] all actions (in progress)
+        * [X] all filters (in progress)
+        * [X] all functions (in progress)
+    * [X] faqs (in progress)
 
 **Developer goodies**
 
