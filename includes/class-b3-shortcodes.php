@@ -15,11 +15,11 @@
             public function __construct() {
                 parent::__construct();
 
-                add_shortcode( 'register-form',     array( $this, 'b3_render_register_form' ) );
-                add_shortcode( 'login-form',        array( $this, 'b3_render_login_form' ) );
-                add_shortcode( 'forgotpass-form',   array( $this, 'b3_render_forgot_password_form' ) );
-                add_shortcode( 'resetpass-form',    array( $this, 'b3_render_reset_password_form' ) );
                 add_shortcode( 'account-page',      array( $this, 'b3_render_account_page' ) );
+                add_shortcode( 'forgotpass-form',   array( $this, 'b3_render_forgot_password_form' ) );
+                add_shortcode( 'login-form',        array( $this, 'b3_render_login_form' ) );
+                add_shortcode( 'register-form',     array( $this, 'b3_render_register_form' ) );
+                add_shortcode( 'resetpass-form',    array( $this, 'b3_render_reset_password_form' ) );
                 add_shortcode( 'user-management',   array( $this, 'b3_render_user_approval_page' ) );
             }
 
