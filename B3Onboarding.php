@@ -24,13 +24,13 @@
         exit; // Exit if accessed directly
     }
 
-    add_action( 'admin_notices', function() {
-        echo sprintf( '<div class="error"><p>You are using an almost finished released version of %s. Use it at your own risk or deactivate it <a href="%s">%s</a> !!!.</p></div>',
-            'B3 - Onboarding',
-            esc_url( admin_url( 'plugins.php?s=b3' ) ),
-            'here'
-        );
-    } );
+    // add_action( 'admin_notices', function() {
+    //     echo sprintf( '<div class="error"><p>You are using an almost finished released version of %s. Use it at your own risk or deactivate it <a href="%s">%s</a> !!!.</p></div>',
+    //         'B3 - Onboarding',
+    //         esc_url( admin_url( 'plugins.php?s=b3' ) ),
+    //         'here'
+    //     );
+    // } );
 
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
@@ -590,7 +590,7 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '99' );
+                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '81' );
                 include( 'includes/user-approval-page.php' ); // content for the settings page
                 add_submenu_page( 'b3-onboarding', __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                 if ( true == get_option( 'b3_debug_info', false ) ) {
