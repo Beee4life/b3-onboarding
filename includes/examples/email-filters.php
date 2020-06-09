@@ -194,7 +194,7 @@
 
 
     /**
-     * Filters password forgot subject
+     * Filters lost password subject
      *
      * @since 2.0.0
      *
@@ -202,14 +202,14 @@
      *
      * @return string
      */
-    function b3_password_forgot_subject( $subject ) {
+    function b3_lost_password_subject( $subject ) {
         return 'Filter subject - Password reset for %blog_name% %user_login% %first_name%';
     }
-    // add_filter( 'b3_password_forgot_subject', 'b3_password_forgot_subject' );
+    // add_filter( 'b3_lost_password_subject', 'b3_lost_password_subject' );
 
 
     /**
-     * Filters password forgot message
+     * Filters lost password message
      *
      * @since 2.0.0
      *
@@ -217,10 +217,10 @@
      *
      * @return string
      */
-    function b3_password_forgot_message( $message ) {
+    function b3_password_lost_message( $message ) {
         return 'Filter message - Password <a href="#">reset</a>';
     }
-    // add_filter( 'b3_password_forgot_message', 'b3_password_forgot_message' );
+    // add_filter( 'b3_password_lost_message', 'b3_password_lost_message' );
 
 
     /**

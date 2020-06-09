@@ -8,7 +8,7 @@
     Requires PHP:       7.0
     Author:             Beee
     Author URI:         https://berryplasman.com
-    Tags:               user, management, registration, login, forgot password, reset password, account
+    Tags:               user, management, registration, login, lost password, reset password, account
     Text-domain:        b3-onboarding
     License:            GPL v2 (or later)
     License URI:        https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,6 +23,14 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit; // Exit if accessed directly
     }
+
+    // add_action( 'admin_notices', function() {
+    //     echo sprintf( '<div class="error"><p>%s is not ready yet. Make sure you deactivate this plugin <a href="%s">%s</a> because your site will stop working !!!.</p></div>',
+    //         'B3 - Onboarding',
+    //         esc_url( admin_url( 'plugins.php?s=b3' ) ),
+    //         'here'
+    //     );
+    // } );
 
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
@@ -86,8 +94,8 @@
                 add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
-                add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_password_reset' ) );
-                add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_password_reset' ) );
+                add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_lost_password' ) );
+                add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_lost_password' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
@@ -880,7 +888,7 @@
                                     } else {
                                         // Success
                                         if ( isset( $reset_password ) ) {
-                                            $reset_password_url = b3_get_forgotpass_url();
+                                            $reset_password_url = b3_get_lostpassword_url();
                                             if ( false != $reset_password_url ) {
                                                 $redirect_url = $reset_password_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
@@ -1064,9 +1072,9 @@
                     }
 
                     // add if force
-                    $forgot_password_url = b3_get_forgotpass_url();
-                    if ( false != $forgot_password_url ) {
-                        wp_safe_redirect( $forgot_password_url );
+                    $lost_password_url = b3_get_lostpassword_url();
+                    if ( false != $lost_password_url ) {
+                        wp_safe_redirect( $lost_password_url );
                         exit;
                     }
                 }
@@ -1077,7 +1085,7 @@
              * Redirects to the custom password reset page, or the login page
              * if there are errors.
              */
-            public function b3_redirect_to_custom_password_reset() {
+            public function b3_redirect_to_custom_lost_password() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
                     // Verify key / login combo
                     $redirect_url = b3_get_resetpass_url();
@@ -1229,7 +1237,7 @@
                             $lostpassword_url = wp_lostpassword_url();
                             if ( isset( $_REQUEST[ 'b3_form' ] ) ) {
                                 // it's our custom form, so custom redirect there
-                                $lostpassword_url = b3_get_forgotpass_url();
+                                $lostpassword_url = b3_get_lostpassword_url();
                             }
                             $redirect_url = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
 
@@ -1265,7 +1273,7 @@
                     }
                     if ( is_wp_error( $errors ) ) {
                         // errors found
-                        $redirect_url = b3_get_forgotpass_url();
+                        $redirect_url = b3_get_lostpassword_url();
                         $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
                     } else {
                         // Email sent
@@ -1284,7 +1292,7 @@
              *
              * @since 1.0.6
              */
-            public function b3_do_password_reset() {
+            public function b3_reset_user_password() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
                     $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
@@ -1540,7 +1548,7 @@
                     }
                     $inform = apply_filters( 'b3_custom_register_inform', $inform );
                     wp_new_user_notification( $user_id, null, $inform );
-                    do_action('b3_after_email_sent', $user_id, true );
+                    do_action( 'b3_do_after_email_sent', $user_id, true );
                 }
 
                 return $user_id;
@@ -1730,9 +1738,7 @@
                         esc_html__( 'here', 'b3-onboarding' )
                     );
                 }
-
                 do_action( 'b3_verify_filter_input' );
-
             }
         }
 

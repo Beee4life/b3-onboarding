@@ -80,9 +80,9 @@
                         ' . esc_html__( 'This renders the login page.', 'b3-onboarding' ) . '
                     </li>
                     <li>
-                        <b>[forgotpass-form]</b>
+                        <b>[lostpass-form]</b>
                         <br />
-                        ' . esc_html__( 'This renders the forgot password page.', 'b3-onboarding' ) . '
+                        ' . esc_html__( 'This renders the lost password page.', 'b3-onboarding' ) . '
                     </li>
                     <li>
                         <b>[resetpass-form]</b>

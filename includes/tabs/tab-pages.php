@@ -26,9 +26,9 @@
                 'page_id' => get_option( 'b3_logout_page_id', false ),
             ),
             array(
-                'id'      => 'forgotpass_page',
+                'id'      => 'lostpass_page',
                 'label'   => esc_html__( 'Forgot Password', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_forgotpass_page_id', false ),
+                'page_id' => get_option( 'b3_lostpass_page_id', false ),
             ),
             array(
                 'id'      => 'resetpass_page',

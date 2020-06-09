@@ -185,9 +185,9 @@
      */
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
 
-        $b3_forgot_password_subject = apply_filters( 'b3_password_reset_subject', b3_get_password_forgot_subject() );
-        if ( false != $b3_forgot_password_subject ) {
-            $subject = $b3_forgot_password_subject;
+        $b3_lost_password_subject = apply_filters( 'b3_lost_password_subject', b3_get_password_lost_subject() );
+        if ( false != $b3_lost_password_subject ) {
+            $subject = $b3_lost_password_subject;
         }
 
         return $subject;
@@ -210,9 +210,9 @@
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
 
-        $b3_forgot_password_message = apply_filters( 'b3_password_forgot_message', b3_get_password_forgot_message() );
-        if ( false != $b3_forgot_password_message ) {
-            $message = $b3_forgot_password_message;
+        $lost_password_message = apply_filters( 'b3_lost_password_message', b3_get_lost_password_message() );
+        if ( false != $lost_password_message ) {
+            $message = $lost_password_message;
         }
 
         $vars = [
@@ -301,7 +301,7 @@
                 $title_suffix = ': Log out';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == get_option( 'b3_forgotpass_page_id', false ) ) {
+        } elseif ( $post->ID == get_option( 'b3_lostpass_page_id', false ) ) {
             if ( $post->post_title == 'Forgot password' ) {
                 $title_suffix = ': Forgot password';
             }

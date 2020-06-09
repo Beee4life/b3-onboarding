@@ -129,7 +129,7 @@
     function b3_default_account_activated_message() {
         $message = sprintf( esc_html__( 'Hi %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%forgotpass_url%' ) . "\n";
+        $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%lostpass_url%' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
@@ -211,7 +211,7 @@
      * @return string
      */
     function b3_default_account_approved_message() {
-        return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_forgotpass_url() ) );
+        return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_lostpassword_url() ) );
     }
 
 
@@ -240,25 +240,25 @@
 
 
     /**
-     * Return default forgot password subject (user)
+     * Return default lost password subject (user)
      *
      * @since 2.0.0
      *
      * @return string
      */
-    function b3_default_forgot_password_subject() {
+    function b3_default_lost_password_subject() {
         return sprintf( esc_html__( 'Password reset for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
 
     /**
-     * Return default forgot password message (user)
+     * Return default lost password message (user)
      *
      * @since 1.0.6
      *
      * @return string
      */
-    function b3_default_forgot_password_message() {
+    function b3_default_lost_password_message() {
         $default_message = __( 'Hi', 'b3-onboarding' ) . ",\n";
         $default_message .= '<br /><br />' . "\n";
         $default_message .= __( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\n";
@@ -300,7 +300,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), '%blog_name%' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_forgotpass_url() ) . "\n";
+        $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
@@ -365,13 +365,13 @@
 
 
     /**
-     * Return default password forgot message
+     * Return default lost password message
      *
      * @since 2.0.0
      *
      * @return string
      */
-    function b3_get_default_password_reset_message() {
+    function b3_get_default_lost_password_message() {
         return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
     }
 

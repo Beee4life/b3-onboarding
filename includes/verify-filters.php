@@ -26,16 +26,16 @@
             'b3_localhost_username'              => array( 'string' ),
             'b3_link_color'                      => array( 'hex_color' ),
             'b3_main_logo'                       => array( 'url', 'file' ),
-            'b3_message_above_login'                   => array( 'string' ),
-            'b3_message_above_password_forgot'           => array( 'string' ),
-            'b3_message_above_registration'            => array( 'string' ),
-            'b3_message_above_request_access'           => array( 'string' ),
+            'b3_message_above_login'             => array( 'string' ),
+            'b3_message_above_lost_password'     => array( 'string' ),
+            'b3_message_above_registration'      => array( 'string' ),
+            'b3_message_above_request_access'    => array( 'string' ),
             'b3_new_user_message'                => array( 'string' ),
             'b3_new_user_notification_addresses' => array( 'email' ),
             'b3_new_user_subject'                => array( 'string' ),
             'b3_notification_sender_email'       => array( 'email' ),
-            'b3_password_reset_message'          => array( 'string' ), // @TODO: only used in preview
-            'b3_password_reset_subject'          => array( 'string' ), // @TODO: only used in preview
+            'b3_lost_password_message'           => array( 'string' ), // @ TODO: check this
+            'b3_lost_password_subject'           => array( 'string' ), // @ TODO: check this
             'b3_privacy_text'                    => array( 'string' ),
             'b3_registration_closed_message'     => array( 'string' ),
             'b3_request_access_message_admin'    => array( 'string' ),
@@ -44,8 +44,8 @@
             'b3_request_access_subject_user'     => array( 'string' ),
             'b3_welcome_user_message'            => array( 'string' ),
             'b3_welcome_user_subject'            => array( 'string' ),
-            'b3_password_forgot_message'            => array( 'string' ),
-            'b3_password_forgot_subject'            => array( 'string' ),
+            'b3_do_after_first_last_name'        => array( 'string' ),
+            'b3_do_before_first_last_name'       => array( 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {

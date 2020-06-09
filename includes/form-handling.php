@@ -76,7 +76,7 @@
 
                     $page_ids = [
                         'b3_account_page_id',
-                        'b3_forgotpass_page_id',
+                        'b3_lostpass_page_id',
                         'b3_login_page_id',
                         'b3_logout_page_id',
                         'b3_register_page_id',
@@ -262,8 +262,8 @@
                     }
                     update_option( 'b3_notification_sender_email', $sender_email, true );
                     update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
-                    update_option( 'b3_forgot_password_message', htmlspecialchars( $_POST[ 'b3_forgot_password_message' ] ), true );
-                    update_option( 'b3_forgot_password_subject', $_POST[ 'b3_forgot_password_subject' ], true );
+                    update_option( 'b3_lost_password_message', htmlspecialchars( $_POST[ 'b3_lost_password_message' ] ), true );
+                    update_option( 'b3_lost_password_subject', $_POST[ 'b3_lost_password_subject' ], true );
 
                     if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
                         $color = $_POST[ 'b3_link_color' ];

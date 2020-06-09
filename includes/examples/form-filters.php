@@ -21,7 +21,7 @@
 
         return $fields;
     }
-    add_filter( 'b3_hidden_fields', 'b3_hidden_fields' );
+    // add_filter( 'b3_hidden_fields', 'b3_hidden_fields' );
 
 
     /**
@@ -175,13 +175,13 @@
      *
      * @return string
      */
-    function b3_message_above_password_forgot( $message ) {
+    function b3_message_above_lost_password( $message ) {
 
         $message = 'Your message';
 
         return $message;
     }
-    // add_filter( 'b3_message_above_password_forgot', 'b3_message_above_password_forgot' );
+    // add_filter( 'b3_message_above_lost_password', 'b3_message_above_lost_password' );
 
 
     /**

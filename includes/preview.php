@@ -33,9 +33,9 @@
                     $message = apply_filters( 'b3_email_activation_message_user', b3_get_email_activation_message_user() ) ;
                     $subject = apply_filters( 'b3_email_activation_subject_user', b3_get_email_activation_subject_user() );
                     break;
-                case 'forgotpass':
-                    $message = apply_filters( 'b3_password_forgot_message', b3_get_password_forgot_message() ) ;
-                    $subject = apply_filters( 'b3_password_forgot_subject', b3_get_password_forgot_subject() );
+                case 'lostpass':
+                    $message = apply_filters( 'b3_lost_password_message', b3_get_password_lost_message() ) ;
+                    $subject = apply_filters( 'b3_lost_password_subject', b3_get_password_lost_subject() );
                     break;
                 case 'new-user-admin':
                     // @TODO: maybe make new one, don't use b3_get_new_user_message

@@ -98,8 +98,8 @@
                 case 'account_rejected':
                     include( 'emails/account-rejected.php' );
                     break;
-                case 'forgot_password':
-                    include( 'emails/forgot-password.php' );
+                case 'lost_password':
+                    include( 'emails/lost-password.php' );
                     break;
                 case 'visitor_register':
                     include( 'emails/ms-visitor-register.php' );

@@ -16,7 +16,7 @@
                     <li><a href="<?php echo $preview_page; ?>account-activated"><?php esc_html_e( 'Account activated (user)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>account-rejected"><?php esc_html_e( 'Account rejected (user)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>email-activation"><?php esc_html_e( 'Email activation (user)', 'b3-onboarding' ); ?></a></li>
-                    <li><a href="<?php echo $preview_page; ?>forgotpass"><?php esc_html_e( 'Forgot pass (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>lostpass"><?php esc_html_e( 'Lost password (user)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>new-user-admin"><?php esc_html_e( 'New user (admin)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>request-access-admin"><?php esc_html_e( 'Request access (admin)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>request-access-user"><?php esc_html_e( 'Request access (user)', 'b3-onboarding' ); ?></a></li>

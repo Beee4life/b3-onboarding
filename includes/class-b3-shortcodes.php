@@ -16,7 +16,7 @@
                 parent::__construct();
 
                 add_shortcode( 'account-page',      array( $this, 'b3_render_account_page' ) );
-                add_shortcode( 'forgotpass-form',   array( $this, 'b3_render_forgot_password_form' ) );
+                add_shortcode( 'lostpass-form',   array( $this, 'b3_render_lost_password_form' ) );
                 add_shortcode( 'login-form',        array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'register-form',     array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'resetpass-form',    array( $this, 'b3_render_reset_password_form' ) );
@@ -144,7 +144,7 @@
 
 
             /**
-             * A shortcode for rendering the password forgot form.
+             * A shortcode for rendering the password lost form.
              *
              * @since 1.0.0
              *
@@ -153,7 +153,7 @@
              *
              * @return string  The shortcode output
              */
-            public function b3_render_forgot_password_form( $user_variables, $content = null ) {
+            public function b3_render_lost_password_form( $user_variables, $content = null ) {
 
                 $default_attributes = array(
                     'title'    => false,
@@ -228,7 +228,7 @@
                         $message .= '<br />';
                         $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
                         $message .= '<br />';
-                        $message .= sprintf( __( "If you haven't received any email, please <a href=\"%s\">click here</a>.", 'b3-onboarding' ), b3_get_forgotpass_url() );
+                        $message .= sprintf( __( "If you haven't received any email, please <a href=\"%s\">click here</a>.", 'b3-onboarding' ), b3_get_lostpassword_url() );
 
                         return $message;
                     }

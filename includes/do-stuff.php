@@ -14,10 +14,10 @@
                 'content' => '[account-page]',
                 'meta'    => 'b3_account_page_id'
             ),
-            _x( 'forgotpassword', 'slug', 'b3-onboarding' ) => array(
+            _x( 'lostpassword', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
-                'content' => '[forgotpass-form]',
-                'meta'    => 'b3_forgotpass_page_id'
+                'content' => '[lostpass-form]',
+                'meta'    => 'b3_lostpass_page_id'
             ),
             _x( 'login', 'slug', 'b3-onboarding' )           => array(
                 'title'   => esc_html__( 'Login', 'b3-onboarding' ),
@@ -235,7 +235,7 @@
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
-            '%forgotpass_url%'    => b3_get_forgotpass_url(),
+            '%lostpass_url%'      => b3_get_lostpassword_url(),
             '%home_url%'          => get_home_url(),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
             '%registration_date%' => $local_registration_date,

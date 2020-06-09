@@ -34,9 +34,9 @@
             'b3_email_template', // set on activate
             'b3_first_last_required',
             'b3_force_custom_login_page',
-            'b3_forgot_password_message',
-            'b3_forgot_password_subject',
-            'b3_forgotpass_page_id', // set on activate
+            'b3_lost_password_message',
+            'b3_lost_password_subject',
+            'b3_lostpass_page_id', // set on activate
             'b3_front_end_approval',
             'b3_link_color',
             'b3_login_logo',
@@ -72,6 +72,7 @@
             'b3_registration_closed_message',
             'b3_sidebar_widget', // set on activate
             'b3_style_default_pages',
+            'b3_use_custom_passwords', // not in use yet
             'b3_users_may_delete',
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
@@ -152,8 +153,8 @@
         }
         $default_boxes2 = array(
             array(
-                'id'    => 'forgot_password',
-                'title' => esc_html__( 'Forgot password email', 'b3-onboarding' ),
+                'id'    => 'lost_password',
+                'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
             ),
         );
         $styling_boxes = array();
@@ -611,16 +612,16 @@
 
 
     /**
-     * Get password forgot message (user)
+     * Get lost password message (user)
      *
      * @since 1.0.0
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_password_forgot_message() {
-        $message = get_option( 'b3_forgot_password_message', false );
+    function b3_get_password_lost_message() {
+        $message = get_option( 'b3_lost_password_message', false );
         if ( ! $message ) {
-            $message = b3_default_forgot_password_message() . "\n";
+            $message = b3_default_lost_password_message() . "\n";
         }
 
         return $message;
@@ -678,10 +679,10 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_password_forgot_subject() {
-        $subject = get_option( 'b3_forgot_password_subject', false );
+    function b3_get_password_lost_subject() {
+        $subject = get_option( 'b3_lost_password_subject', false );
         if ( ! $subject ) {
-            $subject = b3_default_forgot_password_subject();
+            $subject = b3_default_lost_password_subject();
         }
 
         return $subject;
@@ -766,9 +767,9 @@
             switch( $current_form ) {
 
                 case 'login':
-                    $page_types[ 'forgotpassword' ] = [
-                        'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
-                        'link'  => b3_get_forgotpass_url(),
+                    $page_types[ 'lostpassword' ] = [
+                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
+                        'link'  => b3_get_lostpassword_url(),
                     ];
                     if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
                         $page_types[ 'register' ] = [
@@ -785,11 +786,11 @@
                     ];
                     $page_types[ 'fogotpassword' ] = [
                         'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
-                        'link'  => b3_get_forgotpass_url(),
+                        'link'  => b3_get_lostpassword_url(),
                     ];
                     break;
 
-                case 'forgotpassword':
+                case 'lostpassword':
                     $page_types[ 'login' ] = [
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_url(),
@@ -834,7 +835,7 @@
      *
      * @return string
      */
-    function b3_get_password_reset_link( $key, $user_login ) {
+    function b3_get_reset_password_link( $key, $user_login ) {
         // @TODO: make URL nicer
         $url = network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login ), 'login' );
 
@@ -1053,14 +1054,14 @@
     }
 
     /**
-     * Get forgot pass page id/link
+     * Get lost password page id/link
      *
      * @since 1.0.6
      *
      * @return bool|string
      */
-    function b3_get_forgotpass_url() {
-        $id = get_option( 'b3_forgotpass_page_id', false );
+    function b3_get_lostpassword_url() {
+        $id = get_option( 'b3_lostpass_page_id', false );
         if ( false != $id && get_post( $id ) ) {
             return get_the_permalink( $id );
         }
@@ -1210,7 +1211,7 @@
 
 
     /**
-     * Get the message above password forgot form
+     * Get the message above lost password form
      *
      * @TODO: create user input option (this is preparation)
      *
@@ -1218,13 +1219,13 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_password_reset_message() {
+    function b3_get_lost_password_message() {
 
-        $password_message = get_option( 'b3_password_reset_message', false );
+        $password_message = get_option( 'b3_lost_password_message', false );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
-            $message = b3_get_default_password_reset_message();
+            $message = b3_get_default_lost_password_message();
         }
 
         return $message;

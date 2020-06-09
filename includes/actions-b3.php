@@ -104,7 +104,7 @@
         $show_recaptcha    = get_option( 'b3_recaptcha', false );
 
         if ( false != $show_recaptcha ) {
-            do_action( 'b3_before_recaptcha_' . $form_type );
+            do_action( 'b3_do_before_recaptcha_' . $form_type );
             if ( '3' != $recaptcha_version ) {
                 ?>
                 <div class="b3_form-element b3_form-element--recaptcha">
@@ -114,7 +114,7 @@
                 </div>
                 <?php
             }
-            do_action( 'b3_after_recaptcha_' . $form_type );
+            do_action( 'b3_do_after_recaptcha_' . $form_type );
         }
     }
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
@@ -153,6 +153,7 @@
         $show_first_last_name = get_option( 'b3_activate_first_last', false );
         if ( $show_first_last_name ) {
             ob_start();
+            do_action( 'b3_do_before_first_last_name' );
             ?>
             <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
             <div class="b3_form-element b3_form-element--register">
@@ -164,6 +165,7 @@
                 <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
             </div>
             <?php
+            do_action( 'b3_do_after_first_last_name' );
             $output = ob_get_clean();
             echo $output;
         }
@@ -172,7 +174,7 @@
 
 
     /**
-     * Output the password fields (not in use yet)
+     * Output the password fields (not in use yet, needs more testing)
      *
      * @since 0.8-beta
      */
@@ -207,15 +209,15 @@
      *
      * @since 2.0.0
      */
-    function b3_add_custom_fields_registration() {
+    function b3_add_extra_fields_registration() {
         $extra_field_values = apply_filters( 'b3_extra_fields', array() );
-        if ( is_array( $extra_field_values ) && ! empty( $extra_field_values ) ) {
+        if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
                 echo b3_render_extra_field( $extra_field );
             }
         }
     }
-    add_action( 'b3_add_custom_fields_registration', 'b3_add_custom_fields_registration' );
+    add_action( 'b3_add_extra_fields_registration', 'b3_add_extra_fields_registration' );
 
 
     /**
@@ -223,13 +225,17 @@
      */
     function b3_add_privacy_checkbox() {
         $show_privacy = get_option( 'b3_privacy', false );
-        if ( true == $show_privacy ) { ?>
+        if ( true == $show_privacy ) {
+            do_action( 'b3_do_before_privacy_checkbox');
+            ?>
             <div class="b3_form-element b3_form-element--privacy">
                 <label>
                     <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1" /> <?php echo htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) ); ?>
                 </label>
             </div>
-        <?php }
+        <?php
+            do_action( 'b3_do_after_privacy_checkbox');
+        }
     }
     add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
 
@@ -239,7 +245,7 @@
      *
      * @since 2.0.0
      */
-    function b3_hidden_fields_registration_form() {
+    function b3_add_hidden_fields_registration() {
         $hidden_field_values = apply_filters( 'b3_hidden_fields', array() );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             $hidden_fields = '';
@@ -249,7 +255,7 @@
             echo $hidden_fields;
         }
     }
-    add_action( 'b3_hidden_fields_registration_form', 'b3_hidden_fields_registration_form' );
+    add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
 
 
     /**
@@ -281,7 +287,7 @@
             } else {
                 if ( isset( $attributes[ 'template' ] ) && 'lostpassword' == $attributes[ 'template' ] ) {
                     $show_errors = true;
-                    $messages[] = esc_html__( apply_filters( 'b3_message_above_password_forgot', b3_get_password_reset_message() ) );
+                    $messages[] = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_lost_password_message() ) );
                 } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
                     if ( 'request_access' == $registration_type ) {
                         $show_errors = true;
