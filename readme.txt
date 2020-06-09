@@ -1,6 +1,6 @@
 === B3 - Onboarding ===
 Contributors: Beee
-Tags: user, management, registration, login, forgot password, reset password, account
+Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
 Tested up to: 5.4.1
 Requires PHP: 7.0

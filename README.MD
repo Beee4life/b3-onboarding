@@ -39,7 +39,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
   * register
   * login
   * log out
-  * forgot password
+  * lost password
   * reset password
   * account
 * (mostly) styled using [BEM](https://en.bem.info) methodology
@@ -65,7 +65,7 @@ If you activate this plugin the following will be done:
 <a name="shortcodes"></a>
 ### Shortcodes
 * [account-page] = renders account page
-* [forgotpass-form] = renders forgot password form
+* [lostpass-form] = renders lost password form
 * [login-form] = renders login form
 * [register-form] = renders regster form
 * [resetpass-form] = renders reset password form
@@ -74,8 +74,8 @@ If you activate this plugin the following will be done:
 <a name="hooks"></a>
 ### Hooks
 
-* b3_add_custom_fields_registration
-* b3_after_insert_site, $site_id
+* b3_add_extra_fields_registration
+* b3_do_after_insert_site, $site_id
 * b3_after_recaptcha_{$form_type}
 * b3_after_recaptcha_register
 * b3_before_recaptcha_{$form_type}
@@ -148,7 +148,7 @@ These are the things we have planned to add.
 Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboarding/blob/master/CHANGELOG.MD).
 
 1.0.6
-* fix incorrect fallback link for forgot password
+* fix incorrect fallback link for lost password
 
 1.0.5
 * fix broken user ID on dashboard
