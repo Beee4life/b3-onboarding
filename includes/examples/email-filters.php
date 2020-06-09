@@ -14,7 +14,6 @@
      * @return string
      */
     function b3_notification_sender_email( $email ) {
-
         $email = 'info@xx.cc';
 
         return $email;
@@ -307,7 +306,7 @@
      * @return string
      */
     function b3_request_access_message_user( $message ) {
-        return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
+        return esc_html__( 'You have successfully requested access. Someone will check your request.', 'b3-onboarding' );
     }
     // add_filter( 'b3_request_access_message_user', 'b3_request_access_message_user' );
 
