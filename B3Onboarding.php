@@ -24,13 +24,13 @@
         exit; // Exit if accessed directly
     }
 
-    // add_action( 'admin_notices', function() {
-    //     echo sprintf( '<div class="error"><p>You are using an almost finished released version of %s. Use it at your own risk or deactivate it <a href="%s">%s</a> !!!.</p></div>',
-    //         'B3 - Onboarding',
-    //         esc_url( admin_url( 'plugins.php?s=b3' ) ),
-    //         'here'
-    //     );
-    // } );
+    add_action( 'admin_notices', function() {
+        echo sprintf( '<div class="error"><p>You are using an almost finished released version of %s. Use it at your own risk or deactivate it <a href="%s">%s</a> !!!.</p></div>',
+            'B3 - Onboarding',
+            esc_url( admin_url( 'plugins.php?s=b3' ) ),
+            'here'
+        );
+    } );
 
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
