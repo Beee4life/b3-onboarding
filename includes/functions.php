@@ -785,7 +785,7 @@
                         'link'  => b3_get_login_url(),
                     ];
                     $page_types[ 'fogotpassword' ] = [
-                        'title' => esc_html__( 'Forgot password', 'b3-onboarding' ),
+                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
                         'link'  => b3_get_lostpassword_url(),
                     ];
                     break;
@@ -949,18 +949,17 @@
      * @param bool $submit_value
      */
     function b3_get_submit_button( $submit_value = false, $button_modifier = false ) {
-        $default_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         // validate user value
         if ( false != $submit_value ) {
-            if ( is_string( $submit_value ) ) {
-                $submit_value = ' button-submit--' . esc_attr__( $submit_value );
+            if ( ! is_string( $submit_value ) ) {
+                // throw error
             }
         } else {
-            $submit_value = $default_value;
+            $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
         if ( false != $button_modifier ) {
             if ( is_string( $button_modifier ) ) {
-                $button_modifier = ' button-submit--' . esc_attr__( $button_modifier );
+                $button_modifier = ' button-submit--' . esc_attr( $button_modifier );
             } else {
                 $button_modifier = false;
             }

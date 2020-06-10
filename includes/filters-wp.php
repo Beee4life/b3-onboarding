@@ -302,8 +302,8 @@
             }
             $post_states[] = 'B3' . $title_suffix;
         } elseif ( $post->ID == get_option( 'b3_lostpass_page_id', false ) ) {
-            if ( $post->post_title == 'Forgot password' ) {
-                $title_suffix = ': Forgot password';
+            if ( $post->post_title == 'Lost password' ) {
+                $title_suffix = ': Lost password';
             }
             $post_states[] = 'B3' . $title_suffix;
         } elseif ( $post->ID == get_option( 'b3_resetpass_page_id', false ) ) {

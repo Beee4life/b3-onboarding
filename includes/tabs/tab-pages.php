@@ -27,7 +27,7 @@
             ),
             array(
                 'id'      => 'lostpass_page',
-                'label'   => esc_html__( 'Forgot Password', 'b3-onboarding' ),
+                'label'   => esc_html__( 'Lost Password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_lostpass_page_id', false ),
             ),
             array(

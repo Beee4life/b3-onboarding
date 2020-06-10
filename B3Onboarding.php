@@ -1048,7 +1048,7 @@
 
 
             /**
-             * Redirects the user to the custom "Forgot your password?" page instead of
+             * Redirects the user to the custom "Lost password?" page instead of
              * wp-login.php?action=lostpassword.
              */
             public function b3_redirect_to_custom_lostpassword() {

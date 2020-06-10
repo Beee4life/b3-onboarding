@@ -15,7 +15,7 @@
                 'meta'    => 'b3_account_page_id'
             ),
             _x( 'lostpassword', 'slug', 'b3-onboarding' ) => array(
-                'title'   => esc_html__( 'Forgot password', 'b3-onboarding' ),
+                'title'   => esc_html__( 'Lost password', 'b3-onboarding' ),
                 'content' => '[lostpass-form]',
                 'meta'    => 'b3_lostpass_page_id'
             ),

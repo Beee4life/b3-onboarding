@@ -1,6 +1,6 @@
 <?php
     /*
-     * Input fields for 'Forgot password' email
+     * Input fields for 'Lost password' email
      *
      * @since 1.0.0
      */
