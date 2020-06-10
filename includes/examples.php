@@ -1,6 +1,8 @@
 <?php
     /*
      * Includes filters for various 'parts'
+     *
+     * @since 2.0.0
      */
     include( 'examples/email-filters.php' );
     include( 'examples/form-filters.php' );

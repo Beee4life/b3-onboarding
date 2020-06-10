@@ -69,7 +69,6 @@
      * Ouptuts default login/email field
      *
      * @since 1.0.0
-     *
      */
     function b3_add_username_email_fields() {
         ob_start();

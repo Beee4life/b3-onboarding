@@ -2,6 +2,8 @@
 
     /**
      * Disable admin notification on password change
+     *
+     * @since 2.0.0
      */
     if ( 1 == get_option( 'b3_disable_admin_notification_password_change', false ) ) {
         add_filter( 'wp_password_change_notification_email', '__return_false' );
@@ -345,6 +347,8 @@
 
     /**
      * Filters message on default register form
+     *
+     * @since 2.0.0
      *
      * @param $message
      *

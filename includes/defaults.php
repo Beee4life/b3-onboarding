@@ -313,6 +313,8 @@
     /**
      * Return default welcome user subject (user)
      *
+     * @since 2.0.0
+     *
      * @return string
      */
     function b3_default_email_activation_subject() {
@@ -346,6 +348,8 @@
      * Return default registration message
      *
      * @since 2.0.0
+     *
+     * @return string
      */
     function b3_get_default_registration_message() {
         return __( 'Register For This Site' );

@@ -1,3 +1,10 @@
+<?php
+    /**
+     * Preview page output
+     *
+     * @since 2.0.0
+     */
+?>
 <div class="b3_preview">
     <?php
         $message = false;

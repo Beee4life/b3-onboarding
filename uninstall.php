@@ -25,6 +25,7 @@
             'b3_activation',
             'b3_approval',
         );
+        // @TODO: change user role for users with this role.
         foreach( $roles as $role ) {
             remove_role( $role );
         }

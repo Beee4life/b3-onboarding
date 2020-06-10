@@ -271,8 +271,6 @@
     /**
      * Return link color for emails
      *
-     * @TODO: needs user input
-     *
      * @since 2.0.0
      *
      * @return bool|mixed|string|void
@@ -1033,7 +1031,7 @@
      *
      * @since 1.0.6
      *
-     * @return mixed
+     * @return bool|mixed
      */
     function b3_get_account_url( $return_id = false ) {
         $id = get_option( 'b3_account_page_id', false );
@@ -1046,10 +1044,7 @@
             }
         }
 
-        // @TODO: admin profile link
-        // @TODO: add filter if user is allowed to go there
-        // @TODO: if not, add message
-        return '';
+        return false;
     }
 
     /**
@@ -1119,20 +1114,6 @@
         $url = remove_query_arg( array( 'instance', 'action', 'checkemail', 'error', 'loggedout', 'registered', 'redirect_to', 'updated', 'key', '_wpnonce', 'reauth', 'login', 'updated' ) );
 
         return $url;
-    }
-
-
-    /**
-     * Get current protocol
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
-    function b3_get_protocol() {
-        $protocol = ( isset( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] != 'off' ) ? 'https' : 'http';
-
-        return $protocol;
     }
 
 
@@ -1232,7 +1213,7 @@
 
 
     /**
-     * Get the message above registration form
+     * Get the message above request access form
      *
      * @TODO: create user input option (this is preparation)
      *

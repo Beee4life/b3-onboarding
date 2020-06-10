@@ -2,7 +2,7 @@
     /**
      * The function which outputs the dashboard widget
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
     function b3_dashboard_widget_debug_function() {
         if ( current_user_can('manage_options' ) ) {

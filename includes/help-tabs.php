@@ -3,6 +3,8 @@
     /**
      * Add help tabs
      *
+     * @since 1.0.4
+     *
      * @param $screen    object
      */
     function b3_help_tabs( $screen ) {

@@ -9,6 +9,8 @@
 
         /**
          * Class B3Shortcodes
+         *
+         * @since 2.0.0
          */
         class B3_Shortcodes extends B3Onboarding {
 

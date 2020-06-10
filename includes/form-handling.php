@@ -457,7 +457,7 @@
     /**
      * Function which handles approve/deny user form
      *
-     * @since 1.0.0
+     * @since 1.0.4
      */
     function b3_approve_deny_users() {
 
@@ -507,6 +507,8 @@
 
     /**
      * Function to handle (front-end) profile form editing
+     *
+     * @since 1.0.4
      */
     function b3_profile_form_handling() {
 

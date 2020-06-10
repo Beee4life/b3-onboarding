@@ -1,8 +1,8 @@
 <?php
     /**
-     * Render integrations tab
+     * Render recaptcha tab
      *
-     * @since 1.0.0
+     * @since 2.0.0
      *
      * @return false|string
      */

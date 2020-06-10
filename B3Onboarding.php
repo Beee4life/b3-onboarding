@@ -59,7 +59,11 @@
                 }
             }
 
-            function init() {
+
+            /**
+             * This initializes the whole shabang
+             */
+            public function init() {
                 $this->settings = array(
                     'db_version' => '1.0',
                     'path'       => trailingslashit( dirname( __FILE__ ) ),
@@ -208,7 +212,7 @@
              *
              * @since 2.0.0
              */
-            private function b3_set_default_settings() {
+            public function b3_set_default_settings() {
 
                 if ( ! is_multisite() ) {
                     update_option( 'users_can_register', 0 );
@@ -1023,7 +1027,7 @@
             /**
              * Force user to custom login page instead of wp-login.php.
              */
-            function b3_redirect_to_custom_login() {
+            public function b3_redirect_to_custom_login() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
 
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
@@ -1191,7 +1195,7 @@
              *
              * @since 1.0.6
              */
-            function b3_do_user_activate() {
+            public function b3_do_user_activate() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( ! empty( $_GET[ 'action' ] ) && 'activate' == $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
 

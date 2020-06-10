@@ -1,7 +1,7 @@
 <?php
 
     /**
-     * Class B3SidebarWidget
+     * Class B3_Sidebar_Widget
      */
     class B3_Sidebar_Widget extends WP_Widget {
 
