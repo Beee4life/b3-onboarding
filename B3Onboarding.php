@@ -886,20 +886,15 @@
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
                                                 // @TODO: also add to wp form register + MU register
                                                 // @TODO: look into filter 'registration_redirect'
-                                                $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                             } else {
                                                 $login_url    = b3_get_login_url();
                                                 $redirect_url = $login_url;
                                             }
                                         } else {
                                             // redirect to login page
-                                            $login_page_url = b3_get_login_url();
-                                            if ( false != $login_page_url ) {
-                                                $redirect_url = $login_page_url;
-                                                $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
-                                            } else {
-                                                $redirect_url = wp_login_url();
-                                            }
+                                            $redirect_url = b3_get_login_url();
+                                            $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
+                                            $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                         }
                                     }
                                 }
