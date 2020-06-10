@@ -290,8 +290,11 @@
                     $messages[] = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_lost_password_message() ) );
                 } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
                     if ( 'request_access' == $registration_type ) {
-                        $show_errors = true;
-                        $messages[] = esc_html__( apply_filters( 'b3_message_above_request_access', b3_get_request_access_message() ) );
+                        $request_access_message = esc_html__( apply_filters( 'b3_message_above_request_access', b3_get_request_access_message() ) );
+                        if ( false != $request_access_message ) {
+                            $show_errors = true;
+                            $messages[]  = $request_access_message;
+                        }
                     }
                 } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
                     $show_errors = true;
