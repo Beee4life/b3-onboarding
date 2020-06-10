@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-06-10 19:40+0200\n"
-"PO-Revision-Date: 2020-06-10 19:41+0200\n"
+"POT-Creation-Date: 2020-06-10 19:42+0200\n"
+"PO-Revision-Date: 2020-06-10 20:03+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -45,7 +45,8 @@ msgstr "Toegangsmanagement"
 msgid "Debug info"
 msgstr "Debug informatie"
 
-#: B3Onboarding.php:656 includes/admin-page.php:43 includes/help-tabs.php:20
+#: B3Onboarding.php:656 includes/admin-page.php:43
+#: includes/class-b3-sidebar-widget.php:121 includes/help-tabs.php:20
 #: includes/help-tabs.php:21 includes/tabs/tab-settings.php:21
 msgid "Settings"
 msgstr "Instellingen"
@@ -387,10 +388,6 @@ msgstr "Registreren"
 #: includes/tabs/tab-pages.php:40
 msgid "Account"
 msgstr "Account"
-
-#: includes/class-b3-sidebar-widget.php:121
-msgid "B3 Settings"
-msgstr "Instellingen"
 
 #: includes/class-b3-sidebar-widget.php:124 includes/do-stuff.php:28
 #: includes/tabs/tab-pages.php:25
@@ -1869,6 +1866,9 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "B3 Settings"
+#~ msgstr "Instellingen"
 
 #~ msgid "You are already signed in."
 #~ msgstr "Je bent al ingelogd."
