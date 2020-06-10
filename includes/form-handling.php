@@ -22,22 +22,22 @@
                         delete_option( 'b3_custom_passwords' );
                     }
 
-                    if ( isset( $_POST[ 'b3_style_default_pages' ] ) && 1 == $_POST[ 'b3_style_default_pages' ] ) {
-                        update_option( 'b3_style_default_pages', 1, true );
+                    if ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) {
+                        update_option( 'b3_style_wordpress_forms', 1, true );
                     } else {
-                        delete_option( 'b3_style_default_pages' );
+                        delete_option( 'b3_style_wordpress_forms' );
                     }
 
-                    if ( isset( $_POST[ 'b3_force_custom_login_page' ] ) && 1 == $_POST[ 'b3_force_custom_login_page' ] ) {
-                        update_option( 'b3_force_custom_login_page', 1, true );
+                    if ( isset( $_POST[ 'b3_disable_wordpress_forms' ] ) && 1 == $_POST[ 'b3_disable_wordpress_forms' ] ) {
+                        update_option( 'b3_disable_wordpress_forms', 1, true );
                     } else {
-                        delete_option( 'b3_force_custom_login_page' );
+                        delete_option( 'b3_disable_wordpress_forms' );
                     }
 
-                    if ( ( isset( $_POST[ 'b3_style_default_pages' ] ) && 1 == $_POST[ 'b3_style_default_pages' ] ) && ( isset( $_POST[ 'b3_force_custom_login_page' ] ) && 1 == $_POST[ 'b3_force_custom_login_page' ] ) ) {
+                    if ( ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) && ( isset( $_POST[ 'b3_disable_wordpress_forms' ] ) && 1 == $_POST[ 'b3_disable_wordpress_forms' ] ) ) {
                         // can't be at same time
-                        update_option( 'b3_force_custom_login_page', 1, true );
-                        delete_option( 'b3_style_default_pages' );
+                        update_option( 'b3_disable_wordpress_forms', 1, true );
+                        delete_option( 'b3_style_wordpress_forms' );
                     }
 
                     if ( isset( $_POST[ 'b3_debug_info' ] ) && 1 == $_POST[ 'b3_debug_info' ] ) {

@@ -237,7 +237,7 @@
                 }
 
                 update_option( 'b3_dashboard_widget', 1 );
-                update_option( 'b3_force_custom_login_page', 1 );
+                update_option( 'b3_disable_wordpress_forms', 1 );
                 update_option( 'b3_email_styling', b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) );
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_hide_admin_bar', 1 );
@@ -347,7 +347,7 @@
                 $privacy         = get_option( 'b3_privacy', false );
                 $recaptcha       = get_option( 'b3_recaptcha', false );
                 $recaptcha_login = get_option( 'b3_recaptcha_login', false );
-                $style_pages     = get_option( 'b3_style_default_pages', false );
+                $style_pages     = get_option( 'b3_style_wordpress_forms', false );
                 $extra_fields    = apply_filters( 'b3_extra_fields', array() );
 
                 if ( ! empty( $extra_fields ) || $logo || $privacy || $recaptcha || $recaptcha_login || $style_pages ) {
@@ -589,7 +589,7 @@
                 add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '81' );
                 include( 'includes/user-approval-page.php' ); // content for the settings page
                 add_submenu_page( 'b3-onboarding', __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
-                if ( true == get_option( 'b3_debug_info', false ) ) {
+                if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
                     include( 'includes/debug-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                 }
@@ -993,7 +993,7 @@
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_register() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                     } else {
@@ -1014,7 +1014,7 @@
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_wpmu_register() {
-                if ( '/wp-signup.php' == $_SERVER[ 'REQUEST_URI' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
+                if ( '/wp-signup.php' == $_SERVER[ 'REQUEST_URI' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
                     $register_url = b3_get_register_url();
                     if ( false != $register_url ) {
                         wp_safe_redirect( $register_url );
@@ -1028,7 +1028,7 @@
              * Force user to custom login page instead of wp-login.php.
              */
             public function b3_redirect_to_custom_login() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
 
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
 
@@ -1056,7 +1056,7 @@
              * wp-login.php?action=lostpassword.
              */
             public function b3_redirect_to_custom_lostpassword() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                         exit;
@@ -1077,7 +1077,7 @@
              * if there are errors.
              */
             public function b3_redirect_to_custom_lost_password() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_force_custom_login_page', false ) ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
                     // Verify key / login combo
                     $redirect_url = b3_get_resetpass_url();
 

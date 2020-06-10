@@ -33,7 +33,7 @@
             'b3_email_styling', // set on activate
             'b3_email_template', // set on activate
             'b3_first_last_required',
-            'b3_force_custom_login_page',
+            'b3_disable_wordpress_forms',
             'b3_lost_password_message',
             'b3_lost_password_subject',
             'b3_lostpass_page_id', // set on activate
@@ -71,7 +71,7 @@
             'b3_restrict_admin', // set on activate
             'b3_registration_closed_message',
             'b3_sidebar_widget', // set on activate
-            'b3_style_default_pages',
+            'b3_style_wordpress_forms',
             'b3_use_custom_passwords', // not in use yet
             'b3_users_may_delete',
             'b3_welcome_user_message',

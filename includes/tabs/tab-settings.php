@@ -10,10 +10,10 @@
 
         $dashboard_widget        = get_option( 'b3_dashboard_widget', false );
         $debug_info              = get_option( 'b3_debug_info', false );
-        $force_custom_login_page = get_option( 'b3_force_custom_login_page', false );
+        $disable_wordpress_forms = get_option( 'b3_disable_wordpress_forms', false );
         $main_logo               = get_option( 'b3_main_logo', false );
         $sidebar_widget          = get_option( 'b3_sidebar_widget', false );
-        $style_default_pages     = get_option( 'b3_style_default_pages', false );
+        $style_wordpress_forms   = get_option( 'b3_style_wordpress_forms', false );
 
         ob_start();
         ?>
@@ -32,24 +32,24 @@
                 <?php if ( ! is_multisite() ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_style_default_pages"><?php esc_html_e( 'Style default pages', 'b3-onboarding' ); ?></label>
+                            <label for="b3_style_wordpress_forms"><?php esc_html_e( 'Style Wordpress forms', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_style_default_pages" name="b3_style_default_pages" value="1" <?php if ( $style_default_pages ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' default login page.", 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_style_wordpress_forms" name="b3_style_wordpress_forms" value="1" <?php if ( $style_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' forms.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_force_custom_login_page"><?php esc_html_e( 'Force custom login page', 'b3-onboarding' ); ?></label>
+                            <label for="b3_disable_wordpress_forms"><?php esc_html_e( 'Disable Wordpress forms', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_force_custom_login_page" name="b3_force_custom_login_page" value="1" <?php if ( $force_custom_login_page ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to disable WordPress' own pages and force using your custom pages.", 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_disable_wordpress_forms" name="b3_disable_wordpress_forms" value="1" <?php if ( $disable_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to disable WordPress' forms and force using yours.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php if ( current_user_can( 'manage_options' ) ) { ?>
+                <?php if ( current_user_can( 'manage_options' ) && ( ( defined( 'LOCALHOST' ) && true != LOCALHOST ) || ! defined( 'LOCALHOST' ) ) ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>

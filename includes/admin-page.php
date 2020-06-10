@@ -59,7 +59,7 @@
                             'icon'    => 'shield',
                         );
 
-                        if ( 1 == get_option( 'b3_style_default_pages', false ) ) {
+                        if ( 1 == get_option( 'b3_style_wordpress_forms', false ) ) {
                             $tabs[] = array(
                                 'id'      => 'wordpress',
                                 'title'   => 'WordPress',
