@@ -11,7 +11,7 @@
                 'B3: User menu',
                 array(
                     'classname'   => 'b3__widget--user',
-                    'description' => __( 'Custom user menu', 'b3-onboarding' ),
+                    'description' => __( 'Custom user widget', 'b3-onboarding' ),
                 )
             );
         }
@@ -118,7 +118,7 @@
                         echo '<li><a href="' . $account_link . '">' . esc_html__( 'Account', 'b3-onboarding' ) . '</a></li>';
                     }
                     if ( true == $show_settings && current_user_can( 'manage_options' ) ) {
-                        echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a></li>';
+                        echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">' . esc_html__( 'B3 Settings', 'b3-onboarding' ) . '</a></li>';
                     }
                     if ( isset( $logout_link ) && false != $logout_link ) {
                         echo '<li><a href="' . $logout_link . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
