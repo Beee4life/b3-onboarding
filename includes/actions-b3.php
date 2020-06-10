@@ -90,60 +90,6 @@
 
 
     /**
-     * Add reCAPTCHA check
-     *
-     * @since 2.0.0
-     *
-     * @param $recaptcha_public
-     * @param string $form_type
-     */
-    function b3_add_recaptcha_fields( $form_type = 'register' ) {
-        $recaptcha_public  = get_option( 'b3_recaptcha_public', false );
-        $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
-        $show_recaptcha    = get_option( 'b3_recaptcha', false );
-
-        if ( false != $show_recaptcha ) {
-            do_action( 'b3_do_before_recaptcha_' . $form_type );
-            if ( '3' != $recaptcha_version ) {
-                ?>
-                <div class="b3_form-element b3_form-element--recaptcha">
-                    <div class="recaptcha-container">
-                        <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-                    </div>
-                </div>
-                <?php
-            }
-            do_action( 'b3_do_after_recaptcha_' . $form_type );
-        }
-    }
-    add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
-
-
-    /**
-     * Add field for subdomain when WPMU is active (not used yet)
-     *
-     * @since 1.0.0
-     */
-    function b3_add_subdomain_field() {
-        if ( is_multisite() ) {
-            $show_subdomain = get_option( 'b3_show_subdomain_field', false );
-            if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ) , array( 'request_access_subdomain', 'ms_register_site_user' ) ) ) {
-                ob_start();
-                ?>
-                <div class="b3_form-element b3_form-element--register">
-                    <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
-                </div>
-                <?php
-                $output = ob_get_clean();
-                echo $output;
-            }
-        }
-    }
-    add_action( 'b3_add_subdomain_field', 'b3_add_subdomain_field' );
-
-
-    /**
      * Output for first/last name fields
      *
      * @since 0.8-beta
@@ -204,6 +150,30 @@
 
 
     /**
+     * Add field for subdomain when WPMU is active (not used yet)
+     *
+     * @since 1.0.0
+     */
+    function b3_add_subdomain_field() {
+        if ( is_multisite() ) {
+            $show_subdomain = get_option( 'b3_show_subdomain_field', false );
+            if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ) , array( 'request_access_subdomain', 'ms_register_site_user' ) ) ) {
+                ob_start();
+                ?>
+                <div class="b3_form-element b3_form-element--register">
+                    <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
+                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
+                </div>
+                <?php
+                $output = ob_get_clean();
+                echo $output;
+            }
+        }
+    }
+    add_action( 'b3_add_subdomain_field', 'b3_add_subdomain_field' );
+
+
+    /**
      * Function to output any custom fields
      *
      * @since 2.0.0
@@ -217,26 +187,6 @@
         }
     }
     add_action( 'b3_add_extra_fields_registration', 'b3_add_extra_fields_registration' );
-
-
-    /**
-     * Function to output a privacy checkbox
-     */
-    function b3_add_privacy_checkbox() {
-        $show_privacy = get_option( 'b3_privacy', false );
-        if ( true == $show_privacy ) {
-            do_action( 'b3_do_before_privacy_checkbox');
-            ?>
-            <div class="b3_form-element b3_form-element--privacy">
-                <label>
-                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1" /> <?php echo htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) ); ?>
-                </label>
-            </div>
-        <?php
-            do_action( 'b3_do_after_privacy_checkbox');
-        }
-    }
-    add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
 
 
     /**
@@ -255,6 +205,56 @@
         }
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
+
+
+    /**
+     * Add reCAPTCHA check
+     *
+     * @since 2.0.0
+     *
+     * @param $recaptcha_public
+     * @param string $form_type
+     */
+    function b3_add_recaptcha_fields( $form_type = 'register' ) {
+        $recaptcha_public  = get_option( 'b3_recaptcha_public', false );
+        $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
+        $show_recaptcha    = get_option( 'b3_recaptcha', false );
+
+        if ( false != $show_recaptcha ) {
+            do_action( 'b3_do_before_recaptcha_' . $form_type );
+            if ( '3' != $recaptcha_version ) {
+                ?>
+                <div class="b3_form-element b3_form-element--recaptcha">
+                    <div class="recaptcha-container">
+                        <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                    </div>
+                </div>
+                <?php
+            }
+            do_action( 'b3_do_after_recaptcha_' . $form_type );
+        }
+    }
+    add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
+
+
+    /**
+     * Function to output a privacy checkbox
+     */
+    function b3_add_privacy_checkbox() {
+        $show_privacy = get_option( 'b3_privacy', false );
+        if ( true == $show_privacy ) {
+            do_action( 'b3_do_before_privacy_checkbox');
+            ?>
+            <div class="b3_form-element b3_form-element--privacy">
+                <label>
+                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1" /> <?php echo htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) ); ?>
+                </label>
+            </div>
+            <?php
+            do_action( 'b3_do_after_privacy_checkbox');
+        }
+    }
+    add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
 
 
     /**
