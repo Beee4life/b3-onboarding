@@ -2,31 +2,6 @@
     // This file contains functions hooked to the plugin's own hooks
 
     /**
-     * Ouptuts default login/email field
-     *
-     * @since 1.0.0
-     *
-     */
-    function b3_add_username_email_fields() {
-        ob_start();
-        ?>
-            <div class="b3_form-element b3_form-element--login">
-                <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
-            </div>
-
-            <div class="b3_form-element b3_form-element--email">
-                <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', get_option( 'admin_email' ) ) : ''; ?>" required>
-            </div>
-        <?php
-        $output = ob_get_clean();
-        echo $output;
-    }
-    add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
-
-
-    /**
      * Do stuff afer manual activation by admin
      *
      * @since 1.0.0
@@ -52,7 +27,7 @@
         );
         wp_mail( $to, $subject, $message, $headers );
     }
-    add_action( 'b3_new_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
+    add_action( 'b3_after_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
 
 
     /**
@@ -65,7 +40,7 @@
      *
      * @param $user_id
      */
-    function b3_after_user_activated( $user_id ) {
+    function b3_do_stuff_after_user_activated( $user_id ) {
         if ( 1 != get_option( 'b3_disable_admin_notification_new_user', false ) ) {
             wp_new_user_notification( $user_id, null, 'admin' );
         }
@@ -87,7 +62,32 @@
             wp_mail( $to, $subject, $message, $headers );
         }
     }
-    add_action( 'b3_new_user_activated', 'b3_after_user_activated' );
+    add_action( 'b3_after_user_activated', 'b3_do_stuff_after_user_activated' );
+
+
+    /**
+     * Ouptuts default login/email field
+     *
+     * @since 1.0.0
+     *
+     */
+    function b3_add_username_email_fields() {
+        ob_start();
+        ?>
+        <div class="b3_form-element b3_form-element--login">
+            <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+            <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+        </div>
+
+        <div class="b3_form-element b3_form-element--email">
+            <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
+            <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', get_option( 'admin_email' ) ) : ''; ?>" required>
+        </div>
+        <?php
+        $output = ob_get_clean();
+        echo $output;
+    }
+    add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
 
 
     /**
@@ -267,7 +267,7 @@
      *
      * @return bool
      */
-    function b3_show_form_messages( $attributes = false ) {
+    function b3_render_form_messages( $attributes = false ) {
 
         if ( false != $attributes ) {
             $messages          = array();
@@ -312,4 +312,4 @@
 
         return false;
     }
-    add_action( 'b3_show_form_messages', 'b3_show_form_messages' );
+    add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
