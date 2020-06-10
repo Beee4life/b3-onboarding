@@ -26,11 +26,11 @@ There are a ton of things, which you can set through the admin pages or with the
 
 **What problems does this plugin solve ?**
 
-This plugin gives you all the freedom to change/use different parts, without being forced to use other features or where pages are created which you don't need. You can extend this plugin in any way you want with filters/hooks or through a settings page.
+This plugin gives you all the freedom to change/use different parts, without being forced to use other features. You can extend this plugin in any way you want with filters/hooks or through a settings page.
 
 <a name="version"></a>
 ### Version
-2.0.0 - released xx.06.20
+2.0.0 - released 14.06.20 (tbc)
 
 <a name="features"></a>
 ### Features

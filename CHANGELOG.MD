@@ -12,7 +12,7 @@ Any [feedback][github-issues] is welcome.
 
 ## Changelog 2.0.0
 
-#### These are the things that were added (in alphabetical order)
+#### These are the things that were added
 
 **General goodies**
 
