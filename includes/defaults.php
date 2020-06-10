@@ -384,7 +384,7 @@
      * @return string
      */
     function b3_get_default_request_access_message() {
-        return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+        return __( "You have to request access for this website.", 'b3-onboarding' );
     }
 
 
