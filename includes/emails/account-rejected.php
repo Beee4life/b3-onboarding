@@ -1,6 +1,6 @@
 <?php
     /*
-     * Input fields for 'XXXX' email
+     * Input fields for 'account rejected' email
      *
      * @since 1.0.0
      */
