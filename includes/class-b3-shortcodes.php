@@ -16,7 +16,7 @@
                 parent::__construct();
 
                 add_shortcode( 'account-page',      array( $this, 'b3_render_account_page' ) );
-                add_shortcode( 'lostpass-form',   array( $this, 'b3_render_lost_password_form' ) );
+                add_shortcode( 'lostpass-form',     array( $this, 'b3_render_lost_password_form' ) );
                 add_shortcode( 'login-form',        array( $this, 'b3_render_login_form' ) );
                 add_shortcode( 'register-form',     array( $this, 'b3_render_register_form' ) );
                 add_shortcode( 'resetpass-form',    array( $this, 'b3_render_reset_password_form' ) );
@@ -41,7 +41,7 @@
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    return esc_html__( 'You are already signed in.', 'b3-onboarding' );
+                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                 } elseif ( 'closed' == get_option( 'b3_registration_type', false ) ) {
                     return apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() );
                 } else {
@@ -86,7 +86,7 @@
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    return esc_html__( 'You are already signed in.', 'b3-onboarding' );
+                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                 }
 
                 // Pass the redirect parameter to the WordPress login functionality: but
@@ -162,7 +162,7 @@
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    return esc_html__( 'You are already logged in.', 'b3-onboarding' );
+                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                 }
 
                 $attributes[ 'errors' ] = array();
@@ -203,7 +203,7 @@
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    return esc_html__( 'You are already logged in.', 'b3-onboarding' );
+                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                 } else {
                     if ( isset( $_REQUEST[ 'login' ] ) && isset( $_REQUEST[ 'key' ] ) ) {
                         $attributes[ 'login' ] = $_REQUEST[ 'login' ];
