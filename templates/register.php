@@ -23,7 +23,7 @@
         <input name="b3_form" value="custom" type="hidden" />
         <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
 
-        <?php do_action( 'b3_show_form_messages', $attributes ); ?>
+        <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
         <?php if ( 'closed' != $registration_type ) { ?>
 

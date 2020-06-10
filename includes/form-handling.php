@@ -484,7 +484,7 @@
                     $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
                     if ( false != $approve && isset( $user_object->ID ) ) {
-                        do_action( 'b3_new_user_activated_by_admin', $user_id );
+                        do_action( 'b3_after_user_activated_by_admin', $user_id );
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
                         require_once( ABSPATH . 'wp-admin/includes/user.php' );

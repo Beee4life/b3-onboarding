@@ -16,7 +16,7 @@
         <input name="b3_lost_pass" value="<?php echo wp_create_nonce( 'b3-lost-pass' ); ?>" type="hidden" />
         <input name="b3_form" value="custom" type="hidden" />
 
-        <?php do_action( 'b3_show_form_messages', $attributes ); ?>
+        <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
         <div class="b3_form-element">
             <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>

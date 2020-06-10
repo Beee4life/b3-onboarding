@@ -17,7 +17,7 @@
         <input name="rp_key" type="hidden" value="<?php echo esc_attr( $attributes[ 'key' ] ); ?>"/>
         <input name="b3_form" value="custom" type="hidden" />
 
-        <?php do_action( 'b3_show_form_messages', $attributes ); ?>
+        <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
         <div class="b3_form-element">
             <label class="b3_form-label" for="pass1"><?php esc_html_e( 'New password', 'b3-onboarding' ) ?></label>

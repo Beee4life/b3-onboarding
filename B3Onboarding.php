@@ -1,6 +1,6 @@
 <?php
     /*
-    Plugin Name:        B3 - Onboarding
+    Plugin Name:        B3 Onboarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
     Version:            2.0.0
@@ -1240,7 +1240,7 @@
                             $user_object = new WP_User( $user->ID );
                             $user_object->set_role( get_option( 'default_role' ) );
 
-                            do_action( 'b3_new_user_activated', $user->ID );
+                            do_action( 'b3_after_user_activated', $user->ID );
 
                         }
 
@@ -1540,7 +1540,7 @@
                     }
                     $inform = apply_filters( 'b3_custom_register_inform', $inform );
                     wp_new_user_notification( $user_id, null, $inform );
-                    do_action( 'b3_do_after_email_sent', $user_id, true );
+                    do_action( 'b3_after_email_sent', $user_id, true );
                 }
 
                 return $user_id;
@@ -1577,7 +1577,7 @@
                             wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
                             $site_id         = get_id_from_blogname( $sub_domain );
                             $user_registered = true;
-                            do_action( 'b3_do_after_insert_site', $site_id );
+                            do_action( 'b3_after_insert_site', $site_id );
                         }
                     } elseif ( 'none' == $main_register_type ) {
                         // @TODO: add if for user or user + site (MS)
