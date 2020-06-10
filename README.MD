@@ -75,7 +75,7 @@ If you activate this plugin the following will be done:
 ### Hooks
 
 * b3_add_extra_fields_registration
-* b3_do_after_insert_site, $site_id
+* b3_after_insert_site
 * b3_after_recaptcha_{$form_type}
 * b3_after_recaptcha_register
 * b3_before_recaptcha_{$form_type}
@@ -84,8 +84,8 @@ If you activate this plugin the following will be done:
 * b3_do_after_submit_registration_form
 * b3_do_before_{$template_name}
 * b3_do_before_submit_registration_form
-* b3_new_user_activated
-* b3_new_user_activated_by_admin
+* b3_after_user_activated
+* b3_after_user_activated_by_admin
 
 This info + settings will become available on the official website (soon).
 
