@@ -159,10 +159,7 @@
      * @return string
      */
     function b3_message_above_request_access( $message ) {
-
-        $message = 'Click here';
-
-        return $message;
+        return 'Click here';
     }
     // add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access' );
 
@@ -176,10 +173,7 @@
      * @return string
      */
     function b3_message_above_lost_password( $message ) {
-
-        $message = 'Your message';
-
-        return $message;
+        return 'Your message';
     }
     // add_filter( 'b3_message_above_lost_password', 'b3_message_above_lost_password' );
 
@@ -194,10 +188,7 @@
      * @return mixed
      */
     function b3_privacy_text( $privacy_text ) {
-
-        $privacy_text = '<a href="#">Click here</a> for more info';
-
-        return $privacy_text;
+        return '<a href="#">Click here</a> for more info';
     }
     // add_filter( 'b3_privacy_text', 'b3_privacy_text' );
 
@@ -210,10 +201,7 @@
      * @return string
      */
     function b3_message_above_registration( $registration_message ) {
-
-        $registration_message = 'Filter registration text';
-
-        return $registration_message;
+        return  'Filter registration text';
     }
     // add_filter( 'b3_message_above_registration', 'b3_message_above_registration' );
 
@@ -226,10 +214,7 @@
      * @return string
      */
     function b3_message_above_login( $login_message ) {
-
-        $login_message = 'Filter login text';
-
-        return $login_message;
+        return 'Filter login text';
     }
     // add_filter( 'b3_message_above_login', 'b3_message_above_login' );
 
@@ -244,10 +229,7 @@
      * @return mixed
      */
     function b3_registration_closed_message( $registration_closed_message ) {
-
-        $registration_closed_message = '<a href="#">Click</a> here';
-
-        return $registration_closed_message;
+        return '<a href="#">Click</a> here';
     }
     // add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message' );
 
@@ -262,10 +244,7 @@
      * @return string
      */
     function b3_email_styling( $email_styling ) {
-
-        $email_styling = '<a href="#">Click</a> here';
-
-        return $email_styling;
+        return '.body {}';
     }
     // add_filter( 'b3_email_styling', 'b3_email_styling' );
 
@@ -280,10 +259,7 @@
      * @return string
      */
     function b3_email_template( $email_template ) {
-
-        $email_template = '<a href="#">Click</a> here';
-
-        return $email_template;
+        return '<a href="#">Click</a> here';
     }
     // add_filter( 'b3_email_template', 'b3_email_template' );
 
@@ -298,10 +274,7 @@
      * @return string
      */
     function b3_localhost_username( $username ) {
-
-        $username = 'filter dummy';
-
-        return $username;
+        return 'dummy';
     }
     // add_filter( 'b3_localhost_username', 'b3_localhost_username' );
 
@@ -316,9 +289,6 @@
      * @return string
      */
     function b3_localhost_email( $email ) {
-
-        $email = 'filter@emailm';
-
-        return $email;
+        return 'filter@email.com';
     }
     // add_filter( 'b3_localhost_email', 'b3_localhost_email' );

@@ -16,10 +16,7 @@
      * @return false|string
      */
     function b3_main_logo( $logo ) {
-
-        $logo = B3_PLUGIN_URL . 'assets/images/logo-salesforce.png';
-
-        return $logo;
+        return 'http://your-url.com/assets/images/logo-salesforce.png';
     }
     // add_filter( 'b3_main_logo', 'b3_main_logo' );
 
@@ -34,11 +31,6 @@
      * @return string
      */
     function b3_link_color( $link_color ) {
-
-        $link_color = '#ff0000'; // red
-        $link_color = '#ee61'; // invalid hex code
-        $link_color = '#6d32a8'; // purple
-
-        return $link_color;
+        return '#6d32a8'; // purple
     }
     // add_filter( 'b3_link_color', 'b3_link_color' );
