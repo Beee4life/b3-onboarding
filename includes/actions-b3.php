@@ -103,11 +103,11 @@
             <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
             <div class="b3_form-element b3_form-element--register">
                 <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true === LOCALHOST ) ? 'First name' : false; ?>"<?php echo $required; ?>>
+                <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true === LOCALHOST ) ? 'First' : false; ?>"<?php echo $required; ?>>
             </div>
             <div class="b3_form-element b3_form-element--register">
                 <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
-                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true === LOCALHOST ) ? 'Last name' : false; ?>"<?php echo $required; ?>>
+                <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true === LOCALHOST ) ? 'Last' : false; ?>"<?php echo $required; ?>>
             </div>
             <?php
             do_action( 'b3_do_after_first_last_name' );
