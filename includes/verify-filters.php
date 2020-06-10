@@ -44,8 +44,6 @@
             'b3_request_access_subject_user'     => array( 'string' ),
             'b3_welcome_user_message'            => array( 'string' ),
             'b3_welcome_user_subject'            => array( 'string' ),
-            'b3_do_after_first_last_name'        => array( 'string' ),
-            'b3_do_before_first_last_name'       => array( 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {
