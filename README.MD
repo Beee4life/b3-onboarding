@@ -20,7 +20,7 @@
 
 This plugin was built to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website. 
+You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
 
 There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
 
@@ -54,7 +54,7 @@ This plugin gives you all the freedom to change/use different parts, without bei
 1. (optional) Change any setting you want.
 
 <a name="activate"></a>
-### Activation 
+### Activation
 
 If you activate this plugin the following will be done:
 * the necessary pages are created
@@ -141,7 +141,7 @@ These are the things we have planned to add.
 * more emails to set
 * style default WordPress login page
 * force use own pages
-* added recaptcha (optional) for registration/login pages 
+* added recaptcha (optional) for registration/login pages
 * added option to delete user account
 * added option to add/change/remove logo from email header
 
@@ -169,7 +169,7 @@ Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboa
 1.0.1
 * change password reset link in password reset email
 * create function to retrieve password reset url/page/link
- 
+
 1.0.0
 * version change to (hopefully) avoid composer issues
 * clean up of unused code
@@ -186,7 +186,7 @@ Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboa
 
 0.8-beta
 * add first/last name to request access
-* option to make first/last name required 
+* option to make first/last name required
 
 0.7-beta
 * first decent release
