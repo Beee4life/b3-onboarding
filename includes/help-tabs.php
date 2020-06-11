@@ -106,16 +106,19 @@
             ) );
         }
 
-        if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
-            $site = '<p><strong>' . esc_html__( 'More info', 'b3-onboarding' ) . '</strong></p>
-            <p><a href="https://b3onboarding.berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">' . __( 'Official site', 'b3-onboarding' ) . '</a></p>';
-        } else {
-            $site = false;
-        }
+        $screen->add_help_tab( array(
+            'id'      => 'b3-developers',
+            'title'   => esc_html__( 'Developers', 'b3-onboarding' ),
+            'content' => '<h3>' . esc_html__( 'Developers', 'b3-onboarding' ) . '</h3>
+                    <p>' . sprintf( __( 'If you\'re a developer, you might want to check out <a href="%s" rel="noopener" target="_blank">this FAQ topic</a> (if you haven\'t already).', 'b3-onboarding' ), esc_url( B3_PLUGIN_SITE . '/faq/localhost-development/' ) ) . '</p>' .
+                    '<p>' . esc_html__( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) . '</p>'
+        ) );
+
         get_current_screen()->set_help_sidebar(
-            '<p><strong>' . esc_html__( 'Author', 'b3-onboarding' ) . '</strong></p>
-            <p><a href="https://berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">Berry Plasman</a></p>
-            ' . $site
+            '<p><strong>' . esc_html__( 'Author', 'b3-onboarding' ) . '</strong></p>' .
+            '<p><a href="https://berryplasman.com?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">Berry Plasman</a></p>' .
+            '<p><strong>' . esc_html__( 'More info', 'b3-onboarding' ) . '</strong></p>' .
+            '<p><a href="' . B3_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">' . __( 'Official site', 'b3-onboarding' ) . '</a></p>'
         );
     }
     add_action( 'current_screen', 'b3_help_tabs', 5 );
