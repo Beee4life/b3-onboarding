@@ -116,7 +116,7 @@ They will become available on the official website (soon).
 1. Not entirely ready for multisite yet, we're working on it.
 1. It's still under development, use at your own risk.
 1. Not styled for mobile admin yet (might work, but no guarantees).
-1. The link in the reset password email, is not 'custom' yet.
+1. Not tested with Gutenberg.
 
 <a name="roadmap"></a>
 ### Roadmap
