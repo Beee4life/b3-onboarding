@@ -216,9 +216,15 @@
      * @param string $form_type
      */
     function b3_add_recaptcha_fields( $form_type = 'register' ) {
-        $recaptcha_public  = get_option( 'b3_recaptcha_public', false );
-        $recaptcha_version = get_option( 'b3_recaptcha_version', '2' );
-        $show_recaptcha    = get_option( 'b3_recaptcha', false );
+        $recaptcha_public     = get_option( 'b3_recaptcha_public', false );
+        $recaptcha_version    = get_option( 'b3_recaptcha_version', '2' );
+        $show_recaptcha       = get_option( 'b3_recaptcha', false );
+
+        if ( 'login' == $form_type ) {
+            if ( true != get_option( 'b3_recaptcha_login', false ) ) {
+                $show_recaptcha = false;
+            }
+        }
 
         if ( false != $show_recaptcha ) {
             do_action( 'b3_do_before_recaptcha_' . $form_type );
