@@ -61,7 +61,7 @@
                     '
             ) );
 
-            if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
+            if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
                 $shortcode_info = '<p>' . sprintf( __( 'More info about the use of shortcodes and their variables, please see <a href="%s">here</a>.', 'b3-onboarding'  ), B3_PLUGIN_SITE . '/documentation/shortcodes/' ) . '</p>';
             } else {
                 $shortcode_info = false;

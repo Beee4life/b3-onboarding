@@ -67,7 +67,7 @@
 
         </form>
 
-        <?php if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) { ?>
+        <?php if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) { ?>
 
             <?php b3_get_settings_field_open(); ?>
             <?php

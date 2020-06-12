@@ -108,26 +108,22 @@
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
+                add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
                 add_filter( 'authenticate',                         array( $this, 'b3_maybe_redirect_at_authenticate' ), 101, 3 );
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
-                add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
 
                 // WP Login pages
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
                 add_filter( 'login_headertext',                     array( $this, 'b3_login_logo_url_title' ) );
-                // add_filter( 'login_form_defaults',                  array( $this, 'b3_loginform_defaults' ), 1 );
-                // add_filter( 'login_form_top',                       array( $this, 'b3_loginform_top' ), 10, 2 );
-                // add_filter( 'login_form_middle',                    array( $this, 'b3_loginform_middle' ), 10, 2 );
-                // add_filter( 'login_form_bottom',                    array( $this, 'b3_loginform_footer' ), 10, 2 );
 
                 /*
                  * This file contains all actions on plugin hooks
                  */
                 include( 'includes/actions-b3.php' );
                 /*
-                 * This file contains all actions on WordPress hooks
+                 * This file contains important actions on WordPress hooks
                  */
                 include( 'includes/actions-wp.php' );
                 /*
@@ -146,7 +142,7 @@
                  * This file contains functions/includes for various example filters.
                  * They're only loaded for testing purposes, when LOCALHOST is defined as true
                  */
-                if ( defined( 'LOCALHOST' ) && true == 'LOCALHOST' ) {
+                if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
                     include( 'includes/examples.php' );
                 }
                 /*
@@ -622,7 +618,7 @@
                      */
                     include( 'includes/dashboard-widget.php' );
                 }
-                if ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
+                if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
                     include( 'includes/dashboard-widget-debug.php' );
                 }
             }
