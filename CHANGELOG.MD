@@ -12,7 +12,7 @@ Any [feedback][github-issues] is welcome.
 
 ## Changelog 2.0.0
 
-#### These are the things that were added
+#### These are the things that were added (list is probably incomplete)
 
 **General goodies**
 
@@ -21,8 +21,8 @@ Any [feedback][github-issues] is welcome.
 * [X] added a menu icon in WordPress menu
 * [X] added more user input options
 * [X] added a notification + counter if users need approval
-* [X] added an option to remove logo from email header
 * [X] added an option to add a global logo (for emails/default WordPress forms)
+* [X] added an option to set a logo in email header
 * [X] added an option to add a privacy box
 * [X] added an option to delete user account (through non WP forms)
 * [X] added an option to disable admin notification after user registration
@@ -31,19 +31,19 @@ Any [feedback][github-issues] is welcome.
 * [X] added an option to remove the WordPress admin bar for users who don't have admin access
 * [X] added an option to set a logo from the WordPress media library
 * [X] added an option to set your own privacy text
-* [X] added reCaptcha for registration/login pages (optional) 
+* [X] added reCaptcha option for registration/login pages
 * [X] added styling options for default WordPress pages
 * [X] added a verification for all custom filter output
 * [X] published an 'official' [website][website] with
     * [X] documentation for
-        * [X] all actions (in progress)
-        * [X] all filters (in progress)
+        * [X] all actions
+        * [X] all filters
         * [X] all functions (in progress)
     * [X] faqs (in progress)
 
 **Developer goodies**
 
-* [X] added a constant for local development, which 'unlocks' testing/development options
+* [X] added a constant for local development, which 'unlocks' various testing/development options
 * [X] added a debug page
 * [X] added a debug dashboard widget for quick access to email preview links
 * [X] added example filters in a sub-folder
