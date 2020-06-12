@@ -12,8 +12,6 @@
         // Do stuff when user is activated by admin
         $user_object = get_userdata( $user_id );
         $user_object->set_role( get_option( 'default_role' ) );
-        $from_name   = 'Dummy';
-        $from_email  = 'Dummy';
         $to          = $user_object->user_email;
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
         $subject     = strtr( $subject, b3_replace_subject_vars() );
@@ -21,11 +19,7 @@
         $message     = b3_replace_template_styling( $message );
         $message     = strtr( $message, b3_replace_email_vars() );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
-        $headers     = array(
-            'From: ' . $from_name . ' <' . $from_email . '>',
-            'Content-Type: text/html; charset=UTF-8',
-        );
-        wp_mail( $to, $subject, $message, $headers );
+        wp_mail( $to, $subject, $message, array() );
     }
     add_action( 'b3_after_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
 
@@ -46,8 +40,6 @@
         }
         // send activate email to user
         if ( 'email_activation' == get_option( 'b3_registration_type', false ) ) {
-            $from_name  = 'Dummy';
-            $from_email = 'Dummy';
             $user       = get_userdata( $user_id );
             $to         = $user->user_email;
             $subject    = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
@@ -55,11 +47,7 @@
             $message    = b3_replace_template_styling( $message );
             $message    = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
             $message    = htmlspecialchars_decode( stripslashes( $message ) );
-            $headers    = array(
-                'From: ' . $from_name . ' <' . $from_email . '>',
-                'Content-Type: text/html; charset=UTF-8',
-            );
-            wp_mail( $to, $subject, $message, $headers );
+            wp_mail( $to, $subject, $message, array() );
         }
     }
     add_action( 'b3_after_user_activated', 'b3_do_stuff_after_user_activated' );

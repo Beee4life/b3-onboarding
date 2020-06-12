@@ -102,8 +102,8 @@
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
 
                 // Multisite specific
-                add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
-                add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
+                // add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
+                // add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
                 add_action( 'network_admin_notices',                array( $this, 'b3_not_multisite_ready' ) );
 
                 // Filters
