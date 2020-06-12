@@ -405,28 +405,23 @@
                 }
 
                 if ( ! $style_pages && ( $recaptcha || $recaptcha_login ) ) {
-                    echo '#login { ';
-                    echo 'min-width: 352px;';
-                    echo ' }';
+                    echo '#login { min-width: 352px; }';
                     echo "\n";
                 }
 
-                echo '.login form p { margin: 0; }';
                 echo '.login form .input, .login input[type="text"], .login input[type="password"] { margin: 0 6px 0 0; }';
-                echo '.login form p, .b3_form-element { ';
-                echo 'margin-top: 1em;';
-                echo ' }';
-                echo '.login form p:first-child { ';
-                echo 'margin-top: 0;';
-                echo ' }';
+                echo "\n";
+                echo '.login form#lostpasswordform input[type="text"] { margin: 0 6px 16px 0;; }';
+                echo "\n";
+                echo '.login form p, .b3_form-element { margin: 1em 0 0 0; }';
+                echo "\n";
+                echo '.login form#loginform .user-pass-wrap { margin: 1em 0; }';
+                echo "\n";
+                echo '.login form p:first-child { margin-top: 0; }';
                 echo "\n";
 
-
-
                 if ( ! empty( $extra_fields ) ) {
-                    echo '.login label.b3_form-label { ';
-                    echo 'width: 100%;';
-                    echo ' }';
+                    echo '.login label.b3_form-label { width: 100%; }';
                     echo "\n";
 
                     echo '.login input[type="text"].b3_form-input--text { ';
@@ -436,9 +431,7 @@
                     echo ' }';
                     echo "\n";
 
-                    echo '.login input[type="text"].b3_form-input--text input { ';
-                    echo 'padding: 0 8px;';
-                    echo ' }';
+                    echo '.login input[type="text"].b3_form-input--text input { padding: 0 8px; }';
                     echo "\n";
 
                     echo 'input.b3_form-input--number, input.b3_form-input--url { ';
@@ -455,9 +448,7 @@
                     echo ' }';
                     echo "\n";
 
-                    echo '.b3_input-option { ';
-                    echo 'margin-bottom: 0.5em;';
-                    echo ' }';
+                    echo '.b3_input-option { margin-bottom: 0.5em; }';
                     echo "\n";
 
                     echo '.b3_form-element--select select { ';
@@ -468,15 +459,11 @@
                     echo "\n";
                 }
 
-                echo '.recaptcha-container {';
-                echo 'margin: 0 0 1rem 0;';
-                echo ' }';
+                echo '.recaptcha-container {margin: 0 0 1rem 0; }';
                 echo "\n";
 
                 if ( $privacy ) {
-                    echo '.b3_form-element--privacy { ';
-                    echo 'margin-bottom: 1em;';
-                    echo ' }';
+                    echo '.b3_form-element--privacy { margin-bottom: 1em; }';
                 }
 
                 echo '</style>';
