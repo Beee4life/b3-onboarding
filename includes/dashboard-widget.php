@@ -43,7 +43,6 @@
             <?php } ?>
 
             <?php if ( ! empty( $all_users ) ) { ?>
-                <?php $date_time_format = get_option( 'date_format' ) . ' @ ' . get_option( 'time_format' ); ?>
                 <h3>
                     <?php esc_html_e( 'Last registered users', 'b3-onboarding' ); ?>
                 </h3>

@@ -5,7 +5,6 @@
      * @since 1.0.0
      */
     $request_access = get_option( 'b3_registration_type', false );
-    $reset_page     = get_option( 'b3_lostpass_page_id', false );
 ?>
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>

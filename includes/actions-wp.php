@@ -86,8 +86,6 @@
      *
      * @since 2.0.0
      *
-     * @TODO: check if needs to be on login_form (probably due to WP form)
-     *
      * @param $user_id
      */
     function b3_add_login_form_fields() {
