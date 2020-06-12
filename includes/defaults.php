@@ -388,7 +388,7 @@
      *
      * @return string
      */
-    function b3_get_default_request_access_message() {
+    function b3_get_default_message_above_request_access() {
         return __( "You have to request access for this website.", 'b3-onboarding' );
     }
 

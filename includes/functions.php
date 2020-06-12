@@ -822,26 +822,6 @@
 
 
     /**
-     * Return unique password reset link
-     *
-     * @since 1.0.0
-     *
-     * @TODO: check where this was intended to use
-     *
-     * @param $key
-     * @param $user_login
-     *
-     * @return string
-     */
-    function b3_get_reset_password_link( $key, $user_login ) {
-        // @TODO: make URL nicer
-        $url = network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login ), 'login' );
-
-        return $url;
-    }
-
-
-    /**
      * Get a unique activation url for a user
      *
      * @since 1.0.0
@@ -1167,7 +1147,7 @@
      */
     function b3_get_message_above_login() {
 
-        $login_message = get_option( 'b3_login_message', false );
+        $login_message = get_option( 'b3_message_above_login', false );
         if ( false != $login_message ) {
             return $login_message;
         }
@@ -1186,11 +1166,11 @@
      */
     function b3_get_message_above_lost_password() {
 
-        $password_message = get_option( 'b3_lost_password_message', false );
+        $password_message = get_option( 'b3_message_above_lost_password', false );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
-            $message = b3_get_default_message_above_lost_password(); // @TODO: change
+            $message = b3_get_default_message_above_lost_password();
         }
 
         return $message;
@@ -1206,13 +1186,13 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_request_access_message() {
+    function b3_get_message_above_request_access() {
 
-        $password_message = get_option( 'b3_request_access_message', false );
+        $password_message = get_option( 'b3_message_above_request_access', false );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
-            $message = b3_get_default_request_access_message();
+            $message = b3_get_default_message_above_request_access();
         }
 
         return $message;
