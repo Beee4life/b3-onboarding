@@ -448,6 +448,57 @@
 
                     return;
                 }
+
+            } elseif ( isset( $_POST[ 'b3_feedback_nonce' ] ) ) {
+
+                if ( ! wp_verify_nonce( $_POST[ "b3_feedback_nonce" ], 'b3-feedback-nonce' ) ) {
+                    B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
+
+                    return;
+                } else {
+
+                    if ( ! empty( $_POST[ 'b3_feedback_message' ] ) ) {
+                        // site info
+                        $site_info = '<b>Site info</b>';
+                        $site_info .= '<br />';
+                        $site_info .= '<br />';
+                        $site_info .= 'Site name: %blog_name%';
+                        $site_info .= '<br />';
+                        $site_info .= 'Home url: <a href="%home_url%" target="_blank" rel="noopener">%home_url%</a>';
+                        $site_info .= '<br />';
+                        if ( isset( $_POST[ 'b3_followup' ] ) ) {
+                            $user_data = get_userdata( $_POST[ 'b3_followup' ] );
+                            if ( false != $user_data ) {
+                                $site_info .= 'Follow-up allowed @ ' . $user_data->user_email;
+                                $site_info .= '<br />';
+                            }
+                        }
+                        $site_info .= '<br />';
+                        $site_info .= '<b>User message</b>';
+                        $site_info .= '<br />';
+                        $site_info .= '<br />';
+
+                        // send mail
+                        $feedback_counter = get_option( 'b3_feedback_sent', '0' );
+                        $to          = 'info@berryplasman.com';
+                        $subject     = 'B3 Onboarding plugin feedback';
+                        $message     = $site_info . sanitize_textarea_field( $_POST[ 'b3_feedback_message' ] );
+                        $message     = b3_replace_template_styling( $message );
+                        $message     = strtr( $message, b3_replace_email_vars() );
+                        $email_result = wp_mail( $to, $subject, $message, array() );
+
+                        if ( true == $email_result ) {
+                            $feedback_counter++;
+                            update_option( 'b3_feedback_sent', $feedback_counter );
+                            B3Onboarding::b3_errors()->add( 'success_email_sent', esc_html__( 'Thank you, your feedback has been sent.', 'b3-onboarding' ) );
+                        }
+
+                    } else {
+                        B3Onboarding::b3_errors()->add( 'error_no_email_sent', esc_html__( 'If you want to provide feedback, you do have to enter some feedback :)', 'b3-onboarding' ) );
+                    }
+
+                    return;
+                }
             }
         }
     }
