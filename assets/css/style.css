@@ -70,11 +70,7 @@
 }
 
 .b3_form-element {
-    /* @TODO: change to margin-top */
     margin-bottom: 2em;
-}
-
-.b3_form-element--radio {
 }
 
 .b3_input-options {

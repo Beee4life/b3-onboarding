@@ -868,7 +868,6 @@
                                                 $redirect_url = $reset_password_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
                                                 // @TODO: also add to wp form register + MU register
-                                                // @TODO: look into filter 'registration_redirect'
                                             } else {
                                                 $login_url    = b3_get_login_url();
                                                 $redirect_url = $login_url;
@@ -1265,11 +1264,6 @@
                     if ( $rp_key && $rp_login ) {
                         $user = check_password_reset_key( $rp_key, $rp_login );
 
-                        // @TODO: check for hidden key b3_form
-                        if ( isset( $_REQUEST[ 'b3_form' ] ) ) {
-                            // it's our custom form, so custom redirect there
-                        }
-
                         if ( ! $user || is_wp_error( $user ) ) {
                             $login_url = b3_get_login_url();
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
@@ -1627,10 +1621,11 @@
             /**
              * Check post values of saved options
              *
+             * @TODO: add nonce check
+             *
              * @since 2.0.0
              */
             public function b3_check_options_post() {
-                // @TODO: add nonce check
                 if ( isset( $_POST[ 'option_page' ] ) ) {
                     if ( ! isset( $_POST[ 'users_can_register' ] ) ) {
                         if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
