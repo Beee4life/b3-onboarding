@@ -341,6 +341,8 @@
              * @since 2.0.0
              */
             public function b3_add_login_styling() {
+                $extra_fields    = apply_filters( 'b3_extra_fields', array() );
+                $extra_fieldsx   = [];
                 $logo            = apply_filters( 'b3_main_logo', b3_get_main_logo() );
                 $logo_height     = get_option( 'b3_loginpage_logo_height', false );
                 $logo_width      = get_option( 'b3_loginpage_logo_width', false );
@@ -348,147 +350,135 @@
                 $recaptcha       = get_option( 'b3_recaptcha', false );
                 $recaptcha_login = get_option( 'b3_recaptcha_login', false );
                 $style_pages     = get_option( 'b3_style_wordpress_forms', false );
-                $extra_fields    = apply_filters( 'b3_extra_fields', array() );
 
-                if ( ! empty( $extra_fields ) || $logo || $privacy || $recaptcha || $recaptcha_login || $style_pages ) {
-                    echo '<style type="text/css">';
-                    echo "\n";
-                    if ( $style_pages ) {
-                        $bg_color        = get_option( 'b3_loginpage_bg_color', false );
-                        $font_family     = get_option( 'b3_loginpage_font_family', false );
-                        $font_size       = get_option( 'b3_loginpage_font_size', false );
+                echo '<style type="text/css">';
+                echo "\n";
+                if ( $style_pages ) {
+                    $bg_color    = get_option( 'b3_loginpage_bg_color', false );
+                    $font_family = get_option( 'b3_loginpage_font_family', false );
+                    $font_size   = get_option( 'b3_loginpage_font_size', false );
 
-                        if ( $bg_color ) {
-                            echo "\nbody { background: #" . $bg_color . "; }\n";
+                    if ( $bg_color ) {
+                        echo "\nbody { background: #" . $bg_color . "; }\n";
+                    }
+                    if ( $font_family || $font_size ) {
+                        echo '#login { ';
+                        if ( $font_family ) {
+                            echo 'font-family: ' . $font_family . ';';
                         }
-                        if ( $font_family || $font_size || $recaptcha || $recaptcha_login ) {
-                            echo '#login { ';
-                            if ( $font_family ) {
-                                echo 'font-family: ' . $font_family . ';';
-                            }
-                            if ( $font_size ) {
-                                echo 'font-size: ' . $font_size . 'px;';
-                            }
-                            if ( $recaptcha || $recaptcha_login ) {
-                                echo 'min-width: 352px;';
-                            }
-                            echo " }\n";
-                            if ( $recaptcha || $recaptcha_login ) {
-                                echo '.recaptcha-container {';
-                                echo 'margin: 0 0 1rem 0;';
-                                echo '}';
-                                echo "\n";
-                            }
-                            if ( $font_size ) {
-                                echo '.login label { font-size: ' . $font_size . 'px; }';
-                                echo "\n";
-                            }
+                        if ( $font_size ) {
+                            echo 'font-size: ' . $font_size . 'px;';
                         }
-                        if ( $logo ) {
-                            echo '.login h1 a { ';
-                            echo 'background-image: url(' . $logo . '); ';
-                            echo 'background-image: none, url(' . $logo . '); ';
-                            echo 'background-repeat: no-repeat; ';
-                            echo 'padding: 0; ';
-                            if ( $logo_width ) {
-                                echo 'background-size: ' . $logo_width . 'px; ';
-                                echo 'width: ' . $logo_width . 'px; ';
-                            }
-                            if ( $logo_height ) {
-                                echo 'height: ' . $logo_height . 'px; ';
-                            }
-                            echo 'max-width: 320px; ';
-                            echo 'max-height: 150px;';
-                            echo ' }';
-                        }
-                        if ( $privacy ) {
-                            echo '.b3_form-element--privacy { ';
-                            echo 'margin-bottom: 1em;';
-                            echo ' }';
-                        }
-
-                    } else {
-                        // no custom styling
                         if ( $recaptcha || $recaptcha_login ) {
-                            echo '#login { ';
                             echo 'min-width: 352px;';
-                            echo ' }';
-                            echo "\n";
                         }
-
-                        if ( $logo ) {
-                            echo '.login h1 a { ';
-                            echo 'background-image: url(' . $logo . '); ';
-                            echo 'background-image: none, url(' . $logo . '); ';
-                            echo 'background-repeat: no-repeat; ';
-                            echo 'padding: 0; ';
-                            echo ' }';
-                            echo "\n";
-                        }
-
-                        if ( ! empty( $extra_fields ) ) {
-                            echo '.b3_form-element { ';
-                            echo 'margin-bottom: 1em;';
-                            echo ' }';
-                            echo "\n";
-
-                            echo '.b3_form-label { ';
-                            echo 'width: 100%;';
-                            echo ' }';
-                            echo "\n";
-
-                            echo '.b3_input-option { ';
-                            echo 'margin-bottom: 0.5em;';
-                            echo ' }';
-                            echo "\n";
-
-                            echo 'input.b3_form-input--number, input.b3_form-input--url { ';
-                            echo 'font-size: 24px;';
-                            echo 'line-height: 1.33333333;';
-                            echo 'padding: 0.1875rem 0.3125rem;';
-                            echo 'width: 100%;';
-                            echo ' }';
-                            echo "\n";
-
-                            echo '.b3_form-input--textarea { ';
-                            echo 'border-width: 0.0625rem;';
-                            echo 'font-size: 24px;';
-                            echo 'line-height: 1.33333333;';
-                            echo 'margin: 0 6px 16px 0;';
-                            echo 'padding: 0.1875rem 0.3125rem;';
-                            echo 'width: 100%;';
-                            echo ' }';
-                            echo "\n";
-
-                            echo '.b3_form-element--select select { ';
-                            // echo 'font-size: 24px;';
-                            echo 'line-height: 1.33333333;';
-                            echo 'padding: 0.1875rem 0.3125rem;';
-                            echo 'width: 100%;';
-                            echo ' }';
-                            echo "\n";
-                        }
-
-                        if ( $privacy ) {
-                            echo '.b3_form-element--privacy { ';
-                            echo 'margin-bottom: 1em;';
-                            echo ' }';
-                            echo "\n";
-                        }
-
+                        echo " }\n";
                         if ( $recaptcha || $recaptcha_login ) {
                             echo '.recaptcha-container {';
                             echo 'margin: 0 0 1rem 0;';
                             echo '}';
                             echo "\n";
                         }
-
+                        if ( $font_size ) {
+                            echo '.login label { font-size: ' . $font_size . 'px; }';
+                            echo "\n";
+                        }
                     }
+                }
 
-                    echo "\n";
-                    echo '</style>';
+                if ( $logo ) {
+                    echo '.login h1 a { ';
+                    echo 'background-image: url(' . $logo . '); ';
+                    echo 'background-image: none, url(' . $logo . '); ';
+                    echo 'background-repeat: no-repeat; ';
+                    echo 'padding: 0; ';
+                    if ( $logo_width ) {
+                        echo 'background-size: ' . $logo_width . 'px; ';
+                        echo 'width: ' . $logo_width . 'px; ';
+                    }
+                    if ( $logo_height ) {
+                        echo 'height: ' . $logo_height . 'px; ';
+                    }
+                    echo 'max-width: 320px; ';
+                    echo 'max-height: 150px;';
+                    echo ' }';
+                }
+
+                if ( ! $style_pages && ( $recaptcha || $recaptcha_login ) ) {
+                    echo '#login { ';
+                    echo 'min-width: 352px;';
+                    echo ' }';
                     echo "\n";
                 }
+
+                echo '.login form p { margin: 0; }';
+                echo '.login form .input, .login input[type="text"], .login input[type="password"] { margin: 0 6px 0 0; }';
+                echo '.login form p, .b3_form-element { ';
+                echo 'margin-top: 1em;';
+                echo ' }';
+                echo '.login form p:first-child { ';
+                echo 'margin-top: 0;';
+                echo ' }';
+                echo "\n";
+
+
+
+                if ( ! empty( $extra_fields ) ) {
+                    echo '.login label.b3_form-label { ';
+                    echo 'width: 100%;';
+                    echo ' }';
+                    echo "\n";
+
+                    echo '.login input[type="text"].b3_form-input--text { ';
+                    echo 'font-size: initial;';
+                    echo ' }';
+                    echo "\n";
+
+                    echo 'input.b3_form-input--number, input.b3_form-input--url { ';
+                    // echo 'font-size: 24px;';
+                    echo 'line-height: 1.33333333;';
+                    // echo 'padding: 0.1875rem 0.3125rem;';
+                    echo 'width: 100%;';
+                    echo ' }';
+                    echo "\n";
+
+                    echo '.b3_form-input--textarea { ';
+                    echo 'border-width: 0.0625rem;';
+                    // echo 'font-size: 24px;';
+                    echo 'line-height: 1.33333333;';
+                    // echo 'margin: 0 6px 16px 0;';
+                    echo 'padding: 0.1875rem 0.3125rem;';
+                    echo 'width: 100%;';
+                    echo ' }';
+                    echo "\n";
+
+                    echo '.b3_input-option { ';
+                    echo 'margin-bottom: 0.5em;';
+                    echo ' }';
+                    echo "\n";
+
+                    echo '.b3_form-element--select select { ';
+                    // echo 'font-size: 24px;';
+                    echo 'line-height: 1.33333333;';
+                    echo 'padding: 0.1875rem 0.3125rem;';
+                    echo 'width: 100%;';
+                    echo ' }';
+                    echo "\n";
+                }
+
+                echo '.recaptcha-container {';
+                echo 'margin: 0 0 1rem 0;';
+                echo ' }';
+                echo "\n";
+
+                if ( $privacy ) {
+                    echo '.b3_form-element--privacy { ';
+                    echo 'margin-bottom: 1em;';
+                    echo ' }';
+                }
+
+                echo '</style>';
+                echo "\n";
             }
 
 
