@@ -430,24 +430,27 @@
                     echo "\n";
 
                     echo '.login input[type="text"].b3_form-input--text { ';
-                    echo 'font-size: initial;';
+                    echo 'font-size: 14px;';
+                    echo 'min-height: 30px;';
+                    echo 'padding: 0 8px;';
+                    echo ' }';
+                    echo "\n";
+
+                    echo '.login input[type="text"].b3_form-input--text input { ';
+                    echo 'padding: 0 8px;';
                     echo ' }';
                     echo "\n";
 
                     echo 'input.b3_form-input--number, input.b3_form-input--url { ';
-                    // echo 'font-size: 24px;';
                     echo 'line-height: 1.33333333;';
-                    // echo 'padding: 0.1875rem 0.3125rem;';
                     echo 'width: 100%;';
                     echo ' }';
                     echo "\n";
 
                     echo '.b3_form-input--textarea { ';
                     echo 'border-width: 0.0625rem;';
-                    // echo 'font-size: 24px;';
                     echo 'line-height: 1.33333333;';
-                    // echo 'margin: 0 6px 16px 0;';
-                    echo 'padding: 0.1875rem 0.3125rem;';
+                    echo 'padding: 8px;';
                     echo 'width: 100%;';
                     echo ' }';
                     echo "\n";
@@ -458,9 +461,8 @@
                     echo "\n";
 
                     echo '.b3_form-element--select select { ';
-                    // echo 'font-size: 24px;';
                     echo 'line-height: 1.33333333;';
-                    echo 'padding: 0.1875rem 0.3125rem;';
+                    echo 'padding: 8px;';
                     echo 'width: 100%;';
                     echo ' }';
                     echo "\n";
