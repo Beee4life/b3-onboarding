@@ -539,7 +539,7 @@
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
                         require_once( ABSPATH . 'wp-admin/includes/user.php' );
-                        if ( true != wp_delete_user( $user_id ) ) {
+                        if ( true == wp_delete_user( $user_id ) ) {
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                             do_action( 'b3_new_user_rejected_by_admin', $user_id );
                         } else {
@@ -578,7 +578,7 @@
             if ( ! current_user_can( 'edit_user', $current_user->ID ) ) {
                 wp_die( __( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
             }
-            if ( isset( $_POST[ 'b3_delete_account' ] ) && 1 == $_POST[ 'b3_delete_account' ] ) {
+            if ( isset( $_POST[ 'b3_delete_account' ] ) ) {
                 $user_id      = $_POST[ 'checkuser_id' ];
                 $redirect_url = b3_get_login_url();
                 if ( true == wp_delete_user( $user_id ) ) {
@@ -592,8 +592,6 @@
                 if ( ! is_wp_error( $errors ) ) {
                     wp_safe_redirect( add_query_arg( 'updated', 'true' ) );
                     exit;
-                } else {
-                    // @TODO: add proper error
                 }
             }
         }

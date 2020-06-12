@@ -142,8 +142,8 @@
                 <tr>
                     <td colspan="2">
                         <label>
-                            <input type="checkbox" name="b3_delete_account" value="1" />
-                            <?php esc_html_e( 'If you select this option, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( 'If you click this button, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
+                            <input type="submit" name="b3_delete_account" class="button button--small" value="<?php esc_attr_e( 'Delete account', 'b3-onboarding' ); ?>" id="submit" onclick="return confirm( 'Are you sure you want to delete your account ?' )" />
                         </label>
                     </td>
                 </tr>
