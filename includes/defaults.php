@@ -351,7 +351,7 @@
      *
      * @return string
      */
-    function b3_get_default_registration_message() {
+    function b3_get_default_message_above_registration() {
         return __( 'Register For This Site' );
     }
 
@@ -375,7 +375,7 @@
      *
      * @return string
      */
-    function b3_get_default_lost_password_message() {
+    function b3_get_default_message_above_lost_password() {
         return __( "Please enter your username or email address. You will receive an email message with instructions on how to reset your password.", 'b3-onboarding' );
         // return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
     }

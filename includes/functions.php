@@ -616,7 +616,7 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_password_lost_message() {
+    function b3_get_lost_password_message() {
         $message = get_option( 'b3_lost_password_message', false );
         if ( ! $message ) {
             $message = b3_default_lost_password_message() . "\n";
@@ -677,7 +677,7 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_password_lost_subject() {
+    function b3_get_lost_password_subject() {
         $subject = get_option( 'b3_lost_password_subject', false );
         if ( ! $subject ) {
             $subject = b3_default_lost_password_subject();
@@ -1076,7 +1076,7 @@
             return get_the_permalink( $id );
         }
 
-        return false;
+        return site_url( 'wp-login.php', 'login' ) . '?action=rp';
     }
 
     /**
@@ -1143,13 +1143,13 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_registration_message() {
+    function b3_get_message_above_registration() {
 
         $register_message = get_option( 'b3_register_message', false );
         if ( false != $register_message ) {
             $message = $register_message;
         } else {
-            $message = b3_get_default_registration_message();
+            $message = b3_get_default_message_above_registration();
         }
 
         return $message;
@@ -1165,7 +1165,7 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_login_message() {
+    function b3_get_message_above_login() {
 
         $login_message = get_option( 'b3_login_message', false );
         if ( false != $login_message ) {
@@ -1184,13 +1184,13 @@
      *
      * @return bool|mixed|string|void
      */
-    function b3_get_lost_password_message() {
+    function b3_get_message_above_lost_password() {
 
         $password_message = get_option( 'b3_lost_password_message', false );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
-            $message = b3_get_default_lost_password_message();
+            $message = b3_get_default_message_above_lost_password(); // @TODO: change
         }
 
         return $message;

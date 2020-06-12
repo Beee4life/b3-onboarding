@@ -25,44 +25,44 @@
                     $message = $lorem_ipsum;
                     break;
                 case 'account-approved':
-                    $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() ) ;
+                    $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
                     $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
                     break;
                 case 'account-activated':
-                    $message = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() ) ;
+                    $message = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
                     $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
                     break;
                 case 'account-rejected':
-                    $message = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() ) ;
+                    $message = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
                     $subject = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
                     break;
                 case 'email-activation':
-                    $message = apply_filters( 'b3_email_activation_message_user', b3_get_email_activation_message_user() ) ;
+                    $message = apply_filters( 'b3_email_activation_message_user', b3_get_email_activation_message_user() );
                     $subject = apply_filters( 'b3_email_activation_subject_user', b3_get_email_activation_subject_user() );
                     break;
                 case 'lostpass':
-                    $message = apply_filters( 'b3_lost_password_message', b3_get_password_lost_message() ) ;
-                    $subject = apply_filters( 'b3_lost_password_subject', b3_get_password_lost_subject() );
+                    $message = apply_filters( 'b3_lost_password_message', b3_get_lost_password_message() );
+                    $subject = apply_filters( 'b3_lost_password_subject', b3_get_lost_password_subject() );
                     break;
                 case 'new-user-admin':
                     // @TODO: maybe make new one, don't use b3_get_new_user_message
-                    $message = apply_filters( 'b3_new_user_message', b3_get_new_user_message() ) ;
+                    $message = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
                     $subject = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
                     break;
                 case 'request-access-admin':
-                    $message = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() ) ;
+                    $message = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
                     $subject = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
                     break;
                 case 'request-access-user':
-                    $message = apply_filters( 'b3_request_access_message_user', b3_get_request_access_message_user() ) ;
+                    $message = apply_filters( 'b3_request_access_message_user', b3_get_request_access_message_user() );
                     $subject = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
                     break;
                 case 'welcome-user':
-                    $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() ) ;
+                    $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
                     $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                     break;
                 case 'styling':
-                    $css = apply_filters( 'b3_email_styling', b3_get_email_styling() ) ;
+                    $css = apply_filters( 'b3_email_styling', b3_get_email_styling() );
                     break;
                 default:
                     $message = 'OOPS';

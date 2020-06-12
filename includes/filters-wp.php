@@ -187,7 +187,7 @@
      */
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
 
-        $b3_lost_password_subject = apply_filters( 'b3_lost_password_subject', b3_get_password_lost_subject() );
+        $b3_lost_password_subject = apply_filters( 'b3_lost_password_subject', b3_get_lost_password_subject() );
         if ( false != $b3_lost_password_subject ) {
             $subject = $b3_lost_password_subject;
         }
@@ -359,11 +359,11 @@
         if ( isset( $_GET[ 'action' ] ) ) {
             $action = $_GET[ 'action' ];
             if ( 'register' == $action ) {
-                $message = apply_filters( 'b3_message_above_registration', b3_get_registration_message() );
+                $message = apply_filters( 'b3_message_above_registration', b3_get_message_above_registration() );
             } elseif ( 'login' == $action ) {
-                $message = apply_filters( 'b3_message_above_login', b3_get_login_message() );
+                $message = apply_filters( 'b3_message_above_login', b3_get_message_above_login() );
             } elseif ( 'lostpassword' == $action ) {
-                $message = apply_filters( 'b3_lost_password_message', b3_get_lost_password_message() );
+                $message = apply_filters( 'b3_lost_password_message', b3_get_message_above_lost_password() );
             }
         }
 

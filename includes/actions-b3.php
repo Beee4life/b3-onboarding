@@ -283,7 +283,7 @@
             } else {
                 if ( isset( $attributes[ 'template' ] ) && 'lostpassword' == $attributes[ 'template' ] ) {
                     $show_errors = true;
-                    $messages[] = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_lost_password_message() ) );
+                    $messages[] = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
                 } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
                     if ( 'request_access' == $registration_type ) {
                         $request_access_message = esc_html__( apply_filters( 'b3_message_above_request_access', b3_get_request_access_message() ) );

@@ -94,8 +94,8 @@
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_lost_password' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
-                add_action( 'login_form_resetpass',                 array( $this, 'b3_do_password_reset' ) );
-                add_action( 'login_form_rp',                        array( $this, 'b3_do_password_reset' ) );
+                add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
+                add_action( 'login_form_rp',                        array( $this, 'b3_reset_user_password' ) );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
@@ -1200,16 +1200,11 @@
 
                         if ( is_wp_error( $errors ) ) {
                             // errors found
-                            $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), wp_login_url() );
+                            $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
                         } else {
 
-                            // determine which page is used
-                            $lostpassword_url = wp_lostpassword_url();
-                            if ( isset( $_REQUEST[ 'b3_form' ] ) ) {
-                                // it's our custom form, so custom redirect there
-                                $lostpassword_url = b3_get_lostpassword_url();
-                            }
-                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
+                            $lostpassword_url = b3_get_lostpassword_url();
+                            $redirect_url     = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
 
                             // remove user_activation_key
                             $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
