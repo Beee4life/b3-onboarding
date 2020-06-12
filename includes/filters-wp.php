@@ -161,7 +161,7 @@
 
         }
         if ( true == $send_manual_mail ) {
-            // @TODO: create email message for manual adding of user
+            // @TODO: maybe create email message for manual adding of user
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
             $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
@@ -302,7 +302,7 @@
                 $title_suffix = ': Log out';
             }
             $post_states[] = 'B3' . $title_suffix;
-        } elseif ( $post->ID == get_option( 'b3_lostpass_page_id', false ) ) {
+        } elseif ( $post->ID == get_option( 'b3_lost_password_page_id', false ) ) {
             if ( $post->post_title == 'Lost password' ) {
                 $title_suffix = ': Lost password';
             }

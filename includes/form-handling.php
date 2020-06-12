@@ -70,7 +70,7 @@
 
                     $page_ids = [
                         'b3_account_page_id',
-                        'b3_lostpass_page_id',
+                        'b3_lost_password_page_id',
                         'b3_login_page_id',
                         'b3_logout_page_id',
                         'b3_register_page_id',
