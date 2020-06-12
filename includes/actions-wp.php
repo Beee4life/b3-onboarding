@@ -10,33 +10,12 @@
      */
     function b3_add_registration_fields() {
 
-        // Get and set any values already sent
-        $activate_first_last = get_option( 'b3_activate_first_last', false );
-        $first_last_required = get_option( 'b3_first_last_required', false );
-        $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : '';
-        $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : '';
+        do_action( 'b3_add_first_last_name_fields' );
+        do_action( 'b3_add_hidden_fields_registration' );
+        do_action( 'b3_add_extra_fields_registration' );
+        do_action( 'b3_add_recaptcha_fields' );
+        do_action( 'b3_add_privacy_checkbox' );
 
-        if ( true == $activate_first_last ) {
-        ?>
-        <p>
-            <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ) ?> <?php if ( 1 == $first_last_required ) { ?>(<?php esc_html_e( 'required', 'b3-onboarding' ); ?>)<?php }?>
-            <br />
-            <input type="text" name="first_name" id="first_name" class="input" value="<?php echo esc_attr( stripslashes( $first_name ) ); ?>" size="25" /></label>
-        </p>
-
-        <p>
-            <label for="last_name"><?php _e( 'Last name', 'b3-onboarding' ) ?> <?php if ( 1 == $first_last_required ) { ?>(<?php esc_html_e( 'required', 'b3-onboarding' ); ?>)<?php }?>
-            <br />
-            <input type="text" name="last_name" id="last_name" class="input" value="<?php echo esc_attr( stripslashes( $last_name ) ); ?>" size="25" /></label>
-        </p>
-        <?php } ?>
-
-        <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
-        <?php do_action( 'b3_add_extra_fields_registration' ); ?>
-        <?php do_action( 'b3_add_recaptcha_fields' ); ?>
-        <?php do_action( 'b3_add_privacy_checkbox' ); ?>
-
-    <?php
     }
     add_action( 'register_form', 'b3_add_registration_fields' );
 
