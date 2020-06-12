@@ -1689,7 +1689,7 @@
                 $cu = get_userdata( get_current_user_id() );
                 if ( $cu->user_login != 'Beee' ) {
                     echo sprintf( '<div class="error"><p>You are using an almost finished released version of %s. Use it at your own risk or deactivate it <a href="%s">%s</a> !!!.</p></div>',
-                        'B3 - Onboarding',
+                        'B3 Onboarding',
                         esc_url( admin_url( 'plugins.php?s=b3' ) ),
                         'here'
                     );

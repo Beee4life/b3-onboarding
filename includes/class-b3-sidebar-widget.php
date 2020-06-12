@@ -8,7 +8,7 @@
         function __construct() {
             parent::__construct(
                 'b3-widget',
-                'B3: User menu',
+                'B3 User menu',
                 array(
                     'classname'   => 'b3__widget--user',
                     'description' => __( 'Custom user widget', 'b3-onboarding' ),
