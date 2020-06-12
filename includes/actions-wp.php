@@ -69,18 +69,13 @@
     function b3_do_stuff_after_wp_register( $user_id ) {
         // get registration type
         $registration_type = get_option( 'b3_registration_type', false );
-        if ( isset( $_POST[ 'b3_form' ] ) ) {
-            // do nothing
-        } else {
-            if ( 'open' == $registration_type ) {
-            } elseif ( 'request_access' == $registration_type ) {
-                // change user role
-                $user_object = new WP_User( $user_id );
-                $user_object->set_role( 'b3_approval' );
-            } elseif ( 'email_activation' == $registration_type ) {
-                $user_object = new WP_User( $user_id );
-                $user_object->set_role( 'b3_activation' );
-            }
+        if ( 'request_access' == $registration_type ) {
+            // change user role
+            $user_object = new WP_User( $user_id );
+            $user_object->set_role( 'b3_approval' );
+        } elseif ( 'email_activation' == $registration_type ) {
+            $user_object = new WP_User( $user_id );
+            $user_object->set_role( 'b3_activation' );
         }
     }
     add_action( 'user_register', 'b3_do_stuff_after_wp_register' );
