@@ -376,7 +376,8 @@
      * @return string
      */
     function b3_get_default_lost_password_message() {
-        return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+        return __( "Please enter your username or email address. You will receive an email message with instructions on how to reset your password.", 'b3-onboarding' );
+        // return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
     }
 
 

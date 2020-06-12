@@ -356,13 +356,17 @@
      */
     function wp_login_message( $message ) {
 
-        $page_type = ( empty( $message ) ) ? 'login' : 'register';
-
-        if ( 'register' == $page_type ) {
-            $message = apply_filters( 'b3_message_above_registration', b3_get_registration_message() );
-        } elseif ( 'login' == $page_type ) {
-            $message = apply_filters( 'b3_message_above_login', b3_get_login_message() );
+        if ( isset( $_GET[ 'action' ] ) ) {
+            $action = $_GET[ 'action' ];
+            if ( 'register' == $action ) {
+                $message = apply_filters( 'b3_message_above_registration', b3_get_registration_message() );
+            } elseif ( 'login' == $action ) {
+                $message = apply_filters( 'b3_message_above_login', b3_get_login_message() );
+            } elseif ( 'lostpassword' == $action ) {
+                $message = apply_filters( 'b3_lost_password_message', b3_get_lost_password_message() );
+            }
         }
+
         if ( ! empty( $message ) ) {
             $message = '<p class="message">' . $message . '</p>';
         }

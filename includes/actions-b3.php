@@ -68,7 +68,7 @@
 
         <div class="b3_form-element b3_form-element--email">
             <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-            <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', get_option( 'admin_email' ) ) : ''; ?>" required>
+            <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
         </div>
         <?php
         $output = ob_get_clean();
@@ -83,11 +83,11 @@
      * @since 0.8-beta
      */
     function b3_first_last_name_fields() {
-        $activate_first_last = get_option( 'xb3_activate_first_last', false );
+        $activate_first_last = get_option( 'b3_activate_first_last', false );
         if ( $activate_first_last ) {
             $first_last_required = get_option( 'b3_first_last_required', false );
-            $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : ( defined( 'LOCALHOST' ) && true === LOCALHOST ) ? 'First' : false;
-            $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : ( defined( 'LOCALHOST' ) && true === LOCALHOST ) ? 'Last' : false;
+            $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : false;
+            $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : false;
             ob_start();
             do_action( 'b3_do_before_first_last_name' );
             ?>
