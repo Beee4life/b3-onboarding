@@ -66,7 +66,7 @@
             'b3_request_access_notification_addresses',
             'b3_request_access_subject_admin',
             'b3_request_access_subject_user',
-            'b3_resetpass_page_id', // set on activate
+            'b3_reset_password_page_id', // set on activate
             'b3_restrict_admin', // set on activate
             'b3_sidebar_widget', // set on activate
             'b3_style_wordpress_forms',
@@ -1047,8 +1047,8 @@
      *
      * @return bool|string
      */
-    function b3_get_resetpass_url() {
-        $id = get_option( 'b3_resetpass_page_id', false );
+    function b3_get_reset_password_url() {
+        $id = get_option( 'b3_reset_password_page_id', false );
         if ( false != $id && get_post( $id ) ) {
             return get_the_permalink( $id );
         }

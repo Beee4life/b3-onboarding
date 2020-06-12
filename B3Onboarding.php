@@ -90,8 +90,8 @@
                 add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
-                add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_lost_password' ) );
-                add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_lost_password' ) );
+                add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_reset_password' ) );
+                add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
@@ -1030,7 +1030,7 @@
              * wp-login.php?action=lostpassword.
              */
             public function b3_redirect_to_custom_lostpassword() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                         exit;
@@ -1050,10 +1050,10 @@
              * Redirects to the custom password reset page, or the login page
              * if there are errors.
              */
-            public function b3_redirect_to_custom_lost_password() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
+            public function b3_redirect_to_custom_reset_password() {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     // Verify key / login combo
-                    $redirect_url = b3_get_resetpass_url();
+                    $redirect_url = b3_get_reset_password_url();
 
                     if ( isset( $_REQUEST[ 'key' ] ) && isset( $_REQUEST[ 'login' ] ) ) {
                         $user = check_password_reset_key( $_REQUEST[ 'key' ], $_REQUEST[ 'login' ] );
@@ -1271,7 +1271,7 @@
                         if ( isset( $_POST[ 'pass1' ] ) ) {
                             if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
                                 // Passwords don't match
-                                $redirect_url = b3_get_resetpass_url();
+                                $redirect_url = b3_get_reset_password_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
@@ -1282,7 +1282,7 @@
 
                             if ( empty( $_POST[ 'pass1' ] ) ) {
                                 // Password is empty
-                                $redirect_url = b3_get_resetpass_url();
+                                $redirect_url = b3_get_reset_password_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
                                 $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );

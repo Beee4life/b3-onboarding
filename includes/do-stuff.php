@@ -37,7 +37,7 @@
             _x( 'reset-password', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
                 'content' => '[resetpass-form]',
-                'meta'    => 'b3_resetpass_page_id'
+                'meta'    => 'b3_reset_password_page_id'
             ),
         );
 

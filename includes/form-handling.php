@@ -74,7 +74,7 @@
                         'b3_login_page_id',
                         'b3_logout_page_id',
                         'b3_register_page_id',
-                        'b3_resetpass_page_id',
+                        'b3_reset_password_page_id',
                     ];
                     if ( isset( $_POST[ 'b3_approval_page_id' ] ) ) {
                         $page_ids[] = 'b3_approval_page_id';

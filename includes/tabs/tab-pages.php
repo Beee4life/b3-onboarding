@@ -33,7 +33,7 @@
             array(
                 'id'      => 'resetpass_page',
                 'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_resetpass_page_id', false ),
+                'page_id' => get_option( 'b3_reset_password_page_id', false ),
             ),
             array(
                 'id'      => 'account_page',
