@@ -139,16 +139,16 @@
                         }
                     }
 
+                    if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
+                        update_option( 'b3_first_last_required', $_POST[ 'b3_first_last_required' ], true );
+                    } else {
+                        delete_option( 'b3_first_last_required' );
+                    }
+
                     if ( isset( $_POST[ 'b3_activate_first_last' ] ) && 1 == $_POST[ 'b3_activate_first_last' ] ) {
                         update_option( 'b3_activate_first_last', $_POST[ 'b3_activate_first_last' ], true );
                     } else {
                         delete_option( 'b3_activate_first_last' );
-                        delete_option( 'b3_first_last_required' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
-                        update_option( 'b3_first_last_required', $_POST[ 'b3_first_last_required' ], true );
-                    } else {
                         delete_option( 'b3_first_last_required' );
                     }
 
