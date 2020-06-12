@@ -16,7 +16,15 @@
 
             <?php if ( ! empty( $_GET[ 'preview' ] ) ) { ?>
                 <h1 id="b3__admin-title">
-                    <?php _e( 'Email preview', 'b3-onboarding' ); ?>
+                    <?php
+                        if ( 'styling' == $_GET[ 'preview' ] ) {
+                            esc_html_e( 'Styling preview', 'b3-onboarding' );
+                        } elseif ( 'template' == $_GET[ 'preview' ] ) {
+                            esc_html_e( 'Template preview', 'b3-onboarding' );
+                        } else {
+                            esc_html_e( 'Email preview', 'b3-onboarding' );
+                        }
+                    ?>
                 </h1>
 
                 <?php include( 'preview.php' ); ?>
