@@ -1,5 +1,4 @@
 <?php
-
     /**
      * Return default email styling
      *
