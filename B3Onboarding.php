@@ -1232,9 +1232,6 @@
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $errors = retrieve_password();
 
-                    if ( isset( $_REQUEST[ 'b3_form' ] ) ) {
-                        // it's our custom form, so custom redirect there
-                    }
                     if ( is_wp_error( $errors ) ) {
                         // errors found
                         $redirect_url = b3_get_lostpassword_url();
