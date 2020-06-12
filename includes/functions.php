@@ -19,10 +19,10 @@
             'b3_account_rejected_subject',
             'b3_activate_first_last',
             'b3_approval_page_id',
-            'b3_custom_emails', // @TODO: check
+            'b3_custom_emails',
             'b3_dashboard_widget', // set on activate
-            'b3_debug_info', // @TODO: check
-            'b3_disable_action_links', // @TODO: check
+            'b3_debug_info',
+            'b3_disable_action_links',
             'b3_disable_admin_notification_new_user', // @TODO: check
             'b3_disable_admin_notification_password_change',
             'b3_disable_delete_user_email',
@@ -31,9 +31,9 @@
             'b3_email_activation_subject',
             'b3_email_styling', // set on activate
             'b3_email_template', // set on activate
-            'b3_first_last_required', // @TODO: check
+            'b3_first_last_required',
             'b3_front_end_approval',
-            'b3_link_color', // @TODO: check
+            'b3_link_color',
             'b3_login_page_id', // set on activate  // @TODO: change
             'b3_loginpage_bg_color', // @TODO: change
             'b3_loginpage_font_family', // @TODO: change
@@ -50,10 +50,11 @@
             'b3_new_user_subject',
             'b3_notification_sender_email', // set on activate
             'b3_notification_sender_name', // set on activate
-            'b3_privacy', // @TODO: check
-            'b3_privacy_page', // @TODO: check
+            'b3_privacy',
+            'b3_privacy_page',
             'b3_privacy_text',
-            'b3_recaptcha', // @TODO: check
+            'b3_recaptcha',
+            'b3_recaptcha_login',
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
             'b3_recaptcha_version',
@@ -68,7 +69,7 @@
             'b3_resetpass_page_id', // set on activate
             'b3_restrict_admin', // set on activate
             'b3_sidebar_widget', // set on activate
-            'b3_style_wordpress_forms', // @TODO: check
+            'b3_style_wordpress_forms',
             'b3_users_may_delete',
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
