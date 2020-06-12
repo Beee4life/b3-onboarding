@@ -29,8 +29,6 @@
 
             <?php do_action( 'b3_add_username_email_fields' ); ?>
 
-            <?php do_action( 'register_form' ); ?>
-
             <?php do_action( 'b3_add_first_last_name_fields' ); ?>
 
             <?php do_action( 'b3_add_password_fields' ); ?>
