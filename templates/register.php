@@ -7,7 +7,6 @@
     $recaptcha_public         = get_option( 'b3_recaptcha_public', false );
     $registration_type        = get_option( 'b3_registration_type', false );
     $send_password_by_mail    = get_option( 'b3_send_pass_mail', false );
-    $show_custom_passwords    = false;
     $show_recaptcha           = get_option( 'b3_recaptcha', false );
 ?>
 <div id="b3-register" class="b3_page b3_page--register">

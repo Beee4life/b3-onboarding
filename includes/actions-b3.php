@@ -137,7 +137,7 @@
             echo $results;
         }
     }
-    add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
+    // add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
 
 
     /**

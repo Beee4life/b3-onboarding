@@ -16,12 +16,6 @@
                     return;
                 } else {
 
-                    if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) && 1 == $_POST[ 'b3_activate_custom_passwords' ] ) {
-                        update_option( 'b3_custom_passwords', '1', true );
-                    } else {
-                        delete_option( 'b3_custom_passwords' );
-                    }
-
                     if ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) {
                         update_option( 'b3_style_wordpress_forms', 1, true );
                     } else {
