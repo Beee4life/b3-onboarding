@@ -94,7 +94,7 @@
                         $feedback_counter = get_option( 'b3_feedback_sent', 0 );
                         if ( 0 == $feedback_counter ) {
                             $show_feedback_tab = true;
-                        } elseif ( defined( 'LOCALHOST' ) && 1 == LOCALHOST ) {
+                        } elseif ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
                             if ( 2 > $feedback_counter ) {
                                 $show_feedback_tab = true;
                             }
