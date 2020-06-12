@@ -1103,21 +1103,6 @@
     }
 
     /**
-     * Get current url
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
-    function b3_get_current_url() {
-        // @TODO: look into these
-        $url = remove_query_arg( array( 'instance', 'action', 'checkemail', 'error', 'loggedout', 'registered', 'redirect_to', 'updated', 'key', '_wpnonce', 'reauth', 'login', 'updated' ) );
-
-        return $url;
-    }
-
-
-    /**
      * Convert a GMT date/time to local
      *
      * @param bool $date_time_gmt
