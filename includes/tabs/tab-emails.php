@@ -8,10 +8,10 @@
      */
     function b3_render_emails_tab() {
 
-        $custom_emails    = get_option( 'b3_custom_emails', false );
-        $email_boxes      = b3_get_email_boxes();
-        $link_color = get_option( 'b3_link_color', false );
-        $logo_in_email    = get_option( 'b3_logo_in_email', false );
+        $custom_emails = get_option( 'b3_custom_emails', false );
+        $email_boxes   = b3_get_email_boxes();
+        $link_color    = get_option( 'b3_link_color', false );
+        $logo_in_email = get_option( 'b3_logo_in_email', false );
         ob_start();
         ?>
         <h2>
