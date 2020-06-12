@@ -1,4 +1,4 @@
-# B3 - Onboarding
+# B3 Onboarding
 
 ## Contents
 
@@ -24,13 +24,15 @@ You can customise every aspect of the onboarding process, such as control the lo
 
 There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
 
-**What problems does this plugin solve ?**
+**What 'problems' does this plugin solve ?**
 
 This plugin gives you all the freedom to change/use different parts, without being forced to use other features. You can extend this plugin in any way you want with filters/hooks or through a settings page.
 
+Also you can get rid of those default Wordpress forms and use your own.
+
 <a name="version"></a>
 ### Version
-2.0.0 - released 14.06.20 (tbc)
+2.0.0-beta - released 12.06.20
 
 <a name="features"></a>
 ### Features
@@ -87,7 +89,7 @@ If you activate this plugin the following will be done:
 * b3_after_user_activated
 * b3_after_user_activated_by_admin
 
-This info + settings will become available on the official website (soon).
+These are just a few of all available filters which are available on the official website.
 
 <a name="filters"></a>
 ### Filters
@@ -98,7 +100,7 @@ This info + settings will become available on the official website (soon).
 * b3_welcome_user_subject
 * b3_welcome_user_message
 
-... there are more, we still need to index them all properly.
+These are just a few of all available actions which are available on the official website.
 
 If you use hooks, you have more settings available than if you use the admin.
 Some functions are not (yet) available through the admin pages.
