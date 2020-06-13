@@ -232,16 +232,25 @@
                     }
                 }
 
+                update_option( 'b3_account_activated_message', b3_get_account_activated_message_user() );
+                update_option( 'b3_account_approved_message', b3_get_account_approved_message() );
+                update_option( 'b3_account_rejected_message', b3_get_account_rejected_message() );
                 update_option( 'b3_dashboard_widget', 1 );
                 update_option( 'b3_disable_wordpress_forms', 1 );
+                update_option( 'b3_email_activation_message', b3_get_email_activation_message_user() );
                 update_option( 'b3_email_styling', b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) );
                 update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_hide_admin_bar', 1 );
                 update_option( 'b3_logo_in_email', 1 );
+                update_option( 'b3_lost_password_message', b3_get_lost_password_message() );
+                update_option( 'b3_new_user_message', b3_get_new_user_message() );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
+                update_option( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
+                update_option( 'b3_request_access_message_user', b3_get_request_access_message_user() );
                 update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                 update_option( 'b3_sidebar_widget', 1 );
+                update_option( 'b3_welcome_user_message', b3_get_welcome_user_message() );
 
                 if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
                     update_option( 'b3_privacy_page', get_option( 'wp_page_for_privacy_policy' ) );
