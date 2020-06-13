@@ -167,7 +167,15 @@
     margin-bottom: 0.5em;
 }
 
-.b3_settings-input--description {
+.b3_settings-input--recaptcha input {
+    margin-left: 1rem;
+}
+
+.b3_settings-input--recaptcha input:first-child {
+    margin-left: 0;
+}
+
+.b3_settings-input-description {
     color:      #AAA;
     margin-top: 0.5em;
 }
