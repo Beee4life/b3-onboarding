@@ -33,6 +33,29 @@ jQuery(function($){
 
 });
 
+(function($) {
+    $(document).ready(function() {
+
+        var $privacy_fields = '.b3_settings-field--privacy';
+        $('#b3_privacy').change(function() {
+            if (document.getElementById('b3_privacy').checked) {
+                $($privacy_fields).removeClass('hidden');
+            } else {
+                $($privacy_fields).addClass('hidden');
+            }
+        });
+
+        var $recaptcha_info = '.b3_settings-input-description--recaptcha';
+        $('#b3_activate_recaptcha').change(function() {
+            if (document.getElementById('b3_activate_recaptcha').checked) {
+                $($recaptcha_info).removeClass('hidden');
+            } else {
+                $($recaptcha_info).addClass('hidden');
+            }
+        });
+    });
+})(jQuery);
+
 // https://www.w3schools.com/howto/howto_js_tabs.asp
 function openTab(evt, tabName) {
     // Declare all variables

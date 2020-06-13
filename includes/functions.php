@@ -889,9 +889,10 @@
      *
      * @param bool $hide
      */
-    function b3_get_settings_field_open( $hide = false ) {
+    function b3_get_settings_field_open( $hide = false, $modifier = false ) {
         $hide_class = ( $hide != false ) ? ' hidden' : false;
-        echo '<div class="b3_settings-field' . $hide_class . '">';
+        $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
+        echo '<div class="b3_settings-field' . $hide_class . $modifier . '">';
     }
 
     /**

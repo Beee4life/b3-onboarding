@@ -12,6 +12,7 @@
         $public_key        = get_option( 'b3_recaptcha_public', false );
         $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
         $secret_key        = get_option( 'b3_recaptcha_secret', false );
+        $recaptcha_login          = get_option( 'b3_recaptcha_login', false );
         ?>
         <h2>
             <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
@@ -25,6 +26,15 @@
 
         <form action="admin.php?page=b3-onboarding&tab=recaptcha" method="post">
             <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_login" value="1" <?php if ( $recaptcha_login ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to add reCaptcha on the custom login form.', 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>

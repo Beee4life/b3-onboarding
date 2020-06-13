@@ -72,7 +72,7 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $closed_message ); ?>" value="<?php if ( $closed_message ) { echo stripslashes( $closed_message ); } ?>"/>
-                            <div class="b3_settings-input--description">
+                            <div class="b3_settings-input-description">
                                 <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
                             </div>
                         </div>
@@ -105,25 +105,12 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
-                        <?php if ( 1 == get_option( 'b3_recaptcha', false ) ) { ?>
-                            <div class="b3_settings-input--description">
-                                <?php esc_html_e( 'See tab integrations', 'b3-onboarding' ); ?>
-                            </div>
-                        <?php } ?>
+                        <?php $hide_recaptcha_note = ( 1 == get_option( 'b3_recaptcha', false ) ) ? false : ' hidden'; ?>
+                        <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
+                            <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                        </div>
                     </div>
                 <?php b3_get_close(); ?>
-
-                <?php if ( get_option( 'b3_recaptcha', false ) ) { ?>
-                    <?php b3_get_settings_field_open(); ?>
-                        <?php b3_get_label_field_open(); ?>
-                            <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
-                        <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_login" value="1" <?php if ( $recaptcha_login ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to add reCaptcha on the custom login form.', 'b3-onboarding' ); ?>
-                        </div>
-                    <?php b3_get_close(); ?>
-                <?php } ?>
-
 
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
@@ -134,36 +121,35 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php if ( 1 == get_option( 'b3_privacy', false ) ) { ?>
-                    <?php b3_get_settings_field_open(); ?>
-                        <?php b3_get_label_field_open(); ?>
-                            <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
-                        <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--text">
-                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo stripslashes( $privacy_text ); } ?>"/>
-                            <div class="b3_settings-input--description">
-                                <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
-                            </div>
-                        </div>
+                <?php $hide_privacy_settings = ( 1 == get_option( 'b3_privacy', false ) ) ? false : true; ?>
+                <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--text">
+                        <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo stripslashes( $privacy_text ); } ?>"/>
+                        <div class="b3_settings-input-description">
+                            <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
+                        </div>
+                    </div>
+                <?php b3_get_close(); ?>
 
-                    <?php b3_get_settings_field_open(); ?>
-                        <?php b3_get_label_field_open(); ?>
-                            <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
-                        <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--text">
-                            <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ); ?>
-                            <?php $all_pages = get_posts( $page_args ); ?>
-                            <select name="b3_privacy_page" id="b3_privacy_page">
-                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
-                                <?php foreach( $all_pages as $page ) { ?>
-                                    <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
-                                    <option value="<?php echo $page->ID; ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
+                <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-                <?php } ?>
+                    <div class="b3_settings-input b3_settings-input--text">
+                        <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ); ?>
+                        <?php $all_pages = get_posts( $page_args ); ?>
+                        <select name="b3_privacy_page" id="b3_privacy_page">
+                            <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                            <?php foreach( $all_pages as $page ) { ?>
+                                <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
+                                <option value="<?php echo $page->ID; ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                <?php b3_get_close(); ?>
 
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
