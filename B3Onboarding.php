@@ -608,12 +608,10 @@
              * Register widgets (if activated)
              */
             public function b3_register_widgets() {
-                if ( true == get_option( 'b3_sidebar_widget', false ) ) {
-                    /*
-                     * Includes sidebar widget function + call
-                     */
-                    include( 'includes/class-b3-sidebar-widget.php' );
-                }
+                /*
+                 * Includes sidebar widget function + call
+                 */
+                include( 'includes/class-b3-sidebar-widget.php' );
             }
 
 
@@ -621,12 +619,10 @@
              * Add dashboard widget
              */
             public function b3_add_dashboard_widget() {
-                if ( true == get_option( 'b3_dashboard_widget', false ) ) {
-                    /*
-                     * Includes dashboard widget function + call
-                     */
-                    include( 'includes/dashboard-widget.php' );
-                }
+                /*
+                 * Includes dashboard widget function + call
+                 */
+                include( 'includes/dashboard-widget.php' );
                 if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
                     include( 'includes/dashboard-widget-debug.php' );
                 }
