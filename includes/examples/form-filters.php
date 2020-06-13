@@ -292,3 +292,16 @@
         return 'filter@email.com';
     }
     // add_filter( 'b3_localhost_email', 'b3_localhost_email' );
+
+    /**
+     * Disable the admin links
+     *
+     * @param $email
+     *
+     * @return string
+     */
+    function b3_disable_action_links( $setting ) {
+        return true;
+    }
+    // add_filter( 'b3_disable_action_links', 'b3_disable_action_links' );
+
