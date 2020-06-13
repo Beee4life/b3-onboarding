@@ -15,6 +15,7 @@
             'b3_account_rejected_message'        => array( 'string' ),
             'b3_account_rejected_subject'        => array( 'string' ),
             'b3_custom_register_inform'          => array( 'string' ),
+            'b3_disable_action_links'            => array( 'bool', 'string' ),
             'b3_email_activation_message_user'   => array( 'string' ),
             'b3_email_activation_subject_user'   => array( 'string' ),
             'b3_email_footer_text'               => array( 'string' ),
