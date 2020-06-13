@@ -12,7 +12,8 @@
         $public_key        = get_option( 'b3_recaptcha_public', false );
         $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
         $secret_key        = get_option( 'b3_recaptcha_secret', false );
-        $recaptcha_login          = get_option( 'b3_recaptcha_login', false );
+        $recaptcha_login   = get_option( 'b3_recaptcha_login', false );
+        $recaptcha_on      = get_option( 'b3_recaptcha_on', [] );
         ?>
         <h2>
             <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
@@ -28,6 +29,16 @@
             <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
 
             <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_on"><?php esc_html_e( 'Add reCaptcha on:', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox b3_settings-input--recaptcha">
+                    <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_on[]" value="register" <?php if ( in_array( 'register', $recaptcha_on ) ) { ?>checked="checked"<?php } ?>/> <label for="b3_recaptcha_registration"><?php esc_html_e( 'Registration form', 'b3-onboarding' ); ?></label>
+                    <input type="checkbox" id="b3_recaptcha_registration" name="b3_recaptcha_on[]" value="login" <?php if ( in_array( 'login', $recaptcha_on ) ) { ?>checked="checked"<?php } ?>/> <label for="b3_recaptcha_login"><?php esc_html_e( 'Login form', 'b3-onboarding' ); ?></label>
+                </div>
+            <?php b3_get_close(); ?>
+
+            <?php b3_get_settings_field_open(1); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_recaptcha_login"><?php esc_html_e( 'Add reCaptcha on login page', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>

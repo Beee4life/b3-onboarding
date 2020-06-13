@@ -45,7 +45,7 @@
             <?php } ?>
         </p>
 
-        <?php echo b3_get_form_links( 'login' ); ?>
+        <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
 
     </form>
 

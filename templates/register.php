@@ -7,7 +7,7 @@
     $recaptcha_public         = get_option( 'b3_recaptcha_public', false );
     $registration_type        = get_option( 'b3_registration_type', false );
     $send_password_by_mail    = get_option( 'b3_send_pass_mail', false );
-    $show_recaptcha           = get_option( 'b3_recaptcha', false );
+    $show_recaptcha           = get_option( 'b3_activate_recaptcha', false );
 ?>
 <div id="b3-register" class="b3_page b3_page--register">
     <?php if ( $attributes[ 'title' ] ) { ?>
@@ -36,7 +36,7 @@
 
             <?php do_action( 'b3_add_extra_fields_registration' ); ?>
 
-            <?php do_action( 'b3_add_recaptcha_fields' ); ?>
+            <?php do_action( 'b3_add_recaptcha_fields', $attributes[ 'template' ] ); ?>
 
             <?php do_action( 'b3_add_privacy_checkbox' ); ?>
 
@@ -53,7 +53,7 @@
 
         <?php } ?>
 
-        <?php echo b3_get_form_links( 'register' ); ?>
+        <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
 
     </form>
 

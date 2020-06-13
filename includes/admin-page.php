@@ -90,7 +90,7 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( true == get_option( 'b3_recaptcha', false ) ) {
+                        if ( true == get_option( 'b3_activate_recaptcha', false ) ) {
                             $tabs[] = array(
                                 'id'      => 'recaptcha',
                                 'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),

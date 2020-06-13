@@ -18,6 +18,7 @@
             'b3_account_rejected_message',
             'b3_account_rejected_subject',
             'b3_activate_first_last',
+            'b3_activate_recaptcha',
             'b3_approval_page_id',
             'b3_custom_emails',
             'b3_dashboard_widget', // set on activate
@@ -53,8 +54,8 @@
             'b3_privacy',
             'b3_privacy_page',
             'b3_privacy_text',
-            'b3_recaptcha',
-            'b3_recaptcha_login',
+            'b3_recaptcha_login', // @TODO: delete
+            'b3_recaptcha_on',
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
             'b3_recaptcha_version',
@@ -154,19 +155,16 @@
                 'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
             ),
         );
-        $styling_boxes = array();
-        if ( false != get_option( 'b3_custom_emails', false ) && ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) ) {
-            $styling_boxes = array(
-                array(
-                    'id'    => 'email_styling',
-                    'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
-                ),
-                array(
-                    'id'    => 'email_template',
-                    'title' => esc_html__( 'Email template', 'b3-onboarding' ),
-                ),
-            );
-        }
+        $styling_boxes = array(
+            array(
+                'id'    => 'email_styling',
+                'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
+            ),
+            array(
+                'id'    => 'email_template',
+                'title' => esc_html__( 'Email template', 'b3-onboarding' ),
+            ),
+        );
         $email_boxes = array_merge( $settings_box, $new_user_boxes, $request_access_box, $activate_email_boxes, $welcome_user_boxes, $default_boxes2, $styling_boxes );
 
         return $email_boxes;

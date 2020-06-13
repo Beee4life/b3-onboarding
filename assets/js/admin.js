@@ -36,6 +36,15 @@ jQuery(function($){
 (function($) {
     $(document).ready(function() {
 
+        var $first_last = '.b3_settings-field--first-last-required';
+        $('#b3_activate_first_last').change(function() {
+            if (document.getElementById('b3_activate_first_last').checked) {
+                $($first_last).removeClass('hidden');
+            } else {
+                $($first_last).addClass('hidden');
+            }
+        });
+
         var $privacy_fields = '.b3_settings-field--privacy';
         $('#b3_privacy').change(function() {
             if (document.getElementById('b3_privacy').checked) {
@@ -51,6 +60,27 @@ jQuery(function($){
                 $($recaptcha_info).removeClass('hidden');
             } else {
                 $($recaptcha_info).addClass('hidden');
+            }
+        });
+
+        var $wordpress_info = '.b3_settings-input-description--wp-style';
+        $('#b3_style_wordpress_forms').change(function() {
+            if (document.getElementById('b3_style_wordpress_forms').checked) {
+                $($wordpress_info).removeClass('hidden');
+            } else {
+                $($wordpress_info).addClass('hidden');
+            }
+        });
+
+        var $custom_email_styling  = '.metabox-handler--email_styling';
+        var $custom_email_template = '.metabox-handler--email_template';
+        $('#b3_activate_custom_emails').change(function() {
+            if (document.getElementById('b3_activate_custom_emails').checked) {
+                $($custom_email_styling).removeClass('hidden');
+                $($custom_email_template).removeClass('hidden');
+            } else {
+                $($custom_email_styling).addClass('hidden');
+                $($custom_email_template).addClass('hidden');
             }
         });
     });

@@ -36,7 +36,7 @@
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
         ?>
-        <div class="metabox-handler">
+        <div class="metabox-handler metabox-handler--<?php echo $box['id']; ?>">
             <div class="b3__postbox">
                 <div class="b3_foldout--header foldout__toggle">
                     <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>

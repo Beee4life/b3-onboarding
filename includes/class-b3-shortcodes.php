@@ -49,7 +49,7 @@
                 } else {
 
                     $attributes[ 'errors' ]             = array();
-                    $attributes[ 'recaptcha_site_key' ] = get_option( 'b3-onboarding-recaptcha-public-key', null );
+                    $attributes[ 'recaptcha_site_key' ] = get_option( 'b3_recaptcha_public', null ); // @TODO I need this ?
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
 

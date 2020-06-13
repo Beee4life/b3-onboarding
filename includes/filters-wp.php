@@ -250,7 +250,7 @@
                 $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a last name.', 'b3-onboarding' ) ) );
             }
         }
-        if ( 1 == get_option( 'b3_recaptcha', false ) ) {
+        if ( 1 == get_option( 'b3_activate_recaptcha', false ) ) {
             $b3ob = new B3Onboarding();
             if ( ! $b3ob->b3_verify_recaptcha() ) {
                 $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'Recaptcha failed.', 'b3-onboarding' ) ) );

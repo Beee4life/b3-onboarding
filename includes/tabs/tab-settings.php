@@ -8,10 +8,12 @@
      */
     function b3_render_settings_tab() {
 
+        $disable_action_links    = get_option( 'b3_disable_action_links', false );
         $dashboard_widget        = get_option( 'b3_dashboard_widget', false );
         $debug_info              = get_option( 'b3_debug_info', false );
         $disable_wordpress_forms = get_option( 'b3_disable_wordpress_forms', false );
         $main_logo               = get_option( 'b3_main_logo', false );
+        $recaptcha               = get_option( 'b3_activate_recaptcha', false );
         $sidebar_widget          = get_option( 'b3_sidebar_widget', false );
         $style_wordpress_forms   = get_option( 'b3_style_wordpress_forms', false );
 
@@ -45,9 +47,35 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_style_wordpress_forms" name="b3_style_wordpress_forms" value="1" <?php if ( $style_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' forms.", 'b3-onboarding' ); ?>
+                            <?php $hide_wordpress_note = ( 1 == get_option( 'b3_style_wordpress_forms', false ) ) ? false : ' hidden'; ?>
+                            <div class="b3_settings-input-description b3_settings-input-description--wp-style<?php echo $hide_wordpress_note; ?>">
+                                <?php esc_html_e( 'See tab Wordpress (after saving)', 'b3-onboarding' ); ?>
+                            </div>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
+
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
+                        <?php $hide_recaptcha_note = ( 1 == get_option( 'b3_activate_recaptcha', false ) ) ? false : ' hidden'; ?>
+                        <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
+                            <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                        </div>
+                    </div>
+                <?php b3_get_close(); ?>
+
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php if ( $disable_action_links ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' ); ?>
+                    </div>
+                <?php b3_get_close(); ?>
 
                 <?php if ( current_user_can( 'manage_options' ) && ( ( defined( 'LOCALHOST' ) && true != LOCALHOST ) || ! defined( 'LOCALHOST' ) ) ) { ?>
                     <?php b3_get_settings_field_open(); ?>

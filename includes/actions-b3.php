@@ -4,9 +4,10 @@
     /**
      * Do stuff afer manual activation by admin
      *
+     * @param $user_id
+     *
      * @since 1.0.0
      *
-     * @param $user_id
      */
     function b3_do_stuff_after_new_user_activated_by_admin( $user_id ) {
         // Do stuff when user is activated by admin
@@ -19,6 +20,7 @@
         $message     = b3_replace_template_styling( $message );
         $message     = strtr( $message, b3_replace_email_vars() );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
+
         wp_mail( $to, $subject, $message, array() );
     }
     add_action( 'b3_after_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
@@ -27,12 +29,13 @@
     /**
      * Do stuff after user clicked activate link
      *
+     * @param $user_id
+     *
      * @since 1.0.0
      *
-     * @TODO: check for a WordPress hook to hook to
-     * @TODO: look into filter 'registration_redirect'
+     * @TODO  : check for a WordPress hook to hook to
+     * @TODO  : look into filter 'registration_redirect'
      *
-     * @param $user_id
      */
     function b3_do_stuff_after_user_activated( $user_id ) {
         if ( 1 != get_option( 'b3_disable_admin_notification_new_user', false ) ) {
@@ -40,13 +43,14 @@
         }
         // send activate email to user
         if ( 'email_activation' == get_option( 'b3_registration_type', false ) ) {
-            $user       = get_userdata( $user_id );
-            $to         = $user->user_email;
-            $subject    = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
-            $message    = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
-            $message    = b3_replace_template_styling( $message );
-            $message    = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
-            $message    = htmlspecialchars_decode( stripslashes( $message ) );
+            $user    = get_userdata( $user_id );
+            $to      = $user->user_email;
+            $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
+            $message = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
+            $message = b3_replace_template_styling( $message );
+            $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $message = htmlspecialchars_decode( stripslashes( $message ) );
+
             wp_mail( $to, $subject, $message, array() );
         }
     }
@@ -88,19 +92,19 @@
             $first_last_required = get_option( 'b3_first_last_required', false );
             $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : false;
             $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : false;
+            $required            = ( true == $first_last_required ) ? ' required="required"' : false;
             ob_start();
             do_action( 'b3_do_before_first_last_name' );
-            ?>
-            <?php $required = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false; ?>
+        ?>
             <div class="b3_form-element b3_form-element--register">
-                <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?><?php if ( $required ) { ?> <strong>*</strong><?php } ?></label>
                 <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo $first_name; ?>"<?php echo $required; ?>>
             </div>
             <div class="b3_form-element b3_form-element--register">
-                <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><strong>*</strong><?php } ?></label>
+                <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?><?php if ( $required ) { ?> <strong>*</strong><?php } ?></label>
                 <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo $last_name; ?>"<?php echo $required; ?>>
             </div>
-            <?php
+        <?php
             do_action( 'b3_do_after_first_last_name' );
             $output = ob_get_clean();
             echo $output;
@@ -125,12 +129,12 @@
 
             <div class="b3_form-element b3_form-element--password">
                 <label class="b3_form-label" for="pass1"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
-                <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3_form--input" />
+                <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3_form--input"/>
             </div>
 
             <div class="b3_form-element b3_form-element--password">
                 <label class="b3_form-label" for="pass2"><?php esc_html_e( 'Confirm Password', 'b3-onboarding' ); ?></label>
-                <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3_form--input" />
+                <input autocomplete="off" name="pass2" id="pass2" size="20" value="" type="password" class="b3_form--input"/>
             </div>
             <?php
             $results = ob_get_clean();
@@ -148,14 +152,17 @@
     function b3_add_subdomain_field() {
         if ( is_multisite() ) {
             $show_subdomain = get_option( 'b3_show_subdomain_field', false );
-            if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ) , array( 'request_access_subdomain', 'ms_register_site_user' ) ) ) {
+            if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ), array(
+                    'request_access_subdomain',
+                    'ms_register_site_user',
+                ) ) ) {
                 ob_start();
-                ?>
+            ?>
                 <div class="b3_form-element b3_form-element--register">
                     <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required />
+                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required/>
                 </div>
-                <?php
+            <?php
                 $output = ob_get_clean();
                 echo $output;
             }
@@ -201,34 +208,31 @@
     /**
      * Add reCAPTCHA check
      *
+     * @param string $form_type
+     *
      * @since 2.0.0
      *
-     * @param $recaptcha_public
-     * @param string $form_type
      */
     function b3_add_recaptcha_fields( $form_type = 'register' ) {
-        $recaptcha_public     = get_option( 'b3_recaptcha_public', false );
-        $recaptcha_version    = get_option( 'b3_recaptcha_version', '2' );
-        $show_recaptcha       = get_option( 'b3_recaptcha', false );
+        $activate_recaptcha = get_option( 'b3_activate_recaptcha', false );
+        $recaptcha_on       = get_option( 'b3_recaptcha_on', [] );
+        $recaptcha_public   = get_option( 'b3_recaptcha_public', false );
+        $recaptcha_version  = get_option( 'b3_recaptcha_version', '2' );
 
-        if ( 'login' == $form_type ) {
-            if ( true != get_option( 'b3_recaptcha_login', false ) ) {
-                $show_recaptcha = false;
-            }
-        }
-
-        if ( false != $show_recaptcha ) {
-            do_action( 'b3_do_before_recaptcha_' . $form_type );
-            if ( '3' != $recaptcha_version ) {
-                ?>
-                <div class="b3_form-element b3_form-element--recaptcha">
-                    <div class="recaptcha-container">
-                        <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+        if ( false != $activate_recaptcha ) {
+            if ( false != $recaptcha_public && '3' != $recaptcha_version ) {
+                if ( in_array( $form_type, $recaptcha_on ) ) {
+                    do_action( 'b3_do_before_recaptcha_' . $form_type );
+                    ?>
+                    <div class="b3_form-element b3_form-element--recaptcha">
+                        <div class="recaptcha-container">
+                            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                        </div>
                     </div>
-                </div>
-                <?php
+                    <?php
+                    do_action( 'b3_do_after_recaptcha_' . $form_type );
+                }
             }
-            do_action( 'b3_do_after_recaptcha_' . $form_type );
         }
     }
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
@@ -240,15 +244,15 @@
     function b3_add_privacy_checkbox() {
         $show_privacy = get_option( 'b3_privacy', false );
         if ( true == $show_privacy ) {
-            do_action( 'b3_do_before_privacy_checkbox');
+            do_action( 'b3_do_before_privacy_checkbox' );
             ?>
             <div class="b3_form-element b3_form-element--privacy">
                 <label>
-                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1" /> <?php echo htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) ); ?>
+                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1"/> <?php echo htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) ); ?>
                 </label>
             </div>
             <?php
-            do_action( 'b3_do_after_privacy_checkbox');
+            do_action( 'b3_do_after_privacy_checkbox' );
         }
     }
     add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
@@ -257,11 +261,11 @@
     /**
      * Echo error/info message above a (custom) form
      *
-     * @since 2.0.0
-     *
      * @param bool $attributes
      *
      * @return bool
+     * @since 2.0.0
+     *
      */
     function b3_render_form_messages( $attributes = false ) {
 
@@ -272,18 +276,18 @@
 
             if ( isset( $attributes[ 'errors' ] ) && 0 < count( $attributes[ 'errors' ] ) ) {
                 $show_errors = true;
-                foreach ( $attributes[ 'errors' ] as $error ) {
+                foreach( $attributes[ 'errors' ] as $error ) {
                     $messages[] = $error;
                 }
             } elseif ( isset( $attributes[ 'messages' ] ) && 0 < count( $attributes[ 'messages' ] ) ) {
                 $show_errors = true;
-                foreach ( $attributes[ 'messages' ] as $message ) {
+                foreach( $attributes[ 'messages' ] as $message ) {
                     $messages[] = $message;
                 }
             } else {
                 if ( isset( $attributes[ 'template' ] ) && 'lostpassword' == $attributes[ 'template' ] ) {
                     $show_errors = true;
-                    $messages[] = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
+                    $messages[]  = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
                 } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
                     if ( 'request_access' == $registration_type ) {
                         $request_access_message = esc_html__( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
@@ -294,13 +298,13 @@
                     }
                 } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
                     $show_errors = true;
-                    $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
+                    $messages[]  = esc_html__( 'Enter your new password.', 'b3-onboarding' );
                 }
             }
 
             if ( true == $show_errors && ! empty( $messages ) ) {
                 echo '<div class="b3_message">';
-                foreach ( $messages as $message ) {
+                foreach( $messages as $message ) {
                     echo '<p>';
                     echo $message;
                     echo '</p>';
@@ -312,3 +316,62 @@
         return false;
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
+
+    function b3_add_action_links( $form_type = 'login' ) {
+
+        if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links', false ) ) ) {
+            $page_types = array();
+
+            switch( $form_type ) {
+
+                case 'login':
+                    $page_types[ 'lostpassword' ] = [
+                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
+                        'link'  => b3_get_lostpassword_url(),
+                    ];
+                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
+                        $page_types[ 'register' ] = [
+                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
+                            'link'  => b3_get_register_url(),
+                        ];
+                    }
+                    break;
+
+                case 'register':
+                    $page_types[ 'login' ] = [
+                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
+                        'link'  => b3_get_login_url(),
+                    ];
+                    $page_types[ 'fogotpassword' ] = [
+                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
+                        'link'  => b3_get_lostpassword_url(),
+                    ];
+                    break;
+
+                case 'lostpassword':
+                    $page_types[ 'login' ] = [
+                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
+                        'link'  => b3_get_login_url(),
+                    ];
+                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
+                        $page_types[ 'register' ] = [
+                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
+                            'link'  => b3_get_register_url(),
+                        ];
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            if ( count( $page_types ) > 0 ) {
+                echo '<ul class="b3_form-links"><!--';
+                foreach( $page_types as $key => $values ) {
+                    echo '--><li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li><!--';
+                }
+                echo '--></ul>';
+            }
+        }
+    }
+    add_action( 'b3_add_action_links', 'b3_add_action_links' );

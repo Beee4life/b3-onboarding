@@ -16,22 +16,35 @@
                     return;
                 } else {
 
-                    if ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) {
-                        update_option( 'b3_style_wordpress_forms', 1, true );
-                    } else {
-                        delete_option( 'b3_style_wordpress_forms' );
-                    }
-
                     if ( isset( $_POST[ 'b3_disable_wordpress_forms' ] ) && 1 == $_POST[ 'b3_disable_wordpress_forms' ] ) {
                         update_option( 'b3_disable_wordpress_forms', 1, true );
                     } else {
                         delete_option( 'b3_disable_wordpress_forms' );
                     }
 
+                    if ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) {
+                        update_option( 'b3_style_wordpress_forms', 1, true );
+                    } else {
+                        delete_option( 'b3_style_wordpress_forms' );
+                    }
+
                     if ( ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) && ( isset( $_POST[ 'b3_disable_wordpress_forms' ] ) && 1 == $_POST[ 'b3_disable_wordpress_forms' ] ) ) {
                         // can't be at same time
                         update_option( 'b3_disable_wordpress_forms', 1, true );
                         delete_option( 'b3_style_wordpress_forms' );
+                    }
+
+                    if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
+                        update_option( 'b3_disable_action_links', 1, true );
+                    } else {
+                        delete_option( 'b3_disable_action_links' );
+                    }
+
+                    if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
+                        update_option( 'b3_activate_recaptcha', 1, true );
+                    } else {
+                        delete_option( 'b3_activate_recaptcha' );
+                        // TODO: also delete recaptcha settings on login/register
                     }
 
                     if ( isset( $_POST[ 'b3_debug_info' ] ) && 1 == $_POST[ 'b3_debug_info' ] ) {
@@ -79,11 +92,13 @@
                     if ( isset( $_POST[ 'b3_approval_page_id' ] ) ) {
                         $page_ids[] = 'b3_approval_page_id';
                     }
-                    foreach( $page_ids as $page ) {
-                        $old_id = get_option( $page );
-                        update_option( $page, $_POST[ $page ], true );
-                        delete_post_meta( $old_id, '_b3_page' );
-                        update_post_meta( $_POST[ $page ], '_b3_page', true );
+                    foreach( $page_ids as $option_name ) {
+                        $current_id = get_option( $option_name );
+                        if ( $current_id != $_POST[ $option_name ] ) {
+                            update_option( $option_name, $_POST[ $option_name ], true );
+                            delete_post_meta( $current_id, '_b3_page' );
+                            update_post_meta( $_POST[ $option_name ], '_b3_page', true );
+                        }
                     }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Pages settings saved', 'b3-onboarding' ) );
@@ -152,21 +167,6 @@
                         delete_option( 'b3_first_last_required' );
                     }
 
-                    if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
-                        update_option( 'b3_recaptcha', 1, true );
-                    } else {
-                        delete_option( 'b3_recaptcha' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_recaptcha_login' ] ) && 1 == $_POST[ 'b3_recaptcha_login' ] ) {
-                        update_option( 'b3_recaptcha_login', 1, true );
-                        if ( ! isset( $_POST[ 'b3_activate_recaptcha' ] ) || 0 == $_POST[ 'b3_activate_recaptcha' ] ) {
-                            delete_option( 'b3_recaptcha_login' );
-                        }
-                    } else {
-                        delete_option( 'b3_recaptcha_login' );
-                    }
-
                     if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
                         update_option( 'b3_privacy', 1, true );
                     } else {
@@ -181,12 +181,6 @@
 
                     if ( isset( $_POST[ 'b3_privacy_text' ] ) ) {
                         update_option( 'b3_privacy_text', htmlspecialchars( $_POST[ 'b3_privacy_text' ] ), true );
-                    }
-
-                    if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
-                        update_option( 'b3_disable_action_links', 1, true );
-                    } else {
-                        delete_option( 'b3_disable_action_links' );
                     }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Registration settings saved', 'b3-onboarding' ) );
@@ -437,6 +431,12 @@
                     update_option( 'b3_recaptcha_public', $_POST[ 'b3_recaptcha_public' ], true );
                     update_option( 'b3_recaptcha_secret', $_POST[ 'b3_recaptcha_secret' ], true );
                     update_option( 'b3_recaptcha_version', $_POST[ 'b3_recaptcha_version' ], true );
+
+                    if ( isset( $_POST[ 'b3_recaptcha_on' ] ) ) {
+                        update_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ], true );
+                    } else {
+                        delete_option( 'b3_recaptcha_on' );
+                    }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );
 

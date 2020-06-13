@@ -26,12 +26,12 @@
                 'page_id' => get_option( 'b3_logout_page_id', false ),
             ),
             array(
-                'id'      => 'lostpass_page',
+                'id'      => 'lost_password_page',
                 'label'   => esc_html__( 'Lost Password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_lost_password_page_id', false ),
             ),
             array(
-                'id'      => 'resetpass_page',
+                'id'      => 'reset_password_page',
                 'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_reset_password_page_id', false ),
             ),
