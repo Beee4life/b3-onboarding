@@ -83,6 +83,15 @@ jQuery(function($){
                 $($custom_email_template).addClass('hidden');
             }
         });
+
+        var $front_end_approval = '.b3_settings-input-description--approval';
+        $('#b3_activate_frontend_approval').change(function() {
+            if (document.getElementById('b3_activate_custom_emails').checked) {
+                $($front_end_approval).removeClass('hidden');
+            } else {
+                $($front_end_approval).addClass('hidden');
+            }
+        });
     });
 })(jQuery);
 

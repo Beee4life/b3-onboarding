@@ -8,10 +8,11 @@
      */
     function b3_render_users_tab() {
 
-        $front_end_approval = get_option( 'b3_front_end_approval', false );
-        $hide_admin_bar     = get_option( 'b3_hide_admin_bar', false );
-        $roles              = get_editable_roles();
-        $user_may_delete    = get_option( 'b3_user_may_delete', false );
+        $front_end_approval      = get_option( 'b3_front_end_approval', false );
+        $front_end_approval_page = get_option( 'b3_approval_page_id', false );
+        $hide_admin_bar          = get_option( 'b3_hide_admin_bar', false );
+        $roles                   = get_editable_roles();
+        $user_may_delete         = get_option( 'b3_user_may_delete', false );
         asort( $roles );
 
         ob_start();
@@ -33,6 +34,12 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval.', 'b3-onboarding' ); ?>
+                    <?php if ( false == $front_end_approval_page ) { ?>
+                        <?php $hide_user_approval_note = ( 1 == $front_end_approval ) ? false : ' hidden'; ?>
+                        <div class="b3_settings-input-description b3_settings-input-description--approval<?php echo $hide_user_approval_note; ?>">
+                            <?php esc_html_e( "You still need to set an approval page (after you save the settings).", 'b3-onboarding' ); ?>
+                        </div>
+                    <?php } ?>
                 </div>
             <?php b3_get_close(); ?>
 
