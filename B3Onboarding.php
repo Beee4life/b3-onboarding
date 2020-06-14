@@ -1033,13 +1033,12 @@
              * wp-login.php?action=lostpassword.
              */
             public function b3_redirect_to_custom_lostpassword() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                         exit;
                     }
 
-                    // add if force
                     $lost_password_url = b3_get_lostpassword_url();
                     if ( false != $lost_password_url ) {
                         wp_safe_redirect( $lost_password_url );
