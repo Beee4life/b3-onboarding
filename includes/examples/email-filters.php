@@ -32,7 +32,6 @@
      */
     function b3_new_user_notification_addresses( $recipients ) {
 
-        $email = [ 'info@address1.com', 'info@address1.com' ];
         $email = 'info@address1.com, info@address1.com';
 
         return $email;
