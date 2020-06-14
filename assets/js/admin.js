@@ -23,16 +23,6 @@ jQuery(document).ready(function() {
     });
 });
 
-jQuery(function($){
-
-    $("span.b3_message-close").click(function(e){
-
-        $(".b3_message").fadeOut(750);
-
-    });
-
-});
-
 (function($) {
     $(document).ready(function() {
 
