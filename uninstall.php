@@ -10,7 +10,7 @@
         die;
     }
 
-    // If preserve settings is false
+    // If preserve settings is false (but there's no user input option yet, so is always false)
     if ( false == get_option( 'b3_preserve_settings', false ) ) {
 
         $meta_keys = array();
