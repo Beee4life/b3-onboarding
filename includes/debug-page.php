@@ -12,6 +12,9 @@
         ?>
 
         <div class="wrap b3 b3__admin">
+            <h1 id="b3__admin-title">
+                Debug info
+            </h1>
             <?php
                 ob_start();
                 include( 'debug-info.php' );
