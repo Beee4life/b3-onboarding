@@ -63,8 +63,8 @@
                         }
                     }
 
-                    // Render the registration form using an external template
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+
                 }
             }
 
@@ -140,8 +140,8 @@
 
                 $attributes[ 'errors' ] = $errors;
 
-                // Render the login form using an external template
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+
             }
 
 
@@ -182,8 +182,8 @@
                     }
                 }
 
-                // Render the login form using an external template
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+
             }
 
 
@@ -220,7 +220,6 @@
                         }
                         $attributes[ 'errors' ] = $errors;
 
-                        // Render the password form using an external template
                         return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
                     } else {
@@ -233,6 +232,7 @@
                         $message .= sprintf( __( "If you haven't received any email, please <a href=\"%s\">click here</a>.", 'b3-onboarding' ), b3_get_lostpassword_url() );
 
                         return $message;
+
                     }
                 }
             }
