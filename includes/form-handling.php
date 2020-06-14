@@ -44,7 +44,7 @@
                         update_option( 'b3_activate_recaptcha', 1, true );
                     } else {
                         delete_option( 'b3_activate_recaptcha' );
-                        // TODO: also delete recaptcha settings on login/register
+                        delete_option( 'b3_recaptcha_on' );
                     }
 
                     if ( isset( $_POST[ 'b3_debug_info' ] ) && 1 == $_POST[ 'b3_debug_info' ] ) {
@@ -63,7 +63,7 @@
 
             } elseif ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
 
-                if ( ! wp_verify_nonce( $_POST[ "b3_pages_nonce" ], 'b3-pages-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_pages_nonce' ], 'b3-pages-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -95,7 +95,7 @@
                 }
 
             } elseif ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
-                if ( ! wp_verify_nonce( $_POST[ "b3_registration_nonce" ], 'b3-registration-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_registration_nonce' ], 'b3-registration-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -179,7 +179,7 @@
 
             } elseif ( isset( $_POST[ 'b3_loginpage_nonce' ] ) ) {
 
-                if ( ! wp_verify_nonce( $_POST[ "b3_loginpage_nonce" ], 'b3-loginpage-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_loginpage_nonce' ], 'b3-loginpage-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -223,7 +223,7 @@
                 }
 
             } elseif ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
-                if ( ! wp_verify_nonce( $_POST[ "b3_emails_nonce" ], 'b3-emails-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_emails_nonce' ], 'b3-emails-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -372,7 +372,7 @@
 
             } elseif ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
 
-                if ( ! wp_verify_nonce( $_POST[ "b3_users_nonce" ], 'b3-users-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_users_nonce' ], 'b3-users-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -410,7 +410,7 @@
 
             } elseif ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
 
-                if ( ! wp_verify_nonce( $_POST[ "b3_recaptcha_nonce" ], 'b3-recaptcha-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_recaptcha_nonce' ], 'b3-recaptcha-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -433,7 +433,7 @@
 
             } elseif ( isset( $_POST[ 'b3_feedback_nonce' ] ) ) {
 
-                if ( ! wp_verify_nonce( $_POST[ "b3_feedback_nonce" ], 'b3-feedback-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_feedback_nonce' ], 'b3-feedback-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
