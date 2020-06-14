@@ -5,7 +5,6 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
     Version:            2.0.0
     Requires at least:  4.3
-    Requires PHP:       7.0
     Author:             Beee
     Author URI:         https://berryplasman.com
     Tags:               user, management, registration, login, lost password, reset password, account
@@ -347,7 +346,6 @@
              */
             public function b3_add_login_styling() {
                 $extra_fields    = apply_filters( 'b3_extra_fields', array() );
-                $extra_fieldsx   = [];
                 $logo            = apply_filters( 'b3_main_logo', b3_get_main_logo() );
                 $logo_height     = get_option( 'b3_loginpage_logo_height', false );
                 $logo_width      = get_option( 'b3_loginpage_logo_width', false );
@@ -557,8 +555,8 @@
                 wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ], true );
                 wp_localize_script( 'b3-media', 'b3_media',
                     array(
-                        'title'     => __( 'Upload or choose your custom logo', 'b3-onboarding' ),  // This will be used as the title
-                        'button'    => __( 'Insert logo', 'b3-onboarding' )                         // This will be used as the button text
+                        'title'     => __( 'Upload or choose your custom logo', 'b3-onboarding' ),
+                        'button'    => __( 'Insert logo', 'b3-onboarding' ),
                     )
                 );
                 wp_enqueue_script( 'b3-media' );
