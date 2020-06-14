@@ -123,7 +123,7 @@
         }
 
         if ( true == $send_custom_mail ) {
-            // $wp_new_user_notification_email[ 'to' ] = $user->user_email;
+            $wp_new_user_notification_email[ 'to' ] = $user->user_email;
             if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
