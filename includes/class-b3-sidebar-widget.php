@@ -5,6 +5,9 @@
      */
     class B3_Sidebar_Widget extends WP_Widget {
 
+        /**
+         * B3_Sidebar_Widget constructor.
+         */
         function __construct() {
             parent::__construct(
                 'b3-widget',
