@@ -76,11 +76,26 @@
                 $existing_page = get_posts( $existing_page_args );
             }
             if ( ! empty( $existing_page ) ) {
-                $post_id = $existing_page[ 0 ]->ID;
-                // if meta exists
-                $meta = get_post_meta( $post_id, '_b3_page', true );
-                if ( false == $meta ) {
-                    // @TODO: pass to add new
+                $page_id     = $existing_page[ 0 ]->ID;
+                $page_object = get_post( $page_id );
+                $meta        = get_post_meta( $page_id, '_b3_page', true );
+                if ( false != $meta ) {
+                    // page has _b3_page meta
+                    update_option( $page[ 'meta' ], $page_id );
+                    if ( ! empty( $page_object->post_content ) ) {
+                        if ( strpos( $page_object->post_content, $page[ 'content' ] ) === false ) {
+                            $add_shortcode = true;
+                        }
+                    } else {
+                        $add_shortcode = true;
+                    }
+                }
+                if ( true === $add_shortcode ) {
+                    $new_args = [
+                        'ID'           => $page_id,
+                        'post_content' => $page[ 'content' ],
+                    ];
+                    wp_update_post( $new_args );
                 }
             }
             if ( empty( $existing_page ) ) {
