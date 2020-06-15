@@ -83,6 +83,7 @@
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
+                add_action( 'init',                                 array( $this, 'b3_redirect_out_of_admin' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
@@ -295,51 +296,6 @@
 
 
             /**
-             * Redirects "profile.php" to custom account page
-             */
-            public function b3_redirect_to_custom_profile() {
-                global $current_user, $pagenow;
-                if ( is_user_logged_in() && is_admin() ) {
-
-                    $allow_admin  = array( 'administrator' );
-                    $themed_users = array( 'subscriber' );
-                    $redirect_to  = '';
-                    if ( in_array( $themed_users, $current_user->roles ) ) {
-                        $page_link = b3_get_account_url();
-                        if ( false != $page_link ) {
-                            $redirect_to = $page_link;
-                        } else {
-                            $redirect_to = get_home_url();
-                        }
-                    }
-
-                    $user_role = reset( $current_user->roles );
-
-                    if ( is_multisite() && empty( $user_role ) ) {
-                        $user_role = 'subscriber';
-                    }
-
-                    if ( 'profile.php' == $pagenow && ! isset( $_REQUEST[ 'page' ] ) ) {
-                        if ( in_array( $themed_users, $current_user->roles ) ) {
-                            if ( ! empty( $_GET ) ) {
-                                $redirect_to = add_query_arg( (array) $_GET, $redirect_to );
-                            }
-                            wp_safe_redirect( $redirect_to );
-                            exit;
-                        }
-                    } else {
-                        if ( ! in_array( $user_role, $allow_admin ) ) {
-                            if ( ! defined( 'DOING_AJAX' ) ) {
-                                wp_safe_redirect( $redirect_to ); // to profile
-                                exit;
-                            }
-                        }
-                    }
-                }
-            }
-
-
-            /**
              * Add login styling
              *
              * @since 2.0.0
@@ -471,58 +427,6 @@
 
                 echo '</style>';
                 echo "\n";
-            }
-
-
-            /*
-             * Protect some pages
-             */
-            public function b3_template_redirect() {
-                $account_page_id  = b3_get_account_url( true );
-                $account_url      = b3_get_account_url();
-                $approval_page_id = b3_get_user_approval_link( true );
-                $login_page_id    = b3_get_login_url( true );
-                $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
-                $logout_page_id   = b3_get_logout_url( true );
-
-                if ( false != $account_page_id && is_page( array( $account_page_id ) ) && ! is_user_logged_in() ) {
-
-                    wp_safe_redirect( $login_url );
-                    exit;
-
-                } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
-
-                    if ( is_user_logged_in() ) {
-                        if ( ! current_user_can( 'promote_users' ) ) {
-                            wp_safe_redirect( $account_url );
-                            exit;
-                        }
-                    } else {
-                        wp_safe_redirect( $login_url );
-                        exit;
-                    }
-
-                } elseif ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
-
-                    check_admin_referer( 'log-out' );
-
-                    $user = wp_get_current_user();
-
-                    wp_logout();
-
-                    if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
-                        $redirect_to           = $_REQUEST[ 'redirect_to' ];
-                        $requested_redirect_to = '';
-                    } else {
-                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
-                        $requested_redirect_to = '';
-                    }
-
-                    $redirect_to = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
-                    wp_safe_redirect( $redirect_to );
-                    exit;
-
-                }
             }
 
 
@@ -937,6 +841,71 @@
 
             ## REDIRECTS
 
+            /*
+             * Redirect away from admin
+             */
+            public function b3_redirect_out_of_admin() {
+                error_log('HIT b3_redirect_out_of_admin() ');
+                // get current_roles
+                if ( is_admin() && ! defined( 'DOING_AJAX' ) && ( ! current_user_can( 'manage_options' ) ) ) {
+                    wp_redirect( b3_get_account_url() );
+                    exit;
+                }
+            }
+
+
+            /*
+             * Protect some pages
+             */
+            public function b3_template_redirect() {
+                $account_page_id  = b3_get_account_url( true );
+                $account_url      = b3_get_account_url();
+                $approval_page_id = b3_get_user_approval_link( true );
+                $login_page_id    = b3_get_login_url( true );
+                $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
+                $logout_page_id   = b3_get_logout_url( true );
+
+                if ( false != $account_page_id && is_page( array( $account_page_id ) ) && ! is_user_logged_in() ) {
+
+                    wp_safe_redirect( $login_url );
+                    exit;
+
+                } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
+
+                    if ( is_user_logged_in() ) {
+                        if ( ! current_user_can( 'promote_users' ) ) {
+                            wp_safe_redirect( $account_url );
+                            exit;
+                        }
+                    } else {
+                        wp_safe_redirect( $login_url );
+                        exit;
+                    }
+
+                } elseif ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
+
+                    check_admin_referer( 'log-out' );
+
+                    $user = wp_get_current_user();
+
+                    wp_logout();
+
+                    if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
+                        $redirect_to           = $_REQUEST[ 'redirect_to' ];
+                        $requested_redirect_to = '';
+                    } else {
+                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
+                        $requested_redirect_to = '';
+                    }
+
+                    $redirect_to = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
+                    wp_safe_redirect( $redirect_to );
+                    exit;
+
+                }
+            }
+
+
             /**
              * Redirect the user after authentication if there were any errors.
              *
@@ -964,6 +933,52 @@
 
 
             ## Redirect away from default WP pages
+
+            /**
+             * Redirects "profile.php" to custom account page
+             */
+            public function b3_redirect_to_custom_profile() {
+                global $current_user, $pagenow;
+                if ( is_user_logged_in() && is_admin() ) {
+
+                    $allow_admin  = array( 'administrator' );
+                    $themed_users = array( 'subscriber' );
+                    $redirect_to  = '';
+                    if ( in_array( $themed_users, $current_user->roles ) ) {
+                        $page_link = b3_get_account_url();
+                        if ( false != $page_link ) {
+                            $redirect_to = $page_link;
+                        } else {
+                            $redirect_to = get_home_url();
+                        }
+                    }
+
+                    $user_role = reset( $current_user->roles );
+
+                    if ( is_multisite() && empty( $user_role ) ) {
+                        $user_role = 'subscriber';
+                    }
+
+                    if ( 'profile.php' == $pagenow && ! isset( $_REQUEST[ 'page' ] ) ) {
+                        if ( in_array( $themed_users, $current_user->roles ) ) {
+                            if ( ! empty( $_GET ) ) {
+                                $redirect_to = add_query_arg( (array) $_GET, $redirect_to );
+                            }
+                            wp_safe_redirect( $redirect_to );
+                            exit;
+                        }
+                    } else {
+                        if ( ! in_array( $user_role, $allow_admin ) ) {
+                            if ( ! defined( 'DOING_AJAX' ) ) {
+                                wp_safe_redirect( $redirect_to ); // to profile
+                                exit;
+                            }
+                        }
+                    }
+                }
+            }
+
+
 
             /**
              * Redirects the user to the custom registration page instead
