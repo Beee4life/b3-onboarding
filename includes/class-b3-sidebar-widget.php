@@ -123,7 +123,12 @@
                     if ( true == $show_settings && current_user_can( 'manage_options' ) ) {
                         echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a></li>';
                     }
-                    // @TODO: add custom links here
+                    $custom_links = apply_filters( 'b3_widget_links', array() );
+                    if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
+                        foreach( $custom_links as $link ) {
+                            echo '<li><a href="' . $link[ 'link' ] . '">' . $link[ 'label' ] . '</a></li>';
+                        }
+                    }
                     if ( isset( $logout_link ) && false != $logout_link ) {
                         echo '<li><a href="' . $logout_link . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
                     }
