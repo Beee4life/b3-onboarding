@@ -1018,6 +1018,8 @@
             if ( get_post( $id ) ) {
                 return get_the_permalink( $id );
             }
+        } else {
+            // @TODO: return admin profile
         }
 
         return false;
