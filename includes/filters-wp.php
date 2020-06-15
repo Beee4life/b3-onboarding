@@ -283,40 +283,19 @@
 
         $title_suffix = false;
         if ( $post->ID == get_option( 'b3_account_page_id', false ) ) {
-            if ( $post->post_title == 'Account' ) {
-                $title_suffix = ': Account';
-            }
-            $post_states[] = 'B3' . $title_suffix;
+            $post_states[] = 'B3 : Account';
         } elseif ( $post->ID == get_option( 'b3_register_page_id', false ) ) {
-            if ( $post->post_title == 'Register' ) {
-                $title_suffix = ': Register';
-            }
-            $post_states[] = 'B3' . $title_suffix;
+            $post_states[] = 'B3 : Register';
         } elseif ( $post->ID == get_option( 'b3_login_page_id', false ) ) {
-            if ( $post->post_title == 'Login' ) {
-                $title_suffix = ': Login';
-            }
-            $post_states[] = 'B3' . $title_suffix;
+            $post_states[] = 'B3 : Login';
         } elseif ( $post->ID == get_option( 'b3_logout_page_id', false ) ) {
-            if ( $post->post_title == 'Log Out' ) {
-                $title_suffix = ': Log out';
-            }
-            $post_states[] = 'B3' . $title_suffix;
+            $post_states[] = 'B3 : Log out';
         } elseif ( $post->ID == get_option( 'b3_lost_password_page_id', false ) ) {
-            if ( $post->post_title == 'Lost password' ) {
-                $title_suffix = ': Lost password';
-            }
-            $post_states[] = 'B3' . $title_suffix;
+            $post_states[] = 'B3 : Lost password';
         } elseif ( $post->ID == get_option( 'b3_reset_password_page_id', false ) ) {
-            if ( $post->post_title == 'Reset Password' ) {
-                $title_suffix = ': Reset password';
-            }
-            $post_states[] = 'B3' . $title_suffix;
+            $post_states[] = 'B3 : Reset password';
         } elseif ( $post->ID == get_option( 'b3_approval_page_id', false ) ) {
-            if ( $post->post_title == 'User approval' ) {
-                $title_suffix = ': User approval';
-            }
-            $post_states[] = 'B3' . $title_suffix;
+            $post_states[] = 'B3 : User approval';
         }
 
         return $post_states;
