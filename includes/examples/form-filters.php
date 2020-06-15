@@ -13,7 +13,7 @@
      *
      * @return array
      */
-    function b3_hidden_fields( $fields ) {
+    function b3_hidden_fields_example( $fields ) {
         if ( ! is_array( $fields ) ) {
             $fields = array();
         }
@@ -21,7 +21,7 @@
 
         return $fields;
     }
-    // add_filter( 'b3_hidden_fields', 'b3_hidden_fields' );
+    // add_filter( 'b3_hidden_fields', 'b3_hidden_fields_example' );
 
 
     /**
@@ -33,7 +33,7 @@
      *
      * @return array
      */
-    function b3_extra_fields( $fields ) {
+    function b3_extra_fields_example( $fields ) {
         $container_class = 'container-class';
         $id              = 'id';
         $input_class     = 'input-class';
@@ -146,7 +146,7 @@
 
         return $fields;
     }
-    // add_filter( 'b3_extra_fields', 'b3_extra_fields' );
+    // add_filter( 'b3_extra_fields', 'b3_extra_fields_example' );
 
 
     /**
@@ -158,10 +158,10 @@
      *
      * @return string
      */
-    function b3_message_above_request_access( $message ) {
+    function b3_message_above_request_access_example( $message ) {
         return 'Click here';
     }
-    // add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access' );
+    // add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access_example' );
 
 
     /**
@@ -172,25 +172,10 @@
      *
      * @return string
      */
-    function b3_message_above_lost_password( $message ) {
+    function b3_message_above_lost_password_example( $message ) {
         return 'Your message';
     }
-    // add_filter( 'b3_message_above_lost_password', 'b3_message_above_lost_password' );
-
-
-    /**
-     * Override privacy text
-     *
-     * @since 2.0.0
-     *
-     * @param $privacy_text
-     *
-     * @return mixed
-     */
-    function b3_privacy_text( $privacy_text ) {
-        return '<a href="#">Click here</a> for more info';
-    }
-    // add_filter( 'b3_privacy_text', 'b3_privacy_text' );
+    // add_filter( 'b3_message_above_lost_password', 'b3_message_above_lost_password_example' );
 
 
     /**
@@ -200,10 +185,10 @@
      *
      * @return string
      */
-    function b3_message_above_registration( $registration_message ) {
+    function b3_message_above_registration_example( $registration_message ) {
         return  'Filter registration text';
     }
-    // add_filter( 'b3_message_above_registration', 'b3_message_above_registration' );
+    // add_filter( 'b3_message_above_registration', 'b3_message_above_registration_example' );
 
 
     /**
@@ -213,10 +198,10 @@
      *
      * @return string
      */
-    function b3_message_above_login( $login_message ) {
+    function b3_message_above_login_example( $login_message ) {
         return 'Filter login text';
     }
-    // add_filter( 'b3_message_above_login', 'b3_message_above_login' );
+    // add_filter( 'b3_message_above_login', 'b3_message_above_login_example' );
 
 
     /**
@@ -228,10 +213,25 @@
      *
      * @return mixed
      */
-    function b3_registration_closed_message( $registration_closed_message ) {
+    function b3_registration_closed_message_example( $registration_closed_message ) {
         return '<a href="#">Click</a> here';
     }
-    // add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message' );
+    // add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message_example' );
+
+
+    /**
+     * Override privacy text
+     *
+     * @since 2.0.0
+     *
+     * @param $privacy_text
+     *
+     * @return mixed
+     */
+    function b3_privacy_text_example( $privacy_text ) {
+        return '<a href="#">Click here</a> for more info';
+    }
+    // add_filter( 'b3_privacy_text', 'b3_privacy_text_example' );
 
 
     /**
@@ -243,10 +243,10 @@
      *
      * @return string
      */
-    function b3_email_styling( $email_styling ) {
+    function b3_email_styling_example( $email_styling ) {
         return '.body {}';
     }
-    // add_filter( 'b3_email_styling', 'b3_email_styling' );
+    // add_filter( 'b3_email_styling', 'b3_email_styling_example' );
 
 
     /**
@@ -258,10 +258,10 @@
      *
      * @return string
      */
-    function b3_email_template( $email_template ) {
+    function b3_email_template_example( $email_template ) {
         return '<a href="#">Click</a> here';
     }
-    // add_filter( 'b3_email_template', 'b3_email_template' );
+    // add_filter( 'b3_email_template', 'b3_email_template_example' );
 
 
     /**
@@ -273,10 +273,10 @@
      *
      * @return string
      */
-    function b3_localhost_username( $username ) {
+    function b3_localhost_username_example( $username ) {
         return 'dummy';
     }
-    // add_filter( 'b3_localhost_username', 'b3_localhost_username' );
+    // add_filter( 'b3_localhost_username', 'b3_localhost_username_example' );
 
 
     /**
@@ -288,10 +288,10 @@
      *
      * @return string
      */
-    function b3_localhost_email( $email ) {
+    function b3_localhost_email_example( $email ) {
         return 'filter@email.com';
     }
-    // add_filter( 'b3_localhost_email', 'b3_localhost_email' );
+    // add_filter( 'b3_localhost_email', 'b3_localhost_email_example' );
 
     /**
      * Disable the admin links
@@ -300,8 +300,8 @@
      *
      * @return string
      */
-    function b3_disable_action_links( $setting ) {
+    function b3_disable_action_links_example( $setting ) {
         return true;
     }
-    // add_filter( 'b3_disable_action_links', 'b3_disable_action_links' );
+    // add_filter( 'b3_disable_action_links', 'b3_disable_action_links_example' );
 
