@@ -9,12 +9,10 @@
     function b3_render_settings_tab() {
 
         $disable_action_links    = get_option( 'b3_disable_action_links', false );
-        $dashboard_widget        = get_option( 'b3_dashboard_widget', false );
         $debug_info              = get_option( 'b3_debug_info', false );
         $disable_wordpress_forms = get_option( 'b3_disable_wordpress_forms', false );
         $main_logo               = get_option( 'b3_main_logo', false );
         $recaptcha               = get_option( 'b3_activate_recaptcha', false );
-        $sidebar_widget          = get_option( 'b3_sidebar_widget', false );
         $style_wordpress_forms   = get_option( 'b3_style_wordpress_forms', false );
 
         ob_start();
