@@ -123,6 +123,7 @@
                     if ( true == $show_settings && current_user_can( 'manage_options' ) ) {
                         echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a></li>';
                     }
+                    // @TODO: add custom links here
                     if ( isset( $logout_link ) && false != $logout_link ) {
                         echo '<li><a href="' . $logout_link . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
                     }
