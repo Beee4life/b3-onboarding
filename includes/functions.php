@@ -34,6 +34,7 @@
             'b3_email_template', // set on activate
             'b3_first_last_required',
             'b3_front_end_approval',
+            'b3_hide_admin_bar',
             'b3_link_color',
             'b3_login_page_id', // set on activate
             'b3_loginpage_bg_color', // @TODO: change
@@ -46,6 +47,7 @@
             'b3_lost_password_message',
             'b3_lost_password_subject',
             'b3_lost_password_page_id', // set on activate
+            'b3_main_logo',
             'b3_new_user_message',
             'b3_new_user_notification_addresses', // @TODO: check
             'b3_new_user_subject',
@@ -54,7 +56,6 @@
             'b3_privacy',
             'b3_privacy_page',
             'b3_privacy_text',
-            'b3_recaptcha_login', // @TODO: delete
             'b3_recaptcha_on',
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
