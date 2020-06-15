@@ -49,18 +49,18 @@
      *
      * @since 1.0.6
      *
-     * @param array $definitions
+     * @param array $page_definitions
      * @param bool  $create_new_site
      */
-    function b3_create_pages( $definitions = array(), $create_new_site = false ) {
-        foreach ( $definitions as $slug => $page ) {
+    function b3_create_pages( $page_definitions = array(), $create_new_site = false ) {
+        foreach ( $page_definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
             $stored_id = get_option( $slug, false );
             if ( $stored_id ) {
                 $check_page = get_post( $stored_id );
                 if ( ! $check_page ) {
-                    delete_option( $slug );
+                    delete_option( $page[ 'meta' ] );
                 }
             } else {
                 // no stored id, so continue
@@ -76,9 +76,11 @@
                 $existing_page = get_posts( $existing_page_args );
             }
             if ( ! empty( $existing_page ) ) {
-                $page_id     = $existing_page[ 0 ]->ID;
-                $page_object = get_post( $page_id );
-                $meta        = get_post_meta( $page_id, '_b3_page', true );
+                $add_shortcode = false;
+                $page_id       = $existing_page[ 0 ]->ID;
+                $page_object   = get_post( $page_id );
+                $meta          = get_post_meta( $page_id, '_b3_page', true );
+
                 if ( false != $meta ) {
                     // page has _b3_page meta
                     update_option( $page[ 'meta' ], $page_id );
