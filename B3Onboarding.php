@@ -74,7 +74,7 @@
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
-                add_action( 'login_head',                           array( $this, 'b3_add_login_styling' ) );
+                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_login_styling' ), 20 );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
