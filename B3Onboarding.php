@@ -83,7 +83,6 @@
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
-                add_action( 'init',                                 array( $this, 'b3_redirect_out_of_admin' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
@@ -842,19 +841,6 @@
             ## REDIRECTS
 
             /*
-             * Redirect away from admin
-             */
-            public function b3_redirect_out_of_admin() {
-                error_log('HIT b3_redirect_out_of_admin() ');
-                // get current_roles
-                if ( is_admin() && ! defined( 'DOING_AJAX' ) && ( ! current_user_can( 'manage_options' ) ) ) {
-                    wp_redirect( b3_get_account_url() );
-                    exit;
-                }
-            }
-
-
-            /*
              * Protect some pages
              */
             public function b3_template_redirect() {
@@ -940,44 +926,35 @@
             public function b3_redirect_to_custom_profile() {
                 global $current_user, $pagenow;
                 if ( is_user_logged_in() && is_admin() ) {
-
-                    $allow_admin  = array( 'administrator' );
-                    $themed_users = array( 'subscriber' );
-                    $redirect_to  = '';
-                    if ( in_array( $themed_users, $current_user->roles ) ) {
-                        $page_link = b3_get_account_url();
-                        if ( false != $page_link ) {
-                            $redirect_to = $page_link;
-                        } else {
-                            $redirect_to = get_home_url();
-                        }
+                    $account_url = b3_get_account_url();
+                    if ( false != $account_url ) {
+                        $redirect_to = $account_url;
+                    } else {
+                        $redirect_to = get_home_url();
                     }
 
                     $user_role = reset( $current_user->roles );
-
                     if ( is_multisite() && empty( $user_role ) ) {
+                        // or get default role
                         $user_role = 'subscriber';
                     }
 
                     if ( 'profile.php' == $pagenow && ! isset( $_REQUEST[ 'page' ] ) ) {
-                        if ( in_array( $themed_users, $current_user->roles ) ) {
-                            if ( ! empty( $_GET ) ) {
-                                $redirect_to = add_query_arg( (array) $_GET, $redirect_to );
-                            }
-                            wp_safe_redirect( $redirect_to );
-                            exit;
+                        if ( isset( $_GET[ 'redirect_to' ] ) && ! empty( $_GET[ 'redirect_to' ] ) ) {
+                            $redirect_to = add_query_arg( 'redirect_to', $_GET[ 'redirect_to' ], $redirect_to );
                         }
+                        wp_safe_redirect( $redirect_to );
+                        exit;
                     } else {
-                        if ( ! in_array( $user_role, $allow_admin ) ) {
+                        if ( in_array( $user_role, get_option( 'b3_restrict_admin', [] ) ) ) {
                             if ( ! defined( 'DOING_AJAX' ) ) {
-                                wp_safe_redirect( $redirect_to ); // to profile
+                                wp_safe_redirect( $redirect_to );
                                 exit;
                             }
                         }
                     }
                 }
             }
-
 
 
             /**
