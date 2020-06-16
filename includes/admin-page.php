@@ -101,7 +101,15 @@
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
-                            <button class="b3_tab-button<?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
+                            <?php
+                                $hide_wordpress = false;
+                                if ( 'wordpress' == $tab[ 'id' ] ) {
+                                    if ( 1 != get_option( 'b3_style_wordpress_forms', false ) ) {
+                                        $hide_wordpress = ' hidden';
+                                    }
+                                }
+                            ?>
+                            <button class="b3_tab-button b3_tab-button--<?php echo $tab[ 'id' ]; ?><?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?><?php echo $hide_wordpress; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
                                 <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
                                     <i class="dashicons dashicons-<?php echo $tab[ 'icon' ]; ?>"></i>
                                 <?php } ?>
