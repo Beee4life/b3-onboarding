@@ -75,13 +75,8 @@
 }
 
 .b3_input-options {
-    position: relative;
-}
-
-.b3_input-option {
     display: inline-block;
 }
-
 
 /* Links in form footer */
 ul.b3_form-links {
