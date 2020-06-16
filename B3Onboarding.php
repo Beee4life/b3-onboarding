@@ -249,6 +249,7 @@
                 update_option( 'b3_request_access_message_user', b3_get_request_access_message_user() );
                 update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                 update_option( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                update_option( 'b3_version', $this->settings[ 'version' ] );
 
                 if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
                     update_option( 'b3_privacy_page', get_option( 'wp_page_for_privacy_policy' ) );
@@ -279,23 +280,6 @@
                 } else {
                     update_option( 'users_can_register', '0' );
                 }
-
-                if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
-                    $meta_keys = b3_get_all_custom_meta_keys();
-                    foreach( $meta_keys as $key ) {
-                        delete_option( $key );
-                    }
-                }
-
-                $roles = array(
-                    'b3_activation',
-                    'b3_approval',
-                );
-                // @TODO: change user role for users with this role.
-                foreach( $roles as $role ) {
-                    remove_role( $role );
-                }
-
             }
 
 
