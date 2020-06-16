@@ -1200,3 +1200,20 @@
 
         return $message;
     }
+
+
+    /**
+     * Reserved usernames
+     *
+     * @since 2.0.1 @TODO
+     *
+     * @return string[]
+     */
+    function b3_get_reserved_usernames() {
+        $reserved_user_names = [
+            'admin',
+            'administrator',
+        ];
+
+        return $reserved_user_names;
+    }
