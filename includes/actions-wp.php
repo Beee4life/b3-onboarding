@@ -39,7 +39,9 @@
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( isset( $field[ 'id' ] ) ) {
-                    update_user_meta( $user_id, $field[ 'id' ], $_POST[ $field[ 'id' ] ] );
+                    if ( ! empty( $_POST[ $field[ 'id' ] ] ) ) {
+                        update_user_meta( $user_id, $field[ 'id' ], $_POST[ $field[ 'id' ] ] );
+                    }
                 }
             }
         }
