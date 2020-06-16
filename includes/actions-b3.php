@@ -39,9 +39,20 @@
      */
     function b3_do_stuff_after_user_activated( $user_id ) {
         if ( 1 != get_option( 'b3_disable_admin_notification_new_user', false ) ) {
-            wp_new_user_notification( $user_id, null, 'admin' );
+            // send 'new user' email to admin
+            $user          = get_userdata( $user_id );
+            $admin_to      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( 'email_activation' ) );
+            $admin_subject = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
+            $admin_email   = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
+            $admin_email   = b3_replace_template_styling( $admin_email );
+            $admin_email   = strtr( $admin_email, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $admin_email   = htmlspecialchars_decode( stripslashes( $admin_email ) );
+            $admin_message = $admin_email;
+
+            wp_mail( $admin_to, $admin_subject, $admin_message, array() );
         }
-        // send activate email to user
+
+        // send 'account activated' email to user
         if ( 'email_activation' == get_option( 'b3_registration_type', false ) ) {
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
