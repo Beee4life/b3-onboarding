@@ -71,7 +71,7 @@
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
 
             } elseif ( in_array( $registration_type, [ 'email_activation' ] ) ) {
-                // we don't want the email when a user registers, but only when he activates
+                // we don't want the email when a user registers, but only when he/she activates
                 return false;
 
             } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
@@ -220,7 +220,7 @@
             'reset_url' => network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n",
         ];
         $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars( $vars ) );
+        $message = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
 
         return $message;
 
