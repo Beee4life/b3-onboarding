@@ -1,5 +1,12 @@
-<?php $email_styling = get_option( 'b3_email_styling', false ); ?>
-<table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
+<?php
+    /*
+     * Input fields for email styling
+     *
+     * @since 1.0.0
+     */
+    $stored_email_styling = get_option( 'b3_email_styling', false );
+?>
+<table class="b3_table b3_table--emails">
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
@@ -11,7 +18,7 @@
             <label for="b3__input--email-styling" class=""><?php esc_html_e( 'Email styling', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo b3_default_email_styling(); ?>" rows="4"><?php if ( $email_styling ) { echo $email_styling; } ?></textarea>
+            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ); ?>" rows="6"><?php if ( $stored_email_styling ) { echo $stored_email_styling; } ?></textarea>
         </td>
     </tr>
     <tr>

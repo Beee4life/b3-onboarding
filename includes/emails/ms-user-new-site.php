@@ -1,4 +1,11 @@
-<table class="b3_table b3_table--emails" border="0" cellpadding="0" cellspacing="0">
+<?php
+    /*
+     * Input fields for 'User registers site' mail (admin)
+     *
+     * @since 1.0.0
+     */
+?>
+<table class="b3_table b3_table--emails">
     <tbody>
     <tr>
         <th>
@@ -13,7 +20,7 @@
             <label for="b3__input--password-changed-content" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <textarea id="b3__input--password-changed-content" name="b3_input_password_change_content" rows="4"></textarea>
+            <textarea id="b3__input--password-changed-content" name="b3_input_password_change_content" rows="6"></textarea>
         </td>
     </tr>
     <tr>

@@ -3,33 +3,106 @@
     display: none;
 }
 
+button,
+input,
+select,
+textarea {
+    /* copied from twentytwelve */
+    border:        1px solid #ccc;
+    border-radius: 3px;
+    font-family:   inherit;
+    padding:       6px;
+    padding:       0.428571429rem;
+}
+
+/* Error message */
 .b3_message {
-    border:    1px dashed black;
-    padding:   5px 10px;
-    word-wrap: initial;
+    border:        1px dashed black;
+    box-sizing:    border-box;
+    margin-bottom: 2em;
+    padding:       5px 10px;
+    position:      relative;
+    word-wrap:     initial;
 }
 
+.b3_message p {
+    margin: 0;
+}
+
+/* used on front-end profile only */
+.b3_message .error__close {
+    position:      absolute;
+    font-size:     80%;
+    top:           0;
+    right:         0;
+    padding-top:   0.5em;
+    padding-right: 1em;
+}
+
+.b3_message .error__close:hover {
+    cursor: pointer;
+}
+
+/* Forms */
 .b3_page form {
-    margin: 0 auto;
-    width:  600px;
-}
-
-.b3_page form label {
-}
-
-.b3_page form input {
-    box-sizing: border-box;
     width: 100%;
+    max-width: 600px;
+}
+
+.b3_page form input[type="text"],
+.b3_page form input[type="email"] {
+    box-sizing: border-box;
+}
+
+.b3_page form input[name="b3_delete_account"] {
+    vertical-align: middle;
+}
+
+.b3_page form .password-hint,
+.b3_page form .rememberme-wrap {
+    margin-bottom: 2em;
+}
+
+.b3_page form input#rememberme {
+    margin-left: 0;
 }
 
 .b3_page .b3_form-label {
-    display: inline-block;
-    width:   200px;
+    display:        inline-block;
+    width:          220px;
 }
 
+.b3_page .b3_form-element--checkbox .b3_form-label,
+.b3_page .b3_form-element--radio .b3_form-label {
+    vertical-align: top;
+}
+
+.b3_page .b3_form-element--textarea .b3_form-label {
+    margin-top: 10px;
+}
+
+/* Label on password reset input */
+.b3_page .b3_form-label--email {
+    width: 150px;
+}
+
+.b3_form-element {
+    margin-bottom: 2em;
+}
+
+.b3_page--login .b3_form-element--submit {
+    margin-bottom: 1em;
+}
+
+.b3_input-options {
+    display: inline-block;
+}
+
+/* Links in form footer */
 ul.b3_form-links {
-    list-style: none;
-    position:   relative;
+    list-style:   none;
+    padding-left: 0;
+    position:     relative;
 }
 
 ul.b3_form-links li {
@@ -49,10 +122,16 @@ ul.b3_form-links li:last-child {
     border-right: 0;
 }
 
-.b3_form-element {
-    margin-bottom: 2em;
+/* User approval page */
+.b3_table--user th {
+    text-align: left;
 }
 
+.b3_table--account tr td:first-child {
+    width: 175px;
+}
+
+/* Password strength */
 #pass-strength-result {
     background-color: #eee;
     border:           1px solid #ddd;
@@ -63,10 +142,6 @@ ul.b3_form-links li:last-child {
     text-align:       center;
     width:            100%;
     opacity:          0;
-}
-
-.b3_table--user th {
-    text-align: left;
 }
 
 #pass-strength-result.short {
@@ -135,7 +210,17 @@ ul.b3_form-links li:last-child {
     display: inline-block;
 }
 
-.hide,
+/* Admin topbar notification for user approval */
+#wpadminbar .topbar_approve_user a.ab-item {
+    color: #ee6102;
+}
+
+/* Misc */
+.widget .widget-no-settings {
+    border:  1px dashed red;
+    padding: 5px 10px;
+}
+
 .hidden {
     display: none;
 }

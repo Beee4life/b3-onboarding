@@ -1,33 +1,35 @@
+<?php
+    /**
+     * Ouptuts fields for lost password form
+     *
+     * @since 1.0.0
+     */
+
+    $localhost_email = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : '';
+?>
 <div class="b3_page b3_page--lostpass">
-    <?php if ( count( $attributes[ 'errors' ] ) > 0 ) { ?>
-        <?php foreach ( $attributes[ 'errors' ] as $error ) { ?>
-            <p class="b3_message">
-                <?php echo $error; ?>
-            </p>
-        <?php } ?>
-    <?php } ?>
-    
     <?php if ( $attributes[ 'title' ] ) { ?>
-        <h3><?php esc_html_e( 'Forgot password', 'b3-onboarding' ); ?></h3>
+        <h3>
+            <?php echo $attributes[ 'title' ]; ?>
+        </h3>
     <?php } ?>
-    
-    <form id="forgotpasswordform" class="b3_form b3_form--register" action="<?php echo wp_lostpassword_url(); ?>" method="post">
-        <input name="b3_forgot_pass" value="<?php echo wp_create_nonce( 'b3-forgot-pass' ); ?>" type="hidden" />
 
-        <p class="b3_message">
-            <?php esc_html_e( "Enter your email address and we'll send you a link you can use to pick a new password.", 'b3-onboarding' ); ?>
-        </p>
+    <form id="lostpasswordform" class="b3_form b3_form--register" action="<?php echo wp_lostpassword_url(); ?>" method="post">
+        <input name="b3_lost_pass" value="<?php echo wp_create_nonce( 'b3-lost-pass' ); ?>" type="hidden" />
+        <input name="b3_form" value="custom" type="hidden" />
 
-        <p class="form-row">
-            <label for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
-            <input type="text" name="user_login" id="b3_user_email" value="<?php echo ( defined( 'WP_TESTING' ) && true == WP_TESTING ) ? 'test@xxx.com' : false; ?>" required>
-        </p>
+        <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
-        <p class="forgotpassword-submit">
-            <input type="submit" name="submit" class="button button-primary button--forgotpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
-        </p>
-    
-        <?php echo b3_form_links( 'forgotpassword' ); ?>
+        <div class="b3_form-element">
+            <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
+            <input type="text" name="user_login" id="b3_user_email" value="<?php echo $localhost_email; ?>" required>
+        </div>
+
+        <div class="b3_form-element b3_form-element--submit">
+            <input type="submit" class="button button-primary button--lostpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
+        </div>
+
+        <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
     </form>
 
 </div>
