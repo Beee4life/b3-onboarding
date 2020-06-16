@@ -1096,6 +1096,8 @@
         $time_format = get_option( 'time_format' );
         $timezone    = get_option( 'timezone_string' );
 
+
+        $registration_date = gmdate( $date_format . ' @ ' . $time_format, time());
         if ( false != $date_time_gmt ) {
             if ( ! empty( $timezone ) ) {
                 $new_date = new DateTime( $date_time_gmt, new DateTimeZone( 'UTC' ) );
