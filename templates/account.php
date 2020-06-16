@@ -95,7 +95,7 @@
                 <td>
                     <!-- Workaround : https://core.trac.wordpress.org/ticket/24364 -->
                     <input class="hidden" value=" " />
-                    <button type="button" class="button button-secondary wp-generate-pw hide-if-no-js"><?php _e( 'Generate Password', 'b3-onboarding' ); ?></button>
+                    <button type="button" class="button button-secondary button--small wp-generate-pw hide-if-no-js"><?php _e( 'Generate Password', 'b3-onboarding' ); ?></button>
                     <div class="wp-pwd hide-if-js">
                         <span class="password-input-wrapper">
                             <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php echo esc_attr( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
@@ -103,11 +103,11 @@
                             <small><?php _e( 'You can also enter your own password', 'sexdates' ); ?></small>
                         </span>
                         <div style="display:none" id="pass-strength-result" aria-live="polite"></div>
-                        <button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'b3-onboarding' ); ?>">
+                        <button type="button" class="button button-secondary button--small wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'b3-onboarding' ); ?>">
                             <span class="dashicons dashicons-hidden"></span>
                             <span class="text"><?php _e( 'Hide', 'b3-onboarding' ); ?></span>
                         </button>
-                        <button type="button" class="button button-secondary wp-cancel-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Cancel password change', 'b3-onboarding' ); ?>">
+                        <button type="button" class="button button-secondary button--small wp-cancel-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Cancel password change', 'b3-onboarding' ); ?>">
                             <span class="text"><?php _e( 'Cancel', 'b3-onboarding' ); ?></span>
                         </button>
                     </div>
@@ -154,7 +154,7 @@
             <input type="hidden" name="action" value="profile" />
             <input type="hidden" name="instance" value="1" />
             <input type="hidden" name="user_id" id="user_id" value="<?php echo $current_user->ID; ?>" />
-            <input type="submit" class="button button--small" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
+            <input type="submit" class="button button--small button--submit" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
         </div>
 
     </form>
