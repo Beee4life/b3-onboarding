@@ -48,7 +48,7 @@
                     <label for="b3_user_may_delete"><?php esc_html_e( 'User may delete account', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_user_may_delete" name="b3_user_may_delete" value="1" <?php if ( $user_may_delete ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to allow the user to delete his/her account (through custom pages).', 'b3-onboarding' ); ?>
+                    <input type="checkbox" id="b3_user_may_delete" name="b3_user_may_delete" value="1" <?php if ( $user_may_delete ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to allow the user to delete his/her account (only through custom forms).', 'b3-onboarding' ); ?>
                 </div>
             <?php b3_get_close(); ?>
 
