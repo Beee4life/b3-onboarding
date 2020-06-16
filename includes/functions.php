@@ -1073,14 +1073,20 @@
      * @return bool|mixed|void
      */
     function b3_get_user_approval_link( $return_id = false ) {
-        $id = get_option( 'b3_approval_page_id', false );
-        if ( false != $id ) {
-            if ( true == $return_id ) {
-                return $id;
+        if ( true == get_option( 'b3_front_end_approval' ) ) {
+            $id = get_option( 'b3_approval_page_id', false );
+            if ( false != $id ) {
+                if ( true == $return_id ) {
+                    return $id;
+                }
+                if ( get_post( $id ) ) {
+                    return get_the_permalink( $id );
+                } else {
+                    return network_admin_url( 'admin.php?page=b3-user-approval' );
+                }
             }
-            if ( get_post( $id ) ) {
-                return get_the_permalink( $id );
-            }
+        } else {
+            return network_admin_url( 'admin.php?page=b3-user-approval' );
         }
 
         return false;
