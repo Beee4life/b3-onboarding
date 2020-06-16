@@ -202,6 +202,20 @@
 
 
             /**
+             * Do stuff upon plugin deactivation
+             */
+            public function b3_plugin_deactivation() {
+                // set registration option accordingly
+                $registration_type = get_option( 'b3_registration_type', false );
+                if ( 'closed' != $registration_type ) {
+                    update_option( 'users_can_register', '1' );
+                } else {
+                    update_option( 'users_can_register', '0' );
+                }
+            }
+
+
+            /**
              * Set default settings
              *
              * @since 2.0.0
@@ -268,20 +282,6 @@
                     restore_current_blog();
                 }
             }
-
-            /**
-             * Do stuff upon plugin activation
-             */
-            public function b3_plugin_deactivation() {
-                // set registration option accordingly
-                $registration_type = get_option( 'b3_registration_type', false );
-                if ( 'closed' != $registration_type ) {
-                    update_option( 'users_can_register', '1' );
-                } else {
-                    update_option( 'users_can_register', '0' );
-                }
-            }
-
 
             /**
              * Load plugin text domain
@@ -769,6 +769,7 @@
                                             if ( false != $reset_password_url ) {
                                                 $redirect_url = $reset_password_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
+                                                $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                                 // @TODO: also add to wp form register + MU register
                                             } else {
                                                 $login_url    = b3_get_login_url();
