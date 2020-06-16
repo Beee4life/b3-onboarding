@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.0.0 - released 14.06.20 (tbc)
+2.0.0 - released 16.06.20
 
 <a name="features"></a>
 ### Features
@@ -139,7 +139,11 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-2.0.0
+2.0.1
+* added release dates in readme
+* added reserved usernames
+
+2.0.0 (14.06.20)
 * replaced deprecated contextual_help
 * escape user input for storage
 * more emails to set
@@ -151,35 +155,35 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboarding/blob/master/CHANGELOG.MD).
 
-1.0.6
+1.0.6 (03.12.19)
 * fix incorrect fallback link for lost password
 
-1.0.5
+1.0.5 (28.03.19)
 * fix broken user ID on dashboard
 * update css
 * add redirect to login form
 
-1.0.4
+1.0.4 (27.03.19)
 * protect function in uninstall.php
 * always return html as content type
 * remove table from login form
 
-1.0.3
+1.0.3 (19.03.19)
 * update version
 
-1.0.2
+1.0.2 (19.03.19)
 * remove log errors
 
-1.0.1
+1.0.1 (19.03.19)
 * change password reset link in password reset email
 * create function to retrieve password reset url/page/link
 
-1.0.0
+1.0.0 (17.03.19)
 * version change to (hopefully) avoid composer issues
 * clean up of unused code
 * clean up of commented code
 
-0.9-beta
+0.9-beta (17.03.19)
 * add more email settings
 * clean up actions/filters
 * refactor registration form
@@ -188,9 +192,9 @@ Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboa
 * output b3_* option values on debug page
 * add dashboard widget
 
-0.8-beta
+0.8-beta (14.03.19)
 * add first/last name to request access
 * option to make first/last name required
 
-0.7-beta
+0.7-beta (04.03.19)
 * first decent release
