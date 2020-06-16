@@ -233,6 +233,7 @@
                 update_option( 'b3_account_activated_message', b3_get_account_activated_message_user() );
                 update_option( 'b3_account_approved_message', b3_get_account_approved_message() );
                 update_option( 'b3_account_rejected_message', b3_get_account_rejected_message() );
+                update_option( 'b3_activate_custom_emails', 1 );
                 update_option( 'b3_dashboard_widget', 1 );
                 update_option( 'b3_disable_wordpress_forms', 1 );
                 update_option( 'b3_email_activation_message', b3_get_email_activation_message_user() );
@@ -247,7 +248,6 @@
                 update_option( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
                 update_option( 'b3_request_access_message_user', b3_get_request_access_message_user() );
                 update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
-                update_option( 'b3_sidebar_widget', 1 );
                 update_option( 'b3_welcome_user_message', b3_get_welcome_user_message() );
 
                 if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
@@ -280,7 +280,6 @@
                     update_option( 'users_can_register', '0' );
                 }
 
-                $meta_keys = array();
                 if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
                     $meta_keys = b3_get_all_custom_meta_keys();
                     foreach( $meta_keys as $key ) {
