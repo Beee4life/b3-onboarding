@@ -62,7 +62,7 @@
                     $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                     break;
                 case 'styling':
-                    $css = apply_filters( 'b3_email_styling', b3_get_email_styling() );
+                    $css = apply_filters( 'b3_email_styling', b3_get_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) );
                     break;
                 default:
                     $message = 'OOPS';

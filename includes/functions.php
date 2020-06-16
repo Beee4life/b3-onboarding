@@ -257,7 +257,7 @@
         if ( false != $custom_css ) {
             $email_style = $custom_css;
         } else {
-            $email_style = b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) );
+            $email_style = b3_default_email_styling( $link_color );
         }
 
         return $email_style;
