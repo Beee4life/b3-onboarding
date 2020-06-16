@@ -28,10 +28,10 @@
             <input type="password" name="pass2" id="pass2" class="input" size="20" value="" autocomplete="off" />
         </div>
 
-        <p class="description"><?php echo wp_get_password_hint(); ?></p>
+        <p class="password-hint"><?php echo wp_get_password_hint(); ?></p>
 
-        <p class="resetpass-submit">
+        <div class="b3_form-element b3_form-element--submit">
             <input type="submit" id="resetpass-button" class="button" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>" />
-        </p>
+        </div>
     </form>
 </div>

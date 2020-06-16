@@ -46,6 +46,11 @@
     vertical-align: middle;
 }
 
+.b3_page form .password-hint,
+.b3_page form .rememberme-wrap {
+    margin-bottom: 2em;
+}
+
 .b3_page form input#rememberme {
     margin-left: 0;
 }
@@ -56,8 +61,7 @@
 }
 
 .b3_page .b3_form-element--checkbox .b3_form-label,
-.b3_page .b3_form-element--radio .b3_form-label,
-.b3_page .b3_form-element--xtextarea .b3_form-label {
+.b3_page .b3_form-element--radio .b3_form-label {
     vertical-align: top;
 }
 
@@ -72,6 +76,10 @@
 
 .b3_form-element {
     margin-bottom: 2em;
+}
+
+.b3_page--login .b3_form-element--submit {
+    margin-bottom: 1em;
 }
 
 .b3_input-options {

@@ -25,9 +25,9 @@
             <input type="text" name="user_login" id="b3_user_email" value="<?php echo $localhost_email; ?>" required>
         </div>
 
-        <p class="lostpassword-submit">
+        <div class="b3_form-element b3_form-element--submit">
             <input type="submit" class="button button-primary button--lostpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
-        </p>
+        </div>
 
         <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
     </form>
