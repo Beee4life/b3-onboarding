@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.0.1 - released 15.06.20
+2.0.2 - released 15.06.20
 
 <a name="features"></a>
 ### Features
@@ -139,6 +139,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.0.2
+* Forgot to properly change version number
+
 2.0.1
 * fixed incorrect redirect
 * change user approval cap to promote users
