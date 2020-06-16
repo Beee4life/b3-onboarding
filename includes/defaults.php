@@ -11,6 +11,14 @@
 
         if ( false != $link_color ) {
             $default_css .= "\n";
+            $default_css .= '/*';
+            $default_css .= "\n";
+            $default_css .= 'This is the color definition which can be filtered.';
+            $default_css .= "\n";
+            $default_css .= '#b3_email_main is added so it overrides the previous definition.';
+            $default_css .= "\n";
+            $default_css .= '*/';
+            $default_css .= "\n";
             $default_css .= '#b3_email_main a:link,' . "\n";
             $default_css .= '#b3_email_main a:visited,' . "\n";
             $default_css .= '#b3_email_main a:active {' . "\n";
