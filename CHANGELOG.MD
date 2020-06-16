@@ -50,6 +50,7 @@ Any [feedback][github-issues] is welcome.
 * [X] added more filters
     * [X] added filter to add custom fields to forms
     * [X] added filter to add hidden fields to forms
+    * [X] added filter to add custom links to sidebar widget
 * [X] added more hooks
     * [X] added more hooks to add custom code to forms
 * [X] rewrote code (parts) to comply with [WordPress Plugin Guidelines][guidelines]
