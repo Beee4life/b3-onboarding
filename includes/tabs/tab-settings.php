@@ -39,7 +39,8 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php b3_get_settings_field_open(); ?>
+                    <?php $hide_wordpress_checkbox = ( 1 == get_option( 'b3_disable_wordpress_forms', false ) ) ? 'hidden' : false; ?>
+                    <?php b3_get_settings_field_open($hide_wordpress_checkbox, 'wp-forms' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_style_wordpress_forms"><?php esc_html_e( 'Style Wordpress forms', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>

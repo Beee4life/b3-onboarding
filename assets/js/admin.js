@@ -26,6 +26,24 @@ jQuery(document).ready(function() {
 (function($) {
     $(document).ready(function() {
 
+        var $wordpress_setting = '.b3_settings-field--wp-forms';
+        $('#b3_disable_wordpress_forms').change(function() {
+            if (document.getElementById('b3_disable_wordpress_forms').checked) {
+                $($wordpress_setting).addClass('hidden');
+            } else {
+                $($wordpress_setting).removeClass('hidden');
+            }
+        });
+
+        var $wordpress_info = '.b3_settings-input-description--wp-style';
+        $('#b3_style_wordpress_forms').change(function() {
+            if (document.getElementById('b3_style_wordpress_forms').checked) {
+                $($wordpress_info).removeClass('hidden');
+            } else {
+                $($wordpress_info).addClass('hidden');
+            }
+        });
+
         var $first_last = '.b3_settings-field--first-last-required';
         $('#b3_activate_first_last').change(function() {
             if (document.getElementById('b3_activate_first_last').checked) {
@@ -50,15 +68,6 @@ jQuery(document).ready(function() {
                 $($recaptcha_info).removeClass('hidden');
             } else {
                 $($recaptcha_info).addClass('hidden');
-            }
-        });
-
-        var $wordpress_info = '.b3_settings-input-description--wp-style';
-        $('#b3_style_wordpress_forms').change(function() {
-            if (document.getElementById('b3_style_wordpress_forms').checked) {
-                $($wordpress_info).removeClass('hidden');
-            } else {
-                $($wordpress_info).addClass('hidden');
             }
         });
 
