@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.0.0 - released 14.06.20 (tbc)
+2.0.1 - released 15.06.20
 
 <a name="features"></a>
 ### Features
@@ -139,6 +139,12 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.0.1
+* fixed incorrect redirect
+* change user approval cap to promote users
+* always return admin approval page in toolbar
+* add forgotten meta keys for plugin delete
+
 2.0.0
 * replaced deprecated contextual_help
 * escape user input for storage
