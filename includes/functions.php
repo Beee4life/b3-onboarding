@@ -17,6 +17,7 @@
             'b3_account_page_id', // set on activate
             'b3_account_rejected_message',
             'b3_account_rejected_subject',
+            'b3_activate_custom_emails',
             'b3_activate_first_last',
             'b3_activate_recaptcha',
             'b3_approval_page_id',
