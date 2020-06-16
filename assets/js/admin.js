@@ -35,12 +35,12 @@ jQuery(document).ready(function() {
             }
         });
 
-        var $wordpress_info = '.b3_settings-input-description--wp-style';
+        var $wordpress_tab = '.b3_tab-button--wordpress';
         $('#b3_style_wordpress_forms').change(function() {
             if (document.getElementById('b3_style_wordpress_forms').checked) {
-                $($wordpress_info).removeClass('hidden');
+                $($wordpress_tab).removeClass('hidden');
             } else {
-                $($wordpress_info).addClass('hidden');
+                $($wordpress_tab).addClass('hidden');
             }
         });
 
