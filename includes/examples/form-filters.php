@@ -305,3 +305,26 @@
     }
     // add_filter( 'b3_disable_action_links', 'b3_disable_action_links_example' );
 
+
+    /**
+     * Extend reserved usernames
+     *
+     * @since 2.0.x TODO
+     *
+     * @param $existing_user_names
+     *
+     * @return array
+     */
+    function b3_reserved_usernames_example( $existing_user_names ) {
+
+        $new_usernames = [
+            'username1',
+            'username2',
+        ];
+
+        $user_names = array_merge( $existing_user_names, $new_usernames );
+
+        return $user_names;
+    }
+    // add_filter( 'b3_reserved_usernames', 'b3_reserved_usernames_example' );
+
