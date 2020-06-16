@@ -3,6 +3,18 @@
     display: none;
 }
 
+button,
+input,
+select,
+textarea {
+    /* copied from twentytwelve */
+    border:        1px solid #ccc;
+    border-radius: 3px;
+    font-family:   inherit;
+    padding:       6px;
+    padding:       0.428571429rem;
+}
+
 /* Error message */
 .b3_message {
     border:        1px dashed black;
