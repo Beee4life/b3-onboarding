@@ -132,7 +132,7 @@
      * @param $wp_admin_bar
      */
     function b3_add_toolbar( $wp_admin_bar ) {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( current_user_can( 'promote_users' ) ) {
             if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                 $approval_args  = array( 'role' => 'b3_approval' );
                 $approval_users = get_users( $approval_args );

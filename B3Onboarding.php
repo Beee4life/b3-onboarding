@@ -473,7 +473,7 @@
                 include( 'includes/admin-page.php' ); // content for the settings page
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '81' );
                 include( 'includes/user-approval-page.php' ); // content for the settings page
-                add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
                 if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
                     include( 'includes/debug-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );

@@ -1,13 +1,13 @@
 <?php
 
     /**
-     * Content for the 'settings page'
+     * Content for the 'user approval page'
      *
      * @since 1.0.0
      */
     function b3_user_approval() {
 
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( 'promote_users' ) ) {
             wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-onboarding' ) );
         }
         ?>
