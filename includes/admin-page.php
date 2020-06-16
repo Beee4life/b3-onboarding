@@ -98,23 +98,6 @@
                                 'icon'    => 'plus-alt',
                             );
                         }
-
-                        $feedback_counter = get_option( 'b3_feedback_sent', 0 );
-                        if ( 0 == $feedback_counter ) {
-                            $show_feedback_tab = true;
-                        } elseif ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
-                            if ( 2 > $feedback_counter ) {
-                                $show_feedback_tab = true;
-                            }
-                        }
-                        if ( isset( $show_feedback_tab ) && true == $show_feedback_tab ) {
-                            $tabs[] = array(
-                                'id'      => 'feedback',
-                                'title'   => esc_html__( 'Feedback', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'feedback' ),
-                                'icon'    => 'megaphone',
-                            );
-                        }
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
