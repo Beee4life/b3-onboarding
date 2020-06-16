@@ -27,7 +27,7 @@
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
-        $subject = 'User changed password'; // default: [blog name] Password changed
+        $subject = __( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
 
         $wp_password_change_notification_email[ 'subject' ] = $subject;
         $wp_password_change_notification_email[ 'message' ] = $message;
