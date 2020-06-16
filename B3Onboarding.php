@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.0.0
+    Version:            2.0.1
     Requires at least:  4.3
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.0.0',
+                    'version' => '2.0.1',
                 );
 
                 // actions
@@ -1335,6 +1335,9 @@
                     case 'username_exists':
                         return esc_html__( 'This username is already in use.', 'b3-onboarding' );
 
+                    case 'reserved_username':
+                        return esc_html__( 'That user name is reserved.', 'b3-onboarding' );
+
                     case 'invalid_email':
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
 
@@ -1451,6 +1454,12 @@
 
                 if ( username_exists( $user_login ) ) {
                     $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
+
+                    return $errors;
+                }
+
+                if ( in_array( $user_login, apply_filters( 'b3_reserved_usernames', b3_get_reserved_usernames() ) ) ) {
+                    $errors->add( 'reserved_username', $this->b3_get_return_message( 'reserved_username' ) );
 
                     return $errors;
                 }
