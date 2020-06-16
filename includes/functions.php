@@ -34,6 +34,9 @@
             'b3_email_styling', // set on activate
             'b3_email_template', // set on activate
             'b3_first_last_required',
+            'b3_forgot_password_message',
+            'b3_forgot_password_subject',
+            'b3_forgotpass_page_id',
             'b3_front_end_approval',
             'b3_hide_admin_bar',
             'b3_link_color',
