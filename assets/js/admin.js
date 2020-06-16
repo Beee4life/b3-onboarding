@@ -85,7 +85,7 @@ jQuery(document).ready(function() {
 
         var $front_end_approval = '.b3_settings-input-description--approval';
         $('#b3_activate_frontend_approval').change(function() {
-            if (document.getElementById('b3_activate_custom_emails').checked) {
+            if (document.getElementById('b3_activate_frontend_approval').checked) {
                 $($front_end_approval).removeClass('hidden');
             } else {
                 $($front_end_approval).addClass('hidden');
