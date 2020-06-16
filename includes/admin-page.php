@@ -32,7 +32,7 @@
             <?php } else { ?>
 
                 <h1 id="b3__admin-title">
-                    <?php _e( 'Onboarding settings', 'b3-onboarding' ); ?>
+                    <?php _e( 'B3 OnBoarding settings', 'b3-onboarding' ); ?>
                 </h1>
 
                 <?php B3Onboarding::b3_show_admin_notices(); ?>

@@ -78,4 +78,4 @@
         </div>
         <?php
     }
-    wp_add_dashboard_widget( 'b3-dashboard', 'B3 Onboarding', 'b3_dashboard_widget_function' );
+    wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding', 'b3_dashboard_widget_function' );

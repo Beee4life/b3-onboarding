@@ -27,4 +27,4 @@
             </div>
         <?php }
     }
-    wp_add_dashboard_widget( 'b3-dashboard-debug', 'B3 Onboarding (debug)', 'b3_dashboard_widget_debug_function' );
+    wp_add_dashboard_widget( 'b3-dashboard-debug', 'B3 OnBoarding (debug)', 'b3_dashboard_widget_debug_function' );

@@ -3,7 +3,6 @@ Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
 Tested up to: 5.4.2
-Requires PHP: 7.0
 Stable tag: 2.0.0
 License: GNU v3
 License: GPLv2 or later
@@ -24,7 +23,7 @@ There are a ton of things, which you can set through the admin pages or with the
 
 1. Download the [latest release](https://github.com/Beee4life/b3-onboarding/archive/master.zip).
 1. Copy the `b3-onboarding` folder into your `wp-content/plugins` folder.
-1. Activate the `B3 Onboarding` plugin via the plugins admin page.
+1. Activate the `B3 OnBoarding` plugin via the plugins admin page.
 1. (optional) Change any setting you want.
 
 == Upgrade Notice ==

@@ -4,7 +4,7 @@ User feedback is important. You're experiencing an issue, want a new feature, or
 
 ## Getting Started
 
-* Install the [latest version of B3 Onboarding][latest]
+* Install the [latest version of B3 OnBoarding][latest]
 * Get a [GitHub account][signup] if you don't already have one.
 
 Now you're ready to contribute!

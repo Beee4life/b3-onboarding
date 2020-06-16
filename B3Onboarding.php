@@ -1,6 +1,6 @@
 <?php
     /*
-    Plugin Name:        B3 Onboarding
+    Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
     Version:            2.0.0
@@ -487,12 +487,12 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 Onboarding', 'B3 Onboarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '81' );
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '81' );
                 include( 'includes/user-approval-page.php' ); // content for the settings page
-                add_submenu_page( 'b3-onboarding', __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                 if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
                     include( 'includes/debug-page.php' ); // content for the settings page
-                    add_submenu_page( 'b3-onboarding', __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                 }
             }
 
@@ -1699,7 +1699,7 @@
                 $cu = get_userdata( get_current_user_id() );
                 if ( $cu->user_login != 'Beee' ) {
                     echo sprintf( '<div class="error"><p>You are using an almost finished released version of %s. Use it at your own risk or deactivate it <a href="%s">%s</a> !!!.</p></div>',
-                        'B3 Onboarding',
+                        'B3 OnBoarding',
                         esc_url( admin_url( 'plugins.php?s=b3' ) ),
                         'here'
                     );
