@@ -279,6 +279,24 @@
                 } else {
                     update_option( 'users_can_register', '0' );
                 }
+
+                $meta_keys = array();
+                if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
+                    $meta_keys = b3_get_all_custom_meta_keys();
+                    foreach( $meta_keys as $key ) {
+                        delete_option( $key );
+                    }
+                }
+
+                $roles = array(
+                    'b3_activation',
+                    'b3_approval',
+                );
+                // @TODO: change user role for users with this role.
+                foreach( $roles as $role ) {
+                    remove_role( $role );
+                }
+
             }
 
 
