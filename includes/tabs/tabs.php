@@ -10,7 +10,6 @@
      */
     include( 'tab-emails.php' );
     include( 'tab-recaptcha.php' );
-    include( 'tab-feedback.php' );
     include( 'tab-pages.php' );
     include( 'tab-registration.php' );
     include( 'tab-settings.php' );
@@ -40,9 +39,6 @@
                 break;
             case 'recaptcha':
                 $content = b3_render_recaptcha_tab();
-                break;
-            case 'feedback':
-                $content = b3_render_feedback_tab();
                 break;
         }
 
