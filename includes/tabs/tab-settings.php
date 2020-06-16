@@ -46,10 +46,6 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_style_wordpress_forms" name="b3_style_wordpress_forms" value="1" <?php if ( $style_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' forms.", 'b3-onboarding' ); ?>
-                            <?php $hide_wordpress_note = ( 1 == get_option( 'b3_style_wordpress_forms', false ) ) ? false : ' hidden'; ?>
-                            <div class="b3_settings-input-description b3_settings-input-description--wp-style<?php echo $hide_wordpress_note; ?>">
-                                <?php esc_html_e( 'See tab Wordpress (after saving)', 'b3-onboarding' ); ?>
-                            </div>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
