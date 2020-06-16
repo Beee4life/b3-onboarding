@@ -8,10 +8,10 @@
      */
     function b3_render_emails_tab() {
 
-        $custom_emails = get_option( 'b3_custom_emails', false );
-        $email_boxes   = b3_get_email_boxes();
-        $link_color    = get_option( 'b3_link_color', false );
-        $logo_in_email = get_option( 'b3_logo_in_email', false );
+        $activate_custom_emails = get_option( 'b3_activate_custom_emails', false );
+        $email_boxes            = b3_get_email_boxes();
+        $link_color             = get_option( 'b3_link_color', false );
+        $logo_in_email          = get_option( 'b3_logo_in_email', false );
         ob_start();
         ?>
         <h2>
@@ -30,7 +30,7 @@
                     <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' ); ?>
+                    <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $activate_custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' ); ?>
                 </div>
             <?php b3_get_close(); ?>
 
