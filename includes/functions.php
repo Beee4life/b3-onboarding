@@ -1,4 +1,5 @@
 <?php
+    include( B3_PLUGIN_PATH . '/includes/download.php' );
     /**
      * Return all custom meta keys
      *
