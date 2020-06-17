@@ -44,6 +44,15 @@ jQuery(document).ready(function() {
             }
         });
 
+        var $validation_note = '.b3_settings-input-description--validation';
+        $('#b3_activate_filter_validation').change(function() {
+            if (document.getElementById('b3_activate_filter_validation').checked) {
+                $($validation_note).removeClass('hidden');
+            } else {
+                $($validation_note).addClass('hidden');
+            }
+        });
+
         var $first_last = '.b3_settings-field--first-last-required';
         $('#b3_activate_first_last').change(function() {
             if (document.getElementById('b3_activate_first_last').checked) {

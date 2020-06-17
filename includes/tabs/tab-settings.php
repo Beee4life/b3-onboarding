@@ -8,13 +8,14 @@
      */
     function b3_render_settings_tab() {
 
-        $disable_action_links    = get_option( 'b3_disable_action_links', false );
-        $disable_wordpress_forms = get_option( 'b3_disable_wordpress_forms', false );
-        $debug_info              = get_option( 'b3_debug_info', false );
-        $main_logo               = get_option( 'b3_main_logo', false );
-        $recaptcha               = get_option( 'b3_activate_recaptcha', false );
-        $style_wordpress_forms   = get_option( 'b3_style_wordpress_forms', false );
-
+        $activate_filter_validation = get_option( 'b3_activate_filter_validation', false );
+        $disable_action_links       = get_option( 'b3_disable_action_links', false );
+        $disable_wordpress_forms    = get_option( 'b3_disable_wordpress_forms', false );
+        $debug_info                 = get_option( 'b3_debug_info', false );
+        $main_logo                  = get_option( 'b3_main_logo', false );
+        $recaptcha                  = get_option( 'b3_activate_recaptcha', false );
+        $registration_type          = get_option( 'b3_registration_type', false );
+        $style_wordpress_forms      = get_option( 'b3_style_wordpress_forms', false );
         ob_start();
         ?>
         <h2>
@@ -50,18 +51,20 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
-                        <?php $hide_recaptcha_note = ( 1 == get_option( 'b3_activate_recaptcha', false ) ) ? false : ' hidden'; ?>
-                        <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
-                            <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                <?php if ( 'closed' != $registration_type ) { ?>
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
+                            <?php $hide_recaptcha_note = ( 1 == get_option( 'b3_activate_recaptcha', false ) ) ? false : ' hidden'; ?>
+                            <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
+                                <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                            </div>
                         </div>
-                    </div>
-                <?php b3_get_close(); ?>
+                    <?php b3_get_close(); ?>
+                <?php } ?>
 
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
@@ -82,6 +85,19 @@
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
+
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_activate_filter_validation"><?php esc_html_e( 'Activate filter validation', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php if ( $activate_filter_validation ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' ); ?>
+                        <?php $hide_validation_note = ( 1 == get_option( 'b3_activate_filter_validation', false ) ) ? false : ' hidden'; ?>
+                        <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo $hide_validation_note; ?>">
+                            <?php esc_html_e( 'Don\'t forget to turn it of later on, the validation is a bit cpu intensive.', 'b3-onboarding' ); ?>
+                        </div>
+                    </div>
+                <?php b3_get_close(); ?>
 
                 <hr />
 
