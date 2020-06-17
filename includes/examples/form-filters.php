@@ -42,7 +42,7 @@
         $fields = [
             [
                 'container_class' => $container_class,
-                // 'id'              => $id . '1',
+                'id'              => $id . '1',
                 'input_class'     => $input_class,
                 'label'           => 'Text',
                 'options'         => array(),
@@ -52,7 +52,7 @@
             ],
             [
                 'container_class' => $container_class,
-                // 'id'              => $id . '2',
+                'id'              => $id . '2',
                 'input_class'     => $input_class,
                 'label'           => 'Textarea',
                 'options'         => array(),
@@ -62,7 +62,7 @@
             ],
             [
                 'container_class' => $container_class,
-                // 'id'              => $id . '3',
+                'id'              => $id . '3',
                 'input_class'     => $input_class,
                 'label'           => 'Number',
                 'options'         => array(),
@@ -72,7 +72,7 @@
             ],
             [
                 'container_class' => $container_class,
-                // 'id'              => $id . '4',
+                'id'              => $id . '4',
                 'input_class'     => $input_class,
                 'label'           => 'URL',
                 'placeholder'     => $placeholder,
@@ -81,7 +81,7 @@
             ],
             [
                 'container_class' => $container_class,
-                // 'id'              => $id . '5',
+                'id'              => $id . '5',
                 'input_class'     => $input_class,
                 'label'           => 'Radio',
                 'options'         => [
@@ -103,7 +103,7 @@
             ],
             [
                 'container_class' => $container_class,
-                // 'id'              => $id . '6',
+                'id'              => $id . '6',
                 'input_class'     => $input_class,
                 'label'           => 'Checkbox',
                 'options'         => [
@@ -125,7 +125,7 @@
             ],
             [
                 'container_class' => $container_class,
-                // 'id'              => $id . '7',
+                'id'              => $id . '7',
                 'input_class'     => $input_class,
                 'label'           => 'Select',
                 'options'         => [
