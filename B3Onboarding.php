@@ -1497,7 +1497,7 @@
                     return $errors;
                 }
 
-                $extra_field_errors = apply_filters( 'b3_extra_fields_validation', $errors );
+                $extra_field_errors = apply_filters( 'b3_extra_fields_validation', [] );
                 if ( ! empty( $extra_field_errors ) ) {
                     $errors->add( $extra_field_errors[ 'error_code' ], $extra_field_errors[ 'error_message' ] );
                     $errors->add( 'field_' . $extra_field_errors[ 'id' ], '' );
