@@ -10,8 +10,8 @@
      */
     function b3_add_registration_fields() {
 
-        do_action( 'b3_add_first_last_name_fields' );
         do_action( 'b3_add_hidden_fields_registration' );
+        do_action( 'b3_add_first_last_name_fields' );
         do_action( 'b3_add_extra_fields_registration' );
         do_action( 'b3_add_recaptcha_fields', 'register' );
         do_action( 'b3_add_privacy_checkbox' );
