@@ -1343,7 +1343,7 @@
                         return esc_html__( 'This username is already in use.', 'b3-onboarding' );
 
                     case 'reserved_username':
-                        return esc_html__( 'That user name is reserved.', 'b3-onboarding' );
+                        return esc_html__( 'That user name is reserved, please choose another.', 'b3-onboarding' );
 
                     case 'invalid_email':
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
