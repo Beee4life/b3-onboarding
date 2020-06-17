@@ -167,10 +167,12 @@
                  * Functions + renders for admin pages/tabs
                  */
                 include( 'includes/tabs/tabs.php' );
-                /*
-                 * Functions to verify filtered output
-                 */
-                include( 'includes/verify-filters.php' );
+                if ( get_option( 'b3_activate_filter_validation', false ) ){
+                    /*
+                     * Functions to verify filtered output
+                     */
+                    include( 'includes/verify-filters.php' );
+                }
                 /*
                  * Functions + renders for shortcodes/front-end forms
                  */
