@@ -20,18 +20,18 @@
         <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
         <div class="b3_form-element">
-            <label class="b3_form-label" for="pass1"><?php esc_html_e( 'New password', 'b3-onboarding' ) ?></label>
+            <label class="b3_form-label" for="pass1"><?php echo esc_attr( 'New password', 'b3-onboarding' ) ?></label>
             <input type="password" name="pass1" id="pass1" class="input" size="20" value="" autocomplete="off" />
         </div>
         <div class="b3_form-element">
-            <label class="b3_form-label" for="pass2"><?php esc_html_e( 'Repeat new password', 'b3-onboarding' ) ?></label>
+            <label class="b3_form-label" for="pass2"><?php echo esc_attr( 'Repeat new password', 'b3-onboarding' ) ?></label>
             <input type="password" name="pass2" id="pass2" class="input" size="20" value="" autocomplete="off" />
         </div>
 
         <p class="password-hint"><?php echo wp_get_password_hint(); ?></p>
 
         <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" id="resetpass-button" class="button" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>" />
+            <input type="submit" id="resetpass-button" class="button" value="<?php echo esc_attr( 'Reset Password', 'b3-onboarding' ); ?>" />
         </div>
     </form>
 </div>

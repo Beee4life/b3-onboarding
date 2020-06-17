@@ -64,7 +64,7 @@
         <table class="b3_table b3_table--account">
             <tr>
                 <td>
-                    <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
+                    <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php echo esc_attr( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
                 </td>
                 <td>
                     <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php echo esc_attr( $current_user->first_name ); ?>"<?php echo $required; ?> />
@@ -72,7 +72,7 @@
             </tr>
             <tr>
                 <td>
-                    <label for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_html_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
+                    <label for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php echo esc_attr( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
                 </td>
                 <td>
                     <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php echo esc_attr( $current_user->last_name ); ?>"<?php echo $required; ?> />
@@ -115,7 +115,7 @@
             </tr>
             <tr class="user-pass2-wrap hide-if-js">
                 <td>
-                    <label for="pass2"><?php esc_html_e( 'Repeat new password', 'b3-onboarding' ); ?></label>
+                    <label for="pass2"><?php echo esc_attr( 'Repeat new password', 'b3-onboarding' ); ?></label>
                 </td>
                 <td>
                     <input name="pass2" type="password" id="pass2" class="regular-text" value="" autocomplete="off" />
@@ -142,8 +142,8 @@
                 <tr>
                     <td colspan="2">
                         <label>
-                            <?php esc_html_e( 'If you click this button, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
-                            <input type="submit" name="b3_delete_account" class="button button--small" value="<?php esc_attr_e( 'Delete account', 'b3-onboarding' ); ?>" id="submit" onclick="return confirm( 'Are you sure you want to delete your account ?' )" />
+                            <?php echo esc_attr( 'If you click this button, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
+                            <input type="submit" name="b3_delete_account" class="button button--small" value="<?php echo esc_attr( 'Delete account', 'b3-onboarding' ); ?>" id="submit" onclick="return confirm( 'Are you sure you want to delete your account ?' )" />
                         </label>
                     </td>
                 </tr>
@@ -154,7 +154,7 @@
             <input type="hidden" name="action" value="profile" />
             <input type="hidden" name="instance" value="1" />
             <input type="hidden" name="user_id" id="user_id" value="<?php echo $current_user->ID; ?>" />
-            <input type="submit" class="button button--small button--submit" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
+            <input type="submit" class="button button--small button--submit" value="<?php echo esc_attr( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
         </div>
 
     </form>

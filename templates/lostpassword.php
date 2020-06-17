@@ -21,12 +21,12 @@
         <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
         <div class="b3_form-element">
-            <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_html_e( 'Email address', 'b3-onboarding' ); ?></label>
+            <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?></label>
             <input type="text" name="user_login" id="b3_user_email" value="<?php echo $localhost_email; ?>" required>
         </div>
 
         <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" class="button button-primary button--lostpass" value="<?php esc_html_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
+            <input type="submit" class="button button-primary button--lostpass" value="<?php esc_attr_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
         </div>
 
         <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
