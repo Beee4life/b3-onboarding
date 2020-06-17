@@ -43,6 +43,7 @@
             'b3_request_access_subject_admin'    => array( 'string' ),
             'b3_request_access_message_user'     => array( 'string' ),
             'b3_request_access_subject_user'     => array( 'string' ),
+            'b3_reserved_usernames'              => array( 'array' ),
             'b3_welcome_user_message'            => array( 'string' ),
             'b3_welcome_user_subject'            => array( 'string' ),
             'b3_widget_links'                    => array( 'array' ),
