@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.0.1
+    Version:            2.0.2
     Requires at least:  4.3
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.0.1',
+                    'version' => '2.0.2',
                 );
 
                 // actions
@@ -202,6 +202,20 @@
 
 
             /**
+             * Do stuff upon plugin deactivation
+             */
+            public function b3_plugin_deactivation() {
+                // set registration option accordingly
+                $registration_type = get_option( 'b3_registration_type', false );
+                if ( 'closed' != $registration_type ) {
+                    update_option( 'users_can_register', '1' );
+                } else {
+                    update_option( 'users_can_register', '0' );
+                }
+            }
+
+
+            /**
              * Set default settings
              *
              * @since 2.0.0
@@ -268,20 +282,6 @@
                     restore_current_blog();
                 }
             }
-
-            /**
-             * Do stuff upon plugin activation
-             */
-            public function b3_plugin_deactivation() {
-                // set registration option accordingly
-                $registration_type = get_option( 'b3_registration_type', false );
-                if ( 'closed' != $registration_type ) {
-                    update_option( 'users_can_register', '1' );
-                } else {
-                    update_option( 'users_can_register', '0' );
-                }
-            }
-
 
             /**
              * Load plugin text domain
@@ -473,7 +473,7 @@
                 include( 'includes/admin-page.php' ); // content for the settings page
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '81' );
                 include( 'includes/user-approval-page.php' ); // content for the settings page
-                add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
                 if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
                     include( 'includes/debug-page.php' ); // content for the settings page
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
@@ -769,6 +769,7 @@
                                             if ( false != $reset_password_url ) {
                                                 $redirect_url = $reset_password_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
+                                                $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                                 // @TODO: also add to wp form register + MU register
                                             } else {
                                                 $login_url    = b3_get_login_url();

@@ -132,15 +132,12 @@
      * @param $wp_admin_bar
      */
     function b3_add_toolbar( $wp_admin_bar ) {
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( current_user_can( 'promote_users' ) ) {
             if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                 $approval_args  = array( 'role' => 'b3_approval' );
                 $approval_users = get_users( $approval_args );
                 if ( 0 < count( $approval_users ) ) {
-                    $page_link      = b3_get_user_approval_link();
-                    if ( false == $page_link ) {
-                        $page_link = admin_url( '/admin.php?page=b3-user-approval' );
-                    }
+                    $page_link = network_admin_url( 'admin.php?page=b3-user-approval' );
                     $approval_args = array(
                         'id'    => 'approval',
                         'title' => '&rarr; ' . __( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
