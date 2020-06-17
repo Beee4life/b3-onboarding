@@ -257,6 +257,14 @@
             }
         }
 
+        $extra_field_errors = apply_filters( 'b3_extra_fields_validation', [] );
+        if ( ! empty( $extra_field_errors ) ) {
+            $errors->add( $extra_field_errors[ 'error_code' ], $extra_field_errors[ 'error_message' ] );
+            $errors->add( 'field_' . $extra_field_errors[ 'id' ], '' );
+
+            return $errors;
+        }
+
         $privacy_error = b3_verify_privacy();
         if ( true == $privacy_error ) {
             $errors->add( 'no_privacy', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You have to accept the privacy statement.', 'b3-onboarding' ) ) );
