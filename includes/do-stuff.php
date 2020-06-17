@@ -163,10 +163,10 @@
                             <?php $counter = 1; ?>
                             <div class="b3_input-options">
                                 <?php foreach( $input_options as $option ) { ?>
-                                    <div class="b3_input-option">
-                                        <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? ' ' . $option[ 'input_class' ]: false; ?>
+                                    <div class="b3_input-option b3_input-option--<?php echo $input_type; ?>">
+                                        <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
                                         <label for="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $option_class; ?> <?php echo $option_class; ?>" id="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?>" name="<?php echo $option[ 'name' ]; if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php if ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) { echo ' checked="checked"'; } ?>> <?php echo $option[ 'label' ]; ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo $input_type; ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo $option_class; ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?><?php } ?>" name="<?php echo $option[ 'name' ]; if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php if ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) { echo ' checked="checked"'; } ?>> <?php echo $option[ 'label' ]; ?>
                                     </div>
                                     <?php $counter++; ?>
                                 <?php } ?>
