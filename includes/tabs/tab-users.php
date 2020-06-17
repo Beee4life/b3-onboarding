@@ -22,7 +22,7 @@
         </h2>
 
         <p>
-            <?php esc_html_e( 'This page contains restrictions settings for users.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'This page contains settings for users.', 'b3-onboarding' ); ?>
         </p>
 
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">

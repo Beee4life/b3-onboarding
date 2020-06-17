@@ -196,11 +196,11 @@
         $normal_options = array(
             array(
                 'value' => 'request_access',
-                'label' => esc_html__( 'Request access (admin approval)', 'b3-onboarding' ),
+                'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
             ),
             array(
                 'value' => 'email_activation',
-                'label' => esc_html__( 'Open (user needs to confirm email)', 'b3-onboarding' ),
+                'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
             ),
             array(
                 'value' => 'open',
