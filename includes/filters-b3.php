@@ -11,19 +11,24 @@
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( ! empty( $field[ 'id' ] ) ) {
-                    $field_id = $field[ 'id' ];
-                    if ( isset( $_POST[ $field_id ] ) && ! empty( $field_id ) ) {
-                        // all good
-                    } else {
-                        $error_code = 'empty_field';
-                        $error_array = [
-                            'error_code'    => $error_code,
-                            'error_message' => $b3_onboarding->b3_get_return_message( $error_code ),
-                            'id'            => $field_id,
-                            'label'         => $field[ 'label' ],
-                        ];
+                    $field_id   = $field[ 'id' ];
+                    $field_type = $field[ 'type' ];
+                    if ( true == $field[ 'required' ] ) {
+                        if ( in_array( $field_type, [ 'radio', 'checkbox', 'select' ] ) ) {
+                            if ( ! isset( $_POST[ $field_id ] ) || ( isset( $_POST[ $field_id ] ) && empty( $_POST[ $field_id ] ) ) ) {
+                                $error_code = 'empty_field';
+                            }
+                        }
+                        if ( isset( $error_code ) ) {
+                            $error_array = [
+                                'error_code'    => $error_code,
+                                'error_message' => $b3_onboarding->b3_get_return_message( $error_code ),
+                                'id'            => $field_id,
+                                'label'         => $field[ 'label' ],
+                            ];
 
-                        return $error_array;
+                            return $error_array;
+                        }
                     }
                 }
             }
