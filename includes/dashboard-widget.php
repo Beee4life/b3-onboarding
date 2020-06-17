@@ -16,7 +16,7 @@
         $activation_users = get_users( $activation_args );
 
         $all_args = array(
-            'exclude'      => [ '1' ], // @TODO: get proper admin ID (can be changed)
+            'exclude'      => [ get_current_user_id() ],
             'number'       => '5',
             'orderby'      => 'registered',
             'order'        => 'DESC',
