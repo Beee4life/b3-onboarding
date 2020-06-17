@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.0.3 - released 17.06.20
+2.0.4 - released xx.06.20 TODO
 
 <a name="features"></a>
 ### Features
@@ -141,6 +141,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 2.1.0
 * added validation for custom fields
+* added reserved usernames
 
 2.0.3
 * Removed beta notice stuff
