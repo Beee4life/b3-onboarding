@@ -710,6 +710,7 @@
                     $response_code = wp_remote_retrieve_response_code( $response );
 
                     if ( 200 == $response_code && $response && is_array( $response ) ) {
+                        // @TODO: check if ext-json is installed
                         $decoded_response = json_decode( $response_body );
                         $success          = $decoded_response->success;
                     }
@@ -1472,7 +1473,7 @@
                     return $errors;
                 }
 
-                if ( in_array( $user_login, apply_filters( 'b3_reserved_usernames', b3_get_reserved_usernames() ) ) ) {
+                if ( in_array( $user_login, b3_get_reserved_usernames() ) ) {
                     $errors->add( 'reserved_username', $this->b3_get_return_message( 'reserved_username' ) );
 
                     return $errors;
