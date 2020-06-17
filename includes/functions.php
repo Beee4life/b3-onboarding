@@ -1214,15 +1214,24 @@
     /**
      * Reserved usernames
      *
-     * @since 2.0.4
+     * @since 2.0.4 @TODO
      *
      * @return array
      */
     function b3_get_reserved_usernames() {
-        $reserved_user_names = [
+
+        $default_reserved_names = [
             'admin',
             'administrator',
         ];
 
+        $filtered_names = apply_filters( 'b3_reserved_usernames', [] );
+        if ( ! is_array( $filtered_names ) ) {
+            $filtered_names = [ $filtered_names ];
+        }
+
+        $reserved_user_names = array_merge( $default_reserved_names, $filtered_names );
+
         return $reserved_user_names;
+
     }
