@@ -328,6 +328,8 @@
     /**
      * Check if a remote file exists
      *
+     * @TODO: check if ext-curl is installed
+     *
      * @since 2.0.0
      *
      * @link: https://stackoverflow.com/a/7051633/8275339
