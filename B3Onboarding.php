@@ -1681,15 +1681,6 @@
              */
             public function b3_admin_notices() {
 
-                $cu = get_userdata( get_current_user_id() );
-                if ( $cu->user_login != 'Beee' ) {
-                    echo sprintf( '<div class="error"><p>You are using an almost finished released version of %s. Use it at your own risk or deactivate it <a href="%s">%s</a> !!!.</p></div>',
-                        'B3 OnBoarding',
-                        esc_url( admin_url( 'plugins.php?s=b3' ) ),
-                        'here'
-                    );
-                }
-
                 if ( false == get_option( 'b3_approval_page_id', false ) && true == get_option( 'b3_front_end_approval', false ) ) {
                     echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),

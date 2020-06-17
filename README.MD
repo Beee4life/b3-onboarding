@@ -140,7 +140,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 2.0.3
-* Forgot to remove beta notice
+* Removed beta notice stuff
 
 2.0.2
 * Forgot to properly change version number
