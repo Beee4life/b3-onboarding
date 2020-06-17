@@ -53,6 +53,12 @@
                         delete_option( 'b3_debug_info' );
                     }
 
+                    if ( isset( $_POST[ 'b3_activate_filter_validation' ] ) && 1 == $_POST[ 'b3_activate_filter_validation' ] ) {
+                        update_option( 'b3_activate_filter_validation', 1, true );
+                    } else {
+                        delete_option( 'b3_activate_filter_validation' );
+                    }
+
                     update_option( 'b3_main_logo', $_POST[ 'b3_main_logo' ], true );
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
