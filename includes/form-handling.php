@@ -148,6 +148,12 @@
                         }
                     }
 
+                    if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
+                        update_option( 'b3_register_email_only', $_POST[ 'b3_register_email_only' ], true );
+                    } else {
+                        delete_option( 'b3_register_email_only' );
+                    }
+
                     if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
                         update_option( 'b3_first_last_required', $_POST[ 'b3_first_last_required' ], true );
                     } else {

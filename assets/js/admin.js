@@ -53,6 +53,15 @@ jQuery(document).ready(function() {
             }
         });
 
+        var $register_email_only = '.b3-name-fields';
+        $('#b3_register_email_only').change(function() {
+            if (document.getElementById('b3_register_email_only').checked) {
+                $($register_email_only).addClass('hidden');
+            } else {
+                $($register_email_only).removeClass('hidden');
+            }
+        });
+
         var $first_last = '.b3_settings-field--first-last-required';
         $('#b3_activate_first_last').change(function() {
             if (document.getElementById('b3_activate_first_last').checked) {

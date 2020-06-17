@@ -1,5 +1,6 @@
 <?php
     $show_first_last_name = get_option( 'b3_activate_first_last', false );
+    $register_email_only  = get_option( 'b3_register_email_only', false );
     $user_args            = array( 'role' => 'b3_approval' );
     $users                = get_users( $user_args );
 
@@ -39,6 +40,11 @@
                 <th>
                     <?php esc_html_e( 'User ID', 'b3-onboarding' ); ?>
                 </th>
+                <?php if ( false != $register_email_only ) { ?>
+                    <th>
+                        <?php esc_html_e( 'User name', 'b3-onboarding' ); ?>
+                    </th>
+                <?php } ?>
                 <?php if ( false != $show_first_last_name ) { ?>
                     <th>
                         <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
@@ -59,8 +65,10 @@
             <?php foreach( $users as $user ) { ?>
                 <tr>
                     <td><?php echo $user->ID; ?></td>
+                    <?php if ( false != $register_email_only ) { ?>
+                        <td><?php echo $user->user_login; ?></td>
+                    <?php } ?>
                     <?php if ( false != $show_first_last_name ) { ?>
-                        <td><?php echo $user->first_name; ?></td>
                         <td><?php echo $user->last_name; ?></td>
                     <?php } ?>
                     <td><?php echo $user->user_email; ?></td>

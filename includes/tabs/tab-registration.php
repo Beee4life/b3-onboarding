@@ -8,13 +8,14 @@
      */
     function b3_render_registration_tab() {
 
-        $first_last               = get_option( 'b3_activate_first_last', false );
-        $first_last_required      = get_option( 'b3_first_last_required', false );
-        $privacy                  = get_option( 'b3_privacy', false );
-        $privacy_page             = get_option( 'b3_privacy_page', false );
-        $privacy_page_placeholder = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
-        $privacy_text             = get_option( 'b3_privacy_text', false );
-        $registration_type        = get_option( 'b3_registration_type', false );
+        $first_last                   = get_option( 'b3_activate_first_last', false );
+        $first_last_required          = get_option( 'b3_first_last_required', false );
+        $privacy                      = get_option( 'b3_privacy', false );
+        $privacy_page                 = get_option( 'b3_privacy_page', false );
+        $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
+        $privacy_text                 = get_option( 'b3_privacy_text', false );
+        $registration_type            = get_option( 'b3_registration_type', false );
+        $registration_with_email_only = get_option( 'b3_register_email_only', false );
 
         ob_start();
         ?>
@@ -62,6 +63,7 @@
                 <?php b3_get_close(); ?>
 
                 <?php if ( 'closed' == get_option( 'b3_registration_type', false ) ) { ?>
+
                     <?php $closed_message = get_option( 'b3_registration_closed_message', false ); ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
@@ -74,26 +76,41 @@
                             </div>
                         </div>
                     <?php b3_get_close(); ?>
+
                 <?php } else { ?>
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
+                            <label for="b3_register_email_only"><?php esc_html_e( 'Register with email address only', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php if ( $registration_with_email_only ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_first_last_required = ( 1 == get_option( 'b3_activate_first_last', false ) ) ? false : true; ?>
-                    <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
-                        <?php b3_get_label_field_open(); ?>
-                            <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                    <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
+                    <div class="b3-name-fields<?php echo $hide_extended_fields; ?>">
+
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
+                            </div>
                         <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
-                        </div>
-                    <?php b3_get_close(); ?>
+
+                        <?php $hide_first_last_required = ( 1 == get_option( 'b3_activate_first_last', false ) ) ? false : true; ?>
+                        <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
+
+                    </div>
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>

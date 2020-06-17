@@ -5,6 +5,11 @@
      * @since 1.0.0
      */
     $request_access = get_option( 'b3_registration_type', false );
+    $label = esc_attr__( 'Username or Email address', 'b3-onboarding' );
+    if ( 1 == get_option( 'b3_register_email_only', false ) ) {
+        $label = esc_attr__( 'Email address', 'b3-onboarding' );
+    }
+
 ?>
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
@@ -20,12 +25,12 @@
 
         <?php // Output of fields starts here ?>
         <div class="b3_form-element">
-            <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php esc_html_e( 'Username or Email address', 'b3-onboarding' ); ?></label>
+            <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php echo $label; ?></label>
             <input type="text" name="log" id="user_login" class="input" value="" size="20">
         </div>
 
         <div class="b3_form-element">
-            <label class="b3_form-label" for="user_pass"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
+            <label class="b3_form-label" for="user_pass"><?php esc_attr_e( 'Password', 'b3-onboarding' ); ?></label>
             <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
         </div>
 
@@ -34,12 +39,12 @@
         <div class="rememberme-wrap">
             <p class="rememberme">
                 <input name="rememberme" type="checkbox" id="rememberme" value="forever">
-                <label for="rememberme"><?php esc_html_e( 'Remember Me', 'b3-onboarding' ); ?></label>
+                <label for="rememberme"><?php esc_attr_e( 'Remember Me', 'b3-onboarding' ); ?></label>
             </p>
         </div>
 
         <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_html_e( 'Log in', 'b3-onboarding' ); ?>">
+            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_attr_e( 'Log in', 'b3-onboarding' ); ?>">
             <?php if ( false !== $attributes[ 'redirect' ] ) { ?>
                 <input type="hidden" name="redirect_to" value="<?php echo $attributes[ 'redirect' ]; ?>">
             <?php } ?>

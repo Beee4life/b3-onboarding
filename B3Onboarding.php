@@ -250,25 +250,14 @@
                     }
                 }
 
-                update_option( 'b3_account_activated_message', b3_get_account_activated_message_user() );
-                update_option( 'b3_account_approved_message', b3_get_account_approved_message() );
-                update_option( 'b3_account_rejected_message', b3_get_account_rejected_message() );
                 update_option( 'b3_activate_custom_emails', 1 );
                 update_option( 'b3_dashboard_widget', 1 );
                 update_option( 'b3_disable_wordpress_forms', 1 );
-                update_option( 'b3_email_activation_message', b3_get_email_activation_message_user() );
-                update_option( 'b3_email_styling', b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) );
-                update_option( 'b3_email_template', b3_default_email_template() );
                 update_option( 'b3_hide_admin_bar', 1 );
                 update_option( 'b3_logo_in_email', 1 );
-                update_option( 'b3_lost_password_message', b3_get_lost_password_message() );
-                update_option( 'b3_new_user_message', b3_get_new_user_message() );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-                update_option( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
-                update_option( 'b3_request_access_message_user', b3_get_request_access_message_user() );
                 update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
-                update_option( 'b3_welcome_user_message', b3_get_welcome_user_message() );
                 update_option( 'b3_version', $this->settings[ 'version' ] );
 
                 if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
@@ -1458,25 +1447,28 @@
              * @return int|WP_Error
              */
             private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
-                $errors        = new WP_Error();
-                $privacy_error = b3_verify_privacy();
-                $user_data     = array(
+                $errors                       = new WP_Error();
+                $privacy_error                = b3_verify_privacy();
+                $registration_with_email_only = get_option( 'b3_register_email_only', false );
+                $user_data                    = array(
                     'user_login' => $user_login,
                     'user_email' => $user_email,
                     'user_pass'  => '', // for possible/future custom passwords
                     'role'       => $role,
                 );
 
-                if ( username_exists( $user_login ) ) {
-                    $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
+                if ( false == $registration_with_email_only ) {
+                    if ( username_exists( $user_login ) ) {
+                        $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
 
-                    return $errors;
-                }
+                        return $errors;
+                    }
 
-                if ( in_array( $user_login, b3_get_reserved_usernames() ) ) {
-                    $errors->add( 'reserved_username', $this->b3_get_return_message( 'reserved_username' ) );
+                    if ( in_array( $user_login, b3_get_reserved_usernames() ) ) {
+                        $errors->add( 'reserved_username', $this->b3_get_return_message( 'reserved_username' ) );
 
-                    return $errors;
+                        return $errors;
+                    }
                 }
 
                 if ( ! is_email( $user_email ) ) {

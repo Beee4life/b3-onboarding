@@ -337,7 +337,11 @@
      * @return string
      */
     function b3_default_email_activation_message() {
-        $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        if ( 1 == get_option( 'b3_register_email_only', false ) ) {
+            $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
+        } else {
+            $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        }
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( __( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
