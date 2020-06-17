@@ -1214,9 +1214,9 @@
     /**
      * Reserved usernames
      *
-     * @since 2.0.1 @TODO
+     * @since 2.0.4
      *
-     * @return string[]
+     * @return array
      */
     function b3_get_reserved_usernames() {
         $reserved_user_names = [

@@ -315,16 +315,21 @@
      *
      * @return array
      */
-    function b3_reserved_usernames_example( $existing_user_names ) {
+    function b3_reserved_usernames_example( $existing_reserved_names ) {
 
         $new_usernames = [
             'username1',
             'username2',
         ];
 
-        $user_names = array_merge( $existing_user_names, $new_usernames );
+        if ( is_array( $existing_reserved_names ) ) {
+            $user_names = array_merge( $existing_reserved_names, $new_usernames );
+        } else {
+            $user_names = $new_usernames;
+        }
 
         return $user_names;
+
     }
     // add_filter( 'b3_reserved_usernames', 'b3_reserved_usernames_example' );
 
