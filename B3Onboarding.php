@@ -148,6 +148,10 @@
                  */
                 include( 'includes/functions.php' );
                 /*
+                 * This file contains all filters on plugin hooks
+                 */
+                include( 'includes/filters-b3.php' );
+                /*
                  * This file contains all 'WordPress' hooks
                  */
                 include( 'includes/filters-wp.php' );
