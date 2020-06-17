@@ -1312,7 +1312,7 @@
              *
              * @return string               An error message.
              */
-            public function b3_get_return_message( $error_code ) {
+            public function b3_get_return_message( $error_code, $sprintf = false ) {
                 switch( $error_code ) {
 
                     // Return messages
@@ -1350,6 +1350,13 @@
 
                     case 'no_privacy':
                         return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
+
+                    case 'empty_field':
+                        if ( false != $sprintf ) {
+                            return sprintf( esc_html__( 'You didn\'t select an option for "%s".', 'b3-onboarding' ), $sprintf );
+                        } else {
+                            return esc_html__( 'You didn\'t select an option.', 'b3-onboarding' );
+                        }
 
                     case 'access_requested':
                         return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
@@ -1482,6 +1489,14 @@
 
                 if ( true == $privacy_error ) {
                     $errors->add( 'no_privacy', $this->b3_get_return_message( 'no_privacy' ) );
+
+                    return $errors;
+                }
+
+                $extra_field_errors = apply_filters( 'b3_extra_fields_validation', $errors );
+                if ( ! empty( $extra_field_errors ) ) {
+                    $errors->add( $extra_field_errors[ 'error_code' ], $extra_field_errors[ 'error_message' ] );
+                    $errors->add( 'field_' . $extra_field_errors[ 'id' ], '' );
 
                     return $errors;
                 }
