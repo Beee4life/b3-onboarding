@@ -142,6 +142,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 2.1.0
 * added validation for custom fields
 * added reserved usernames
+* added an option to use email only for registration
 
 2.0.3
 * Removed beta notice stuff
