@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.0.3
+    Version:            2.1.0-beta
     Requires at least:  4.3
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.0.3',
+                    'version' => '2.1.0-beta',
                 );
 
                 // actions
@@ -167,7 +167,7 @@
                  * Functions + renders for admin pages/tabs
                  */
                 include( 'includes/tabs/tabs.php' );
-                if ( get_option( 'b3_activate_filter_validation', false ) ){
+                if ( get_option( 'b3_activate_filter_validation', false ) ) {
                     /*
                      * Functions to verify filtered output
                      */
@@ -1701,13 +1701,24 @@
              */
             public function b3_admin_notices() {
 
+                if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
+                    $message = __( "You're using a beta version, which is not finished yet and can give unexpected results.", 'b3-onboarding' );
+                    if ( ! defined( 'LOCALHOST' ) ) {
+                        echo '<div class="error"><p>'. $message . '.</p></div>';
+                    } else {
+                        echo '<div class="notice notice-warning"><p>'. $message . '.</p></div>';
+                    }
+                }
+
                 if ( false == get_option( 'b3_approval_page_id', false ) && true == get_option( 'b3_front_end_approval', false ) ) {
                     echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),
                         esc_html__( 'here', 'b3-onboarding' )
                     );
                 }
-                do_action( 'b3_verify_filter_input' );
+                if ( get_option( 'b3_activate_filter_validation', false ) ) {
+                    do_action( 'b3_verify_filter_input' );
+                }
             }
         }
 
@@ -1727,7 +1738,6 @@
             return $b3_onboarding;
         }
 
-        // Initialize the plugin
         init_b3_onboarding();
 
-    } // class_exists check
+    }
