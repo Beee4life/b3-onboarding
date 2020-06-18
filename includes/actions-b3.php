@@ -84,13 +84,9 @@
             <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
             <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
         </div>
-        <?php
-        } else {
-        ?>
-            <input type="hidden" name="user_login" value="<?php echo gmdate( 'U', time() ); ?>">
-        <?php
-        }
-        ?>
+        <?php } else { ?>
+            <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
+        <?php } ?>
         <div class="b3_form-element b3_form-element--email">
             <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
             <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>

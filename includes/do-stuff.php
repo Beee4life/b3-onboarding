@@ -352,3 +352,18 @@
             return false;
         }
     }
+
+
+    /**
+     * Generate user login
+     *
+     * @return string
+     */
+    function b3_generate_user_login() {
+        $now        = gmdate( 'U', time() );
+        $now_min_50 = $now - ( 50 * YEAR_IN_SECONDS );
+        $user_login = (string) $now_min_50;
+
+        return $user_login;
+
+    }
