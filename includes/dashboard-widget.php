@@ -78,4 +78,8 @@
         </div>
         <?php
     }
-    wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding', 'b3_dashboard_widget_function' );
+    if ( current_user_can( 'promote_users' ) ) {
+        wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding', 'b3_dashboard_widget_function' );
+    }
+
+
