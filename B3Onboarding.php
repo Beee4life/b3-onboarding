@@ -921,33 +921,25 @@
              * Redirects "profile.php" to custom account page
              */
             public function b3_redirect_to_custom_profile() {
-                global $current_user, $pagenow;
+                global $current_user;
                 if ( is_user_logged_in() && is_admin() ) {
-                    $account_url = b3_get_account_url();
-                    if ( false != $account_url ) {
-                        $redirect_to = $account_url;
-                    } else {
-                        $redirect_to = get_home_url();
-                    }
-
                     $user_role = reset( $current_user->roles );
                     if ( is_multisite() && empty( $user_role ) ) {
-                        // or get default role
+                        // @TODO: get default role
                         $user_role = 'subscriber';
                     }
 
-                    if ( 'profile.php' == $pagenow && ! isset( $_REQUEST[ 'page' ] ) ) {
-                        if ( isset( $_GET[ 'redirect_to' ] ) && ! empty( $_GET[ 'redirect_to' ] ) ) {
-                            $redirect_to = add_query_arg( 'redirect_to', $_GET[ 'redirect_to' ], $redirect_to );
+                    if ( in_array( $user_role, get_option( 'b3_restrict_admin', [] ) ) ) {
+                        $frontend_account_url = b3_get_account_url();
+                        if ( false != $frontend_account_url ) {
+                            $redirect_to = $frontend_account_url;
+                        } else {
+                            $redirect_to = get_home_url();
                         }
-                        wp_safe_redirect( $redirect_to );
-                        exit;
-                    } else {
-                        if ( in_array( $user_role, get_option( 'b3_restrict_admin', [] ) ) ) {
-                            if ( ! defined( 'DOING_AJAX' ) ) {
-                                wp_safe_redirect( $redirect_to );
-                                exit;
-                            }
+
+                        if ( ! defined( 'DOING_AJAX' ) ) {
+                            wp_safe_redirect( $redirect_to );
+                            exit;
                         }
                     }
                 }
@@ -1074,15 +1066,20 @@
              * @param string $redirect_to An optional redirect_to URL for admin users
              */
             private function b3_redirect_logged_in_user( $redirect_to = null ) {
-                $user = wp_get_current_user();
-                if ( user_can( $user, 'manage_options' ) ) {
+                $current_user = wp_get_current_user();
+                $user_role    = reset( $current_user->roles );
+                if ( in_array( $user_role, get_option( 'b3_restrict_admin', [] ) ) ) {
+                    $redirect_url = b3_get_account_url();
+                    if ( false == $redirect_url ) {
+                        $redirect_url = home_url();
+                    }
+                    wp_safe_redirect( $redirect_url );
+                } else {
                     if ( $redirect_to ) {
                         wp_safe_redirect( $redirect_to );
                     } else {
                         wp_safe_redirect( admin_url() );
                     }
-                } else {
-                    wp_safe_redirect( home_url() );
                 }
                 exit;
             }
