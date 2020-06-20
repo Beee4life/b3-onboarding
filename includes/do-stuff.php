@@ -131,7 +131,7 @@
      *
      * @return bool|false|string
      */
-    function b3_render_extra_field( $extra_field = false ) {
+    function b3_render_extra_field( $extra_field = false, $value = false ) {
 
         if ( false != $extra_field ) {
 
@@ -152,6 +152,7 @@
 
                     <label class="b3_form-label" for="<?php echo $input_id; ?>"><?php echo $input_label; ?><?php echo $input_required; ?></label>
                     <?php if ( in_array( $input_type, array( 'text' , 'number', 'url' ) ) ) { ?>
+                        <?php $field_value = ( ! empty( $field_value) ) ? $field_value : ( false != $value && is_string( $value ) ) ? $value : false; ?>
                         <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?>value="<?php echo $field_value; ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
 
                     <?php } elseif ( 'textarea' == $input_type ) { ?>
@@ -165,8 +166,9 @@
                                 <?php foreach( $input_options as $option ) { ?>
                                     <div class="b3_input-option b3_input-option--<?php echo $input_type; ?>">
                                         <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
+                                        <?php $selected = ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) ? ' checked="checked"' : ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                         <label for="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input class="b3_form-input b3_form-input--<?php echo $input_type; ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo $option_class; ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?><?php } ?>" name="<?php echo $option[ 'name' ]; if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php if ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) { echo ' checked="checked"'; } ?>> <?php echo $option[ 'label' ]; ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo $input_type; ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo $option_class; ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?><?php } ?>" name="<?php echo $option[ 'name' ]; if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php echo $selected; ?>> <?php echo $option[ 'label' ]; ?>
                                     </div>
                                     <?php $counter++; ?>
                                 <?php } ?>
@@ -179,7 +181,8 @@
                                 <?php $input_placeholder_select = ( $input_placeholder ) ? $input_placeholder : __( 'Select an option', 'b3-onboarding' ); ?>
                                 <option value=""><?php echo $input_placeholder_select; ?></option>
                                 <?php foreach( $input_options as $option ) { ?>
-                                    <option value="<?php echo $option[ 'value' ]; ?>"><?php echo $option[ 'label' ]; ?></option>
+                                    <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value ) ? ' selected="selected"' : false; ?>
+                                    <option value="<?php echo $option[ 'value' ]; ?>"<?php echo $selected; ?>><?php echo $option[ 'label' ]; ?></option>
                                 <?php } ?>
                             <?php } ?>
                         </select>
@@ -207,7 +210,7 @@
      */
     function b3_replace_subject_vars( $vars = array() ) {
 
-        $user_data = false;
+        $user_data  = false;
         if ( is_user_logged_in() ) {
             $user_data = get_userdata( get_current_user_id() );
             if ( false != $user_data ) {
@@ -215,9 +218,11 @@
             }
         }
 
+        $user_login = ( true != get_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
+
         $replacements = array(
             '%blog_name%'   => get_option( 'blogname' ),
-            '%user_login%'  => ( false != $user_data ) ? $user_data->user_login : false,
+            '%user_login%'  => $user_login,
             '%first_name%'  => ( false != $user_data ) ? $user_data->first_name : false,
         );
 
@@ -250,6 +255,8 @@
         $registration_date_gmt   = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
         $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
 
+        $user_login = ( true != get_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
+
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
@@ -259,7 +266,7 @@
             '%registration_date%' => $local_registration_date,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
             '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
-            '%user_login%'        => ( false != $user_data ) ? $user_data->user_login : false,
+            '%user_login%'        => $user_login,
         );
         // Replace %blog_name% again if used in the footer
         if ( strpos( $replacements[ '%email_footer%' ], '%' ) !== false ) {
