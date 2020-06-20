@@ -55,8 +55,6 @@
                     </td>
                     <td>
                         <?php echo esc_attr( $current_user->user_login ); ?>
-                        <!--<input type="text" name="user_login" id="user_login" value="--><?php //echo esc_attr( $current_user->user_login ); ?><!--" disabled="disabled" />-->
-                        <!--<span class="description">--><?php //_e( "Can't be changed.", 'b3-onboarding' ); ?><!--</span>-->
                     </td>
                 </tr>
             </table>
