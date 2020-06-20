@@ -18,7 +18,6 @@
         <input name="rp_key" type="hidden" value="<?php echo esc_attr( $attributes[ 'key' ] ); ?>"/>
         <input name="b3_form" value="custom" type="hidden" />
 
-
         <div class="b3_form-element">
             <label class="b3_form-label" for="pass1"><?php echo esc_attr( 'New password', 'b3-onboarding' ) ?></label>
             <input type="password" name="pass1" id="pass1" class="input" size="20" value="" autocomplete="off" />
