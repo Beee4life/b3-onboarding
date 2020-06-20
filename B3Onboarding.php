@@ -82,14 +82,14 @@
                 add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
-                add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
+                add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
-                add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
+                add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
@@ -848,13 +848,16 @@
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
 
-                if ( false != $account_page_id && is_page( array( $account_page_id ) ) && ! is_user_logged_in() ) {
-
-                    wp_safe_redirect( $login_url );
-                    exit;
-
+                if ( false != $account_page_id ) {
+                    if ( is_page() ) {
+                        $page = get_post( get_the_ID() );
+                        // if user is not logged and if page is account page or sub-page of account page
+                        if ( ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) && ! is_user_logged_in() ) {
+                            wp_safe_redirect( $login_url );
+                            exit;
+                        }
+                    }
                 } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
-
                     if ( is_user_logged_in() ) {
                         if ( ! current_user_can( 'promote_users' ) ) {
                             wp_safe_redirect( $account_url );
