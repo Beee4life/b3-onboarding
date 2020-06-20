@@ -11,6 +11,8 @@
     }
 
 ?>
+<?php do_action( 'b3_add_form_messages', $attributes ); ?>
+
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
         <h3>
@@ -20,8 +22,6 @@
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
         <input name="b3_form" value="custom" type="hidden" />
-
-        <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
         <?php // Output of fields starts here ?>
         <div class="b3_form-element">

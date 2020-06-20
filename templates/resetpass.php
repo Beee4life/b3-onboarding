@@ -5,6 +5,7 @@
      * @since 1.0.0
      */
 ?>
+<?php do_action( 'b3_add_form_messages', $attributes ); ?>
 <div id="b3-resetpass" class="b3 b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) : ?>
         <h3>
@@ -17,7 +18,6 @@
         <input name="rp_key" type="hidden" value="<?php echo esc_attr( $attributes[ 'key' ] ); ?>"/>
         <input name="b3_form" value="custom" type="hidden" />
 
-        <?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
         <div class="b3_form-element">
             <label class="b3_form-label" for="pass1"><?php echo esc_attr( 'New password', 'b3-onboarding' ) ?></label>
