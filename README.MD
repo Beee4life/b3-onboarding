@@ -143,6 +143,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * added validation for custom fields
 * added reserved usernames
 * added an option to use email only for registration
+* added 'protection' for sub-pages of account/profile
 
 2.0.3
 * Removed beta notice stuff
