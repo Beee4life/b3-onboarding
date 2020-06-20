@@ -82,7 +82,7 @@
      *
      */
     function b3_account_approved_subject_example( $subject ) {
-        return 'Filter subject - Account approved for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - Account approved for %blog_name%';
     }
     // add_filter( 'b3_account_approved_subject', 'b3_account_approved_subject_example' );
 
@@ -112,7 +112,7 @@
      * @return string
      */
     function b3_account_activated_subject_user_example( $subject ) {
-        return 'Filter subject - Account activated for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - Account activated for %blog_name%';
     }
     // add_filter( 'b3_account_activated_subject_user', 'b3_account_activated_subject_user_example' );
 
@@ -142,7 +142,7 @@
      * @return string
      */
     function b3_account_rejected_subject_example( $subject ) {
-        return 'Filter subject - Account rejected for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - Account rejected for %blog_name%';
     }
     // add_filter( 'b3_account_rejected_subject', 'b3_account_rejected_subject_example' );
 
@@ -172,7 +172,7 @@
      * @return string
      */
     function b3_email_activation_subject_user_example( $subject ) {
-        return 'Filter subject - Confirm email for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - Confirm email for %blog_name%';
     }
     // add_filter( 'b3_email_activation_subject_user', 'b3_email_activation_subject_user_example' );
 
@@ -202,7 +202,7 @@
      * @return string
      */
     function b3_lost_password_subject_example( $subject ) {
-        return 'Filter subject - Password reset for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - Password reset for %blog_name%';
     }
     // add_filter( 'b3_lost_password_subject', 'b3_lost_password_subject_example' );
 
@@ -232,7 +232,7 @@
      * @return string
      */
     function b3_new_user_subject_example( $subject ) {
-        return 'Filter subject - New user for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - New user for %blog_name%';
     }
     // add_filter( 'b3_new_user_subject', 'b3_new_user_subject_example' );
 
@@ -262,7 +262,7 @@
      * @return string
      */
     function b3_request_access_subject_admin_example( $subject ) {
-        return 'Filter subject - request access for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - request access for %blog_name%';
     }
     // add_filter( 'b3_request_access_subject_admin', 'b3_request_access_subject_admin_example' );
 
@@ -291,7 +291,7 @@
      * @return string
      */
     function b3_request_access_subject_user_example( $subject ) {
-        return 'Filter subject - request access for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - request access for %blog_name%';
     }
     // add_filter( 'b3_request_access_subject_user', 'b3_request_access_subject_user_example' );
 
@@ -320,7 +320,7 @@
      * @return string
      */
     function b3_welcome_user_subject_example( $subject ) {
-        return 'Filter subject - welcome user for %blog_name% %user_login% %first_name%';
+        return 'Filter subject - welcome user for %blog_name%';
     }
     // add_filter( 'b3_welcome_user_subject', 'b3_welcome_user_subject_example' );
 
