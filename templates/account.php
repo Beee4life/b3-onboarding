@@ -8,9 +8,9 @@
     $registration_with_email_only = get_option( 'b3_register_email_only', false );
     $required                     = ( true == get_option( 'b3_first_last_required', false ) ) ? ' required="required"' : false;
     $user_delete                  = get_option( 'b3_user_may_delete', false );
-
-    // echo '<pre>'; var_dump($registration_with_email_only); echo '</pre>'; exit;
 ?>
+<?php do_action( 'b3_add_form_messages', $attributes ); ?>
+
 <div id="b3-account" class="b3_page b3_page--account">
     <form id="accountform" name="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
         <?php wp_nonce_field( 'update-user_' . $current_user->ID ); ?>
