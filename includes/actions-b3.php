@@ -12,13 +12,17 @@
     function b3_do_stuff_after_new_user_activated_by_admin( $user_id ) {
         // Do stuff when user is activated by admin
         $user_object = get_userdata( $user_id );
+        $key         = get_password_reset_key( $user_object );
+        $user_login  = $user_object->user_login;
         $user_object->set_role( get_option( 'default_role' ) );
+        $vars[ 'reset_url'] = network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' );
+
         $to          = $user_object->user_email;
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
         $subject     = strtr( $subject, b3_replace_subject_vars() );
         $message     = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
         $message     = b3_replace_template_styling( $message );
-        $message     = strtr( $message, b3_replace_email_vars() );
+        $message     = strtr( $message, b3_replace_email_vars( $vars ) );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $to, $subject, $message, array() );
