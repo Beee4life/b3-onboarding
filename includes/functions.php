@@ -1102,13 +1102,12 @@
      * @throws Exception
      */
     function b3_get_local_date_time( $date_time_gmt = false ) {
-        $date_format = get_option( 'date_format' );
-        $gmt_offset  = get_option( 'gmt_offset' );
-        $time_format = get_option( 'time_format' );
-        $timezone    = get_option( 'timezone_string' );
+        $date_format       = get_option( 'date_format' );
+        $gmt_offset        = get_option( 'gmt_offset' );
+        $time_format       = get_option( 'time_format' );
+        $timezone          = get_option( 'timezone_string' );
+        $registration_date = gmdate( $date_format . ' @ ' . $time_format, time() );
 
-
-        $registration_date = gmdate( $date_format . ' @ ' . $time_format, time());
         if ( false != $date_time_gmt ) {
             if ( ! empty( $timezone ) ) {
                 $new_date = new DateTime( $date_time_gmt, new DateTimeZone( 'UTC' ) );
