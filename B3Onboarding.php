@@ -1424,6 +1424,10 @@
                     case 'emails_saved':
                         return esc_html__( 'Settings saved', 'b3-onboarding' );
 
+                    // Validation
+                    case 'no_space':
+                        return esc_html__( "You can't use a space there.", 'b3-onboarding' );
+
                     // Website
                     case 'dummy':
                         return esc_html__( 'You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again.', 'b3-onboarding' );
