@@ -19,7 +19,7 @@ textarea {
 .b3_message {
     border:        1px dashed black;
     box-sizing:    border-box;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     padding:       5px 10px;
     position:      relative;
     word-wrap:     initial;
@@ -87,7 +87,13 @@ textarea {
 }
 
 .b3_form-element {
-    margin-bottom: 2em;
+    /* @TODO: check this in sandbox and on custom and WP form */
+    /*margin-bottom: 2em;*/
+    margin-top: 2em;
+}
+
+.b3_form-element:first-of-type {
+    margin-top: 0;
 }
 
 .b3_page--login .b3_form-element--submit {
