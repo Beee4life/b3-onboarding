@@ -466,7 +466,7 @@
              */
             public function b3_add_admin_pages() {
                 include( 'includes/admin-page.php' ); // content for the settings page
-                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '81' );
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
                 include( 'includes/user-approval-page.php' ); // content for the settings page
                 add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
                 if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
@@ -1507,8 +1507,10 @@
 
                 $extra_field_errors = apply_filters( 'b3_extra_fields_validation', [] );
                 if ( ! empty( $extra_field_errors ) ) {
-                    $errors->add( $extra_field_errors[ 'error_code' ], $extra_field_errors[ 'error_message' ] );
-                    $errors->add( 'field_' . $extra_field_errors[ 'id' ], '' );
+                    foreach( $extra_field_errors as $extra_field_error ) {
+                        $errors->add( $extra_field_error[ 'error_code' ], $extra_field_error[ 'error_message' ] );
+                        $errors->add( 'field_' . $extra_field_error[ 'id' ], '' );
+                    }
 
                     return $errors;
                 }
