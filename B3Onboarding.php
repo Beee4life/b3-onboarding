@@ -955,13 +955,13 @@
              */
             public function b3_redirect_to_custom_register() {
                 if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                    $page_url = b3_get_register_url();
-                    if ( false != $page_url ) {
-                        wp_safe_redirect( $page_url );
-                    } else {
-                        // @TODO: create fallback
+                    if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'custom' != $_REQUEST[ 'b3_form' ] ) {
+                        $page_url = b3_get_register_url();
+                        if ( false != $page_url ) {
+                            wp_safe_redirect( $page_url );
+                            exit;
+                        }
                     }
-                    exit;
                 } else {
                     if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
                         if ( is_user_logged_in() ) {
