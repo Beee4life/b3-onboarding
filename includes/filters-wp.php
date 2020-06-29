@@ -33,6 +33,7 @@
         $wp_password_change_notification_email[ 'message' ] = $message;
 
         return $wp_password_change_notification_email;
+
     }
 
     /**
@@ -89,6 +90,7 @@
         }
 
         return $wp_new_user_notification_email_admin;
+
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
@@ -273,6 +275,7 @@
         }
 
         return $errors;
+
     }
     add_filter( 'registration_errors', 'b3_registration_errors', 10, 3 );
 
@@ -307,6 +310,7 @@
         }
 
         return $post_states;
+
     }
     add_filter( 'display_post_states', 'b3_add_post_state', 10, 2 );
 
@@ -327,6 +331,7 @@
         }
 
         return $permalink;
+
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
@@ -346,11 +351,11 @@
             $action = $_GET[ 'action' ];
             if ( 'register' == $action ) {
                 $message = apply_filters( 'b3_message_above_registration', b3_get_message_above_registration() );
-            } elseif ( 'login' == $action ) {
-                $message = apply_filters( 'b3_message_above_login', b3_get_message_above_login() );
             } elseif ( 'lostpassword' == $action ) {
-                $message = apply_filters( 'b3_lost_password_message', b3_get_message_above_lost_password() );
+                $message = apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() );
             }
+        } else {
+            $message = apply_filters( 'b3_message_above_login', b3_get_message_above_login() );
         }
 
         if ( ! empty( $message ) ) {
@@ -358,5 +363,6 @@
         }
 
         return $message;
+
     }
     add_filter( 'login_message', 'wp_login_message' );
