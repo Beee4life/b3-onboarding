@@ -2,7 +2,6 @@
 .b3_tabs {
     background: white;
     margin-top: 2em;
-    max-width:  60%;
 }
 
 .b3_tab-header {
@@ -417,3 +416,11 @@ ul.b3_integrations--list {
 .hidden {
     display: none;
 }
+
+/* Media queries */
+@media screen and ( min-width: 1280px ) {
+    .b3_tabs {
+        max-width: 75%;
+    }
+}
+

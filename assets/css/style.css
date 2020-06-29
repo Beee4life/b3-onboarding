@@ -67,6 +67,10 @@ textarea {
     margin-left: 0;
 }
 
+.b3_page p.rememberme {
+    margin-top: 1rem;
+}
+
 .b3_page .b3_form-label {
     display:        inline-block;
     width:          220px;
@@ -134,7 +138,7 @@ ul.b3_form-links li:last-child {
 }
 
 .b3_table--account tr td:first-child {
-    width: 175px;
+    width: 75px;
 }
 
 /* Password strength */
@@ -229,4 +233,21 @@ ul.b3_form-links li:last-child {
 
 .hidden {
     display: none;
+}
+
+/* Media queries */
+@media screen and ( min-width: 480px ) {
+    .b3_table--account tr td:first-child {
+        width: 150px;
+    }
+}
+@media screen and ( min-width: 640px ) {
+    .b3_table--account tr td:first-child {
+        width: 175px;
+    }
+}
+@media screen and ( min-width: 1024px ) {
+    .b3_table--account tr td:first-child {
+        width: 200px;
+    }
 }
