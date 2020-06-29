@@ -141,10 +141,6 @@
     margin-bottom: 1em;
 }
 
-.b3_settings-field:last-child {
-    margin-bottom: 0;
-}
-
 .b3_settings-label {
     font-weight:   bold;
     margin-bottom: 0.5em;
