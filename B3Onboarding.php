@@ -1719,13 +1719,13 @@
              * @since 1.0.6
              */
             public function b3_admin_notices() {
-
+                die('test');
                 if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                     $message = __( "You're using a beta version, which is not finished yet and can give unexpected results.", 'b3-onboarding' );
-                    if ( ! defined( 'LOCALHOST' ) ) {
-                        echo '<div class="error"><p>'. $message . '.</p></div>';
+                    if ( ! defined( 'LOCALHOST' ) || defined( 'LOCALHOST' ) && false == LOCALHOST ) {
+                        echo '<div class="error"><p>' . $message . '.</p></div>';
                     } else {
-                        echo '<div class="notice notice-warning"><p>'. $message . '.</p></div>';
+                        echo '<div class="notice notice-warning"><p>' . $message . '.</p></div>';
                     }
                 }
 
