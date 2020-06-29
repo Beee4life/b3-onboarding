@@ -263,7 +263,7 @@
 
         $registration_date_gmt   = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
         $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
-        $user_login              = ( true != get_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
+        $user_login              = ( false != $user_data && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
 
         $replacements = array(
             '%blog_name%'         => get_option( 'blogname' ),
