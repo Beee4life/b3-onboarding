@@ -155,8 +155,8 @@
                         <?php $field_value = ( ! empty( $field_value) ) ? $field_value : ( false != $value && is_string( $value ) ) ? $value : false; ?>
                         <?php if ( in_array( $input_type, array( 'number' ) ) ) { ?>
                             <?php $negatives_allowed = ( isset( $extra_field[ 'negatives' ] ) && true == $extra_field[ 'negatives' ] ) ? true : false; ?>
-                            <?php $validation = false; ?>
-                            <?php if ( true == $negatives_allowed ) { ?>
+                            <?php $validation = true; ?>
+                            <?php if ( false == $negatives_allowed ) { ?>
                                 <?php $validation = " min=0 oninput=\"validity.valid||(value='');\""; ?>
                             <?php } ?>
                                 <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?><?php echo $validation; ?> value="<?php echo $field_value; ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
