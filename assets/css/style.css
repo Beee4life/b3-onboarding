@@ -96,7 +96,7 @@ textarea {
     margin-top: 0;
 }
 
-.b3_page--login .b3_form-element--submit {
+.b3_page .b3_form-element--submit {
     margin-bottom: 1em;
 }
 
