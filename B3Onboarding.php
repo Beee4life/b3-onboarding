@@ -1371,7 +1371,7 @@
                         return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
 
                     case 'confirm_email':
-                        return esc_html__( 'You have sucessfully registered but need to confirm your email first. Please check your email for an activation link.', 'b3-onboarding' );
+                        return esc_html__( 'You have sucessfully registered but need to confirm your email address first. Please check your email for an activation link.', 'b3-onboarding' );
 
                     // Lost password
                     case 'invalidcombo':
@@ -1381,7 +1381,7 @@
                         return esc_html__( 'You have to get approved first.', 'b3-onboarding' );
 
                     case 'wait_confirmation':
-                        return esc_html__( 'You have to confirm your email first.', 'b3-onboarding' );
+                        return esc_html__( 'You have to confirm your email address first.', 'b3-onboarding' );
 
                     case 'password_updated':
                         return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );
