@@ -327,7 +327,7 @@
      */
     function b3_logout_link( $permalink, $post_id ) {
         if ( b3_get_logout_url( true ) == $post_id ) {
-            $permalink = add_query_arg( '_wpnonce', wp_create_nonce( 'log-out' ), $permalink );
+            $permalink = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $permalink );
         }
 
         return $permalink;

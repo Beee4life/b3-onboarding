@@ -857,7 +857,8 @@
                             exit;
                         }
                     }
-                } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
+                }
+                if ( false != $approval_page_id && is_page( $approval_page_id ) ) {
                     if ( is_user_logged_in() ) {
                         if ( ! current_user_can( 'promote_users' ) ) {
                             wp_safe_redirect( $account_url );
@@ -870,10 +871,9 @@
 
                 } elseif ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
 
-                    check_admin_referer( 'log-out' );
+                    check_admin_referer( 'logout' );
 
                     $user = wp_get_current_user();
-
                     wp_logout();
 
                     if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
