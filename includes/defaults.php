@@ -397,8 +397,11 @@
      * @return string
      */
     function b3_get_default_message_above_lost_password() {
-        return __( "Please enter your username or email address. You will receive an email message with instructions on how to reset your password.", 'b3-onboarding' );
-        // return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+        if ( 1 == get_option( 'b3_register_email_only' ) ) {
+            return __( "Please enter your email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+        } else {
+            return __( "Please enter your username or email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+        }
     }
 
 
