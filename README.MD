@@ -127,8 +127,8 @@ These are the things we have planned to add.
 * [ ] make it work with WPML
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
-* [ ] disallow certain user names
-* [ ] validate extra fields added through a filter
+* [X] disallow certain user names
+* [X] validate extra fields added through a filter
 * [ ] look more into responsiveness
 * [ ] multi-page registration forms
 * [ ] style all default WordPress mails
@@ -143,7 +143,8 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * added validation for custom fields
 * added reserved usernames
 * added an option to use email only for registration
-* added 'protection' for sub-pages of account/profile
+* added 'protection' for sub-pages of account page
+* added better css for smaller screens
 
 2.0.3
 * Removed beta notice stuff
