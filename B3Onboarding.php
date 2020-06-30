@@ -1348,6 +1348,13 @@
                     case 'invalid_email':
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
 
+                    case 'invalid_username':
+                        if ( 1 == get_option( 'b3_register_email_only' ) ) {
+                            return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
+                        } else {
+                            return esc_html__( 'The user login you entered is not valid.', 'b3-onboarding' );
+                        }
+
                     case 'email_exists':
                         return esc_html__( 'An account already exists with this email address.', 'b3-onboarding' );
 
