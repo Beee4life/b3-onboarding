@@ -15,6 +15,10 @@ textarea {
     padding:       0.428571429rem;
 }
 
+select {
+    max-width: 100%;
+}
+
 /* Error message */
 .b3_message {
     border:        1px dashed black;
