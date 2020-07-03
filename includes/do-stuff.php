@@ -138,6 +138,7 @@
             $container_class   = ( isset( $extra_field[ 'container_class' ] ) && ! empty( $extra_field[ 'container_class' ] ) ) ? $extra_field[ 'container_class' ] : false;
             $input_id          = ( isset( $extra_field[ 'id' ] ) && ! empty( $extra_field[ 'id' ] ) ) ? $extra_field[ 'id' ] : false;
             $input_class       = ( isset( $extra_field[ 'input_class' ] ) && ! empty( $extra_field[ 'input_class' ] ) ) ? '' . $extra_field[ 'input_class' ] : false;
+            $input_description = ( isset( $extra_field[ 'input_description' ] ) && ! empty( $extra_field[ 'input_description' ] ) ) ? '' . $extra_field[ 'input_description' ] : false;
             $input_label       = ( isset( $extra_field[ 'label' ] ) && ! empty( $extra_field[ 'label' ] ) ) ? $extra_field[ 'label' ] : false;
             $input_placeholder = ( isset( $extra_field[ 'placeholder' ] ) && ! empty( $extra_field[ 'placeholder' ] ) ) ? $extra_field[ 'placeholder' ] : false;
             $input_required    = ( isset( $extra_field[ 'required' ] ) && ! empty( $extra_field[ 'required' ] ) ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
@@ -167,6 +168,12 @@
                     <?php } elseif ( 'textarea' == $input_type ) { ?>
                         <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo $field_value; ?></textarea>
 
+                    <?php } elseif ( in_array( $input_type, array( 'true_false' ) ) ) { ?>
+
+                        <?php $selected = false; ?>
+                        <label for="<?php echo $input_id; ?>" class="screen-reader-text"><?php echo $input_label; ?></label>
+                        <input type="checkbox" id="<?php echo $input_id; ?>" name="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" /> <?php echo $input_description; ?>
+
                     <?php } elseif ( in_array( $input_type, array( 'radio', 'checkbox' ) ) ) { ?>
 
                         <?php if ( $input_options ) { ?>
@@ -175,7 +182,11 @@
                                 <?php foreach( $input_options as $option ) { ?>
                                     <div class="b3_input-option b3_input-option--<?php echo $input_type; ?>">
                                         <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
-                                        <?php $selected = ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) ? ' checked="checked"' : ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
+                                        <?php if ( in_array( $input_type, array( 'radio' ) ) ) { ?>
+                                            <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value ) ? ' checked="checked"' : false; ?>
+                                        <?php } elseif ( in_array( $input_type, array( 'checkbox' ) ) ) { ?>
+                                            <?php $selected = ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) ? ' checked="checked"' : ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
+                                        <?php } ?>
                                         <label for="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
                                         <input class="b3_form-input b3_form-input--<?php echo $input_type; ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo $option_class; ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?><?php } ?>" name="<?php echo $option[ 'name' ]; if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php echo $selected; ?>> <?php echo $option[ 'label' ]; ?>
                                     </div>
