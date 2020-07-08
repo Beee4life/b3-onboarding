@@ -928,8 +928,7 @@
                 if ( is_user_logged_in() && is_admin() ) {
                     $user_role = reset( $current_user->roles );
                     if ( is_multisite() && empty( $user_role ) ) {
-                        // @TODO: get default role
-                        $user_role = 'subscriber';
+                        $user_role = get_option( 'default_role' );
                     }
 
                     if ( in_array( $user_role, get_option( 'b3_restrict_admin', [] ) ) ) {
