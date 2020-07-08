@@ -86,7 +86,7 @@
             }
 
             if ( current_user_can( 'manage_options' ) ) {
-                $show_settings = ! empty( $instance[ 'show_settings' ] ) ? $instance[ 'show_settings' ] : false;
+                $show_settings = ( false != $instance[ 'show_settings' ] ) ? $instance[ 'show_settings' ] : false;
                 if ( false == $show_settings ) {
                     $count_errors[] = 'settings';
                 }
@@ -116,6 +116,15 @@
                 }
             }
 
+            $custom_links = apply_filters( 'b3_widget_links', array() );
+
+            if ( ! isset( $login_id ) && ! isset( $register_id ) && ! isset( $logout_id ) && empty( $custom_links ) ) {
+                $show_widget = false;
+                if ( false != $show_settings && current_user_can( 'manage_options' ) ) {
+                    $show_widget = true;
+                }
+            }
+
             if ( true === $show_widget ) {
                 echo $args[ 'before_widget' ];
 
@@ -132,14 +141,13 @@
                         echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
                     }
                 } else {
-                    if ( false != $account_url ) {
+                    if ( isset( $account_url ) && false != $account_url ) {
                         echo '<li><a href="' . $account_url . '">' . $account_title . '</a></li>';
                     }
                     if ( true == $show_settings && current_user_can( 'manage_options' ) ) {
                         echo '<li><a href="' . admin_url( 'admin.php?page=b3-onboarding' ) . '">B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a></li>';
                     }
 
-                    $custom_links = apply_filters( 'b3_widget_links', array() );
                     if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
                         foreach( $custom_links as $link ) {
                             echo '<li><a href="' . $link[ 'link' ] . '">' . $link[ 'label' ] . '</a></li>';
