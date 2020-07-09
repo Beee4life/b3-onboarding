@@ -95,8 +95,6 @@ select {
 }
 
 .b3_form-element {
-    /* @TODO: check this in sandbox and on custom and WP form */
-    /*margin-bottom: 2em;*/
     margin-top: 2em;
 }
 
