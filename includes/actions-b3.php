@@ -12,13 +12,17 @@
     function b3_do_stuff_after_new_user_activated_by_admin( $user_id ) {
         // Do stuff when user is activated by admin
         $user_object = get_userdata( $user_id );
+        $key         = get_password_reset_key( $user_object );
+        $user_login  = $user_object->user_login;
         $user_object->set_role( get_option( 'default_role' ) );
+        $vars[ 'reset_url'] = network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' );
+
         $to          = $user_object->user_email;
         $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
         $subject     = strtr( $subject, b3_replace_subject_vars() );
         $message     = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
         $message     = b3_replace_template_styling( $message );
-        $message     = strtr( $message, b3_replace_email_vars() );
+        $message     = strtr( $message, b3_replace_email_vars( $vars ) );
         $message     = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $to, $subject, $message, array() );
@@ -74,13 +78,19 @@
      * @since 1.0.0
      */
     function b3_add_username_email_fields() {
+        $registration_with_email_only = get_option( 'b3_register_email_only', false );
+
         ob_start();
+
+        if ( false == $registration_with_email_only ) {
         ?>
         <div class="b3_form-element b3_form-element--login">
             <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
             <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
         </div>
-
+        <?php } else { ?>
+            <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
+        <?php } ?>
         <div class="b3_form-element b3_form-element--email">
             <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
             <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
@@ -301,7 +311,7 @@
                     $messages[]  = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
                 } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
                     if ( 'request_access' == $registration_type ) {
-                        $request_access_message = esc_html__( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
+                        $request_access_message = __( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
                         if ( false != $request_access_message ) {
                             $show_errors = true;
                             $messages[]  = $request_access_message;

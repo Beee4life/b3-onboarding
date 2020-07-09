@@ -43,6 +43,7 @@
             'b3_request_access_subject_admin'    => array( 'string' ),
             'b3_request_access_message_user'     => array( 'string' ),
             'b3_request_access_subject_user'     => array( 'string' ),
+            'b3_reserved_usernames'              => array( 'array' ),
             'b3_welcome_user_message'            => array( 'string' ),
             'b3_welcome_user_subject'            => array( 'string' ),
             'b3_widget_links'                    => array( 'array' ),
@@ -101,7 +102,42 @@
                             }
                         } elseif ( in_array( 'extra', $validation ) ) {
                             foreach( $filter_output as $field ) {
-                                // @TODO: verify extra fields
+                                if ( ! isset( $field[ 'type' ] ) ) {
+                                    if ( isset( $field[ 'label' ] ) || isset( $field[ 'id' ] ) ) {
+                                        if ( isset( $field[ 'label' ] ) ) {
+                                            $replace = $field[ 'label' ];
+                                        } elseif ( isset( $field[ 'id' ] ) ) {
+                                            $replace = $field[ 'id' ];
+                                        }
+                                        $error_messages[] = sprintf( __( 'You didn\'t set a field type for "%s".', 'b3-onboarding' ), $replace );
+                                    } else {
+                                        $error_messages[] = __( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
+                                    }
+                                } else {
+                                    if ( ! isset( $field[ 'label' ] ) && isset( $field[ 'id' ] ) ) {
+                                        $error_messages[] = sprintf( __( 'A label for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'id' ], $filter );
+                                    }
+                                    if ( ! isset( $field[ 'id' ] ) && isset( $field[ 'label' ] ) ) {
+                                        $error_messages[] = sprintf( __( 'An ID for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'label' ], $filter );
+                                    }
+                                    if ( ! isset( $field[ 'id' ] ) && ! isset( $field[ 'label' ] ) ) {
+                                        $error_messages[] = sprintf( __( 'An ID and label for your option in the filter "%s" is required.', 'b3-onboarding' ), $filter );
+                                    }
+                                    if ( in_array( $field[ 'type' ], [ 'checkbox', 'radio', 'select' ] ) ) {
+                                        if ( ! isset( $field[ 'options' ] ) ) {
+                                            if ( isset( $field[ 'label' ] ) || isset( $field[ 'id' ] ) ) {
+                                                if ( isset( $field[ 'label' ] ) ) {
+                                                    $replace = $field[ 'label' ];
+                                                } elseif ( isset( $field[ 'id' ] ) ) {
+                                                    $replace = $field[ 'id' ];
+                                                }
+                                                $error_messages[] = sprintf( __( 'You didn\'t set any options for the field "%s".', 'b3-onboarding' ), $replace );
+                                            } else {
+                                                $error_messages[] = __( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

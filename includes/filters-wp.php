@@ -33,6 +33,7 @@
         $wp_password_change_notification_email[ 'message' ] = $message;
 
         return $wp_password_change_notification_email;
+
     }
 
     /**
@@ -89,6 +90,7 @@
         }
 
         return $wp_new_user_notification_email_admin;
+
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
@@ -257,6 +259,14 @@
             }
         }
 
+        $extra_field_errors = apply_filters( 'b3_extra_fields_validation', [] );
+        if ( ! empty( $extra_field_errors ) ) {
+            $errors->add( $extra_field_errors[ 'error_code' ], $extra_field_errors[ 'error_message' ] );
+            $errors->add( 'field_' . $extra_field_errors[ 'id' ], '' );
+
+            return $errors;
+        }
+
         $privacy_error = b3_verify_privacy();
         if ( true == $privacy_error ) {
             $errors->add( 'no_privacy', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You have to accept the privacy statement.', 'b3-onboarding' ) ) );
@@ -265,6 +275,7 @@
         }
 
         return $errors;
+
     }
     add_filter( 'registration_errors', 'b3_registration_errors', 10, 3 );
 
@@ -299,6 +310,7 @@
         }
 
         return $post_states;
+
     }
     add_filter( 'display_post_states', 'b3_add_post_state', 10, 2 );
 
@@ -315,10 +327,11 @@
      */
     function b3_logout_link( $permalink, $post_id ) {
         if ( b3_get_logout_url( true ) == $post_id ) {
-            $permalink = add_query_arg( '_wpnonce', wp_create_nonce( 'log-out' ), $permalink );
+            $permalink = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $permalink );
         }
 
         return $permalink;
+
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
@@ -338,11 +351,11 @@
             $action = $_GET[ 'action' ];
             if ( 'register' == $action ) {
                 $message = apply_filters( 'b3_message_above_registration', b3_get_message_above_registration() );
-            } elseif ( 'login' == $action ) {
-                $message = apply_filters( 'b3_message_above_login', b3_get_message_above_login() );
             } elseif ( 'lostpassword' == $action ) {
-                $message = apply_filters( 'b3_lost_password_message', b3_get_message_above_lost_password() );
+                $message = apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() );
             }
+        } else {
+            $message = apply_filters( 'b3_message_above_login', b3_get_message_above_login() );
         }
 
         if ( ! empty( $message ) ) {
@@ -350,5 +363,6 @@
         }
 
         return $message;
+
     }
     add_filter( 'login_message', 'wp_login_message' );

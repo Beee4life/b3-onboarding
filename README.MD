@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.0.3 - released 17.06.20
+2.1.0 - released 09.07.20
 
 <a name="features"></a>
 ### Features
@@ -123,12 +123,12 @@ They will become available on the official website (soon).
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
+* [X] disallow certain user names
+* [X] validate extra fields added through a filter
 * [ ] make it work with Multisite
 * [ ] make it work with WPML
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
-* [ ] disallow certain user names
-* [ ] validate extra fields added through a filter
 * [ ] look more into responsiveness
 * [ ] multi-page registration forms
 * [ ] style all default WordPress mails
@@ -139,6 +139,13 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.1.0
+* added validation for custom fields
+* added reserved usernames
+* added an option to use email only for registration
+* added 'protection' for sub-pages of account page
+* added better css for smaller screens
+
 2.0.3
 * Removed beta notice stuff
 
@@ -163,35 +170,35 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboarding/blob/master/CHANGELOG.MD).
 
-1.0.6
+1.0.6 (03.12.19)
 * fix incorrect fallback link for lost password
 
-1.0.5
+1.0.5 (28.03.19)
 * fix broken user ID on dashboard
 * update css
 * add redirect to login form
 
-1.0.4
+1.0.4 (27.03.19)
 * protect function in uninstall.php
 * always return html as content type
 * remove table from login form
 
-1.0.3
+1.0.3 (19.03.19)
 * update version
 
-1.0.2
+1.0.2 (19.03.19)
 * remove log errors
 
-1.0.1
+1.0.1 (19.03.19)
 * change password reset link in password reset email
 * create function to retrieve password reset url/page/link
 
-1.0.0
+1.0.0 (17.03.19)
 * version change to (hopefully) avoid composer issues
 * clean up of unused code
 * clean up of commented code
 
-0.9-beta
+0.9-beta (17.03.19)
 * add more email settings
 * clean up actions/filters
 * refactor registration form
@@ -200,9 +207,9 @@ Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboa
 * output b3_* option values on debug page
 * add dashboard widget
 
-0.8-beta
+0.8-beta (14.03.19)
 * add first/last name to request access
 * option to make first/last name required
 
-0.7-beta
+0.7-beta (04.03.19)
 * first decent release

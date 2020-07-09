@@ -45,15 +45,32 @@
                 if ( is_user_logged_in() ) {
                     return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                 } elseif ( 'closed' == get_option( 'b3_registration_type', false ) ) {
-                    return apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() );
+                    return '<p class="b3_message">' . apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) . '</p>';
                 } else {
 
-                    $attributes[ 'errors' ]             = array();
+                    $attributes[ 'errors' ] = array();
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
-
+                        $error_count = 1;
                         foreach ( $error_codes as $error_code ) {
-                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
+                            if ( 1 == count( $error_codes ) ) {
+                                $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
+                            } else {
+                                if ( 1 < $error_count ) {
+                                    // 2 errors only occurs with extra fields
+                                    if ( strpos( $error_code, 'field_' ) !== false ) {
+                                        $field_id                 = substr( $error_code, 6 );
+                                        $extra_field_values       = apply_filters( 'b3_extra_fields', array() );
+                                        $column                   = array_column( $extra_field_values, 'id' );
+                                        $key                      = array_search( $field_id, $column );
+                                        $sprintf_variable         = $extra_field_values[ $key ][ 'label' ];
+                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
+                                    } else {
+                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
+                                    }
+                                }
+                            }
+                            $error_count++;
                         }
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                         // this is for demonstration setup
@@ -319,3 +336,4 @@
         new B3_Shortcodes();
 
     endif;
+

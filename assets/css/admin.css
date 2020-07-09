@@ -2,7 +2,6 @@
 .b3_tabs {
     background: white;
     margin-top: 2em;
-    max-width:  60%;
 }
 
 .b3_tab-header {
@@ -139,10 +138,6 @@
 /* Settings page */
 .b3_settings-field {
     margin-bottom: 1em;
-}
-
-.b3_settings-field:last-child {
-    margin-bottom: 0;
 }
 
 .b3_settings-label {
@@ -421,3 +416,11 @@ ul.b3_integrations--list {
 .hidden {
     display: none;
 }
+
+/* Media queries */
+@media screen and ( min-width: 1280px ) {
+    .b3_tabs {
+        max-width: 75%;
+    }
+}
+

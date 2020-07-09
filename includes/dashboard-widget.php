@@ -16,7 +16,7 @@
         $activation_users = get_users( $activation_args );
 
         $all_args = array(
-            'exclude'      => [ '1' ], // @TODO: get proper admin ID (can be changed)
+            'exclude'      => [ get_current_user_id() ],
             'number'       => '5',
             'orderby'      => 'registered',
             'order'        => 'DESC',
@@ -78,4 +78,8 @@
         </div>
         <?php
     }
-    wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding', 'b3_dashboard_widget_function' );
+    if ( current_user_can( 'promote_users' ) ) {
+        wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding', 'b3_dashboard_widget_function' );
+    }
+
+

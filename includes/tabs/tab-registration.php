@@ -8,13 +8,14 @@
      */
     function b3_render_registration_tab() {
 
-        $first_last               = get_option( 'b3_activate_first_last', false );
-        $first_last_required      = get_option( 'b3_first_last_required', false );
-        $privacy                  = get_option( 'b3_privacy', false );
-        $privacy_page             = get_option( 'b3_privacy_page', false );
-        $privacy_page_placeholder = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
-        $privacy_text             = get_option( 'b3_privacy_text', false );
-        $registration_type        = get_option( 'b3_registration_type', false );
+        $first_last                   = get_option( 'b3_activate_first_last', false );
+        $first_last_required          = get_option( 'b3_first_last_required', false );
+        $privacy                      = get_option( 'b3_privacy', false );
+        $privacy_page                 = get_option( 'b3_privacy_page', false );
+        $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
+        $privacy_text                 = get_option( 'b3_privacy_text', false );
+        $registration_type            = get_option( 'b3_registration_type', false );
+        $registration_with_email_only = get_option( 'b3_register_email_only', false );
 
         ob_start();
         ?>
@@ -62,6 +63,7 @@
                 <?php b3_get_close(); ?>
 
                 <?php if ( 'closed' == get_option( 'b3_registration_type', false ) ) { ?>
+
                     <?php $closed_message = get_option( 'b3_registration_closed_message', false ); ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
@@ -74,65 +76,81 @@
                             </div>
                         </div>
                     <?php b3_get_close(); ?>
-                <?php } ?>
 
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
-                    </div>
-                <?php b3_get_close(); ?>
+                <?php } else { ?>
 
-                <?php $hide_first_last_required = ( 1 == get_option( 'b3_activate_first_last', false ) ) ? false : true; ?>
-                <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
-                    </div>
-                <?php b3_get_close(); ?>
-
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox.', 'b3-onboarding' ); ?>
-                    </div>
-                <?php b3_get_close(); ?>
-
-                <?php $hide_privacy_settings = ( 1 == get_option( 'b3_privacy', false ) ) ? false : true; ?>
-                <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--text">
-                        <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo stripslashes( $privacy_text ); } ?>"/>
-                        <div class="b3_settings-input-description">
-                            <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_register_email_only"><?php esc_html_e( 'Register with email address only', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php if ( $registration_with_email_only ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' ); ?>
                         </div>
-                    </div>
-                <?php b3_get_close(); ?>
-
-                <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--text">
-                        <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ); ?>
-                        <?php $all_pages = get_posts( $page_args ); ?>
-                        <select name="b3_privacy_page" id="b3_privacy_page">
-                            <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
-                            <?php foreach( $all_pages as $page ) { ?>
-                                <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
-                                <option value="<?php echo $page->ID; ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
-                            <?php } ?>
-                        </select>
+
+                    <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
+                    <div class="b3-name-fields<?php echo $hide_extended_fields; ?>">
+
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
+
+                        <?php $hide_first_last_required = ( 1 == get_option( 'b3_activate_first_last', false ) ) ? false : true; ?>
+                        <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
+
                     </div>
-                <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox.', 'b3-onboarding' ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php $hide_privacy_settings = ( 1 == get_option( 'b3_privacy', false ) ) ? false : true; ?>
+                    <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo stripslashes( $privacy_text ); } ?>"/>
+                            <div class="b3_settings-input-description">
+                                <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
+                            </div>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ); ?>
+                            <?php $all_pages = get_posts( $page_args ); ?>
+                            <select name="b3_privacy_page" id="b3_privacy_page">
+                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                                <?php foreach( $all_pages as $page ) { ?>
+                                    <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
+                                    <option value="<?php echo $page->ID; ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    <?php b3_get_close(); ?>
+                <?php } ?>
             <?php } ?>
 
             <?php b3_get_submit_button(); ?>

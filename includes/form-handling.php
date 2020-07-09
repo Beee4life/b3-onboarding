@@ -53,6 +53,12 @@
                         delete_option( 'b3_debug_info' );
                     }
 
+                    if ( isset( $_POST[ 'b3_activate_filter_validation' ] ) && 1 == $_POST[ 'b3_activate_filter_validation' ] ) {
+                        update_option( 'b3_activate_filter_validation', 1, true );
+                    } else {
+                        delete_option( 'b3_activate_filter_validation' );
+                    }
+
                     update_option( 'b3_main_logo', $_POST[ 'b3_main_logo' ], true );
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
@@ -140,6 +146,12 @@
                         } else {
                             delete_option( 'b3_registration_closed_message' );
                         }
+                    }
+
+                    if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
+                        update_option( 'b3_register_email_only', $_POST[ 'b3_register_email_only' ], true );
+                    } else {
+                        delete_option( 'b3_register_email_only' );
                     }
 
                     if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {

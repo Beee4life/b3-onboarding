@@ -1,4 +1,5 @@
 <?php
+    include( B3_PLUGIN_PATH . '/includes/download.php' );
     /**
      * Return all custom meta keys
      *
@@ -196,11 +197,11 @@
         $normal_options = array(
             array(
                 'value' => 'request_access',
-                'label' => esc_html__( 'Request access (admin approval)', 'b3-onboarding' ),
+                'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
             ),
             array(
                 'value' => 'email_activation',
-                'label' => esc_html__( 'Open (user needs to confirm email)', 'b3-onboarding' ),
+                'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
             ),
             array(
                 'value' => 'open',
@@ -1101,13 +1102,12 @@
      * @throws Exception
      */
     function b3_get_local_date_time( $date_time_gmt = false ) {
-        $date_format = get_option( 'date_format' );
-        $gmt_offset  = get_option( 'gmt_offset' );
-        $time_format = get_option( 'time_format' );
-        $timezone    = get_option( 'timezone_string' );
+        $date_format       = get_option( 'date_format' );
+        $gmt_offset        = get_option( 'gmt_offset' );
+        $time_format       = get_option( 'time_format' );
+        $timezone          = get_option( 'timezone_string' );
+        $registration_date = gmdate( $date_format . ' @ ' . $time_format, time() );
 
-
-        $registration_date = gmdate( $date_format . ' @ ' . $time_format, time());
         if ( false != $date_time_gmt ) {
             if ( ! empty( $timezone ) ) {
                 $new_date = new DateTime( $date_time_gmt, new DateTimeZone( 'UTC' ) );
@@ -1208,4 +1208,30 @@
         }
 
         return $message;
+    }
+
+
+    /**
+     * Reserved usernames
+     *
+     * @since 2.0.4 @TODO
+     *
+     * @return array
+     */
+    function b3_get_reserved_usernames() {
+
+        $default_reserved_names = [
+            'admin',
+            'administrator',
+        ];
+
+        $filtered_names = apply_filters( 'b3_reserved_usernames', [] );
+        if ( ! is_array( $filtered_names ) ) {
+            $filtered_names = [ $filtered_names ];
+        }
+
+        $reserved_user_names = array_merge( $default_reserved_names, $filtered_names );
+
+        return $reserved_user_names;
+
     }

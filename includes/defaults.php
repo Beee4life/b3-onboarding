@@ -106,6 +106,7 @@
     function b3_default_new_user_admin_message() {
         $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . ".\n";
         $admin_message .= '<br /><br />' . "\n";
+        // @TODO: add if for no login registration
         $admin_message .= sprintf( __( 'User name: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
         $admin_message .= '<br /><br />' . "\n";
         $admin_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), '%user_ip%' ) . "\n";
@@ -134,7 +135,12 @@
      * @return string
      */
     function b3_default_account_activated_message() {
-        $message = sprintf( esc_html__( 'Hi %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+
+        if ( true == get_option( 'b3_register_email_only' ) ) {
+            $message = esc_html__( 'Hi', 'b3-onboarding' ) . ',' . "\n";
+        } else {
+            $message = sprintf( esc_html__( 'Hi %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        }
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%lostpass_url%' ) . "\n";
         $message .= '<br /><br />' . "\n";
@@ -303,7 +309,11 @@
      * @return string
      */
     function b3_default_welcome_user_message() {
-        $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        if ( true == get_option( 'b3_register_email_only' ) ) {
+            $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
+        } else {
+            $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        }
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), '%blog_name%' ) . "\n";
         $message .= '<br /><br />' . "\n";
@@ -337,7 +347,11 @@
      * @return string
      */
     function b3_default_email_activation_message() {
-        $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        if ( 1 == get_option( 'b3_register_email_only', false ) ) {
+            $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
+        } else {
+            $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        }
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( __( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
@@ -383,8 +397,11 @@
      * @return string
      */
     function b3_get_default_message_above_lost_password() {
-        return __( "Please enter your username or email address. You will receive an email message with instructions on how to reset your password.", 'b3-onboarding' );
-        // return __( "Enter your email address and we'll send you a link to reset your password.", 'b3-onboarding' );
+        if ( 1 == get_option( 'b3_register_email_only' ) ) {
+            return __( "Please enter your email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+        } else {
+            return __( "Please enter your username or email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+        }
     }
 
 

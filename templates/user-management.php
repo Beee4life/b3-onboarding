@@ -1,5 +1,6 @@
 <?php
     $show_first_last_name = get_option( 'b3_activate_first_last', false );
+    $register_email_only  = get_option( 'b3_register_email_only', false );
     $user_args            = array( 'role' => 'b3_approval' );
     $users                = get_users( $user_args );
 
@@ -37,21 +38,26 @@
             <thead>
             <tr>
                 <th>
-                    <?php esc_html_e( 'User ID', 'b3-onboarding' ); ?>
+                    <?php echo esc_html__( 'User ID', 'b3-onboarding' ); ?>
                 </th>
+                <?php if ( false != $register_email_only ) { ?>
+                    <th>
+                        <?php echo esc_html__( 'User name', 'b3-onboarding' ); ?>
+                    </th>
+                <?php } ?>
                 <?php if ( false != $show_first_last_name ) { ?>
                     <th>
-                        <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
+                        <?php echo esc_html__( 'First name', 'b3-onboarding' ); ?>
                     </th>
                     <th>
-                        <?php esc_html_e( 'Last name', 'b3-onboarding' ); ?>
+                        <?php echo esc_html__( 'Last name', 'b3-onboarding' ); ?>
                     </th>
                 <?php } ?>
                 <th>
-                    <?php esc_html_e( 'Email', 'b3-onboarding' ); ?>
+                    <?php echo esc_html__( 'Email', 'b3-onboarding' ); ?>
                 </th>
                 <th>
-                    <?php esc_html_e( 'Actions', 'b3-onboarding' ); ?>
+                    <?php echo esc_html__( 'Actions', 'b3-onboarding' ); ?>
                 </th>
             </tr>
             </thead>
@@ -59,8 +65,10 @@
             <?php foreach( $users as $user ) { ?>
                 <tr>
                     <td><?php echo $user->ID; ?></td>
+                    <?php if ( false != $register_email_only ) { ?>
+                        <td><?php echo $user->user_login; ?></td>
+                    <?php } ?>
                     <?php if ( false != $show_first_last_name ) { ?>
-                        <td><?php echo $user->first_name; ?></td>
                         <td><?php echo $user->last_name; ?></td>
                     <?php } ?>
                     <td><?php echo $user->user_email; ?></td>
@@ -68,8 +76,8 @@
                         <form name="b3_user_management" action="" method="post">
                             <input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
                             <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
-                            <input name="b3_approve_user" class="button" type="submit" value="<?php esc_html_e( 'Approve', 'b3-onboarding' ); ?>" />
-                            <input name="b3_reject_user" class="button" type="submit" value="<?php esc_html_e( 'Reject', 'b3-onboarding' ); ?>" />
+                            <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr( 'Approve', 'b3-onboarding' ); ?>" />
+                            <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr( 'Reject', 'b3-onboarding' ); ?>" />
                         </form>
                     </td>
                 </tr>
