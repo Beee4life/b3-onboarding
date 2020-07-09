@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.1.0 - released 30.06.20
+2.1.0 - released 09.07.20
 
 <a name="features"></a>
 ### Features
@@ -123,12 +123,12 @@ They will become available on the official website (soon).
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
+* [X] disallow certain user names
+* [X] validate extra fields added through a filter
 * [ ] make it work with Multisite
 * [ ] make it work with WPML
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
-* [X] disallow certain user names
-* [X] validate extra fields added through a filter
 * [ ] look more into responsiveness
 * [ ] multi-page registration forms
 * [ ] style all default WordPress mails
