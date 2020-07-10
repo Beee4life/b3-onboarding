@@ -3,7 +3,7 @@ Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
 Tested up to: 5.4.2
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

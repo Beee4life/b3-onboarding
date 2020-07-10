@@ -139,6 +139,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.1.1
+* forgot to change version
+
 2.1.0
 * added validation for custom fields
 * added reserved usernames
