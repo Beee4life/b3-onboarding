@@ -752,9 +752,8 @@
                                         $role      = 'b3_activation';
                                         $query_arg = 'confirm_email';
                                     } else {
-                                        $query_arg      = 'success';
-                                        // @TODO: make a setting for this
-                                        // $reset_password = true;
+                                        $query_arg = 'success';
+                                        $reset_password = ( true == get_option( 'b3_redirect_set_password' ) ) ? true : false;
                                     }
 
                                     $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role );
@@ -765,7 +764,7 @@
                                         $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                     } else {
                                         // Success
-                                        if ( isset( $reset_password ) ) {
+                                        if ( isset( $reset_password ) && true == $reset_password ) {
                                             $reset_password_url = b3_get_lostpassword_url();
                                             if ( false != $reset_password_url ) {
                                                 $redirect_url = $reset_password_url;
