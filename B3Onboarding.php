@@ -664,7 +664,11 @@
              * at the end of the page.
              */
             public function b3_add_captcha_js_to_footer() {
-                wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
+                $recaptcha = get_option( 'b3_activate_recaptcha' );
+                $recaptcha_on = get_option( 'b3_recaptcha_on' );
+                if ( true == $recaptcha && is_array( $recaptcha ) && ! empty( $recaptcha ) ) {
+                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
+                }
             }
 
 
@@ -749,7 +753,7 @@
                                         $query_arg = 'confirm_email';
                                     } else {
                                         $query_arg      = 'success';
-                                        $reset_password = true;
+                                        // $reset_password = true;
                                     }
 
                                     $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role );
@@ -1397,7 +1401,7 @@
 
                     // Registration
                     case 'registration_success':
-                        return esc_html__( 'You have successfully registered.', 'b3-onboarding' );
+                        return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
 
                     case 'registration_success_enter_password':
                         return sprintf(
