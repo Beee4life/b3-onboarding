@@ -14,6 +14,7 @@
         $privacy_page                 = get_option( 'b3_privacy_page', false );
         $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
         $privacy_text                 = get_option( 'b3_privacy_text', false );
+        $redirect_set_password        = get_option( 'b3_redirect_set_password', false );
         $registration_type            = get_option( 'b3_registration_type', false );
         $registration_with_email_only = get_option( 'b3_register_email_only', false );
 
@@ -109,8 +110,18 @@
                                 <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
-
                     </div>
+
+                    <?php if ( 'open' == get_option( 'b3_registration_type', false ) ) { ?>
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php if ( $redirect_set_password ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
+                    <?php } ?>
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>

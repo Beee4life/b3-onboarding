@@ -167,6 +167,12 @@
                         delete_option( 'b3_first_last_required' );
                     }
 
+                    if ( isset( $_POST[ 'b3_redirect_set_password' ] ) && 1 == $_POST[ 'b3_redirect_set_password' ] ) {
+                        update_option( 'b3_redirect_set_password', 1, true );
+                    } else {
+                        delete_option( 'b3_redirect_set_password' );
+                    }
+
                     if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
                         update_option( 'b3_privacy', 1, true );
                     } else {
