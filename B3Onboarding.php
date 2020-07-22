@@ -753,6 +753,7 @@
                                         $query_arg = 'confirm_email';
                                     } else {
                                         $query_arg      = 'success';
+                                        // @TODO: make a setting for this
                                         // $reset_password = true;
                                     }
 
