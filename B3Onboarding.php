@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.1.1
+    Version:            2.2.0
     Requires at least:  4.3
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.1.1',
+                    'version' => '2.2.0',
                 );
 
                 // actions
