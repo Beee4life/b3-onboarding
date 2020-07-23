@@ -116,13 +116,14 @@
             // user is manually added
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
-                $send_manual_mail               = true;
+                $send_custom_mail               = true;
                 $wp_new_user_notification_email = false;
             }
         }
 
         if ( true == $send_custom_mail ) {
-            $wp_new_user_notification_email[ 'to' ] = $user->user_email;
+            $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
+            $wp_new_user_notification_email[ 'headers' ] = [];
             if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
