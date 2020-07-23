@@ -18,7 +18,6 @@ You can customise every aspect of the onboarding process, such as control the lo
 
 There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
 
-
 == Installation ==
 
 1. Download the [latest release](https://github.com/Beee4life/b3-onboarding/archive/master.zip).
