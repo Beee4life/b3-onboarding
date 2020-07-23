@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.1.0 - released 09.07.20
+2.2.0 - released 23.07.20
 
 <a name="features"></a>
 ### Features
@@ -139,6 +139,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.2.0
+* fix for undefined headers when manually adding a user with notification
+
 2.1.1
 * forgot to change version
 

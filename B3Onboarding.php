@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.1.1
+    Version:            2.2.0
     Requires at least:  4.3
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.1.1',
+                    'version' => '2.2.0',
                 );
 
                 // actions
@@ -664,7 +664,11 @@
              * at the end of the page.
              */
             public function b3_add_captcha_js_to_footer() {
-                wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
+                $recaptcha = get_option( 'b3_activate_recaptcha' );
+                $recaptcha_on = get_option( 'b3_recaptcha_on' );
+                if ( true == $recaptcha && is_array( $recaptcha ) && ! empty( $recaptcha ) ) {
+                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
+                }
             }
 
 
@@ -748,8 +752,8 @@
                                         $role      = 'b3_activation';
                                         $query_arg = 'confirm_email';
                                     } else {
-                                        $query_arg      = 'success';
-                                        $reset_password = true;
+                                        $query_arg = 'success';
+                                        $reset_password = ( true == get_option( 'b3_redirect_set_password' ) ) ? true : false;
                                     }
 
                                     $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role );
@@ -760,7 +764,7 @@
                                         $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                     } else {
                                         // Success
-                                        if ( isset( $reset_password ) ) {
+                                        if ( isset( $reset_password ) && true == $reset_password ) {
                                             $reset_password_url = b3_get_lostpassword_url();
                                             if ( false != $reset_password_url ) {
                                                 $redirect_url = $reset_password_url;
@@ -1397,7 +1401,7 @@
 
                     // Registration
                     case 'registration_success':
-                        return esc_html__( 'You have successfully registered.', 'b3-onboarding' );
+                        return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
 
                     case 'registration_success_enter_password':
                         return sprintf(

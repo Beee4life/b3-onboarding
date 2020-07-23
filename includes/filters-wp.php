@@ -109,23 +109,21 @@
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
 
         // check if use of own styling/templates
-        $send_custom_mail = true;
+        $send_custom_mail = false;
         $send_manual_mail = false;
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
-                $send_custom_mail               = false;
-                $send_manual_mail               = true;
+                $send_custom_mail               = true;
                 $wp_new_user_notification_email = false;
-            } else {
-                $send_custom_mail = false;
             }
         }
 
         if ( true == $send_custom_mail ) {
-            $wp_new_user_notification_email[ 'to' ] = $user->user_email;
+            $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
+            $wp_new_user_notification_email[ 'headers' ] = [];
             if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
@@ -162,10 +160,12 @@
             }
 
         }
+        // not in use yet, due to more debugging
         if ( true == $send_manual_mail ) {
             // @TODO: maybe create email message for manual adding of user
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+            $wp_new_user_notification_email[ 'headers' ] = [];
             $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
         }
 

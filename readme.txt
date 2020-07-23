@@ -3,7 +3,7 @@ Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
 Tested up to: 5.4.2
-Stable tag: 2.1.1
+Stable tag: 2.2.0
 License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,7 +17,6 @@ This plugin was built to 'onboard' (in other words register/add) users to your s
 You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
 
 There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
-
 
 == Installation ==
 

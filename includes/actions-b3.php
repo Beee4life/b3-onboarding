@@ -316,6 +316,12 @@
                             $show_errors = true;
                             $messages[]  = $request_access_message;
                         }
+                    } elseif ( 'closed' != $registration_type ) {
+                        $registration_message = apply_filters( 'b3_message_above_registration', false );
+                        if ( false != $registration_message ) {
+                            $show_errors = true;
+                            $messages[]  = $registration_message;
+                        }
                     }
                 } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
                     $show_errors = true;
