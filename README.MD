@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.2.0 - released 23.07.20
+2.3.0 - released xx.07.20
 
 <a name="features"></a>
 ### Features
@@ -74,38 +74,17 @@ If you activate this plugin the following will be done:
 * [user-management] = renders user management page
 
 <a name="hooks"></a>
-### Hooks
+### Actions
 
-* b3_add_extra_fields_registration
-* b3_after_insert_site
-* b3_after_recaptcha_{$form_type}
-* b3_after_recaptcha_register
-* b3_before_recaptcha_{$form_type}
-* b3_before_recaptcha_register
-* b3_do_after_{$template_name}
-* b3_do_after_submit_registration_form
-* b3_do_before_{$template_name}
-* b3_do_before_submit_registration_form
-* b3_after_user_activated
-* b3_after_user_activated_by_admin
-
-These are just a few of all available filters which are available on the official website.
+There are a lot of actions which you can use, to hook your code to. There are too many to list here, so find them on the [official website](https://b3onboarding.berryplasman.com/actions/).
 
 <a name="filters"></a>
 ### Filters
 
-* b3_extra_fields
-* b3_hidden_fields
-* b3_registration_closed_message
-* b3_welcome_user_subject
-* b3_welcome_user_message
+There are a lot of filters which you can use. There are too many to list here, so find them on the [official website](https://b3onboarding.berryplasman.com/filters/).
 
-These are just a few of all available actions which are available on the official website.
-
-If you use hooks, you have more settings available than if you use the admin.
-Some functions are not (yet) available through the admin pages.
-
-They will become available on the official website (soon).
+If you use hooks, you have more settings available than if you (just) use the admin.
+Some functions are not (yet) available through the admin pages and some will never be.
 
 <a name="uninstall"></a>
 ### Uninstall
@@ -123,6 +102,7 @@ They will become available on the official website (soon).
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
+* [X] use custom passwords
 * [X] disallow certain user names
 * [X] validate extra fields added through a filter
 * [ ] make it work with Multisite
