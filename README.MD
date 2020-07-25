@@ -139,6 +139,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.3.0
+* custom passwords
+
 2.2.0
 * fix for undefined headers when manually adding a user with notification
 
