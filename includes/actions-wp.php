@@ -157,7 +157,7 @@
      *
      * @since 2.0.0
      */
-    function remove_admin_bar() {
+    function b3_remove_admin_bar() {
         $hide_admin_bar = get_option( 'b3_hide_admin_bar', false );
         if ( false != $hide_admin_bar ) {
             $restricted_roles = get_option( 'b3_restrict_admin' );
@@ -169,4 +169,4 @@
             }
         }
     }
-    add_action( 'after_setup_theme', 'remove_admin_bar' );
+    add_action( 'after_setup_theme', 'b3_remove_admin_bar' );
