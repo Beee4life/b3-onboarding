@@ -327,6 +327,25 @@
     }
 
 
+    function b3_default_manual_welcome_user_message() {
+        if ( true == get_option( 'b3_register_email_only' ) ) {
+            $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
+        } else {
+            $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
+        }
+        $message .= '<br /><br />' . "\n";
+        $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= sprintf( __( 'You can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+
+        return $message;
+    }
+
+
     /**
      * Return default welcome user subject (user)
      *

@@ -109,15 +109,23 @@
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
 
         // check if use of own styling/templates
-        $send_custom_mail = false;
-        $send_manual_mail = false;
+        $send_custom_mail = true;
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
-                $send_custom_mail               = true;
-                $wp_new_user_notification_email = false;
+                $send_custom_mail                            = false;
+                $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
+                $wp_new_user_notification_email[ 'headers' ] = [];
+                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+
+                $user_email = apply_filters( 'b3_manual_welcome_user', b3_get_manual_welcome_user() );
+                $user_email = b3_replace_template_styling( $user_email );
+                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
+                $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
+
+                $wp_new_user_notification_email[ 'message' ] = $user_email;
             }
         }
 
@@ -159,14 +167,6 @@
 
             }
 
-        }
-        // not in use yet, due to more debugging
-        if ( true == $send_manual_mail ) {
-            // @TODO: maybe create email message for manual adding of user
-            $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
-            $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-            $wp_new_user_notification_email[ 'headers' ] = [];
-            $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
         }
 
         return $wp_new_user_notification_email;
