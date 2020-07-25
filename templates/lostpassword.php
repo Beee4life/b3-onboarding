@@ -15,7 +15,7 @@
         </h3>
     <?php } ?>
 
-    <form id="lostpasswordform" class="b3_form b3_form--register" action="<?php echo wp_lostpassword_url(); ?>" method="post">
+    <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--register" action="<?php echo wp_lostpassword_url(); ?>" method="post">
         <input name="b3_lost_pass" value="<?php echo wp_create_nonce( 'b3-lost-pass' ); ?>" type="hidden" />
         <input name="b3_form" value="custom" type="hidden" />
 

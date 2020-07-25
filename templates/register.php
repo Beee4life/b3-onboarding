@@ -15,7 +15,7 @@
         </h3>
     <?php } ?>
 
-    <form id="b3-register-form" class="b3_form b3_form--register" action="<?php echo wp_registration_url(); ?>" method="post">
+    <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo wp_registration_url(); ?>" method="post">
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
         <input name="b3_form" value="custom" type="hidden" />
 
