@@ -1202,8 +1202,12 @@
                             $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
                         } else {
 
-                            $lostpassword_url = b3_get_lostpassword_url();
-                            $redirect_url     = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
+                            if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                                $redirect_url = b3_get_lostpassword_url();
+                            } else {
+                                $redirect_url = b3_get_login_url();
+                            }
+                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $redirect_url );
 
                             // remove user_activation_key
                             $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
@@ -1273,19 +1277,8 @@
                         }
 
                         if ( isset( $_POST[ 'pass1' ] ) ) {
-                            if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
-                                // Passwords don't match
-                                $redirect_url = b3_get_reset_password_url();
-                                $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
-                                $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
-                                $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
-
-                                wp_safe_redirect( $redirect_url );
-                                exit;
-                            }
-
-                            if ( empty( $_POST[ 'pass1' ] ) ) {
-                                // Password is empty
+                            if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
+                                // Password is empty or don't match
                                 $redirect_url = b3_get_reset_password_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
@@ -1401,7 +1394,11 @@
 
                     // Registration
                     case 'registration_success':
-                        return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
+                        if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                            return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
+                        } else {
+                            return esc_html__( 'You have successfully registered. You can now login.', 'b3-onboarding' );
+                        }
 
                     case 'registration_success_enter_password':
                         return sprintf(
@@ -1411,7 +1408,11 @@
 
                     // Activation
                     case 'activate_success':
-                        return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
+                        if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                            return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
+                        } else {
+                            return esc_html__( 'You have successfully registered. You can now login.', 'b3-onboarding' );
+                        }
 
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
@@ -1480,6 +1481,7 @@
                     'user_pass'  => '', // for possible/future custom passwords
                     'role'       => $role,
                 );
+                $use_custom_passwords = true;
 
                 if ( false == $registration_with_email_only ) {
                     if ( username_exists( $user_login ) ) {
@@ -1517,6 +1519,21 @@
                     $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
 
                     return $errors;
+                }
+
+                if ( true == $use_custom_passwords ) {
+                    if ( isset( $_POST[ 'pass1' ] ) && isset( $_POST[ 'pass2' ] ) ) {
+                        if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
+                            // Password is empty or don't match
+                            $errors->add( 'no_pw_match', $this->b3_get_return_message( 'password_reset_mismatch' ) );
+
+                            return $errors;
+                        } elseif ( $_POST[ 'pass1' ] == $_POST[ 'pass2' ] ) {
+                            $hashed_password                    = wp_hash_password( $_POST[ 'pass1' ] );
+                            $user_data[ 'user_activation_key' ] = '';
+                            $user_data[ 'user_pass' ]           = $hashed_password;
+                        }
+                    }
                 }
 
                 if ( true == $privacy_error ) {
