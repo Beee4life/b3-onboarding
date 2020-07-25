@@ -1428,6 +1428,9 @@
                     case 'password_reset_empty':
                         return esc_html__( "Sorry, we don't accept empty passwords.", 'b3-onboarding' );
 
+                    case 'password_too_easy':
+                        return esc_html__( 'Sorry, that password is too easy.', 'b3-onbaording' );
+
                     // Multisite
                     case 'domain_exists':
                         return esc_html__( 'Sorry, this subdomain has already been taken.', 'b3-onboarding' );
@@ -1523,6 +1526,21 @@
 
                 if ( true == $use_custom_passwords ) {
                     if ( isset( $_POST[ 'pass1' ] ) && isset( $_POST[ 'pass2' ] ) ) {
+                        $easy_passwords = array(
+                            '000000',
+                            '111111',
+                            '123456',
+                            '12345678',
+                            'abcdef',
+                            'password',
+                            'wachtwoord',
+                        );
+                        if ( in_array( $_POST[ 'pass1' ], $easy_passwords ) ) {
+                            $errors->add( 'pw_too_easy', $this->b3_get_return_message( 'password_too_easy' ) );
+
+                            return $errors;
+                        }
+
                         if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
                             // Password is empty or don't match
                             $errors->add( 'no_pw_match', $this->b3_get_return_message( 'password_reset_mismatch' ) );
