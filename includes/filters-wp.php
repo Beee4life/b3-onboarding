@@ -120,7 +120,7 @@
                 $wp_new_user_notification_email[ 'headers' ] = [];
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
 
-                $user_email = apply_filters( 'b3_manual_welcome_user', b3_get_manual_welcome_user() );
+                $user_email = apply_filters( 'b3_manual_welcome_user', b3_get_manual_welcome_user_message() );
                 $user_email = b3_replace_template_styling( $user_email );
                 $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );

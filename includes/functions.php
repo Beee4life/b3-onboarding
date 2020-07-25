@@ -1244,7 +1244,7 @@
      *
      * @return string
      */
-    function b3_get_manual_welcome_user() {
+    function b3_get_manual_welcome_user_message() {
         $message = b3_default_manual_welcome_user_message();
 
         return $message;
