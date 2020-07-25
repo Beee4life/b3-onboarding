@@ -27,7 +27,7 @@
             'b3_localhost_username'              => array( 'string' ),
             'b3_link_color'                      => array( 'hex_color' ),
             'b3_main_logo'                       => array( 'url', 'file' ),
-            'b3_manual_welcome_user'             => array( 'string' ),
+            'b3_manual_welcome_user_message'     => array( 'string' ),
             'b3_message_above_login'             => array( 'string' ),
             'b3_message_above_lost_password'     => array( 'string' ),
             'b3_message_above_registration'      => array( 'string' ),
