@@ -664,9 +664,9 @@
              * at the end of the page.
              */
             public function b3_add_captcha_js_to_footer() {
-                $recaptcha = get_option( 'b3_activate_recaptcha' );
-                $recaptcha_on = get_option( 'b3_recaptcha_on' );
-                if ( true == $recaptcha && is_array( $recaptcha ) && ! empty( $recaptcha ) ) {
+                $recaptcha    = get_option( 'b3_activate_recaptcha' );
+                $recaptcha_on = get_option( 'b3_recaptcha_on', [] );
+                if ( true == $recaptcha && ! empty( $recaptcha_on ) ) {
                     wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
                 }
             }
