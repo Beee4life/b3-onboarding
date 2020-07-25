@@ -1235,3 +1235,17 @@
         return $reserved_user_names;
 
     }
+
+
+    /**
+     * Get manually added welcome message user
+     *
+     * @since 2.3.0
+     *
+     * @return string
+     */
+    function b3_get_manual_welcome_user() {
+        $message = b3_default_manual_welcome_user_message();
+
+        return $message;
+    }
