@@ -39,6 +39,7 @@
             'b3_lost_password_message'           => array( 'string' ), // @ TODO: check this
             'b3_lost_password_subject'           => array( 'string' ), // @ TODO: check this
             'b3_privacy_text'                    => array( 'string' ),
+            'b3_redirect_after_register'         => array( 'url' ),
             'b3_registration_closed_message'     => array( 'string' ),
             'b3_request_access_message_admin'    => array( 'string' ),
             'b3_request_access_subject_admin'    => array( 'string' ),
