@@ -8,6 +8,7 @@
      */
     function b3_render_registration_tab() {
 
+        $custom_passwords             = get_option( 'b3_activate_custom_passwords', false );
         $first_last                   = get_option( 'b3_activate_first_last', false );
         $first_last_required          = get_option( 'b3_first_last_required', false );
         $privacy                      = get_option( 'b3_privacy', false );
@@ -33,34 +34,34 @@
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
 
                 <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <?php if ( is_multisite() && is_main_site() ) { ?>
-                    <p>
-                        <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
-                    </p>
-                <?php } else if ( ! is_multisite() ) { ?>
-                    <p>
-                        <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), admin_url( 'options-general.php' ) ); ?>
-                    </p>
-                <?php } ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <?php if ( is_multisite() && is_main_site() ) { ?>
+                        <p>
+                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
+                        </p>
+                    <?php } else if ( ! is_multisite() ) { ?>
+                        <p>
+                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), admin_url( 'options-general.php' ) ); ?>
+                        </p>
+                    <?php } ?>
 
-                <?php $options = b3_get_registration_types(); ?>
-                <?php if ( ! empty( $options ) ) { ?>
-                    <?php foreach( $options as $option ) { ?>
-                        <div class="b3_settings-input b3_settings-input--radio">
-                            <div>
-                                <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                    <?php $options = b3_get_registration_types(); ?>
+                    <?php if ( ! empty( $options ) ) { ?>
+                        <?php foreach( $options as $option ) { ?>
+                            <div class="b3_settings-input b3_settings-input--radio">
+                                <div>
+                                    <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                    <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                </div>
                             </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div class="b3_settings-input b3_settings-input--radio">
+                            <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
                         </div>
                     <?php } ?>
-                <?php } else { ?>
-                    <div class="b3_settings-input b3_settings-input--radio">
-                        <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
-                    </div>
-                <?php } ?>
                 <?php b3_get_close(); ?>
 
                 <?php if ( 'closed' == get_option( 'b3_registration_type', false ) ) { ?>
@@ -86,6 +87,15 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php if ( $registration_with_email_only ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php if ( $custom_passwords ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom passwords.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 

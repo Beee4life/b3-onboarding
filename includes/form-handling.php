@@ -149,19 +149,25 @@
                     }
 
                     if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
-                        update_option( 'b3_register_email_only', $_POST[ 'b3_register_email_only' ], true );
+                        update_option( 'b3_register_email_only', 1, true );
                     } else {
                         delete_option( 'b3_register_email_only' );
                     }
 
+                    if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) && 1 == $_POST[ 'b3_activate_custom_passwords' ] ) {
+                        update_option( 'b3_activate_custom_passwords', 1, true );
+                    } else {
+                        delete_option( 'b3_activate_custom_passwords' );
+                    }
+
                     if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
-                        update_option( 'b3_first_last_required', $_POST[ 'b3_first_last_required' ], true );
+                        update_option( 'b3_first_last_required', 1, true );
                     } else {
                         delete_option( 'b3_first_last_required' );
                     }
 
                     if ( isset( $_POST[ 'b3_activate_first_last' ] ) && 1 == $_POST[ 'b3_activate_first_last' ] ) {
-                        update_option( 'b3_activate_first_last', $_POST[ 'b3_activate_first_last' ], true );
+                        update_option( 'b3_activate_first_last', 1, true );
                     } else {
                         delete_option( 'b3_activate_first_last' );
                         delete_option( 'b3_first_last_required' );
@@ -180,7 +186,7 @@
                     }
 
                     if ( isset( $_POST[ 'b3_privacy_page' ] ) ) {
-                        update_option( 'b3_privacy_page', $_POST[ 'b3_privacy_page' ], true );
+                        update_option( 'b3_privacy_page', 1, true );
                     } else {
                         delete_option( 'b3_privacy_page' );
                     }
