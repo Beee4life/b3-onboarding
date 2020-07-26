@@ -1422,6 +1422,7 @@
                     case 'invalidkey':
                         return esc_html__( 'The password reset link you used is not valid anymore.', 'b3-onboarding' );
 
+                    case 'password_mismatch':
                     case 'password_reset_mismatch':
                         return esc_html__( "The two passwords you entered don't match.", 'b3-onboarding' );
 
@@ -1543,12 +1544,12 @@
 
                         if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
                             // Password is empty or don't match
-                            $errors->add( 'no_pw_match', $this->b3_get_return_message( 'password_reset_mismatch' ) );
+                            $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
                             return $errors;
                         } elseif ( $_POST[ 'pass1' ] == $_POST[ 'pass2' ] ) {
                             $hashed_password                    = wp_hash_password( $_POST[ 'pass1' ] );
-                            $user_data[ 'user_activation_key' ] = '';
+                            // $user_data[ 'user_activation_key' ] = '';
                             $user_data[ 'user_pass' ]           = $hashed_password;
                         }
                     }
