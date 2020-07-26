@@ -414,4 +414,4 @@
             $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
         }
     }
-    add_action( 'b3_after_email_sent', 'b3_after_email_sent', 9, 2 );
+    // add_action( 'b3_after_email_sent', 'b3_after_email_sent', 9, 2 );
