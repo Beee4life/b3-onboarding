@@ -317,8 +317,10 @@
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
-        $message .= '<br /><br />' . "\n";
+        if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
+            $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
+            $message .= '<br /><br />' . "\n";
+        }
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
