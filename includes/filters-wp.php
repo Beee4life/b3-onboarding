@@ -115,7 +115,6 @@
             // user is manually added
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
-                $send_custom_mail                            = false;
                 $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
                 $wp_new_user_notification_email[ 'headers' ] = [];
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
