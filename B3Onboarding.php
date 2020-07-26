@@ -1573,7 +1573,7 @@
 
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    if ( true == $use_custom_passwords ) {
+                    if ( true == $use_custom_passwords && isset( $_POST[ 'pass1' ] ) ) {
                         wp_set_password( $_POST[ 'pass1' ], $user_id );
                     }
 
