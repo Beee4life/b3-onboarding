@@ -161,7 +161,7 @@
                             <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC' ); ?>
+                            <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC', 'suppress_filters' => false ); ?>
                             <?php $all_pages = get_posts( $page_args ); ?>
                             <select name="b3_privacy_page" id="b3_privacy_page">
                                 <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
