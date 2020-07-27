@@ -36,7 +36,7 @@
 
         <?php do_action( 'b3_add_recaptcha_fields', $attributes[ 'template' ] ); ?>
 
-        <div class="rememberme-wrap">
+        <div class="b3_form-element">
             <p class="rememberme">
                 <input name="rememberme" type="checkbox" id="rememberme" value="forever">
                 <label for="rememberme"><?php esc_attr_e( 'Remember Me', 'b3-onboarding' ); ?></label>
