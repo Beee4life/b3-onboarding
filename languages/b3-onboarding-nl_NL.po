@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
 "POT-Creation-Date: 2020-07-27 01:00+0200\n"
-"PO-Revision-Date: 2020-07-27 01:02+0200\n"
+"PO-Revision-Date: 2020-07-27 14:43+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -760,7 +760,8 @@ msgstr ""
 #: includes/defaults.php:287
 msgid "To (re)set your password, go to <a href=\"%reset_url%\">this page</a>."
 msgstr ""
-"Om je wachtwoord te resetten, ga naar <a href=\"%reset_url%”>deze pagina</a>."
+"Om je wachtwoord te resetten, ga naar <a href=\"%reset_url%\">deze pagina</"
+"a>."
 
 #: includes/defaults.php:306
 #, php-format
