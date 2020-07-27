@@ -6,7 +6,7 @@
      */
 ?>
 <?php do_action( 'b3_add_form_messages', $attributes ); ?>
-<div id="b3-resetpass" class="b3 b3_page b3_page--login">
+<div id="b3-resetpass" class="b3 b3_page b3_page--resetpass">
     <?php if ( $attributes[ 'title' ] ) : ?>
         <h3>
             <?php echo $attributes[ 'title' ]; ?>
