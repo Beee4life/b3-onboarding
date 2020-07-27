@@ -754,6 +754,7 @@
                                     } else {
                                         $query_arg = 'success';
                                         $reset_password = ( true == get_option( 'b3_redirect_set_password' ) ) ? true : false;
+                                        error_log($reset_password);
                                     }
 
                                     $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role );
