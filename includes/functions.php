@@ -1270,3 +1270,27 @@
 
         return $message;
     }
+
+    function b3_get_protocol() {
+        $protocol = ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
+
+        return $protocol;
+    }
+
+    function b3_get_current_url( $include_query = false ) {
+
+        $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
+        $url_array  = parse_url( $url );
+        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $url_array[ 'path' ];
+
+        if ( false != $include_query ) {
+            if ( isset( $url_array[ 'query' ] ) ) {
+                $query_string = $url_array[ 'query' ];
+                $return_url   .= '?' . $query_string;
+            }
+
+        }
+
+        return $return_url;
+
+    }
