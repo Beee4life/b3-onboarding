@@ -91,9 +91,10 @@
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
-                add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
-                add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
-                add_action( 'login_form_rp',                        array( $this, 'b3_reset_user_password' ) );
+                add_action( 'init',                                 array( $this, 'b3_do_password_lost' ) );
+                // add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
+                // add_action( 'login_form_rp',                        array( $this, 'b3_reset_user_password' ) );
+                add_action( 'init',                                 array( $this, 'b3_reset_user_password' ) );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
@@ -958,10 +959,10 @@
              */
             public function b3_redirect_to_custom_register() {
                 if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                    if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'custom' != $_REQUEST[ 'b3_form' ] ) {
-                        $page_url = b3_get_register_url();
-                        if ( false != $page_url ) {
-                            wp_safe_redirect( $page_url );
+                    if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'register' != $_REQUEST[ 'b3_form' ] ) {
+                        $register_url = b3_get_register_url();
+                        if ( false != $register_url ) {
+                            wp_safe_redirect( $register_url );
                             exit;
                         }
                     }
@@ -970,9 +971,9 @@
                         if ( is_user_logged_in() ) {
                             $this->b3_redirect_logged_in_user();
                         } else {
-                            $page_url = b3_get_register_url();
-                            if ( false != $page_url ) {
-                                wp_safe_redirect( $page_url );
+                            $register_url = b3_get_register_url();
+                            if ( false != $register_url ) {
+                                wp_safe_redirect( $register_url );
                             } else {
                                 wp_safe_redirect( wp_registration_url() );
                             }
@@ -1234,20 +1235,23 @@
              */
             public function b3_do_password_lost() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    $errors = retrieve_password();
 
-                    if ( is_wp_error( $errors ) ) {
-                        // errors found
-                        $redirect_url = b3_get_lostpassword_url();
-                        $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
-                    } else {
-                        // Email sent
-                        $redirect_url = b3_get_login_url();
-                        $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
+                    if ( isset( $_POST[ 'b3_form' ] ) && 'lostpass' == $_POST[ 'b3_form' ] ) {
+                        $errors = b3_retrieve_password();
+
+                        if ( is_wp_error( $errors ) ) {
+                            // errors found
+                            $redirect_url = b3_get_lostpassword_url();
+                            $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
+                        } else {
+                            // Email sent
+                            $redirect_url = b3_get_login_url();
+                            $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
+                        }
+
+                        wp_safe_redirect( $redirect_url );
+                        exit;
                     }
-
-                    wp_safe_redirect( $redirect_url );
-                    exit;
                 }
             }
 
@@ -1300,7 +1304,6 @@
                             echo "Invalid request.";
                         }
                     }
-
                 }
             }
 
