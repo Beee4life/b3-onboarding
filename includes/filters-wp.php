@@ -217,11 +217,11 @@
             $message = $lost_password_message;
         }
 
-        $vars = [
-            'reset_url' => network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n",
-        ];
-        $message = b3_replace_template_styling( $message );
-        $message = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
+        // get reset pass id
+        $reset_pass_url      = b3_get_reset_password_url();
+        $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
+        $message             = b3_replace_template_styling( $message );
+        $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
 
         return $message;
 
