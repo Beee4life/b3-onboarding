@@ -841,7 +841,7 @@
         global $wpdb;
         $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user_data->user_login ) );
 
-        $login_url      = wp_login_url();
+        $login_url      = b3_get_login_url();
         $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user_data->user_login ) ), $login_url );
 
         return $activation_url;
@@ -1315,11 +1315,11 @@
         $user_data = false;
 
         if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
-            $errors->add( 'empty_username', __( '<strong>Error</strong>: Enter a username or email address.', 'b3-onboarding' ) );
+            $errors->add( 'empty_username', __( '<strong>Error</strong>: Enter a username or email address.' ) );
         } elseif ( strpos( $_POST['user_login'], '@' ) ) {
             $user_data = get_user_by( 'email', trim( wp_unslash( $_POST['user_login'] ) ) );
             if ( empty( $user_data ) ) {
-                $errors->add( 'invalid_email', __( '<strong>Error</strong>: There is no account with that username or email address.', 'b3-onboarding' ) );
+                $errors->add( 'invalid_email', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
             }
         } else {
             $login     = trim( wp_unslash( $_POST['user_login'] ) );
@@ -1344,7 +1344,7 @@
         }
 
         if ( ! $user_data ) {
-            $errors->add( 'invalidcombo', __( '<strong>Error</strong>: There is no account with that username or email address.', 'b3-onboarding' ) );
+            $errors->add( 'invalidcombo', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
             return $errors;
         }
 
@@ -1412,7 +1412,7 @@
                 sprintf(
                 /* translators: %s: Documentation URL. */
                     __( '<strong>Error</strong>: The email could not be sent. Your site may not be correctly configured to send emails. <a href="%s">Get support for resetting your password</a>.' ),
-                    esc_url( __( 'https://wordpress.org/support/article/resetting-your-password/' ) )
+                    esc_url( 'https://wordpress.org/support/article/resetting-your-password/' )
                 )
             );
             return $errors;
