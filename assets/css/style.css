@@ -49,7 +49,7 @@ select {
 
 /* Forms */
 .b3_page form {
-    width: 100%;
+    width:     100%;
     max-width: 600px;
 }
 
@@ -62,9 +62,12 @@ select {
     vertical-align: middle;
 }
 
-.b3_page form .password-hint,
+.b3_page form .password-hint {
+    margin-top: 2rem;
+}
+
 .b3_page form .rememberme-wrap {
-    margin-bottom: 2em;
+    /*margin-bottom: 2em;*/
 }
 
 .b3_page form input#rememberme {
@@ -76,8 +79,8 @@ select {
 }
 
 .b3_page .b3_form-label {
-    display:        inline-block;
-    width:          220px;
+    display: inline-block;
+    width:   220px;
 }
 
 .b3_page .b3_form-element--checkbox .b3_form-label,
@@ -95,15 +98,11 @@ select {
 }
 
 .b3_form-element {
-    margin-top: 2em;
+    margin-top: 2rem;
 }
 
 .b3_form-element:first-of-type {
     margin-top: 0;
-}
-
-.b3_page .b3_form-element--submit {
-    margin-bottom: 1em;
 }
 
 .b3_input-options {
@@ -243,11 +242,13 @@ ul.b3_form-links li:last-child {
         width: 150px;
     }
 }
+
 @media screen and ( min-width: 640px ) {
     .b3_table--account tr td:first-child {
         width: 175px;
     }
 }
+
 @media screen and ( min-width: 1024px ) {
     .b3_table--account tr td:first-child {
         width: 200px;
