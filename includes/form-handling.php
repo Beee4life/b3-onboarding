@@ -186,7 +186,7 @@
                     }
 
                     if ( isset( $_POST[ 'b3_privacy_page' ] ) ) {
-                        update_option( 'b3_privacy_page', 1, true );
+                        update_option( 'b3_privacy_page', $_POST[ 'b3_privacy_page' ], true );
                     } else {
                         delete_option( 'b3_privacy_page' );
                     }
