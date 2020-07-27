@@ -727,7 +727,7 @@
 
                             return;
                         } else {
-                            error_log(ICL_LANGUAGE_CODE);
+
                             $user_login                = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role                      = get_option( 'default_role' );
