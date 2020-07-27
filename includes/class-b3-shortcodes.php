@@ -63,8 +63,10 @@
                                         $extra_field_values       = apply_filters( 'b3_extra_fields', array() );
                                         $column                   = array_column( $extra_field_values, 'id' );
                                         $key                      = array_search( $field_id, $column );
-                                        $sprintf_variable         = $extra_field_values[ $key ][ 'label' ];
-                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
+                                        if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
+                                            $sprintf_variable         = $extra_field_values[ $key ][ 'label' ];
+                                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
+                                        }
                                     } else {
                                         $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
                                     }
