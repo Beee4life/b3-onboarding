@@ -89,7 +89,7 @@
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
-                add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
+                add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
@@ -726,7 +726,7 @@
 
                             return;
                         } else {
-
+                            error_log(ICL_LANGUAGE_CODE);
                             $user_login                = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role                      = get_option( 'default_role' );
