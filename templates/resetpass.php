@@ -30,7 +30,7 @@
         <p class="password-hint"><?php echo wp_get_password_hint(); ?></p>
 
         <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" id="resetpass-button" class="button" value="<?php echo esc_attr( 'Reset Password', 'b3-onboarding' ); ?>" />
+            <input type="submit" id="resetpass-button" class="button" value="<?php echo esc_attr__( 'Set password', 'b3-onboarding' ); ?>" />
         </div>
     </form>
 </div>

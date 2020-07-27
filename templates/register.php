@@ -26,9 +26,9 @@
 
         <div class="b3_form-element b3_form-element--submit">
             <?php if ( 'request_access' == get_option( 'b3_registration_type', false ) ) { ?>
-                <?php $submit_label = esc_attr( 'Request access', 'b3-onboarding' ); ?>
+                <?php $submit_label = esc_attr__( 'Request access', 'b3-onboarding' ); ?>
             <?php } else { ?>
-                <?php $submit_label = esc_attr( 'Register', 'b3-onboarding' ); ?>
+                <?php $submit_label = esc_attr__( 'Register', 'b3-onboarding' ); ?>
             <?php } ?>
             <input type="submit" class="button" value="<?php echo $submit_label; ?>" />
         </div>
