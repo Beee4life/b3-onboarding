@@ -955,10 +955,18 @@
      *
      * @return bool|string
      */
-    function b3_get_register_url() {
+    function b3_get_register_url( $return_id = false ) {
         $id = get_option( 'b3_register_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( class_exists( 'Sitepress' ) ) {
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+        }
+        if ( false != $id ) {
+            if ( false != $return_id ) {
+                return $id;
+            }
+            if ( get_post( $id ) ) {
+                return get_the_permalink( $id );
+            }
         }
 
         return wp_registration_url();
@@ -972,13 +980,26 @@
      *
      * @return bool|string
      */
-    function b3_get_login_url( $return_id = false ) {
+    function b3_get_login_url( $return_id = false, $log = false ) {
         $id = get_option( 'b3_login_page_id', false );
+        if ( class_exists( 'Sitepress' ) ) {
+            if ( true == $log ) {
+                $current_lang = apply_filters( 'wpml_current_language', NULL );
+                error_log('curr lang: ' . $current_lang);
+            }
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            if ( true == $log ) {
+                error_log('wpml login id: ' . $id);
+            }
+        }
         if ( false != $id ) {
             if ( false != $return_id ) {
                 return $id;
             }
             if ( get_post( $id ) ) {
+                if ( true == $log ) {
+                    error_log(get_the_permalink( $id ));
+                }
                 return get_the_permalink( $id );
             }
         }

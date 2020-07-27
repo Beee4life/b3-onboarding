@@ -142,7 +142,13 @@
             $message = sprintf( esc_html__( 'Hi %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
         }
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%lostpass_url%' ) . "\n";
+        if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
+            error_log('wrong one');
+            $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%lostpass_url%' ) . "\n";
+        } else {
+            error_log('right one');
+            $message .= sprintf( __( 'you have confirmed your email address and can now login <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_login_url() ) . "\n";
+        }
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
@@ -309,6 +315,8 @@
      * @return string
      */
     function b3_default_welcome_user_message() {
+        error_log('hit welcome user message');
+        error_log(ICL_LANGUAGE_CODE);
         if ( true == get_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
         } else {
@@ -368,6 +376,11 @@
      * @return string
      */
     function b3_default_email_activation_message() {
+        // $current_lang = apply_filters( 'wpml_current_language', NULL );
+        // error_log($current_lang);
+
+        // error_log('hit email activation message');
+        // error_log(ICL_LANGUAGE_CODE);
         if ( 1 == get_option( 'b3_register_email_only', false ) ) {
             $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
         } else {
