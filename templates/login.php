@@ -22,6 +22,7 @@
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
         <input name="b3_form" value="login" type="hidden" />
+        <input name="redirect_to" value="<?php echo b3_get_account_url(); ?>" type="hidden" />
 
         <?php // Output of fields starts here ?>
         <div class="b3_form-element">
