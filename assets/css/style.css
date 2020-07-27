@@ -108,6 +108,7 @@ select {
 /* Links in form footer */
 ul.b3_form-links {
     list-style:   none;
+    margin-top:   1.5rem;
     padding-left: 0;
     position:     relative;
 }
