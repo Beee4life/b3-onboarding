@@ -390,11 +390,11 @@
             }
 
             if ( count( $page_types ) > 0 ) {
-                echo '<ul class="b3_form-links"><!--';
+                echo '<ul class="b3_form-links">';
                 foreach( $page_types as $key => $values ) {
-                    echo '--><li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li><!--';
+                    echo '<li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li>';
                 }
-                echo '--></ul>';
+                echo '</ul>';
             }
         }
     }
