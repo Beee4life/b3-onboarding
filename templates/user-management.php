@@ -40,7 +40,7 @@
                 <th>
                     <?php echo esc_html__( 'User ID', 'b3-onboarding' ); ?>
                 </th>
-                <?php if ( false != $register_email_only ) { ?>
+                <?php if ( false == $register_email_only ) { ?>
                     <th>
                         <?php echo esc_html__( 'User name', 'b3-onboarding' ); ?>
                     </th>
@@ -65,10 +65,11 @@
             <?php foreach( $users as $user ) { ?>
                 <tr>
                     <td><?php echo $user->ID; ?></td>
-                    <?php if ( false != $register_email_only ) { ?>
+                    <?php if ( false == $register_email_only ) { ?>
                         <td><?php echo $user->user_login; ?></td>
                     <?php } ?>
                     <?php if ( false != $show_first_last_name ) { ?>
+                        <td><?php echo $user->first_name; ?></td>
                         <td><?php echo $user->last_name; ?></td>
                     <?php } ?>
                     <td><?php echo $user->user_email; ?></td>
