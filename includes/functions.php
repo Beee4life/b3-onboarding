@@ -1305,16 +1305,21 @@
 
     }
 
+    /**
+     * Copied from wp-login.php since we bypass it and can't piggyback on the function in this file.
+     *
+     * @return bool|int|string|WP_Error
+     */
     function b3_retrieve_password() {
         $errors    = new WP_Error();
         $user_data = false;
 
-        if ( empty( $_POST['user_login'] ) || ! is_string( $_POST['user_login'] ) ) {
-            $errors->add( 'empty_username', __( '<strong>Error</strong>: Enter a username or email address.' ) );
+        if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
+            $errors->add( 'empty_username', __( '<strong>Error</strong>: Enter a username or email address.', 'b3-onboarding' ) );
         } elseif ( strpos( $_POST['user_login'], '@' ) ) {
             $user_data = get_user_by( 'email', trim( wp_unslash( $_POST['user_login'] ) ) );
             if ( empty( $user_data ) ) {
-                $errors->add( 'invalid_email', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
+                $errors->add( 'invalid_email', __( '<strong>Error</strong>: There is no account with that username or email address.', 'b3-onboarding' ) );
             }
         } else {
             $login     = trim( wp_unslash( $_POST['user_login'] ) );
@@ -1339,7 +1344,7 @@
         }
 
         if ( ! $user_data ) {
-            $errors->add( 'invalidcombo', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
+            $errors->add( 'invalidcombo', __( '<strong>Error</strong>: There is no account with that username or email address.', 'b3-onboarding' ) );
             return $errors;
         }
 
