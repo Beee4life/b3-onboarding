@@ -517,7 +517,6 @@
      * @since 1.0.4
      */
     function b3_profile_form_handling() {
-
         $account_page_id = b3_get_account_url( true );
         if ( false != $account_page_id && is_page( $account_page_id ) && is_user_logged_in() ) {
             require_once( ABSPATH . 'wp-admin/includes/user.php' );
@@ -534,15 +533,17 @@
                 wp_die( __( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
             }
             if ( isset( $_POST[ 'b3_delete_account' ] ) ) {
-                $user_id      = $_POST[ 'checkuser_id' ];
                 $redirect_url = b3_get_login_url();
-                if ( true == wp_delete_user( $user_id ) ) {
+                if ( true == wp_delete_user( $current_user->ID ) ) {
                     $redirect_url = add_query_arg( 'account', 'removed', $redirect_url );
                 }
                 wp_safe_redirect( $redirect_url );
                 exit;
+
             } else {
+
                 $errors = edit_user( $current_user->ID );
+                do_action( 'b3_after_save_profile', $current_user->ID );
 
                 if ( ! is_wp_error( $errors ) ) {
                     wp_safe_redirect( add_query_arg( 'updated', 'true' ) );

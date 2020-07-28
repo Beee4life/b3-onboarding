@@ -404,14 +404,19 @@
     /**
      * Do stuff after first email is sent
      *
-     * @param      $user_id
-     * @param bool $send_mail
+     * @param $user_id
      */
-    function b3_after_email_sent( $user_id, $send_mail = false ) {
-        if ( false != get_option( 'b3_activate_custom_passwords', false ) ) {
-            global $wpdb;
-            $user = get_userdata( $user_id );
-            $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
+    function b3_after_save_profile( $user_id ) {
+
+        if ( isset( $_POST[ 'no_emails' ] ) ) {
+            update_user_meta( $user_id, 'no_emails', 1 );
+        } else {
+            delete_user_meta( $user_id, 'no_emails' );
+        }
+
+        if ( isset( $_POST[ 'preferred_language' ] ) ) {
+            update_user_meta( $user_id, 'preferred_language', $_POST[ 'preferred_language' ] );
         }
     }
-    // add_action( 'b3_after_email_sent', 'b3_after_email_sent', 9, 2 );
+    add_action( 'b3_after_save_profile', 'b3_after_save_profile', 9, 2 );
+
