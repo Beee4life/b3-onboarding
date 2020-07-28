@@ -1129,18 +1129,17 @@
                         $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
                     }
                 } else {
-
                     // Non-admin users always go to their account page after login, if defined
                     $account_page_url = b3_get_account_url();
-                    if ( false != $account_page_url ) {
+                    if ( $requested_redirect_to ) {
+                        $redirect_url = $redirect_to;
+                    } elseif ( false != $account_page_url ) {
                         if ( ! in_array( $stored_roles, $user->roles ) ) {
                             $redirect_url = $account_page_url;
                         } else {
                             // non-admin logged in
                             // $redirect_url set at start
                         }
-                    } elseif ( $requested_redirect_to ) {
-                        $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
                     } elseif ( current_user_can( 'read' ) ) {
                         $redirect_url = get_edit_user_link( get_current_user_id() );
                     }
