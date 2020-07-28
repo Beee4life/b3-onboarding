@@ -1413,7 +1413,7 @@
                         if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
                             return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
                         } else {
-                            return esc_html__( 'You have successfully registered. You can now login.', 'b3-onboarding' );
+                            return esc_html__( 'You have successfully activated your account. You can now login.', 'b3-onboarding' );
                         }
 
                     case 'invalid_key':
