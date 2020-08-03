@@ -399,24 +399,3 @@
         }
     }
     add_action( 'b3_add_action_links', 'b3_add_action_links' );
-
-
-    /**
-     * Do stuff after first email is sent
-     *
-     * @param $user_id
-     */
-    function b3_after_save_profile( $user_id ) {
-
-        if ( isset( $_POST[ 'no_emails' ] ) ) {
-            update_user_meta( $user_id, 'no_emails', 1 );
-        } else {
-            delete_user_meta( $user_id, 'no_emails' );
-        }
-
-        if ( isset( $_POST[ 'preferred_language' ] ) ) {
-            update_user_meta( $user_id, 'preferred_language', $_POST[ 'preferred_language' ] );
-        }
-    }
-    add_action( 'b3_after_save_profile', 'b3_after_save_profile', 9, 2 );
-
