@@ -852,32 +852,27 @@
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
+                $request_redirect = ( isset( $_SERVER[ 'REDIRECT_URI' ] ) ) ? urlencode_deep( $_SERVER[ 'REQUEST_SCHEME' ] . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REDIRECT_URI' ] ): false;
 
                 if ( false != $account_page_id ) {
-                    // echo '<pre>'; var_dump($account_page_id); echo '</pre>'; exit;
                     if ( is_page() ) {
                         $page = get_post( get_the_ID() );
-                        // echo '<pre>'; var_dump($page->ID); echo '</pre>'; exit;
                         // if user is not logged and if page is account page or sub-page of account page
-                        if ( ! is_user_logged_in() ) {
-                            if ( ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) ) {
-                                wp_safe_redirect( $login_url );
-                                exit;
+                        if ( ! is_user_logged_in() && ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) ) {
+                            if ( false != $request_redirect ) {
+                                $login_url = add_query_arg( 'redirect_to', $request_redirect, $login_url );
                             }
+                            $redirect_url = $login_url;
                         }
                     }
-                }
-                if ( false != $approval_page_id && is_page( $approval_page_id ) ) {
+                } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
                     if ( is_user_logged_in() ) {
                         if ( ! current_user_can( 'promote_users' ) ) {
-                            wp_safe_redirect( $account_url );
-                            exit;
+                            $redirect_url = $account_url;
                         }
                     } else {
-                        wp_safe_redirect( $login_url );
-                        exit;
+                        $redirect_url = $login_url;
                     }
-
                 } elseif ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
 
                     check_admin_referer( 'logout' );
@@ -893,10 +888,11 @@
                         $requested_redirect_to = '';
                     }
 
-                    $redirect_to = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
-                    wp_safe_redirect( $redirect_to );
+                    $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
+                }
+                if ( isset( $redirect_url ) ) {
+                    wp_safe_redirect( $redirect_url );
                     exit;
-
                 }
             }
 
