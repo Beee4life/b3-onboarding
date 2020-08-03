@@ -958,10 +958,10 @@
      *
      * @return bool|mixed
      */
-    function b3_get_account_url( $return_id = false ) {
+    function b3_get_account_url( $return_id = false, $language = false ) {
         $id = get_option( 'b3_account_page_id', false );
         if ( class_exists( 'Sitepress' ) ) {
-            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true, $language );
         }
         if ( false != $id ) {
             if ( false != $return_id ) {
