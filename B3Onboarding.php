@@ -854,12 +854,16 @@
                 $logout_page_id   = b3_get_logout_url( true );
 
                 if ( false != $account_page_id ) {
+                    // echo '<pre>'; var_dump($account_page_id); echo '</pre>'; exit;
                     if ( is_page() ) {
                         $page = get_post( get_the_ID() );
+                        // echo '<pre>'; var_dump($page->ID); echo '</pre>'; exit;
                         // if user is not logged and if page is account page or sub-page of account page
-                        if ( ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) && ! is_user_logged_in() ) {
-                            wp_safe_redirect( $login_url );
-                            exit;
+                        if ( ! is_user_logged_in() ) {
+                            if ( ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) ) {
+                                wp_safe_redirect( $login_url );
+                                exit;
+                            }
                         }
                     }
                 }
