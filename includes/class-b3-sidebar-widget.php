@@ -30,7 +30,7 @@
          * @param array $instance Saved values from database.
          */
         public function widget( $args, $instance ) {
-            $count_errors  = 0;
+            $count_errors  = [];
             $count_setting = 0;
             $show_account  = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             $show_widget   = true;
@@ -103,7 +103,7 @@
                 }
             }
 
-            if ( is_array( $count_errors ) ) {
+            if ( $count_errors ) {
                 if ( $count_setting == count( $count_errors ) ) {
                     $show_widget = false;
                     if ( current_user_can( 'manage_options' ) ) {
