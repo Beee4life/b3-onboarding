@@ -878,13 +878,11 @@
                 }
 
                 if ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
-                    error_log('hit function');
+
                     check_admin_referer( 'logout' );
-                    error_log('hit after referrer');
 
                     $user = wp_get_current_user();
                     wp_logout();
-                    error_log('hit after logout');
 
                     if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
                         $redirect_to           = $_REQUEST[ 'redirect_to' ];
