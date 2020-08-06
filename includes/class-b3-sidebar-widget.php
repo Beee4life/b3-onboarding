@@ -154,8 +154,8 @@
                             echo '<li><a href="' . $link[ 'link' ] . '">' . $link[ 'label' ] . '</a></li>';
                         }
                     }
-                    if ( isset( $logout_link ) && false != $logout_link ) {
-                        echo '<li><a href="' . $logout_link . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
+                    if ( isset( $logout_url ) && false != $logout_url ) {
+                        echo '<li><a href="' . $logout_url . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
                     }
                 }
                 echo '</ul>';
