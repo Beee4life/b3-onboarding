@@ -865,7 +865,9 @@
                             $redirect_url = $login_url;
                         }
                     }
-                } elseif ( false != $approval_page_id && is_page( $approval_page_id ) ) {
+                }
+
+                if ( false != $approval_page_id && is_page( $approval_page_id ) ) {
                     if ( is_user_logged_in() ) {
                         if ( ! current_user_can( 'promote_users' ) ) {
                             $redirect_url = $account_url;
@@ -873,12 +875,16 @@
                     } else {
                         $redirect_url = $login_url;
                     }
-                } elseif ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
+                }
 
+                if ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
+                    error_log('hit function');
                     check_admin_referer( 'logout' );
+                    error_log('hit after referrer');
 
                     $user = wp_get_current_user();
                     wp_logout();
+                    error_log('hit after logout');
 
                     if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
                         $redirect_to           = $_REQUEST[ 'redirect_to' ];
