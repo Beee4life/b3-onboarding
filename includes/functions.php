@@ -1219,7 +1219,8 @@
 
         $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
         $url_array  = parse_url( $url );
-        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $url_array[ 'path' ];
+        $port       = ( $url_array[ 'port' ] && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
+        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $url_array[ 'path' ];
 
         if ( false != $include_query ) {
             if ( isset( $url_array[ 'query' ] ) ) {
