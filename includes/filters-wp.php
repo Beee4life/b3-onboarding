@@ -56,11 +56,9 @@
         $new_message .= '<br /><br />';
 
         // @TODO: add if preferred language
-        $new_message .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL###.';
+        $new_message .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL### from ###EMAIL###.';
         $new_message .= '<br /><br />';
         $new_message .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###';
-        $new_message .= '<br /><br />';
-        $new_message .= 'This email has been sent to ###EMAIL###';
         $new_message .= '<br /><br />';
         $new_message .= __( 'Greetings', 'b3-onboarding' ) . ',';
         $new_message .= '<br /><br />';
