@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.3.0 - released xx.07.20
+2.3.0 - released xx.08.20
 
 <a name="features"></a>
 ### Features
@@ -121,6 +121,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 2.3.0
 * custom passwords
+* filter to override email changed notification email
 
 2.2.0
 * fix for undefined headers when manually adding a user with notification
