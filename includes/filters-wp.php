@@ -8,7 +8,7 @@
     if ( 1 == get_option( 'b3_disable_admin_notification_password_change', false ) ) {
         add_filter( 'wp_password_change_notification_email', '__return_false' );
     } else {
-        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email', 10, 3 );
+        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
     }
 
     /**
@@ -22,7 +22,7 @@
      *
      * @return mixed
      */
-    function b3_password_changed_email( $wp_password_change_notification_email, $user, $blogname ) {
+    function b3_password_changed_email_admin( $wp_password_change_notification_email, $user, $blogname ) {
         $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login ); // default: Password changed for user: {username}
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
@@ -35,6 +35,44 @@
         return $wp_password_change_notification_email;
 
     }
+
+    /**
+     * Filter password change notification mail (user)
+     *
+     * @since 2.3.0
+     *
+     * @param $change_email
+     * @param $user
+     * @param $userdata
+     *
+     * @return mixed
+     */
+    function b3_password_changed_email_user( $change_email, $user, $userdata ) {
+        if ( true == get_option( 'b3_register_email_only' ) ) {
+            $new_message = 'Hi,';
+        } else {
+            $new_message = 'Hi ###USERNAME###,';
+        }
+        $new_message .= '<br /><br />';
+
+        // @TODO: add if preferred language
+        $new_message .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL###.';
+        $new_message .= '<br /><br />';
+        $new_message .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###';
+        $new_message .= '<br /><br />';
+        $new_message .= 'This email has been sent to ###EMAIL###';
+        $new_message .= '<br /><br />';
+        $new_message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $new_message .= '<br /><br />';
+        $new_message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+        $new_message = b3_replace_template_styling( $new_message );
+        $new_message = strtr( $new_message, b3_replace_email_vars() );
+        $change_email[ 'message' ] = $new_message;
+
+        return $change_email;
+
+    }
+    add_filter( 'email_change_email', 'b3_password_changed_email_user', 5, 3 );
 
     /**
      * Override new user notification for admin
