@@ -53,18 +53,16 @@
         } else {
             $new_message = 'Hi ###USERNAME###,';
         }
-        $new_message .= '<br /><br />';
-
-        // @TODO: add if preferred language
-        $new_message .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL### from ###EMAIL###.';
-        $new_message .= '<br /><br />';
-        $new_message .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###';
-        $new_message .= '<br /><br />';
-        $new_message .= __( 'Greetings', 'b3-onboarding' ) . ',';
-        $new_message .= '<br /><br />';
-        $new_message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
-        $new_message = b3_replace_template_styling( $new_message );
-        $new_message = strtr( $new_message, b3_replace_email_vars() );
+        $new_message               .= '<br /><br />';
+        $new_message               .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL### from ###EMAIL###.';
+        $new_message               .= '<br /><br />';
+        $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###';
+        $new_message               .= '<br /><br />';
+        $new_message               .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $new_message               .= '<br /><br />';
+        $new_message               .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+        $new_message               = b3_replace_template_styling( $new_message );
+        $new_message               = strtr( $new_message, b3_replace_email_vars() );
         $change_email[ 'message' ] = $new_message;
 
         return $change_email;
