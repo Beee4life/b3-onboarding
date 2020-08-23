@@ -1519,18 +1519,6 @@
                     return $errors;
                 }
 
-                if ( ! is_email( $user_email ) ) {
-                    $errors->add( 'email', $this->b3_get_return_message( 'invalid_email' ) );
-
-                    return $errors;
-                }
-
-                if ( username_exists( $user_email ) || email_exists( $user_email ) ) {
-                    $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
-
-                    return $errors;
-                }
-
                 if ( true == $use_custom_passwords ) {
                     if ( isset( $_POST[ 'pass1' ] ) && isset( $_POST[ 'pass2' ] ) ) {
                         $easy_passwords = array(
