@@ -3,22 +3,6 @@
     display: none;
 }
 
-button,
-input,
-select,
-textarea {
-    /* copied from twentytwelve */
-    border:        1px solid #ccc;
-    border-radius: 3px;
-    font-family:   inherit;
-    padding:       6px;
-    padding:       0.428571429rem;
-}
-
-select {
-    max-width: 100%;
-}
-
 /* Error message */
 .b3_message {
     border:        1px dashed black;
@@ -52,6 +36,22 @@ select {
     width:     100%;
     max-width: 600px;
 }
+
+.b3_page form button,
+.b3_page form input,
+.b3_page form select,
+.b3_page form textarea {
+    border:        1px solid #ccc;
+    border-radius: 3px;
+    font-family:   inherit;
+    /*padding:       6px;*/
+    /*padding:       0.428571429rem;*/
+}
+
+.b3_page form select {
+    max-width: 100%;
+}
+
 
 .b3_page form input[type="text"],
 .b3_page form input[type="email"] {
