@@ -117,12 +117,17 @@
                 }
 
                 $errors = array();
-                if ( isset( $_REQUEST[ 'login' ] ) ) {
-                    $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
+                    if ( isset( $_REQUEST[ 'login' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                    } elseif ( isset( $_REQUEST[ 'error' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'error' ] );
+                    }
 
                     foreach ( $error_codes as $code ) {
                         $errors[] = $this->b3_get_return_message( $code );
                     }
+
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( is_multisite() ) {
                         $attributes[ 'messages' ][] = sprintf(
