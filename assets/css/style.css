@@ -44,8 +44,8 @@
     border:        1px solid #ccc;
     border-radius: 3px;
     font-family:   inherit;
-    /*padding:       6px;*/
-    /*padding:       0.428571429rem;*/
+    padding:       6px;
+    padding:       0.428571429rem;
 }
 
 .b3_page form select {
