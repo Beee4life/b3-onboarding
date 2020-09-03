@@ -21,22 +21,23 @@
     <?php } ?>
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
-        <input name="b3_form" value="custom" type="hidden" />
+        <input name="b3_form" value="login" type="hidden" />
+        <input name="redirect_to" value="<?php echo b3_get_account_url(); ?>" type="hidden" />
 
         <?php // Output of fields starts here ?>
         <div class="b3_form-element">
             <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php echo $label; ?></label>
-            <input type="text" name="log" id="user_login" class="input" value="" size="20">
+            <input type="text" name="log" id="user_login" class="input" value="" size="20" autocomplete="username">
         </div>
 
         <div class="b3_form-element">
             <label class="b3_form-label" for="user_pass"><?php esc_attr_e( 'Password', 'b3-onboarding' ); ?></label>
-            <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
+            <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" autocomplete="current-password">
         </div>
 
         <?php do_action( 'b3_add_recaptcha_fields', $attributes[ 'template' ] ); ?>
 
-        <div class="rememberme-wrap">
+        <div class="b3_form-element">
             <p class="rememberme">
                 <input name="rememberme" type="checkbox" id="rememberme" value="forever">
                 <label for="rememberme"><?php esc_attr_e( 'Remember Me', 'b3-onboarding' ); ?></label>

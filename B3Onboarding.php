@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.2.0
+    Version:            2.3.0
     Requires at least:  4.3
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.2.0',
+                    'version' => '2.3.0',
                 );
 
                 // actions
@@ -89,11 +89,12 @@
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
-                add_action( 'login_form_register',                  array( $this, 'b3_registration_form_handling' ) );
+                add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
-                add_action( 'login_form_lostpassword',              array( $this, 'b3_do_password_lost' ) );
-                add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
-                add_action( 'login_form_rp',                        array( $this, 'b3_reset_user_password' ) );
+                add_action( 'init',                                 array( $this, 'b3_do_password_lost' ) );
+                // add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
+                // add_action( 'login_form_rp',                        array( $this, 'b3_reset_user_password' ) );
+                add_action( 'init',                                 array( $this, 'b3_reset_user_password' ) );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
@@ -664,9 +665,9 @@
              * at the end of the page.
              */
             public function b3_add_captcha_js_to_footer() {
-                $recaptcha = get_option( 'b3_activate_recaptcha' );
-                $recaptcha_on = get_option( 'b3_recaptcha_on' );
-                if ( true == $recaptcha && is_array( $recaptcha ) && ! empty( $recaptcha ) ) {
+                $recaptcha    = get_option( 'b3_activate_recaptcha' );
+                $recaptcha_on = get_option( 'b3_recaptcha_on', [] );
+                if ( true == $recaptcha && ! empty( $recaptcha_on ) ) {
                     wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
                 }
             }
@@ -851,29 +852,32 @@
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
+                $request_redirect = ( isset( $_SERVER[ 'REDIRECT_URI' ] ) ) ? urlencode_deep( $_SERVER[ 'REQUEST_SCHEME' ] . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REDIRECT_URI' ] ): false;
 
                 if ( false != $account_page_id ) {
                     if ( is_page() ) {
                         $page = get_post( get_the_ID() );
                         // if user is not logged and if page is account page or sub-page of account page
-                        if ( ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) && ! is_user_logged_in() ) {
-                            wp_safe_redirect( $login_url );
-                            exit;
+                        if ( ! is_user_logged_in() && ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) ) {
+                            if ( false != $request_redirect ) {
+                                $login_url = add_query_arg( 'redirect_to', $request_redirect, $login_url );
+                            }
+                            $redirect_url = $login_url;
                         }
                     }
                 }
+
                 if ( false != $approval_page_id && is_page( $approval_page_id ) ) {
                     if ( is_user_logged_in() ) {
                         if ( ! current_user_can( 'promote_users' ) ) {
-                            wp_safe_redirect( $account_url );
-                            exit;
+                            $redirect_url = $account_url;
                         }
                     } else {
-                        wp_safe_redirect( $login_url );
-                        exit;
+                        $redirect_url = $login_url;
                     }
+                }
 
-                } elseif ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
+                if ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
 
                     check_admin_referer( 'logout' );
 
@@ -888,10 +892,11 @@
                         $requested_redirect_to = '';
                     }
 
-                    $redirect_to = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
-                    wp_safe_redirect( $redirect_to );
+                    $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
+                }
+                if ( isset( $redirect_url ) ) {
+                    wp_safe_redirect( $redirect_url );
                     exit;
-
                 }
             }
 
@@ -958,10 +963,10 @@
              */
             public function b3_redirect_to_custom_register() {
                 if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                    if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'custom' != $_REQUEST[ 'b3_form' ] ) {
-                        $page_url = b3_get_register_url();
-                        if ( false != $page_url ) {
-                            wp_safe_redirect( $page_url );
+                    if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'register' != $_REQUEST[ 'b3_form' ] ) {
+                        $register_url = b3_get_register_url();
+                        if ( false != $register_url ) {
+                            wp_safe_redirect( $register_url );
                             exit;
                         }
                     }
@@ -970,9 +975,9 @@
                         if ( is_user_logged_in() ) {
                             $this->b3_redirect_logged_in_user();
                         } else {
-                            $page_url = b3_get_register_url();
-                            if ( false != $page_url ) {
-                                wp_safe_redirect( $page_url );
+                            $register_url = b3_get_register_url();
+                            if ( false != $register_url ) {
+                                wp_safe_redirect( $register_url );
                             } else {
                                 wp_safe_redirect( wp_registration_url() );
                             }
@@ -1128,18 +1133,17 @@
                         $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
                     }
                 } else {
-
                     // Non-admin users always go to their account page after login, if defined
                     $account_page_url = b3_get_account_url();
-                    if ( false != $account_page_url ) {
+                    if ( $requested_redirect_to ) {
+                        $redirect_url = $redirect_to;
+                    } elseif ( false != $account_page_url ) {
                         if ( ! in_array( $stored_roles, $user->roles ) ) {
                             $redirect_url = $account_page_url;
                         } else {
                             // non-admin logged in
                             // $redirect_url set at start
                         }
-                    } elseif ( $requested_redirect_to ) {
-                        $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
                     } elseif ( current_user_can( 'read' ) ) {
                         $redirect_url = get_edit_user_link( get_current_user_id() );
                     }
@@ -1202,8 +1206,12 @@
                             $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
                         } else {
 
-                            $lostpassword_url = b3_get_lostpassword_url();
-                            $redirect_url     = add_query_arg( array( 'activate' => 'success' ), $lostpassword_url );
+                            if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                                $redirect_url = b3_get_lostpassword_url();
+                            } else {
+                                $redirect_url = b3_get_login_url();
+                            }
+                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $redirect_url );
 
                             // remove user_activation_key
                             $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
@@ -1230,20 +1238,23 @@
              */
             public function b3_do_password_lost() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    $errors = retrieve_password();
 
-                    if ( is_wp_error( $errors ) ) {
-                        // errors found
-                        $redirect_url = b3_get_lostpassword_url();
-                        $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
-                    } else {
-                        // Email sent
-                        $redirect_url = b3_get_login_url();
-                        $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
+                    if ( isset( $_POST[ 'b3_form' ] ) && 'lostpass' == $_POST[ 'b3_form' ] ) {
+                        $errors = b3_retrieve_password();
+
+                        if ( is_wp_error( $errors ) ) {
+                            // errors found
+                            $redirect_url = b3_get_lostpassword_url();
+                            $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
+                        } else {
+                            // Email sent
+                            $redirect_url = b3_get_login_url();
+                            $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
+                        }
+
+                        wp_safe_redirect( $redirect_url );
+                        exit;
                     }
-
-                    wp_safe_redirect( $redirect_url );
-                    exit;
                 }
             }
 
@@ -1273,19 +1284,8 @@
                         }
 
                         if ( isset( $_POST[ 'pass1' ] ) ) {
-                            if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] ) {
-                                // Passwords don't match
-                                $redirect_url = b3_get_reset_password_url();
-                                $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
-                                $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
-                                $redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
-
-                                wp_safe_redirect( $redirect_url );
-                                exit;
-                            }
-
-                            if ( empty( $_POST[ 'pass1' ] ) ) {
-                                // Password is empty
+                            if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
+                                // Password is empty or don't match
                                 $redirect_url = b3_get_reset_password_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
                                 $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
@@ -1304,10 +1304,9 @@
                             exit;
 
                         } else {
-                            echo "Invalid request1.";
+                            echo "Invalid request.";
                         }
                     }
-
                 }
             }
 
@@ -1401,7 +1400,11 @@
 
                     // Registration
                     case 'registration_success':
-                        return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
+                        if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                            return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
+                        } else {
+                            return esc_html__( 'You have successfully registered. You can now login.', 'b3-onboarding' );
+                        }
 
                     case 'registration_success_enter_password':
                         return sprintf(
@@ -1411,7 +1414,11 @@
 
                     // Activation
                     case 'activate_success':
-                        return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
+                        if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                            return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
+                        } else {
+                            return esc_html__( 'You have successfully activated your account. You can now login.', 'b3-onboarding' );
+                        }
 
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
@@ -1421,11 +1428,15 @@
                     case 'invalidkey':
                         return esc_html__( 'The password reset link you used is not valid anymore.', 'b3-onboarding' );
 
+                    case 'password_mismatch':
                     case 'password_reset_mismatch':
                         return esc_html__( "The two passwords you entered don't match.", 'b3-onboarding' );
 
                     case 'password_reset_empty':
                         return esc_html__( "Sorry, we don't accept empty passwords.", 'b3-onboarding' );
+
+                    case 'password_too_easy':
+                        return esc_html__( 'Sorry, that password is too easy.', 'b3-onbaording' );
 
                     // Multisite
                     case 'domain_exists':
@@ -1480,6 +1491,7 @@
                     'user_pass'  => '', // for possible/future custom passwords
                     'role'       => $role,
                 );
+                $use_custom_passwords = true;
 
                 if ( false == $registration_with_email_only ) {
                     if ( username_exists( $user_login ) ) {
@@ -1507,16 +1519,34 @@
                     return $errors;
                 }
 
-                if ( ! is_email( $user_email ) ) {
-                    $errors->add( 'email', $this->b3_get_return_message( 'invalid_email' ) );
+                if ( true == $use_custom_passwords ) {
+                    if ( isset( $_POST[ 'pass1' ] ) && isset( $_POST[ 'pass2' ] ) ) {
+                        $easy_passwords = array(
+                            '000000',
+                            '111111',
+                            '123456',
+                            '12345678',
+                            'abcdef',
+                            'password',
+                            'wachtwoord',
+                        );
+                        if ( in_array( $_POST[ 'pass1' ], $easy_passwords ) ) {
+                            $errors->add( 'pw_too_easy', $this->b3_get_return_message( 'password_too_easy' ) );
 
-                    return $errors;
-                }
+                            return $errors;
+                        }
 
-                if ( username_exists( $user_email ) || email_exists( $user_email ) ) {
-                    $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
+                        if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
+                            // Password is empty or don't match
+                            $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
-                    return $errors;
+                            return $errors;
+                        } elseif ( $_POST[ 'pass1' ] == $_POST[ 'pass2' ] ) {
+                            $hashed_password                    = wp_hash_password( $_POST[ 'pass1' ] );
+                            // $user_data[ 'user_activation_key' ] = '';
+                            $user_data[ 'user_pass' ]           = $hashed_password;
+                        }
+                    }
                 }
 
                 if ( true == $privacy_error ) {
@@ -1537,6 +1567,10 @@
 
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
+                    if ( true == $use_custom_passwords && isset( $_POST[ 'pass1' ] ) ) {
+                        wp_set_password( $_POST[ 'pass1' ], $user_id );
+                    }
+
                     $inform = 'both';
                     if ( 'email_activation' == $registration_type ) {
                         // never notify an admin if a user hasn't confirmed email yet

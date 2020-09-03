@@ -19,7 +19,7 @@
             <br />
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=styling' ) ); ?>
             <br />
-            <?php echo sprintf( __( '<a href="%s">Download styling</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_URL . 'includes/download.php?file=default-email-styling.css' ) ); ?>
+            <?php echo sprintf( __( '<a href="%s">Download styling</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_URL . 'includes/download.php?file=default-email-styling.css&sentby=b3' ) ); ?>
         </th>
         <td>
             <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ); ?>" rows="6"><?php if ( $stored_email_styling ) { echo $stored_email_styling; } ?></textarea>

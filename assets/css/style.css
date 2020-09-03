@@ -3,22 +3,6 @@
     display: none;
 }
 
-button,
-input,
-select,
-textarea {
-    /* copied from twentytwelve */
-    border:        1px solid #ccc;
-    border-radius: 3px;
-    font-family:   inherit;
-    padding:       6px;
-    padding:       0.428571429rem;
-}
-
-select {
-    max-width: 100%;
-}
-
 /* Error message */
 .b3_message {
     border:        1px dashed black;
@@ -49,9 +33,25 @@ select {
 
 /* Forms */
 .b3_page form {
-    width: 100%;
+    width:     100%;
     max-width: 600px;
 }
+
+.b3_page form button,
+.b3_page form input,
+.b3_page form select,
+.b3_page form textarea {
+    border:        1px solid #ccc;
+    border-radius: 3px;
+    font-family:   inherit;
+    padding:       6px;
+    padding:       0.428571429rem;
+}
+
+.b3_page form select {
+    max-width: 100%;
+}
+
 
 .b3_page form input[type="text"],
 .b3_page form input[type="email"] {
@@ -62,9 +62,8 @@ select {
     vertical-align: middle;
 }
 
-.b3_page form .password-hint,
-.b3_page form .rememberme-wrap {
-    margin-bottom: 2em;
+.b3_page form .password-hint {
+    margin-top: 2rem;
 }
 
 .b3_page form input#rememberme {
@@ -76,8 +75,8 @@ select {
 }
 
 .b3_page .b3_form-label {
-    display:        inline-block;
-    width:          220px;
+    display: inline-block;
+    width:   220px;
 }
 
 .b3_page .b3_form-element--checkbox .b3_form-label,
@@ -95,15 +94,11 @@ select {
 }
 
 .b3_form-element {
-    margin-top: 2em;
+    margin-top: 2rem;
 }
 
 .b3_form-element:first-of-type {
     margin-top: 0;
-}
-
-.b3_page .b3_form-element--submit {
-    margin-bottom: 1em;
 }
 
 .b3_input-options {
@@ -113,6 +108,7 @@ select {
 /* Links in form footer */
 ul.b3_form-links {
     list-style:   none;
+    margin-top:   1.5rem;
     padding-left: 0;
     position:     relative;
 }
@@ -243,11 +239,13 @@ ul.b3_form-links li:last-child {
         width: 150px;
     }
 }
+
 @media screen and ( min-width: 640px ) {
     .b3_table--account tr td:first-child {
         width: 175px;
     }
 }
+
 @media screen and ( min-width: 1024px ) {
     .b3_table--account tr td:first-child {
         width: 200px;

@@ -10,20 +10,20 @@
      *
      */
     function b3_do_stuff_after_new_user_activated_by_admin( $user_id ) {
-        // Do stuff when user is activated by admin
         $user_object = get_userdata( $user_id );
         $key         = get_password_reset_key( $user_object );
         $user_login  = $user_object->user_login;
         $user_object->set_role( get_option( 'default_role' ) );
-        $vars[ 'reset_url'] = network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' );
+        $reset_pass_url      = b3_get_reset_password_url();
+        $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
 
-        $to          = $user_object->user_email;
-        $subject     = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
-        $subject     = strtr( $subject, b3_replace_subject_vars() );
-        $message     = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
-        $message     = b3_replace_template_styling( $message );
-        $message     = strtr( $message, b3_replace_email_vars( $vars ) );
-        $message     = htmlspecialchars_decode( stripslashes( $message ) );
+        $to      = $user_object->user_email;
+        $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+        $subject = strtr( $subject, b3_replace_subject_vars() );
+        $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_replace_email_vars( $vars ) );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $to, $subject, $message, array() );
     }
@@ -140,14 +140,11 @@
      * @since 0.8-beta
      */
     function b3_add_password_fields() {
-        $show_custom_passwords = get_option( 'b3_use_custom_passwords', false );
-        if ( $show_custom_passwords ) {
+        $registration_type     = get_option( 'b3_registration_type', false );
+        $show_custom_passwords = get_option( 'b3_activate_custom_passwords', false );
+        if ( $show_custom_passwords && in_array( $registration_type, [ 'email_activation', 'open' ] ) ) {
             ob_start();
             ?>
-            <p class="b3_message">
-                <?php esc_html_e( "If you triggered this setting manually, be aware that it's not working yet.", "b3-onboarding" ); ?>
-            </p>
-
             <div class="b3_form-element b3_form-element--password">
                 <label class="b3_form-label" for="pass1"><?php esc_html_e( 'Password', 'b3-onboarding' ); ?></label>
                 <input autocomplete="off" name="pass1" id="pass1" size="20" value="" type="password" class="b3_form--input"/>
@@ -162,7 +159,7 @@
             echo $results;
         }
     }
-    // add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
+    add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
 
 
     /**
@@ -393,11 +390,11 @@
             }
 
             if ( count( $page_types ) > 0 ) {
-                echo '<ul class="b3_form-links"><!--';
+                echo '<ul class="b3_form-links">';
                 foreach( $page_types as $key => $values ) {
-                    echo '--><li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li><!--';
+                    echo '<li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li>';
                 }
-                echo '--></ul>';
+                echo '</ul>';
             }
         }
     }

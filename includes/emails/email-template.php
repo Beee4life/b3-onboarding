@@ -19,7 +19,7 @@
             <br />
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=template' ) ); ?>
             <br />
-            <?php echo sprintf( __( '<a href="%s">Download template</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_URL . 'includes/download.php?file=default-email-template.html' ) ); ?>
+            <?php echo sprintf( __( '<a href="%s">Download template</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_URL . 'includes/download.php?file=default-email-template.html&sentby=b3' ) ); ?>
         </th>
         <td>
             <textarea id="b3__input--email-template" name="b3_email_template" placeholder="<?php echo esc_attr( b3_default_email_template() ); ?>" rows="6"><?php if ( $stored_email_template ) { echo $stored_email_template; } ?></textarea>

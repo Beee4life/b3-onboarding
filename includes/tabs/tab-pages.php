@@ -82,9 +82,20 @@
                     <div class="b3_select-page__selector">
                         <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
                             <option value=""> <?php esc_html_e( "Select a page", "b3-user-regiser" ); ?></option>
-                            <?php foreach( $all_pages as $active_page ) { ?>
-                                <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
-                                <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                            <?php if ( class_exists( 'SitePress' ) ) { ?>
+                                <?php $default_lang = apply_filters( 'wpml_default_language', null ); ?>
+                                <?php foreach( $all_pages as $active_page ) { ?>
+                                    <?php $post_language_information = wpml_get_language_information( '', $active_page->ID ); ?>
+                                    <?php if ( $post_language_information[ 'language_code' ] == $default_lang ) { ?>
+                                        <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
+                                        <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <?php foreach( $all_pages as $active_page ) { ?>
+                                    <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
+                                    <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                                <?php } ?>
                             <?php } ?>
                         </select>
                     </div>

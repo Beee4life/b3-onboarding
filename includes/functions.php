@@ -752,78 +752,6 @@
 
 
     /**
-     * Return links below a (public) form
-     *
-     * @since 1.0.0
-     *
-     * @TODO: (maybe) show with use of filter (next to a setting)
-     */
-    function b3_get_form_links( $current_form ) {
-
-        $output = '';
-        if ( true != get_option( 'b3_disable_action_links', false ) ) {
-            $page_types = array();
-
-            switch( $current_form ) {
-
-                case 'login':
-                    $page_types[ 'lostpassword' ] = [
-                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
-                        'link'  => b3_get_lostpassword_url(),
-                    ];
-                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
-                        $page_types[ 'register' ] = [
-                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
-                            'link'  => b3_get_register_url(),
-                        ];
-                    }
-                    break;
-
-                case 'register':
-                    $page_types[ 'login' ] = [
-                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_url(),
-                    ];
-                    $page_types[ 'fogotpassword' ] = [
-                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
-                        'link'  => b3_get_lostpassword_url(),
-                    ];
-                    break;
-
-                case 'lostpassword':
-                    $page_types[ 'login' ] = [
-                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_url(),
-                    ];
-                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
-                        $page_types[ 'register' ] = [
-                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
-                            'link'  => b3_get_register_url(),
-                        ];
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-
-            if ( count( $page_types ) > 0 ) {
-                ob_start();
-                echo '<ul class="b3_form-links"><!--';
-                foreach( $page_types as $key => $values ) {
-                    echo '--><li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li><!--';
-                }
-                echo '--></ul>';
-                $output = ob_get_clean();
-            }
-
-        }
-
-        return $output;
-    }
-
-
-    /**
      * Get a unique activation url for a user
      *
      * @since 1.0.0
@@ -841,7 +769,7 @@
         global $wpdb;
         $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user_data->user_login ) );
 
-        $login_url      = wp_login_url();
+        $login_url      = b3_get_login_url();
         $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user_data->user_login ) ), $login_url );
 
         return $activation_url;
@@ -955,10 +883,18 @@
      *
      * @return bool|string
      */
-    function b3_get_register_url() {
+    function b3_get_register_url( $return_id = false ) {
         $id = get_option( 'b3_register_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( class_exists( 'Sitepress' ) ) {
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+        }
+        if ( false != $id ) {
+            if ( false != $return_id ) {
+                return $id;
+            }
+            if ( get_post( $id ) ) {
+                return get_the_permalink( $id );
+            }
         }
 
         return wp_registration_url();
@@ -974,6 +910,9 @@
      */
     function b3_get_login_url( $return_id = false ) {
         $id = get_option( 'b3_login_page_id', false );
+        if ( class_exists( 'Sitepress' ) ) {
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+        }
         if ( false != $id ) {
             if ( false != $return_id ) {
                 return $id;
@@ -996,6 +935,9 @@
      */
     function b3_get_logout_url( $return_id = false ) {
         $id = get_option( 'b3_logout_page_id', false );
+        if ( class_exists( 'Sitepress' ) ) {
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+        }
         if ( false != $id ) {
             if ( false != $return_id ) {
                 return $id;
@@ -1016,8 +958,11 @@
      *
      * @return bool|mixed
      */
-    function b3_get_account_url( $return_id = false ) {
+    function b3_get_account_url( $return_id = false, $language = false ) {
         $id = get_option( 'b3_account_page_id', false );
+        if ( class_exists( 'Sitepress' ) ) {
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true, $language );
+        }
         if ( false != $id ) {
             if ( false != $return_id ) {
                 return $id;
@@ -1041,6 +986,9 @@
      */
     function b3_get_lostpassword_url() {
         $id = get_option( 'b3_lost_password_page_id', false );
+        if ( class_exists( 'Sitepress' ) ) {
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+        }
         if ( false != $id && get_post( $id ) ) {
             return get_the_permalink( $id );
         }
@@ -1055,13 +1003,21 @@
      *
      * @return bool|string
      */
-    function b3_get_reset_password_url() {
+    function b3_get_reset_password_url( $return_id = false ) {
         $id = get_option( 'b3_reset_password_page_id', false );
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( class_exists( 'Sitepress' ) ) {
+            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+        }
+        if ( false != $id ) {
+            if ( true == $return_id ) {
+                return $id;
+            }
+            if ( get_post( $id ) ) {
+                return get_the_permalink( $id );
+            }
         }
 
-        return site_url( 'wp-login.php', 'login' ) . '?action=rp';
+        return network_site_url( 'wp-login.php', 'login' ) . '?action=rp';
     }
 
     /**
@@ -1076,6 +1032,9 @@
     function b3_get_user_approval_link( $return_id = false ) {
         if ( true == get_option( 'b3_front_end_approval' ) ) {
             $id = get_option( 'b3_approval_page_id', false );
+            if ( class_exists( 'Sitepress' ) ) {
+                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            }
             if ( false != $id ) {
                 if ( true == $return_id ) {
                     return $id;
@@ -1234,4 +1193,159 @@
 
         return $reserved_user_names;
 
+    }
+
+
+    /**
+     * Get manually added welcome message user
+     *
+     * @since 2.3.0
+     *
+     * @return string
+     */
+    function b3_get_manual_welcome_user_message() {
+        $message = b3_default_manual_welcome_user_message();
+
+        return $message;
+    }
+
+    function b3_get_protocol() {
+        $protocol = ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
+
+        return $protocol;
+    }
+
+    function b3_get_current_url( $include_query = false ) {
+
+        $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
+        $url_array  = parse_url( $url );
+        $port       = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
+        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $url_array[ 'path' ];
+
+        if ( false != $include_query ) {
+            if ( isset( $url_array[ 'query' ] ) ) {
+                $query_string = $url_array[ 'query' ];
+                $return_url   .= '?' . $query_string;
+            }
+
+        }
+
+        return $return_url;
+
+    }
+
+    /**
+     * Copied from wp-login.php since we bypass it and can't piggyback on the function in this file.
+     *
+     * @return bool|int|string|WP_Error
+     */
+    function b3_retrieve_password() {
+        $errors    = new WP_Error();
+        $user_data = false;
+
+        if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
+            $errors->add( 'empty_username', __( '<strong>Error</strong>: Enter a username or email address.' ) );
+        } elseif ( strpos( $_POST['user_login'], '@' ) ) {
+            $user_data = get_user_by( 'email', trim( wp_unslash( $_POST['user_login'] ) ) );
+            if ( empty( $user_data ) ) {
+                $errors->add( 'invalid_email', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
+            }
+        } else {
+            $login     = trim( wp_unslash( $_POST['user_login'] ) );
+            $user_data = get_user_by( 'login', $login );
+        }
+
+        /**
+         * Fires before errors are returned from a password reset request.
+         *
+         * @since 2.1.0
+         * @since 4.4.0 Added the `$errors` parameter.
+         * @since 5.4.0 Added the `$user_data` parameter.
+         *
+         * @param WP_Error $errors A WP_Error object containing any errors generated
+         *                         by using invalid credentials.
+         * @param WP_User|false    WP_User object if found, false if the user does not exist.
+         */
+        do_action( 'lostpassword_post', $errors, $user_data );
+
+        if ( $errors->has_errors() ) {
+            return $errors;
+        }
+
+        if ( ! $user_data ) {
+            $errors->add( 'invalidcombo', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
+            return $errors;
+        }
+
+        // Redefining user_login ensures we return the right case in the email.
+        $user_login = $user_data->user_login;
+        $user_email = $user_data->user_email;
+        $key        = get_password_reset_key( $user_data );
+
+        if ( is_wp_error( $key ) ) {
+            return $key;
+        }
+
+        if ( is_multisite() ) {
+            $site_name = get_network()->site_name;
+        } else {
+            /*
+             * The blogname option is escaped with esc_html on the way into the database
+             * in sanitize_option we want to reverse this for the plain text arena of emails.
+             */
+            $site_name = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+        }
+
+        $message = __( 'Someone has requested a password reset for the following account:' ) . "\r\n\r\n";
+        /* translators: %s: Site name. */
+        $message .= sprintf( __( 'Site Name: %s' ), $site_name ) . "\r\n\r\n";
+        /* translators: %s: User login. */
+        $message .= sprintf( __( 'Username: %s' ), $user_login ) . "\r\n\r\n";
+        $message .= __( 'If this was a mistake, just ignore this email and nothing will happen.' ) . "\r\n\r\n";
+        $message .= __( 'To reset your password, visit the following address:' ) . "\r\n\r\n";
+        $message .= network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
+
+        /* translators: Password reset notification email subject. %s: Site title. */
+        $title = sprintf( __( '[%s] Password Reset' ), $site_name );
+
+        /**
+         * Filters the subject of the password reset email.
+         *
+         * @since 2.8.0
+         * @since 4.4.0 Added the `$user_login` and `$user_data` parameters.
+         *
+         * @param string  $title      Default email title.
+         * @param string  $user_login The username for the user.
+         * @param WP_User $user_data  WP_User object.
+         */
+        $title = apply_filters( 'retrieve_password_title', $title, $user_login, $user_data );
+
+        /**
+         * Filters the message body of the password reset mail.
+         *
+         * If the filtered message is empty, the password reset email will not be sent.
+         *
+         * @since 2.8.0
+         * @since 4.1.0 Added `$user_login` and `$user_data` parameters.
+         *
+         * @param string  $message    Default mail message.
+         * @param string  $key        The activation key.
+         * @param string  $user_login The username for the user.
+         * @param WP_User $user_data  WP_User object.
+         */
+        $message = apply_filters( 'retrieve_password_message', $message, $key, $user_login, $user_data );
+
+        if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) ) {
+            $errors->add(
+                'retrieve_password_email_failure',
+                sprintf(
+                /* translators: %s: Documentation URL. */
+                    __( '<strong>Error</strong>: The email could not be sent. Your site may not be correctly configured to send emails. <a href="%s">Get support for resetting your password</a>.' ),
+                    esc_url( 'https://wordpress.org/support/article/resetting-your-password/' )
+                )
+            );
+            return $errors;
+        }
+
+        return true;
     }

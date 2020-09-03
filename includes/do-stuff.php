@@ -276,15 +276,27 @@
         $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
         $user_login              = ( false != $user_data && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
 
+        // More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
+        if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
+            // check ip from share internet
+            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+        } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
+            // to check ip is pass from proxy
+            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+        } else {
+            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+        }
+
         $replacements = array(
+            '%account_page%'      => b3_get_account_url(),
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
             '%lostpass_url%'      => b3_get_lostpassword_url(),
-            '%home_url%'          => get_home_url(),
+            '%home_url%'          => get_home_url( '', '/' ),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
             '%registration_date%' => $local_registration_date,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
-            '%user_ip%'           => $_SERVER[ 'REMOTE_ADDR' ] ? : ( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ? : $_SERVER[ 'HTTP_CLIENT_IP' ] ),
+            '%user_ip%'           => $user_ip,
             '%user_login%'        => $user_login,
         );
         // Replace %blog_name% again if used in the footer

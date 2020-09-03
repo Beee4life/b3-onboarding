@@ -8,7 +8,7 @@
     if ( 1 == get_option( 'b3_disable_admin_notification_password_change', false ) ) {
         add_filter( 'wp_password_change_notification_email', '__return_false' );
     } else {
-        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email', 10, 3 );
+        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
     }
 
     /**
@@ -22,7 +22,7 @@
      *
      * @return mixed
      */
-    function b3_password_changed_email( $wp_password_change_notification_email, $user, $blogname ) {
+    function b3_password_changed_email_admin( $wp_password_change_notification_email, $user, $blogname ) {
         $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login ); // default: Password changed for user: {username}
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
@@ -35,6 +35,40 @@
         return $wp_password_change_notification_email;
 
     }
+
+    /**
+     * Filter password change notification mail (user)
+     *
+     * @since 2.3.0
+     *
+     * @param $change_email
+     * @param $user
+     * @param $userdata
+     *
+     * @return mixed
+     */
+    function b3_password_changed_email_user( $change_email, $user, $userdata ) {
+        if ( true == get_option( 'b3_register_email_only' ) ) {
+            $new_message = 'Hi,';
+        } else {
+            $new_message = 'Hi ###USERNAME###,';
+        }
+        $new_message               .= '<br /><br />';
+        $new_message               .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL### from ###EMAIL###.';
+        $new_message               .= '<br /><br />';
+        $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###';
+        $new_message               .= '<br /><br />';
+        $new_message               .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $new_message               .= '<br /><br />';
+        $new_message               .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+        $new_message               = b3_replace_template_styling( $new_message );
+        $new_message               = strtr( $new_message, b3_replace_email_vars() );
+        $change_email[ 'message' ] = $new_message;
+
+        return $change_email;
+
+    }
+    add_filter( 'email_change_email', 'b3_password_changed_email_user', 5, 3 );
 
     /**
      * Override new user notification for admin
@@ -109,15 +143,22 @@
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
 
         // check if use of own styling/templates
-        $send_custom_mail = false;
-        $send_manual_mail = false;
+        $send_custom_mail = true;
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
-                $send_custom_mail               = true;
-                $wp_new_user_notification_email = false;
+                $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
+                $wp_new_user_notification_email[ 'headers' ] = [];
+                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+
+                $user_email = apply_filters( 'b3_manual_welcome_user_message', b3_get_manual_welcome_user_message() );
+                $user_email = b3_replace_template_styling( $user_email );
+                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
+                $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
+
+                $wp_new_user_notification_email[ 'message' ] = $user_email;
             }
         }
 
@@ -159,14 +200,6 @@
 
             }
 
-        }
-        // not in use yet, due to more debugging
-        if ( true == $send_manual_mail ) {
-            // @TODO: maybe create email message for manual adding of user
-            $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
-            $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-            $wp_new_user_notification_email[ 'headers' ] = [];
-            $wp_new_user_notification_email[ 'message' ] = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
         }
 
         return $wp_new_user_notification_email;
@@ -218,11 +251,11 @@
             $message = $lost_password_message;
         }
 
-        $vars = [
-            'reset_url' => network_site_url( "wp-login.php?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ), 'login' ) . "\r\n\r\n",
-        ];
-        $message = b3_replace_template_styling( $message );
-        $message = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
+        // get reset pass id
+        $reset_pass_url      = b3_get_reset_password_url();
+        $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
+        $message             = b3_replace_template_styling( $message );
+        $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
 
         return $message;
 

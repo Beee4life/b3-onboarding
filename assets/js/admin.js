@@ -109,6 +109,15 @@ jQuery(document).ready(function() {
                 $($front_end_approval).addClass('hidden');
             }
         });
+
+        var $custom_passwords = '.b3_settings-field--custom-passwords';
+        $('input[name="b3_registration_type"]').change(function() {
+            if (document.getElementById('b3_registration_type_request_access').checked) {
+                $($custom_passwords).addClass('hidden');
+            } else {
+                $($custom_passwords).removeClass('hidden');
+            }
+        });
     });
 })(jQuery);
 

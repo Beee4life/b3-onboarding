@@ -30,6 +30,7 @@
          * @param array $instance Saved values from database.
          */
         public function widget( $args, $instance ) {
+            $count_errors  = [];
             $count_setting = 0;
             $show_account  = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             $show_widget   = true;
@@ -37,7 +38,7 @@
 
             if ( $show_account ) {
                 $account_id    = b3_get_account_url( true );
-                $account_title = esc_html__( 'Account', 'b3-onbaording' );
+                $account_title = esc_html__( 'Account', 'b3-onboarding' );
                 $account_url   = b3_get_account_url();
                 if ( false == $account_id ) {
                     $count_errors[] = 'account';
@@ -51,7 +52,7 @@
             $show_login = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : false;
             if ( $show_login ) {
                 $login_id    = b3_get_login_url( true );
-                $login_title = esc_html__( 'Login', 'b3-onbaording' );
+                $login_title = esc_html__( 'Login', 'b3-onboarding' );
                 $login_url   = b3_get_login_url();
                 if ( false == $login_id ) {
                     $count_errors[] = 'login';
@@ -64,8 +65,8 @@
 
             $show_logout = ! empty( $instance[ 'show_logout' ] ) ? $instance[ 'show_logout' ] : false;
             if ( $show_logout ) {
-                $logout_link = b3_get_logout_url();
-                if ( false == $logout_link ) {
+                $logout_url = b3_get_logout_url();
+                if ( false == $logout_url ) {
                     $count_errors[] = 'logout';
                 }
                 $count_setting++;
@@ -73,8 +74,8 @@
 
             $show_register = ! empty( $instance[ 'show_register' ] ) ? $instance[ 'show_register' ] : false;
             if ( $show_register ) {
-                $register_id    = get_option( 'b3_register_page_id' );
-                $register_title = esc_html__( 'Login', 'b3-onbaording' );
+                $register_id    = b3_get_register_url( true );
+                $register_title = esc_html__( 'Login', 'b3-onboarding' );
                 $register_url   = b3_get_register_url();
                 if ( false == $register_id ) {
                     $count_errors[] = 'register';
@@ -102,7 +103,7 @@
                 }
             }
 
-            if ( ! empty( $count_errors ) ) {
+            if ( $count_errors ) {
                 if ( $count_setting == count( $count_errors ) ) {
                     $show_widget = false;
                     if ( current_user_can( 'manage_options' ) ) {
@@ -118,7 +119,7 @@
 
             $custom_links = apply_filters( 'b3_widget_links', array() );
 
-            if ( ! isset( $login_id ) && ! isset( $register_id ) && ! isset( $logout_id ) && empty( $custom_links ) ) {
+            if ( ! isset( $login_url ) && ! isset( $register_url ) && ! isset( $logout_url ) && empty( $custom_links ) ) {
                 $show_widget = false;
                 if ( false != $show_settings && current_user_can( 'manage_options' ) ) {
                     $show_widget = true;
@@ -153,8 +154,8 @@
                             echo '<li><a href="' . $link[ 'link' ] . '">' . $link[ 'label' ] . '</a></li>';
                         }
                     }
-                    if ( isset( $logout_link ) && false != $logout_link ) {
-                        echo '<li><a href="' . $logout_link . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
+                    if ( isset( $logout_url ) && false != $logout_url ) {
+                        echo '<li><a href="' . $logout_url . '">' . esc_html__( 'Log Out', 'b3-onboarding' ) . '</a></li>';
                     }
                 }
                 echo '</ul>';

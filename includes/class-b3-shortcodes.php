@@ -63,8 +63,10 @@
                                         $extra_field_values       = apply_filters( 'b3_extra_fields', array() );
                                         $column                   = array_column( $extra_field_values, 'id' );
                                         $key                      = array_search( $field_id, $column );
-                                        $sprintf_variable         = $extra_field_values[ $key ][ 'label' ];
-                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
+                                        if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
+                                            $sprintf_variable         = $extra_field_values[ $key ][ 'label' ];
+                                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
+                                        }
                                     } else {
                                         $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
                                     }
@@ -115,12 +117,17 @@
                 }
 
                 $errors = array();
-                if ( isset( $_REQUEST[ 'login' ] ) ) {
-                    $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
+                    if ( isset( $_REQUEST[ 'login' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                    } elseif ( isset( $_REQUEST[ 'error' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'error' ] );
+                    }
 
                     foreach ( $error_codes as $code ) {
                         $errors[] = $this->b3_get_return_message( $code );
                     }
+
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( is_multisite() ) {
                         $attributes[ 'messages' ][] = sprintf(

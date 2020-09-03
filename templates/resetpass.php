@@ -6,17 +6,17 @@
      */
 ?>
 <?php do_action( 'b3_add_form_messages', $attributes ); ?>
-<div id="b3-resetpass" class="b3 b3_page b3_page--login">
+<div id="b3-resetpass" class="b3 b3_page b3_page--resetpass">
     <?php if ( $attributes[ 'title' ] ) : ?>
         <h3>
             <?php echo $attributes[ 'title' ]; ?>
         </h3>
     <?php endif; ?>
 
-    <form name="resetpassform" id="resetpassform" action="<?php echo site_url( 'wp-login.php?action=resetpass' ); ?>" method="post" autocomplete="off">
+    <form name="resetpassform" id="resetpassform" action="<?php echo b3_get_reset_password_url(); ?>" method="post" autocomplete="off">
+        <input name="b3_form" value="resetpass" type="hidden" />
         <input name="rp_login" type="hidden" value="<?php echo esc_attr( $attributes[ 'login' ] ); ?>" autocomplete="off"/>
         <input name="rp_key" type="hidden" value="<?php echo esc_attr( $attributes[ 'key' ] ); ?>"/>
-        <input name="b3_form" value="custom" type="hidden" />
 
         <div class="b3_form-element">
             <label class="b3_form-label" for="pass1"><?php echo esc_attr( 'New password', 'b3-onboarding' ) ?></label>
@@ -30,7 +30,7 @@
         <p class="password-hint"><?php echo wp_get_password_hint(); ?></p>
 
         <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" id="resetpass-button" class="button" value="<?php echo esc_attr( 'Reset Password', 'b3-onboarding' ); ?>" />
+            <input type="submit" id="resetpass-button" class="button" value="<?php echo esc_attr__( 'Set password', 'b3-onboarding' ); ?>" />
         </div>
     </form>
 </div>
