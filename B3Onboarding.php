@@ -3,8 +3,10 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.3.0
+    Version:            2.4.0
     Requires at least:  4.3
+    Tested up to:       5.5.1
+    Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
     Tags:               user, management, registration, login, lost password, reset password, account
@@ -65,7 +67,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.3.0',
+                    'version' => '2.4.0',
                 );
 
                 // actions
@@ -1390,7 +1392,7 @@
                         return esc_html__( 'You have to get approved first.', 'b3-onboarding' );
 
                     case 'wait_confirmation':
-                        return esc_html__( 'You have to confirm your email address first.', 'b3-onboarding' );
+                        return esc_html__( 'You have to confirm your email address first. Please check your inbox.', 'b3-onboarding' );
 
                     case 'password_updated':
                         return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );

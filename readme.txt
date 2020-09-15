@@ -3,7 +3,8 @@ Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
 Tested up to: 5.5.1
-Stable tag: 2.2.0
+Requires PHP: 5.6
+Stable tag: 2.4.0
 License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,5 +28,4 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Upgrade Notice ==
 
-= 2.0.0 =
-This update offers a ton of new features/options/settings. You'd be stupid to miss out on them ;)
+This update offers a fix for user being able to login, without being approved or having the email confirmed.
