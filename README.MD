@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.4.0 - released 15.09.20
+2.5.0 - released xx.09.20
 
 <a name="features"></a>
 ### Features
@@ -119,6 +119,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.5.0
+* improve html/css for account page
+
 2.4.0
 * fix for preventing login when email/user is not confirmed yet
 * update css
