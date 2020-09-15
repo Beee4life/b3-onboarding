@@ -97,6 +97,14 @@
     margin-top: 0;
 }
 
+.b3_form-element--delete div {
+    margin-top: 1rem;
+}
+
+.b3_form-element--delete strong {
+    font-size: 1.15rem;
+}
+
 /* Label on password reset input */
 .b3_page .b3_form-label--email {
     width: 150px;
