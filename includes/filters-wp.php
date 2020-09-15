@@ -399,3 +399,28 @@
 
     }
     add_filter( 'login_message', 'wp_login_message' );
+
+
+    /**
+     * Check if user may login, if he/she has a custom role.
+     *
+     * @since 2.4.0
+     *
+     * @param $user
+     * @param $password
+     *
+     * @return WP_Error
+     */
+    function b3_login_errors( $user, $password ) {
+        if ( $user ) {
+            if ( in_array( 'b3_activation', $user->roles ) ) {
+                return new WP_Error( 'wait_confirmation', '' );
+            } elseif ( in_array( 'b3_approval', $user->roles ) ) {
+                return new WP_Error( 'wait_approval', '' );
+            }
+        }
+
+        return $user;
+
+    }
+    add_filter( 'wp_authenticate_user', 'b3_login_errors', 20, 2 );
