@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-09-15 22:41+0200\n"
+"POT-Creation-Date: 2020-09-16 01:09+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -275,22 +275,21 @@ msgstr ""
 msgid "User name"
 msgstr ""
 
-#: includes/actions-b3.php:95 templates/account.php:64
-#: templates/user-management.php:57
+#: includes/actions-b3.php:95 templates/user-management.php:57
 msgid "Email"
 msgstr ""
 
-#: includes/actions-b3.php:121 templates/account.php:101
+#: includes/actions-b3.php:121 templates/account.php:64
 #: templates/user-management.php:50
 msgid "First name"
 msgstr ""
 
-#: includes/actions-b3.php:125 templates/account.php:109
+#: includes/actions-b3.php:125 templates/account.php:67
 #: templates/user-management.php:53
 msgid "Last name"
 msgstr ""
 
-#: includes/actions-b3.php:149 templates/account.php:122 templates/login.php:34
+#: includes/actions-b3.php:149 templates/login.php:35
 msgid "Password"
 msgstr ""
 
@@ -1834,79 +1833,66 @@ msgstr ""
 msgid "close"
 msgstr ""
 
-#: templates/account.php:32 templates/account.php:38
+#: templates/account.php:32
 msgid "Username"
 msgstr ""
 
-#: templates/account.php:42
-msgid "Can't be changed."
-msgstr ""
-
-#: templates/account.php:48 templates/account.php:54
-#: templates/user-management.php:41
+#: templates/account.php:34 templates/user-management.php:41
 msgid "User ID"
 msgstr ""
 
-#: templates/account.php:70 templates/login.php:10
+#: templates/account.php:42 templates/login.php:11
 #: templates/lostpassword.php:24
 msgid "Email address"
 msgstr ""
 
-#: templates/account.php:71
-msgid "(required)"
-msgstr ""
-
-#: templates/account.php:83
+#: templates/account.php:53
 #, php-format
 msgid ""
 "There is a pending change of your e-mail to %1$s. <a href=\"%2$s\">Cancel</a>"
 msgstr ""
 
-#: templates/account.php:96
-msgid "Name"
+#: templates/account.php:79
+msgid "Change password"
 msgstr ""
 
-#: templates/account.php:127
+#: templates/account.php:82
 msgid "New password"
 msgstr ""
 
-#: templates/account.php:132
-msgid "Generate Password"
-msgstr ""
-
-#: templates/account.php:137
+#: templates/account.php:87
 msgid "You can also enter your own password"
 msgstr ""
 
-#: templates/account.php:140
+#: templates/account.php:90
 msgid "Hide password"
 msgstr ""
 
-#: templates/account.php:142
+#: templates/account.php:92
 msgid "Hide"
 msgstr ""
 
-#: templates/account.php:144
+#: templates/account.php:94
 msgid "Cancel password change"
 msgstr ""
 
-#: templates/account.php:145
+#: templates/account.php:96
 msgid "Cancel"
 msgstr ""
 
-#: templates/account.php:156
+#: templates/account.php:103
 msgid "Type your new password again."
 msgstr ""
 
-#: templates/account.php:160
+#: templates/account.php:107
 msgid "Confirm password"
 msgstr ""
 
-#: templates/account.php:164
+#: templates/account.php:110
 msgid "Confirm use of weak password"
 msgstr ""
 
-#: templates/account.php:173
+#: templates/account.php:118
 msgid "Delete account"
 msgstr ""
 
@@ -1914,7 +1900,7 @@ msgstr ""
 msgid "Username or Email address"
 msgstr ""
 
-#: templates/login.php:43
+#: templates/login.php:44
 msgid "Remember Me"
 msgstr ""
 

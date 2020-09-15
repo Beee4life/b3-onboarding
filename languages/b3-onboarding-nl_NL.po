@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-09-15 22:41+0200\n"
-"PO-Revision-Date: 2020-09-15 22:41+0200\n"
+"POT-Creation-Date: 2020-09-16 01:07+0200\n"
+"PO-Revision-Date: 2020-09-16 01:09+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -293,22 +293,21 @@ msgstr ""
 msgid "User name"
 msgstr "Gebruikersnaam"
 
-#: includes/actions-b3.php:95 templates/account.php:64
-#: templates/user-management.php:57
+#: includes/actions-b3.php:95 templates/user-management.php:57
 msgid "Email"
 msgstr "Email"
 
-#: includes/actions-b3.php:121 templates/account.php:101
+#: includes/actions-b3.php:121 templates/account.php:64
 #: templates/user-management.php:50
 msgid "First name"
 msgstr "Voornaam"
 
-#: includes/actions-b3.php:125 templates/account.php:109
+#: includes/actions-b3.php:125 templates/account.php:67
 #: templates/user-management.php:53
 msgid "Last name"
 msgstr "Achternaam"
 
-#: includes/actions-b3.php:149 templates/account.php:122 templates/login.php:34
+#: includes/actions-b3.php:149 templates/login.php:35
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -1976,29 +1975,20 @@ msgstr "Profiel opgeslagen"
 msgid "close"
 msgstr "sluiten"
 
-#: templates/account.php:32 templates/account.php:38
+#: templates/account.php:32
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: templates/account.php:42
-msgid "Can't be changed."
-msgstr "Kan niet gewijzigd worden."
-
-#: templates/account.php:48 templates/account.php:54
-#: templates/user-management.php:41
+#: templates/account.php:34 templates/user-management.php:41
 msgid "User ID"
 msgstr "Gebruikers ID"
 
-#: templates/account.php:70 templates/login.php:10
+#: templates/account.php:42 templates/login.php:11
 #: templates/lostpassword.php:24
 msgid "Email address"
 msgstr "Email adres"
 
-#: templates/account.php:71
-msgid "(required)"
-msgstr "(verplicht)"
-
-#: templates/account.php:83
+#: templates/account.php:53
 #, php-format
 msgid ""
 "There is a pending change of your e-mail to %1$s. <a href=\"%2$s\">Cancel</a>"
@@ -2006,51 +1996,47 @@ msgstr ""
 "Er is een wijziging om je email adres te wijzigen naar %1$s welke nog niet "
 "bevestigd is. <a href=\"%2$s\">Annuleren</a>"
 
-#: templates/account.php:96
-msgid "Name"
-msgstr "Naam"
+#: templates/account.php:79
+msgid "Change password"
+msgstr "Wachtwoord wijzigen"
 
-#: templates/account.php:127
+#: templates/account.php:82
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
-#: templates/account.php:132
-msgid "Generate Password"
-msgstr "Wachtwoord genereren"
-
-#: templates/account.php:137
+#: templates/account.php:87
 msgid "You can also enter your own password"
 msgstr "Je kan ook je eigen wachtwoord kiezen"
 
-#: templates/account.php:140
+#: templates/account.php:90
 msgid "Hide password"
 msgstr "Verberg wachtwoord"
 
-#: templates/account.php:142
+#: templates/account.php:92
 msgid "Hide"
 msgstr "Verbergen"
 
-#: templates/account.php:144
+#: templates/account.php:94
 msgid "Cancel password change"
 msgstr "Annuleer wijzigen wachtwoord"
 
-#: templates/account.php:145
+#: templates/account.php:96
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: templates/account.php:156
+#: templates/account.php:103
 msgid "Type your new password again."
 msgstr "Type je nieuwe wachtwoord nogmaals."
 
-#: templates/account.php:160
+#: templates/account.php:107
 msgid "Confirm password"
 msgstr "Wachtwoord bevestigen"
 
-#: templates/account.php:164
+#: templates/account.php:110
 msgid "Confirm use of weak password"
 msgstr "Bevestig zwak wachtwoord"
 
-#: templates/account.php:173
+#: templates/account.php:118
 msgid "Delete account"
 msgstr "Account verwijderen"
 
@@ -2058,7 +2044,7 @@ msgstr "Account verwijderen"
 msgid "Username or Email address"
 msgstr "Gebruikersnaam of email adres"
 
-#: templates/login.php:43
+#: templates/login.php:44
 msgid "Remember Me"
 msgstr "Onthoud mij"
 
@@ -2116,6 +2102,18 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "Can't be changed."
+#~ msgstr "Kan niet gewijzigd worden."
+
+#~ msgid "(required)"
+#~ msgstr "(verplicht)"
+
+#~ msgid "Name"
+#~ msgstr "Naam"
+
+#~ msgid "Generate Password"
+#~ msgstr "Wachtwoord genereren"
 
 #~ msgid ""
 #~ "If you triggered this setting manually, be aware that it's not working "
