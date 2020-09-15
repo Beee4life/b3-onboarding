@@ -28,5 +28,4 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Upgrade Notice ==
 
-= 2.0.0 =
-This update offers a ton of new features/options/settings. You'd be stupid to miss out on them ;)
+This update offers a fix for user being able to login, without being approved or having the email confirmed.
