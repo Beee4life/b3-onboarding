@@ -1392,7 +1392,7 @@
                         return esc_html__( 'You have to get approved first.', 'b3-onboarding' );
 
                     case 'wait_confirmation':
-                        return esc_html__( 'You have to confirm your email address first.', 'b3-onboarding' );
+                        return esc_html__( 'You have to confirm your email address first. Please check your inbox.', 'b3-onboarding' );
 
                     case 'password_updated':
                         return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );
