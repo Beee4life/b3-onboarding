@@ -80,25 +80,13 @@
             <?php echo esc_html__( 'Name', 'b3-onboarding' ); ?>
         </h3>
 
-        <?php // @TODO: change to div ?>
-        <table class="b3_table b3_table--account">
-            <tr>
-                <td>
-                    <label for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php echo esc_attr( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
-                </td>
-                <td>
-                    <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php echo esc_attr( $current_user_object->first_name ); ?>"<?php echo $required; ?> />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php echo esc_attr( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
-                </td>
-                <td>
-                    <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php echo esc_attr( $current_user_object->last_name ); ?>"<?php echo $required; ?> />
-                </td>
-            </tr>
-        </table>
+        <div class="b3_form-element">
+            <label class="b3_form-label" for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php echo esc_attr( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
+            <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php echo esc_attr( $current_user_object->first_name ); ?>"<?php echo $required; ?> />
+            <br /><br />
+            <label class="b3_form-label" for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php echo esc_attr( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
+            <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php echo esc_attr( $current_user_object->last_name ); ?>"<?php echo $required; ?> />
+        </div>
 
         <?php
             $show_password_fields = apply_filters( 'show_password_fields', true, $current_user_object );
