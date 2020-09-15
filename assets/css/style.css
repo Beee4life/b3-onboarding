@@ -147,7 +147,7 @@ ul.b3_form-links li:last-child {
     box-sizing:       border-box;
     color:            #23282d;
     font-weight:      600;
-    margin:           0 0 1rem;
+    margin:           1rem 0;
     padding:          3px 5px;
     text-align:       center;
     width:            100%;
