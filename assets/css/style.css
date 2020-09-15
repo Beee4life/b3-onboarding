@@ -37,8 +37,12 @@
     max-width: 600px;
 }
 
+.b3_page form input[type="text"],
+.b3_page form input[type="email"],
+.b3_page form input[type="number"],
+.b3_page form input[type="password"],
+.b3_page form input[type="url"],
 .b3_page form button,
-.b3_page form input,
 .b3_page form select,
 .b3_page form textarea {
     border:        1px solid #ccc;
@@ -133,19 +137,21 @@ ul.b3_form-links li:last-child {
 }
 
 .b3_table--account tr td:first-child {
-    width: 75px;
+    width: 95px;
 }
 
 /* Password strength */
 #pass-strength-result {
     background-color: #eee;
     border:           1px solid #ddd;
+    box-sizing:       border-box;
     color:            #23282d;
     font-weight:      600;
-    margin:           -1px 0 1.5em;
+    margin:           0 0 1rem;
     padding:          3px 5px;
     text-align:       center;
     width:            100%;
+    max-width:        100%;
     opacity:          0;
 }
 
@@ -194,7 +200,8 @@ ul.b3_form-links li:last-child {
 }
 
 .pw-weak {
-    display: none;
+    display:    none;
+    margin-top: 1rem;
 }
 
 .indicator-hint {

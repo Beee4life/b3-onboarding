@@ -32,69 +32,55 @@
                 <?php echo esc_html__( 'Username', 'b3-onboarding' ); ?>
             </h3>
 
-            <table class="b3_table b3_table--account">
-                <tr>
-                    <td>
-                        <label for="user_login"><?php echo esc_html__( 'Username', 'b3-onboarding' ); ?></label>
-                    </td>
-                    <td>
-                        <input type="text" name="user_login" id="user_login" value="<?php echo esc_attr( $current_user->user_login ); ?>" disabled="disabled" />
-                        <span class="description"><?php _e( "Can't be changed.", 'b3-onboarding' ); ?></span>
-                    </td>
-                </tr>
-            </table>
+            <div class="b3_form-element">
+                <label class="b3_form-label" for="user_login"><?php echo esc_html__( 'Username', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="text" name="user_login" id="user_login" value="<?php echo esc_attr( $current_user_object->user_login ); ?>" disabled="disabled" />
+                <span class="description"><?php _e( "Can't be changed.", 'b3-onboarding' ); ?></span>
+            </div>
         <?php } else { ?>
             <h3>
                 <?php echo esc_html__( 'User ID', 'b3-onboarding' ); ?>
             </h3>
 
-            <table class="b3_table b3_table--account">
-                <tr>
-                    <td>
-                        <label for="user_login"><?php echo esc_html__( 'User ID', 'b3-onboarding' ); ?></label>
-                    </td>
-                    <td>
-                        <?php echo esc_attr( $current_user->user_login ); ?>
-                    </td>
-                </tr>
-            </table>
+            <div class="b3_form-element">
+                <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="text" name="user_login" id="user_login" class="b3_form--input" value="<?php echo esc_attr( $current_user_object->user_login ); ?>"  disabled="disabled" />
+            </div>
         <?php } ?>
 
         <h3>
             <?php echo esc_html__( 'Email', 'b3-onboarding' ); ?>
         </h3>
 
-        <table class="b3_table b3_table--account">
-            <tr>
-                <td>
-                    <label for="email"><?php echo esc_html__( 'Email address', 'b3-onboarding' ); ?>
-                        <span class="description"><?php echo esc_html__( '(required)', 'b3-onboarding' ); ?></span>
-                    </label>
-                </td>
-                <td>
-                    <input type="text" name="email" id="email" value="<?php echo esc_attr( $current_user->user_email ); ?>" class="input regular-text" />
-                    <?php
-                        $new_email = get_option( $current_user->ID . '_new_email' );
-                        if ( $new_email && $new_email[ 'newemail' ] != $current_user->user_email ) : ?>
-                            <div class="updated inline">
-                                <p>
-                                    <?php
-                                        printf(
-                                            esc_html__( 'There is a pending change of your e-mail to %1$s. <a href="%2$s">Cancel</a>', 'b3-onboarding' ),
-                                            '<code>' . $new_email[ 'newemail' ] . '</code>',
-                                            esc_url( self_admin_url( 'profile.php?dismiss=' . $current_user->ID . '_new_email' ) )
-                                        );
-                                    ?>
-                                </p>
-                            </div>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        </table>
+        <div class="b3_form-element">
+
+            <label class="b3_form-label" for="email"><?php echo esc_html__( 'Email address', 'b3-onboarding' ); ?>
+                <span class="description"><?php echo esc_html__( '(required)', 'b3-onboarding' ); ?></span>
+            </label>
+
+            <input type="text" name="email" id="email" value="<?php echo esc_attr( $current_user_object->user_email ); ?>" class="input regular-text" />
+            <?php
+                $new_email = get_option( $current_user_object->ID . '_new_email' );
+                if ( $new_email && $new_email[ 'newemail' ] != $current_user_object->user_email ) : ?>
+                    <div class="updated inline">
+                        <p>
+                            <?php
+                                printf(
+                                    esc_html__( 'There is a pending change of your e-mail to %1$s. <a href="%2$s">Cancel</a>', 'b3-onboarding' ),
+                                    '<code>' . $new_email[ 'newemail' ] . '</code>',
+                                    esc_url( self_admin_url( 'profile.php?dismiss=' . $current_user_object->ID . '_new_email' ) )
+                                );
+                            ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+        </div>
 
         <h3>
             <?php echo esc_html__( 'Name', 'b3-onboarding' ); ?>
         </h3>
+
+        <?php // @TODO: change to div ?>
         <table class="b3_table b3_table--account">
             <tr>
                 <td>
@@ -121,67 +107,57 @@
         <h3>
             <?php echo esc_html__( 'Password', 'b3-onboarding' ); ?>
         </h3>
-        <table class="b3_table b3_table--account">
-            <tr id="password" class="user-pass1-wrap">
-                <td>
-                    <label for="pass1"><?php echo esc_html__( 'New password', 'b3-onboarding' ); ?></label>
-                </td>
-                <td>
-                    <!-- Workaround : https://core.trac.wordpress.org/ticket/24364 -->
-                    <input class="hidden" value=" " />
-                    <button type="button" class="button button-secondary button--small wp-generate-pw hide-if-no-js"><?php _e( 'Generate Password', 'b3-onboarding' ); ?></button>
-                    <div class="wp-pwd hide-if-js">
-                        <span class="password-input-wrapper">
-                            <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php echo esc_attr( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
-                            <br/>
-                            <small><?php _e( 'You can also enter your own password', 'sexdates' ); ?></small>
-                        </span>
-                        <div style="display:none" id="pass-strength-result" aria-live="polite"></div>
-                        <button type="button" class="button button-secondary button--small wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'b3-onboarding' ); ?>">
-                            <span class="dashicons dashicons-hidden"></span>
-                            <span class="text"><?php _e( 'Hide', 'b3-onboarding' ); ?></span>
-                        </button>
-                        <button type="button" class="button button-secondary button--small wp-cancel-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Cancel password change', 'b3-onboarding' ); ?>">
-                            <span class="text"><?php _e( 'Cancel', 'b3-onboarding' ); ?></span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr class="user-pass2-wrap hide-if-js">
-                <td>
-                    <label for="pass2"><?php echo esc_attr( 'Repeat new password', 'b3-onboarding' ); ?></label>
-                </td>
-                <td>
-                    <input name="pass2" type="password" id="pass2" class="regular-text" value="" autocomplete="off" />
-                    <p class="description"><?php echo esc_html__( 'Type your new password again.', 'b3-onboarding' ); ?></p>
-                </td>
-            </tr>
-            <tr class="pw-weak">
-                <td><?php echo esc_html__( 'Confirm password', 'b3-onboarding' ); ?></td>
-                <td>
-                    <label>
-                        <input type="checkbox" name="pw_weak" class="pw-checkbox" />
-                        <?php echo esc_html__( 'Confirm use of weak password', 'b3-onboarding' ); ?>
+
+        <div class="b3_form-element b3_form-element--password">
+            <div class="password-input user-pass1-wrap">
+                <!-- Workaround : https://core.trac.wordpress.org/ticket/24364 -->
+                <input class="hidden" value=" " />
+                <button type="button" class="button button-secondary button--small wp-generate-pw hide-if-no-js"><?php _e( 'Generate Password', 'b3-onboarding' ); ?></button>
+                <div class="wp-pwd hide-if-js">
+                    <label class="b3_form-label" for="pass1">
+                        <?php echo esc_html__( 'New password', 'b3-onboarding' ); ?>
                     </label>
-                </td>
-            </tr>
-        </table>
+                    <span class="password-input-wrapper">
+                                <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php echo esc_attr( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
+                                <br/>
+                                <small><?php _e( 'You can also enter your own password', 'sexdates' ); ?></small>
+                            </span>
+                    <div style="display:none" id="pass-strength-result" aria-live="polite"></div>
+                    <button type="button" class="button button-secondary button--small wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'b3-onboarding' ); ?>">
+                        <span class="dashicons dashicons-hidden"></span>
+                        <span class="text"><?php _e( 'Hide', 'b3-onboarding' ); ?></span>
+                    </button>
+                    <button type="button" class="button button-secondary button--small wp-cancel-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Cancel password change', 'b3-onboarding' ); ?>">
+                        <span class="text"><?php _e( 'Cancel', 'b3-onboarding' ); ?></span>
+                    </button>
+                </div>
+            </div>
+            <div class="user-pass2-wrap hide-if-js">
+                <label for="pass2"><?php echo esc_attr( 'Repeat new password', 'b3-onboarding' ); ?></label>
+                <input name="pass2" type="password" id="pass2" class="regular-text" value="" autocomplete="off" />
+                <p class="description"><?php echo esc_html__( 'Type your new password again.', 'b3-onboarding' ); ?></p>
+            </div>
+            <div class="pw-weak">
+                <label class="b3_form-label">
+                    <?php echo esc_html__( 'Confirm password', 'b3-onboarding' ); ?>
+                </label>
+                <input type="checkbox" name="pw_weak" class="pw-checkbox" />
+                <?php echo esc_html__( 'Confirm use of weak password', 'b3-onboarding' ); ?>
+            </div>
+        </div>
         <?php endif; ?>
 
         <?php if ( $user_delete ) { ?>
             <h3>
                 <?php echo esc_html__( 'Delete account', 'b3-onboarding' ); ?>
             </h3>
-            <table class="b3_table b3_table--account">
-                <tr>
-                    <td colspan="2">
-                        <label>
-                            <?php echo esc_attr( 'If you click this button, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
-                            <input type="submit" name="b3_delete_account" class="button button--small" value="<?php echo esc_attr( 'Delete account', 'b3-onboarding' ); ?>" id="submit" onclick="return confirm( 'Are you sure you want to delete your account ?' )" />
-                        </label>
-                    </td>
-                </tr>
-            </table>
+
+            <div class="b3_form-element">
+                <label>
+                    <?php echo esc_attr( 'If you click this button, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
+                    <input type="submit" name="b3_delete_account" class="button button--small" value="<?php echo esc_attr( 'Delete account', 'b3-onboarding' ); ?>" id="submit" onclick="return confirm( 'Are you sure you want to delete your account ?' )" />
+                </label>
+            </div>
         <?php } ?>
 
         <div>
