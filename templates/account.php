@@ -27,35 +27,19 @@
             </p>
         <?php } ?>
 
-        <?php if ( false == $registration_with_email_only ) { ?>
-            <h3>
-                <?php echo esc_html__( 'Username', 'b3-onboarding' ); ?>
-            </h3>
-
-            <div class="b3_form-element">
-                <label class="b3_form-label" for="user_login"><?php echo esc_html__( 'Username', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="text" name="user_login" id="user_login" value="<?php echo esc_attr( $current_user_object->user_login ); ?>" disabled="disabled" />
-                <span class="description"><?php _e( "Can't be changed.", 'b3-onboarding' ); ?></span>
-            </div>
-        <?php } else { ?>
-            <h3>
-                <?php echo esc_html__( 'User ID', 'b3-onboarding' ); ?>
-            </h3>
-
-            <div class="b3_form-element">
-                <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="text" name="user_login" id="user_login" class="b3_form--input" value="<?php echo esc_attr( $current_user_object->user_login ); ?>"  disabled="disabled" />
-            </div>
-        <?php } ?>
-
-        <h3>
-            <?php echo esc_html__( 'Email', 'b3-onboarding' ); ?>
-        </h3>
+        <div class="b3_form-element">
+            <?php if ( false == $registration_with_email_only ) { ?>
+                <label class="b3_form-label" for="user_login"><?php echo esc_html__( 'Username', 'b3-onboarding' ); ?></label>
+            <?php } else { ?>
+                <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User ID', 'b3-onboarding' ); ?></label>
+            <?php } ?>
+            <?php // @TODO: just echo, not in disabled input ?>
+            <input type="text" name="user_login" id="user_login" value="<?php echo esc_attr( $current_user_object->user_login ); ?>" disabled="disabled" />
+        </div>
 
         <div class="b3_form-element">
-
-            <label class="b3_form-label" for="email"><?php echo esc_html__( 'Email address', 'b3-onboarding' ); ?>
-                <span class="description"><?php echo esc_html__( '(required)', 'b3-onboarding' ); ?></span>
+            <label class="b3_form-label" for="email">
+                <?php echo esc_html__( 'Email address', 'b3-onboarding' ); ?>
             </label>
 
             <input type="text" name="email" id="email" value="<?php echo esc_attr( $current_user_object->user_email ); ?>" class="input regular-text" />
@@ -76,10 +60,6 @@
                 <?php endif; ?>
         </div>
 
-        <h3>
-            <?php echo esc_html__( 'Name', 'b3-onboarding' ); ?>
-        </h3>
-
         <div class="b3_form-element">
             <label class="b3_form-label" for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php echo esc_attr( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php echo esc_attr( $current_user_object->first_name ); ?>"<?php echo $required; ?> />
@@ -92,15 +72,11 @@
             $show_password_fields = apply_filters( 'show_password_fields', true, $current_user_object );
             if ( $show_password_fields ) :
         ?>
-        <h3>
-            <?php echo esc_html__( 'Password', 'b3-onboarding' ); ?>
-        </h3>
-
         <div class="b3_form-element b3_form-element--password">
             <div class="password-input user-pass1-wrap">
                 <!-- Workaround : https://core.trac.wordpress.org/ticket/24364 -->
                 <input class="hidden" value=" " />
-                <button type="button" class="button button-secondary button--small wp-generate-pw hide-if-no-js"><?php _e( 'Generate new password', 'b3-onboarding' ); ?></button>
+                <button type="button" class="button button-secondary button--small wp-generate-pw hide-if-no-js"><?php _e( 'Change password', 'b3-onboarding' ); ?></button>
                 <div class="wp-pwd hide-if-js">
                     <label class="b3_form-label" for="pass1">
                         <?php echo esc_html__( 'New password', 'b3-onboarding' ); ?>
@@ -137,16 +113,17 @@
         <?php endif; ?>
 
         <?php if ( $user_delete ) { ?>
-            <h3>
-                <?php echo esc_html__( 'Delete account', 'b3-onboarding' ); ?>
-            </h3>
-
-            <div class="b3_form-element">
+            <div class="b3_form-element b3_form-element--delete">
+                <strong>
+                    <?php echo esc_html__( 'Delete account', 'b3-onboarding' ); ?>
+                </strong>
+                <br />
                 <label for="b3_delete_account">
                     <?php echo esc_attr( 'If you click this button, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
                 </label>
-                <br />
-                <input type="submit" id="b3_delete_account" name="b3_delete_account" class="button button--small" value="<?php echo esc_attr( 'Delete account', 'b3-onboarding' ); ?>" onclick="return confirm( 'Are you sure you want to delete your account ?' )" />
+                <div>
+                    <input type="submit" id="b3_delete_account" name="b3_delete_account" class="button button--small" value="<?php echo esc_attr( 'Delete account', 'b3-onboarding' ); ?>" onclick="return confirm( 'Are you sure you want to delete your account ?' )" />
+                </div>
             </div>
         <?php } ?>
 
