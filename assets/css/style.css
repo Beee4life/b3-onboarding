@@ -222,6 +222,10 @@ ul.b3_form-links li:last-child {
     display: inline-block;
 }
 
+.button .text.hide {
+    margin-left: 5px;
+}
+
 /* Admin topbar notification for user approval */
 #wpadminbar .topbar_approve_user a.ab-item {
     color: #ee6102;
