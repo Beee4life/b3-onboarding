@@ -48,14 +48,15 @@
     padding:       0.428571429rem;
 }
 
-.b3_page form select {
-    max-width: 100%;
-}
-
-
 .b3_page form input[type="text"],
-.b3_page form input[type="email"] {
+.b3_page form input[type="email"],
+.b3_page form input[type="number"],
+.b3_page form input[type="password"],
+.b3_page form input[type="url"],
+.b3_page form select,
+.b3_page form textarea {
     box-sizing: border-box;
+    width:      100%;
 }
 
 .b3_page form input[name="b3_delete_account"] {
@@ -70,19 +71,8 @@
     margin-left: 0;
 }
 
-.b3_page p.rememberme {
-    margin-top: 1rem;
-}
-
 .b3_page .b3_form-label {
     display: block;
-}
-
-@media screen and ( min-width: 480px ) {
-    .b3_page .b3_form-label {
-        display: inline-block;
-        width: 200px;
-    }
 }
 
 .b3_page .b3_form-element--checkbox .b3_form-label,
@@ -90,21 +80,22 @@
     vertical-align: top;
 }
 
-.b3_page .b3_form-element--textarea .b3_form-label {
-    margin-top: 10px;
+.b3_page p.rememberme {
+    margin-top: 1rem;
+}
+
+.b3_form-element {
+    margin-top:     2rem;
+    vertical-align: top;
+}
+
+.b3_form-element:first-of-type {
+    margin-top: 0;
 }
 
 /* Label on password reset input */
 .b3_page .b3_form-label--email {
     width: 150px;
-}
-
-.b3_form-element {
-    margin-top: 2rem;
-}
-
-.b3_form-element:first-of-type {
-    margin-top: 0;
 }
 
 .b3_input-options {
@@ -241,6 +232,23 @@ ul.b3_form-links li:last-child {
 
 /* Media queries */
 @media screen and ( min-width: 480px ) {
+    .b3_page .b3_form-label {
+        display: inline-block;
+        width:   200px;
+    }
+
+    .b3_page form input[type="text"],
+    .b3_page form input[type="email"],
+    .b3_page form input[type="number"],
+    .b3_page form input[type="password"],
+    .b3_page form input[type="url"],
+    .b3_page form select,
+    .b3_page form textarea {
+        display:   inline-block;
+        width:     initial;
+        min-width: 220px;
+    }
+
     .b3_table--account tr td:first-child {
         width: 150px;
     }
