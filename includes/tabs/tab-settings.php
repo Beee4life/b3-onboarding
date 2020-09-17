@@ -27,7 +27,7 @@
         </p>
 
         <form action="admin.php?page=b3-onboarding" method="post">
-            <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
+            <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
                 <?php if ( ! is_multisite() ) { ?>

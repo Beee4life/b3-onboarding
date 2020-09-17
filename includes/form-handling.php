@@ -8,9 +8,9 @@
     function b3_admin_form_handling() {
 
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            if ( isset( $_POST[ 'b3_settings_nonce' ] ) ) {
+            if ( isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
 
-                if ( ! wp_verify_nonce( $_POST[ 'b3_settings_nonce' ], 'b3-settings-nonce' ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3ob_settings_nonce' ], 'b3ob-settings-nonce' ) ) {
                     B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
                     return;
@@ -59,7 +59,9 @@
                         delete_option( 'b3_activate_filter_validation' );
                     }
 
-                    update_option( 'b3_main_logo', $_POST[ 'b3_main_logo' ], true );
+                    if ( isset( $_POST[ 'b3_main_logo' ] ) ) {
+                        update_option( 'b3_main_logo', $_POST[ 'b3_main_logo' ], true );
+                    }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
 
