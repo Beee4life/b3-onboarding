@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-09-16 01:07+0200\n"
-"PO-Revision-Date: 2020-09-16 01:09+0200\n"
+"POT-Creation-Date: 2020-09-20 04:51+0200\n"
+"PO-Revision-Date: 2020-09-20 04:51+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -64,10 +64,10 @@ msgid "Dismiss this notice"
 msgstr "Verberg deze melding"
 
 #: B3Onboarding.php:728 includes/form-handling.php:14
-#: includes/form-handling.php:73 includes/form-handling.php:105
-#: includes/form-handling.php:207 includes/form-handling.php:251
-#: includes/form-handling.php:400 includes/form-handling.php:438
-#: includes/form-handling.php:482
+#: includes/form-handling.php:75 includes/form-handling.php:107
+#: includes/form-handling.php:209 includes/form-handling.php:253
+#: includes/form-handling.php:402 includes/form-handling.php:440
+#: includes/form-handling.php:484
 msgid "Something went wrong, please try again."
 msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
 
@@ -341,7 +341,7 @@ msgstr "Registreren"
 #: includes/actions-b3.php:366 includes/actions-b3.php:377
 #: includes/tabs/tab-pages.php:20
 msgid "Log In"
-msgstr "Aanmelden"
+msgstr "Inloggen"
 
 #: includes/actions-wp.php:142
 msgid "Approve"
@@ -1099,39 +1099,39 @@ msgstr "Je moet een achternaam invullen."
 msgid "Recaptcha failed."
 msgstr "Recaptcha mislukt."
 
-#: includes/form-handling.php:64
+#: includes/form-handling.php:66
 msgid "General settings saved"
 msgstr "Algemene instellingen opgeslagen"
 
-#: includes/form-handling.php:98
+#: includes/form-handling.php:100
 msgid "Pages settings saved"
 msgstr "Pagina instellingen opgeslagen"
 
-#: includes/form-handling.php:198
+#: includes/form-handling.php:200
 msgid "Registration settings saved"
 msgstr "Registratie instellingen opgeslagen"
 
-#: includes/form-handling.php:218
+#: includes/form-handling.php:220
 msgid "Your hex code is incorrect."
 msgstr "Je hex code is incorrect."
 
-#: includes/form-handling.php:243
+#: includes/form-handling.php:245
 msgid "Login page settings saved"
 msgstr "Login pagina instellingen opgeslagen"
 
-#: includes/form-handling.php:257
+#: includes/form-handling.php:259
 msgid "That is not a valid email address."
 msgstr "Dit is geen geldig email adres."
 
-#: includes/form-handling.php:272
+#: includes/form-handling.php:274
 msgid "The length of your hex color is incorrect."
 msgstr "De lengte van je hex code is incorrect."
 
-#: includes/form-handling.php:277
+#: includes/form-handling.php:279
 msgid "Your hex color is incorrect, it's missing a hashtag (#)."
 msgstr "De het waarde van kleur is incorrect. Er mist een hashtag (#)."
 
-#: includes/form-handling.php:279
+#: includes/form-handling.php:281
 msgid ""
 "Your hex color is incorrect, it's missing a hashtag (#) and the color value "
 "is incorrect."
@@ -1139,24 +1139,24 @@ msgstr ""
 "De het waarde van kleur is incorrect. Er mist een hashtag (#) en de kleur "
 "waarde is incorrect."
 
-#: includes/form-handling.php:341
+#: includes/form-handling.php:343
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr "\"%s\" is geen geldig email adres."
 
-#: includes/form-handling.php:392
+#: includes/form-handling.php:394
 msgid "Email settings saved"
 msgstr "Email instellingen opgeslagen"
 
-#: includes/form-handling.php:430
+#: includes/form-handling.php:432
 msgid "User settings saved"
 msgstr "Gebruikersinstellingen opgeslagen"
 
-#: includes/form-handling.php:453
+#: includes/form-handling.php:455
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha instellingen opgeslagen"
 
-#: includes/form-handling.php:533
+#: includes/form-handling.php:535
 msgid "You do not have permission to edit this user."
 msgstr "Je hebt niet voldoende rechten om deze gebruiker te bewerken."
 
@@ -1755,7 +1755,7 @@ msgstr ""
 "Dit is het logo dat gebruikt wordt in emails en op WordPress' standaard "
 "pagina's."
 
-#: includes/tabs/tab-settings.php:114 includes/tabs/tab-settings.php:115
+#: includes/tabs/tab-settings.php:117 includes/tabs/tab-settings.php:118
 msgid "Choose a logo"
 msgstr "Kies een logo"
 
