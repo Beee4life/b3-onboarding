@@ -299,7 +299,7 @@
             '%user_ip%'           => $user_ip,
             '%user_login%'        => $user_login,
         );
-        // Replace %blog_name% again if used in the footer
+        // Replace %blog_name% if used in the footer
         if ( strpos( $replacements[ '%email_footer%' ], '%' ) !== false ) {
             $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
         }
