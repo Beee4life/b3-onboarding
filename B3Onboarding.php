@@ -81,7 +81,6 @@
                 add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
-                add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
@@ -111,6 +110,7 @@
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
                 add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
                 add_filter( 'authenticate',                         array( $this, 'b3_maybe_redirect_at_authenticate' ), 101, 3 );
+                add_filter( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
@@ -851,51 +851,50 @@
                 $account_page_id  = b3_get_account_url( true );
                 $account_url      = b3_get_account_url();
                 $approval_page_id = b3_get_user_approval_link( true );
+                $current_url      = b3_get_current_url();
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
-                $request_redirect = ( isset( $_SERVER[ 'REDIRECT_URI' ] ) ) ? urlencode_deep( $_SERVER[ 'REQUEST_SCHEME' ] . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REDIRECT_URI' ] ): false;
-
-                if ( false != $account_page_id ) {
-                    if ( is_page() ) {
-                        $page = get_post( get_the_ID() );
-                        // if user is not logged and if page is account page or sub-page of account page
-                        if ( ! is_user_logged_in() && ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) ) {
-                            if ( false != $request_redirect ) {
-                                $login_url = add_query_arg( 'redirect_to', $request_redirect, $login_url );
-                            }
+                
+                if ( is_page() ) {
+                    $current_page = get_post( get_the_ID() );
+                    if ( false != $account_page_id ) {
+                        if ( ! is_user_logged_in() && ( $account_page_id == $current_page || $account_page_id == $current_page->post_parent ) ) {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
                             $redirect_url = $login_url;
                         }
                     }
-                }
-
-                if ( false != $approval_page_id && is_page( $approval_page_id ) ) {
-                    if ( is_user_logged_in() ) {
-                        if ( ! current_user_can( 'promote_users' ) ) {
-                            $redirect_url = $account_url;
+                    
+                    if ( false != $approval_page_id && $current_page->ID == $approval_page_id ) {
+                        if ( is_user_logged_in() ) {
+                            if ( ! current_user_can( 'promote_users' ) ) {
+                                $redirect_url = $account_url;
+                            }
+                        } else {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
+                            $redirect_url = $login_url;
                         }
-                    } else {
-                        $redirect_url = $login_url;
+                    }
+                    
+                    if ( false != $logout_page_id && $current_page->ID == $logout_page_id ) {
+                        check_admin_referer( 'logout' );
+    
+                        $user = wp_get_current_user();
+                        wp_logout();
+                        
+                        if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
+                            $redirect_to           = $_REQUEST[ 'redirect_to' ];
+                            $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
+                        } else {
+                            $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
+                            $requested_redirect_to = '';
+                        }
+    
+                        $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
                     }
                 }
 
-                if ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
 
-                    check_admin_referer( 'logout' );
-
-                    $user = wp_get_current_user();
-                    wp_logout();
-
-                    if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
-                        $redirect_to           = $_REQUEST[ 'redirect_to' ];
-                        $requested_redirect_to = '';
-                    } else {
-                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
-                        $requested_redirect_to = '';
-                    }
-
-                    $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
-                }
                 if ( isset( $redirect_url ) ) {
                     wp_safe_redirect( $redirect_url );
                     exit;
@@ -1127,29 +1126,28 @@
                 if ( ! isset( $user->ID ) ) {
                     return $redirect_url;
                 }
-
-                if ( user_can( $user, 'manage_options' ) ) {
-                    // Use the redirect_to parameter if one is set, otherwise redirect to admin dashboard.
-                    $redirect_url = admin_url();
-                    if ( $requested_redirect_to != '' ) {
-                        $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
-                    }
+                
+                if ( $requested_redirect_to ) {
+                    // redirect url is set
+                    $redirect_url = $requested_redirect_to;
                 } else {
-                    // Non-admin users always go to their account page after login, if defined
-                    $account_page_url = b3_get_account_url();
-                    if ( $requested_redirect_to ) {
-                        $redirect_url = $redirect_to;
-                    } elseif ( false != $account_page_url ) {
-                        if ( ! in_array( $stored_roles, $user->roles ) ) {
-                            $redirect_url = $account_page_url;
-                        } else {
-                            // non-admin logged in
-                            // $redirect_url set at start
+                    // redirect url is not set                   
+                    if ( user_can( $user, 'manage_options' ) ) {
+                        $redirect_url = admin_url();
+                    } else {
+                        // Non-admin users always go to their account page after login, if it's defined
+                        $account_page_url = b3_get_account_url();
+                        if ( false != $account_page_url ) {
+                            if ( ! in_array( $stored_roles, $user->roles ) ) {
+                                $redirect_url = $account_page_url;
+                            } else {
+                                // non-admin logged in
+                                // $redirect_url set at start
+                            }
+                        } elseif ( current_user_can( 'read' ) ) {
+                            $redirect_url = get_edit_user_link( get_current_user_id() );
                         }
-                    } elseif ( current_user_can( 'read' ) ) {
-                        $redirect_url = get_edit_user_link( get_current_user_id() );
                     }
-
                 }
 
                 return $redirect_url;
@@ -1162,13 +1160,7 @@
              * @since 1.0.6
              */
             public function b3_redirect_after_logout() {
-                $login_url = b3_get_login_url();
-                if ( false != $login_url ) {
-                    $redirect_url = $login_url;
-                } else {
-                    $redirect_url = wp_login_url();
-                }
-                $redirect_url = add_query_arg( 'logout', 'true', $redirect_url );
+                $redirect_url = add_query_arg( 'logout', 'true', b3_get_login_url() );
                 wp_safe_redirect( $redirect_url );
                 exit;
             }
