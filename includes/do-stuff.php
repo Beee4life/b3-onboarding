@@ -263,13 +263,13 @@
     function b3_replace_email_vars( $vars = array(), $activation = false ) {
 
         $user_data = false;
-        if ( is_user_logged_in() ) {
+        if ( isset( $vars[ 'user_data' ] ) ) {
+            $user_data = $vars[ 'user_data' ];
+        } elseif ( is_user_logged_in() ) {
             $user_data = get_userdata( get_current_user_id() );
             if ( false != $user_data ) {
                 $vars[ 'user_data' ] = $user_data;
             }
-        } elseif ( isset( $vars[ 'user_data' ] ) ) {
-            $user_data = $vars[ 'user_data' ];
         }
 
         $registration_date_gmt   = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
