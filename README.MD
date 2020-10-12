@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.5.0 - released xx.09.20
+2.5.0 - released xx.10.20
 
 <a name="features"></a>
 ### Features
@@ -121,6 +121,8 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 2.5.0
 * improve html/css for account page
+* improve protection of pages
+* improve requested redirect url
 
 2.4.0
 * fix for preventing login when email/user is not confirmed yet
