@@ -399,3 +399,27 @@
         }
     }
     add_action( 'b3_add_action_links', 'b3_add_action_links' );
+
+
+    /**
+     * Resend user activation mail
+     * 
+     * @since 2.5.0
+     * 
+     * @param $user_id
+     */
+    function b3_send_user_activation( $user_id ) {
+        if ( $user_id ) {
+            $user_data    = get_userdata( $user_id );
+            $wp_mail_vars = apply_filters( 'wp_new_user_notification_email', [], $user_data, get_bloginfo( 'name' ) );
+            
+            wp_mail(
+                $wp_mail_vars[ 'to' ],
+                $wp_mail_vars[ 'subject' ],
+                $wp_mail_vars[ 'message' ],
+                $wp_mail_vars[ 'headers' ]
+            );
+
+        }
+    }
+    add_action( 'b3_resend_user_activation', 'b3_send_user_activation' );
