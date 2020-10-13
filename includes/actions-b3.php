@@ -49,7 +49,7 @@
      * 
      * @since 2.5.0
      */
-    function b3_before_reject_user( $user_id ) {
+    function b3_do_stuff_before_reject_user_by_admin( $user_id ) {
         if ( false == get_option( 'b3_disable_delete_user_email', false ) ) {
             $user_object = get_userdata( $user_id );
             $to          = $user_object->user_email;
@@ -64,7 +64,7 @@
             }
         }
     }
-    add_action( 'b3_before_reject_user', 'b3_before_reject_user' );
+    add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
     
     
     /**
