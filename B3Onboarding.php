@@ -631,9 +631,9 @@
                     $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
                     
                     if ( ! $user_id ) {
-                        wp_die( __( 'There&#8217;s no user with that ID.', 'b3-onboarding' ) );
+                        wp_die( __( "There's no user with that ID.", 'b3-onboarding' ) );
                     } elseif ( ! current_user_can( 'edit_user', $user_id ) ) {
-                        wp_die( __( 'You&#8217;re not allowed to edit that user.', 'b3-onboarding' ) );
+                        wp_die( __( "You're not allowed to edit that user.", 'b3-onboarding' ) );
                     }
 
                     $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( array( 'wp_http_referer', 'updated' ), stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
@@ -1841,7 +1841,7 @@
                 if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'sendactivation' ) ) ) {
                     echo '<div id="message" class="updated"><p>';
                     if ( 'sendactivation' == $_GET[ 'update' ] ) {
-                        _e( 'Activation resent.', 'b3-onboarding' );
+                        _e( 'Activation mail resent.', 'b3-onboarding' );
                     }
                     echo '</p></div>';
                 }

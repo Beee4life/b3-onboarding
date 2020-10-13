@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-10-12 22:14+0200\n"
+"POT-Creation-Date: 2020-10-13 02:14+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -22,49 +22,61 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: languages\n"
 
-#: B3Onboarding.php:203
+#: B3Onboarding.php:205
 msgid "Awaiting activation"
 msgstr ""
 
-#: B3Onboarding.php:207
+#: B3Onboarding.php:209
 msgid "Awaiting approval"
 msgstr ""
 
-#: B3Onboarding.php:459
+#: B3Onboarding.php:461
 msgid "Upload or choose your custom logo"
 msgstr ""
 
-#: B3Onboarding.php:460
+#: B3Onboarding.php:462
 msgid "Insert logo"
 msgstr ""
 
-#: B3Onboarding.php:474
+#: B3Onboarding.php:476
 msgid "User Approval"
 msgstr ""
 
-#: B3Onboarding.php:477
+#: B3Onboarding.php:479
 msgid "Debug info"
 msgstr ""
 
-#: B3Onboarding.php:539 includes/admin-page.php:51
+#: B3Onboarding.php:541 includes/admin-page.php:51
 #: includes/class-b3-sidebar-widget.php:149 includes/help-tabs.php:22
 #: includes/help-tabs.php:23 includes/tabs/tab-settings.php:22
 msgid "Settings"
 msgstr ""
 
-#: B3Onboarding.php:636 B3Onboarding.php:645
+#: B3Onboarding.php:613
+msgid "Resend activation"
+msgstr ""
+
+#: B3Onboarding.php:634
+msgid "There's no user with that ID."
+msgstr ""
+
+#: B3Onboarding.php:636
+msgid "You're not allowed to edit that user."
+msgstr ""
+
+#: B3Onboarding.php:701 B3Onboarding.php:710
 msgid "Error"
 msgstr ""
 
-#: B3Onboarding.php:639
+#: B3Onboarding.php:704
 msgid "Warning"
 msgstr ""
 
-#: B3Onboarding.php:658
+#: B3Onboarding.php:723
 msgid "Dismiss this notice"
 msgstr ""
 
-#: B3Onboarding.php:728 includes/form-handling.php:14
+#: B3Onboarding.php:793 includes/form-handling.php:14
 #: includes/form-handling.php:75 includes/form-handling.php:107
 #: includes/form-handling.php:209 includes/form-handling.php:253
 #: includes/form-handling.php:402 includes/form-handling.php:440
@@ -72,203 +84,207 @@ msgstr ""
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: B3Onboarding.php:1184 B3Onboarding.php:1188 B3Onboarding.php:1195
+#: B3Onboarding.php:1249 B3Onboarding.php:1253 B3Onboarding.php:1260
 msgid "Invalid key"
 msgstr ""
 
-#: B3Onboarding.php:1322
+#: B3Onboarding.php:1387
 msgid "Please enter a user name"
 msgstr ""
 
-#: B3Onboarding.php:1325
+#: B3Onboarding.php:1390
 msgid "Please enter a password."
 msgstr ""
 
-#: B3Onboarding.php:1328
+#: B3Onboarding.php:1393
 msgid "The username or password you entered wasn't quite right."
 msgstr ""
 
-#: B3Onboarding.php:1330
+#: B3Onboarding.php:1395
 #, php-format
 msgid "Did you <a href=\"%s\">forget</a> your password ?"
 msgstr ""
 
-#: B3Onboarding.php:1335
+#: B3Onboarding.php:1400
 msgid "You are logged out."
 msgstr ""
 
-#: B3Onboarding.php:1339
+#: B3Onboarding.php:1404
 msgid "This username is already in use."
 msgstr ""
 
-#: B3Onboarding.php:1342
+#: B3Onboarding.php:1407
 msgid "That user name is reserved, please choose another."
 msgstr ""
 
-#: B3Onboarding.php:1345 B3Onboarding.php:1349
+#: B3Onboarding.php:1410 B3Onboarding.php:1414
 msgid "The email address you entered is not valid."
 msgstr ""
 
-#: B3Onboarding.php:1351
+#: B3Onboarding.php:1416
 msgid "The user login you entered is not valid."
 msgstr ""
 
-#: B3Onboarding.php:1355
+#: B3Onboarding.php:1420
 msgid "An account already exists with this email address."
 msgstr ""
 
-#: B3Onboarding.php:1358 includes/defaults.php:414
+#: B3Onboarding.php:1423 includes/defaults.php:414
 msgid "Registering new users is currently not allowed."
 msgstr ""
 
-#: B3Onboarding.php:1361
+#: B3Onboarding.php:1426
 msgid "The Google reCAPTCHA check failed. Are you a robot?"
 msgstr ""
 
-#: B3Onboarding.php:1364 includes/filters-wp.php:305
+#: B3Onboarding.php:1429 includes/filters-wp.php:305
 msgid "You have to accept the privacy statement."
 msgstr ""
 
-#: B3Onboarding.php:1368
+#: B3Onboarding.php:1433
 #, php-format
 msgid "You didn't select an option for \"%s\"."
 msgstr ""
 
-#: B3Onboarding.php:1370
+#: B3Onboarding.php:1435
 msgid "You didn't select an option."
 msgstr ""
 
-#: B3Onboarding.php:1374
+#: B3Onboarding.php:1439
 msgid "You have sucessfully requested access. Someone will check your request."
 msgstr ""
 
-#: B3Onboarding.php:1377
+#: B3Onboarding.php:1442
 msgid ""
 "You have sucessfully registered but need to confirm your email address "
 "first. Please check your email for an activation link."
 msgstr ""
 
-#: B3Onboarding.php:1381
+#: B3Onboarding.php:1446
 msgid "There are no users registered with this email address."
 msgstr ""
 
-#: B3Onboarding.php:1384
+#: B3Onboarding.php:1449
 msgid "You have to get approved first."
 msgstr ""
 
-#: B3Onboarding.php:1387
+#: B3Onboarding.php:1452
 msgid "You have to confirm your email address first. Please check your inbox."
 msgstr ""
 
-#: B3Onboarding.php:1390
+#: B3Onboarding.php:1455
 msgid "Your password has been changed. You can login now."
 msgstr ""
 
-#: B3Onboarding.php:1393
+#: B3Onboarding.php:1458
 msgid "Check your email for a link to reset your password."
 msgstr ""
 
-#: B3Onboarding.php:1398
+#: B3Onboarding.php:1463
 msgid ""
 "You have successfully registered. Please check your email for a link to set "
 "your password."
 msgstr ""
 
-#: B3Onboarding.php:1400
+#: B3Onboarding.php:1465
 msgid "You have successfully registered. You can now login."
 msgstr ""
 
-#: B3Onboarding.php:1405
+#: B3Onboarding.php:1470
 #, php-format
 msgid ""
 "You have successfully registered to %s. Enter your email address to set your "
 "password."
 msgstr ""
 
-#: B3Onboarding.php:1412
+#: B3Onboarding.php:1477
 msgid ""
 "You have successfully activated your account. You can initiate a password "
 "(re)set below."
 msgstr ""
 
-#: B3Onboarding.php:1414
+#: B3Onboarding.php:1479
 msgid "You have successfully activated your account. You can now login."
 msgstr ""
 
-#: B3Onboarding.php:1418
+#: B3Onboarding.php:1483
 msgid "The activation link you used is not valid."
 msgstr ""
 
-#: B3Onboarding.php:1423
+#: B3Onboarding.php:1488
 msgid "The password reset link you used is not valid anymore."
 msgstr ""
 
-#: B3Onboarding.php:1427
+#: B3Onboarding.php:1492
 msgid "The two passwords you entered don't match."
 msgstr ""
 
-#: B3Onboarding.php:1430
+#: B3Onboarding.php:1495
 msgid "Sorry, we don't accept empty passwords."
 msgstr ""
 
-#: B3Onboarding.php:1433
+#: B3Onboarding.php:1498
 msgid "Sorry, that password is too easy."
 msgstr ""
 
-#: B3Onboarding.php:1437
+#: B3Onboarding.php:1502
 msgid "Sorry, this subdomain has already been taken."
 msgstr ""
 
-#: B3Onboarding.php:1440
+#: B3Onboarding.php:1505
 msgid ""
 "You have successfully registered. Please check your email for an activation "
 "link."
 msgstr ""
 
-#: B3Onboarding.php:1444
+#: B3Onboarding.php:1509
 msgid "Your account has been deleted."
 msgstr ""
 
-#: B3Onboarding.php:1450
+#: B3Onboarding.php:1515
 msgid "Settings saved"
 msgstr ""
 
-#: B3Onboarding.php:1454
+#: B3Onboarding.php:1519
 msgid "You can't use a space there."
 msgstr ""
 
-#: B3Onboarding.php:1458
+#: B3Onboarding.php:1523
 msgid ""
 "You have just registered an account successfully but since this is a "
 "demonstration setup, your user account has been deleted immediately again."
 msgstr ""
 
-#: B3Onboarding.php:1464
+#: B3Onboarding.php:1529
 msgid "An unknown error occurred. Please try again later."
 msgstr ""
 
-#: B3Onboarding.php:1747
+#: B3Onboarding.php:1812
 #, php-format
 msgid ""
 "This plugin is not meant (yet) for network activation. Please deactivate it "
 "<a href=\"%s\">%s</a> and activate on a per-site bases"
 msgstr ""
 
-#: B3Onboarding.php:1749 B3Onboarding.php:1772
+#: B3Onboarding.php:1814 B3Onboarding.php:1837
 msgid "here"
 msgstr ""
 
-#: B3Onboarding.php:1761
+#: B3Onboarding.php:1826
 msgid ""
 "You're using a beta version, which is not finished yet and can give "
 "unexpected results."
 msgstr ""
 
-#: B3Onboarding.php:1770
+#: B3Onboarding.php:1835
 #, php-format
 msgid ""
 "You have not set a page for front-end user approval. Set it <a href=\"%s\">"
 "%s</a>"
+msgstr ""
+
+#: B3Onboarding.php:1844
+msgid "Activation mail resent."
 msgstr ""
 
 #: includes/actions-b3.php:88 templates/user-management.php:45
