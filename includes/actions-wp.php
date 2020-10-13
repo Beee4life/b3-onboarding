@@ -99,31 +99,6 @@
 
 
     /**
-     * Do stuff just before deleting the user (and userdata is still available)
-     *
-     * @since 2.0.0
-     *
-     * @param $user_id
-     */
-    function b3_new_user_rejected( $user_id ) {
-        if ( false == get_option( 'b3_disable_delete_user_email', false ) ) {
-            $user_object = get_userdata( $user_id );
-            $to          = $user_object->user_email;
-            $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
-            $message     = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
-
-            if ( in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
-                $message = b3_replace_template_styling( $message );
-                $message = strtr( $message, b3_replace_email_vars() );
-                $message = htmlspecialchars_decode( stripslashes( $message ) );
-                wp_mail( $to, $subject, $message, array() );
-            }
-        }
-    }
-    add_action( 'delete_user', 'b3_new_user_rejected' );
-
-
-    /**
      * Add approval to admin bar
      *
      * @since 2.0.0

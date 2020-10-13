@@ -492,13 +492,13 @@
                     $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
                     if ( false != $approve && isset( $user_object->ID ) ) {
-                        do_action( 'b3_after_user_activated_by_admin', $user_id );
+                        do_action( 'b3_approve_user', $user_id );
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
                     } elseif ( false != $reject && isset( $user_object->ID ) ) {
+                        do_action( 'b3_before_reject_user', $user_id );
                         require_once( ABSPATH . 'wp-admin/includes/user.php' );
                         if ( true == wp_delete_user( $user_id ) ) {
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
-                            do_action( 'b3_new_user_rejected_by_admin', $user_id );
                         } else {
                             $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
                         }
