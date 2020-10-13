@@ -594,7 +594,7 @@
 
             /**
              * Add user actions on users.php
-             * 
+             *
              * @param $actions
              * @param $user_object
              *
@@ -611,12 +611,12 @@
                                 wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' )
                             ),
                             __( 'Resend activation', 'b3-onboarding' )
-                        );    
+                        );
                     } elseif ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
                         // @TODO: create approval option
                     }
                 }
-                
+
                 return $actions;
             }
 
@@ -629,7 +629,7 @@
 
                 if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'resendactivation' ) ) ) {
                     $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
-                    
+
                     if ( ! $user_id ) {
                         wp_die( __( "There's no user with that ID.", 'b3-onboarding' ) );
                     } elseif ( ! current_user_can( 'edit_user', $user_id ) ) {
@@ -642,7 +642,7 @@
                         case 'resendactivation' :
                             check_admin_referer( 'resend-activation' );
                             do_action( 'b3_resend_user_activation', $user_id );
-                            
+
                             // @TODO: add a check if email is sent
                             $redirect_to = add_query_arg( 'update', 'sendactivation', $redirect_to );
                             break;
@@ -920,7 +920,7 @@
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
-                
+
                 if ( is_page() ) {
                     $current_page = get_post( get_the_ID() );
                     if ( false != $account_page_id ) {
@@ -929,7 +929,7 @@
                             $redirect_url = $login_url;
                         }
                     }
-                    
+
                     if ( false != $approval_page_id && $current_page->ID == $approval_page_id ) {
                         if ( is_user_logged_in() ) {
                             if ( ! current_user_can( 'promote_users' ) ) {
@@ -940,13 +940,13 @@
                             $redirect_url = $login_url;
                         }
                     }
-                    
+
                     if ( false != $logout_page_id && $current_page->ID == $logout_page_id ) {
                         check_admin_referer( 'logout' );
-    
+
                         $user = wp_get_current_user();
                         wp_logout();
-                        
+
                         if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
                             $redirect_to           = $_REQUEST[ 'redirect_to' ];
                             $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
@@ -954,7 +954,7 @@
                             $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
                             $requested_redirect_to = '';
                         }
-    
+
                         $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
                     }
                 }
@@ -1188,17 +1188,17 @@
                 $redirect_url = get_home_url();
                 $stored_roles = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
 
-                if ( ! isset( $user->ID ) ) {
+                if ( ! $user ) {
                     return $redirect_url;
                 }
-                
+
                 if ( $requested_redirect_to ) {
                     // redirect url is set
                     $redirect_url = $requested_redirect_to;
                 } else {
-                    // redirect url is not set                   
+                    // redirect url is not set
                     if ( user_can( $user, 'manage_options' ) ) {
-                        $redirect_url = admin_url();
+                        $redirect_url = $redirect_to;
                     } else {
                         // Non-admin users always go to their account page after login, if it's defined
                         $account_page_url = b3_get_account_url();
