@@ -123,6 +123,11 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * improve html/css for account page
 * improve protection of pages
 * improve requested redirect url
+* changed action name b3_after_user_activated_by_admin to b3_approve_user
+* changed action name b3_new_user_rejected_by_admin to b3_before_reject_user
+* added IF in account approved message for custom passwords
+* removed hook on 'delete_user' and moved to custom hook on b3_before_reject_user
+
 
 2.4.0
 * fix for preventing login when email/user is not confirmed yet
