@@ -100,6 +100,7 @@
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
+                add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
                 // add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
@@ -114,6 +115,7 @@
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
+                add_filter( 'user_row_actions',                     array( $this, 'b3_user_row_actions' ), 10, 2 );
 
                 // WP Login pages
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
@@ -587,6 +589,69 @@
              */
             public function b3_email_content_type( $content_type ) {
                 return 'text/html';
+            }
+
+
+            /**
+             * Add user actions on users.php
+             * 
+             * @param $actions
+             * @param $user_object
+             *
+             * @return mixed
+             */
+            public function b3_user_row_actions( $actions, $user_object ) {
+
+                $current_user = wp_get_current_user();
+
+                if ( $current_user->ID != $user_object->ID ) {
+                    if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
+                        $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>',
+                            add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
+                                wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' )
+                            ),
+                            __( 'Resend activation', 'b3-onboarding' )
+                        );    
+                    } elseif ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
+                        // @TODO: create approval option
+                    }
+                }
+                
+                return $actions;
+            }
+
+
+            /**
+             * Check if user actions need to be taken
+             */
+            public function b3_load_users_page() {
+                add_action( 'admin_notices', array( $this, 'b3_admin_notices' ) );
+
+                if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'resendactivation' ) ) ) {
+                    $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
+                    
+                    if ( ! $user_id ) {
+                        wp_die( __( 'There&#8217;s no user with that ID.', 'b3-onboarding' ) );
+                    } elseif ( ! current_user_can( 'edit_user', $user_id ) ) {
+                        wp_die( __( 'You&#8217;re not allowed to edit that user.', 'b3-onboarding' ) );
+                    }
+
+                    $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( array( 'wp_http_referer', 'updated' ), stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
+
+                    switch( $_GET[ 'action' ] ) {
+                        case 'resendactivation' :
+                            check_admin_referer( 'resend-activation' );
+                            do_action( 'b3_resend_user_activation', $user_id );
+                            
+                            // @TODO: add a check if email is sent
+                            $redirect_to = add_query_arg( 'update', 'sendactivation', $redirect_to );
+                            break;
+                    }
+
+                    wp_safe_redirect( $redirect_to );
+                    exit;
+
+                }
             }
 
 
@@ -1772,6 +1837,15 @@
                         esc_html__( 'here', 'b3-onboarding' )
                     );
                 }
+
+                if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'sendactivation' ) ) ) {
+                    echo '<div id="message" class="updated"><p>';
+                    if ( 'sendactivation' == $_GET[ 'update' ] ) {
+                        _e( 'Activation resent.', 'b3-onboarding' );
+                    }
+                    echo '</p></div>';
+                }
+
                 if ( get_option( 'b3_activate_filter_validation', false ) ) {
                     do_action( 'b3_verify_filter_input' );
                 }
