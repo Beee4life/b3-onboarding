@@ -1173,7 +1173,7 @@
     /**
      * Reserved usernames
      *
-     * @since 2.0.4 @TODO
+     * @since 2.0.4
      *
      * @return array
      */

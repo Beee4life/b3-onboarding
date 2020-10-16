@@ -366,7 +366,7 @@
     /**
      * Check if a remote file exists
      *
-     * @TODO: check if ext-curl is installed
+     * @TODO: check if ext-curl is installed/needed
      *
      * @since 2.0.0
      *
