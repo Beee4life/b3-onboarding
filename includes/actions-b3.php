@@ -24,10 +24,6 @@
         } else {
             // user has set a custom password
         }
-        
-        if ( 'email_activation' == $registration_type ) {
-        } elseif ( 'request_access' == $registration_type ) {            
-        }
 
         $to      = $user_object->user_email;
         $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
@@ -44,9 +40,9 @@
 
     /**
      * Reject a user (by admin)
-     * 
+     *
      * @param $user_id
-     * 
+     *
      * @since 2.5.0
      */
     function b3_do_stuff_before_reject_user_by_admin( $user_id ) {
@@ -65,8 +61,8 @@
         }
     }
     add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
-    
-    
+
+
     /**
      * Do stuff after user clicked activate link
      *
@@ -440,23 +436,26 @@
 
     /**
      * Resend user activation mail
-     * 
+     *
      * @since 2.5.0
-     * 
+     *
+     * @TODO: add if to determine if user's registration typw (still) matches current,
+     * otherwise incorrect email will be sent
+     *
      * @param $user_id
      */
     function b3_send_user_activation( $user_id ) {
+
         if ( $user_id ) {
             $user_data    = get_userdata( $user_id );
             $wp_mail_vars = apply_filters( 'wp_new_user_notification_email', [], $user_data, get_bloginfo( 'name' ) );
-            
+
             wp_mail(
                 $wp_mail_vars[ 'to' ],
                 $wp_mail_vars[ 'subject' ],
                 $wp_mail_vars[ 'message' ],
                 $wp_mail_vars[ 'headers' ]
             );
-
         }
     }
     add_action( 'b3_resend_user_activation', 'b3_send_user_activation' );
