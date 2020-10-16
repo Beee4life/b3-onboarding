@@ -602,9 +602,10 @@
              */
             public function b3_user_row_actions( $actions, $user_object ) {
 
-                $current_user = wp_get_current_user();
+                $current_user      = wp_get_current_user();
+                $registration_type = get_option( 'b3_registration_type' );
 
-                if ( $current_user->ID != $user_object->ID ) {
+                if ( $current_user->ID != $user_object->ID && 'email_activation' == $registration_type ) {
                     if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
                         $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>',
                             add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
@@ -629,11 +630,18 @@
 
                 if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'resendactivation' ) ) ) {
                     $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
-
                     if ( ! $user_id ) {
                         wp_die( __( "There's no user with that ID.", 'b3-onboarding' ) );
                     } elseif ( ! current_user_can( 'edit_user', $user_id ) ) {
                         wp_die( __( "You're not allowed to edit that user.", 'b3-onboarding' ) );
+                    }
+
+                    $user = new WP_User( $user_id );
+                    $registration_type = false;
+                    if ( in_array( 'b3_activation', $user->roles ) ) {
+                        $registration_type = 'email_activation';
+                    } elseif ( in_array( 'b3_approval', $user->roles ) ) {
+                        $registration_type = 'request_access';
                     }
 
                     $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( array( 'wp_http_referer', 'updated' ), stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
@@ -641,10 +649,11 @@
                     switch( $_GET[ 'action' ] ) {
                         case 'resendactivation' :
                             check_admin_referer( 'resend-activation' );
-                            do_action( 'b3_resend_user_activation', $user_id );
-
-                            // @TODO: add a check if email is sent
-                            $redirect_to = add_query_arg( 'update', 'sendactivation', $redirect_to );
+                            if ( 'email_activation' == $registration_type ) {
+                                do_action( 'b3_resend_user_activation', $user_id );
+                                // @TODO: add a check if email is sent
+                                $redirect_to = add_query_arg( 'update', 'sendactivation', $redirect_to );
+                            }
                             break;
                     }
 
