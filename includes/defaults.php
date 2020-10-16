@@ -106,8 +106,11 @@
     function b3_default_new_user_admin_message() {
         $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . ".\n";
         $admin_message .= '<br /><br />' . "\n";
-        // @TODO: add if for no login registration
-        $admin_message .= sprintf( __( 'User name: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
+        if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
+            $admin_message .= sprintf( __( 'User ID: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
+        } else {
+            $admin_message .= sprintf( __( 'User name: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
+        }
         $admin_message .= '<br /><br />' . "\n";
         $admin_message .= sprintf( __( 'IP: %s', 'b3-onboarding' ), '%user_ip%' ) . "\n";
 
