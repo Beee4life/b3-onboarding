@@ -933,7 +933,7 @@
                 if ( is_page() ) {
                     $current_page = get_post( get_the_ID() );
                     if ( false != $account_page_id ) {
-                        if ( ! is_user_logged_in() && ( $account_page_id == $current_page || $account_page_id == $current_page->post_parent ) ) {
+                        if ( ! is_user_logged_in() && ( $account_page_id == $current_page->ID || $account_page_id == $current_page->post_parent ) ) {
                             $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
                             $redirect_url = $login_url;
                         }
