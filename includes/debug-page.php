@@ -17,7 +17,7 @@
             </h1>
             <?php
                 ob_start();
-                include( 'debug-info.php' );
+                include 'debug-info.php';
                 echo ob_get_clean();
             ?>
         </div>

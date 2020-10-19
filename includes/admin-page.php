@@ -27,7 +27,7 @@
                     ?>
                 </h1>
 
-                <?php include( 'preview.php' ); ?>
+                <?php include 'preview.php'; ?>
 
             <?php } else { ?>
 
