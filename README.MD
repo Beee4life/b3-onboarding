@@ -22,7 +22,7 @@ This plugin was built to 'onboard' (in other words register/add) users to your s
 
 You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
 
-There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
+There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
 
 **What 'problems' does this plugin solve ?**
 
