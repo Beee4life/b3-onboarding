@@ -605,16 +605,22 @@
                 $current_user      = wp_get_current_user();
                 $registration_type = get_option( 'b3_registration_type' );
 
-                if ( $current_user->ID != $user_object->ID && 'email_activation' == $registration_type ) {
-                    if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
-                        $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>',
-                            add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
-                                wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' )
-                            ),
-                            __( 'Resend activation', 'b3-onboarding' )
-                        );
-                    } elseif ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
-                        // @TODO: create approval option
+                if ( $current_user->ID != $user_object->ID ) {
+                    if ( 'email_activation' == $registration_type ) {
+                        if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
+                            $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), __( 'Activate', 'b3-onboarding' ) );
+                            $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), __( 'Resend activation', 'b3-onboarding' ) );
+                        }
+                    } elseif ( 'request_access' == $registration_type ) {
+                        if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
+                            $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
+                                add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
+                                    wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
+                                ),
+                                __( 'Activate', 'b3-onboarding' )
+                            );
+                        }
+
                     }
                 }
 
@@ -628,7 +634,7 @@
             public function b3_load_users_page() {
                 add_action( 'admin_notices', array( $this, 'b3_admin_notices' ) );
 
-                if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'resendactivation' ) ) ) {
+                if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'activate', 'resendactivation' ) ) ) {
                     $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
                     if ( ! $user_id ) {
                         wp_die( __( "There's no user with that ID.", 'b3-onboarding' ) );
@@ -647,11 +653,16 @@
                     $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( array( 'wp_http_referer', 'updated' ), stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
 
                     switch( $_GET[ 'action' ] ) {
+                        case 'activate' :
+                            check_admin_referer( 'manual-activation' );
+                            do_action( 'b3_manual_user_activate', $user_id );
+                            $redirect_to = add_query_arg( 'update', 'manually-activated', $redirect_to );
+                            break;
+
                         case 'resendactivation' :
                             check_admin_referer( 'resend-activation' );
                             if ( 'email_activation' == $registration_type ) {
                                 do_action( 'b3_resend_user_activation', $user_id );
-                                // @TODO: add a check if email is sent
                                 $redirect_to = add_query_arg( 'update', 'sendactivation', $redirect_to );
                             }
                             break;
@@ -1266,7 +1277,7 @@
                         $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, $_GET[ 'user_login' ] ) );
 
                         if ( empty( $user ) ) {
-                            $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                            $errors = new WP_Error( 'invalid_user', __( 'Invalid user', 'b3-onboarding' ) );
                         }
 
                         if ( is_wp_error( $errors ) ) {
@@ -1492,6 +1503,9 @@
 
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
+
+                    case 'invalid_user':
+                        return esc_html__( 'There appears to be no user account associated with this link.', 'b3-onboarding' );
 
                     // Reset password
                     case 'expiredkey':  // same error as next

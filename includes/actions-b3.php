@@ -459,3 +459,29 @@
         }
     }
     add_action( 'b3_resend_user_activation', 'b3_send_user_activation' );
+
+
+    /**
+     * Manually activate a user
+     *
+     * @since 2.5.0
+     *
+     * @param $user_id
+     */
+    function b3_manually_activate_user( $user_id ) {
+
+        if ( $user_id ) {
+            $user    = get_userdata( $user_id );
+            $user->set_role( get_option( 'default_role' ) );
+            $to      = $user->user_email;
+            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = strtr( $subject, b3_replace_subject_vars() );
+            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_replace_template_styling( $message );
+            $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+            wp_mail( $to, $subject, $message, array() );
+        }
+    }
+    add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
