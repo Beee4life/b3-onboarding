@@ -53,18 +53,17 @@
                                 'icon'    => 'admin-generic',
                             ),
                             array(
+                                'id'      => 'registration',
+                                'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'registration' ),
+                                'icon'    => 'shield',
+                            ),
+                            array(
                                 'id'      => 'pages',
                                 'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'pages' ),
                                 'icon'    => 'admin-page',
                             ),
-                        );
-
-                        $tabs[] = array(
-                            'id'      => 'registration',
-                            'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'registration' ),
-                            'icon'    => 'shield',
                         );
 
                         if ( 1 == get_option( 'b3_style_wordpress_forms', false ) ) {
