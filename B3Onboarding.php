@@ -1445,10 +1445,12 @@
                         }
 
                     case 'access_requested':
-                        return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
+                        $access_requested_string = esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
+                        return apply_filters( 'b3_registration_access_requested_message', $access_requested_string );
 
                     case 'confirm_email':
-                        return esc_html__( 'You have sucessfully registered but need to confirm your email address first. Please check your email for an activation link.', 'b3-onboarding' );
+                        $confirm_email_string = esc_html__( 'You have sucessfully registered but need to confirm your email address first. Please check your email for an activation link.', 'b3-onboarding' );
+                        return apply_filters( 'b3_registration_confirm_email_message', $confirm_email_string );
 
                     // Lost password
                     case 'invalidcombo':
