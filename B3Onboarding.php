@@ -1084,7 +1084,7 @@
             public function b3_redirect_to_custom_login() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
 
-                    $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
+                    $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user( $redirect_to );
