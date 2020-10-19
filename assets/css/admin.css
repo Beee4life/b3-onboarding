@@ -95,6 +95,7 @@
 }
 
 .b3_table {
+    border-spacing: 0;
     width: 100%;
 }
 
@@ -232,7 +233,8 @@
 }
 
 .b3 input#b3_main_logo {
-    width: 500px;
+    max-width: 500px;
+    width:     100%;
 }
 
 /* Emails page */
@@ -420,7 +422,7 @@ ul.b3_integrations--list {
 /* Media queries */
 @media screen and ( min-width: 1280px ) {
     .b3_tabs {
-        max-width: 75%;
+        max-width: 1024px;
     }
 }
 
