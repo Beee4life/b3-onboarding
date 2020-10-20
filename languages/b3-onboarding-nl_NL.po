@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-10-20 14:05+0200\n"
-"PO-Revision-Date: 2020-10-20 14:06+0200\n"
+"POT-Creation-Date: 2020-10-20 14:20+0200\n"
+"PO-Revision-Date: 2020-10-20 14:21+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -82,8 +82,8 @@ msgstr "Verberg deze melding"
 #: B3Onboarding.php:813 includes/form-handling.php:14
 #: includes/form-handling.php:75 includes/form-handling.php:107
 #: includes/form-handling.php:209 includes/form-handling.php:253
-#: includes/form-handling.php:402 includes/form-handling.php:440
-#: includes/form-handling.php:484
+#: includes/form-handling.php:408 includes/form-handling.php:446
+#: includes/form-handling.php:490
 msgid "Something went wrong, please try again."
 msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
 
@@ -934,7 +934,7 @@ msgstr "Kies een optie"
 #: includes/emails/account-approved.php:14
 #: includes/emails/account-rejected.php:15
 #: includes/emails/email-activation.php:14
-#: includes/emails/email-confirmed.php:14 includes/emails/lost-password.php:15
+#: includes/emails/email-confirmed.php:14 includes/emails/lost-password.php:16
 #: includes/emails/new-user-admin.php:36
 #: includes/emails/request-access-admin.php:29
 #: includes/emails/request-access-user.php:14
@@ -946,7 +946,7 @@ msgstr "Als een veld leeg wordt gelaten wordt de 'placeholder' gebruikt."
 #: includes/emails/account-approved.php:19
 #: includes/emails/account-rejected.php:20
 #: includes/emails/email-activation.php:19
-#: includes/emails/email-confirmed.php:19 includes/emails/lost-password.php:20
+#: includes/emails/email-confirmed.php:19 includes/emails/lost-password.php:21
 #: includes/emails/ms-user-delete-site.php:13
 #: includes/emails/ms-user-new-site.php:12
 #: includes/emails/ms-visitor-register-site.php:12
@@ -962,7 +962,7 @@ msgstr "Email onderwerp"
 #: includes/emails/account-approved.php:27
 #: includes/emails/account-rejected.php:28
 #: includes/emails/email-activation.php:27
-#: includes/emails/email-confirmed.php:27 includes/emails/lost-password.php:28
+#: includes/emails/email-confirmed.php:27 includes/emails/lost-password.php:29
 #: includes/emails/new-user-admin.php:49
 #: includes/emails/request-access-admin.php:42
 #: includes/emails/request-access-user.php:27
@@ -975,7 +975,7 @@ msgstr "Email bericht"
 #: includes/emails/account-rejected.php:30
 #: includes/emails/email-activation.php:29
 #: includes/emails/email-confirmed.php:29 includes/emails/email-styling.php:20
-#: includes/emails/email-template.php:20 includes/emails/lost-password.php:30
+#: includes/emails/email-template.php:20 includes/emails/lost-password.php:31
 #: includes/emails/new-user-admin.php:51
 #: includes/emails/request-access-admin.php:44
 #: includes/emails/request-access-user.php:29
@@ -990,7 +990,7 @@ msgstr "<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Bekijken</a>"
 #: includes/emails/email-activation.php:40
 #: includes/emails/email-confirmed.php:40 includes/emails/email-settings.php:47
 #: includes/emails/email-styling.php:31 includes/emails/email-template.php:31
-#: includes/emails/lost-password.php:51
+#: includes/emails/lost-password.php:56
 #: includes/emails/ms-user-delete-site.php:33
 #: includes/emails/ms-user-new-site.php:29
 #: includes/emails/ms-visitor-register-site.php:29
@@ -1053,7 +1053,7 @@ msgstr "E-mail template"
 msgid "<a href=\"%s\">Download template</a>"
 msgstr "<a href=\"%s\">Download template</a>"
 
-#: includes/emails/lost-password.php:33
+#: includes/emails/lost-password.php:34
 msgid ""
 "Be sure to include %reset_url% in your email, otherwise the user can't reset "
 "his/her password."
@@ -1061,11 +1061,15 @@ msgstr ""
 "Zorg ervoor dat je %reset_url% in je email hebt, anders kan de gebruiker "
 "niet zijn of haar wachtwoord wijzigen."
 
-#: includes/emails/lost-password.php:35
+#: includes/emails/lost-password.php:36
 msgid "Other available variables are:"
 msgstr "Andere variabelen zijn:"
 
-#: includes/emails/lost-password.php:44
+#: includes/emails/lost-password.php:45
+msgid "Disable user notification on password change"
+msgstr "Deactiveer gebruiker notificatie bij wachtwoord wijziging"
+
+#: includes/emails/lost-password.php:49
 msgid "Disable admin notification on password change"
 msgstr "Deactiveer admin notificatie bij wachtwoord wijziging gebruiker"
 
@@ -1141,7 +1145,7 @@ msgstr "Je moet een achternaam invullen."
 msgid "Recaptcha failed."
 msgstr "Recaptcha mislukt."
 
-#: includes/filters-wp.php:459
+#: includes/filters-wp.php:448
 msgid ""
 "Hi ###USERNAME###,\n"
 "\n"
@@ -1171,12 +1175,12 @@ msgstr ""
 "###SITEURL###"
 
 #. translators: Password change notification email subject. %s: Site title.
-#: includes/filters-wp.php:476 includes/filters-wp.php:516
+#: includes/filters-wp.php:465 includes/filters-wp.php:511
 #, php-format
 msgid "[%s] Password Changed"
 msgstr "[%s] Wachtwoord gewijzigd"
 
-#: includes/filters-wp.php:499
+#: includes/filters-wp.php:494
 msgid ""
 "Hi ###USERNAME###,\n"
 "\n"
@@ -1245,24 +1249,24 @@ msgstr ""
 "De het waarde van kleur is incorrect. Er mist een hashtag (#) en de kleur "
 "waarde is incorrect."
 
-#: includes/form-handling.php:343
+#: includes/form-handling.php:349
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr "\"%s\" is geen geldig email adres."
 
-#: includes/form-handling.php:394
+#: includes/form-handling.php:400
 msgid "Email settings saved"
 msgstr "Email instellingen opgeslagen"
 
-#: includes/form-handling.php:432
+#: includes/form-handling.php:438
 msgid "User settings saved"
 msgstr "Gebruikersinstellingen opgeslagen"
 
-#: includes/form-handling.php:455
+#: includes/form-handling.php:461
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha instellingen opgeslagen"
 
-#: includes/form-handling.php:535
+#: includes/form-handling.php:541
 msgid "You do not have permission to edit this user."
 msgstr "Je hebt niet voldoende rechten om deze gebruiker te bewerken."
 
