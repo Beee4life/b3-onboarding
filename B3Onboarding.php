@@ -1863,9 +1863,11 @@
                     );
                 }
 
-                if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'sendactivation' ) ) ) {
+                if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'activate', 'sendactivation' ) ) ) {
                     echo '<div id="message" class="updated"><p>';
-                    if ( 'sendactivation' == $_GET[ 'update' ] ) {
+                    if ( 'activate' == $_GET[ 'update' ] ) {
+                        _e( 'User activated.', 'b3-onboarding' );
+                    } elseif ( 'sendactivation' == $_GET[ 'update' ] ) {
                         _e( 'Activation mail resent.', 'b3-onboarding' );
                     }
                     echo '</p></div>';
