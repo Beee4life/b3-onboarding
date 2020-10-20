@@ -498,9 +498,9 @@ All at ###SITENAME###
         $pass_change_text = __(
             'Hi ###USERNAME###,
 
-This notice confirms that your password was changed on ###SITENAME###.
+This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL###.
 
-If you did not change your password, please contact the Site Administrator at
+If you did not change your email, please contact the Site Administrator at
 ###ADMIN_EMAIL###
 
 This email has been sent to ###EMAIL###.

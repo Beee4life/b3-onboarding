@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2020-10-20 14:04+0200\n"
+"POT-Creation-Date: 2020-10-20 14:05+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -1073,7 +1073,7 @@ msgstr ""
 msgid "Recaptcha failed."
 msgstr ""
 
-#: includes/filters-wp.php:459 includes/filters-wp.php:499
+#: includes/filters-wp.php:459
 msgid ""
 "Hi ###USERNAME###,\n"
 "\n"
@@ -1094,6 +1094,23 @@ msgstr ""
 #: includes/filters-wp.php:476 includes/filters-wp.php:516
 #, php-format
 msgid "[%s] Password Changed"
+msgstr ""
+
+#: includes/filters-wp.php:499
+msgid ""
+"Hi ###USERNAME###,\n"
+"\n"
+"This notice confirms that your email address on ###SITENAME### was changed "
+"to ###NEW_EMAIL###.\n"
+"\n"
+"If you did not change your email, please contact the Site Administrator at\n"
+"###ADMIN_EMAIL###\n"
+"\n"
+"This email has been sent to ###EMAIL###.\n"
+"\n"
+"Regards,\n"
+"All at ###SITENAME###\n"
+"###SITEURL###"
 msgstr ""
 
 #: includes/form-handling.php:66
