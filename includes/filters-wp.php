@@ -518,6 +518,6 @@ All at ###SITENAME###
             'headers' => '',
         );
 
-        return $pass_change_email;
+        return $email_change_email;
     }
     add_filter( 'email_change_email', 'b3_content_email_change_notification', 10, 3 );
