@@ -424,3 +424,100 @@
 
     }
     add_filter( 'wp_authenticate_user', 'b3_login_errors', 20, 2 );
+
+    /**
+     * Determines whether an email must be send upon password change (or not)
+     * Now always set to true, until a filter/setting has been created.
+     *
+     * @param bool  $send
+     * @param array $user
+     * @param array $userdata
+     *
+     * @return bool|mixed
+     */
+    function b3_password_change_email( $send = true, $user = [], $userdata = [] ) {
+
+        return $send;
+
+    }
+    add_filter( 'send_password_change_email', 'b3_password_change_email', 20, 3 );
+
+
+    /**
+     * Change content of password changed email
+     * Not in use yet, prepare for coming setting/filter
+     *
+     * @param $pass_change_email
+     * @param $user
+     * @param $userdata
+     *
+     * @return array
+     */
+    function b3_content_password_change_notification( $pass_change_email, $user, $userdata ) {
+
+        $pass_change_text = __(
+            'Hi ###USERNAME###,
+
+This notice confirms that your password was changed on ###SITENAME###.
+
+If you did not change your password, please contact the Site Administrator at
+###ADMIN_EMAIL###
+
+This email has been sent to ###EMAIL###.
+
+Regards,
+All at ###SITENAME###
+###SITEURL###'
+        );
+
+        $pass_change_email = array(
+            'to'      => $user['user_email'],
+            /* translators: Password change notification email subject. %s: Site title. */
+            'subject' => __( '[%s] Password Changed' ),
+            'message' => $pass_change_text,
+            'headers' => '',
+        );
+
+        return $pass_change_email;
+    }
+    add_filter( 'password_change_email', 'b3_content_password_change_notification', 10, 3 );
+
+
+    /**
+     * Change content of email address changed email
+     * Not in use yet, prepare for coming setting/filter
+     *
+     * @param $email_change_email
+     * @param $user
+     * @param $userdata
+     *
+     * @return array
+     */
+    function b3_content_email_change_notification( $email_change_email, $user, $userdata ) {
+
+        $pass_change_text = __(
+            'Hi ###USERNAME###,
+
+This notice confirms that your password was changed on ###SITENAME###.
+
+If you did not change your password, please contact the Site Administrator at
+###ADMIN_EMAIL###
+
+This email has been sent to ###EMAIL###.
+
+Regards,
+All at ###SITENAME###
+###SITEURL###'
+        );
+
+        $pass_change_email = array(
+            'to'      => $user['user_email'],
+            /* translators: Password change notification email subject. %s: Site title. */
+            'subject' => __( '[%s] Password Changed' ),
+            'message' => $pass_change_text,
+            'headers' => '',
+        );
+
+        return $pass_change_email;
+    }
+    add_filter( 'email_change_email', 'b3_content_email_change_notification', 10, 3 );
