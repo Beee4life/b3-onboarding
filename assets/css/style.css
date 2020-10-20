@@ -271,6 +271,10 @@ ul.b3_form-links li:last-child {
     .b3_table--account tr td:first-child {
         width: 150px;
     }
+
+    .b3_page form .password-input-description {
+        margin-left: 205px;
+    }
 }
 
 @media screen and ( min-width: 640px ) {
