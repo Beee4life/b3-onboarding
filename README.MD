@@ -105,13 +105,13 @@ These are the things we have planned to add.
 * [X] use custom passwords
 * [X] disallow certain user names
 * [X] validate extra fields added through a filter
+* [X] look more into responsiveness
 * [ ] reCaptcha v3
 * [ ] make it work with Multisite
 * [ ] make it work with WPML
 * [ ] add more filter and/or inputs
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
-* [ ] look more into responsiveness
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
@@ -129,8 +129,9 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * changed action name b3_new_user_rejected_by_admin to b3_before_reject_user
 * added IF in account approved message for custom passwords
 * removed hook on 'delete_user' and moved to custom hook on b3_before_reject_user
-* added new filters to override registration messages
+* added new filters to override registration (confirmation) messages
 * added option to manually activate user
+* added option to disable password changed email (for user)
 
 2.4.0
 * fix for preventing login when email/user is not confirmed yet
