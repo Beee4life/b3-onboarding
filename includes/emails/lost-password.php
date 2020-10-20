@@ -5,8 +5,9 @@
      * @since 1.0.0
      */
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_password_change', false );
-    $lost_password_subject    = get_option( 'b3_lost_password_subject', false );
-    $lost_password_message    = get_option( 'b3_lost_password_message', false );
+    $disable_user_notification  = get_option( 'b3_disable_user_notification_password_change', false ); // @TODO: add to docs/site
+    $lost_password_subject      = get_option( 'b3_lost_password_subject', false );
+    $lost_password_message      = get_option( 'b3_lost_password_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -42,6 +43,10 @@
         <td>
             <label>
                 <input name="b3_disable_admin_notification_password_change" type="checkbox" value="1" <?php if ( 1 == $disable_admin_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable admin notification on password change', 'b3-onboarding' ); ?>
+            </label>
+            <br />
+            <label>
+                <input name="b3_disable_user_notification_password_change" type="checkbox" value="1" <?php if ( 1 == $disable_user_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable user notification on password change', 'b3-onboarding' ); ?>
             </label>
         </td>
     </tr>

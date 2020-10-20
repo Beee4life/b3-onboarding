@@ -318,6 +318,12 @@
                         delete_option( 'b3_disable_admin_notification_password_change' );
                     }
 
+                    if ( isset( $_POST[ 'b3_disable_user_notification_password_change' ] ) && 1 == $_POST[ 'b3_disable_user_notification_password_change' ] ) {
+                        update_option( 'b3_disable_user_notification_password_change', 1, true );
+                    } else {
+                        delete_option( 'b3_disable_user_notification_password_change' );
+                    }
+
                     if ( isset( $_POST[ 'b3_disable_admin_notification_new_user' ] ) && 1 == $_POST[ 'b3_disable_admin_notification_new_user' ] ) {
                         update_option( 'b3_disable_admin_notification_new_user', 1, true );
                     } else {

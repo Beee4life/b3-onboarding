@@ -426,24 +426,6 @@
     add_filter( 'wp_authenticate_user', 'b3_login_errors', 20, 2 );
 
     /**
-     * Determines whether an email must be send upon password change (or not)
-     * Now always set to true, until a filter/setting has been created.
-     *
-     * @param bool  $send
-     * @param array $user
-     * @param array $userdata
-     *
-     * @return bool|mixed
-     */
-    function b3_password_change_email( $send = true, $user = [], $userdata = [] ) {
-
-        return $send;
-
-    }
-    add_filter( 'send_password_change_email', 'b3_password_change_email', 20, 3 );
-
-
-    /**
      * Change content of password changed email
      * Not in use yet, prepare for coming setting/filter
      *
@@ -451,9 +433,16 @@
      * @param $user
      * @param $userdata
      *
-     * @return array
+     * @return array|bool
      */
     function b3_content_password_change_notification( $pass_change_email, $user, $userdata ) {
+
+        // if admin disabled notification option
+        if ( true == get_option( 'b3_disable_password_change_email' ) ) {
+            return false;
+        }
+
+        // @TODO: add if for email only registration
 
         $pass_change_text = __(
             'Hi ###USERNAME###,
@@ -467,11 +456,11 @@ This email has been sent to ###EMAIL###.
 
 Regards,
 All at ###SITENAME###
-###SITEURL###'
+###SITEURL###', 'b3-onboarding'
         );
 
         $pass_change_email = array(
-            'to'      => $user['user_email'],
+            'to'      => $user[ 'user_email' ],
             /* translators: Password change notification email subject. %s: Site title. */
             'subject' => __( '[%s] Password Changed' ),
             'message' => $pass_change_text,
@@ -491,9 +480,15 @@ All at ###SITENAME###
      * @param $user
      * @param $userdata
      *
-     * @return array
+     * @return array|bool
      */
     function b3_content_email_change_notification( $email_change_email, $user, $userdata ) {
+
+        // if admin disabled notification option
+        // option doesn't exist in admin (yet)
+
+        // @TODO: add if for no email setting
+        // @TODO: add if for email only registration
 
         $pass_change_text = __(
             'Hi ###USERNAME###,
@@ -507,11 +502,11 @@ This email has been sent to ###EMAIL###.
 
 Regards,
 All at ###SITENAME###
-###SITEURL###'
+###SITEURL###', 'b3-onboarding'
         );
 
-        $pass_change_email = array(
-            'to'      => $user['user_email'],
+        $email_change_email = array(
+            'to'      => $user[ 'user_email' ],
             /* translators: Password change notification email subject. %s: Site title. */
             'subject' => __( '[%s] Password Changed' ),
             'message' => $pass_change_text,
