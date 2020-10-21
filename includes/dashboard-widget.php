@@ -57,21 +57,23 @@
                     </thead>
                     <tbody>
                         <?php foreach( $all_users as $user ) { ?>
-                            <td>
-                                <?php if ( current_user_can( 'edit_users' ) ) { ?>
-                                <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->ID ); ?>">
-                                <?php } ?>
-                                <?php echo $user->user_login; ?>
-                                <?php if ( current_user_can( 'edit_users' ) ) { ?>
-                                </a>
-                                <?php } ?>
-                            </td>
-                            <td>
-                                [<?php echo $user->ID; ?>]
-                            </td>
-                            <td>
-                                (<?php echo b3_get_local_date_time( $user->user_registered ); ?>)
-                            </td>
+                            <tr>
+                                <td>
+                                    <?php if ( current_user_can( 'edit_users' ) ) { ?>
+                                    <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->ID ); ?>">
+                                    <?php } ?>
+                                    <?php echo $user->user_login; ?>
+                                    <?php if ( current_user_can( 'edit_users' ) ) { ?>
+                                    </a>
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    [<?php echo $user->ID; ?>]
+                                </td>
+                                <td>
+                                    (<?php echo b3_get_local_date_time( $user->user_registered ); ?>)
+                                </td>
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>
