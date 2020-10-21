@@ -36,8 +36,8 @@
             'b3_new_user_notification_addresses'       => array( 'email' ),
             'b3_new_user_subject'                      => array( 'string' ),
             'b3_notification_sender_email'             => array( 'email' ),
-            'b3_lost_password_message'                 => array( 'string' ), // @ TODO: check this
-            'b3_lost_password_subject'                 => array( 'string' ), // @ TODO: check this
+            'b3_lost_password_message'                 => array( 'string' ),
+            'b3_lost_password_subject'                 => array( 'string' ),
             'b3_privacy_text'                          => array( 'string' ),
             'b3_redirect_after_register'               => array( 'url' ),
             'b3_registration_access_requested_message' => array( 'string' ),

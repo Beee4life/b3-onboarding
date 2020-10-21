@@ -84,9 +84,11 @@
                     <span class="password-input-wrapper">
                         <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php echo esc_attr( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
                         <br/>
-                        <small><?php _e( 'You can also enter your own password', 'sexdates' ); ?></small>
+                        <span class="password-input-description">
+                            <small><?php _e( 'You can also enter your own password', 'sexdates' ); ?></small>
+                        </span>
                     </span>
-                    <div style="display:none" id="pass-strength-result" aria-live="polite"></div>
+                    <div style="display:none" id="pass-strength-result"></div>
                     <button type="button" class="button button-secondary button--small wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'b3-onboarding' ); ?>">
                         <span class="dashicons dashicons-hidden"></span>
                         <span class="text hide"><?php _e( 'Hide', 'b3-onboarding' ); ?></span>
