@@ -1834,10 +1834,9 @@
              */
             public function b3_not_multisite_ready() {
                 if ( isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
-                    echo sprintf( '<div class="error"><p>'. __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>',
-                        esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ),
-                        esc_html__( 'here', 'b3-onboarding' )
-                    );
+                    echo sprintf( '<div class="error"><p>' . __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>', esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
+                } elseif ( class_exists( 'B3Onboarding.php' ) ) {
+                    echo '<div class="error"><p>' . __( 'This plugin has not been properly tested for multisite installations. Please use it at your own risk.', 'b3-onboarding' ) . '.</p></div>';
                 }
             }
 
