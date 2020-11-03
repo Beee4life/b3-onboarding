@@ -1,5 +1,5 @@
 <?php
-    include( B3_PLUGIN_PATH . '/includes/download.php' );
+    include B3_PLUGIN_PATH . '/includes/download.php';
     /**
      * Return all custom meta keys
      *
@@ -1173,7 +1173,7 @@
     /**
      * Reserved usernames
      *
-     * @since 2.0.4 @TODO
+     * @since 2.0.4
      *
      * @return array
      */
@@ -1220,7 +1220,8 @@
         $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
         $url_array  = parse_url( $url );
         $port       = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
-        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $url_array[ 'path' ];
+        $path       = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
+        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $path;
 
         if ( false != $include_query ) {
             if ( isset( $url_array[ 'query' ] ) ) {

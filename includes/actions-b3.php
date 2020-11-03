@@ -2,20 +2,28 @@
     // This file contains functions hooked to the plugin's own hooks
 
     /**
-     * Do stuff afer manual activation by admin
+     * Approve a user
      *
      * @param $user_id
      *
      * @since 1.0.0
      *
      */
-    function b3_do_stuff_after_new_user_activated_by_admin( $user_id ) {
-        $user_object = get_userdata( $user_id );
-        $key         = get_password_reset_key( $user_object );
-        $user_login  = $user_object->user_login;
+    function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
+        $registration_type = get_option( 'b3_registration_type', false );
+        $custom_passwords  = get_option( 'b3_activate_custom_passwords', false );
+        $user_object       = get_userdata( $user_id );
+        $user_login        = $user_object->user_login;
         $user_object->set_role( get_option( 'default_role' ) );
-        $reset_pass_url      = b3_get_reset_password_url();
-        $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
+
+        if ( false == $custom_passwords ) {
+            // user needs a password
+            $key                 = get_password_reset_key( $user_object );
+            $reset_pass_url      = b3_get_reset_password_url();
+            $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
+        } else {
+            // user has set a custom password
+        }
 
         $to      = $user_object->user_email;
         $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
@@ -27,7 +35,32 @@
 
         wp_mail( $to, $subject, $message, array() );
     }
-    add_action( 'b3_after_user_activated_by_admin', 'b3_do_stuff_after_new_user_activated_by_admin' );
+    add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
+
+
+    /**
+     * Reject a user (by admin)
+     *
+     * @param $user_id
+     *
+     * @since 2.5.0
+     */
+    function b3_do_stuff_before_reject_user_by_admin( $user_id ) {
+        if ( false == get_option( 'b3_disable_delete_user_email', false ) ) {
+            $user_object = get_userdata( $user_id );
+            $to          = $user_object->user_email;
+            $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
+            $message     = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
+
+            if ( in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
+                $message = b3_replace_template_styling( $message );
+                $message = strtr( $message, b3_replace_email_vars() );
+                $message = htmlspecialchars_decode( stripslashes( $message ) );
+                wp_mail( $to, $subject, $message, array() );
+            }
+        }
+    }
+    add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
 
 
     /**
@@ -399,3 +432,56 @@
         }
     }
     add_action( 'b3_add_action_links', 'b3_add_action_links' );
+
+
+    /**
+     * Resend user activation mail
+     *
+     * @since 2.5.0
+     *
+     * @TODO: add if to determine if user's registration type (still) matches current,
+     * otherwise incorrect email will be sent
+     *
+     * @param $user_id
+     */
+    function b3_send_user_activation( $user_id ) {
+
+        if ( $user_id ) {
+            $user_data    = get_userdata( $user_id );
+            $wp_mail_vars = apply_filters( 'wp_new_user_notification_email', [], $user_data, get_bloginfo( 'name' ) );
+
+            wp_mail(
+                $wp_mail_vars[ 'to' ],
+                $wp_mail_vars[ 'subject' ],
+                $wp_mail_vars[ 'message' ],
+                $wp_mail_vars[ 'headers' ]
+            );
+        }
+    }
+    add_action( 'b3_resend_user_activation', 'b3_send_user_activation' );
+
+
+    /**
+     * Manually activate a user
+     *
+     * @since 2.5.0
+     *
+     * @param $user_id
+     */
+    function b3_manually_activate_user( $user_id ) {
+
+        if ( $user_id ) {
+            $user    = get_userdata( $user_id );
+            $user->set_role( get_option( 'default_role' ) );
+            $to      = $user->user_email;
+            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = strtr( $subject, b3_replace_subject_vars() );
+            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_replace_template_styling( $message );
+            $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+            wp_mail( $to, $subject, $message, array() );
+        }
+    }
+    add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );

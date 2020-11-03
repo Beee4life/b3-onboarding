@@ -37,8 +37,12 @@
     max-width: 600px;
 }
 
+.b3_page form input[type="text"],
+.b3_page form input[type="email"],
+.b3_page form input[type="number"],
+.b3_page form input[type="password"],
+.b3_page form input[type="url"],
 .b3_page form button,
-.b3_page form input,
 .b3_page form select,
 .b3_page form textarea {
     border:        1px solid #ccc;
@@ -93,6 +97,14 @@
     margin-top: 0;
 }
 
+.b3_form-element--delete div {
+    margin-top: 1rem;
+}
+
+.b3_form-element--delete strong {
+    font-size: 1.15rem;
+}
+
 /* Label on password reset input */
 .b3_page .b3_form-label--email {
     width: 150px;
@@ -133,19 +145,21 @@ ul.b3_form-links li:last-child {
 }
 
 .b3_table--account tr td:first-child {
-    width: 75px;
+    width: 95px;
 }
 
 /* Password strength */
 #pass-strength-result {
     background-color: #eee;
     border:           1px solid #ddd;
+    box-sizing:       border-box;
     color:            #23282d;
     font-weight:      600;
-    margin:           -1px 0 1.5em;
+    margin:           1rem 0;
     padding:          3px 5px;
     text-align:       center;
     width:            100%;
+    max-width:        100%;
     opacity:          0;
 }
 
@@ -194,7 +208,8 @@ ul.b3_form-links li:last-child {
 }
 
 .pw-weak {
-    display: none;
+    display:    none;
+    margin-top: 1rem;
 }
 
 .indicator-hint {
@@ -213,6 +228,10 @@ ul.b3_form-links li:last-child {
 
 .show-password #pass1-text {
     display: inline-block;
+}
+
+.button .text.hide {
+    margin-left: 5px;
 }
 
 /* Admin topbar notification for user approval */
@@ -251,6 +270,10 @@ ul.b3_form-links li:last-child {
 
     .b3_table--account tr td:first-child {
         width: 150px;
+    }
+
+    .b3_page form .password-input-description {
+        margin-left: 205px;
     }
 }
 

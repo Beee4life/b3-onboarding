@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.4.0
+    Version:            2.5.0
     Requires at least:  4.3
     Tested up to:       5.5.1
     Requires PHP:       5.6
@@ -67,7 +67,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.4.0',
+                    'version' => '2.5.0',
                 );
 
                 // actions
@@ -81,7 +81,6 @@
                 add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
-                add_action( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
@@ -101,6 +100,7 @@
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
+                add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
                 // add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
@@ -111,9 +111,11 @@
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
                 add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
                 add_filter( 'authenticate',                         array( $this, 'b3_maybe_redirect_at_authenticate' ), 101, 3 );
+                add_filter( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
                 add_filter( 'wp_mail_from',                         array( $this, 'b3_email_from' ) );
                 add_filter( 'wp_mail_from_name',                    array( $this, 'b3_email_from_name' ) );
                 add_filter( 'wp_mail_content_type',                 array( $this, 'b3_email_content_type' ) );
+                add_filter( 'user_row_actions',                     array( $this, 'b3_user_row_actions' ), 10, 2 );
 
                 // WP Login pages
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
@@ -122,64 +124,64 @@
                 /*
                  * This file contains all actions on plugin hooks
                  */
-                include( 'includes/actions-b3.php' );
+                include 'includes/actions-b3.php';
                 /*
                  * This file contains important actions on WordPress hooks
                  */
-                include( 'includes/actions-wp.php' );
+                include 'includes/actions-wp.php';
                 /*
                  * This file contains functions which return default values
                  */
-                include( 'includes/defaults.php' );
+                include 'includes/defaults.php';
                 /*
                  * This file contains functions which 'do' something with a value
                  */
-                include( 'includes/do-stuff.php' );
+                include 'includes/do-stuff.php';
                 /*
                  * Renders admin input fields
                  */
-                include( 'includes/emails.php' );
+                include 'includes/emails.php';
                 /*
                  * This file contains functions/includes for various example filters.
                  * They're only loaded for testing purposes, when LOCALHOST is defined as true
                  */
                 if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
-                    include( 'includes/examples.php' );
+                    include 'includes/examples.php';
                 }
                 /*
                  * This file contains simple functions which are called throughout the plugin
                  */
-                include( 'includes/functions.php' );
+                include 'includes/functions.php';
                 /*
                  * This file contains all filters on plugin hooks
                  */
-                include( 'includes/filters-b3.php' );
+                include 'includes/filters-b3.php';
                 /*
                  * This file contains all 'WordPress' hooks
                  */
-                include( 'includes/filters-wp.php' );
+                include 'includes/filters-wp.php';
                 /*
                  * Processes most forms
                  */
-                include( 'includes/form-handling.php' );
+                include 'includes/form-handling.php';
                 /*
                  * This file contains all content for the help tabs/contextual help
                  */
-                include( 'includes/help-tabs.php' );
+                include 'includes/help-tabs.php';
                 /*
                  * Functions + renders for admin pages/tabs
                  */
-                include( 'includes/tabs/tabs.php' );
+                include 'includes/tabs/tabs.php';
                 if ( get_option( 'b3_activate_filter_validation', false ) ) {
                     /*
                      * Functions to verify filtered output
                      */
-                    include( 'includes/verify-filters.php' );
+                    include 'includes/verify-filters.php';
                 }
                 /*
                  * Functions + renders for shortcodes/front-end forms
                  */
-                include( 'includes/class-b3-shortcodes.php' );
+                include 'includes/class-b3-shortcodes.php';
             }
 
 
@@ -468,12 +470,12 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                include( 'includes/admin-page.php' ); // content for the settings page
+                include 'includes/admin-page.php'; // content for the settings page
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
-                include( 'includes/user-approval-page.php' ); // content for the settings page
+                include 'includes/user-approval-page.php'; // content for the settings page
                 add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
                 if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
-                    include( 'includes/debug-page.php' ); // content for the settings page
+                    include 'includes/debug-page.php'; // content for the settings page
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                 }
             }
@@ -510,7 +512,7 @@
                 /*
                  * Includes sidebar widget function + call
                  */
-                include( 'includes/class-b3-sidebar-widget.php' );
+                include 'includes/class-b3-sidebar-widget.php';
             }
 
 
@@ -521,9 +523,9 @@
                 /*
                  * Includes dashboard widget function + call
                  */
-                include( 'includes/dashboard-widget.php' );
+                include 'includes/dashboard-widget.php';
                 if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
-                    include( 'includes/dashboard-widget-debug.php' );
+                    include 'includes/dashboard-widget-debug.php';
                 }
             }
 
@@ -587,6 +589,89 @@
              */
             public function b3_email_content_type( $content_type ) {
                 return 'text/html';
+            }
+
+
+            /**
+             * Add user actions on users.php
+             *
+             * @param $actions
+             * @param $user_object
+             *
+             * @return mixed
+             */
+            public function b3_user_row_actions( $actions, $user_object ) {
+
+                $current_user      = wp_get_current_user();
+                $registration_type = get_option( 'b3_registration_type' );
+
+                if ( $current_user->ID != $user_object->ID ) {
+                    if ( 'email_activation' == $registration_type ) {
+                        if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
+                            $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), __( 'Activate', 'b3-onboarding' ) );
+                            $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), __( 'Resend activation', 'b3-onboarding' ) );
+                        }
+                    } elseif ( 'request_access' == $registration_type ) {
+                        if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
+                            $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
+                                add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
+                                    wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
+                                ),
+                                __( 'Activate', 'b3-onboarding' )
+                            );
+                        }
+
+                    }
+                }
+
+                return $actions;
+            }
+
+
+            /**
+             * Check if user actions need to be taken
+             */
+            public function b3_load_users_page() {
+                add_action( 'admin_notices', array( $this, 'b3_admin_notices' ) );
+
+                if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'activate', 'resendactivation' ) ) ) {
+                    $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
+                    if ( ! $user_id ) {
+                        wp_die( __( "There's no user with that ID.", 'b3-onboarding' ) );
+                    } elseif ( ! current_user_can( 'edit_user', $user_id ) ) {
+                        wp_die( __( "You're not allowed to edit that user.", 'b3-onboarding' ) );
+                    }
+
+                    $user = new WP_User( $user_id );
+                    $registration_type = false;
+                    if ( in_array( 'b3_activation', $user->roles ) ) {
+                        $registration_type = 'email_activation';
+                    } elseif ( in_array( 'b3_approval', $user->roles ) ) {
+                        $registration_type = 'request_access';
+                    }
+
+                    $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( array( 'wp_http_referer', 'updated' ), stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
+
+                    switch( $_GET[ 'action' ] ) {
+                        case 'activate' :
+                            check_admin_referer( 'manual-activation' );
+                            do_action( 'b3_manual_user_activate', $user_id );
+                            $redirect_to = add_query_arg( 'update', 'manually-activated', $redirect_to );
+                            break;
+
+                        case 'resendactivation' :
+                            check_admin_referer( 'resend-activation' );
+                            if ( 'email_activation' == $registration_type ) {
+                                do_action( 'b3_resend_user_activation', $user_id );
+                                $redirect_to = add_query_arg( 'update', 'sendactivation', $redirect_to );
+                            }
+                            break;
+                    }
+
+                    wp_safe_redirect( $redirect_to );
+                    exit;
+
+                }
             }
 
 
@@ -851,51 +936,50 @@
                 $account_page_id  = b3_get_account_url( true );
                 $account_url      = b3_get_account_url();
                 $approval_page_id = b3_get_user_approval_link( true );
+                $current_url      = b3_get_current_url();
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
-                $request_redirect = ( isset( $_SERVER[ 'REDIRECT_URI' ] ) ) ? urlencode_deep( $_SERVER[ 'REQUEST_SCHEME' ] . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REDIRECT_URI' ] ): false;
 
-                if ( false != $account_page_id ) {
-                    if ( is_page() ) {
-                        $page = get_post( get_the_ID() );
-                        // if user is not logged and if page is account page or sub-page of account page
-                        if ( ! is_user_logged_in() && ( is_page( array( $account_page_id ) ) || $account_page_id == $page->post_parent ) ) {
-                            if ( false != $request_redirect ) {
-                                $login_url = add_query_arg( 'redirect_to', $request_redirect, $login_url );
-                            }
+                if ( is_page() ) {
+                    $current_page = get_post( get_the_ID() );
+                    if ( false != $account_page_id ) {
+                        if ( ! is_user_logged_in() && ( $account_page_id == $current_page->ID || $account_page_id == $current_page->post_parent ) ) {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
                             $redirect_url = $login_url;
                         }
                     }
-                }
 
-                if ( false != $approval_page_id && is_page( $approval_page_id ) ) {
-                    if ( is_user_logged_in() ) {
-                        if ( ! current_user_can( 'promote_users' ) ) {
-                            $redirect_url = $account_url;
+                    if ( false != $approval_page_id && $current_page->ID == $approval_page_id ) {
+                        if ( is_user_logged_in() ) {
+                            if ( ! current_user_can( 'promote_users' ) ) {
+                                $redirect_url = $account_url;
+                            }
+                        } else {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
+                            $redirect_url = $login_url;
                         }
-                    } else {
-                        $redirect_url = $login_url;
+                    }
+
+                    if ( false != $logout_page_id && $current_page->ID == $logout_page_id ) {
+                        check_admin_referer( 'logout' );
+
+                        $user = wp_get_current_user();
+                        wp_logout();
+
+                        if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
+                            $redirect_to           = $_REQUEST[ 'redirect_to' ];
+                            $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
+                        } else {
+                            $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
+                            $requested_redirect_to = '';
+                        }
+
+                        $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
                     }
                 }
 
-                if ( false != $logout_page_id && is_page( array( $logout_page_id ) ) ) {
 
-                    check_admin_referer( 'logout' );
-
-                    $user = wp_get_current_user();
-                    wp_logout();
-
-                    if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
-                        $redirect_to           = $_REQUEST[ 'redirect_to' ];
-                        $requested_redirect_to = '';
-                    } else {
-                        $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
-                        $requested_redirect_to = '';
-                    }
-
-                    $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
-                }
                 if ( isset( $redirect_url ) ) {
                     wp_safe_redirect( $redirect_url );
                     exit;
@@ -1011,7 +1095,7 @@
             public function b3_redirect_to_custom_login() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
 
-                    $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? $_REQUEST[ 'redirect_to' ] : null;
+                    $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user( $redirect_to );
@@ -1124,32 +1208,31 @@
                 $redirect_url = get_home_url();
                 $stored_roles = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
 
-                if ( ! isset( $user->ID ) ) {
+                if ( ! $user ) {
                     return $redirect_url;
                 }
 
-                if ( user_can( $user, 'manage_options' ) ) {
-                    // Use the redirect_to parameter if one is set, otherwise redirect to admin dashboard.
-                    $redirect_url = admin_url();
-                    if ( $requested_redirect_to != '' ) {
-                        $redirect_url = add_query_arg( 'redirect_to', $requested_redirect_to, $redirect_url );
-                    }
+                if ( $requested_redirect_to ) {
+                    // redirect url is set
+                    $redirect_url = $requested_redirect_to;
                 } else {
-                    // Non-admin users always go to their account page after login, if defined
-                    $account_page_url = b3_get_account_url();
-                    if ( $requested_redirect_to ) {
+                    // redirect url is not set
+                    if ( user_can( $user, 'manage_options' ) ) {
                         $redirect_url = $redirect_to;
-                    } elseif ( false != $account_page_url ) {
-                        if ( ! in_array( $stored_roles, $user->roles ) ) {
-                            $redirect_url = $account_page_url;
-                        } else {
-                            // non-admin logged in
-                            // $redirect_url set at start
+                    } else {
+                        // Non-admin users always go to their account page after login, if it's defined
+                        $account_page_url = b3_get_account_url();
+                        if ( false != $account_page_url ) {
+                            if ( ! in_array( $stored_roles, $user->roles ) ) {
+                                $redirect_url = $account_page_url;
+                            } else {
+                                // non-admin logged in
+                                // $redirect_url set at start
+                            }
+                        } elseif ( current_user_can( 'read' ) ) {
+                            $redirect_url = get_edit_user_link( get_current_user_id() );
                         }
-                    } elseif ( current_user_can( 'read' ) ) {
-                        $redirect_url = get_edit_user_link( get_current_user_id() );
                     }
-
                 }
 
                 return $redirect_url;
@@ -1162,13 +1245,7 @@
              * @since 1.0.6
              */
             public function b3_redirect_after_logout() {
-                $login_url = b3_get_login_url();
-                if ( false != $login_url ) {
-                    $redirect_url = $login_url;
-                } else {
-                    $redirect_url = wp_login_url();
-                }
-                $redirect_url = add_query_arg( 'logout', 'true', $redirect_url );
+                $redirect_url = add_query_arg( 'logout', 'true', b3_get_login_url() );
                 wp_safe_redirect( $redirect_url );
                 exit;
             }
@@ -1200,7 +1277,7 @@
                         $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, $_GET[ 'user_login' ] ) );
 
                         if ( empty( $user ) ) {
-                            $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                            $errors = new WP_Error( 'invalid_user', __( 'Invalid user', 'b3-onboarding' ) );
                         }
 
                         if ( is_wp_error( $errors ) ) {
@@ -1379,10 +1456,12 @@
                         }
 
                     case 'access_requested':
-                        return esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
+                        $access_requested_string = esc_html__( 'You have sucessfully requested access. Someone will check your request.', 'b3-onboarding' );
+                        return apply_filters( 'b3_registration_access_requested_message', $access_requested_string );
 
                     case 'confirm_email':
-                        return esc_html__( 'You have sucessfully registered but need to confirm your email address first. Please check your email for an activation link.', 'b3-onboarding' );
+                        $confirm_email_string = esc_html__( 'You have sucessfully registered but need to confirm your email address first. Please check your email for an activation link.', 'b3-onboarding' );
+                        return apply_filters( 'b3_registration_confirm_email_message', $confirm_email_string );
 
                     // Lost password
                     case 'invalidcombo':
@@ -1424,6 +1503,9 @@
 
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
+
+                    case 'invalid_user':
+                        return esc_html__( 'There appears to be no user account associated with this link.', 'b3-onboarding' );
 
                     // Reset password
                     case 'expiredkey':  // same error as next
@@ -1680,7 +1762,7 @@
 
                 do_action( 'b3_do_before_' . $template_name );
 
-                include( $location . $template_name . '.php' );
+                include $location . $template_name . '.php';
 
                 do_action( 'b3_do_after_' . $template_name );
 
@@ -1752,10 +1834,9 @@
              */
             public function b3_not_multisite_ready() {
                 if ( isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
-                    echo sprintf( '<div class="error"><p>'. __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>',
-                        esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ),
-                        esc_html__( 'here', 'b3-onboarding' )
-                    );
+                    echo sprintf( '<div class="error"><p>' . __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>', esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
+                } elseif ( class_exists( 'B3Onboarding.php' ) ) {
+                    echo '<div class="error"><p>' . __( 'This plugin has not been properly tested for multisite installations. Please use it at your own risk.', 'b3-onboarding' ) . '.</p></div>';
                 }
             }
 
@@ -1780,6 +1861,17 @@
                         esc_html__( 'here', 'b3-onboarding' )
                     );
                 }
+
+                if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'activate', 'sendactivation' ) ) ) {
+                    echo '<div id="message" class="updated"><p>';
+                    if ( 'activate' == $_GET[ 'update' ] ) {
+                        _e( 'User activated.', 'b3-onboarding' );
+                    } elseif ( 'sendactivation' == $_GET[ 'update' ] ) {
+                        _e( 'Activation mail resent.', 'b3-onboarding' );
+                    }
+                    echo '</p></div>';
+                }
+
                 if ( get_option( 'b3_activate_filter_validation', false ) ) {
                     do_action( 'b3_verify_filter_input' );
                 }

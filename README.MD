@@ -22,7 +22,7 @@ This plugin was built to 'onboard' (in other words register/add) users to your s
 
 You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
 
-There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
+There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
 
 **What 'problems' does this plugin solve ?**
 
@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.4.0 - released 15.09.20
+2.5.0 - released 03.11.20
 
 <a name="features"></a>
 ### Features
@@ -95,8 +95,6 @@ Some functions are not (yet) available through the admin pages and some will nev
 <a name="disclaimer"></a>
 ### Disclaimer
 1. Not entirely ready for multisite yet, we're working on it.
-1. It's still under development, use at your own risk.
-1. Not styled for mobile admin yet (might work, but no guarantees).
 1. Not tested with Gutenberg.
 
 <a name="roadmap"></a>
@@ -105,13 +103,14 @@ These are the things we have planned to add.
 * [X] use custom passwords
 * [X] disallow certain user names
 * [X] validate extra fields added through a filter
+* [X] look more into responsiveness
+* [ ] reCaptcha v3
 * [ ] make it work with Multisite
 * [ ] make it work with WPML
+* [ ] add more filter and/or inputs
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
-* [ ] look more into responsiveness
 * [ ] multi-page registration forms
-* [ ] style all default WordPress mails
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
@@ -119,6 +118,19 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.5.0
+* improve html/css for account page
+* improve protection of pages
+* improve requested redirect url
+* encode redirect_to url when redirecting
+* changed action name b3_after_user_activated_by_admin to b3_approve_user
+* changed action name b3_new_user_rejected_by_admin to b3_before_reject_user
+* added IF in account approved message for custom passwords
+* removed hook on 'delete_user' and moved to custom hook on b3_before_reject_user
+* added new filters to override registration (confirmation) messages
+* added option to manually activate user
+* added option to disable password changed email (for user)
+
 2.4.0
 * fix for preventing login when email/user is not confirmed yet
 * update css

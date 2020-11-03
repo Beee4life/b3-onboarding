@@ -8,13 +8,13 @@
      *
      * @return string
      */
-    include( 'tab-emails.php' );
-    include( 'tab-recaptcha.php' );
-    include( 'tab-pages.php' );
-    include( 'tab-registration.php' );
-    include( 'tab-settings.php' );
-    include( 'tab-users.php' );
-    include( 'tab-wordpress.php' );
+    include 'tab-emails.php';
+    include 'tab-recaptcha.php';
+    include 'tab-pages.php';
+    include 'tab-registration.php';
+    include 'tab-settings.php';
+    include 'tab-users.php';
+    include 'tab-wordpress.php';
 
     function b3_render_tab_content( $tab ) {
         $content = '';

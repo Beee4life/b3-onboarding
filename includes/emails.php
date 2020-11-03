@@ -72,54 +72,54 @@
             ob_start();
             switch( $box[ 'id' ] ) {
                 case 'email_settings':
-                    include( 'emails/email-settings.php' );
+                    include 'emails/email-settings.php';
                     break;
                 case 'welcome_email_user':
-                    include( 'emails/welcome-email-user.php' );
+                    include 'emails/welcome-email-user.php';
                     break;
                 case 'new_user_admin':
-                    include( 'emails/new-user-admin.php' );
+                    include 'emails/new-user-admin.php';
                     break;
                 case 'request_access_user':
-                    include( 'emails/request-access-user.php' );
+                    include 'emails/request-access-user.php';
                     break;
                 case 'request_access_admin':
-                    include( 'emails/request-access-admin.php' );
+                    include 'emails/request-access-admin.php';
                     break;
                 case 'email_activation':
-                    include( 'emails/email-activation.php' );
+                    include 'emails/email-activation.php';
                     break;
                 case 'account_activated':
-                    include( 'emails/account-activated.php' );
+                    include 'emails/account-activated.php';
                     break;
                 case 'account_approved':
-                    include( 'emails/account-approved.php' );
+                    include 'emails/account-approved.php';
                     break;
                 case 'account_rejected':
-                    include( 'emails/account-rejected.php' );
+                    include 'emails/account-rejected.php';
                     break;
                 case 'lost_password':
-                    include( 'emails/lost-password.php' );
+                    include 'emails/lost-password.php';
                     break;
                 case 'visitor_register':
-                    include( 'emails/ms-visitor-register.php' );
+                    include 'emails/ms-visitor-register.php';
                     break;
                 // Multisite specific
                 case 'visitor_register_site':
-                    include( 'emails/ms-visitor-register-site.php' );
+                    include 'emails/ms-visitor-register-site.php';
                     break;
                 case 'user_registered_site':
-                    include( 'emails/ms-user-new-site.php' );
+                    include 'emails/ms-user-new-site.php';
                     break;
                 case 'user_deleted_site':
-                    include( 'emails/ms-user-delete-site.php' );
+                    include 'emails/ms-user-delete-site.php';
                     break;
                 // Email styling
                 case 'email_styling':
-                    include( 'emails/email-styling.php' );
+                    include 'emails/email-styling.php';
                     break;
                 case 'email_template':
-                    include( 'emails/email-template.php' );
+                    include 'emails/email-template.php';
                     break;
                 default:
             }

@@ -27,7 +27,7 @@
         </p>
 
         <form action="admin.php?page=b3-onboarding" method="post">
-            <input name="b3_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-settings-nonce' ); ?>" />
+            <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
                 <?php if ( ! is_multisite() ) { ?>
@@ -111,14 +111,12 @@
                             <?php esc_html_e( "This is the logo used in emails and on WordPress' default forms.", 'b3-onboarding' ); ?>
                         </p>
                         <p>
-                            <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">
-                                <?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?>
-                            </a>
-                        </p>
-                        <p>
                             <label>
                                 <input type="text" name="b3_main_logo" id="b3_main_logo" value="<?php echo $main_logo; ?>" />
                             </label>
+                            <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">
+                                <?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?>
+                            </a>
                         </p>
                     </div>
                 <?php b3_get_close(); ?>
