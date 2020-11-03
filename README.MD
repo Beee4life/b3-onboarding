@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.5.0 - released xx.10.20
+2.5.0 - released 03.11.20
 
 <a name="features"></a>
 ### Features
@@ -95,8 +95,6 @@ Some functions are not (yet) available through the admin pages and some will nev
 <a name="disclaimer"></a>
 ### Disclaimer
 1. Not entirely ready for multisite yet, we're working on it.
-1. It's still under development, use at your own risk.
-1. Not styled for mobile admin yet (might work, but no guarantees).
 1. Not tested with Gutenberg.
 
 <a name="roadmap"></a>
