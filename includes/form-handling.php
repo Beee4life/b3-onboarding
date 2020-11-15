@@ -28,6 +28,12 @@
                         delete_option( 'b3_style_wordpress_forms' );
                     }
 
+                    if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {
+                        update_option( 'b3_use_popup', 1, true );
+                    } else {
+                        delete_option( 'b3_use_popup' );
+                    }
+
                     if ( ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) && ( isset( $_POST[ 'b3_disable_wordpress_forms' ] ) && 1 == $_POST[ 'b3_disable_wordpress_forms' ] ) ) {
                         // can't be at same time
                         update_option( 'b3_disable_wordpress_forms', 1, true );

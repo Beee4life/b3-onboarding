@@ -12,10 +12,12 @@
         $disable_action_links       = get_option( 'b3_disable_action_links', false );
         $disable_wordpress_forms    = get_option( 'b3_disable_wordpress_forms', false );
         $debug_info                 = get_option( 'b3_debug_info', false );
+        $hide_wordpress_checkbox    = ( 1 == get_option( 'b3_disable_wordpress_forms', false ) ) ? 'hidden' : false;
         $main_logo                  = get_option( 'b3_main_logo', false );
         $recaptcha                  = get_option( 'b3_activate_recaptcha', false );
         $registration_type          = get_option( 'b3_registration_type', false );
         $style_wordpress_forms      = get_option( 'b3_style_wordpress_forms', false );
+        $use_popup                  = get_option( 'b3_use_popup', false );
         ob_start();
         ?>
         <h2>
@@ -40,13 +42,21 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_wordpress_checkbox = ( 1 == get_option( 'b3_disable_wordpress_forms', false ) ) ? 'hidden' : false; ?>
-                    <?php b3_get_settings_field_open($hide_wordpress_checkbox, 'wp-forms' ); ?>
+                    <?php b3_get_settings_field_open( $hide_wordpress_checkbox, 'wp-forms' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_style_wordpress_forms"><?php esc_html_e( 'Style Wordpress forms', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_style_wordpress_forms" name="b3_style_wordpress_forms" value="1" <?php if ( $style_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' forms.", 'b3-onboarding' ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_use_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php if ( $use_popup ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to show the login form in a popup.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
