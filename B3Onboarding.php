@@ -444,7 +444,7 @@
 
                 wp_enqueue_script(
                     'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js',
-                    array( 'jquery' ), '0.9.1', true
+                    array( 'jquery' ), '0.9.1'
                 );
                 wp_enqueue_style(
                     'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css',
