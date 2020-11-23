@@ -56,7 +56,7 @@
                             <label for="b3_use_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php if ( $use_popup ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to show the login form in a popup.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php if ( $use_popup ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to show the login form in a popup (from the widget link).', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
