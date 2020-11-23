@@ -140,7 +140,7 @@
                         echo '<li>';
                         if ( true === $use_popup ) {
                             echo '<a href="#login-form" rel="modal:open">' . $login_title . '</a>';
-                            echo '<div id="#login-form" class="modal">';
+                            echo '<div id="login-form" class="modal">';
                             echo do_shortcode('[login-form]');
                             echo '</div>';
                         } else {
