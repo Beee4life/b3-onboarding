@@ -138,7 +138,7 @@
                 if ( ! is_user_logged_in() ) {
                     if ( $show_login ) {
                         echo '<li>';
-                        if ( true === $use_popup ) {
+                        if ( true == $use_popup ) {
                             echo '<a href="#login-form" rel="modal:open">' . $login_title . '</a>';
                             echo '<div id="login-form" class="modal">';
                             echo do_shortcode('[login-form]');
