@@ -130,6 +130,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * added new filters to override registration (confirmation) messages
 * added option to manually activate user
 * added option to disable password changed email (for user)
+* added option to register with email only
 
 2.4.0
 * fix for preventing login when email/user is not confirmed yet
