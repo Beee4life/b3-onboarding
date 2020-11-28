@@ -37,14 +37,16 @@
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-                    <?php if ( is_multisite() && is_main_site() ) { ?>
-                        <p>
-                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
-                        </p>
-                    <?php } else if ( ! is_multisite() ) { ?>
-                        <p>
-                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), admin_url( 'options-general.php' ) ); ?>
-                        </p>
+                    <?php if ( ! class_exists( 'c_ws_plugin__s2member_installation' ) ) { ?>
+                        <?php if ( is_multisite() && is_main_site() ) { ?>
+                            <p>
+                                <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
+                            </p>
+                        <?php } else if ( ! is_multisite() ) { ?>
+                            <p>
+                                <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), admin_url( 'options-general.php' ) ); ?>
+                            </p>
+                        <?php } ?>
                     <?php } ?>
 
                     <?php $options = b3_get_registration_types(); ?>
