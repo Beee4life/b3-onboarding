@@ -16,6 +16,7 @@
         do_action( 'b3_add_recaptcha_fields', 'register' );
 
     }
+    add_action( 'b3_register_form', 'b3_add_registration_fields' );
     add_action( 'register_form', 'b3_add_registration_fields' );
 
 
