@@ -21,7 +21,7 @@
         <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
         <?php do_action( 'b3_add_username_email_fields' ); ?>
         <?php do_action( 'b3_add_password_fields' ); ?>
-        <?php do_action( 'register_form' ); ?>
+        <?php do_action( 'b3_register_form' ); ?>
         <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
 
         <div class="b3_form-element b3_form-element--submit">

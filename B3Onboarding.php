@@ -941,6 +941,7 @@
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
 
+
                 if ( is_page() ) {
                     $current_page = get_post( get_the_ID() );
                     if ( false != $account_page_id ) {
@@ -1033,6 +1034,7 @@
                         } else {
                             $redirect_to = get_home_url();
                         }
+
 
                         if ( ! defined( 'DOING_AJAX' ) ) {
                             wp_safe_redirect( $redirect_to );
@@ -1180,14 +1182,13 @@
                     if ( false == $redirect_url ) {
                         $redirect_url = home_url();
                     }
-                    wp_safe_redirect( $redirect_url );
                 } else {
+                    $redirect_url = admin_url();
                     if ( $redirect_to ) {
-                        wp_safe_redirect( $redirect_to );
-                    } else {
-                        wp_safe_redirect( admin_url() );
+                        $redirect_url = $redirect_to;
                     }
                 }
+                wp_safe_redirect( $redirect_url );
                 exit;
             }
 
@@ -1204,7 +1205,6 @@
              * @return string Redirect URL
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-
                 $redirect_url = get_home_url();
                 $stored_roles = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
 
