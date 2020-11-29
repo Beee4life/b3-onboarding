@@ -66,7 +66,7 @@
                     <?php } ?>
                 <?php b3_get_close(); ?>
 
-                <?php if ( 'closed' == get_option( 'b3_registration_type', false ) ) { ?>
+                <?php if ( 'closed' == $registration_type ) { ?>
 
                     <?php $closed_message = get_option( 'b3_registration_closed_message', false ); ?>
                     <?php b3_get_settings_field_open(); ?>
@@ -88,11 +88,11 @@
                             <label for="b3_register_email_only"><?php esc_html_e( 'Register with email address only', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php if ( $registration_with_email_only ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php if ( $registration_with_email_only ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to register with only an email address (no user login).', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_custom_passwords = ( in_array( get_option( 'b3_registration_type', false ), [ 'request_access', 'closed' ] ) ) ? true : false; ?>
+                    <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'closed' ] ) ) ? true : false; ?>
                     <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -125,7 +125,7 @@
                         <?php b3_get_close(); ?>
                     </div>
 
-                    <?php if ( 'open' == get_option( 'b3_registration_type', false ) ) { ?>
+                    <?php if ( 'open' == $registration_type && false == $custom_passwords ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
