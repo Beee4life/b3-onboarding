@@ -105,6 +105,7 @@ These are the things we have planned to add.
 * [X] validate extra fields added through a filter
 * [X] look more into responsiveness
 * [ ] reCaptcha v3
+* [ ] add filter for username
 * [ ] make it work with Multisite
 * [ ] make it work with WPML
 * [ ] add more filter and/or inputs
