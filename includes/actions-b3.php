@@ -114,21 +114,43 @@
         $registration_with_email_only = get_option( 'b3_register_email_only', false );
 
         ob_start();
+        
+        if ( is_multisite() ) {
+            ?>
+            <div class="b3_form-element b3_form-element--login">
+                <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="text" name="user_name" id="b3_user_login" class="b3_form--input" autocapitalize="none" autocomplete="off" spellcheck="false" maxlength="60" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+            </div>
+            <div class="b3_form-element b3_form-element--email">
+                <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
+            </div>
+            <input type="hidden" name="signup_for" value="user">
+<!--            <div class="b3_form-element b3_form-element--signup-for">-->
+<!--                <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">-->
+<!--                <label class="checkbox" for="signupblog">Gimme a site!</label>-->
+<!--                <br />-->
+<!--                <input id="signupuser" type="radio" name="signup_for" value="user">-->
+<!--                <label class="checkbox" for="signupuser">Just a username, please.</label>-->
+<!--            </div>-->
+            <?php
+        } else {
+            if ( false == $registration_with_email_only ) {
+                ?>
+                <div class="b3_form-element b3_form-element--login">
+                    <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                    <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+                </div>
+            <?php } else { ?>
+                <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
+            <?php } ?>
+            <div class="b3_form-element b3_form-element--email">
+                <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
+            </div>
+            <?php
+        }
 
-        if ( false == $registration_with_email_only ) {
-        ?>
-        <div class="b3_form-element b3_form-element--login">
-            <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-            <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
-        </div>
-        <?php } else { ?>
-            <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
-        <?php } ?>
-        <div class="b3_form-element b3_form-element--email">
-            <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-            <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
-        </div>
-        <?php
         $output = ob_get_clean();
         echo $output;
     }
@@ -168,7 +190,7 @@
 
 
     /**
-     * Output the password fields (not in use yet, needs more testing)
+     * Output the password fields
      *
      * @since 0.8-beta
      */
@@ -208,10 +230,11 @@
                     'ms_register_site_user',
                 ) ) ) {
                 ob_start();
+                // @TODO: only show when 'blog' is set as registration option
             ?>
-                <div class="b3_form-element b3_form-element--register">
+                <div class="b3_form-element b3_form-element--register hidden">
                     <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required/>
+                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>    .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required/>
                 </div>
             <?php
                 $output = ob_get_clean();
