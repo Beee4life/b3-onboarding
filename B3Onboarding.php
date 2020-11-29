@@ -193,9 +193,12 @@
             public function b3_plugin_activation() {
 
                 // create necessary pages
-                b3_setup_initial_pages();
+                if ( is_multisite() ) {
+                } else {
+                    b3_setup_initial_pages();
+                    $this->b3_set_default_settings();
+                }
 
-                $this->b3_set_default_settings();
 
                 /**
                  * Independent
@@ -814,8 +817,13 @@
 
                             return;
                         } else {
-
-                            $user_login                = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
+    
+    
+                            if ( is_multisite() ) {
+                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
+                            } else {
+                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
+                            }
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role                      = get_option( 'default_role' );
                             $registration_type         = get_option( 'b3_registration_type', false );
@@ -889,7 +897,7 @@
 
                                 if ( true == $register ) {
                                     // is_multisite
-                                    $meta_data[ 'blog_public' ] = '1';
+                                    $meta_data[ 'blog_public' ] = '1'; // get from setting
                                     $meta_data[ 'lang_id' ]     = '0'; // ????
                                     $sub_domain                 = ( isset( $_POST[ 'b3_subdomain' ] ) ) ? $_POST[ 'b3_subdomain' ] : false;
 
@@ -911,9 +919,18 @@
                                             }
                                         }
                                     } else {
-                                        // no subdomain entered
+                                        // just register user
                                         error_log('no subdomain entered');
                                         $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
+                                        if ( is_wp_error( $result ) ) {
+                                            // Parse errors into a string and append as parameter to redirect
+                                            $errors       = join( ',', $result->get_error_codes() );
+                                            $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
+                                        } else {
+                                            // Success, redirect to login page.
+                                            // $redirect_url = wp_login_url();
+                                            $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
+                                        }
                                     }
                                 }
                             }
