@@ -239,6 +239,22 @@ ul.b3_form-links li:last-child {
     color: #ee6102;
 }
 
+/* Modal */
+
+.modal {
+    padding: 15px;
+}
+
+.modal__logo {
+    margin-bottom: 1rem;
+    text-align:    center;
+}
+
+.modal__logo img {
+    max-height: 100px;
+    width:      auto;
+}
+
 /* Misc */
 .widget .widget-no-settings {
     border:  1px dashed red;

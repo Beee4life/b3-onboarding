@@ -35,6 +35,8 @@
             $show_account  = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             $show_widget   = true;
             $show_settings = false;
+            $use_popup     = get_option( 'b3_use_popup', false );
+            $main_logo     = get_option( 'b3_main_logo', false );
 
             if ( $show_account ) {
                 $account_id    = b3_get_account_url( true );
@@ -136,7 +138,21 @@
                 echo '<ul>';
                 if ( ! is_user_logged_in() ) {
                     if ( $show_login ) {
-                        echo '<li><a href="' . $login_url . '">' . $login_title . '</a></li>';
+                        echo '<li>';
+                        if ( true == $use_popup ) {
+                            echo '<a href="#login-form" rel="modal:open">' . $login_title . '</a>';
+                            echo '<div id="login-form" class="modal">';
+                            if ( false != $main_logo ) {
+                                echo '<div class="modal__logo">';
+                                echo '<img src="' . $main_logo . '" alt="" />';
+                                echo '</div>';
+                            }
+                            echo do_shortcode('[login-form]');
+                            echo '</div>';
+                        } else {
+                            echo '<a href="' . $login_url . '">' . $login_title . '</a>';
+                        }
+                        echo '</li>';
                     }
                     if ( $show_register ) {
                         echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';

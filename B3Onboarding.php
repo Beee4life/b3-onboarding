@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://github.com/Beee4life/b3-onboarding
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
-    Version:            2.5.0
+    Version:            2.6.0
     Requires at least:  4.3
     Tested up to:       5.5.1
     Requires PHP:       5.6
@@ -67,7 +67,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.5.0',
+                    'version' => '2.6.0',
                 );
 
                 // actions
@@ -433,8 +433,26 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
+
+                if ( ! is_admin() ) {
+                    wp_deregister_script( 'jquery' ); // Deregister the included library
+                    wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js', array(), '2.1.4', true );
+                }
+
+                if ( false != get_option( 'b3_use_popup', false ) ) {
+                    wp_enqueue_script(
+                        'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js',
+                        array( 'jquery' ), '0.9.1'
+                    );
+                    wp_enqueue_style(
+                        'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css',
+                        false, '0.9.1'
+                    );
+                }
+
                 wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+
             }
 
 
