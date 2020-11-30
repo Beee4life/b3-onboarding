@@ -145,3 +145,26 @@
         }
     }
     add_action( 'after_setup_theme', 'b3_remove_admin_bar' );
+
+
+    /**
+     * Do stuff after signup WPMU user
+     *
+     * @since 2.6.0
+     *
+     * @param       $user_login
+     * @param       $user_email
+     * @param       $key
+     * @param array $meta
+     */
+    function b3_after_signup_user( $user_login, $user_email, $key, $meta = array() ) {
+        $subject = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), get_option( 'blogname' ) );
+        $message = sprintf( apply_filters( 'b3_wpmu_activate_user_email', b3_get_wpmu_activate_user_email() ), $user_login, site_url( "wp-activate.php?key=$key" ) );
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_replace_email_vars() );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+        wp_mail( $user_email, $subject, $message, [] );
+
+    }
+    add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
