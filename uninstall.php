@@ -13,9 +13,9 @@
     // If preserve settings is false (but there's no user input option yet, so is always false)
     if ( false == get_option( 'b3_preserve_settings', false ) ) {
 
-        $meta_keys = array();
         if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
-            $meta_keys = b3_get_all_custom_meta_keys();
+            $meta_keys   = b3_get_all_custom_meta_keys();
+            $meta_keys[] = 'widget_b3-widget';
             foreach( $meta_keys as $key ) {
                 delete_option( $key );
             }
