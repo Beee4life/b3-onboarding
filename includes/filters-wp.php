@@ -536,9 +536,14 @@ All at ###SITENAME###
     function b3_disable_welcome_mu_user_email( $user_id, $password, $meta ) {
         return false;
     }
-    // add_filter( 'wpmu_welcome_user_notification', 'b3_disable_welcome_mu_user_email', 10, 3 );
+    add_filter( 'wpmu_welcome_user_notification', 'b3_disable_welcome_mu_user_email', 10, 3 );
 
     function b3_override_email_subject() {
         return 'Custom Subject';
     }
-    // add_filter( 'update_welcome_user_subject', 'b3_override_email_subject', 1 );
+    // add_filter( 'update_welcome_user_subject', 'b3_override_email_subject' );
+
+    function b3_override_email_email() {
+        return 'Custom content';
+    }
+    // add_filter( 'update_welcome_user_email', 'b3_override_email_email' );
