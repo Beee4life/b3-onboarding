@@ -871,8 +871,13 @@
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role                      = get_option( 'default_role' );
                             $registration_type         = get_option( 'b3_registration_type', false );
-                            $meta_data[ 'first_name' ] = ( isset( $_POST[ 'first_name' ] ) ) ? sanitize_text_field( $_POST[ 'first_name' ] ) : false;
-                            $meta_data[ 'last_name' ]  = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( $_POST[ 'last_name' ] ) : false;
+                            
+                            if ( isset( $_POST[ 'first_name' ] ) ) {
+                                $meta_data[ 'first_name' ] = sanitize_text_field( $_POST[ 'first_name' ] );
+                            }
+                            if ( isset( $_POST[ 'last_name' ] ) ) {
+                                $meta_data[ 'last_name' ] = sanitize_text_field( $_POST[ 'last_name' ] );
+                            }
 
                             if ( ! is_multisite() ) {
                                 if ( 'closed' == $registration_type ) {
@@ -944,9 +949,14 @@
     
                                 if ( true == $register ) {
                                     // is_multisite
-                                    $meta_data[ 'blog_public' ] = $_POST[ 'blog_public' ]; // get from setting
-                                    $meta_data[ 'lang_id' ]     = '0'; // @TODO: look into this
-                                    $sub_domain                 = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
+                                    if ( isset( $_POST[ 'blog_public' ] ) ) {
+                                        $meta_data[ 'blog_public' ] = $_POST[ 'blog_public' ];
+                                    }
+                                    if ( isset( $_POST[ 'lang_id' ] ) ) {
+                                        $meta_data[ 'lang_id' ] = $_POST[ 'lang_id' ];
+                                    }
+    
+                                    $sub_domain = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
 
                                     if ( false != $sub_domain ) {
                                         // validate_blog_signup();
