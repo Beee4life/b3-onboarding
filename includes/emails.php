@@ -101,10 +101,10 @@
                 case 'lost_password':
                     include 'emails/lost-password.php';
                     break;
+                // Multisite specific
                 case 'visitor_register':
                     include 'emails/ms-visitor-register.php';
                     break;
-                // Multisite specific
                 case 'visitor_register_site':
                     include 'emails/ms-visitor-register-site.php';
                     break;
