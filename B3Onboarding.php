@@ -96,7 +96,7 @@
                 add_action( 'init',                                 array( $this, 'b3_reset_user_password' ) );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
-                add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
+                // add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
@@ -840,7 +840,6 @@
                     $response_code = wp_remote_retrieve_response_code( $response );
 
                     if ( 200 == $response_code && $response && is_array( $response ) ) {
-                        // @TODO: check if ext-json is installed
                         $decoded_response = json_decode( $response_body );
                         $success          = $decoded_response->success;
                     }
@@ -1845,7 +1844,7 @@
             /**
              * Check post values of saved options
              *
-             * @TODO: add nonce check
+             * @TODO: look into deleting in favor of filter
              *
              * @since 2.0.0
              */
