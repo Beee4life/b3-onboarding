@@ -125,14 +125,13 @@
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
                 <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
             </div>
-            <input type="hidden" name="signup_for" value="user">
-<!--            <div class="b3_form-element b3_form-element--signup-for">-->
-<!--                <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">-->
-<!--                <label class="checkbox" for="signupblog">Gimme a site!</label>-->
-<!--                <br />-->
-<!--                <input id="signupuser" type="radio" name="signup_for" value="user">-->
-<!--                <label class="checkbox" for="signupuser">Just a username, please.</label>-->
-<!--            </div>-->
+            <div class="b3_form-element b3_form-element--signup-for">
+                <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
+                <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'Gimme a site!' ) ); ?></label>
+                <br />
+                <input id="signupuser" type="radio" name="signup_for" value="user">
+                <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a username, please.' ) ); ?></label></label>
+            </div>
             <?php
         } else {
             if ( false == $registration_with_email_only ) {
@@ -218,23 +217,49 @@
 
 
     /**
-     * Add field for subdomain when WPMU is active (not used yet)
+     * Add field for subdomain when WPMU is active
      *
      * @since 1.0.0
      */
-    function b3_add_subdomain_field() {
+    function b3_add_site_fields() {
         if ( is_multisite() ) {
-            $show_subdomain = get_option( 'b3_show_subdomain_field', false );
             if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ), array(
                     'request_access_subdomain',
                     'ms_register_site_user',
                 ) ) ) {
                 ob_start();
-                // @TODO: only show when 'blog' is set as registration option
             ?>
-                <div class="b3_form-element b3_form-element--register hidden">
-                    <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>    .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required/>
+                <div class="b3_form-element b3_form-element--site-fields">
+                    <div class="b3_form-element b3_form-element--subdomain">
+                        <?php $current_network = get_network(); ?>
+                        <?php if ( is_subdomain_install() ) { ?>
+                            <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site (sub) domain', 'b3-onboarding' ); ?></label>
+                            <input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>" />.<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>
+                        <?php } else { ?>
+                            <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site address', 'b3-onboarding' ); ?></label>
+                            <?php echo $current_network->domain . $current_network->path; ?><input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'address', 'b3-onboarding' ); ?>" />
+                        <?php } ?>
+                    </div>
+                    <div class="b3_form-element b3_form-element--site-title">
+                        <label class="b3_form-label" for="blog_title"><?php esc_html_e( 'Site title', 'b3-onboarding' ); ?></label>
+                        <input name="blog_title" id="blog_title" value="" type="text" class="b3_form--input" />
+                    </div>
+                    <?php // @TODO: add languages option ?>
+                    <div class="b3_form-element b3_form-element--visbility">
+                        <p class="privacy-intro">
+                            <?php _e( 'Privacy:' ); ?>
+                            <?php _e( 'Allow search engines to index this site.' ); ?>
+                            <br style="clear:both" />
+                            <label class="checkbox" for="blog_public_on">
+                                <input type="radio" id="blog_public_on" name="blog_public" value="1" checked="checked" />
+                                <strong><?php _e( 'Yes' ); ?></strong>
+                            </label>
+                            <label class="checkbox" for="blog_public_off">
+                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />
+                                <strong><?php _e( 'No' ); ?></strong>
+                            </label>
+                        </p>
+                    </div>
                 </div>
             <?php
                 $output = ob_get_clean();
@@ -242,7 +267,7 @@
             }
         }
     }
-    add_action( 'b3_add_subdomain_field', 'b3_add_subdomain_field' );
+    add_action( 'b3_add_site_fields', 'b3_add_site_fields' );
 
 
     /**
