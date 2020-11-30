@@ -939,9 +939,8 @@
                                 } else {
                                 }
                                 
-                                //@TODO: validate user
-                                validate_user_signup();
-    
+                                // @TODO: validate user ?
+                                // validate_user_signup();
     
                                 if ( true == $register ) {
                                     // is_multisite
@@ -950,15 +949,13 @@
                                     $sub_domain                 = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
 
                                     if ( false != $sub_domain ) {
+                                        // validate_blog_signup();
                                         // @TODO: check this for options (MS)
-                                        validate_blog_signup();
                                         if ( true == domain_exists( $sub_domain, '/' ) ) {
                                             $redirect_url = add_query_arg( 'registration-error', 'domain_exists', $redirect_url );
                                         } else {
                                             $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
-
                                             if ( is_wp_error( $result ) ) {
-                                                // Parse errors into a string and append as parameter to redirect
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                             } else {
@@ -970,10 +967,8 @@
                                         }
                                     } else {
                                         // just register user
-                                        error_log('no subdomain entered');
                                         $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
                                         if ( is_wp_error( $result ) ) {
-                                            // Parse errors into a string and append as parameter to redirect
                                             $errors       = join( ',', $result->get_error_codes() );
                                             $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                         } else {
@@ -998,7 +993,7 @@
             ## REDIRECTS
 
             /*
-             * Protect some pages
+             * Protect pages + redirect user (if needed)
              */
             public function b3_template_redirect() {
                 $account_page_id  = b3_get_account_url( true );
@@ -1205,8 +1200,8 @@
 
 
             /**
-             * Redirects to the custom password reset page, or the login page
-             * if there are errors.
+             * Redirects to the custom password reset page,
+             * or the login page if there are errors.
              */
             public function b3_redirect_to_custom_reset_password() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -1261,7 +1256,7 @@
 
 
             /**
-             * Returns the URL to which the user should be redirected after the (successful) login.
+             * Returns the URL to which the user should be redirected after a (successful) login.
              *
              * @since 1.0.6
              *
@@ -1281,10 +1276,8 @@
                 }
 
                 if ( $requested_redirect_to ) {
-                    // redirect url is set
                     $redirect_url = $requested_redirect_to;
                 } else {
-                    // redirect url is not set
                     if ( current_user_can( 'manage_options' ) ) {
                         $redirect_url = $redirect_to;
                     } else {
@@ -1750,15 +1743,15 @@
              * @return bool|WP_Error
              */
             private function b3_register_wpmu_user( $user_name, $user_email, $sub_domain, $meta = array() ) {
-
-                $errors                = false;
-                $main_register_type    = get_site_option( 'registration' );
-                $subsite_register_type = get_option( 'b3_registration_type', array() );
-                $user_registered       = false;
+    
+                $b3_register_type   = get_option( 'b3_registration_type', false );
+                $errors             = false;
+                $main_register_type = get_site_option( 'registration' );
+                $user_registered    = false;
 
                 if ( is_main_site() ) {
 
-                    if ( in_array( $main_register_type, [ 'all', 'blog' ] ) && in_array( $subsite_register_type, [ 'request_access', 'request_access_subdomain', 'ms_loggedin_register', 'ms_register_user', 'ms_register_site_user' ] )) {
+                    if ( in_array( $main_register_type, [ 'all', 'blog' ] ) && in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'ms_loggedin_register', 'ms_register_user', 'ms_register_site_user' ] )) {
                         if ( false == $sub_domain ) {
                             // @TODO: throw error if no subdomain is chosen (MS)
                             wpmu_signup_user( $user_name, $user_email, $meta );
@@ -1780,7 +1773,7 @@
 
                 } else {
 
-                    if ( 'user' == $main_register_type && 'closed' != $subsite_register_type ) {
+                    if ( 'user' == $main_register_type && 'closed' != $b3_register_type ) {
                         wpmu_signup_user( $user_name, $user_email, $meta );
                         $user_registered = true;
                     } else {
