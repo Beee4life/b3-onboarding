@@ -1092,7 +1092,7 @@
     /**
      * Get the message above registration form
      *
-     * @TODO: create user input option (this is preparation)
+     * @TODO: create user input option
      *
      * @param $message
      *
@@ -1114,7 +1114,7 @@
     /**
      * Get the message above login form
      *
-     * @TODO: create user input option (this is preparation)
+     * @TODO: create user input option
      *
      * @param $message
      *
@@ -1133,7 +1133,7 @@
     /**
      * Get the message above lost password form
      *
-     * @TODO: create user input option (this is preparation)
+     * @TODO: create user input option
      *
      * @param $message
      *
@@ -1155,7 +1155,7 @@
     /**
      * Get the message above request access form
      *
-     * @TODO: create user input option (this is preparation)
+     * @TODO: create user input option
      *
      * @param $message
      *
@@ -1240,7 +1240,7 @@
     }
 
     /**
-     * Copied from wp-login.php since we bypass it and can't piggyback on the function in this file.
+     * Copied from wp-login.php since we bypass it and can't hook in/piggyback on the function in this file.
      *
      * @return bool|int|string|WP_Error
      */
