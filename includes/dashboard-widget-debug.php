@@ -5,7 +5,7 @@
      * @since 2.0.0
      */
     function b3_dashboard_widget_debug_function() {
-        $preview_page = network_admin_url( 'admin.php?page=b3-onboarding&preview=', '' );
+        $preview_page = admin_url( 'admin.php?page=b3-onboarding&preview=', '' );
         ?>
 
         <div class="b3_widget--dashboard">

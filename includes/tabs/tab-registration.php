@@ -39,7 +39,7 @@
                     <?php b3_get_close(); ?>
                     <?php if ( is_multisite() && is_main_site() ) { ?>
                         <p>
-                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
+                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), admin_url( 'settings.php' ) ); ?>
                         </p>
                     <?php } else if ( ! is_multisite() ) { ?>
                         <p>

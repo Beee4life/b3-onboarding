@@ -478,7 +478,7 @@
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
 
-                $redirect_url = network_admin_url( 'admin.php?page=b3-user-approval' );
+                $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
                 if ( ! is_admin() ) {
                     $approval_link = b3_get_user_approval_link();
                     if ( false != $approval_link ) {

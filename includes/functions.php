@@ -1046,11 +1046,11 @@
                 if ( get_post( $id ) ) {
                     return get_the_permalink( $id );
                 } else {
-                    return network_admin_url( 'admin.php?page=b3-user-approval' );
+                    return admin_url( 'admin.php?page=b3-user-approval' );
                 }
             }
         } else {
-            return network_admin_url( 'admin.php?page=b3-user-approval' );
+            return admin_url( 'admin.php?page=b3-user-approval' );
         }
 
         return false;
