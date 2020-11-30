@@ -99,8 +99,7 @@
                     ];
                     wp_update_post( $new_args );
                 }
-            }
-            if ( empty( $existing_page ) ) {
+            } else {
                 $result = wp_insert_post( array(
                     'post_title'     => $page[ 'title' ],
                     'post_name'      => $slug,
