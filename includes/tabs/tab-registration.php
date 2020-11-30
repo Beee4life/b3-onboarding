@@ -81,7 +81,6 @@
 
                 <?php } else { ?>
 
-                    <?php if ( ! is_multisite() ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_register_email_only"><?php esc_html_e( 'Register with email address only', 'b3-onboarding' ); ?></label>
@@ -100,6 +99,7 @@
                                 <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php if ( $custom_passwords ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom passwords.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
+                    <?php if ( ! is_multisite() ) { ?>
                     <?php } ?>
 
                     <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
