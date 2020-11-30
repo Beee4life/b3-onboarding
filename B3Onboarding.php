@@ -103,7 +103,6 @@
                 // Multisite specific
                 add_action( 'wp_initialize_site',                   array( $this, 'b3_new_blog' ) );
                 // add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
-                // add_action( 'network_admin_notices',                array( $this, 'b3_not_multisite_ready' ) );
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -196,12 +195,14 @@
                 $this->b3_set_default_settings();
                 
                 if ( is_multisite() ) {
-                    
+                    if ( is_main_site() ) {
+                        // no problem
+                    } else {
+                    }
                     // @TODO
                     // get all site ids
                     // loop through all ids
                     // add page account
-                    
                 } else {
                     
                     $b3_activation = get_role( 'b3_activation' );
@@ -1880,24 +1881,17 @@
             }
 
             /**
-             * Add network admin message (MS) if plugin is activated
-             *
-             * @since 2.0.0
-             */
-            public function b3_not_multisite_ready() {
-                if ( isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
-                    echo sprintf( '<div class="error"><p>' . __( 'This plugin is not meant (yet) for network activation. Please deactivate it <a href="%s">%s</a> and activate on a per-site bases', 'b3-onboarding' ) . '.</p></div>', esc_url( network_admin_url( 'plugins.php?plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
-                } elseif ( class_exists( 'B3Onboarding.php' ) ) {
-                    echo '<div class="error"><p>' . __( 'This plugin has not been properly tested for multisite installations. Please use it at your own risk.', 'b3-onboarding' ) . '.</p></div>';
-                }
-            }
-
-            /**
              * Add admin notices
              *
              * @since 1.0.6
              */
             public function b3_admin_notices() {
+                // not for single site in MU
+                if ( is_multisite() && ! is_main_site() ) {
+                    echo sprintf( '<div class="error"><p>' . __( 'B3 Onboarding is not meant for single site activation in a multisite. Registrations are handledby the main site. No functions will work (for you). Please deactivate it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>', esc_url( admin_url( 'plugins.php?s=b3&plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
+                }
+                
+                // beta notice
                 if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                     $message = __( "You're using a beta version, which is not finished yet and can give unexpected results.", 'b3-onboarding' );
                     if ( ! defined( 'LOCALHOST' ) || defined( 'LOCALHOST' ) && false == LOCALHOST ) {
@@ -1907,6 +1901,7 @@
                     }
                 }
 
+                // no page for front-end approval
                 if ( false == get_option( 'b3_approval_page_id', false ) && true == get_option( 'b3_front_end_approval', false ) ) {
                     echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),
@@ -1914,6 +1909,7 @@
                     );
                 }
 
+                // manual actions
                 if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'activate', 'sendactivation' ) ) ) {
                     echo '<div id="message" class="updated"><p>';
                     if ( 'activate' == $_GET[ 'update' ] ) {
