@@ -57,12 +57,16 @@
                 $b3_setting = 'blog';
             } elseif ( 'ms_register_site_user' == $b3_setting ) {
                 $b3_setting = 'all';
+            } else {
+                $b3_setting = 'all';
             }
         } elseif ( ! is_multisite() ) {
             // @TODO: test this
             if ( 'closed' == $b3_setting ) {
                 $b3_setting = '0';
             } elseif ( in_array( $b3_setting, [ 'request_access', 'email_activation', 'open' ] ) ) {
+                $b3_setting = '1';
+            } else {
                 $b3_setting = '1';
             }
         }
