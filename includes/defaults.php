@@ -399,6 +399,36 @@
 
 
     /**
+     * Default activate user email subject (WPMU)
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_activate_user_subject() {
+        return __( '%s: Confirm your registration', 'b3-onboarding' );
+    }
+
+
+    /**
+     * Default activate user email message (WPMU)
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_activate_user_email() {
+        return __( "Dear %s,\n\n<br /><br />To activate your account, please click <a href=\"%s\">this link</a>.<br /><br />After you activate, you will receive *another email* with your login.", 'b3-onboarding' );
+    }
+
+
+    /**
+     * Default user activated email message (WPMU)
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_user_activated_email() {
+        return __( 'Howdy USERNAME,<br /><br />Your new CUSTOM account is set up.<br /><br />You can log in with the following information:<br />Username: USERNAME<br />Password: PASSWORD<br />LOGINLINK<br /><br />Thanks!<br /><br />The Team @ SITE_NAME', 'b3-onboarding' );
+    }
+
+
+    /**
      * Return default registration message
      *
      * @since 2.0.0
