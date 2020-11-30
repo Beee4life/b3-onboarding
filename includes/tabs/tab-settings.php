@@ -30,7 +30,6 @@
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
-                <?php if ( ! is_multisite() ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_disable_wordpress_forms"><?php esc_html_e( 'Disable Wordpress forms', 'b3-onboarding' ); ?></label>
@@ -49,6 +48,7 @@
                             <input type="checkbox" id="b3_style_wordpress_forms" name="b3_style_wordpress_forms" value="1" <?php if ( $style_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' forms.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
+                <?php if ( ! is_multisite() ) { ?>
                 <?php } ?>
 
                 <?php if ( 'closed' != $registration_type ) { ?>
