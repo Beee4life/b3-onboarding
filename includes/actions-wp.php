@@ -17,6 +17,7 @@
 
     }
     add_action( 'register_form', 'b3_add_registration_fields' );
+    add_action( 'b3_register_form', 'b3_add_registration_fields' );
 
 
     /**
