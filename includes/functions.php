@@ -95,10 +95,10 @@
      * @return array
      */
     function b3_get_email_boxes() {
-    
+
         $registration_type = get_option( 'b3_registration_type', false );
         $email_boxes       = array();
-    
+
         $email_boxes[] = array(
             'id'    => 'email_settings',
             'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
@@ -1213,12 +1213,55 @@
         return $message;
     }
 
+
+    function b3_get_wpmu_activate_user_subject() {
+        $subject = b3_default_wpmu_activate_user_subject();
+
+        return $subject;
+    }
+
+
+    function b3_get_wpmu_activate_user_email() {
+        $message = b3_default_wpmu_activate_user_email();
+
+        return $message;
+    }
+
+
+    function b3_get_wpmu_user_activated_subject() {
+        $subject = b3_default_wpmu_activate_user_subject();
+
+        return $subject;
+    }
+
+
+    // @TODO: not used yet
+    function b3_get_wpmu_user_activated_email() {
+        $message = b3_default_wpmu_user_activated_email();
+
+        return $message;
+    }
+
+
+    /**
+     * Get protocol
+     *
+     * @return string
+     */
     function b3_get_protocol() {
         $protocol = ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
 
         return $protocol;
     }
 
+
+    /**
+     * Get current URL
+     *
+     * @param false $include_query
+     *
+     * @return string
+     */
     function b3_get_current_url( $include_query = false ) {
 
         $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
