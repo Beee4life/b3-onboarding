@@ -105,7 +105,9 @@
                 // add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
 
                 // Filters
-                add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
+                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                    add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
+                }
                 add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
                 add_filter( 'authenticate',                         array( $this, 'b3_maybe_redirect_at_authenticate' ), 101, 3 );
                 add_filter( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
@@ -189,21 +191,23 @@
              */
             public function b3_plugin_activation() {
 
-                // create necessary pages (main site)
-                b3_setup_initial_pages();
-                // set default values
-                $this->b3_set_default_settings();
-                
                 if ( is_multisite() ) {
                     if ( is_main_site() ) {
-                        // no problem
-                    } else {
+                        // create necessary pages (main site)
+                        b3_setup_initial_pages();
+                        // set default values
+                        $this->b3_set_default_settings();
                     }
                     // @TODO
                     // get all site ids
                     // loop through all ids
                     // add page account
                 } else {
+
+                    // create necessary pages
+                    b3_setup_initial_pages();
+                    // set default values
+                    $this->b3_set_default_settings();
                     
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
@@ -291,6 +295,8 @@
              * @param $new_site
              */
             public function b3_new_blog( $new_site ) {
+                // @TODO: add setting if local account page is 'wanted'
+                
                 /*
                  * Available vars:
                  * - blog_id (= site id)
@@ -299,8 +305,8 @@
                  * - site id (= network id)
                  * - lang_id
                  */
+                
                 switch_to_blog( $new_site->blog_id );
-    
                 // create new page account
                 $result = wp_insert_post( array(
                     'post_title'     => 'Account',
@@ -314,9 +320,8 @@
                     true
                 );
                 if ( ! is_wp_error( $result ) ) {
+                    // @TODO: do I need this
                     update_post_meta( $result, '_b3_page', true );
-                } else {
-                    echo '<pre>'; var_dump($result); echo '</pre>'; exit;
                 }
                 restore_current_blog();
     
@@ -509,13 +514,16 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                include 'includes/admin-page.php'; // content for the settings page
-                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
-                include 'includes/user-approval-page.php'; // content for the settings page
-                add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
-                if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
-                    include 'includes/debug-page.php'; // content for the settings page
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
+                
+                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                    include 'includes/admin-page.php'; // content for the settings page
+                    add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                    include 'includes/user-approval-page.php'; // content for the settings page
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
+                    if ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) || true == get_option( 'b3_debug_info', false ) ) {
+                        include 'includes/debug-page.php'; // content for the settings page
+                        add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
+                    }
                 }
             }
 
