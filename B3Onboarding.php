@@ -93,8 +93,6 @@
                 add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_password_lost' ) );
-                // add_action( 'login_form_resetpass',                 array( $this, 'b3_reset_user_password' ) );
-                // add_action( 'login_form_rp',                        array( $this, 'b3_reset_user_password' ) );
                 add_action( 'init',                                 array( $this, 'b3_reset_user_password' ) );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
@@ -103,9 +101,9 @@
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
-                // add_action( 'wp_insert_site',                       array( $this, 'b3_new_blog' ) );
+                add_action( 'wp_initialize_site',                   array( $this, 'b3_new_blog' ) );
                 // add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
-                add_action( 'network_admin_notices',                array( $this, 'b3_not_multisite_ready' ) );
+                // add_action( 'network_admin_notices',                array( $this, 'b3_not_multisite_ready' ) );
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -192,24 +190,28 @@
              */
             public function b3_plugin_activation() {
 
-                // create necessary pages
+                // create necessary pages (main site)
+                b3_setup_initial_pages();
+                // set default values
+                $this->b3_set_default_settings();
+                
                 if ( is_multisite() ) {
+                    
+                    // @TODO
+                    // get all site ids
+                    // loop through all ids
+                    // add page account
+                    
                 } else {
-                    b3_setup_initial_pages();
-                    $this->b3_set_default_settings();
-                }
-
-
-                /**
-                 * Independent
-                 */
-                $aw_activation = get_role( 'b3_activation' );
-                if ( ! $aw_activation ) {
-                    add_role( 'b3_activation', __( 'Awaiting activation' ), array() );
-                }
-                $aw_approval = get_role( 'b3_approval' );
-                if ( ! $aw_approval ) {
-                    add_role( 'b3_approval', __( 'Awaiting approval' ), array() );
+                    
+                    $b3_activation = get_role( 'b3_activation' );
+                    if ( ! $b3_activation ) {
+                        add_role( 'b3_activation', __( 'Awaiting activation' ), array() );
+                    }
+                    $b3_approval = get_role( 'b3_approval' );
+                    if ( ! $b3_approval ) {
+                        add_role( 'b3_approval', __( 'Awaiting approval' ), array() );
+                    }
                 }
 
             }
@@ -226,6 +228,15 @@
                 } else {
                     update_option( 'users_can_register', '0' );
                 }
+    
+                if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
+                    $meta_keys   = b3_get_all_custom_meta_keys();
+                    $meta_keys[] = 'widget_b3-widget';
+                    foreach( $meta_keys as $key ) {
+                        delete_option( $key );
+                    }
+                }
+    
             }
 
 
@@ -279,11 +290,35 @@
              * @param $new_site
              */
             public function b3_new_blog( $new_site ) {
-                if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
-                    switch_to_blog( $new_site->blog_id );
-                    b3_setup_initial_pages( true );
-                    restore_current_blog();
+                /*
+                 * Available vars:
+                 * - blog_id (= site id)
+                 * - domain
+                 * - path
+                 * - site id (= network id)
+                 * - lang_id
+                 */
+                switch_to_blog( $new_site->blog_id );
+    
+                // create new page account
+                $result = wp_insert_post( array(
+                    'post_title'     => 'Account',
+                    'post_name'      => 'account',
+                    'post_content'   => '[account-page]',
+                    'post_status'    => 'publish',
+                    'post_type'      => 'page',
+                    'ping_status'    => 'closed',
+                    'comment_status' => 'closed',
+                ),
+                    true
+                );
+                if ( ! is_wp_error( $result ) ) {
+                    update_post_meta( $result, '_b3_page', true );
+                } else {
+                    echo '<pre>'; var_dump($result); echo '</pre>'; exit;
                 }
+                restore_current_blog();
+    
             }
 
             /**
@@ -1234,7 +1269,7 @@
                     $redirect_url = $requested_redirect_to;
                 } else {
                     // redirect url is not set
-                    if ( user_can( $user, 'manage_options' ) ) {
+                    if ( current_user_can( 'manage_options' ) ) {
                         $redirect_url = $redirect_to;
                     } else {
                         // Non-admin users always go to their account page after login, if it's defined
