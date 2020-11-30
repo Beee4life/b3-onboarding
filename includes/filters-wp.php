@@ -516,3 +516,29 @@ All at ###SITENAME###
         return $email_change_email;
     }
     add_filter( 'email_change_email', 'b3_content_email_change_notification', 10, 3 );
+
+
+    /**
+     * Disable WPMU user signup email to take it over
+     *
+     * @param       $user_login
+     * @param       $user_email
+     * @param       $key
+     * @param array $meta
+     *
+     * @return false
+     */
+    function b3_disable_wpmu_user_signup_notification( $user_login, $user_email, $key, $meta = array() ) {
+        return false;
+    }
+    add_filter( 'wpmu_signup_user_notification', 'b3_disable_wpmu_user_signup_notification', 10, 5 );
+
+    function b3_disable_welcome_mu_user_email( $user_id, $password, $meta ) {
+        return false;
+    }
+    // add_filter( 'wpmu_welcome_user_notification', 'b3_disable_welcome_mu_user_email', 10, 3 );
+
+    function b3_override_email_subject() {
+        return 'Custom Subject';
+    }
+    // add_filter( 'update_welcome_user_subject', 'b3_override_email_subject', 1 );
