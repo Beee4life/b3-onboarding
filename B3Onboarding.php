@@ -862,7 +862,6 @@
                             return;
                         } else {
     
-    
                             if ( is_multisite() ) {
                                 $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
                             } else {
@@ -938,15 +937,20 @@
                                     $register = true;
                                 } else {
                                 }
-
+                                
+                                //@TODO: validate user
+                                validate_user_signup();
+    
+    
                                 if ( true == $register ) {
                                     // is_multisite
-                                    $meta_data[ 'blog_public' ] = '1'; // get from setting
-                                    $meta_data[ 'lang_id' ]     = '0'; // ????
-                                    $sub_domain                 = ( isset( $_POST[ 'b3_subdomain' ] ) ) ? $_POST[ 'b3_subdomain' ] : false;
+                                    $meta_data[ 'blog_public' ] = $_POST[ 'blog_public' ]; // get from setting
+                                    $meta_data[ 'lang_id' ]     = '0'; // @TODO: look into this
+                                    $sub_domain                 = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
 
                                     if ( false != $sub_domain ) {
                                         // @TODO: check this for options (MS)
+                                        validate_blog_signup();
                                         if ( true == domain_exists( $sub_domain, '/' ) ) {
                                             $redirect_url = add_query_arg( 'registration-error', 'domain_exists', $redirect_url );
                                         } else {
@@ -960,6 +964,7 @@
                                                 // Success, redirect to login page.
                                                 $redirect_url = wp_login_url();
                                                 $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
+                                                do_action( 'signup_finished' ); // @TODO: do i need this ?
                                             }
                                         }
                                     } else {
@@ -972,8 +977,9 @@
                                             $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                         } else {
                                             // Success, redirect to login page.
-                                            // $redirect_url = wp_login_url();
+                                            $redirect_url = wp_login_url();
                                             $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
+                                            do_action( 'signup_finished' ); // @TODO: do i need this ?
                                         }
                                     }
                                 }
