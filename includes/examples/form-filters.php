@@ -326,3 +326,35 @@
 
     }
     // add_filter( 'b3_reserved_usernames', 'b3_reserved_usernames_example' );
+
+
+    /**
+     * Override label "A site"
+     *
+     * @since 2.6.0
+     *
+     * @param $label
+     *
+     * @return mixed
+     */
+    function b3_signup_for_site( $label ) {
+        return $label;
+    }
+    // add_filter( 'b3_signup_for_site', 'b3_signup_for_site' );
+
+
+    /**
+     * Override label "Just a user"
+     *
+     * @since 2.6.0
+     *
+     * @param $label
+     *
+     * @return mixed
+     */
+    function b3_signup_for_user( $label ) {
+        return $label;
+    }
+    // add_filter( 'b3_signup_for_user', 'b3_signup_for_user' );
+
+

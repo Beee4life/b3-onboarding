@@ -126,11 +126,13 @@
                 <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
             </div>
             <div class="b3_form-element b3_form-element--signup-for">
+                <div>
+                    <strong><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?>:</strong>
+                </div>
                 <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
-                <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'Gimme a site!' ) ); ?></label>
-                <br />
+                <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'A site' ) ); ?></label>
                 <input id="signupuser" type="radio" name="signup_for" value="user">
-                <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a username, please.' ) ); ?></label></label>
+                <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
             </div>
             <?php
         } else {
@@ -253,10 +255,6 @@
                                 <input type="checkbox" id="blog_public_on" name="dont_index" value="1" />
                                 <?php _e( "Don't let search engines index this site." ); ?>
                             </label>
-<!--                            <label class="checkbox" for="blog_public_off">-->
-<!--                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />-->
-<!--                                <strong>--><?php //_e( 'No' ); ?><!--</strong>-->
-<!--                            </label>-->
                         </p>
                     </div>
                 </div>
