@@ -407,3 +407,59 @@
         return $user_login;
 
     }
+
+
+    /**
+     * Validate blog signup
+     * copied from wp-signup.php line 757 because this is a standalone file
+     */
+    function validate_blog_signup() {
+        $user_result = wpmu_validate_user_signup( $_POST['user_name'], $_POST['user_email'] );
+        $user_name   = $user_result['user_name'];
+        $user_email  = $user_result['user_email'];
+        $user_errors = $user_result['errors'];
+
+        if ( $user_errors->has_errors() ) {
+            // signup_user( $user_name, $user_email, $user_errors );
+            return false;
+        }
+
+        $result     = wpmu_validate_blog_signup( $_POST['blogname'], $_POST['blog_title'] );
+        $domain     = $result['domain'];
+        $path       = $result['path'];
+        $blogname   = $result['blogname'];
+        $blog_title = $result['blog_title'];
+        $errors     = $result['errors'];
+
+        if ( $errors->has_errors() ) {
+            // signup_blog( $user_name, $user_email, $blogname, $blog_title, $errors );
+            return false;
+        }
+
+        $public      = (int) $_POST[ 'blog_public' ];
+        $signup_meta = array(
+            'lang_id' => 1,
+            'public'  => $public,
+        );
+
+        // Handle the language setting for the new site.
+        if ( ! empty( $_POST[ 'WPLANG' ] ) ) {
+
+            $languages = signup_get_available_languages();
+
+            if ( in_array( $_POST[ 'WPLANG' ], $languages, true ) ) {
+                $language = wp_unslash( sanitize_text_field( $_POST[ 'WPLANG' ] ) );
+
+                if ( $language ) {
+                    $signup_meta[ 'WPLANG' ] = $language;
+                }
+            }
+        }
+
+        /** This filter is documented in wp-signup.php */
+        $meta = apply_filters( 'add_signup_meta', $signup_meta );
+
+        wpmu_signup_blog( $domain, $path, $blog_title, $user_name, $user_email, $meta );
+        confirm_blog_signup( $domain, $path, $blog_title, $user_name, $user_email, $meta );
+        return true;
+    }
