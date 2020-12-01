@@ -255,17 +255,28 @@
                     return;
                 } else {
 
-                    if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) && ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
-                        B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
+                    if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
+                        if ( ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
+                            B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
 
-                        return;
+                            return;
+                        } else {
+                            $sender_email = $_POST[ 'b3_notification_sender_email' ];
+                        }
                     } else {
-                        $sender_email = $_POST[ 'b3_notification_sender_email' ];
                     }
-                    update_option( 'b3_notification_sender_email', $sender_email, true );
-                    update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
-                    update_option( 'b3_lost_password_message', htmlspecialchars( $_POST[ 'b3_lost_password_message' ] ), true );
-                    update_option( 'b3_lost_password_subject', $_POST[ 'b3_lost_password_subject' ], true );
+
+                    /* general boxes */
+                    if ( isset( $sender_email ) ) {
+                        update_option( 'b3_notification_sender_email', $sender_email, true );
+                    } else {
+                        delete_option( 'b3_notification_sender_email' );
+                    }
+                    if ( isset( $_POST[ 'b3_notification_sender_name' ] ) && ! empty( $_POST[ 'b3_notification_sender_name' ] ) ) {
+                        update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], true );
+                    } else {
+                        delete_option( 'b3_notification_sender_email' );
+                    }
 
                     if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
                         $color = $_POST[ 'b3_link_color' ];
@@ -304,14 +315,27 @@
                         delete_option( 'b3_logo_in_email' );
                     }
 
-                    if ( isset( $_POST[ 'b3_email_styling' ] ) ) {
-                        update_option( 'b3_email_styling', $_POST[ 'b3_email_styling' ], true );
+                    if ( isset( $_POST[ 'b3_email_styling' ] ) && ! empty( $_POST[ 'b3_email_styling' ] ) ) {
+                        update_option( 'b3_email_styling', stripslashes( $_POST[ 'b3_email_styling' ] ), true );
+                    } else {
+                        delete_option( 'b3_email_styling' );
                     }
-                    if ( isset( $_POST[ 'b3_email_template' ] ) ) {
-                        // @TODO: check for htmlspecialchars
+                    if ( isset( $_POST[ 'b3_email_template' ] ) && ! empty( $_POST[ 'b3_email_template' ] ) ) {
                         update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), true );
+                    } else {
+                        delete_option( 'b3_email_template' );
                     }
 
+                    if ( isset( $_POST[ 'b3_lost_password_subject' ] ) && ! empty( $_POST[ 'b3_lost_password_subject' ] ) ) {
+                        update_option( 'b3_lost_password_subject', $_POST[ 'b3_lost_password_subject' ], true );
+                    } else {
+                        delete_option( 'b3_lost_password_subject' );
+                    }
+                    if ( isset( $_POST[ 'b3_lost_password_message' ] ) && ! empty( $_POST[ 'b3_lost_password_message' ] ) ) {
+                        update_option( 'b3_lost_password_message', htmlspecialchars( $_POST[ 'b3_lost_password_message' ] ), true );
+                    } else {
+                        delete_option( 'b3_lost_password_message' );
+                    }
                     if ( isset( $_POST[ 'b3_disable_admin_notification_password_change' ] ) && 1 == $_POST[ 'b3_disable_admin_notification_password_change' ] ) {
                         update_option( 'b3_disable_admin_notification_password_change', 1, true );
                     } else {
@@ -330,6 +354,7 @@
                         delete_option( 'b3_disable_admin_notification_new_user' );
                     }
 
+                    /* specific boxes */
                     if ( in_array( get_option( 'b3_registration_type', array() ), array( 'open', 'email_activation' ) ) ) {
                         if ( isset( $_POST[ 'b3_account_activated_subject' ] ) ) {
                             update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ], true );
@@ -396,23 +421,35 @@
                     }
 
                     if ( is_multisite() ) {
-                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_subject' ] ) ) {
+                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_subject' ] ) && ! empty( $_POST[ 'b3_confirm_wpmu_user_subject' ] ) ) {
                             update_option( 'b3_confirm_wpmu_user_subject', stripslashes( $_POST[ 'b3_confirm_wpmu_user_subject' ] ), true );
+                        } else {
+                            delete_option( 'b3_confirm_wpmu_user_subject' );
                         }
-                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_message' ] ) ) {
+                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_message' ] ) && ! empty( $_POST[ 'b3_confirm_wpmu_user_message' ] ) ) {
                             update_option( 'b3_confirm_wpmu_user_message', htmlspecialchars( $_POST[ 'b3_confirm_wpmu_user_message' ] ), true );
+                        } else {
+                            delete_option( 'b3_confirm_wpmu_user_message' );
                         }
-                        if ( isset( $_POST[ 'b3_activated_wpmu_user_subject' ] ) ) {
+                        if ( isset( $_POST[ 'b3_activated_wpmu_user_subject' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_subject' ] ) ) {
                             update_option( 'b3_activated_wpmu_user_subject', stripslashes( $_POST[ 'b3_activated_wpmu_user_subject' ] ), true );
+                        } else {
+                            delete_option( 'b3_activated_wpmu_user_subject' );
                         }
-                        if ( isset( $_POST[ 'b3_activated_wpmu_user_message' ] ) ) {
+                        if ( isset( $_POST[ 'b3_activated_wpmu_user_message' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_message' ] ) ) {
                             update_option( 'b3_activated_wpmu_user_message', htmlspecialchars( $_POST[ 'b3_activated_wpmu_user_message' ] ), true );
+                        } else {
+                            delete_option( 'b3_activated_wpmu_user_message' );
                         }
-                        if ( isset( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ) {
+                        if ( isset( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) && ! empty( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ) {
                             update_option( 'b3_new_wpmu_user_admin_subject', stripslashes( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ), true );
+                        } else {
+                            delete_option( 'b3_new_wpmu_user_admin_subject' );
                         }
-                        if ( isset( $_POST[ 'b3_new_wpmu_user_admin_message' ] ) ) {
+                        if ( isset( $_POST[ 'b3_new_wpmu_user_admin_message' ] ) && ! empty( $_POST[ 'b3_new_wpmu_user_admin_message' ] ) ) {
                             update_option( 'b3_new_wpmu_user_admin_message', htmlspecialchars( $_POST[ 'b3_new_wpmu_user_admin_message' ] ), true );
+                        } else {
+                            delete_option( 'b3_new_wpmu_user_admin_message' );
                         }
                     }
 
