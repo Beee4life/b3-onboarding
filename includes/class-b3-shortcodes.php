@@ -151,6 +151,8 @@
                     }
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
+                } elseif ( isset( $_REQUEST[ 'mu-activate' ] ) && 'success' == $_REQUEST[ 'mu-activate' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'mu_activate_success' );
                 } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' == $_REQUEST[ 'password' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'password_updated' );
                 } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' == $_REQUEST[ 'checkemail' ] ) {
