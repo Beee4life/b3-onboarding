@@ -160,7 +160,7 @@
     function b3_after_signup_user( $user_login, $user_email, $key, $meta = array() ) {
         $current_network = get_network();
         $subject         = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), $current_network->site_name );
-        $message         = sprintf( apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() ), $user_login, site_url( "wp-activate.php?key=$key" ) );
+        $message         = sprintf( apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() ), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
         $message         = b3_replace_template_styling( $message );
         $message         = strtr( $message, b3_replace_email_vars() );
         $message         = htmlspecialchars_decode( stripslashes( $message ) );
