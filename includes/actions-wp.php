@@ -170,6 +170,7 @@
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
 
+
     /**
      * Do stuff after activate user (only)
      *
