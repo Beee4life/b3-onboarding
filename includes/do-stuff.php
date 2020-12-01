@@ -293,14 +293,17 @@
             '%lostpass_url%'      => b3_get_lostpassword_url(),
             '%home_url%'          => get_home_url( '', '/' ),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
+            '%network_name%'      => get_site_option( 'site_name' ),
             '%registration_date%' => $local_registration_date,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
             '%user_ip%'           => $user_ip,
             '%user_login%'        => $user_login,
         );
+
+        // @TODO: look why this is here, test in non-mu site
         // Replace %blog_name% if used in the footer
-        if ( strpos( $replacements[ '%email_footer%' ], '%' ) !== false ) {
-            $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
+        if ( strpos( $replacements[ '%email_footer%' ], '%blog_name%' ) !== false ) {
+            // $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
         }
         if ( false != $activation ) {
             $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
