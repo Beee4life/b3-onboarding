@@ -56,7 +56,9 @@
      * @return false|string
      */
     function b3_default_email_footer() {
-        return __( 'This is an automated email from the website <a href="%home_url%">%blog_name%</a>.', 'b3-onboarding' );
+        $anchor = ( is_multisite() ) ? '%network_name%' : '%blog_name%';
+
+        return __( 'This is an automated email from the website <a href="%home_url%">' . $anchor . '</a>.', 'b3-onboarding' );
     }
 
 
@@ -401,6 +403,8 @@
     /**
      * Default activate user email subject (WPMU)
      *
+     * %s = Site name, translated/replaced by Wordpress
+     *
      * @return string|void
      */
     function b3_default_wpmu_activate_user_subject() {
@@ -413,8 +417,8 @@
      *
      * @return string|void
      */
-    function b3_default_wpmu_activate_user_email() {
-        return __( "Dear %s,\n\n<br /><br />To activate your account, please click <a href=\"%s\">this link</a>.<br /><br />After you activate, you will receive *another email* with your login.", 'b3-onboarding' );
+    function b3_default_wpmu_activate_user_message() {
+        return __( 'Dear %1$s,<br /><br />To activate your account, please click <a href="%2$s">this link</a>.<br /><br />After you activate, you will receive *another email* with your login.', 'b3-onboarding' );
     }
 
 
@@ -423,8 +427,45 @@
      *
      * @return string|void
      */
-    function b3_default_wpmu_user_activated_email() {
-        return __( 'Howdy USERNAME,<br /><br />Your new CUSTOM account is set up.<br /><br />You can log in with the following information:<br />Username: USERNAME<br />Password: PASSWORD<br />LOGINLINK<br /><br />Thanks!<br /><br />The Team @ SITE_NAME', 'b3-onboarding' );
+    function b3_default_wpmu_user_activated_subject() {
+        return __( 'Welcome to %1$s', 'b3-onboarding' );
+    }
+
+
+    /**
+     * Default user activated email message (WPMU)
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_user_activated_message() {
+        return __( 'Howdy %1$s,<br /><br />Your new account is set up.<br /><br />You can log in with the following information:<br />Username: %2$s<br />Password: %3$s<br />You can login <a href="%4$s">here</a>.<br /><br />The Team @ %5$s', 'b3-onboarding' );
+    }
+
+
+    /**
+     * Default admin message for new wpmu user (no site)
+     *
+     * @param false $user
+     *
+     * @return string
+     */
+    function b3_default_message_new_wpmu_user_admin( $user = false ) {
+
+        $message = '';
+
+        if ( false != $user ) {
+            $options_site_url = esc_url( network_admin_url( 'settings.php' ) );
+
+            $message = sprintf(
+                /* translators: New user notification email. 1: User login, 2: User IP address, 3: URL to Network Settings screen. */
+                __( 'New user: %1$s<br /><br />Remote IP address: %2$s<br /><br />Disable these notifications <a href="%3$s">here</a>.', 'b3-onboarding' ),
+                $user->user_login,
+                wp_unslash( $_SERVER[ 'REMOTE_ADDR' ] ),
+                $options_site_url
+            );
+        }
+
+        return $message;
     }
 
 
