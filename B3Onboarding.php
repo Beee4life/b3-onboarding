@@ -954,7 +954,9 @@
                             } else {
 
                                 // if is_multisite
-                                $register = false;
+                                $meta_data  = [];
+                                $register   = false;
+
                                 if ( 'closed' == $registration_type ) {
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
@@ -966,27 +968,26 @@
                                 } else {
                                 }
 
-                                // @TODO: look into this
-                                // validate_user_signup();
-
                                 if ( true == $register ) {
-                                    // is_multisite
-                                    $meta_data  = [];
-                                    $sub_domain = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
 
-                                    if ( false != $sub_domain && ! isset( $_POST[ 'dont_index' ] ) ) {
-                                        $meta_data[ 'blog_public' ] = '1';
-                                    }
+                                    $signup_for = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
+
                                     if ( isset( $_POST[ 'lang_id' ] ) ) {
                                         $meta_data[ 'lang_id' ] = $_POST[ 'lang_id' ];
                                     }
 
+                                    if ( 'blog' == $signup_for ) {
 
-                                    if ( false != $sub_domain ) {
-                                        // validate_blog_signup();
-                                        // @TODO: check this for options (MS)
-                                        if ( true == domain_exists( $sub_domain, '/' ) ) {
-                                            $redirect_url = add_query_arg( 'registration-error', 'domain_exists', $redirect_url );
+                                        // $sub_domain = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
+                                        // if ( false != $sub_domain && ! isset( $_POST[ 'dont_index' ] ) ) {
+                                        //     $meta_data[ 'blog_public' ] = '1';
+                                        // }
+                                        $blog_valid = wpmu_validate_blog_signup( $_POST[ 'blogname' ], $_POST[ 'blog_title' ] );
+                                        echo '<pre>'; var_dump($blog_valid[ 'errors' ]->errors); echo '</pre>'; exit;
+                                        if ( ! empty( $blog_valid[ 'errors' ]->errors ) ) {
+                                            // @TODO: make this work properly
+                                            $errors       = join( ',', $blog_valid[ 'errors' ]->get_error_codes() );
+                                            $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                         } else {
                                             $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
                                             if ( is_wp_error( $result ) ) {
@@ -995,13 +996,14 @@
                                             } else {
                                                 // Success, redirect to login page.
                                                 $redirect_url = wp_login_url();
-                                                $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
-                                                do_action( 'signup_finished' ); // @TODO: do i need this ?
+                                                $redirect_url = add_query_arg( 'registered', 'wpmu_confirm_email', $redirect_url );
                                             }
                                         }
-                                    } else {
+                                        wp_safe_redirect( $redirect_url );
+                                        exit;
+                                    } elseif ( 'user' == $signup_for ) {
                                         // just register user
-                                        $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
+                                        $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, $meta_data );
                                         if ( true == $result ) {
                                             // Success, redirect to login page.
                                             $redirect_url = b3_get_login_url();
@@ -1015,7 +1017,6 @@
 
                                         wp_safe_redirect( $redirect_url );
                                         exit;
-
                                     }
                                 }
                             }
@@ -1677,6 +1678,12 @@
                     // Multisite
                     case 'domain_exists':
                         return esc_html__( 'Sorry, this subdomain has already been taken.', 'b3-onboarding' );
+
+                    case 'blogname':
+                        return esc_html__( 'Please enter a site address.', 'b3-onboarding' );
+
+                    case 'blog_title':
+                        return esc_html__( 'Please enter a title.', 'b3-onboarding' );
 
                     case 'user_registered':
                         return esc_html__( 'You have successfully registered. Please check your email for an activation link.', 'b3-onboarding' );
