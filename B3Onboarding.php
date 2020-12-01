@@ -98,6 +98,7 @@
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 // add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
+                add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
@@ -105,7 +106,14 @@
                 // add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
 
                 // Filters
-                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                $add_filter = false;
+                if ( is_multisite() && is_main_site() && isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
+                    //@TODO: test on non main site
+                    $add_filter = true;
+                } elseif ( ! is_multisite() ) {
+                    $add_filter = true;
+                }
+                if ( true == $add_filter ) {
                     add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
                 }
                 add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
@@ -208,7 +216,7 @@
                     b3_setup_initial_pages();
                     // set default values
                     $this->b3_set_default_settings();
-                    
+
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
                         add_role( 'b3_activation', __( 'Awaiting activation' ), array() );
@@ -233,7 +241,7 @@
                 } else {
                     update_option( 'users_can_register', '0' );
                 }
-    
+
                 if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
                     $meta_keys   = b3_get_all_custom_meta_keys();
                     $meta_keys[] = 'widget_b3-widget';
@@ -241,7 +249,7 @@
                         delete_option( $key );
                     }
                 }
-    
+
             }
 
 
@@ -257,8 +265,12 @@
                     update_option( 'b3_registration_type', 'open' );
                 } else {
 
-                    $public_registration = get_site_option( 'registration' );
+                    if ( is_main_site() ) {
+                        update_site_option( 'registrationnotification', 'no' );
+                    }
 
+                    // @TODO: checkif I need this
+                    $public_registration = get_site_option( 'registration' );
                     if ( is_main_site() ) {
                         if ( 'user' == $public_registration ) {
                             update_blog_option( get_current_blog_id(), 'b3_registration_type', 'ms_register_user' );
@@ -296,7 +308,7 @@
              */
             public function b3_new_blog( $new_site ) {
                 // @TODO: add setting if local account page is 'wanted'
-                
+
                 /*
                  * Available vars:
                  * - blog_id (= site id)
@@ -305,7 +317,7 @@
                  * - site id (= network id)
                  * - lang_id
                  */
-                
+
                 switch_to_blog( $new_site->blog_id );
                 // create new page account
                 $result = wp_insert_post( array(
@@ -324,7 +336,7 @@
                     update_post_meta( $result, '_b3_page', true );
                 }
                 restore_current_blog();
-    
+
             }
 
             /**
@@ -514,17 +526,26 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                
-                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
-                    include 'includes/admin-page.php'; // content for the settings page
-                    add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
-                    
-                    include 'includes/user-approval-page.php'; // content for the settings page
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
-                    
-                    if ( true == get_option( 'b3_debug_info', false ) ) {
-                        include 'includes/debug-page.php'; // content for the settings page
-                        add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
+
+                $add_menu = false;
+                if ( is_multisite() && is_main_site() && isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
+                    $add_menu = true;
+                } elseif ( ! is_multisite() ) {
+                    $add_menu = true;
+                }
+
+                if ( true == $add_menu ) {
+                    if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                        include 'includes/admin-page.php'; // content for the settings page
+                        add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+
+                        include 'includes/user-approval-page.php'; // content for the settings page
+                        add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'promote_users', 'b3-user-approval', 'b3_user_approval' );
+
+                        if ( true == get_option( 'b3_debug_info', false ) ) {
+                            include 'includes/debug-page.php'; // content for the settings page
+                            add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
+                        }
                     }
                 }
             }
@@ -539,6 +560,7 @@
                     <script type="text/javascript">
                         jQuery(document).ready(function () {
                             jQuery('.form-table input[name="registration"]').prop('disabled', true);
+                            jQuery('.form-table input[name="registrationnotification"]').prop('disabled', true);
                         });
                     </script>
                     <?php
@@ -862,7 +884,7 @@
 
                             return;
                         } else {
-    
+
                             if ( is_multisite() ) {
                                 $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
                             } else {
@@ -871,7 +893,7 @@
                             $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role                      = get_option( 'default_role' );
                             $registration_type         = get_option( 'b3_registration_type', false );
-                            
+
                             if ( isset( $_POST[ 'first_name' ] ) ) {
                                 $meta_data[ 'first_name' ] = sanitize_text_field( $_POST[ 'first_name' ] );
                             }
@@ -943,10 +965,10 @@
                                     $register = true;
                                 } else {
                                 }
-                                
+
                                 // @TODO: validate user ?
                                 // validate_user_signup();
-    
+
                                 if ( true == $register ) {
                                     // is_multisite
                                     if ( isset( $_POST[ 'blog_public' ] ) ) {
@@ -955,7 +977,7 @@
                                     if ( isset( $_POST[ 'lang_id' ] ) ) {
                                         $meta_data[ 'lang_id' ] = $_POST[ 'lang_id' ];
                                     }
-    
+
                                     $sub_domain = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
 
                                     if ( false != $sub_domain ) {
@@ -1753,7 +1775,7 @@
              * @return bool|WP_Error
              */
             private function b3_register_wpmu_user( $user_name, $user_email, $sub_domain, $meta = array() ) {
-    
+
                 $b3_register_type   = get_option( 'b3_registration_type', false );
                 $errors             = false;
                 $main_register_type = get_site_option( 'registration' );
@@ -1905,10 +1927,16 @@
              */
             public function b3_admin_notices() {
                 // not for single site in MU
-                if ( is_multisite() && ! is_main_site() ) {
-                    echo sprintf( '<div class="error"><p>' . __( 'B3 Onboarding is not meant for single site activation in a multisite. Registrations are handledby the main site. No functions will work (for you). Please deactivate it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>', esc_url( admin_url( 'plugins.php?s=b3&plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
+                if ( is_multisite() ) {
+                    if ( ! is_main_site() ) {
+                        echo sprintf( '<div class="error"><p>' . __( 'B3 Onboarding is not meant for single site activation in a multisite. Registrations are handled by the main site. No functions will work (for you). Please deactivate it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>', esc_url( admin_url( 'plugins.php?s=b3&plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
+                    } else {
+                        if ( ! isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
+                            echo sprintf( '<div class="error"><p>' . __( 'If you want to take full advantage of this plugin, you should \'network activate\' it, otherwise some functions are not \'reached\'. Please deactivate the plugin <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>', esc_url( admin_url( 'plugins.php?s=b3&plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
+                        }
+                    }
                 }
-                
+
                 // beta notice
                 if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                     $message = __( "You're using a beta version, which is not finished yet and can give unexpected results.", 'b3-onboarding' );
@@ -1942,7 +1970,23 @@
                     do_action( 'b3_verify_filter_input' );
                 }
             }
+
+
+            /**
+             * Set network admin notice on "network Settings" screen
+             */
+            function b3_network_admin_notices() {
+                $screen = get_current_screen();
+                if ( 'settings-network' == $screen->id ) {
+                    echo sprintf( '<div class="notice notice-warning"><p>'. __( 'The setting for "Allow new registrations" and "Registration notification" are controlled by %s. Find them <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                        'B3 Onboarding',
+                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
+                        esc_html__( 'here', 'b3-onboarding' )
+                    );
+                }
+            }
         }
+
 
         /**
          * The main function responsible for returning the one true B3Onboarding instance to functions everywhere.
