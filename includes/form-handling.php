@@ -375,7 +375,6 @@
                             update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ), true );
                             update_option( 'b3_email_activation_message', htmlspecialchars( $_POST[ 'b3_email_activation_message' ] ), true );
                         }
-
                     }
 
                     if ( 'request_access' == get_option( 'b3_registration_type', false ) ) {
@@ -394,7 +393,27 @@
                         } else {
                             delete_option( 'b3_disable_delete_user_email' );
                         }
+                    }
 
+                    if ( is_multisite() ) {
+                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_subject' ] ) ) {
+                            update_option( 'b3_confirm_wpmu_user_subject', stripslashes( $_POST[ 'b3_confirm_wpmu_user_subject' ] ), true );
+                        }
+                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_message' ] ) ) {
+                            update_option( 'b3_confirm_wpmu_user_message', htmlspecialchars( $_POST[ 'b3_confirm_wpmu_user_message' ] ), true );
+                        }
+                        if ( isset( $_POST[ 'b3_activated_wpmu_user_subject' ] ) ) {
+                            update_option( 'b3_activated_wpmu_user_subject', stripslashes( $_POST[ 'b3_activated_wpmu_user_subject' ] ), true );
+                        }
+                        if ( isset( $_POST[ 'b3_activated_wpmu_user_message' ] ) ) {
+                            update_option( 'b3_activated_wpmu_user_message', htmlspecialchars( $_POST[ 'b3_activated_wpmu_user_message' ] ), true );
+                        }
+                        if ( isset( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ) {
+                            update_option( 'b3_new_wpmu_user_admin_subject', stripslashes( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ), true );
+                        }
+                        if ( isset( $_POST[ 'b3_new_wpmu_user_admin_message' ] ) ) {
+                            update_option( 'b3_new_wpmu_user_admin_message', htmlspecialchars( $_POST[ 'b3_new_wpmu_user_admin_message' ] ), true );
+                        }
                     }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Email settings saved', 'b3-onboarding' ) );
