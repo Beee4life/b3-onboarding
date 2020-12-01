@@ -519,6 +519,62 @@ All at ###SITENAME###
 
 
     /**
+     * Prevent update registration option
+     *
+     * @param $new_value
+     * @param $old_value
+     *
+     * @return false|mixed|string|void
+     */
+    function b3_prevent_update_registration_option( $new_value, $old_value ) {
+        $b3_setting = get_option( 'b3_registration_type' );
+        if ( is_multisite() && is_main_site() ) {
+            if ( 'closed' == $b3_setting ) {
+                $b3_setting = 'none';
+            } elseif ( 'ms_register_user' == $b3_setting ) {
+                $b3_setting = 'user';
+            } elseif ( 'ms_loggedin_register' == $b3_setting ) {
+                $b3_setting = 'blog';
+            } elseif ( 'ms_register_site_user' == $b3_setting ) {
+                $b3_setting = 'all';
+            } else {
+                $b3_setting = 'all';
+            }
+        } elseif ( ! is_multisite() ) {
+            // @TODO: test this
+            if ( 'closed' == $b3_setting ) {
+                $b3_setting = '0';
+            } elseif ( in_array( $b3_setting, [ 'request_access', 'email_activation', 'open' ] ) ) {
+                $b3_setting = '1';
+            } else {
+                $b3_setting = '1';
+            }
+        }
+
+        $new_value = $b3_setting;
+
+        return $new_value;
+
+    }
+    add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multissite
+    add_filter( 'pre_update_site_option_registration', 'b3_prevent_update_registration_option', 10, 2 ); // multisite
+
+
+    /**
+     * Prevent update setting to inform admins for new users
+     *
+     * @param $new_value
+     * @param $old_value
+     *
+     * @return string
+     */
+    function b3_prevent_update_registration_notification_option( $new_value, $old_value ) {
+        return 'no';
+    }
+    add_filter( 'pre_update_site_option_registrationnotification', 'b3_prevent_update_registration_notification_option', 10, 2 );
+
+
+    /**
      * Disable WPMU user signup email to take it over
      *
      * @param       $user_login
@@ -533,17 +589,17 @@ All at ###SITENAME###
     }
     add_filter( 'wpmu_signup_user_notification', 'b3_disable_wpmu_user_signup_notification', 10, 5 );
 
+
+    /**
+     * Disable WPMU user welcome email to take it over
+     *
+     * @param $user_id
+     * @param $password
+     * @param $meta
+     *
+     * @return false
+     */
     function b3_disable_welcome_mu_user_email( $user_id, $password, $meta ) {
         return false;
     }
     add_filter( 'wpmu_welcome_user_notification', 'b3_disable_welcome_mu_user_email', 10, 3 );
-
-    function b3_override_email_subject() {
-        return 'Custom Subject';
-    }
-    // add_filter( 'update_welcome_user_subject', 'b3_override_email_subject' );
-
-    function b3_override_email_email() {
-        return 'Custom content';
-    }
-    // add_filter( 'update_welcome_user_email', 'b3_override_email_email' );
