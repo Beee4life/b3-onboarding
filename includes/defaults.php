@@ -471,7 +471,7 @@
      */
     function b3_default_message_new_wpmu_user_admin( $user = false ) {
 
-        $options_site_url = esc_url( network_admin_url( 'settings.php' ) );
+        $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
 
         if ( false != $user ) {
             /* translators: New user notification email. 1: User login, 2: User IP address, 3: URL to Network Settings screen. */
@@ -488,6 +488,7 @@
                 $options_site_url
             );
         } else {
+            // for placeholder only
             /* translators: New user notification email. 1: User IP address, 2: URL to Network Settings screen. */
             $split_message = __( 'New user: dummy', 'b3-onboarding' ) . "\n";
             $split_message .= '<br /><br />' . "\n";
