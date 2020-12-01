@@ -890,9 +890,9 @@
                             } else {
                                 $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
                             }
-                            $user_email                = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
-                            $role                      = get_option( 'default_role' );
-                            $registration_type         = get_option( 'b3_registration_type', false );
+                            $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
+                            $role              = get_option( 'default_role' );
+                            $registration_type = get_option( 'b3_registration_type', false );
 
                             if ( isset( $_POST[ 'first_name' ] ) ) {
                                 $meta_data[ 'first_name' ] = sanitize_text_field( $_POST[ 'first_name' ] );
@@ -966,13 +966,13 @@
                                 } else {
                                 }
 
-                                // @TODO: validate user ?
+                                // @TODO: look into this
                                 // validate_user_signup();
 
                                 if ( true == $register ) {
                                     // is_multisite
-                                    if ( isset( $_POST[ 'blog_public' ] ) ) {
-                                        $meta_data[ 'blog_public' ] = $_POST[ 'blog_public' ];
+                                    if ( ! isset( $_POST[ 'dont_index' ] ) ) {
+                                        $meta_data[ 'blog_public' ] = '1';
                                     }
                                     if ( isset( $_POST[ 'lang_id' ] ) ) {
                                         $meta_data[ 'lang_id' ] = $_POST[ 'lang_id' ];
@@ -1000,15 +1000,20 @@
                                     } else {
                                         // just register user
                                         $result = $this->b3_register_wpmu_user( $user_login, $user_email, $sub_domain, $meta_data );
-                                        if ( is_wp_error( $result ) ) {
+                                        if ( true == $result ) {
+                                            // Success, redirect to login page.
+                                            $redirect_url = b3_get_login_url();
+                                            $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
+
+                                        } elseif ( is_wp_error( $result ) ) {
+                                            $redirect_url = b3_get_register_url();
                                             $errors       = join( ',', $result->get_error_codes() );
                                             $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
-                                        } else {
-                                            // Success, redirect to login page.
-                                            $redirect_url = wp_login_url();
-                                            $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
-                                            do_action( 'signup_finished' ); // @TODO: do i need this ?
                                         }
+
+                                        wp_safe_redirect( $redirect_url );
+                                        exit;
+
                                     }
                                 }
                             }
@@ -1787,12 +1792,14 @@
                         if ( false == $sub_domain ) {
                             // @TODO: throw error if no subdomain is chosen (MS)
                             wpmu_signup_user( $user_name, $user_email, $meta );
-                            $user_registered = true;
+
+                            return true;
                         } else {
                             wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
-                            $site_id         = get_id_from_blogname( $sub_domain );
-                            $user_registered = true;
-                            do_action( 'b3_after_insert_site', $site_id );
+                            // @TODO: do i need this
+                            // $site_id = get_id_from_blogname( $sub_domain );
+
+                            return true;
                         }
                     } elseif ( 'none' == $main_register_type ) {
                         // @TODO: add if for user or user + site (MS)
@@ -1804,21 +1811,12 @@
                     }
 
                 } else {
-
-                    if ( 'user' == $main_register_type && 'closed' != $b3_register_type ) {
-                        wpmu_signup_user( $user_name, $user_email, $meta );
-                        $user_registered = true;
-                    } else {
-                        $errors = new WP_Error( 'unknown', $this->b3_get_return_message( 'unknown' ) );
-                    }
-
+                    // ???
                 }
 
-                if ( true == $user_registered ) {
-                    // $errors = new WP_Error( 'user_registered', $this->b3_get_return_message( 'user_registered' ) );
+                if ( false != $errors ) {
+                    return $errors;
                 }
-
-                return $errors;
             }
 
 
