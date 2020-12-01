@@ -422,7 +422,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= __( 'To activate your account, please click <a href="%2$s">this link</a>.', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' );
+        $message .= __( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
 
         return $message;
     }
