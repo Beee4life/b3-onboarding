@@ -977,12 +977,7 @@
                                     }
 
                                     if ( 'blog' == $signup_for ) {
-
-                                        // $sub_domain = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
-                                        // if ( false != $sub_domain && ! isset( $_POST[ 'dont_index' ] ) ) {
-                                        //     $meta_data[ 'blog_public' ] = '1';
-                                        // }
-                                        $blog_valid = wpmu_validate_blog_signup( $_POST[ 'blogname' ], $_POST[ 'blog_title' ] );
+                                        $blog_valid = validate_blog_form();
                                         echo '<pre>'; var_dump($blog_valid[ 'errors' ]->errors); echo '</pre>'; exit;
                                         if ( ! empty( $blog_valid[ 'errors' ]->errors ) ) {
                                             // @TODO: make this work properly
@@ -1003,6 +998,7 @@
                                         exit;
                                     } elseif ( 'user' == $signup_for ) {
                                         // just register user
+                                        // validate_user_form();
                                         $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, $meta_data );
                                         if ( true == $result ) {
                                             // Success, redirect to login page.
