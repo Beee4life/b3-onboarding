@@ -971,14 +971,16 @@
 
                                 if ( true == $register ) {
                                     // is_multisite
-                                    if ( ! isset( $_POST[ 'dont_index' ] ) ) {
+                                    $meta_data  = [];
+                                    $sub_domain = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
+
+                                    if ( false != $sub_domain && ! isset( $_POST[ 'dont_index' ] ) ) {
                                         $meta_data[ 'blog_public' ] = '1';
                                     }
                                     if ( isset( $_POST[ 'lang_id' ] ) ) {
                                         $meta_data[ 'lang_id' ] = $_POST[ 'lang_id' ];
                                     }
 
-                                    $sub_domain = ( isset( $_POST[ 'blogname' ] ) ) ? $_POST[ 'blogname' ] : false;
 
                                     if ( false != $sub_domain ) {
                                         // validate_blog_signup();
@@ -1355,54 +1357,103 @@
              * @since 1.0.6
              */
             public function b3_do_user_activate() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    if ( ! empty( $_GET[ 'action' ] ) && 'activate' == $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+                if ( is_multisite() ) {
+                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' == $_GET[ 'activate' ] ) {
 
-                        global $wpdb;
+                        $activate_cookie = 'wp-activate-' . COOKIEHASH;
+                        $redirect_url    = b3_get_login_url();
+                        $result          = null;
 
-                        $errors = false;
-                        $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', $_GET[ 'key' ] );
-
-                        if ( empty( $key ) || ! is_string( $key ) ) {
-                            $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                        if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
+                            wp_die( __( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), __( 'An error occurred during the activation' ), 400 );
+                        } elseif ( ! empty( $_GET[ 'key' ] ) ) {
+                            $key = $_GET[ 'key' ];
+                        } elseif ( ! empty( $_POST[ 'key' ] ) ) {
+                            $key = $_POST[ 'key' ];
                         }
 
-                        if ( empty( $_GET[ 'user_login' ] ) || ! is_string( $_GET[ 'user_login' ] ) ) {
-                            $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                        if ( isset( $key ) ) {
+                            list( $activate_path ) = explode( '?', wp_unslash( $_SERVER['REQUEST_URI'] ) );
+                            $valid_error_codes = array( 'already_active', 'blog_taken' );
+
+                            $result = wpmu_activate_signup( $key );
+                        }
+                        // echo '<pre>'; var_dump($result); echo '</pre>'; exit;
+
+                        if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
+                            $key    = $_COOKIE[ $activate_cookie ];
+                            $result = wpmu_activate_signup( $key );
+                            setcookie( $activate_cookie, ' ', time() - YEAR_IN_SECONDS, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
                         }
 
-                        // Validate activation key
-                        $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, $_GET[ 'user_login' ] ) );
+                        if ( null === $result || ( is_wp_error( $result ) && 'invalid_key' === $result->get_error_code() ) ) {
+                            status_header( 404 );
+                        } elseif ( is_wp_error( $result ) ) {
+                            $error_code = $result->get_error_code();
 
-                        if ( empty( $user ) ) {
-                            $errors = new WP_Error( 'invalid_user', __( 'Invalid user', 'b3-onboarding' ) );
-                        }
-
-                        if ( is_wp_error( $errors ) ) {
-                            // errors found
-                            $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
-                        } else {
-
-                            if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
-                                $redirect_url = b3_get_lostpassword_url();
-                            } else {
-                                $redirect_url = b3_get_login_url();
+                            if ( ! in_array( $error_code, $valid_error_codes, true ) ) {
+                                status_header( 400 );
                             }
-                            $redirect_url = add_query_arg( array( 'activate' => 'success' ), $redirect_url );
-
-                            // remove user_activation_key
-                            $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
-
-                            // activate user, change user role
-                            $user_object = new WP_User( $user->ID );
-                            $user_object->set_role( get_option( 'default_role' ) );
-
-                            do_action( 'b3_after_user_activated', $user->ID );
-
                         }
 
-                        wp_safe_redirect( $redirect_url );
-                        exit;
+                        if ( true == $result ) {
+                            $redirect_url = add_query_arg( array( 'mu-activate' => 'success' ), $redirect_url );
+                            wp_safe_redirect( $redirect_url );
+                            exit;
+                        }
+
+                    }
+                } else {
+
+                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                        if ( ! empty( $_GET[ 'action' ] ) && 'activate' == $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+
+                            global $wpdb;
+
+                            $errors = false;
+                            $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', $_GET[ 'key' ] );
+
+                            if ( empty( $key ) || ! is_string( $key ) ) {
+                                $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                            }
+
+                            if ( empty( $_GET[ 'user_login' ] ) || ! is_string( $_GET[ 'user_login' ] ) ) {
+                                $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                            }
+
+                            // Validate activation key
+                            $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, $_GET[ 'user_login' ] ) );
+
+                            if ( empty( $user ) ) {
+                                $errors = new WP_Error( 'invalid_user', __( 'Invalid user', 'b3-onboarding' ) );
+                            }
+
+                            if ( is_wp_error( $errors ) ) {
+                                // errors found
+                                $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
+                            } else {
+
+                                if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                                    $redirect_url = b3_get_lostpassword_url();
+                                } else {
+                                    $redirect_url = b3_get_login_url();
+                                }
+                                $redirect_url = add_query_arg( array( 'activate' => 'success' ), $redirect_url );
+
+                                // remove user_activation_key
+                                $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
+
+                                // activate user, change user role
+                                $user_object = new WP_User( $user->ID );
+                                $user_object->set_role( get_option( 'default_role' ) );
+
+                                do_action( 'b3_after_user_activated', $user->ID );
+
+                            }
+
+                            wp_safe_redirect( $redirect_url );
+                            exit;
+                        }
                     }
                 }
             }
@@ -1598,6 +1649,9 @@
                         } else {
                             return esc_html__( 'You have successfully activated your account. You can now login.', 'b3-onboarding' );
                         }
+
+                    case 'mu_activate_success':
+                        return esc_html__( 'You have successfully activated your account. Your password has been emailed to you.', 'b3-onboarding' );
 
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
