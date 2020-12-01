@@ -148,7 +148,7 @@
 
 
     /**
-     * Do stuff after signup WPMU user
+     * Do stuff after signup WPMU user (only)
      *
      * @since 2.6.0
      *
@@ -158,13 +158,58 @@
      * @param array $meta
      */
     function b3_after_signup_user( $user_login, $user_email, $key, $meta = array() ) {
-        $subject = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), get_option( 'blogname' ) );
-        $message = sprintf( apply_filters( 'b3_wpmu_activate_user_email', b3_get_wpmu_activate_user_email() ), $user_login, site_url( "wp-activate.php?key=$key" ) );
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars() );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
+        $current_network = get_network();
+        $subject         = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), $current_network->site_name );
+        $message         = sprintf( apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() ), $user_login, site_url( "wp-activate.php?key=$key" ) );
+        $message         = b3_replace_template_styling( $message );
+        $message         = strtr( $message, b3_replace_email_vars() );
+        $message         = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
 
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
+
+    /**
+     * Do stuff after activate user (only)
+     *
+     * @since 2.6.0
+     *
+     * @param       $user_id
+     * @param       $password
+     * @param array $meta
+     */
+    function b3_after_activate_user( $user_id, $password, $meta = array() ) {
+        $current_network = get_network();
+        $user            = get_userdata( $user_id );
+        $subject         = sprintf( apply_filters( 'b3_wpmu_user_activated_subject', b3_get_wpmu_user_activated_subject() ), $current_network->site_name, $user->user_login );
+        $message         = sprintf( apply_filters( 'b3_wpmu_user_activated_message', b3_get_wpmu_user_activated_message() ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        $message         = b3_replace_template_styling( $message );
+        $message         = strtr( $message, b3_replace_email_vars() );
+        $message         = htmlspecialchars_decode( stripslashes( $message ) );
+
+        wp_mail( $user->user_email, $subject, $message, [] );
+
+    }
+    add_action( 'wpmu_activate_user', 'b3_after_activate_user', 10, 3 );
+
+
+    /**
+     * Send admin message for new wpmu user (no site)
+     *
+     * @since 2.6.0
+     *
+     * @param $user_id
+     */
+    function b3_override_new_mu_user_admin_email( $user_id ) {
+        $user    = get_userdata( $user_id );
+        $subject = sprintf( __( 'New User Registration: %s' ), $user->user_login );
+        $message = b3_get_new_wpmu_user_message_admin( $user );
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_replace_email_vars() );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+        wp_mail( $user->user_email, $subject, $message, [] );
+
+    }
+    add_action( 'wpmu_new_user', 'b3_override_new_mu_user_admin_email' );
