@@ -114,7 +114,7 @@
         $registration_with_email_only = get_option( 'b3_register_email_only', false );
 
         ob_start();
-        
+
         if ( is_multisite() ) {
             ?>
             <div class="b3_form-element b3_form-element--login">
@@ -247,17 +247,16 @@
                     <?php // @TODO: add languages option ?>
                     <div class="b3_form-element b3_form-element--visbility">
                         <p class="privacy-intro">
-                            <?php _e( 'Privacy:' ); ?>
-                            <?php _e( 'Allow search engines to index this site.' ); ?>
+                            <strong><?php _e( 'Privacy' ); ?></strong>
                             <br style="clear:both" />
                             <label class="checkbox" for="blog_public_on">
-                                <input type="radio" id="blog_public_on" name="blog_public" value="1" checked="checked" />
-                                <strong><?php _e( 'Yes' ); ?></strong>
+                                <input type="checkbox" id="blog_public_on" name="dont_index" value="1" />
+                                <?php _e( "Don't let search engines index this site." ); ?>
                             </label>
-                            <label class="checkbox" for="blog_public_off">
-                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />
-                                <strong><?php _e( 'No' ); ?></strong>
-                            </label>
+<!--                            <label class="checkbox" for="blog_public_off">-->
+<!--                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />-->
+<!--                                <strong>--><?php //_e( 'No' ); ?><!--</strong>-->
+<!--                            </label>-->
                         </p>
                     </div>
                 </div>
