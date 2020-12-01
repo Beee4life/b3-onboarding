@@ -139,23 +139,15 @@
         }
         if ( is_multisite() ) {
             $email_boxes[] = array(
-                'id'    => 'visitor_register',
-                'title' => esc_html__( 'Visitor registered user', 'b3-onboarding' ),
+                'id'    => 'confirm_user_email',
+                'title' => esc_html__( 'Confirm email (user)', 'b3-onboarding' ),
             );
             $email_boxes[] = array(
-                'id'    => 'visitor_register_site',
-                'title' => esc_html__( 'Visitor registered site', 'b3-onboarding' ),
+                'id'    => 'activated_user_email',
+                'title' => esc_html__( 'User activated (user)', 'b3-onboarding' ),
             );
             $email_boxes[] = array(
-                'id'    => 'user_registered_site',
-                'title' => esc_html__( 'User registered site', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'user_deleted_site',
-                'title' => esc_html__( 'User deleted site', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'new_user_admin',
+                'id'    => 'new_wpmu_user_admin',
                 'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
             );
         }

@@ -102,6 +102,15 @@
                     include 'emails/lost-password.php';
                     break;
                 // Multisite specific
+                case 'confirm_user_email':
+                    include 'emails/ms-confirm-user-email.php';
+                    break;
+                case 'activated_user_email':
+                    include 'emails/ms-activated-user-email.php';
+                    break;
+                case 'new_wpmu_user_admin':
+                    include 'emails/ms-new-user-admin.php';
+                    break;
                 case 'visitor_register':
                     include 'emails/ms-visitor-register.php';
                     break;

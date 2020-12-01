@@ -418,7 +418,13 @@
      * @return string|void
      */
     function b3_default_wpmu_activate_user_message() {
-        return __( 'Dear %1$s,<br /><br />To activate your account, please click <a href="%2$s">this link</a>.<br /><br />After you activate, you will receive *another email* with your login.', 'b3-onboarding' );
+        $message = __( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'To activate your account, please click <a href="%2$s">this link</a>.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' );
+
+        return $message;
     }
 
 
@@ -438,7 +444,21 @@
      * @return string|void
      */
     function b3_default_wpmu_user_activated_message() {
-        return __( 'Howdy %1$s,<br /><br />Your new account is set up.<br /><br />You can log in with the following information:<br />Username: %2$s<br />Password: %3$s<br />You can login <a href="%4$s">here</a>.<br /><br />The Team @ %5$s', 'b3-onboarding' );
+        $message = __( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Username: %2$s', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Password: %3$s', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'You can login <a href="%4$s">here</a>.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'The Team @ %5$s', 'b3-onboarding' );
+
+        return $message;
     }
 
 
@@ -451,15 +471,32 @@
      */
     function b3_default_message_new_wpmu_user_admin( $user = false ) {
 
-        $message = '';
+        $options_site_url = esc_url( network_admin_url( 'settings.php' ) );
 
         if ( false != $user ) {
-            $options_site_url = esc_url( network_admin_url( 'settings.php' ) );
+            /* translators: New user notification email. 1: User login, 2: User IP address, 3: URL to Network Settings screen. */
+            $split_message = __( 'New user: %1$s', 'b3-onboarding' ) . "\n";
+            $split_message .= '<br /><br />' . "\n";
+            $split_message .= __( 'Remote IP address: %2$s.', 'b3-onboarding' ) . "\n";
+            $split_message .= '<br /><br />' . "\n";
+            $split_message .= __( 'Disable these notifications <a href="%3$s">here</a>.', 'b3-onboarding' );
 
             $message = sprintf(
-                /* translators: New user notification email. 1: User login, 2: User IP address, 3: URL to Network Settings screen. */
-                __( 'New user: %1$s<br /><br />Remote IP address: %2$s<br /><br />Disable these notifications <a href="%3$s">here</a>.', 'b3-onboarding' ),
+                $split_message,
                 $user->user_login,
+                wp_unslash( $_SERVER[ 'REMOTE_ADDR' ] ),
+                $options_site_url
+            );
+        } else {
+            /* translators: New user notification email. 1: User IP address, 2: URL to Network Settings screen. */
+            $split_message = __( 'New user: dummy', 'b3-onboarding' ) . "\n";
+            $split_message .= '<br /><br />' . "\n";
+            $split_message .= __( 'Remote IP address: %1$s.', 'b3-onboarding' ) . "\n";
+            $split_message .= '<br /><br />' . "\n";
+            $split_message .= __( 'Disable these notifications <a href="%2$s">here</a>.', 'b3-onboarding' );
+
+            $message = sprintf(
+                $split_message,
                 wp_unslash( $_SERVER[ 'REMOTE_ADDR' ] ),
                 $options_site_url
             );
