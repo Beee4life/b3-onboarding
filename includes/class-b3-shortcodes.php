@@ -132,7 +132,7 @@
                     if ( is_multisite() ) {
                         $attributes[ 'messages' ][] = sprintf(
                             __( 'You have successfully registered to <strong>%s</strong>. We have emailed you an activation link.', 'b3-onboarding' ),
-                            get_bloginfo( 'name' )
+                            get_site_option( 'site_name' )
                         );
                     } else {
                         if ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
