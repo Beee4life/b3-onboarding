@@ -8,16 +8,16 @@
      */
     function b3_render_registration_tab() {
 
-        $custom_passwords             = get_option( 'b3_activate_custom_passwords', false );
-        $first_last                   = get_option( 'b3_activate_first_last', false );
-        $first_last_required          = get_option( 'b3_first_last_required', false );
-        $privacy                      = get_option( 'b3_privacy', false );
-        $privacy_page                 = get_option( 'b3_privacy_page', false );
+        $custom_passwords             = get_site_option( 'b3_activate_custom_passwords', false );
+        $first_last                   = get_site_option( 'b3_activate_first_last', false );
+        $first_last_required          = get_site_option( 'b3_first_last_required', false );
+        $privacy                      = get_site_option( 'b3_privacy', false );
+        $privacy_page                 = get_site_option( 'b3_privacy_page', false );
         $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
-        $privacy_text                 = get_option( 'b3_privacy_text', false );
-        $redirect_set_password        = get_option( 'b3_redirect_set_password', false );
-        $registration_type            = get_option( 'b3_registration_type', false );
-        $registration_with_email_only = get_option( 'b3_register_email_only', false );
+        $privacy_text                 = get_site_option( 'b3_privacy_text', false );
+        $redirect_set_password        = get_site_option( 'b3_redirect_set_password', false );
+        $registration_type            = get_site_option( 'b3_registration_type', false );
+        $registration_with_email_only = get_site_option( 'b3_register_email_only', false );
 
         ob_start();
         ?>
@@ -64,9 +64,9 @@
                     <?php } ?>
                 <?php b3_get_close(); ?>
 
-                <?php if ( 'closed' == get_option( 'b3_registration_type', false ) ) { ?>
+                <?php if ( 'closed' == get_site_option( 'b3_registration_type', false ) ) { ?>
 
-                    <?php $closed_message = get_option( 'b3_registration_closed_message', false ); ?>
+                    <?php $closed_message = get_site_option( 'b3_registration_closed_message', false ); ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
@@ -91,7 +91,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_custom_passwords = ( in_array( get_option( 'b3_registration_type', false ), [ 'request_access', 'closed' ] ) ) ? true : false; ?>
+                        <?php $hide_custom_passwords = ( in_array( get_site_option( 'b3_registration_type', false ), [ 'request_access', 'closed' ] ) ) ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -114,7 +114,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_first_last_required = ( 1 == get_option( 'b3_activate_first_last', false ) ) ? false : true; ?>
+                        <?php $hide_first_last_required = ( 1 == get_site_option( 'b3_activate_first_last', false ) ) ? false : true; ?>
                         <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
@@ -125,7 +125,7 @@
                         <?php b3_get_close(); ?>
                     </div>
 
-                    <?php if ( 'open' == get_option( 'b3_registration_type', false ) ) { ?>
+                    <?php if ( 'open' == get_site_option( 'b3_registration_type', false ) ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
@@ -145,7 +145,7 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_privacy_settings = ( 1 == get_option( 'b3_privacy', false ) ) ? false : true; ?>
+                    <?php $hide_privacy_settings = ( 1 == get_site_option( 'b3_privacy', false ) ) ? false : true; ?>
                     <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>

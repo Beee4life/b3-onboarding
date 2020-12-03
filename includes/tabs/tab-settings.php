@@ -8,14 +8,14 @@
      */
     function b3_render_settings_tab() {
 
-        $activate_filter_validation = get_option( 'b3_activate_filter_validation', false );
-        $disable_action_links       = get_option( 'b3_disable_action_links', false );
-        $disable_wordpress_forms    = get_option( 'b3_disable_wordpress_forms', false );
-        $debug_info                 = get_option( 'b3_debug_info', false );
-        $main_logo                  = get_option( 'b3_main_logo', false );
-        $recaptcha                  = get_option( 'b3_activate_recaptcha', false );
-        $registration_type          = get_option( 'b3_registration_type', false );
-        $style_wordpress_forms      = get_option( 'b3_style_wordpress_forms', false );
+        $activate_filter_validation = get_site_option( 'b3_activate_filter_validation', false );
+        $disable_action_links       = get_site_option( 'b3_disable_action_links', false );
+        $disable_wordpress_forms    = get_site_option( 'b3_disable_wordpress_forms', false );
+        $debug_info                 = get_site_option( 'b3_debug_info', false );
+        $main_logo                  = get_site_option( 'b3_main_logo', false );
+        $recaptcha                  = get_site_option( 'b3_activate_recaptcha', false );
+        $registration_type          = get_site_option( 'b3_registration_type', false );
+        $style_wordpress_forms      = get_site_option( 'b3_style_wordpress_forms', false );
         ob_start();
         ?>
         <h2>
@@ -39,7 +39,7 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_wordpress_checkbox = ( 1 == get_option( 'b3_disable_wordpress_forms', false ) ) ? 'hidden' : false; ?>
+                    <?php $hide_wordpress_checkbox = ( 1 == get_site_option( 'b3_disable_wordpress_forms', false ) ) ? 'hidden' : false; ?>
                     <?php b3_get_settings_field_open($hide_wordpress_checkbox, 'wp-forms' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_style_wordpress_forms"><?php esc_html_e( 'Style Wordpress forms', 'b3-onboarding' ); ?></label>

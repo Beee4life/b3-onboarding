@@ -8,11 +8,11 @@
      */
     function b3_render_users_tab() {
 
-        $front_end_approval      = get_option( 'b3_front_end_approval', false );
-        $front_end_approval_page = get_option( 'b3_approval_page_id', false );
-        $hide_admin_bar          = get_option( 'b3_hide_admin_bar', false );
+        $front_end_approval      = get_site_option( 'b3_front_end_approval', false );
+        $front_end_approval_page = get_site_option( 'b3_approval_page_id', false );
+        $hide_admin_bar          = get_site_option( 'b3_hide_admin_bar', false );
         $roles                   = get_editable_roles();
-        $user_may_delete         = get_option( 'b3_user_may_delete', false );
+        $user_may_delete         = get_site_option( 'b3_user_may_delete', false );
         asort( $roles );
 
         ob_start();
@@ -28,7 +28,7 @@
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
-            <?php $hide_front_end_approval = ( 'request_access' == get_option( 'b3_registration_type', false ) ) ? false : 'hidden'; ?>
+            <?php $hide_front_end_approval = ( 'request_access' == get_site_option( 'b3_registration_type', false ) ) ? false : 'hidden'; ?>
             <?php b3_get_settings_field_open($hide_front_end_approval ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
@@ -67,7 +67,7 @@
                     </p>
                     <?php
                         $dont_show_roles  = array( 'administrator', 'b3_approval', 'b3_activation' );
-                        $stored_roles     = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'b3_activation', 'b3_approval' );
+                        $stored_roles     = ( is_array( get_site_option( 'b3_restrict_admin', false ) ) ) ? get_site_option( 'b3_restrict_admin' ) : array( 'b3_activation', 'b3_approval' );
                         foreach( $roles as $name => $values ) {
                             if ( ! in_array( $name, $dont_show_roles ) ) {
                                 ?>
