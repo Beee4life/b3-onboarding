@@ -893,7 +893,7 @@
                             }
                             $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                             $role              = get_option( 'default_role' );
-                            $registration_type = get_option( 'b3_registration_type', false );
+                            $registration_type = get_site_option( 'b3_registration_type', false );
 
                             if ( isset( $_POST[ 'first_name' ] ) ) {
                                 $meta_data[ 'first_name' ] = sanitize_text_field( $_POST[ 'first_name' ] );
@@ -991,6 +991,7 @@
                                         wp_safe_redirect( $redirect_url );
                                         exit;
                                     } else {
+
                                         if ( 'user' == $signup_for ) {
                                             $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, $meta_data );
                                             if ( true == $result ) {
@@ -1181,16 +1182,33 @@
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_register() {
-                if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                    if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'register' != $_REQUEST[ 'b3_form' ] ) {
-                        $register_url = b3_get_register_url();
-                        if ( false != $register_url ) {
-                            wp_safe_redirect( $register_url );
-                            exit;
+
+                if ( ! is_multisite() ) {
+                    if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                        if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'register' != $_REQUEST[ 'b3_form' ] ) {
+                            $register_url = b3_get_register_url();
+                            if ( false != $register_url ) {
+                                wp_safe_redirect( $register_url );
+                                exit;
+                            }
+                        }
+                    } else {
+                        if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
+                            if ( is_user_logged_in() ) {
+                                $this->b3_redirect_logged_in_user();
+                            } else {
+                                $register_url = b3_get_register_url();
+                                if ( false != $register_url ) {
+                                    wp_safe_redirect( $register_url );
+                                } else {
+                                    wp_safe_redirect( wp_registration_url() );
+                                }
+                                exit;
+                            }
                         }
                     }
                 } else {
-                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
+                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_site_option( 'b3_disable_wordpress_forms', false ) ) {
                         if ( is_user_logged_in() ) {
                             $this->b3_redirect_logged_in_user();
                         } else {
@@ -1208,31 +1226,16 @@
 
 
             /**
-             * Redirects the user to the custom MU registration page instead
-             * of wp-login.php?action=register.
-             */
-            public function b3_redirect_to_custom_wpmu_register() {
-                if ( '/wp-signup.php' == $_SERVER[ 'REQUEST_URI' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
-                    $register_url = b3_get_register_url();
-                    if ( false != $register_url ) {
-                        wp_safe_redirect( $register_url );
-                        exit;
-                    }
-                }
-            }
-
-
-            /**
              * Force user to custom login page instead of wp-login.php.
              */
             public function b3_redirect_to_custom_login() {
-                
+
                 if ( is_multisite() ) {
                     $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms', false );
                 } else {
                     $disable_wp_forms = get_option( 'b3_disable_wordpress_forms', false );
                 }
-                
+
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == $disable_wp_forms ) {
 
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
@@ -1895,7 +1898,7 @@
              */
             private function b3_register_wpmu_user( $user_name, $user_email, $sub_domain, $meta = array() ) {
 
-                $b3_register_type   = get_option( 'b3_registration_type', false );
+                $b3_register_type   = get_site_option( 'b3_registration_type', false );
                 $errors             = false;
                 $main_register_type = get_site_option( 'registration' );
 
