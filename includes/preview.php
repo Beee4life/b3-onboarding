@@ -24,6 +24,21 @@
                 case 'template':
                     $message = $lorem_ipsum;
                     break;
+                case 'mu-confirm-email':
+                    // @TODO
+                    $message = b3_get_wpmu_activate_user_message();
+                    $subject = b3_get_wpmu_activate_user_subject();
+                    break;
+                case 'mu-user-activated':
+                    // @TODO
+                    $message = b3_get_wpmu_user_activated_message();
+                    $subject = b3_get_wpmu_user_activated_subject();
+                    break;
+                case 'mu-new-user-admin':
+                    // @TODO
+                    $message = b3_get_new_wpmu_user_message_admin();
+                    $subject = b3_get_new_wpmu_user_subject_admin();
+                    break;
                 case 'account-approved':
                     $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
                     $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
