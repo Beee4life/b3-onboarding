@@ -219,8 +219,8 @@
         if ( ! is_subdomain_install() || get_current_network_id() != 1 ) {
             $activate_url = network_site_url( "wp-activate.php?key=$key" );
         } else {
-            // $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
-            $activate_url = "http://{$domain}{$path}wp-activate=user&key=$key";
+            $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
+            // $activate_url = "http://{$domain}{$path}wp-activate=user&key=$key";
         }
         $activate_url = esc_url( $activate_url );
     
