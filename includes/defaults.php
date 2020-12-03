@@ -463,6 +463,18 @@
 
 
     /**
+     * Default admin subject for new wpmu user (no site)
+     *
+     * @param false $user
+     *
+     * @return string
+     */
+    function b3_default_subject_new_wpmu_user_admin() {
+        return __( 'New User Registration: %s', 'b3-onboarding' );
+    }
+
+
+    /**
      * Default admin message for new wpmu user (no site)
      *
      * @param false $user
