@@ -413,7 +413,7 @@
      * Validate blog signup
      * copied from wp-signup.php line 757 because this is a standalone file
      */
-    function validate_blog_signup() {
+    function b3_validate_blog_signup() {
         $user_result = wpmu_validate_user_signup( $_POST['user_name'], $_POST['user_email'] );
         $user_name   = $user_result['user_name'];
         $user_email  = $user_result['user_email'];
