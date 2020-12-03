@@ -40,6 +40,7 @@
             'b3_lost_password_subject'                 => array( 'string' ),
             'b3_privacy_text'                          => array( 'string' ),
             'b3_redirect_after_register'               => array( 'url' ),
+            'b3_register_for'                          => array( 'string' ),
             'b3_registration_access_requested_message' => array( 'string' ),
             'b3_registration_closed_message'           => array( 'string' ),
             'b3_registration_confirm_email_message'    => array( 'string' ),

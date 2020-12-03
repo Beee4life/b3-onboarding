@@ -10,7 +10,6 @@
      *
      */
     function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
-        $registration_type = get_option( 'b3_registration_type', false );
         $custom_passwords  = get_option( 'b3_activate_custom_passwords', false );
         $user_object       = get_userdata( $user_id );
         $user_login        = $user_object->user_login;
@@ -125,15 +124,20 @@
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
                 <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
             </div>
-            <div class="b3_form-element b3_form-element--signup-for">
-                <div>
-                    <strong><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?>:</strong>
+            <?php $register_for = apply_filters( 'b3_register_for', false ); ?>
+            <?php if ( false != $register_for && in_array( $register_for, [ 'blog', 'user' ] ) ) { ?>
+                <input type="hidden" name="signup_for" value="<?php echo $register_for; ?>" />
+            <?php } else { ?>
+                <div class="b3_form-element b3_form-element--signup-for">
+                    <div>
+                        <strong><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?>:</strong>
+                    </div>
+                    <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
+                    <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'A site' ) ); ?></label>
+                    <input id="signupuser" type="radio" name="signup_for" value="user">
+                    <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
                 </div>
-                <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
-                <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'A site' ) ); ?></label>
-                <input id="signupuser" type="radio" name="signup_for" value="user">
-                <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
-            </div>
+            <?php } ?>
             <?php
         } else {
             if ( false == $registration_with_email_only ) {
@@ -230,6 +234,8 @@
                     'ms_register_site_user',
                 ) ) ) {
                 ob_start();
+                $register_for = apply_filters( 'b3_register_for', false );
+                if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
             ?>
                 <div class="b3_form-element b3_form-element--site-fields">
                     <div class="b3_form-element b3_form-element--subdomain">
@@ -242,10 +248,12 @@
                             <?php echo $current_network->domain . $current_network->path; ?><input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'address', 'b3-onboarding' ); ?>" />
                         <?php } ?>
                     </div>
+
                     <div class="b3_form-element b3_form-element--site-title">
                         <label class="b3_form-label" for="blog_title"><?php esc_html_e( 'Site title', 'b3-onboarding' ); ?></label>
                         <input name="blog_title" id="blog_title" value="" type="text" class="b3_form--input" />
                     </div>
+
                     <?php // @TODO: add languages option ?>
                     <div class="b3_form-element b3_form-element--visbility">
                         <p class="privacy-intro">
@@ -259,6 +267,7 @@
                     </div>
                 </div>
             <?php
+                }
                 $output = ob_get_clean();
                 echo $output;
             }
