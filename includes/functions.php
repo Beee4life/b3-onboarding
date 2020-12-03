@@ -905,7 +905,12 @@
      * @return bool|string
      */
     function b3_get_login_url( $return_id = false ) {
-        $id = get_option( 'b3_login_page_id', false );
+
+        if ( is_multisite() ) { switch_to_blog( get_main_site_id() ); }
+        $id = get_site_option( 'b3_login_page_id', false );
+        if ( is_multisite() ) { restore_current_blog(); }
+
+        // echo '<pre>'; var_dump($id); echo '</pre>'; exit;
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
@@ -913,9 +918,13 @@
             if ( false != $return_id ) {
                 return $id;
             }
+
+            if ( is_multisite() ) { switch_to_blog( get_main_site_id() ); }
             if ( get_post( $id ) ) {
                 return get_the_permalink( $id );
             }
+            if ( is_multisite() ) { restore_current_blog(); }
+
         }
 
         return wp_login_url();
@@ -1276,17 +1285,32 @@
 
         return $message;
     }
-    
+
     function b3_get_new_wpmu_user_blog_subject( $user = false ) {
         $subject = b3_default_subject_new_wpmu_user_blog( $user );
-    
+
         return $subject;
     }
 
 
     function b3_get_new_wpmu_user_blog_message( $user = false ) {
         $message = b3_default_message_new_wpmu_user_blog( $user );
-    
+
+        return $message;
+    }
+
+
+
+    function b3_get_welcome_wpmu_user_blog_subject( $user = false ) {
+        $subject = b3_default_subject_welcome_wpmu_user_blog( $user );
+
+        return $subject;
+    }
+
+
+    function b3_get_welcome_wpmu_user_blog_message( $user = false ) {
+        $message = b3_default_message_welcome_wpmu_user_blog( $user );
+
         return $message;
     }
 
