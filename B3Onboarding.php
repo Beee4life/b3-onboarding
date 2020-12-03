@@ -1240,15 +1240,12 @@
                 }
 
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == $disable_wp_forms ) {
-
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
-
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user( $redirect_to );
                         exit;
                     }
 
-                    // The rest is redirected to the login page
                     $custom_login_url = b3_get_login_url();
                     $login_url        = ( false != $custom_login_url ) ? $custom_login_url : wp_login_url();
 
@@ -1421,6 +1418,7 @@
                             $valid_error_codes = array( 'already_active', 'blog_taken' );
 
                             $result = wpmu_activate_signup( $key );
+
                         }
 
                         if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
@@ -1439,12 +1437,7 @@
                             }
                         }
 
-                        if ( true == $result ) {
-                            if ( isset( $result[ 'blog_id' ] ) ) {
-                                // @TODO: get url for redirect
-                                $redirect_url = get_site_url( $result[ 'blog_id' ] );
-                                error_log($redirect_url);
-                            }
+                        if ( isset( $result[ 'blog_id' ] ) && ! empty( $result[ 'blog_id' ] ) ) {
                             $redirect_url = add_query_arg( array( 'mu-activate' => 'success' ), $redirect_url );
                             wp_safe_redirect( $redirect_url );
                             exit;
