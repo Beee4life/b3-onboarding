@@ -262,36 +262,36 @@
             public function b3_set_default_settings() {
 
                 if ( ! is_multisite() ) {
-                    update_option( 'users_can_register', 0 );
+                    update_option( 'b3_activate_custom_emails', 1 );
+                    update_option( 'b3_disable_wordpress_forms', 1 );
+                    update_option( 'b3_logo_in_email', 1 );
                     update_option( 'b3_registration_type', 'open' );
+                    update_option( 'users_can_register', 0 );
                 } else {
-
-                    if ( is_main_site() ) {
-                        update_site_option( 'registrationnotification', 'no' );
-                    }
+                    update_site_option( 'b3_activate_custom_emails', 1 );
+                    update_site_option( 'b3_disable_wordpress_forms', 1 );
+                    update_site_option( 'b3_logo_in_email', 1 );
+                    update_site_option( 'registrationnotification', 'no' );
 
                     // @TODO: checkif I need this
                     $public_registration = get_site_option( 'registration' );
                     if ( is_main_site() ) {
                         if ( 'user' == $public_registration ) {
-                            update_blog_option( get_current_blog_id(), 'b3_registration_type', 'ms_register_user' );
+                            update_site_option( 'b3_registration_type', 'ms_register_user' );
                         } elseif ( 'blog' == $public_registration ) {
-                            update_blog_option( get_current_blog_id(), 'b3_registration_type', 'ms_loggedin_register' );
+                            update_site_option( 'b3_registration_type', 'ms_loggedin_register' );
                         } elseif ( 'all' == $public_registration ) {
-                            update_blog_option( get_current_blog_id(), 'b3_registration_type', 'ms_register_site_user' );
+                            update_site_option( 'b3_registration_type', 'ms_register_site_user' );
                         }
                     } else {
                         if ( 'user' == $public_registration ) {
-                            update_blog_option( get_current_blog_id(), 'b3_registration_type', 'open' );
+                            update_site_option( 'b3_registration_type', 'open' );
                         }
                     }
                 }
 
-                update_option( 'b3_activate_custom_emails', 1 );
                 update_option( 'b3_dashboard_widget', 1 );
-                update_option( 'b3_disable_wordpress_forms', 1 );
                 update_option( 'b3_hide_admin_bar', 1 );
-                update_option( 'b3_logo_in_email', 1 );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
@@ -1226,7 +1226,14 @@
              * Force user to custom login page instead of wp-login.php.
              */
             public function b3_redirect_to_custom_login() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_option( 'b3_disable_wordpress_forms', false ) ) {
+                
+                if ( is_multisite() ) {
+                    $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms', false );
+                } else {
+                    $disable_wp_forms = get_option( 'b3_disable_wordpress_forms', false );
+                }
+                
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == $disable_wp_forms ) {
 
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
@@ -1409,7 +1416,6 @@
 
                             $result = wpmu_activate_signup( $key );
                         }
-                        // echo '<pre>'; var_dump($result); echo '</pre>'; exit;
 
                         if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
                             $key    = $_COOKIE[ $activate_cookie ];
@@ -1428,6 +1434,11 @@
                         }
 
                         if ( true == $result ) {
+                            if ( isset( $result[ 'blog_id' ] ) ) {
+                                // @TODO: get url for redirect
+                                $redirect_url = get_site_url( $result[ 'blog_id' ] );
+                                error_log($redirect_url);
+                            }
                             $redirect_url = add_query_arg( array( 'mu-activate' => 'success' ), $redirect_url );
                             wp_safe_redirect( $redirect_url );
                             exit;
