@@ -344,6 +344,9 @@
              * Load plugin text domain
              */
             public function b3_load_plugin_text_domain() {
+                // $user = get_userdata( get_current_user_id() );
+                // echo '<pre>'; var_dump($user->caps); echo '</pre>';
+                // echo '<pre>'; var_dump($user->roles); echo '</pre>'; exit;
                 $plugin_folder = dirname( plugin_basename( __FILE__ ) );
                 $locale        = apply_filters( 'plugin_locale', get_locale(), $plugin_folder );
                 load_textdomain( $plugin_folder, trailingslashit( WP_LANG_DIR ) . $plugin_folder . '/' . $plugin_folder . '-' . $locale . '.mo' );
@@ -1348,8 +1351,8 @@
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
 
-                $redirect_url = get_home_url();
-                $stored_roles = ( is_array( get_option( 'b3_restrict_admin', false ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
+                $redirect_url  = get_home_url();
+                $stored_roles  = ( is_array( get_site_option( 'b3_restrict_admin', false ) ) ) ? get_site_option( 'b3_restrict_admin' ) : array( 'subscriber' );
 
                 if ( ! $user ) {
                     return $redirect_url;
@@ -1358,7 +1361,7 @@
                 if ( $requested_redirect_to ) {
                     $redirect_url = $requested_redirect_to;
                 } else {
-                    if ( current_user_can( 'manage_options' ) ) {
+                    if ( array_key_exists( 'administrator', $user->caps ) ) {
                         $redirect_url = $redirect_to;
                     } else {
                         // Non-admin users always go to their account page after login, if it's defined
