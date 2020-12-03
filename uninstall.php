@@ -17,7 +17,7 @@
             $meta_keys   = b3_get_all_custom_meta_keys();
             $meta_keys[] = 'widget_b3-widget';
             foreach( $meta_keys as $key ) {
-                delete_option( $key );
+                delete_site_option( $key );
             }
         }
 

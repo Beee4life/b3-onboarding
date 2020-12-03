@@ -232,18 +232,26 @@
              */
             public function b3_plugin_deactivation() {
                 // set registration option accordingly
-                $registration_type = get_option( 'b3_registration_type', false );
-                if ( 'closed' != $registration_type ) {
-                    update_option( 'users_can_register', '1' );
+                $registration_type = get_site_option( 'b3_registration_type', false );
+                if ( is_multisite() ) {
+                    if ( 'closed' == $registration_type ) {
+                        update_site_option( 'registration', 'none' );
+                    } else {
+                        update_site_option( 'registration', 'all' );
+                    }
                 } else {
-                    update_option( 'users_can_register', '0' );
+                    if ( 'closed' == $registration_type ) {
+                        update_site_option( 'users_can_register', '0' );
+                    } else {
+                        update_site_option( 'users_can_register', '1' );
+                    }
                 }
 
                 if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
                     $meta_keys   = b3_get_all_custom_meta_keys();
                     $meta_keys[] = 'widget_b3-widget';
                     foreach( $meta_keys as $key ) {
-                        delete_option( $key );
+                        delete_site_option( $key );
                     }
                 }
 
@@ -277,7 +285,7 @@
                         }
                     }
                 }
-    
+
                 update_site_option( 'b3_activate_custom_emails', 1 );
                 update_site_option( 'b3_dashboard_widget', 1 );
                 update_site_option( 'b3_disable_wordpress_forms', 1 );
