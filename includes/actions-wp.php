@@ -135,9 +135,13 @@
     function b3_remove_admin_bar() {
         $hide_admin_bar = get_site_option( 'b3_hide_admin_bar', false );
         if ( false != $hide_admin_bar ) {
-            $restricted_roles = get_site_option( 'b3_restrict_admin' );
-            $user             = wp_get_current_user();
-            $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
+            $user = wp_get_current_user();
+            if ( is_multisite() ) {
+                $restricted_roles = get_site_option( 'b3_restrict_admin' );
+            } else {
+                $restricted_roles = get_option( 'b3_restrict_admin' );
+            }
+            $result = ! empty( array_intersect( $restricted_roles, $user->roles ) );
 
             if ( true == $result ) {
                 show_admin_bar( false );
@@ -169,7 +173,6 @@
 
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
-
 
     /**
      * Do stuff after activate user (only)
