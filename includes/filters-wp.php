@@ -577,6 +577,8 @@ All at ###SITENAME###
     /**
      * Disable WPMU user signup email to take it over
      *
+     * @TODO: check if vars can be removed
+     *
      * @param       $user_login
      * @param       $user_email
      * @param       $key
@@ -593,6 +595,8 @@ All at ###SITENAME###
     /**
      * Disable WPMU user welcome email to take it over
      *
+     * @TODO: check if vars can be removed
+     *
      * @param $user_id
      * @param $password
      * @param $meta
@@ -603,3 +607,14 @@ All at ###SITENAME###
         return false;
     }
     add_filter( 'wpmu_welcome_user_notification', 'b3_disable_welcome_mu_user_email', 10, 3 );
+    
+    
+    /**
+     * Disable email for register site + user
+     *
+     * @return false
+     */
+    function b3_disable_welcome_mu_user_blog_email() {
+        return false;
+    }
+    add_filter( 'wpmu_signup_blog_notification', 'b3_disable_welcome_mu_user_blog_email' );

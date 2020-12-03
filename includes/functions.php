@@ -1276,6 +1276,19 @@
 
         return $message;
     }
+    
+    function b3_get_new_wpmu_user_blog_subject( $user = false ) {
+        $subject = b3_default_subject_new_wpmu_user_blog( $user );
+    
+        return $subject;
+    }
+
+
+    function b3_get_new_wpmu_user_blog_message( $user = false ) {
+        $message = b3_default_message_new_wpmu_user_blog( $user );
+    
+        return $message;
+    }
 
 
     /**

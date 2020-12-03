@@ -214,3 +214,25 @@
 
     }
     add_action( 'wpmu_new_user', 'b3_override_new_mu_user_admin_email' );
+
+    function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
+        if ( ! is_subdomain_install() || get_current_network_id() != 1 ) {
+            $activate_url = network_site_url( "wp-activate.php?key=$key" );
+        } else {
+            // $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
+            $activate_url = "http://{$domain}{$path}wp-activate=user&key=$key";
+        }
+        $activate_url = esc_url( $activate_url );
+    
+        $from_name = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
+        $user      = get_user_by( 'login', $user_login );
+        $subject   = sprintf( b3_get_new_wpmu_user_blog_subject(), $from_name );
+        $message   = sprintf( b3_get_new_wpmu_user_blog_message( $user ), $activate_url, esc_url( "http://{$domain}{$path}" ) );
+        $message   = b3_replace_template_styling( $message );
+        $message   = strtr( $message, b3_replace_email_vars() );
+        $message   = htmlspecialchars_decode( stripslashes( $message ) );
+
+        wp_mail( $user_email, $subject, $message, [] );
+
+    }
+    add_action( 'after_signup_site', 'b3_override_new_mu_user_blog_email', 10, 6 );
