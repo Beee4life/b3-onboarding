@@ -1355,13 +1355,13 @@
                 if ( $requested_redirect_to ) {
                     $redirect_url = $requested_redirect_to;
                 } else {
-                    if ( array_key_exists( 'administrator', $user->caps ) ) {
+                    if ( isset( $user->caps ) && array_key_exists( 'administrator', $user->caps ) ) {
                         $redirect_url = $redirect_to;
                     } else {
                         // Non-admin users always go to their account page after login, if it's defined
                         $account_page_url = b3_get_account_url();
                         if ( false != $account_page_url ) {
-                            if ( ! in_array( $stored_roles, $user->roles ) ) {
+                            if ( isset( $user->roles ) && ! in_array( $stored_roles, $user->roles ) ) {
                                 $redirect_url = $account_page_url;
                             } else {
                                 // non-admin logged in
