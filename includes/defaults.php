@@ -524,13 +524,43 @@
             $split_message .= 'Hi ' . $user->user_login . ",\n";
             $split_message .= '<br /><br />' . "\n";
         }
-        $split_message .= __( 'To activate your blog, please click <a href="%1$s">' . __( 'this link', 'b3-onboarding' ) . '</a>.' ) . "\n";
+        $split_message .= __( 'To activate your blog, please click %1$s.', 'b3-onboarding') . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
         $split_message .= '<br />' . "\n";
         $split_message .= '<a href="%2$s">%2$s</a>' . "\n";
+
+        return $split_message;
+    }
+
+
+    function b3_default_subject_welcome_wpmu_user_blog( $user = false ) {
+        return 'New %1$s Site: %2$s';
+    }
+
+
+    function b3_default_message_welcome_wpmu_user_blog( $user = false ) {
+
+        $split_message = '' . "\n";
+        if ( false != $user ) {
+            $split_message .= 'Hi ' . $user->user_login . ",\n";
+            $split_message .= '<br /><br />' . "\n";
+        }
+        $split_message .= __( 'Your new site has been successfully set up at %1$s.', 'b3-onboarding') . "\n";
+        $split_message .= '<br /><br />' . "\n";
+        $split_message .= __( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
+        $split_message .= '<br />' . "\n";
+        $split_message .= __( 'Username', 'b3-onboarding' ) . ': ' . '%2$s' . "\n";
+        $split_message .= '<br />' . "\n";
+        $split_message .= __( 'Password', 'b3-onboarding' ) . ': ' . '%3$s' . "\n";
+        $split_message .= '<br /><br />' . "\n";
+        $split_message .= __( 'Login here: <a href="%4$s">%4$s</a>', 'b3-onboarding' ) . "\n";
+        $split_message .= '<br /><br />' . "\n";
+        $split_message .= __( 'Enjoy your new site.', 'b3-onboarding' ) . "\n";
+        $split_message .= '<br /><br />' . "\n";
+        $split_message .= __( 'Afzender', 'b3-onboarding' ) . "\n";
 
         return $split_message;
     }
