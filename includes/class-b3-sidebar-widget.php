@@ -74,16 +74,18 @@
 
             $show_register = ! empty( $instance[ 'show_register' ] ) ? $instance[ 'show_register' ] : false;
             if ( $show_register ) {
-                $register_id    = b3_get_register_url( true );
-                $register_title = esc_html__( 'Login', 'b3-onboarding' );
-                $register_url   = b3_get_register_url();
-                if ( false == $register_id ) {
-                    $count_errors[] = 'register';
-                } else {
-                    $register_title = get_the_title( $register_id );
-                    $register_url   = get_the_permalink( $register_id );
+                $register_id       = b3_get_register_url( true );
+                $registration_type = get_site_option( 'b3_registration_type' );
+
+                if ( 'closed' != $registration_type ) {
+                    if ( false == $register_id ) {
+                        $count_errors[] = 'register';
+                    } else {
+                        $register_title = get_the_title( $register_id );
+                        $register_url   = get_the_permalink( $register_id );
+                    }
+                    $count_setting++;
                 }
-                $count_setting++;
             }
 
             if ( current_user_can( 'manage_options' ) ) {
@@ -138,7 +140,7 @@
                     if ( $show_login ) {
                         echo '<li><a href="' . $login_url . '">' . $login_title . '</a></li>';
                     }
-                    if ( $show_register ) {
+                    if ( isset( $register_url ) ) {
                         echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
                     }
                 } else {
