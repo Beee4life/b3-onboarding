@@ -1411,11 +1411,10 @@
                         }
 
                         if ( isset( $key ) ) {
-                            list( $activate_path ) = explode( '?', wp_unslash( $_SERVER['REQUEST_URI'] ) );
+                            list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
                             $valid_error_codes = array( 'already_active', 'blog_taken' );
 
                             $result = wpmu_activate_signup( $key );
-
                         }
 
                         if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
@@ -1471,13 +1470,6 @@
                                 $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
                             } else {
 
-                                if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
-                                    $redirect_url = b3_get_lostpassword_url();
-                                } else {
-                                    $redirect_url = b3_get_login_url();
-                                }
-                                $redirect_url = add_query_arg( array( 'activate' => 'success' ), $redirect_url );
-
                                 // remove user_activation_key
                                 $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $_GET[ 'user_login' ] ) );
 
@@ -1485,8 +1477,14 @@
                                 $user_object = new WP_User( $user->ID );
                                 $user_object->set_role( get_option( 'default_role' ) );
 
-                                do_action( 'b3_after_user_activated', $user->ID );
+                                if ( false == get_option( 'b3_activate_custom_passwords', false ) ) {
+                                    $redirect_url = b3_get_lostpassword_url();
+                                } else {
+                                    $redirect_url = b3_get_login_url();
+                                }
+                                $redirect_url = add_query_arg( array( 'activate' => 'success' ), $redirect_url );
 
+                                do_action( 'b3_after_user_activated', $user->ID );
                             }
 
                             wp_safe_redirect( $redirect_url );
