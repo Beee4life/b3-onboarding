@@ -207,10 +207,6 @@
                         // set default values
                         $this->b3_set_default_settings();
                     }
-                    // @TODO
-                    // get all site ids
-                    // loop through all ids
-                    // add page account
                 } else {
 
                     // create necessary pages
@@ -264,16 +260,19 @@
                 if ( ! is_multisite() ) {
                     update_option( 'b3_activate_custom_emails', 1 );
                     update_option( 'b3_disable_wordpress_forms', 1 );
+                    update_option( 'b3_hide_admin_bar', 1 );
                     update_option( 'b3_logo_in_email', 1 );
                     update_option( 'b3_registration_type', 'open' );
+                    update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                     update_option( 'users_can_register', 0 );
                 } else {
                     update_site_option( 'b3_activate_custom_emails', 1 );
                     update_site_option( 'b3_disable_wordpress_forms', 1 );
+                    update_site_option( 'b3_hide_admin_bar', 1 );
                     update_site_option( 'b3_logo_in_email', 1 );
+                    update_site_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                     update_site_option( 'registrationnotification', 'no' );
 
-                    // @TODO: checkif I need this
                     $public_registration = get_site_option( 'registration' );
                     if ( is_main_site() ) {
                         if ( 'user' == $public_registration ) {
@@ -291,10 +290,8 @@
                 }
 
                 update_option( 'b3_dashboard_widget', 1 );
-                update_option( 'b3_hide_admin_bar', 1 );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-                update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                 update_option( 'b3_version', $this->settings[ 'version' ] );
 
                 if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
