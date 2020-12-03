@@ -4,8 +4,8 @@
      *
      * @since 1.0.0
      */
-    $email_activation_subject = get_option( 'b3_email_activation_subject', false );
-    $email_activation_message = get_option( 'b3_email_activation_message', false );
+    $email_activation_subject = get_site_option( 'b3_email_activation_subject', false );
+    $email_activation_message = get_site_option( 'b3_email_activation_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

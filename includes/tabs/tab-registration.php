@@ -48,6 +48,7 @@
                     <?php } ?>
 
                     <?php $options = b3_get_registration_types(); ?>
+                    <?php //echo '<pre>'; var_dump($options); echo '</pre>'; exit; ?>
                     <?php if ( ! empty( $options ) ) { ?>
                         <?php foreach( $options as $option ) { ?>
                             <div class="b3_settings-input b3_settings-input--radio">

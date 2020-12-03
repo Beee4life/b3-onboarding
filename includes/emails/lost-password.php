@@ -4,10 +4,10 @@
      *
      * @since 1.0.0
      */
-    $disable_admin_notification = get_option( 'b3_disable_admin_notification_password_change', false );
-    $disable_user_notification  = get_option( 'b3_disable_user_notification_password_change', false ); // @TODO: add to docs/site
-    $lost_password_subject      = get_option( 'b3_lost_password_subject', false );
-    $lost_password_message      = get_option( 'b3_lost_password_message', false );
+    $disable_admin_notification = get_site_option( 'b3_disable_admin_notification_password_change', false );
+    $disable_user_notification  = get_site_option( 'b3_disable_user_notification_password_change', false ); // @TODO: add to docs/site
+    $lost_password_subject      = get_site_option( 'b3_lost_password_subject', false );
+    $lost_password_message      = get_site_option( 'b3_lost_password_message', false );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

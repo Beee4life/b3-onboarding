@@ -9,11 +9,11 @@
     function b3_render_recaptcha_tab() {
 
         ob_start();
-        $public_key        = get_option( 'b3_recaptcha_public', false );
-        $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
-        $secret_key        = get_option( 'b3_recaptcha_secret', false );
-        $recaptcha_login   = get_option( 'b3_recaptcha_login', false );
-        $recaptcha_on      = get_option( 'b3_recaptcha_on', [] );
+        $public_key        = get_site_option( 'b3_recaptcha_public', false );
+        $recaptcha_version = get_site_option( 'b3_recaptcha_version', 2 );
+        $secret_key        = get_site_option( 'b3_recaptcha_secret', false );
+        $recaptcha_login   = get_site_option( 'b3_recaptcha_login', false );
+        $recaptcha_on      = get_site_option( 'b3_recaptcha_on', [] );
         ?>
         <h2>
             <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>

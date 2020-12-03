@@ -4,10 +4,10 @@
      *
      * @since 2.6.0
      */
-    $disable_admin_notification  = get_option( 'b3_disable_admin_notification_new_user', false );
-    $new_wpmu_user_subject_admin = get_option( 'b3_new_wpmu_user_admin_subject', false );
-    $new_wpmu_user_message_admin = get_option( 'b3_new_wpmu_user_admin_message', false );
-    $placeholder_subject         = __( 'New user registration', 'b3-onboarding' );
+    $disable_admin_notification  = get_site_option( 'b3_disable_admin_notification_new_user', false );
+    $new_wpmu_user_subject_admin = get_site_option( 'b3_new_wpmu_user_admin_subject', false );
+    $new_wpmu_user_message_admin = get_site_option( 'b3_new_wpmu_user_admin_message', false );
+    $placeholder_subject         = esc_attr( b3_get_new_wpmu_user_subject_admin() );
     $placeholder_message         = esc_attr( b3_get_new_wpmu_user_message_admin() );
 ?>
 <table class="b3_table b3_table--emails">
@@ -28,6 +28,8 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--new-wpmu-user-admin-message" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
+            <br />
+            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=mu-new-user-admin' ) ); ?>
         </th>
         <td>
             <textarea id="b3__input--new-wpmu-user-admin-message" name="b3_new_wpmu_user_admin_message" placeholder="<?php echo $placeholder_message; ?>" rows="6"><?php echo stripslashes( $new_wpmu_user_message_admin ); ?></textarea>

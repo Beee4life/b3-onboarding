@@ -44,7 +44,7 @@
 
                 if ( is_user_logged_in() ) {
                     return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
-                } elseif ( 'closed' == get_option( 'b3_registration_type', false ) ) {
+                } elseif ( in_array( get_site_option( 'b3_registration_type', false ), [ 'closed', 'none' ] ) ) {
                     return '<p class="b3_message">' . apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) . '</p>';
                 } else {
 

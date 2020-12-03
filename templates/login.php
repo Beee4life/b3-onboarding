@@ -4,10 +4,10 @@
      *
      * @since 1.0.0
      */
-    $request_access = get_option( 'b3_registration_type', false );
+    $request_access = get_site_option( 'b3_registration_type', false );
     $label          = esc_attr__( 'Username or Email address', 'b3-onboarding' );
 
-    if ( 1 == get_option( 'b3_register_email_only', false ) ) {
+    if ( 1 == get_site_option( 'b3_register_email_only', false ) ) {
         $label = esc_attr__( 'Email address', 'b3-onboarding' );
     }
 

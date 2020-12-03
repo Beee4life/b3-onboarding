@@ -66,7 +66,7 @@
                             ),
                         );
 
-                        if ( 1 == get_option( 'b3_style_wordpress_forms', false ) ) {
+                        if ( 1 == get_site_option( 'b3_style_wordpress_forms', false ) ) {
                             $tabs[] = array(
                                 'id'      => 'wordpress',
                                 'title'   => 'WordPress',
@@ -89,7 +89,7 @@
                             'icon'    => 'admin-users',
                         );
 
-                        if ( true == get_option( 'b3_activate_recaptcha', false ) ) {
+                        if ( true == get_site_option( 'b3_activate_recaptcha', false ) ) {
                             $tabs[] = array(
                                 'id'      => 'recaptcha',
                                 'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
@@ -103,7 +103,7 @@
                             <?php
                                 $hide_wordpress = false;
                                 if ( 'wordpress' == $tab[ 'id' ] ) {
-                                    if ( 1 != get_option( 'b3_style_wordpress_forms', false ) ) {
+                                    if ( 1 != get_site_option( 'b3_style_wordpress_forms', false ) ) {
                                         $hide_wordpress = ' hidden';
                                     }
                                 }

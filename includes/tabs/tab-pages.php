@@ -48,7 +48,7 @@
             'page_id' => get_option( 'b3_approval_page_id', false ),
         );
 
-        if ( true == get_option( 'b3_front_end_approval', false ) ) {
+        if ( true == get_site_option( 'b3_front_end_approval', false ) ) {
             $b3_pages[] = $front_end_approval;
         }
 

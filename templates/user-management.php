@@ -1,6 +1,6 @@
 <?php
-    $show_first_last_name = get_option( 'b3_activate_first_last', false );
-    $register_email_only  = get_option( 'b3_register_email_only', false );
+    $show_first_last_name = get_site_option( 'b3_activate_first_last', false );
+    $register_email_only  = get_site_option( 'b3_register_email_only', false );
     $user_args            = array( 'role' => 'b3_approval' );
     $users                = get_users( $user_args );
 

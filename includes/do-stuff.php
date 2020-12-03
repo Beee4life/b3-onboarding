@@ -56,7 +56,7 @@
         foreach ( $page_definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
-            $stored_id = get_option( $slug, false );
+            $stored_id = get_site_option( $slug, false );
             if ( $stored_id ) {
                 $check_page = get_post( $stored_id );
                 if ( ! $check_page ) {
@@ -83,7 +83,7 @@
 
                 if ( false != $meta ) {
                     // page has _b3_page meta
-                    update_option( $page[ 'meta' ], $page_id );
+                    update_site_option( $page[ 'meta' ], $page_id );
                     if ( ! empty( $page_object->post_content ) ) {
                         if ( strpos( $page_object->post_content, $page[ 'content' ] ) === false ) {
                             $add_shortcode = true;
@@ -112,7 +112,7 @@
                     true
                 );
                 if ( ! is_wp_error( $result ) ) {
-                    update_option( $page[ 'meta' ], $result, true );
+                    update_site_option( $page[ 'meta' ], $result, true );
                     update_post_meta( $result, '_b3_page', true );
                 }
             }
@@ -237,7 +237,7 @@
             }
         }
 
-        $user_login = ( true != get_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
+        $user_login = ( true != get_site_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
 
         $replacements = array(
             '%blog_name%'   => get_option( 'blogname' ),

@@ -70,7 +70,7 @@
      */
     function b3_do_stuff_after_wp_register( $user_id ) {
         // get registration type
-        $registration_type = get_option( 'b3_registration_type', false );
+        $registration_type = get_site_option( 'b3_registration_type', false );
         if ( 'request_access' == $registration_type ) {
             // change user role
             $user_object = new WP_User( $user_id );
@@ -91,7 +91,7 @@
      * @param $user_id
      */
     function b3_add_login_form_fields() {
-        $show_recaptcha   = get_option( 'b3_recaptcha_login', false );
+        $show_recaptcha   = get_site_option( 'b3_recaptcha_login', false );
         if ( $show_recaptcha ) {
             do_action( 'b3_add_recaptcha_fields' );
         }
@@ -108,7 +108,7 @@
      */
     function b3_add_toolbar( $wp_admin_bar ) {
         if ( current_user_can( 'promote_users' ) ) {
-            if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+            if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
                 $approval_args  = array( 'role' => 'b3_approval' );
                 $approval_users = get_users( $approval_args );
                 if ( 0 < count( $approval_users ) ) {
@@ -139,7 +139,7 @@
             if ( is_multisite() ) {
                 $restricted_roles = get_site_option( 'b3_restrict_admin' );
             } else {
-                $restricted_roles = get_option( 'b3_restrict_admin' );
+                $restricted_roles = get_site_option( 'b3_restrict_admin' );
             }
             $result = ! empty( array_intersect( $restricted_roles, $user->roles ) );
 
