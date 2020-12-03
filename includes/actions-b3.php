@@ -229,7 +229,7 @@
      */
     function b3_add_site_fields() {
         if ( is_multisite() ) {
-            if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ), array(
+            if ( 'all' == get_site_option( 'registration' ) && in_array( get_site_option( 'b3_registration_type', false ), array(
                     'request_access_subdomain',
                     'ms_register_site_user',
                 ) ) ) {
@@ -257,11 +257,11 @@
                     <?php // @TODO: add languages option ?>
                     <div class="b3_form-element b3_form-element--visbility">
                         <p class="privacy-intro">
-                            <strong><?php _e( 'Privacy' ); ?></strong>
+                            <strong><?php _e( 'Privacy', 'b3-onboarding' ); ?></strong>
                             <br style="clear:both" />
                             <label class="checkbox" for="blog_public_on">
                                 <input type="checkbox" id="blog_public_on" name="dont_index" value="1" />
-                                <?php _e( "Don't let search engines index this site." ); ?>
+                                <?php _e( "Don't let search engines index this site.", 'b3-onboarding' ); ?>
                             </label>
                         </p>
                     </div>
