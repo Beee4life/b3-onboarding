@@ -12,7 +12,11 @@
             <h3><?php esc_html_e( 'Email preview links', 'b3-onboarding' ); ?></h3>
             <ul>
                 <?php if ( is_multisite() && is_main_site() ) { ?>
+                    <li><a href="<?php echo $preview_page; ?>mu-confirm-email"><?php esc_html_e( 'Confirm email (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>mu-user-activated"><?php esc_html_e( 'User activated (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>mu-new-user-admin"><?php esc_html_e( 'New user (admin)', 'b3-onboarding' ); ?></a></li>
                 <?php } elseif ( ! is_multisite() ) { ?>
+                    <li><a href="<?php echo $preview_page; ?>account-approved"><?php esc_html_e( 'Account approved (user)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>account-approved"><?php esc_html_e( 'Account approved (user)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>account-activated"><?php esc_html_e( 'Account activated (user)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>account-rejected"><?php esc_html_e( 'Account rejected (user)', 'b3-onboarding' ); ?></a></li>
