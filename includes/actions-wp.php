@@ -133,9 +133,9 @@
      * @since 2.0.0
      */
     function b3_remove_admin_bar() {
-        $hide_admin_bar = get_option( 'b3_hide_admin_bar', false );
+        $hide_admin_bar = get_site_option( 'b3_hide_admin_bar', false );
         if ( false != $hide_admin_bar ) {
-            $restricted_roles = get_option( 'b3_restrict_admin' );
+            $restricted_roles = get_site_option( 'b3_restrict_admin' );
             $user             = wp_get_current_user();
             $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
 
@@ -223,7 +223,7 @@
             // $activate_url = "http://{$domain}{$path}wp-activate=user&key=$key";
         }
         $activate_url = esc_url( $activate_url );
-    
+
         $from_name = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
         $user      = get_user_by( 'login', $user_login );
         $subject   = sprintf( b3_get_new_wpmu_user_blog_subject(), $from_name );
