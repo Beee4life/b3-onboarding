@@ -2031,17 +2031,6 @@
              * @since 1.0.6
              */
             public function b3_admin_notices() {
-                // not for single site in MU
-                if ( is_multisite() ) {
-                    if ( ! is_main_site() ) {
-                        echo sprintf( '<div class="error"><p>' . __( 'B3 Onboarding is not meant for single site activation in a multisite. Registrations are handled by the main site. No functions will work (for you). Please deactivate it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>', esc_url( admin_url( 'plugins.php?s=b3&plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
-                    } else {
-                        if ( ! isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
-                            echo sprintf( '<div class="error"><p>' . __( 'If you want to take full advantage of this plugin, you should \'network activate\' it, otherwise some functions are not \'reached\'. Please deactivate the plugin <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>', esc_url( admin_url( 'plugins.php?s=b3&plugin_status=active' ) ), esc_html__( 'here', 'b3-onboarding' ) );
-                        }
-                    }
-                }
-
                 // beta notice
                 if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                     $message = __( "You're using a beta version, which is not finished yet and can give unexpected results.", 'b3-onboarding' );
