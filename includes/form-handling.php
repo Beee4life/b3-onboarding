@@ -110,28 +110,27 @@
                 } else {
 
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
+                        // echo '<pre>'; var_dump($_POST[ 'b3_registration_type' ]); echo '</pre>'; exit;
                         if ( is_multisite() ) {
-                            if ( is_main_site() ) {
-                                $ms_registration_type = $_POST[ 'b3_registration_type' ];
-                                if ( 'closed' == $ms_registration_type ) {
-                                    $registration_type = 'none';
-                                    update_site_option( 'b3_registration_type', $ms_registration_type );
-                                } elseif ( 'request_access_subdomain' == $ms_registration_type ) {
-                                    // not in use (yet)
-                                    $registration_type = '';
-                                    update_site_option( 'b3_registration_type', $ms_registration_type );
-                                } elseif ( 'ms_loggedin_register' == $ms_registration_type ) {
-                                    $registration_type = 'blog';
-                                    update_site_option( 'b3_registration_type', $ms_registration_type );
-                                } elseif ( 'ms_register_user' == $ms_registration_type ) {
-                                    $registration_type = 'user';
-                                    update_site_option( 'b3_registration_type', $ms_registration_type );
-                                } elseif ( 'ms_register_site_user' == $ms_registration_type ) {
-                                    $registration_type = 'all';
-                                    update_site_option( 'b3_registration_type', $ms_registration_type );
-                                }
-                                update_site_option( 'registration', $registration_type );
+                            $ms_registration_type = $_POST[ 'b3_registration_type' ];
+                            if ( 'closed' == $ms_registration_type ) {
+                                $registration_type = 'none';
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'request_access_subdomain' == $ms_registration_type ) {
+                                // not in use (yet)
+                                $registration_type = '';
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'ms_loggedin_register' == $ms_registration_type ) {
+                                $registration_type = 'blog';
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'ms_register_user' == $ms_registration_type ) {
+                                $registration_type = 'user';
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'ms_register_site_user' == $ms_registration_type ) {
+                                $registration_type = 'all';
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
                             }
+                            update_site_option( 'registration', $registration_type );
                         } else {
                             if ( 'closed' == $_POST[ 'b3_registration_type' ] ) {
                                 update_site_option( 'users_can_register', '0' );
