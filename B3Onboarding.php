@@ -1373,8 +1373,8 @@
                                 // non-admin logged in
                                 // $redirect_url set at start
                             }
-                        } elseif ( current_user_can( 'read' ) ) {
-                            $redirect_url = get_edit_user_link( get_current_user_id() );
+                        } elseif ( array_key_exists( 'read', $user->caps ) ) {
+                            $redirect_url = get_edit_user_link( $user->ID );
                         }
                     }
                 }
