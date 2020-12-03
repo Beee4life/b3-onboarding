@@ -607,14 +607,20 @@ All at ###SITENAME###
         return false;
     }
     add_filter( 'wpmu_welcome_user_notification', 'b3_disable_welcome_mu_user_email', 10, 3 );
-    
-    
+
+
     /**
      * Disable email for register site + user
      *
      * @return false
      */
-    function b3_disable_welcome_mu_user_blog_email() {
+    function b3_disable_signup_mu_user_blog_email() {
         return false;
     }
-    add_filter( 'wpmu_signup_blog_notification', 'b3_disable_welcome_mu_user_blog_email' );
+    add_filter( 'wpmu_signup_blog_notification', 'b3_disable_signup_mu_user_blog_email' );
+
+
+    function b3_disable_welcome_mu_user_blog_email( $blog_id, $user_id, $password, $title, $meta ) {
+        return false;
+    }
+    add_filter( 'wpmu_welcome_notification', 'b3_disable_welcome_mu_user_blog_email', 10, 5 );
