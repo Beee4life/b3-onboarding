@@ -1434,7 +1434,7 @@
                             }
                         }
 
-                        if ( isset( $result[ 'blog_id' ] ) && ! empty( $result[ 'blog_id' ] ) ) {
+                        if ( ! is_wp_error( $result ) ) {
                             $redirect_url = add_query_arg( array( 'mu-activate' => 'success' ), $redirect_url );
                             wp_safe_redirect( $redirect_url );
                             exit;
