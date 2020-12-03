@@ -527,7 +527,7 @@ All at ###SITENAME###
      * @return false|mixed|string|void
      */
     function b3_prevent_update_registration_option( $new_value, $old_value ) {
-        $b3_setting = get_option( 'b3_registration_type' );
+        $b3_setting = get_site_option( 'b3_registration_type' );
         if ( is_multisite() && is_main_site() ) {
             if ( 'closed' == $b3_setting ) {
                 $b3_setting = 'none';
@@ -541,11 +541,8 @@ All at ###SITENAME###
                 $b3_setting = 'all';
             }
         } elseif ( ! is_multisite() ) {
-            // @TODO: test this
             if ( 'closed' == $b3_setting ) {
                 $b3_setting = '0';
-            } elseif ( in_array( $b3_setting, [ 'request_access', 'email_activation', 'open' ] ) ) {
-                $b3_setting = '1';
             } else {
                 $b3_setting = '1';
             }
