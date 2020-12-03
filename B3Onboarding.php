@@ -267,6 +267,7 @@
             public function b3_set_default_settings() {
 
                 if ( ! is_multisite() ) {
+                    update_option( 'b3_registration_type', 'open' );
                     update_option( 'users_can_register', 0 );
                 } else {
                     update_site_option( 'registrationnotification', 'no' );
