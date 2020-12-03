@@ -111,6 +111,7 @@
      * @since 1.0.0
      */
     function b3_add_username_email_fields() {
+        $registration_type            = get_site_option( 'b3_registration_type', false );
         $registration_with_email_only = get_site_option( 'b3_register_email_only', false );
 
         ob_start();
@@ -125,10 +126,8 @@
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
                 <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
             </div>
-            <?php $register_for = apply_filters( 'b3_register_for', false ); ?>
-            <?php if ( false != $register_for && in_array( $register_for, [ 'blog', 'user' ] ) ) { ?>
-                <input type="hidden" name="signup_for" value="<?php echo $register_for; ?>" />
-            <?php } else { ?>
+
+            <?php if ( 'ms_register_site_user' == $registration_type ) { ?>
                 <div class="b3_form-element b3_form-element--signup-for">
                     <div>
                         <strong><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?>:</strong>
@@ -138,6 +137,8 @@
                     <input id="signupuser" type="radio" name="signup_for" value="user">
                     <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
                 </div>
+            <?php } elseif ( 'none' != $registration_type ) { ?>
+                <input type="hidden" name="signup_for" value="user" />
             <?php } ?>
             <?php
         } else {
