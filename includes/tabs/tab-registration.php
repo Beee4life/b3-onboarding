@@ -39,7 +39,7 @@
                     <?php b3_get_close(); ?>
                     <?php if ( is_multisite() && is_main_site() ) { ?>
                         <p>
-                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Network admin</a> page.', 'b3-onboarding' ), admin_url( 'settings.php' ) ); ?>
+                            <?php echo sprintf( __( 'The main registrations settings can be found on the <a href="%s">Network admin</a> page (for now).', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
                         </p>
                     <?php } else if ( ! is_multisite() ) { ?>
                         <p>
@@ -47,21 +47,22 @@
                         </p>
                     <?php } ?>
 
-                    <?php $options = b3_get_registration_types(); ?>
-                    <?php //echo '<pre>'; var_dump($options); echo '</pre>'; exit; ?>
-                    <?php if ( ! empty( $options ) ) { ?>
-                        <?php foreach( $options as $option ) { ?>
-                            <div class="b3_settings-input b3_settings-input--radio">
-                                <div>
-                                    <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                    <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                    <?php if ( ! is_multisite() ) { ?>
+                        <?php $options = b3_get_registration_types(); ?>
+                        <?php if ( ! empty( $options ) ) { ?>
+                            <?php foreach( $options as $option ) { ?>
+                                <div class="b3_settings-input b3_settings-input--radio">
+                                    <div>
+                                        <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                        <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                    </div>
                                 </div>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <div class="b3_settings-input b3_settings-input--radio">
+                                <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
                             </div>
                         <?php } ?>
-                    <?php } else { ?>
-                        <div class="b3_settings-input b3_settings-input--radio">
-                            <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
-                        </div>
                     <?php } ?>
                 <?php b3_get_close(); ?>
 
