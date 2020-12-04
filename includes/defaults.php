@@ -602,6 +602,11 @@
     }
 
 
+    function b3_default_logged_in_registration_only_message() {
+        return sprintf( __( 'You must first <a href="%s">log in</a>, and then you can create a new site.' ), wp_login_url() );
+    }
+
+
     /**
      * Return default lost password message
      *

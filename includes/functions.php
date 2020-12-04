@@ -234,8 +234,6 @@
                 }
             } else {
                 $registration_options = array_merge( $closed_option, $multisite_options );
-                if ( 'none' != $mu_registration ) {
-                }
             }
 
         }
@@ -724,6 +722,24 @@
         }
 
         return $registration_closed_message;
+    }
+
+
+    /**
+     * Message to let user know they need to login first to register a site
+     *
+     * @return string
+     */
+    function b3_get_logged_in_registration_only_message() {
+
+        $user_input = get_site_option( 'b3_logged_in_registration_only', false );
+        if ( false != $user_input ) {
+            $logged_in_registration_only_message = htmlspecialchars_decode( $user_input );
+        } else {
+            $logged_in_registration_only_message = b3_default_logged_in_registration_only_message();
+        }
+
+        return $logged_in_registration_only_message;
     }
 
 
