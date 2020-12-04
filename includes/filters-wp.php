@@ -518,7 +518,7 @@ All at ###SITENAME###
 
 
     /**
-     * Prevent update registration option
+     * Check setting to update B3
      *
      * @param $new_value
      * @param $old_value
@@ -553,11 +553,37 @@ All at ###SITENAME###
 
     }
     add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multissite
-    add_filter( 'pre_update_site_option_registration', 'b3_prevent_update_registration_option', 10, 2 ); // multisite
 
 
     /**
-     * Prevent update setting to inform admins for new users
+     * Check setting to update B3
+     *
+     * @param $new_value
+     * @param $old_value
+     *
+     * @return mixed
+     */
+    function b3_check_network_registration_option( $new_value, $old_value ) {
+        if ( is_multisite() ) {
+            if ( 'none' == $new_value ) {
+                $b3_setting = 'closed';
+            } elseif ( 'user' == $new_value ) {
+                $b3_setting = 'ms_register_user';
+            } elseif ( 'blog' == $new_value ) {
+                $b3_setting = 'ms_loggedin_register';
+            } elseif ( 'all' == $new_value ) {
+                $b3_setting = 'ms_register_site_user';
+            }
+            update_site_option( 'b3_registration_type', $b3_setting );
+        }
+
+        return $new_value;
+    }
+    add_filter( 'pre_update_site_option_registration', 'b3_check_network_registration_option', 10, 2 ); // multisite
+
+
+    /**
+     * Check setting to update B3
      *
      * @param $new_value
      * @param $old_value
@@ -565,7 +591,15 @@ All at ###SITENAME###
      * @return string
      */
     function b3_prevent_update_registration_notification_option( $new_value, $old_value ) {
-        return 'no';
+        if ( is_multisite() ) {
+            if ( 'no' == $new_value ) {
+                update_site_option( 'b3_disable_admin_notification_new_user', '1' );
+            } elseif ( 'yes' == $new_value ) {
+                delete_site_option( 'b3_disable_admin_notification_new_user' );
+            }
+        }
+
+        return $new_value;
     }
     add_filter( 'pre_update_site_option_registrationnotification', 'b3_prevent_update_registration_notification_option', 10, 2 );
 
