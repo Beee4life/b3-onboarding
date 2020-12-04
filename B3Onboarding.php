@@ -79,7 +79,6 @@
                 add_action( 'login_head',                           array( $this, 'b3_add_login_styling' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
-                add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
@@ -97,9 +96,8 @@
                 add_action( 'init',                                 array( $this, 'b3_reset_user_password' ) );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
-                // add_action( 'admin_init',                           array( $this, 'b3_check_options_post' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
-                add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
+                // add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
@@ -548,31 +546,6 @@
                             add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                         }
                     }
-                }
-            }
-
-
-            /*
-             * Inline js to disable registration option
-             */
-            public function b3_add_js_head() {
-                if ( is_multisite() ) {
-                    ?>
-                    <script type="text/javascript">
-                        jQuery(document).ready(function () {
-                            jQuery('.form-table input[name="registration"]').prop('disabled', true);
-                            jQuery('.form-table input[name="registrationnotification"]').prop('disabled', true);
-                        });
-                    </script>
-                    <?php
-                } else {
-                    ?>
-                    <script type="text/javascript">
-                        jQuery(document).ready(function () {
-                            jQuery('.form-table input[name="users_can_register"]').prop('disabled', true);
-                        });
-                    </script>
-                    <?php
                 }
             }
 
@@ -1972,28 +1945,6 @@
 
 
             /**
-             * Check post values of saved options
-             *
-             * @TODO: look into deleting in favor of filter
-             *
-             * @since 2.0.0
-             */
-            public function b3_check_options_post() {
-                if ( isset( $_POST[ 'option_page' ] ) ) {
-                    if ( ! isset( $_POST[ 'users_can_register' ] ) ) {
-                        if ( 'closed' != get_site_option( 'b3_registration_type', false ) ) {
-                            $_POST[ 'users_can_register' ] = 1;
-                        }
-                    } else {
-                        if ( 'closed' == get_site_option( 'b3_registration_type', false ) ) {
-                            $_POST[ 'users_can_register' ] = 0;
-                        }
-                    }
-                }
-            }
-
-
-            /**
              * For filter 'login_headerurl', replaces the url of the logo on the login page
              *
              * @since 1.0.6
@@ -2072,7 +2023,7 @@
             function b3_network_admin_notices() {
                 $screen = get_current_screen();
                 if ( 'settings-network' == $screen->id ) {
-                    echo sprintf( '<div class="notice notice-warning"><p>'. __( 'The setting for "Allow new registrations" and "Registration notification" are controlled by %s. Find them <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                    echo sprintf( '<div class="notice notice-info"><p>'. __( 'The setting for "Allow new registrations" and "Registration notification" are linked by %s. Find them <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
                         'B3 Onboarding',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
                         esc_html__( 'here', 'b3-onboarding' )
