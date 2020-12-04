@@ -4,9 +4,11 @@
      *
      * @since 1.0.0
      */
-?>
 
-<?php do_action( 'b3_add_form_messages', $attributes ); ?>
+    $registration_type = get_site_option( 'b3_registration_type' );
+
+    do_action( 'b3_add_form_messages', $attributes );
+?>
 
 <div id="b3-register" class="b3_page b3_page--register">
     <?php if ( $attributes[ 'title' ] ) { ?>
@@ -20,7 +22,14 @@
         <input name="b3_register_user" value="<?php echo wp_create_nonce( 'b3-register-user' ); ?>" type="hidden" />
 
         <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
-        <?php do_action( 'b3_add_username_email_fields' ); ?>
+
+        <?php
+            // echo '<pre>'; var_dump($registration_type); echo '</pre>'; exit;
+            if ( 'ms_loggedin_register' != $registration_type ) {
+                do_action( 'b3_add_username_email_fields' );
+            }
+        ?>
+
         <?php if ( ! is_multisite() ) { ?>
             <?php do_action( 'b3_add_password_fields' ); ?>
         <?php } else { ?>

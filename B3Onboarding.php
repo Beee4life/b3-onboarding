@@ -937,9 +937,9 @@
                                 } elseif ( false != get_site_option( 'b3_activate_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-                                } elseif ( in_array( $registration_type, array( 'request_access', 'email_activation', 'ms_register_site_user' ) ) ) {
-                                    $register = true;
+                                // } elseif ( in_array( $registration_type, array( 'request_access', 'email_activation', 'ms_register_user', 'ms_loggedin_register', 'ms_register_site_user' ) ) ) {
                                 } else {
+                                    $register = true;
                                 }
 
                                 if ( true == $register ) {
@@ -1868,7 +1868,7 @@
                 $main_register_type = get_site_option( 'registration' );
 
                 if ( is_main_site() ) {
-                    if ( in_array( $main_register_type, [ 'all', 'blog' ] ) && in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'ms_loggedin_register', 'ms_register_user', 'ms_register_site_user' ] )) {
+                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'ms_loggedin_register', 'ms_register_user', 'ms_register_site_user' ] )) {
                         if ( false == $sub_domain ) {
                             // @TODO: throw error if no subdomain is chosen (MS)
                             wpmu_signup_user( $user_name, $user_email, $meta );

@@ -231,8 +231,9 @@
      */
     function b3_add_site_fields() {
         if ( is_multisite() ) {
-            if ( 'all' == get_site_option( 'registration' ) && in_array( get_site_option( 'b3_registration_type', false ), array(
+            if ( in_array( get_site_option( 'b3_registration_type' ), array(
                     'request_access_subdomain',
+                    'ms_loggedin_register',
                     'ms_register_site_user',
                 ) ) ) {
                 ob_start();

@@ -43,10 +43,14 @@
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
-                } elseif ( in_array( get_site_option( 'b3_registration_type', false ), [ 'closed', 'none' ] ) ) {
+                    if ( ! in_array( get_site_option( 'b3_registration_type', false ), [ 'ms_loggedin_register', '' ] ) ) {
+                        return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                    }
+                }
+
+                if ( in_array( get_site_option( 'b3_registration_type', false ), [ 'closed', 'none' ] ) ) {
                     return '<p class="b3_message">' . apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) . '</p>';
-                } elseif ( in_array( get_site_option( 'b3_registration_type', false ), [ 'ms_loggedin_register', '' ] ) ) {
+                } elseif ( in_array( get_site_option( 'b3_registration_type', false ), [ 'ms_loggedin_register', '' ] ) && ! is_user_logged_in() ) {
                     return '<p class="b3_message">' . apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) . '</p>';
                 } else {
 
