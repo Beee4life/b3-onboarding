@@ -110,7 +110,6 @@
                 } else {
 
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
-                        // echo '<pre>'; var_dump($_POST[ 'b3_registration_type' ]); echo '</pre>'; exit;
                         if ( is_multisite() ) {
                             $ms_registration_type = $_POST[ 'b3_registration_type' ];
                             if ( 'closed' == $ms_registration_type ) {
@@ -349,8 +348,14 @@
 
                     if ( isset( $_POST[ 'b3_disable_admin_notification_new_user' ] ) && 1 == $_POST[ 'b3_disable_admin_notification_new_user' ] ) {
                         update_site_option( 'b3_disable_admin_notification_new_user', 1 );
+                        if ( is_multisite() ) {
+                            update_site_option( 'registrationnotification', 'no' );
+                        }
                     } else {
                         delete_site_option( 'b3_disable_admin_notification_new_user' );
+                        if ( is_multisite() ) {
+                            update_site_option( 'registrationnotification', 'yes' );
+                        }
                     }
 
                     /* specific boxes */
