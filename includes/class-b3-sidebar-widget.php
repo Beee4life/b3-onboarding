@@ -127,7 +127,7 @@
                     $show_widget = true;
                 }
             }
-
+            
             if ( true === $show_widget ) {
                 echo $args[ 'before_widget' ];
 
@@ -142,6 +142,11 @@
                     }
                     if ( isset( $register_url ) ) {
                         echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
+                    }
+                    if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
+                        foreach( $custom_links as $link ) {
+                            echo '<li><a href="' . $link[ 'link' ] . '">' . $link[ 'label' ] . '</a></li>';
+                        }
                     }
                 } else {
                     if ( isset( $account_url ) && false != $account_url ) {
