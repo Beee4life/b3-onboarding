@@ -1005,7 +1005,6 @@
                                         $blog_info   = wpmu_validate_blog_signup( $_POST[ 'blogname' ], $_POST[ 'blog_title' ], $user );
                                         $domain      = $blog_info[ 'domain' ];
                                         $path        = $blog_info[ 'path' ];
-                                        $blogname    = $blog_info[ 'blogname' ];
                                         $blog_title  = $blog_info[ 'blog_title' ];
                                         $errors      = $blog_info[ 'errors' ];
                                         $error_codes = array();
@@ -1402,8 +1401,11 @@
                 if ( is_multisite() ) {
                     if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' == $_GET[ 'activate' ] ) {
 
+                        $redirect_url      = b3_get_login_url();
+                        $valid_error_codes = array( 'already_active', 'blog_taken' );
+                        list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
                         $activate_cookie = 'wp-activate-' . COOKIEHASH;
-                        $redirect_url    = b3_get_login_url();
+                        $key             = '';
                         $result          = null;
 
                         if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
@@ -1414,11 +1416,16 @@
                             $key = $_POST[ 'key' ];
                         }
 
-                        if ( isset( $key ) ) {
-                            list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
-                            $valid_error_codes = array( 'already_active', 'blog_taken' );
+                        if ( $key ) {
+                            $redirect_url = remove_query_arg( 'key' );
 
-                            $result = wpmu_activate_signup( $key );
+                            if ( remove_query_arg( false ) !== $redirect_url ) {
+                                setcookie( $activate_cookie, $key, 0, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
+                                wp_safe_redirect( $redirect_url );
+                                exit;
+                            } else {
+                                $result = wpmu_activate_signup( $key );
+                            }
                         }
 
                         if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
@@ -1908,7 +1915,7 @@
 
                             return true;
                         } else {
-                            wpmu_signup_blog( $domain, '/', $blog_title, $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
+                            wpmu_signup_blog( $domain, $path, $blog_title, $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
 
                             return true;
                         }
