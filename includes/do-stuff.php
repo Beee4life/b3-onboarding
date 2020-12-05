@@ -112,7 +112,7 @@
                     true
                 );
                 if ( ! is_wp_error( $result ) ) {
-                    update_site_option( $page[ 'meta' ], $result, true );
+                    update_site_option( $page[ 'meta' ], $result );
                     update_post_meta( $result, '_b3_page', true );
                 }
             }
@@ -182,7 +182,7 @@
                                     <div class="b3_input-option b3_input-option--<?php echo $input_type; ?>">
                                         <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
                                         <?php if ( in_array( $input_type, array( 'radio' ) ) ) { ?>
-                                            <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value ) ? ' checked="checked"' : false; ?>
+                                            <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                         <?php } elseif ( in_array( $input_type, array( 'checkbox' ) ) ) { ?>
                                             <?php $selected = ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) ? ' checked="checked"' : ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                         <?php } ?>
