@@ -24,7 +24,6 @@
         <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
 
         <?php
-            // echo '<pre>'; var_dump($registration_type); echo '</pre>'; exit;
             if ( 'ms_loggedin_register' != $registration_type ) {
                 do_action( 'b3_add_username_email_fields' );
             }
