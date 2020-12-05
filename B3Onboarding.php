@@ -943,18 +943,30 @@
 
                                 if ( true == $register ) {
                                     $signup_for = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
-                                    if ( 'ms_loggedin_register' != $registration_type ) {
-                                        $user_valid               = wpmu_validate_user_signup( $_POST[ 'user_name' ], $_POST[ 'user_email' ] );
-                                        $error_message_user_name  = $user_valid[ 'errors' ]->get_error_message( 'user_name' );
-                                        $error_message_user_email = $user_valid[ 'errors' ]->get_error_message( 'user_email' );
+                                    $user_valid = wpmu_validate_user_signup( $_POST[ 'user_name' ], $_POST[ 'user_email' ] );
+                                    $errors     = $user_valid[ 'errors' ];
 
-                                        if ( ! empty( $error_message_user_name ) ) {
-                                            if ( 'That username is currently reserved but may be available in a couple of days.' == $error_message_user_name ) {
-                                                $error_codes[] = 'wpmu_user_reserved';
-                                            }
-                                        } elseif ( ! empty( $error_message_user_email ) ) {
-                                            if ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' == $error_message_user_email ) {
-                                                $error_codes[] = 'wpmu_email_in_use';
+                                    if ( $errors->has_errors() ) {
+                                        if ( 'ms_loggedin_register' != $registration_type ) {
+                                            $error_message_user_name  = $errors->get_error_message( 'user_name' );
+                                            $error_message_user_email = $errors->get_error_message( 'user_email' );
+
+                                            if ( ! empty( $error_message_user_name ) ) {
+                                                if ( 'Sorry, that username already exists!' == $error_message_user_name ) {
+                                                    $error_codes[] = 'username_exists';
+                                                } elseif ( 'That username is currently reserved but may be available in a couple of days.' == $error_message_user_name ) {
+                                                    $error_codes[] = 'wpmu_user_reserved';
+                                                }
+                                            } elseif ( ! empty( $error_message_user_email ) ) {
+                                                if ( 'Sorry, that email address is already used!' == $error_message_user_email ) {
+                                                    $error_codes[] = 'email_exists';
+                                                } elseif ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' == $error_message_user_email ) {
+                                                    $error_codes[] = 'wpmu_email_in_use';
+                                                }
+                                            } else {
+                                                $redirect_url = add_query_arg( 'registration-error', 'unknown', $redirect_url );
+                                                wp_safe_redirect( $redirect_url );
+                                                exit;
                                             }
                                         }
                                     }
@@ -1009,6 +1021,8 @@
                                                     $error_codes[] = 'site_min4';
                                                 } elseif ( 'Sorry, site names must have letters too!' == $error_message_name ) {
                                                     $error_codes[] = 'site_letters';
+                                                } elseif ( 'Sorry, that site already exists!' == $error_message_name ) {
+                                                    $error_codes[] = 'domain_exists';
                                                 }
                                             } elseif ( ! empty( $error_message_title ) ) {
                                                 if ( 'Please enter a site title.' == $error_message_title ) {
@@ -1702,7 +1716,7 @@
 
                     // Multisite
                     case 'domain_exists':
-                        return esc_html__( 'Sorry, this subdomain has already been taken.', 'b3-onboarding' );
+                        return esc_html__( 'Sorry, this domain has already been taken.', 'b3-onboarding' );
 
                     case 'no_address':
                         return esc_html__( 'Please enter a site address.', 'b3-onboarding' );
