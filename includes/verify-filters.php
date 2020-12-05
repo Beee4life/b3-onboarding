@@ -30,6 +30,7 @@
             'b3_manual_welcome_user_message'           => array( 'string' ),
             'b3_message_above_login'                   => array( 'string' ),
             'b3_message_above_lost_password'           => array( 'string' ),
+            'b3_message_above_new_blog'                => array( 'string' ),
             'b3_message_above_registration'            => array( 'string' ),
             'b3_message_above_request_access'          => array( 'string' ),
             'b3_new_user_message'                      => array( 'string' ),
