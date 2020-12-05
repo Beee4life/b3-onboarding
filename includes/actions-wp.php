@@ -260,7 +260,7 @@
 
         $user = get_userdata( $user_id );
         $subject = sprintf( b3_get_welcome_wpmu_user_blog_subject(), get_site_option( 'site_name' ), $title );
-        $message = sprintf( b3_get_welcome_wpmu_user_blog_message(), get_site_url( $blog_id ), $user->user_login, $password, esc_url( b3_get_login_url() ) );
+        $message = sprintf( b3_get_welcome_wpmu_user_blog_message(), get_site_url( $blog_id ), $user->user_login, $password, esc_url( b3_get_login_url( false, $blog_id ) ) );
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
