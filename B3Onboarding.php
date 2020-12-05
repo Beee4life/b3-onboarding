@@ -859,13 +859,14 @@
                             return;
                         } else {
 
+                            $meta_data         = array();
+                            $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
+                            $registration_type = get_site_option( 'b3_registration_type', false );
                             if ( is_multisite() ) {
                                 $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
                             } else {
                                 $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
                             }
-                            $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
-                            $registration_type = get_site_option( 'b3_registration_type', false );
 
                             if ( isset( $_POST[ 'first_name' ] ) ) {
                                 $meta_data[ 'first_name' ] = sanitize_text_field( $_POST[ 'first_name' ] );
@@ -928,8 +929,7 @@
                             } else {
 
                                 // if is_multisite
-                                $meta_data  = [];
-                                $register   = false;
+                                $register = false;
 
                                 if ( 'closed' == $registration_type ) {
                                     // Registration closed, display error
@@ -937,28 +937,29 @@
                                 } elseif ( false != get_site_option( 'b3_activate_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-                                // } elseif ( in_array( $registration_type, array( 'request_access', 'email_activation', 'ms_register_user', 'ms_loggedin_register', 'ms_register_site_user' ) ) ) {
                                 } else {
                                     $register = true;
                                 }
 
                                 if ( true == $register ) {
-                                    $signup_for               = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
-                                    $user_valid               = wpmu_validate_user_signup( $_POST[ 'user_name' ], $_POST[ 'user_email' ] );
-                                    $error_message_user_name  = $user_valid[ 'errors' ]->get_error_message( 'user_name' );
-                                    $error_message_user_email = $user_valid[ 'errors' ]->get_error_message( 'user_email' );
+                                    $signup_for = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
+                                    if ( 'ms_loggedin_register' != $registration_type ) {
+                                        $user_valid               = wpmu_validate_user_signup( $_POST[ 'user_name' ], $_POST[ 'user_email' ] );
+                                        $error_message_user_name  = $user_valid[ 'errors' ]->get_error_message( 'user_name' );
+                                        $error_message_user_email = $user_valid[ 'errors' ]->get_error_message( 'user_email' );
 
-                                    if ( ! empty( $error_message_user_name ) ) {
-                                        if ( 'That username is currently reserved but may be available in a couple of days.' == $error_message_user_name ) {
-                                            $error_codes[] = 'wpmu_user_reserved';
-                                        }
-                                    } elseif ( ! empty( $error_message_user_email ) ) {
-                                        if ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' == $error_message_user_email ) {
-                                            $error_codes[] = 'wpmu_email_in_use';
+                                        if ( ! empty( $error_message_user_name ) ) {
+                                            if ( 'That username is currently reserved but may be available in a couple of days.' == $error_message_user_name ) {
+                                                $error_codes[] = 'wpmu_user_reserved';
+                                            }
+                                        } elseif ( ! empty( $error_message_user_email ) ) {
+                                            if ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' == $error_message_user_email ) {
+                                                $error_codes[] = 'wpmu_email_in_use';
+                                            }
                                         }
                                     }
 
-                                    if ( ! empty( $error_codes ) ) {
+                                    if ( isset( $error_codes ) && ! empty( $error_codes ) ) {
                                         $errors       = join( ',', $error_codes );
                                         $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                         wp_safe_redirect( $redirect_url );
@@ -966,7 +967,7 @@
                                     } else {
 
                                         if ( 'user' == $signup_for ) {
-                                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, $meta_data );
+                                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, false, false, $meta_data );
                                             if ( true == $result ) {
                                                 // Success, redirect to login page.
                                                 $redirect_url = b3_get_login_url();
@@ -976,54 +977,68 @@
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                             }
-                                            // wp_safe_redirect( $redirect_url );
-                                            // exit;
                                         }
                                     }
 
                                     if ( 'blog' == $signup_for && empty( $error_codes ) ) {
 
-                                        if ( isset( $_POST[ 'lang_id' ] ) ) {
-                                            $meta_data[ 'lang_id' ] = $_POST[ 'lang_id' ];
+                                        $meta_data[ 'lang_id' ] = ( isset( $_POST[ 'lang_id' ] ) ) ? $_POST[ 'lang_id' ] : 1;
+                                        $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? $_POST[ 'blog_public' ] : 1;
+                                        $user                   = '';
+
+                                        if ( is_user_logged_in() ) {
+                                            $user = wp_get_current_user();
                                         }
 
-                                        $blog_valid          = wpmu_validate_blog_signup( $_POST[ 'blogname' ], $_POST[ 'blog_title' ], '' );
-                                        $error_codes         = [];
-                                        $error_message_name  = $blog_valid[ 'errors' ]->get_error_message( 'blogname' );
-                                        $error_message_title = $blog_valid[ 'errors' ]->get_error_message( 'blog_title' );
+                                        $blog_info   = wpmu_validate_blog_signup( $_POST[ 'blogname' ], $_POST[ 'blog_title' ], $user );
+                                        $domain      = $blog_info[ 'domain' ];
+                                        $path        = $blog_info[ 'path' ];
+                                        $blogname    = $blog_info[ 'blogname' ];
+                                        $blog_title  = $blog_info[ 'blog_title' ];
+                                        $errors      = $blog_info[ 'errors' ];
+                                        $error_codes = array();
 
-                                        if ( ! empty( $error_message_name ) ) {
-                                            if ( 'Please enter a site name.' == $error_message_name ) {
-                                                $error_codes[] = 'no_address';
-                                            } elseif ( 'Site name must be at least 4 characters.' == $error_message_name ) {
-                                                $error_codes[] = 'site_min4';
-                                            } elseif ( 'Sorry, site names must have letters too!' == $error_message_name ) {
-                                                $error_codes[] = 'site_letters';
-                                            }
-                                        } elseif ( ! empty( $error_message_title ) ) {
-                                            if ( 'Please enter a site title.' == $error_message_title ) {
-                                                $error_codes[] = 'no_title';
-                                            }
-                                        }
+                                        if ( $errors->has_errors() ) {
+                                            $error_message_name  = $errors->get_error_message( 'blogname' );
+                                            $error_message_title = $errors->get_error_message( 'blog_title' );
 
-                                        if ( ! empty( $error_codes ) ) {
+                                            if ( ! empty( $error_message_name ) ) {
+                                                if ( 'Please enter a site name.' == $error_message_name ) {
+                                                    $error_codes[] = 'no_address';
+                                                } elseif ( 'Site name must be at least 4 characters.' == $error_message_name ) {
+                                                    $error_codes[] = 'site_min4';
+                                                } elseif ( 'Sorry, site names must have letters too!' == $error_message_name ) {
+                                                    $error_codes[] = 'site_letters';
+                                                }
+                                            } elseif ( ! empty( $error_message_title ) ) {
+                                                if ( 'Please enter a site title.' == $error_message_title ) {
+                                                    $error_codes[] = 'no_title';
+                                                }
+                                            }
+
                                             $errors       = join( ',', $error_codes );
                                             $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
-                                        } else {
+                                        }
+
+                                        if ( empty( $error_codes ) ) {
                                             // no errors
-                                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, $_POST[ 'blogname' ], $meta_data );
-                                            if ( true == $result ) {
-                                                // Success, redirect to login page.
-                                                $redirect_url = b3_get_login_url();
-                                                $redirect_url = add_query_arg( 'registered', 'wpmu_confirm_email', $redirect_url );
-                                            } elseif ( is_wp_error( $result ) ) {
+                                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, $domain, $blog_title, $path, $meta_data );
+                                            if ( is_wp_error( $result ) ) {
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
+                                            } else {
+                                                if ( 'ms_loggedin_register' == $registration_type ) {
+                                                    // Success, redirect to message.
+                                                    $redirect_url = add_query_arg( 'registered', 'new_blog', $redirect_url );
+                                                    $redirect_url = add_query_arg( 'site_id', $result, $redirect_url );
+                                                } elseif ( true == $result ) {
+                                                    // Success, redirect to login page.
+                                                    $redirect_url = b3_get_login_url();
+                                                    $redirect_url = add_query_arg( 'registered', 'wpmu_confirm_email', $redirect_url );
+                                                }
                                             }
                                         }
                                     }
-                                    // wp_safe_redirect( $redirect_url );
-                                    // exit;
                                 }
                             }
                             wp_safe_redirect( $redirect_url );
@@ -1364,9 +1379,10 @@
 
 
             /**
-             * Initiates email activation ('normal site')
+             * Initiates email activation
              *
              * @since 1.0.6
+             * @since 2.6.0 wpmu user activation
              */
             public function b3_do_user_activate() {
                 if ( is_multisite() ) {
@@ -1856,36 +1872,36 @@
              *
              * @param       $user_name
              * @param       $user_email
-             * @param       $sub_domain
+             * @param       $domain
              * @param array $meta
              *
              * @return bool|WP_Error
              */
-            private function b3_register_wpmu_user( $user_name, $user_email, $sub_domain, $meta = array() ) {
+            private function b3_register_wpmu_user( $user_name, $user_email, $domain, $blog_title, $path, $meta = array() ) {
 
-                $b3_register_type   = get_site_option( 'b3_registration_type', false );
-                $errors             = false;
-                $main_register_type = get_site_option( 'registration' );
+                $b3_register_type = get_site_option( 'b3_registration_type', false );
+                $errors           = false;
+                if ( false != $user_name ) {
+                    $user = get_user_by( 'login', $user_name );
+                } else {
+                    $user = get_userdata( get_current_user_id() );
+                }
 
                 if ( is_main_site() ) {
-                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'ms_loggedin_register', 'ms_register_user', 'ms_register_site_user' ] )) {
-                        if ( false == $sub_domain ) {
-                            // @TODO: throw error if no subdomain is chosen (MS)
+                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'ms_register_user', 'ms_register_site_user' ] )) {
+                        if ( false == $domain ) {
                             wpmu_signup_user( $user_name, $user_email, $meta );
 
                             return true;
                         } else {
-                            wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
-                            // @TODO: do i need this
-                            // $site_id = get_id_from_blogname( $sub_domain );
+                            wpmu_signup_blog( $domain, '/', $blog_title, $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
 
                             return true;
                         }
-                    } elseif ( 'none' == $main_register_type ) {
-                        // @TODO: add if for user or user + site (MS)
-                        // @TODO: add if for if user needs to activate
-                        // @TODO: add if for if admin needs to activate
-                        // wpmu_signup_blog( $sub_domain . '.' . $_SERVER[ 'HTTP_HOST' ], '/', ucfirst( $sub_domain ), $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
+                    } elseif ( 'ms_loggedin_register' == $b3_register_type ) {
+                        $blog_id = wpmu_create_blog( $domain, $path, $blog_title, $user->ID, $meta, get_current_network_id() );
+
+                        return $blog_id;
                     } else {
                         $errors = new WP_Error( 'unknown', $this->b3_get_return_message( 'unknown' ) );
                     }

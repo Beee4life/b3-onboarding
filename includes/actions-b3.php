@@ -137,11 +137,12 @@
                     <input id="signupuser" type="radio" name="signup_for" value="user">
                     <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
                 </div>
-            <?php } elseif ( 'none' != $registration_type ) { ?>
+            <?php } elseif ( 'ms_register_user' == $registration_type ) { ?>
                 <input type="hidden" name="signup_for" value="user" />
+            <?php } elseif ( 'ms_loggedin_register' == $registration_type ) { ?>
+                <input type="hidden" name="signup_for" value="blog" />
             <?php } ?>
-            <?php
-        } else {
+        <?php } else {
             if ( false == $registration_with_email_only ) {
                 ?>
                 <div class="b3_form-element b3_form-element--login">
@@ -231,7 +232,8 @@
      */
     function b3_add_site_fields() {
         if ( is_multisite() ) {
-            if ( in_array( get_site_option( 'b3_registration_type' ), array(
+            $registration_type = get_site_option( 'b3_registration_type' );
+            if ( in_array( $registration_type, array(
                     'request_access_subdomain',
                     'ms_loggedin_register',
                     'ms_register_site_user',
@@ -241,11 +243,20 @@
                 if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
             ?>
                 <div class="b3_form-element b3_form-element--site-fields">
+                    <?php
+                        if ( 'ms_loggedin_register' == $registration_type ) {
+                            $b3_message_above_new_blog = esc_html__( "Here you can register for a new site.", 'b3-onboarding' );
+                            $notice = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
+                            if ( false !== $notice ) {
+                                echo '<p>' . $notice . '</p>';
+                            }
+                        }
+                    ?>
                     <div class="b3_form-element b3_form-element--subdomain">
                         <?php $current_network = get_network(); ?>
                         <?php if ( is_subdomain_install() ) { ?>
                             <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site (sub) domain', 'b3-onboarding' ); ?></label>
-                            <input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>" />.<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>
+                            <input name="blogname" id="blogname" value="abcd" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>" />.<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>
                         <?php } else { ?>
                             <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site address', 'b3-onboarding' ); ?></label>
                             <?php echo $current_network->domain . $current_network->path; ?><input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'address', 'b3-onboarding' ); ?>" />
@@ -254,17 +265,22 @@
 
                     <div class="b3_form-element b3_form-element--site-title">
                         <label class="b3_form-label" for="blog_title"><?php esc_html_e( 'Site title', 'b3-onboarding' ); ?></label>
-                        <input name="blog_title" id="blog_title" value="" type="text" class="b3_form--input" />
+                        <input name="blog_title" id="blog_title" value="abcd" type="text" class="b3_form--input" />
                     </div>
 
                     <?php // @TODO: add languages option ?>
                     <div class="b3_form-element b3_form-element--visbility">
                         <p class="privacy-intro">
-                            <strong><?php _e( 'Privacy', 'b3-onboarding' ); ?></strong>
+                            <?php _e( 'Privacy:', 'b3-onboarding' ); ?>
+                            <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
                             <br style="clear:both" />
                             <label class="checkbox" for="blog_public_on">
-                                <input type="checkbox" id="blog_public_on" name="dont_index" value="1" />
-                                <?php _e( "Don't let search engines index this site.", 'b3-onboarding' ); ?>
+                                <input type="radio" id="blog_public_on" name="blog_public" value="1" />
+                                <?php _e( 'Yes' ); ?>
+                            </label>
+                            <label class="checkbox" for="blog_public_off">
+                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />
+                                <?php _e( 'No' ); ?>
                             </label>
                         </p>
                     </div>
@@ -308,6 +324,9 @@
                 $hidden_fields .= '<input type="hidden" name="' . $key . '" value="' . $value . '">' . "\n";
             }
             echo $hidden_fields;
+        }
+        if ( is_multisite() && 'ms_loggedin_register' == get_site_option( 'b3_registration_type' ) ) {
+            echo '<input type="hidden" name="signup_for" value="blog" />';
         }
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
