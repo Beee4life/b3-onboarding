@@ -560,7 +560,7 @@
             $split_message .= 'Hi ' . $user->user_login . ",\n";
             $split_message .= '<br /><br />' . "\n";
         }
-        $split_message .= __( 'Your new site has been successfully set up at %1$s.', 'b3-onboarding') . "\n";
+        $split_message .= __( 'Your new site has been successfully set up at <a href="%1$s">%1$s</a>.', 'b3-onboarding') . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
         $split_message .= '<br />' . "\n";
