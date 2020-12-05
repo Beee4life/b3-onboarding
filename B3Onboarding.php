@@ -268,7 +268,10 @@
                     update_option( 'b3_registration_type', 'open' );
                     update_option( 'users_can_register', 0 );
                 } else {
-                    update_site_option( 'registrationnotification', 'no' );
+                    $admin_notification = get_site_option( 'registrationnotification' );
+                    if ( 'no' == $admin_notification ) {
+                        update_site_option( 'b3_disable_admin_notification_new_user', 1 );
+                    }
 
                     $public_registration = get_site_option( 'registration' );
                     if ( 'user' == $public_registration ) {
