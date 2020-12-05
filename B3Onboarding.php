@@ -77,6 +77,7 @@
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
                 add_action( 'login_head',                           array( $this, 'b3_add_login_styling' ) );
+                add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
@@ -493,6 +494,31 @@
             public function b3_enqueue_scripts_frontend() {
                 wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+            }
+
+
+            /*
+             * Inline js to disable registration option
+             */
+            public function b3_add_js_head() {
+                if ( is_multisite() ) {
+                    // ?>
+                    <!--<script type="text/javascript">-->
+                    <!--    jQuery(document).ready(function () {-->
+                    <!--        jQuery('.form-table input[name="registration"]').prop('disabled', true);-->
+                    <!--    });-->
+                    <!--</script>-->
+                    <?php
+                } else {
+                    ?>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function () {
+                            // $js .= "jQuery(document).ready(function(\$){ \$('input#users_can_register, select#default_role').attr('disabled', 'disabled'); });";
+                            jQuery('.form-table input[name="users_can_register"]').prop('disabled', true);
+                        });
+                    </script>
+                    <?php
+                }
             }
 
 
@@ -2049,6 +2075,15 @@
                         _e( 'Activation mail resent.', 'b3-onboarding' );
                     }
                     echo '</p></div>';
+                }
+
+                global $pagenow; // Need this global variable.
+                // Multisite does NOT provide these options.
+                if ( is_blog_admin() && $pagenow === "options-general.php" && ! isset ( $_GET['page'] ) && ! is_multisite() ) {
+                    echo sprintf( '<div class="notice notice-info"><p>'. __( 'B3 OnBoarding takes control over the \'Membership\' option. You can change this <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
+                        esc_html__( 'here', 'b3-onboarding' )
+                    );
                 }
 
                 if ( get_site_option( 'b3_activate_filter_validation', false ) ) {
