@@ -267,8 +267,13 @@
 
                 if ( ! is_multisite() ) {
                     update_option( 'b3_registration_type', 'open' );
+                    update_option( 'b3_dashboard_widget', 1 );
                     update_option( 'users_can_register', 0 );
                 } else {
+                    
+                    if ( is_main_site() ) {
+                        update_option( 'b3_dashboard_widget', 1 );
+                    }
                     $admin_notification = get_site_option( 'registrationnotification' );
                     if ( 'no' == $admin_notification ) {
                         update_site_option( 'b3_disable_admin_notification_new_user', 1 );
@@ -287,7 +292,6 @@
                 }
 
                 update_site_option( 'b3_activate_custom_emails', 1 );
-                update_site_option( 'b3_dashboard_widget', 1 );
                 update_site_option( 'b3_disable_wordpress_forms', 1 );
                 update_site_option( 'b3_hide_admin_bar', 1 );
                 update_site_option( 'b3_logo_in_email', 1 );
@@ -318,24 +322,9 @@
                  * - lang_id
                  */
 
-                switch_to_blog( $new_site->blog_id );
-                // create new page account
-                $result = wp_insert_post( array(
-                    'post_title'     => 'Account',
-                    'post_name'      => 'account',
-                    'post_content'   => '[account-page]',
-                    'post_status'    => 'publish',
-                    'post_type'      => 'page',
-                    'ping_status'    => 'closed',
-                    'comment_status' => 'closed',
-                ),
-                    true
-                );
-                if ( ! is_wp_error( $result ) ) {
-                    // @TODO: do I need this
-                    update_post_meta( $result, '_b3_page', true );
-                }
-                restore_current_blog();
+                // switch_to_blog( $new_site->blog_id );
+                // @TODO: create new page account
+                // restore_current_blog();
 
             }
 
@@ -586,7 +575,9 @@
                 /*
                  * Includes sidebar widget function + call
                  */
-                include 'includes/class-b3-sidebar-widget.php';
+                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                    include 'includes/class-b3-sidebar-widget.php';
+                }
             }
 
 
@@ -597,9 +588,11 @@
                 /*
                  * Includes dashboard widget function + call
                  */
-                include 'includes/dashboard-widget.php';
-                if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
-                    include 'includes/dashboard-widget-debug.php';
+                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                    include 'includes/dashboard-widget.php';
+                    if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
+                        include 'includes/dashboard-widget-debug.php';
+                    }
                 }
             }
 
@@ -1263,7 +1256,7 @@
 
                 if ( is_multisite() ) {
                     // $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms', false );
-                } else {
+                    $custom_login_url = b3_get_login_url(false, get_current_blog_id());
                 }
                 $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms', false );
 
@@ -1386,20 +1379,35 @@
                 if ( $requested_redirect_to ) {
                     $redirect_url = $requested_redirect_to;
                 } else {
-                    if ( isset( $user->caps ) && array_key_exists( 'administrator', $user->caps ) ) {
-                        $redirect_url = $redirect_to;
-                    } else {
-                        // Non-admin users always go to their account page after login, if it's defined
-                        $account_page_url = b3_get_account_url();
-                        if ( false != $account_page_url ) {
-                            if ( isset( $user->roles ) && ! in_array( $stored_roles, $user->roles ) ) {
-                                $redirect_url = $account_page_url;
+                    if ( is_multisite() ) {
+                        if ( is_main_site() ) {
+                            $blogs = get_blogs_of_user( $user->ID );
+                            if ( ! empty( $blogs ) ) {
+                                $site_info = array_shift( $blogs );
+                                switch_to_blog( $site_info->userblog_id );
+                                $redirect_url = get_admin_url( $site_info->userblog_id );
+                                restore_current_blog();
+                                return $redirect_url;
                             } else {
-                                // non-admin logged in
-                                // $redirect_url set at start
+                                //user profile
                             }
-                        } elseif ( array_key_exists( 'read', $user->caps ) ) {
-                            $redirect_url = get_edit_user_link( $user->ID );
+                        }
+                    } else {
+                        if ( isset( $user->caps ) && array_key_exists( 'administrator', $user->caps ) ) {
+                            $redirect_url = $redirect_to;
+                        } else {
+                            // Non-admin users always go to their account page after login, if it's defined
+                            $account_page_url = b3_get_account_url();
+                            if ( false != $account_page_url ) {
+                                if ( isset( $user->roles ) && ! in_array( $stored_roles, $user->roles ) ) {
+                                    $redirect_url = $account_page_url;
+                                } else {
+                                    // non-admin logged in
+                                    // $redirect_url set at start
+                                }
+                            } elseif ( array_key_exists( 'read', $user->caps ) ) {
+                                $redirect_url = get_edit_user_link( $user->ID );
+                            }
                         }
                     }
                 }
@@ -1940,7 +1948,7 @@
                 if ( is_main_site() ) {
                     if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all' ] )) {
                         if ( false == $domain ) {
-                            wpmu_signup_user( $user_name, $user_email, $meta );
+                            wpmu_signup_user( $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
 
                             return true;
                         } else {
@@ -1949,7 +1957,7 @@
                             return true;
                         }
                     } elseif ( 'blog' == $b3_register_type ) {
-                        $blog_id = wpmu_create_blog( $domain, $path, $blog_title, $user->ID, $meta, get_current_network_id() );
+                        $blog_id = wpmu_create_blog( $domain, $path, $blog_title, $user->ID, apply_filters( 'add_signup_meta', $meta ), get_current_network_id() );
 
                         return $blog_id;
                     } else {
