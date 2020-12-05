@@ -132,11 +132,11 @@
                             update_site_option( 'registration', $registration_type );
                         } else {
                             if ( 'closed' == $_POST[ 'b3_registration_type' ] ) {
-                                update_site_option( 'users_can_register', '0' );
+                                update_option( 'users_can_register', 0 );
                             } else {
-                                update_site_option( 'users_can_register', '1' );
+                                update_option( 'users_can_register', 1 );
                             }
-                            update_site_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ] );
+                            update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ] );
                         }
                     }
 
