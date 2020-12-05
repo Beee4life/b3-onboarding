@@ -230,21 +230,16 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        if ( ! is_subdomain_install() || get_current_network_id() != 1 ) {
-            $activate_url = network_site_url( "wp-activate.php?key=$key" );
-        } else {
-            $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
-            // $activate_url = "http://{$domain}{$path}wp-activate=user&key=$key";
-        }
-        $activate_url = esc_url( $activate_url );
 
-        $from_name = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
-        $user      = get_user_by( 'login', $user_login );
-        $subject   = sprintf( b3_get_new_wpmu_user_blog_subject(), $from_name );
-        $message   = sprintf( b3_get_new_wpmu_user_blog_message( $user ), '<a href="' . esc_url( $activate_url ) . '">' . __( 'this link', 'b3-onboarding' ) . '</a>', esc_url( "http://{$domain}{$path}" ) );
-        $message   = b3_replace_template_styling( $message );
-        $message   = strtr( $message, b3_replace_email_vars() );
-        $message   = htmlspecialchars_decode( stripslashes( $message ) );
+        $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
+        $activate_url = esc_url( $activate_url );
+        $from_name    = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
+        $user         = get_user_by( 'login', $user_login );
+        $subject      = sprintf( b3_get_new_wpmu_user_blog_subject(), $from_name );
+        $message      = sprintf( b3_get_new_wpmu_user_blog_message( $user ), '<a href="' . esc_url( $activate_url ) . '">' . __( 'this link', 'b3-onboarding' ) . '</a>', esc_url( "http://{$domain}{$path}" ) );
+        $message      = b3_replace_template_styling( $message );
+        $message      = strtr( $message, b3_replace_email_vars() );
+        $message      = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
 
