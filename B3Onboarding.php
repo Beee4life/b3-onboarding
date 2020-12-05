@@ -270,7 +270,7 @@
                     update_option( 'b3_dashboard_widget', 1 );
                     update_option( 'users_can_register', 0 );
                 } else {
-                    
+
                     if ( is_main_site() ) {
                         update_option( 'b3_dashboard_widget', 1 );
                     }
@@ -1254,21 +1254,16 @@
              */
             public function b3_redirect_to_custom_login() {
 
-                if ( is_multisite() ) {
-                    // $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms', false );
-                    $custom_login_url = b3_get_login_url(false, get_current_blog_id());
-                }
                 $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms', false );
-
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == $disable_wp_forms ) {
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
+
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user( $redirect_to );
                         exit;
                     }
 
-                    $custom_login_url = b3_get_login_url();
-                    $login_url        = ( false != $custom_login_url ) ? $custom_login_url : wp_login_url();
+                    $login_url = b3_get_login_url();
 
                     if ( ! empty( $redirect_to ) ) {
                         $login_url = add_query_arg( 'redirect_to', $redirect_to, $login_url );
@@ -1377,37 +1372,24 @@
                 }
 
                 if ( $requested_redirect_to ) {
+                    // redirect url is set
                     $redirect_url = $requested_redirect_to;
                 } else {
-                    if ( is_multisite() ) {
-                        if ( is_main_site() ) {
-                            $blogs = get_blogs_of_user( $user->ID );
-                            if ( ! empty( $blogs ) ) {
-                                $site_info = array_shift( $blogs );
-                                switch_to_blog( $site_info->userblog_id );
-                                $redirect_url = get_admin_url( $site_info->userblog_id );
-                                restore_current_blog();
-                                return $redirect_url;
-                            } else {
-                                //user profile
-                            }
-                        }
+                    // redirect url is not set
+                    if ( user_can( $user, 'manage_options' ) ) {
+                        $redirect_url = $redirect_to;
                     } else {
-                        if ( isset( $user->caps ) && array_key_exists( 'administrator', $user->caps ) ) {
-                            $redirect_url = $redirect_to;
-                        } else {
-                            // Non-admin users always go to their account page after login, if it's defined
-                            $account_page_url = b3_get_account_url();
-                            if ( false != $account_page_url ) {
-                                if ( isset( $user->roles ) && ! in_array( $stored_roles, $user->roles ) ) {
-                                    $redirect_url = $account_page_url;
-                                } else {
-                                    // non-admin logged in
-                                    // $redirect_url set at start
-                                }
-                            } elseif ( array_key_exists( 'read', $user->caps ) ) {
-                                $redirect_url = get_edit_user_link( $user->ID );
+                        // Non-admin users always go to their account page after login, if it's defined
+                        $account_page_url = b3_get_account_url();
+                        if ( false != $account_page_url ) {
+                            if ( ! in_array( $stored_roles, $user->roles ) ) {
+                                $redirect_url = $account_page_url;
+                            } else {
+                                // non-admin logged in
+                                // $redirect_url set at start
                             }
+                        } elseif ( current_user_can( 'read' ) ) {
+                            $redirect_url = get_edit_user_link( get_current_user_id() );
                         }
                     }
                 }
