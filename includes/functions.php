@@ -923,19 +923,19 @@
     function b3_get_login_url( $return_id = false, $blog_id = false ) {
 
         $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms' );
-        $id               = get_site_option( 'b3_login_page_id' );
+        $login_page_id    = get_site_option( 'b3_login_page_id' );
 
         if ( class_exists( 'Sitepress' ) ) {
-            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            $login_page_id = apply_filters( 'wpml_object_id', $login_page_id, 'page', true );
         }
-        if ( false != $id && '1' == $disable_wp_forms ) {
+        if ( false != $login_page_id && '1' == $disable_wp_forms ) {
             if ( false != $return_id ) {
-                return $id;
+                return $login_page_id;
             }
 
-            if ( get_post( $id ) ) {
+            if ( get_post( $login_page_id ) ) {
                 switch_to_blog( get_main_site_id() );
-                $login_url = get_the_permalink( $id );
+                $login_url = get_the_permalink( $login_page_id );
                 restore_current_blog();
 
                 return $login_url;
