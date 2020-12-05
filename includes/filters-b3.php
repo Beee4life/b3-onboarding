@@ -7,7 +7,7 @@
     function b3_extra_fields_validation() {
         $b3_onboarding      = new B3Onboarding();
         $extra_field_values = apply_filters( 'b3_extra_fields', array() );
-        $error_array = [];
+        $error_array = array();
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( ! empty( $field[ 'id' ] ) ) {

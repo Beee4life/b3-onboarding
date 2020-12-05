@@ -22,7 +22,7 @@
             $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
         } else {
             // user has set a custom password or requests access
-            $vars = [];
+            $vars = array();
         }
 
         $to      = $user_object->user_email;

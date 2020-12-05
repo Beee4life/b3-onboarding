@@ -150,7 +150,7 @@
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
                 $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
-                $wp_new_user_notification_email[ 'headers' ] = [];
+                $wp_new_user_notification_email[ 'headers' ] = array();
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
 
                 $user_email = apply_filters( 'b3_manual_welcome_user_message', b3_get_manual_welcome_user_message() );
@@ -164,7 +164,7 @@
 
         if ( true == $send_custom_mail ) {
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
-            $wp_new_user_notification_email[ 'headers' ] = [];
+            $wp_new_user_notification_email[ 'headers' ] = array();
             if ( 'request_access' == get_site_option( 'b3_registration_type', false ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
