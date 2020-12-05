@@ -276,11 +276,11 @@
 
                     $public_registration = get_site_option( 'registration' );
                     if ( 'user' == $public_registration ) {
-                        update_site_option( 'b3_registration_type', 'ms_register_user' );
+                        update_site_option( 'b3_registration_type', 'user' );
                     } elseif ( 'blog' == $public_registration ) {
-                        update_site_option( 'b3_registration_type', 'ms_loggedin_register' );
+                        update_site_option( 'b3_registration_type', 'blog' );
                     } elseif ( 'all' == $public_registration ) {
-                        update_site_option( 'b3_registration_type', 'ms_register_site_user' );
+                        update_site_option( 'b3_registration_type', 'all' );
                     } elseif ( 'none' == $public_registration ) {
                         update_site_option( 'b3_registration_type', 'closed' );
                     }
@@ -976,7 +976,7 @@
                                     $errors     = $user_valid[ 'errors' ];
 
                                     if ( $errors->has_errors() ) {
-                                        if ( 'ms_loggedin_register' != $registration_type ) {
+                                        if ( 'blog' != $registration_type ) {
                                             $error_message_user_name  = $errors->get_error_message( 'user_name' );
                                             $error_message_user_email = $errors->get_error_message( 'user_email' );
 
@@ -1069,7 +1069,7 @@
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                             } else {
-                                                if ( 'ms_loggedin_register' == $registration_type ) {
+                                                if ( 'blog' == $registration_type ) {
                                                     // Success, redirect to message.
                                                     $redirect_url = add_query_arg( 'registered', 'new_blog', $redirect_url );
                                                     $redirect_url = add_query_arg( 'site_id', $result, $redirect_url );
@@ -1938,7 +1938,7 @@
                 }
 
                 if ( is_main_site() ) {
-                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'ms_register_user', 'ms_register_site_user' ] )) {
+                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all' ] )) {
                         if ( false == $domain ) {
                             wpmu_signup_user( $user_name, $user_email, $meta );
 
@@ -1948,7 +1948,7 @@
 
                             return true;
                         }
-                    } elseif ( 'ms_loggedin_register' == $b3_register_type ) {
+                    } elseif ( 'blog' == $b3_register_type ) {
                         $blog_id = wpmu_create_blog( $domain, $path, $blog_title, $user->ID, $meta, get_current_network_id() );
 
                         return $blog_id;

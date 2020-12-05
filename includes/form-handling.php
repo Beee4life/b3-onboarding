@@ -119,13 +119,13 @@
                                 // not in use (yet)
                                 $registration_type = '';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'ms_loggedin_register' == $ms_registration_type ) {
+                            } elseif ( 'blog' == $ms_registration_type ) {
                                 $registration_type = 'blog';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'ms_register_user' == $ms_registration_type ) {
+                            } elseif ( 'user' == $ms_registration_type ) {
                                 $registration_type = 'user';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'ms_register_site_user' == $ms_registration_type ) {
+                            } elseif ( 'all' == $ms_registration_type ) {
                                 $registration_type = 'all';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
                             }

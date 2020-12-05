@@ -24,7 +24,7 @@
         <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
 
         <?php
-            if ( 'ms_loggedin_register' != $registration_type ) {
+            if ( 'blog' != $registration_type ) {
                 do_action( 'b3_add_username_email_fields' );
             }
         ?>

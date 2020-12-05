@@ -127,7 +127,7 @@
                 <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
             </div>
 
-            <?php if ( 'ms_register_site_user' == $registration_type ) { ?>
+            <?php if ( 'all' == $registration_type ) { ?>
                 <div class="b3_form-element b3_form-element--signup-for">
                     <div>
                         <strong><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?>:</strong>
@@ -137,9 +137,9 @@
                     <input id="signupuser" type="radio" name="signup_for" value="user">
                     <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
                 </div>
-            <?php } elseif ( 'ms_register_user' == $registration_type ) { ?>
+            <?php } elseif ( 'user' == $registration_type ) { ?>
                 <input type="hidden" name="signup_for" value="user" />
-            <?php } elseif ( 'ms_loggedin_register' == $registration_type ) { ?>
+            <?php } elseif ( 'blog' == $registration_type ) { ?>
                 <input type="hidden" name="signup_for" value="blog" />
             <?php } ?>
         <?php } else {
@@ -235,8 +235,8 @@
             $registration_type = get_site_option( 'b3_registration_type' );
             if ( in_array( $registration_type, array(
                     'request_access_subdomain',
-                    'ms_loggedin_register',
-                    'ms_register_site_user',
+                    'blog',
+                    'all',
                 ) ) ) {
                 ob_start();
                 $register_for = apply_filters( 'b3_register_for', false );
@@ -244,7 +244,7 @@
             ?>
                 <div class="b3_form-element b3_form-element--site-fields">
                     <?php
-                        if ( 'ms_loggedin_register' == $registration_type ) {
+                        if ( 'blog' == $registration_type ) {
                             $b3_message_above_new_blog = esc_html__( "Here you can register for a new site.", 'b3-onboarding' );
                             $notice = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
                             if ( false !== $notice ) {
@@ -325,7 +325,7 @@
             }
             echo $hidden_fields;
         }
-        if ( is_multisite() && 'ms_loggedin_register' == get_site_option( 'b3_registration_type' ) ) {
+        if ( is_multisite() && 'blog' == get_site_option( 'b3_registration_type' ) ) {
             echo '<input type="hidden" name="signup_for" value="blog" />';
         }
     }

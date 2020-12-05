@@ -211,15 +211,15 @@
             //     'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
             // ),
             array(
-                'value' => 'ms_register_user', // @TODO: maybe change to user
+                'value' => 'user', // @TODO: maybe change to user
                 'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
             ),
             array(
-                'value' => 'ms_loggedin_register', // @TODO: maybe change to blog
+                'value' => 'blog', // @TODO: maybe change to blog
                 'label' => esc_html__( 'Logged in user may register a site', 'b3-onboarding' ),
             ),
             array(
-                'value' => 'ms_register_site_user', // @TODO: maybe change to all
+                'value' => 'all', // @TODO: maybe change to all
                 'label' => esc_html__( 'Visitor may register user + site', 'b3-onboarding' ),
             ),
         );

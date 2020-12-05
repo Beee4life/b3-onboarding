@@ -530,11 +530,11 @@ All at ###SITENAME###
         if ( is_multisite() && is_main_site() ) {
             if ( 'closed' == $b3_setting ) {
                 $b3_setting = 'none';
-            } elseif ( 'ms_register_user' == $b3_setting ) {
+            } elseif ( 'user' == $b3_setting ) {
                 $b3_setting = 'user';
-            } elseif ( 'ms_loggedin_register' == $b3_setting ) {
+            } elseif ( 'blog' == $b3_setting ) {
                 $b3_setting = 'blog';
-            } elseif ( 'ms_register_site_user' == $b3_setting ) {
+            } elseif ( 'all' == $b3_setting ) {
                 $b3_setting = 'all';
             } else {
                 $b3_setting = 'all';
@@ -568,11 +568,11 @@ All at ###SITENAME###
             if ( 'none' == $new_value ) {
                 $b3_setting = 'closed';
             } elseif ( 'user' == $new_value ) {
-                $b3_setting = 'ms_register_user';
+                $b3_setting = 'user';
             } elseif ( 'blog' == $new_value ) {
-                $b3_setting = 'ms_loggedin_register';
+                $b3_setting = 'blog';
             } elseif ( 'all' == $new_value ) {
-                $b3_setting = 'ms_register_site_user';
+                $b3_setting = 'all';
             }
             update_site_option( 'b3_registration_type', $b3_setting );
         }
