@@ -920,25 +920,34 @@
      *
      * @return bool|string
      */
-    function b3_get_login_url( $return_id = false ) {
+    function b3_get_login_url( $return_id = false, $blog_id = false ) {
 
-        $id = get_site_option( 'b3_login_page_id', false );
+        $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms' );
+        $id               = get_site_option( 'b3_login_page_id' );
 
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
-        if ( false != $id ) {
+        if ( false != $id && '1' == $disable_wp_forms ) {
             if ( false != $return_id ) {
                 return $id;
             }
 
-            // @TODO: check if needed
-            if ( is_multisite() ) { switch_to_blog( get_main_site_id() ); }
             if ( get_post( $id ) ) {
-                return get_the_permalink( $id );
-            }
-            if ( is_multisite() ) { restore_current_blog(); }
+                switch_to_blog( get_main_site_id() );
+                $login_url = get_the_permalink( $id );
+                restore_current_blog();
 
+                return $login_url;
+            }
+        }
+
+        if ( false != $blog_id ) {
+            switch_to_blog( $blog_id );
+            $login_url = wp_login_url();
+            restore_current_blog();
+
+            return $login_url;
         }
 
         return wp_login_url();
