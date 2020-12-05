@@ -2049,8 +2049,6 @@
              */
             public function b3_admin_notices() {
 
-                global $pagenow;
-
                 // beta notice
                 if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                     $message = __( "You're using a beta version, which is not finished yet and can give unexpected results.", 'b3-onboarding' );
@@ -2080,7 +2078,7 @@
                     echo '</p></div>';
                 }
 
-                // Multisite does NOT provide these options.
+                global $pagenow;
                 if ( is_blog_admin() && $pagenow === "options-general.php" && ! isset ( $_GET['page'] ) && ! is_multisite() ) {
                     echo sprintf( '<div class="notice notice-info"><p>'. __( 'B3 OnBoarding takes control over the \'Membership\' option. You can change this <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
