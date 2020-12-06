@@ -1134,8 +1134,17 @@
 
                         $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
                     }
+    
+                    if ( is_home() || is_front_page() ) {
+                        if ( isset( $_REQUEST[ 'logout' ] ) ) {
+                            check_admin_referer( 'logout' );
+                            $user = wp_get_current_user();
+                            wp_logout();
+                            $redirect_to  = home_url();
+                            $redirect_url = apply_filters( 'logout_redirect', $redirect_to, '', $user );
+                        }
+                    }
                 }
-
 
                 if ( isset( $redirect_url ) ) {
                     wp_safe_redirect( $redirect_url );
@@ -1404,7 +1413,15 @@
              * @since 1.0.6
              */
             public function b3_redirect_after_logout() {
-                $redirect_url = add_query_arg( 'logout', 'true', b3_get_login_url() );
+                if ( is_multisite() ) {
+                    if ( is_main_site()) {
+                        $redirect_url = add_query_arg( 'logout', 'true', b3_get_login_url() );
+                    } else {
+                        $redirect_url = get_home_url();
+                    }
+                } else {
+                    $redirect_url = add_query_arg( 'logout', 'true', b3_get_login_url() );
+                }
                 wp_safe_redirect( $redirect_url );
                 exit;
             }
