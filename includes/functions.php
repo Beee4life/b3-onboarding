@@ -934,18 +934,26 @@
             }
 
             if ( get_post( $login_page_id ) ) {
-                switch_to_blog( get_main_site_id() );
+                if ( is_multisite() ) {
+                    switch_to_blog( get_main_site_id() );
+                }
                 $login_url = get_the_permalink( $login_page_id );
-                restore_current_blog();
+                if ( is_multisite() ) {
+                    restore_current_blog();
+                }
 
                 return $login_url;
             }
         }
 
         if ( false != $blog_id ) {
-            switch_to_blog( $blog_id );
+            if ( is_multisite() ) {
+                switch_to_blog( $blog_id );
+            }
             $login_url = wp_login_url();
-            restore_current_blog();
+            if ( is_multisite() ) {
+                restore_current_blog();
+            }
 
             return $login_url;
         }
