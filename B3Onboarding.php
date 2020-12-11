@@ -1134,7 +1134,7 @@
 
                         $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
                     }
-    
+
                     if ( is_home() || is_front_page() ) {
                         if ( isset( $_REQUEST[ 'logout' ] ) ) {
                             check_admin_referer( 'logout' );
