@@ -24,18 +24,28 @@
                 case 'template':
                     $message = $lorem_ipsum;
                     break;
-                case 'mu-confirm-email':
-                    // @TODO
+                case 'mu-confirm-user-email':
+                    // @TODO: add filter
                     $message = b3_get_wpmu_activate_user_message();
                     $subject = b3_get_wpmu_activate_user_subject();
                     break;
                 case 'mu-user-activated':
-                    // @TODO
+                    // @TODO: add filter
+                    $message = b3_get_wpmu_user_activated_message();
+                    $subject = b3_get_wpmu_user_activated_subject();
+                    break;
+                case 'mu-confirm-user-site-email':
+                    // @TODO: add filter
+                    $message = b3_get_welcome_wpmu_user_blog_message();
+                    $subject = b3_get_welcome_wpmu_user_blog_subject();
+                    break;
+                case 'mu-user-site-activated':
+                    // @TODO: add filter
                     $message = b3_get_wpmu_user_activated_message();
                     $subject = b3_get_wpmu_user_activated_subject();
                     break;
                 case 'mu-new-user-admin':
-                    // @TODO
+                    // @TODO: add filter
                     $message = b3_get_new_wpmu_user_message_admin();
                     $subject = b3_get_new_wpmu_user_subject_admin();
                     break;

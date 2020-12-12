@@ -173,6 +173,7 @@
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
 
+    
     /**
      * Do stuff after activate user (only)
      *
@@ -234,8 +235,8 @@
         $activate_url = esc_url( $activate_url );
         $from_name    = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
         $user         = get_user_by( 'login', $user_login );
-        $subject      = sprintf( b3_get_new_wpmu_user_blog_subject(), $from_name );
-        $message      = sprintf( b3_get_new_wpmu_user_blog_message( $user ), '<a href="' . esc_url( $activate_url ) . '">' . __( 'this link', 'b3-onboarding' ) . '</a>', esc_url( "http://{$domain}{$path}" ) );
+        $subject      = sprintf( b3_get_welcome_wpmu_user_blog_subject(), $from_name );
+        $message      = sprintf( b3_get_welcome_wpmu_user_blog_message( $user ), '<a href="' . esc_url( $activate_url ) . '">' . __( 'this link', 'b3-onboarding' ) . '</a>', esc_url( "http://{$domain}{$path}" ) );
         $message      = b3_replace_template_styling( $message );
         $message      = strtr( $message, b3_replace_email_vars() );
         $message      = htmlspecialchars_decode( stripslashes( $message ) );

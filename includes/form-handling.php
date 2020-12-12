@@ -445,6 +445,28 @@
                         } else {
                             delete_site_option( 'b3_activated_wpmu_user_message' );
                         }
+    
+                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_site_subject' ] ) && ! empty( $_POST[ 'b3_confirm_wpmu_user_site_subject' ] ) ) {
+                            update_site_option( 'b3_confirm_wpmu_user_site_subject', stripslashes( $_POST[ 'b3_confirm_wpmu_user_site_subject' ] ) );
+                        } else {
+                            delete_site_option( 'b3_confirm_wpmu_user_site_subject' );
+                        }
+                        if ( isset( $_POST[ 'b3_confirm_wpmu_user_site_message' ] ) && ! empty( $_POST[ 'b3_confirm_wpmu_user_site_message' ] ) ) {
+                            update_site_option( 'b3_confirm_wpmu_user_site_message', htmlspecialchars( $_POST[ 'b3_confirm_wpmu_user_site_message' ] ) );
+                        } else {
+                            delete_site_option( 'b3_confirm_wpmu_user_site_message' );
+                        }
+                        if ( isset( $_POST[ 'b3_activated_wpmu_user_site_subject' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_site_subject' ] ) ) {
+                            update_site_option( 'b3_activated_wpmu_user_site_subject', stripslashes( $_POST[ 'b3_activated_wpmu_user_site_subject' ] ) );
+                        } else {
+                            delete_site_option( 'b3_activated_wpmu_user_site_subject' );
+                        }
+                        if ( isset( $_POST[ 'b3_activated_wpmu_user_site_message' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_site_message' ] ) ) {
+                            update_site_option( 'b3_activated_wpmu_user_site_message', htmlspecialchars( $_POST[ 'b3_activated_wpmu_user_site_message' ] ) );
+                        } else {
+                            delete_site_option( 'b3_activated_wpmu_user_site_message' );
+                        }
+                        
                         if ( isset( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) && ! empty( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ) {
                             update_site_option( 'b3_new_wpmu_user_admin_subject', stripslashes( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) );
                         } else {

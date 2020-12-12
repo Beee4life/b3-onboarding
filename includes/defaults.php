@@ -531,7 +531,7 @@
 
     function b3_default_message_new_wpmu_user_blog( $user = false ) {
 
-        $split_message = '' . "\n";
+        $split_message = '';
         if ( false != $user ) {
             $split_message .= 'Hi ' . $user->user_login . ",\n";
             $split_message .= '<br /><br />' . "\n";
@@ -555,7 +555,7 @@
 
     function b3_default_message_welcome_wpmu_user_blog( $user = false ) {
 
-        $split_message = '' . "\n";
+        $split_message = '';
         if ( false != $user ) {
             $split_message .= 'Hi ' . $user->user_login . ",\n";
             $split_message .= '<br /><br />' . "\n";
