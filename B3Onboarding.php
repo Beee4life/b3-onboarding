@@ -1739,10 +1739,6 @@
 
                 }
 
-                if ( true == $user_registered ) {
-                    // $errors = new WP_Error( 'user_registered', $this->b3_get_return_message( 'user_registered' ) );
-                }
-
                 return $errors;
             }
 
