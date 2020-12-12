@@ -133,18 +133,17 @@
      * @since 2.0.0
      */
     function b3_remove_admin_bar() {
-        $hide_admin_bar = get_site_option( 'b3_hide_admin_bar', false );
-        if ( false != $hide_admin_bar ) {
-            $user = wp_get_current_user();
-            if ( is_multisite() ) {
+        if ( ! is_multisite() ) {
+            $hide_admin_bar = get_site_option( 'b3_hide_admin_bar', false );
+            if ( false != $hide_admin_bar ) {
+                $result = false;
+                $user   = wp_get_current_user();
                 $restricted_roles = get_site_option( 'b3_restrict_admin' );
-            } else {
-                $restricted_roles = get_site_option( 'b3_restrict_admin' );
-            }
-            $result = ! empty( array_intersect( $restricted_roles, $user->roles ) );
-
-            if ( true == $result ) {
-                show_admin_bar( false );
+                $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
+    
+                if ( true == $result ) {
+                    show_admin_bar( false );
+                }
             }
         }
     }
