@@ -202,7 +202,6 @@
      */
     function b3_add_subdomain_field() {
         if ( is_multisite() ) {
-            $show_subdomain = get_option( 'b3_show_subdomain_field', false );
             if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ), array(
                     'request_access_subdomain',
                     'ms_register_site_user',
