@@ -332,9 +332,6 @@
              * Load plugin text domain
              */
             public function b3_load_plugin_text_domain() {
-                // $user = get_userdata( get_current_user_id() );
-                // echo '<pre>'; var_dump($user->caps); echo '</pre>';
-                // echo '<pre>'; var_dump($user->roles); echo '</pre>'; exit;
                 $plugin_folder = dirname( plugin_basename( __FILE__ ) );
                 $locale        = apply_filters( 'plugin_locale', get_locale(), $plugin_folder );
                 load_textdomain( $plugin_folder, trailingslashit( WP_LANG_DIR ) . $plugin_folder . '/' . $plugin_folder . '-' . $locale . '.mo' );
@@ -1374,7 +1371,6 @@
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
     
-                error_log('Original: ' . $redirect_to );
                 $stored_roles  = ( is_array( get_site_option( 'b3_restrict_admin', false ) ) ) ? get_site_option( 'b3_restrict_admin' ) : array( 'subscriber' );
                 $redirect_url  = get_home_url();
                 
@@ -1383,42 +1379,30 @@
                 }
 
                 if ( $requested_redirect_to ) {
-                    // redirect url is set
-                    error_log('Request redirect: ' . $requested_redirect_to);
-                    $redirect_url = $requested_redirect_to;
+                    $redirect_to = $requested_redirect_to;
                 } else {
-    
                     if ( is_multisite() ) {
-                        $redirect_url = $redirect_to;
-                        $active_blog = get_active_blog_for_user( $user->ID );
-                        if ( isset( $active_blog->blog_id ) ) {
-                            // switch_to_blog( $active_blog->blog_id );
-                            $redirect_url2 = get_admin_url( $active_blog->blog_id );
-                            error_log($redirect_url2);
-                            // restore_current_blog();
-                        }
+                        // do nothing for now, goes to site dashboard
                     } else {
                         // redirect url is not set
-                        if ( user_can( $user, 'manage_options' ) ) {
-                            $redirect_url = $redirect_to;
-                        } else {
+                        if ( ! user_can( $user, 'manage_options' ) ) {
                             // Non-admin users always go to their account page after login, if it's defined
                             $account_page_url = b3_get_account_url();
                             if ( false != $account_page_url ) {
                                 if ( ! in_array( $stored_roles, $user->roles ) ) {
-                                    $redirect_url = $account_page_url;
+                                    $redirect_to = $account_page_url;
                                 } else {
                                     // non-admin logged in
-                                    // $redirect_url set at start
+                                    // $redirect_to set at start
                                 }
                             } elseif ( current_user_can( 'read' ) ) {
-                                $redirect_url = get_edit_user_link( get_current_user_id() );
+                                $redirect_to = get_edit_user_link( get_current_user_id() );
                             }
                         }
                     }
                 }
 
-                return $redirect_url;
+                return $redirect_to;
             }
 
 
