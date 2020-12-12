@@ -953,6 +953,11 @@
                                 if ( 'closed' == $registration_type ) {
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
+                                } elseif ( 'blog' == $registration_type ) {
+                                    $user       = get_userdata( get_current_user_id() );
+                                    $user_login = $user->user_login;
+                                    $user_email = $user->user_email;
+                                    $register   = true;
                                 } elseif ( false != get_site_option( 'b3_activate_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
@@ -962,7 +967,7 @@
 
                                 if ( true == $register ) {
                                     $signup_for = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
-                                    $user_valid = wpmu_validate_user_signup( $_POST[ 'user_name' ], $_POST[ 'user_email' ] );
+                                    $user_valid = wpmu_validate_user_signup( $user_login, $user_email );
                                     $errors     = $user_valid[ 'errors' ];
 
                                     if ( $errors->has_errors() ) {
@@ -1012,7 +1017,6 @@
                                     }
 
                                     if ( 'blog' == $signup_for && empty( $error_codes ) ) {
-
                                         $meta_data[ 'lang_id' ] = ( isset( $_POST[ 'lang_id' ] ) ) ? $_POST[ 'lang_id' ] : 1;
                                         $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? $_POST[ 'blog_public' ] : 1;
                                         $user                   = '';
@@ -1370,10 +1374,10 @@
              * @return string Redirect URL
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-    
+
                 $stored_roles  = ( is_array( get_site_option( 'b3_restrict_admin', false ) ) ) ? get_site_option( 'b3_restrict_admin' ) : array( 'subscriber' );
                 $redirect_url  = get_home_url();
-                
+
                 if ( ! $user ) {
                     return $redirect_url;
                 }
