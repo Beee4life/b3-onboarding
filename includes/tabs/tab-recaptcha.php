@@ -72,7 +72,7 @@
                 <div class="b3_settings-input b3_settings-input--text">
                     <select name="b3_recaptcha_version" id="b3_recaptcha_version">
                         <option value=""><?php esc_html_e( 'Choose', 'b3-onboarding' ); ?></option>
-                        <?php $versions = [ 2, 3 ]; ?>
+                        <?php $versions = array( 2, 3 ); ?>
                         <?php foreach( $versions as $version ) { ?>
                             <option value="<?php echo $version; ?>"<?php echo ( $recaptcha_version == $version ) ? ' selected="selected"' : false; ?>>v<?php echo $version; ?></option>
                         <?php } ?>
