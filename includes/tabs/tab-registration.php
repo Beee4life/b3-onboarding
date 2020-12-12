@@ -34,20 +34,14 @@
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
 
                 <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <?php if ( is_multisite() && is_main_site() ) { ?>
-                        <p>
-                            <?php echo sprintf( __( 'The main registrations settings can be found on the <a href="%s">Network admin</a> page (for now).', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
-                        </p>
-                    <?php } else if ( ! is_multisite() ) { ?>
+                    <?php if ( ! is_multisite() ) { ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
                         <p>
                             <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), admin_url( 'options-general.php' ) ); ?>
                         </p>
-                    <?php } ?>
 
-                    <?php if ( ! is_multisite() ) { ?>
                         <?php $options = b3_get_registration_types(); ?>
                         <?php if ( ! empty( $options ) ) { ?>
                             <?php foreach( $options as $option ) { ?>
