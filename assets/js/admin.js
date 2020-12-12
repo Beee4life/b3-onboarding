@@ -1,30 +1,28 @@
-jQuery(document).ready(function() {
-    var content = ".foldout__content";
-    jQuery(content).hide();
-
-    jQuery(".foldout__toggle").click(function() {
-        if (jQuery(content).hasClass('hidden')){
-            jQuery(content).removeClass('hidden');
-        }
-        jQuery(this).next(content).toggle('fast');
-        if (jQuery(this).hasClass('open')){
-            jQuery(this).removeClass('open');
-        } else {
-            jQuery(this).addClass('open');
-        }
-
-        if (jQuery(this).find('i.dashicons').hasClass('dashicons-plus')){
-            jQuery(this).find('i.dashicons').removeClass('dashicons-plus');
-            jQuery(this).find('i.dashicons').addClass('dashicons-no');
-        } else if (jQuery(this).find('i.dashicons').hasClass('dashicons-no')){
-            jQuery(this).find('i.dashicons').removeClass('dashicons-no');
-            jQuery(this).find('i.dashicons').addClass('dashicons-plus');
-        }
-    });
-});
-
 (function($) {
     $(document).ready(function() {
+
+        var content = ".foldout__content";
+        $(content).hide();
+
+        $(".foldout__toggle").click(function() {
+            if ($(content).hasClass('hidden')){
+                $(content).removeClass('hidden');
+            }
+            $(this).next(content).toggle('fast');
+            if ($(this).hasClass('open')){
+                $(this).removeClass('open');
+            } else {
+                $(this).addClass('open');
+            }
+
+            if ($(this).find('i.dashicons').hasClass('dashicons-plus')){
+                $(this).find('i.dashicons').removeClass('dashicons-plus');
+                $(this).find('i.dashicons').addClass('dashicons-no');
+            } else if ($(this).find('i.dashicons').hasClass('dashicons-no')){
+                $(this).find('i.dashicons').removeClass('dashicons-no');
+                $(this).find('i.dashicons').addClass('dashicons-plus');
+            }
+        });
 
         var $wordpress_setting = '.b3_settings-field--wp-forms';
         $('#b3_disable_wordpress_forms').change(function() {
