@@ -70,8 +70,8 @@
      *
      * @since 1.0.0
      *
-     * @TODO  : check for a WordPress hook to hook to
-     * @TODO  : look into filter 'registration_redirect'
+     * @TODO: check for a WordPress hook to hook to
+     * @TODO: look into filter 'registration_redirect'
      *
      */
     function b3_do_stuff_after_user_activated( $user_id ) {
@@ -452,7 +452,7 @@
 
     function b3_add_action_links( $form_type = 'login' ) {
 
-        if ( true != apply_filters( 'b3_disable_action_links', get_site_option( 'b3_disable_action_links', false ) ) ) {
+        if ( true != apply_filters( 'b3_disable_action_links', get_site_option( 'b3_disable_action_links' ) ) ) {
             $page_types = array();
 
             switch( $form_type ) {
@@ -462,7 +462,7 @@
                         'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
                         'link'  => b3_get_lostpassword_url(),
                     ];
-                    if ( 'closed' != get_site_option( 'b3_registration_type', false ) ) {
+                    if ( 'closed' != get_site_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),
@@ -486,7 +486,7 @@
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_url(),
                     ];
-                    if ( 'closed' != get_site_option( 'b3_registration_type', false ) ) {
+                    if ( 'closed' != get_site_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),

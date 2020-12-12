@@ -8,7 +8,7 @@
      */
     function b3_render_wordpress_tab() {
 
-        $fonts = [
+        $fonts = array(
             'Arial',
             'Arial Narrow',
             'Calibri',
@@ -25,7 +25,7 @@
             'Times',
             'Times New Roman',
             'Verdana',
-        ];
+        );
 
         ob_start();
         $background_color = get_site_option( 'b3_loginpage_bg_color', false );

@@ -9,12 +9,10 @@
      * @since 1.0.0
      */
     function b3_add_registration_fields() {
-
         do_action( 'b3_add_first_last_name_fields' );
         do_action( 'b3_add_extra_fields_registration' );
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields', 'register' );
-
     }
     add_action( 'register_form', 'b3_add_registration_fields' );
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
@@ -56,7 +54,6 @@
         if ( isset( $_POST[ 'b3_privacy_accept' ] ) && 1 == $_POST[ 'b3_privacy_accept' ] ) {
             update_user_meta( $user_id, 'privacy_accept', true );
         }
-
     }
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
@@ -70,7 +67,7 @@
      */
     function b3_do_stuff_after_wp_register( $user_id ) {
         // get registration type
-        $registration_type = get_site_option( 'b3_registration_type', false );
+        $registration_type = get_site_option( 'b3_registration_type' );
         if ( 'request_access' == $registration_type ) {
             // change user role
             $user_object = new WP_User( $user_id );
@@ -91,7 +88,7 @@
      * @param $user_id
      */
     function b3_add_login_form_fields() {
-        $show_recaptcha   = get_site_option( 'b3_recaptcha_login', false );
+        $show_recaptcha   = get_site_option( 'b3_recaptcha_login' );
         if ( $show_recaptcha ) {
             do_action( 'b3_add_recaptcha_fields' );
         }
@@ -134,13 +131,13 @@
      */
     function b3_remove_admin_bar() {
         if ( ! is_multisite() ) {
-            $hide_admin_bar = get_site_option( 'b3_hide_admin_bar', false );
+            $hide_admin_bar = get_site_option( 'b3_hide_admin_bar' );
             if ( false != $hide_admin_bar ) {
                 $result = false;
                 $user   = wp_get_current_user();
                 $restricted_roles = get_site_option( 'b3_restrict_admin' );
                 $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
-    
+
                 if ( true == $result ) {
                     show_admin_bar( false );
                 }
@@ -173,7 +170,7 @@
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
 
-    
+
     /**
      * Do stuff after activate user (only)
      *

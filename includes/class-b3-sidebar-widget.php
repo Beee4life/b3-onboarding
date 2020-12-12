@@ -43,8 +43,8 @@
                 if ( false == $account_id ) {
                     $count_errors[] = 'account';
                 } else {
-                    $account_title  = get_the_title( $account_id );
-                    $account_url    = get_the_permalink( $account_id );
+                    $account_title = get_the_title( $account_id );
+                    $account_url   = get_the_permalink( $account_id );
                 }
                 $count_setting++;
             }
@@ -57,8 +57,8 @@
                 if ( false == $login_id ) {
                     $count_errors[] = 'login';
                 } else {
-                    $login_title  = get_the_title( $login_id );
-                    $login_url    = get_the_permalink( $login_id );
+                    $login_title = get_the_title( $login_id );
+                    $login_url   = get_the_permalink( $login_id );
                 }
                 $count_setting++;
             }

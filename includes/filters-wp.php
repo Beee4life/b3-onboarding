@@ -109,7 +109,7 @@
                 // we don't want the email when a user registers, but only when he/she activates
                 return false;
 
-            } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
+            } elseif ( in_array( $registration_type, array( 'open' ) ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
 

@@ -759,10 +759,10 @@
      */
     function b3_get_reserved_usernames() {
 
-        $default_reserved_names = [
+        $default_reserved_names = array(
             'admin',
             'administrator',
-        ];
+        );
 
         $filtered_names = apply_filters( 'b3_reserved_usernames', [] );
         if ( ! is_array( $filtered_names ) ) {

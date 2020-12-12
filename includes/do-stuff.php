@@ -68,11 +68,11 @@
 
             $existing_page = array();
             if ( false == $create_new_site ) {
-                $existing_page_args = [
+                $existing_page_args = array(
                     'post_type'      => 'page',
                     'posts_per_page' => 1,
                     'pagename'       => $slug,
-                ];
+                );
                 $existing_page = get_posts( $existing_page_args );
             }
             if ( ! empty( $existing_page ) ) {
@@ -93,14 +93,14 @@
                     }
                 }
                 if ( true === $add_shortcode ) {
-                    $new_args = [
+                    $new_args = array(
                         'ID'           => $page_id,
                         'post_content' => $page[ 'content' ],
-                    ];
+                    );
                     wp_update_post( $new_args );
                 }
             } else {
-                $result = wp_insert_post( array(
+                $new_post_args = array(
                     'post_title'     => $page[ 'title' ],
                     'post_name'      => $slug,
                     'post_content'   => $page[ 'content' ],
@@ -108,9 +108,8 @@
                     'post_type'      => 'page',
                     'ping_status'    => 'closed',
                     'comment_status' => 'closed',
-                ),
-                    true
                 );
+                $result = wp_insert_post( $new_post_args, true );
                 if ( ! is_wp_error( $result ) ) {
                     update_site_option( $page[ 'meta' ], $result );
                     update_post_meta( $result, '_b3_page', true );
@@ -168,7 +167,6 @@
                         <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo $field_value; ?></textarea>
 
                     <?php } elseif ( in_array( $input_type, array( 'true_false' ) ) ) { ?>
-
                         <?php $selected = false; ?>
                         <label for="<?php echo $input_id; ?>" class="screen-reader-text"><?php echo $input_label; ?></label>
                         <input type="checkbox" id="<?php echo $input_id; ?>" name="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" /> <?php echo $input_description; ?>
@@ -332,11 +330,11 @@
             $template     = apply_filters( 'b3_email_template', b3_get_email_template( $hide_logo ) );
 
             if ( false != $styling && false != $template ) {
-                $replace_vars = [
+                $replace_vars = array(
                     '%email_footer%'  => $email_footer,
                     '%email_message%' => $message,
                     '%email_styling%' => $styling,
-                ];
+                );
                 $message = strtr( $template, $replace_vars );
             }
         }
