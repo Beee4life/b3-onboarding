@@ -268,6 +268,7 @@
                 if ( ! is_multisite() ) {
                     update_option( 'b3_registration_type', 'open' );
                     update_option( 'b3_dashboard_widget', 1 );
+                    update_option( 'b3_hide_admin_bar', 1 );
                     update_option( 'users_can_register', 0 );
                 } else {
 
@@ -293,7 +294,6 @@
 
                 update_site_option( 'b3_activate_custom_emails', 1 );
                 update_site_option( 'b3_disable_wordpress_forms', 1 );
-                update_site_option( 'b3_hide_admin_bar', 1 );
                 update_site_option( 'b3_logo_in_email', 1 );
                 update_site_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                 update_site_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
