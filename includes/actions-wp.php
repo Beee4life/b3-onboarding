@@ -231,8 +231,8 @@
         $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
         $activate_url = esc_url( $activate_url );
         $from_name    = ( '' != get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
-        $subject      = sprintf( b3_get_wpmu_activate_user_subject(), $from_name );
-        $message      = sprintf( b3_get_wpmu_activate_user_message(), $user_login, $activate_url );
+        $subject      = sprintf( b3_get_wpmu_activate_user_blog_subject(), $from_name );
+        $message      = sprintf( b3_get_wpmu_activate_user_blog_message(), $activate_url, 'http://'. $domain . $path );
         $message      = b3_replace_template_styling( $message );
         $message      = strtr( $message, b3_replace_email_vars() );
         $message      = htmlspecialchars_decode( stripslashes( $message ) );
@@ -255,8 +255,8 @@
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
 
         $user    = get_userdata( $user_id );
-        $subject = sprintf( b3_get_welcome_wpmu_user_blog_subject(), get_site_option( 'site_name' ), $title );
-        $message = sprintf( b3_get_welcome_wpmu_user_blog_message(), get_site_url( $blog_id ), $user->user_login, $password, esc_url( b3_get_login_url( false, $blog_id ) ) );
+        $subject = sprintf( b3_get_wpmu_activated_user_blog_subject(), get_site_option( 'site_name' ), $title );
+        $message = sprintf( b3_get_wpmu_activated_user_blog_message( $user->user_login ), get_site_url( $blog_id ), $user->user_login, $password, esc_url( b3_get_login_url( false, $blog_id ) ) );
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
