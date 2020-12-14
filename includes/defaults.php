@@ -522,7 +522,7 @@
     function b3_default_subject_new_wpmu_user_blog( $user = false ) {
 
         /* translators: New site notification email subject. 1: Network title, 2: New site URL. */
-        $subject = _x( '[%1$s] Activate your account', 'New site notification email subject' );
+        $subject = _x( '[%network_name%] Activate your account', 'New site notification email subject' );
 
         return $subject;
 
@@ -533,23 +533,23 @@
 
         $split_message = '';
         if ( false != $user ) {
-            $split_message .= 'Hi ' . $user->user_login . ",\n";
+            $split_message .= 'Hi %user_login%' . ",\n";
             $split_message .= '<br /><br />' . "\n";
         }
-        $split_message .= __( 'To activate your registration, please click <a href="%1$s">here</a>.', 'b3-onboarding') . "\n";
+        $split_message .= __( 'To activate your registration, please click <a href="%activation_url%">here</a>.', 'b3-onboarding') . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
         $split_message .= '<br />' . "\n";
-        $split_message .= '<a href="%2$s">%2$s</a>' . "\n";
+        $split_message .= '<a href="%home_url%">%home_url%</a>' . "\n";
 
         return $split_message;
     }
 
 
-    function b3_default_subject_welcome_wpmu_user_blog( $user = false ) {
-        return 'New %1$s Site: %2$s';
+    function b3_default_subject_welcome_wpmu_user_blog() {
+        return 'New %network_name% Site: %site_name%';
     }
 
 

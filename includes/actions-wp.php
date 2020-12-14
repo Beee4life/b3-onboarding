@@ -228,13 +228,12 @@
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
 
-        $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
-        $activate_url = esc_url( $activate_url );
-        $from_name    = ( '' != get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
-        $subject      = sprintf( b3_get_wpmu_activate_user_blog_subject(), $from_name );
-        $message      = sprintf( b3_get_wpmu_activate_user_blog_message(), $activate_url, b3_get_protocol() . '://' . $domain . $path );
+        $blog_id      = get_blog_id_from_url( $domain );
+        $subject      = b3_get_wpmu_activate_user_blog_subject();
+        $subject      = strtr( $subject, b3_replace_subject_vars() );
+        $message      = b3_get_wpmu_activate_user_blog_message();
         $message      = b3_replace_template_styling( $message );
-        $message      = strtr( $message, b3_replace_email_vars() );
+        $message      = strtr( $message, b3_replace_email_vars( array( 'blog_id' => $blog_id, 'key' => $key ), true ) );
         $message      = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );

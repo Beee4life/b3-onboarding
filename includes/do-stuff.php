@@ -238,9 +238,10 @@
         $user_login = ( true != get_site_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
 
         $replacements = array(
-            '%blog_name%'   => get_option( 'blogname' ),
-            '%user_login%'  => $user_login,
-            '%first_name%'  => ( false != $user_data ) ? $user_data->first_name : false,
+            '%blog_name%'    => get_option( 'blogname' ),
+            '%network_name%' => get_site_option( 'site_name' ),
+            '%user_login%'   => $user_login,
+            '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
         );
 
         return $replacements;
@@ -284,12 +285,14 @@
             $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
         }
 
+        $blog_id = ( isset( $vars[ 'blog_id' ] ) ) ? : false;
+
         $replacements = array(
             '%account_page%'      => b3_get_account_url(),
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
             '%lostpass_url%'      => b3_get_lostpassword_url(),
-            '%home_url%'          => get_home_url( '', '/' ),
+            '%home_url%'          => get_home_url( $blog_id, '/' ),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
             '%network_name%'      => get_site_option( 'site_name' ),
             '%registration_date%' => $local_registration_date,
@@ -298,13 +301,22 @@
             '%user_login%'        => $user_login,
         );
 
+        if ( false != $activation ) {
+            if ( is_multisite() ) {
+                $replacements[ 'network_name' ] = get_option( 'name' );
+                if ( isset( $vars[ 'key' ] ) ) {
+                    $activate_url                       = b3_get_login_url() . "?activate=user&key={$vars[ 'key' ]}";
+                    $replacements[ '%activation_url%' ] = esc_url( $activate_url );
+                }
+            } else {
+                $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
+            }
+        }
+
         // @TODO: look why this is here, test in non-mu site
         // Replace %blog_name% if used in the footer
         if ( strpos( $replacements[ '%email_footer%' ], '%blog_name%' ) !== false ) {
             // $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
-        }
-        if ( false != $activation ) {
-            $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
         }
 
         return $replacements;
