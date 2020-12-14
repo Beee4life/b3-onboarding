@@ -536,7 +536,7 @@
             $split_message .= 'Hi ' . $user->user_login . ",\n";
             $split_message .= '<br /><br />' . "\n";
         }
-        $split_message .= __( 'To activate your blog, please click %1$s.', 'b3-onboarding') . "\n";
+        $split_message .= __( 'To activate your registration, please click <a href="%1$s">here</a>.', 'b3-onboarding') . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
         $split_message .= '<br /><br />' . "\n";
@@ -553,11 +553,11 @@
     }
 
 
-    function b3_default_message_welcome_wpmu_user_blog( $user = false ) {
+    function b3_default_message_welcome_wpmu_user_blog( $user_login = false ) {
 
         $split_message = '';
-        if ( false != $user ) {
-            $split_message .= 'Hi ' . $user->user_login . ",\n";
+        if ( false != $user_login ) {
+            $split_message .= 'Hi ' . $user_login . ",\n";
             $split_message .= '<br /><br />' . "\n";
         }
         $split_message .= __( 'Your new site has been successfully set up at <a href="%1$s">%1$s</a>.', 'b3-onboarding') . "\n";
