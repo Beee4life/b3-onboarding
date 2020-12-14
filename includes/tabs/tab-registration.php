@@ -60,7 +60,9 @@
                     <?php b3_get_close(); ?>
                 <?php } else { ?>
                     <p>
-                        Right now there are no 'special' registration types, like in a single site. Once we add those, the registration settings will bemanaged on this place.
+                        <?php esc_html_e( "Right now there are no 'special' registration types, like (request access) in a single site.", 'b3-onboarding' ); ?>
+                        <br />
+                        <?php esc_html_e( "Once we add new ones, the registration settings will be managed on this spot.", 'b3-onboarding' ); ?>
                     </p>
                 <?php } ?>
 
