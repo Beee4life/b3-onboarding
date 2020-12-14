@@ -1,7 +1,7 @@
 <?php
     /*
     Plugin Name:        B3 OnBoarding
-    Plugin URI:         https://github.com/Beee4life/b3-onboarding
+    Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you more control over the registration/login process (aka onboarding).
     Version:            2.6.0
     Requires at least:  4.3
@@ -1370,10 +1370,10 @@
              * @return string Redirect URL
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-    
+
                 $stored_roles  = ( is_array( get_site_option( 'b3_restrict_admin', false ) ) ) ? get_site_option( 'b3_restrict_admin' ) : array( 'subscriber' );
                 $redirect_url  = get_home_url();
-                
+
                 if ( ! $user ) {
                     return $redirect_url;
                 }
