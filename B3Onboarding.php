@@ -898,10 +898,14 @@
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
 
-                                } elseif ( false != get_site_option( 'b3_activate_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
-                                    // Recaptcha check failed, display error
-                                    $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-
+                                } elseif ( false != get_site_option( 'b3_activate_recaptcha' ) ) {
+                                    $recaptcha_on = get_site_option( 'b3_recaptcha_on' );
+                                    if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
+                                        if ( ! $this->b3_verify_recaptcha() ) {
+                                            // Recaptcha check failed, display error
+                                            $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                        }
+                                    }
                                 } elseif ( 'closed' != $registration_type ) {
                                     // Registration is not closed
                                     if ( 'request_access' == $registration_type ) {
@@ -956,9 +960,14 @@
                                     $user_login = $user->user_login;
                                     $user_email = $user->user_email;
                                     $register   = true;
-                                } elseif ( false != get_site_option( 'b3_activate_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
-                                    // Recaptcha check failed, display error
-                                    $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                } elseif ( false != get_site_option( 'b3_activate_recaptcha' ) ) {
+                                    $recaptcha_on = get_site_option( 'b3_recaptcha_on' );
+                                    if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
+                                        if ( ! $this->b3_verify_recaptcha() ) {
+                                            // Recaptcha check failed, display error
+                                            $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                        }
+                                    }
                                 } else {
                                     $register = true;
                                 }
