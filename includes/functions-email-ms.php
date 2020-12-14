@@ -1,6 +1,6 @@
 <?php
     /**
-     * Get email subject for activate wpmu user (only, no site)
+     * Get email subject for activate wpmu user (user only, no site)
      *
      * @since 2.6.0
      *
@@ -8,13 +8,13 @@
      */
     function b3_get_wpmu_activate_user_subject() {
         $subject = b3_default_wpmu_activate_user_subject();
-        
+
         return $subject;
     }
-    
-    
+
+
     /**
-     * Get email message for activate wpmu user (only, no site)
+     * Get email message for activate wpmu user (user only, no site)
      *
      * @since 2.6.0
      *
@@ -22,13 +22,13 @@
      */
     function b3_get_wpmu_activate_user_message() {
         $message = b3_default_wpmu_activate_user_message();
-        
+
         return $message;
     }
-    
-    
+
+
     /**
-     * Get email subject for activated wpmu user (only, no site)
+     * Get email subject for activated wpmu user (user only, no site)
      *
      * @since 2.6.0
      *
@@ -36,13 +36,13 @@
      */
     function b3_get_wpmu_user_activated_subject() {
         $subject = b3_default_wpmu_user_activated_subject();
-        
+
         return $subject;
     }
-    
-    
+
+
     /**
-     * Get email message for activated wpmu user (only, no site)
+     * Get email message for activated wpmu user (user only, no site)
      *
      * @since 2.6.0
      *
@@ -50,13 +50,13 @@
      */
     function b3_get_wpmu_user_activated_message() {
         $message = b3_default_wpmu_user_activated_message();
-        
+
         return $message;
     }
-    
-    
+
+
     /**
-     * Get welcome email subject for user + site
+     * Get activate email subject for user + site
      *
      * @since 2.6.0
      *
@@ -64,15 +64,18 @@
      *
      * @return string
      */
-    function b3_get_welcome_wpmu_user_blog_subject( $user = false ) {
-        $subject = b3_default_subject_welcome_wpmu_user_blog( $user );
-        
+    function b3_get_wpmu_activate_user_blog_subject( $user = false ) {
+        $subject = get_site_option( 'b3_activate_wpmu_user_site_subject' );
+        if ( ! $subject ) {
+            $subject = b3_default_subject_new_wpmu_user_blog( $user );
+        }
+
         return $subject;
     }
-    
-    
+
+
     /**
-     * Get welcome email message for user + site
+     * Get activate email message for user + site
      *
      * @since 2.6.0
      *
@@ -80,15 +83,37 @@
      *
      * @return string
      */
-    function b3_get_welcome_wpmu_user_blog_message( $user = false ) {
-        $message = b3_default_message_welcome_wpmu_user_blog( $user );
-        
+    function b3_get_wpmu_activate_user_blog_message( $user = false ) {
+        $message = get_site_option( 'b3_activate_wpmu_user_site_message' );
+        if ( ! $message ) {
+            $message = b3_default_message_new_wpmu_user_blog( $user );
+        }
+
+
         return $message;
     }
-    
-    
+
+    function b3_get_wpmu_activated_user_blog_subject() {
+        $subject = get_site_option( 'b3_activated_wpmu_user_site_subject' );
+        if ( ! $subject ) {
+            $subject = b3_default_subject_welcome_wpmu_user_blog();
+        }
+
+        return $subject;
+    }
+
+    function b3_get_wpmu_activated_user_blog_message( $user_login ) {
+        $message = get_site_option( 'b3_activated_wpmu_user_site_message' );
+        if ( ! $message ) {
+            $message = b3_default_message_welcome_wpmu_user_blog( $user_login );
+        }
+
+        return $message;
+    }
+
+
     /**
-     * Get admin email message for new user
+     * Get admin email subject for new user
      *
      * @since 2.6.0
      *
@@ -98,11 +123,11 @@
      */
     function b3_get_new_wpmu_user_subject_admin() {
         $message = b3_default_subject_new_wpmu_user_admin();
-        
+
         return $message;
     }
-    
-    
+
+
     /**
      * Get admin message for new user
      *
@@ -112,6 +137,6 @@
      */
     function b3_get_new_wpmu_user_message_admin( $user = false ) {
         $message = b3_default_message_new_wpmu_user_admin( $user );
-        
+
         return $message;
     }
