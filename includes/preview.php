@@ -36,8 +36,8 @@
                     break;
                 case 'mu-confirm-user-site-email':
                     // @TODO: add filter
-                    $message = b3_get_welcome_wpmu_user_blog_message();
-                    $subject = b3_get_welcome_wpmu_user_blog_subject();
+                    $message = b3_get_wpmu_activate_user_blog_message();
+                    $subject = b3_get_wpmu_activate_user_blog_subject();
                     break;
                 case 'mu-user-site-activated':
                     // @TODO: add filter
