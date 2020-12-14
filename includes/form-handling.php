@@ -77,14 +77,14 @@
                     return;
                 } else {
 
-                    $page_ids = [
+                    $page_ids = array(
                         'b3_account_page_id',
                         'b3_lost_password_page_id',
                         'b3_login_page_id',
                         'b3_logout_page_id',
                         'b3_register_page_id',
                         'b3_reset_password_page_id',
-                    ];
+                    );
                     if ( isset( $_POST[ 'b3_approval_page_id' ] ) ) {
                         $page_ids[] = 'b3_approval_page_id';
                     }
@@ -261,7 +261,6 @@
                         } else {
                             $sender_email = $_POST[ 'b3_notification_sender_email' ];
                         }
-                    } else {
                     }
 
                     /* general boxes */
@@ -359,7 +358,7 @@
                     }
 
                     /* specific boxes */
-                    if ( in_array( get_site_option( 'b3_registration_type', array() ), array( 'open', 'email_activation' ) ) ) {
+                    if ( in_array( get_site_option( 'b3_registration_type' ), array( 'open', 'email_activation' ) ) ) {
                         if ( isset( $_POST[ 'b3_account_activated_subject' ] ) ) {
                             update_site_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ] );
                         }
@@ -445,7 +444,7 @@
                         } else {
                             delete_site_option( 'b3_activated_wpmu_user_message' );
                         }
-    
+
                         if ( isset( $_POST[ 'b3_confirm_wpmu_user_site_subject' ] ) && ! empty( $_POST[ 'b3_confirm_wpmu_user_site_subject' ] ) ) {
                             update_site_option( 'b3_confirm_wpmu_user_site_subject', stripslashes( $_POST[ 'b3_confirm_wpmu_user_site_subject' ] ) );
                         } else {
@@ -466,7 +465,7 @@
                         } else {
                             delete_site_option( 'b3_activated_wpmu_user_site_message' );
                         }
-                        
+
                         if ( isset( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) && ! empty( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ) {
                             update_site_option( 'b3_new_wpmu_user_admin_subject', stripslashes( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) );
                         } else {

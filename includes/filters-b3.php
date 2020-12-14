@@ -14,18 +14,18 @@
                     $field_id   = $field[ 'id' ];
                     $field_type = $field[ 'type' ];
                     if ( true == $field[ 'required' ] ) {
-                        if ( in_array( $field_type, [ 'radio', 'checkbox', 'select' ] ) ) {
+                        if ( in_array( $field_type, array( 'radio', 'checkbox', 'select' ) ) ) {
                             if ( ! isset( $_POST[ $field_id ] ) || ( isset( $_POST[ $field_id ] ) && empty( $_POST[ $field_id ] ) ) ) {
                                 $error_code = 'empty_field';
                             }
                         }
                         if ( isset( $error_code ) ) {
-                            $error_array[] = [
+                            $error_array[] = array(
                                 'error_code'    => $error_code,
                                 'error_message' => $b3_onboarding->b3_get_return_message( $error_code ),
                                 'id'            => $field_id,
                                 'label'         => $field[ 'label' ],
-                            ];
+                            );
                         }
                     }
                 }

@@ -3,7 +3,7 @@
     include 'functions-email-general.php';
     include 'functions-email-single.php';
     include 'functions-email-ms.php';
-    
+
     /**
      * Return all custom meta keys
      *
@@ -260,7 +260,7 @@
 
         return $registration_options;
     }
-    
+
     /**
      * Return user email logo and default logo if false
      *
@@ -270,17 +270,17 @@
      */
     function b3_get_main_logo() {
         $custom_logo = get_site_option( 'b3_main_logo', false );
-        
+
         if ( false != $custom_logo ) {
             $main_logo = $custom_logo;
         } else {
             $main_logo = b3_default_main_logo();
         }
-        
+
         return $main_logo;
     }
-    
-    
+
+
     /**
      * Get the 'registration closed' message
      *
@@ -291,36 +291,36 @@
      * @return string
      */
     function b3_get_registration_closed_message() {
-        
+
         $user_input = get_site_option( 'b3_registration_closed_message', false );
         if ( false != $user_input ) {
             $registration_closed_message = htmlspecialchars_decode( $user_input );
         } else {
             $registration_closed_message = b3_default_registration_closed_message();
         }
-        
+
         return $registration_closed_message;
     }
-    
-    
+
+
     /**
      * Message to let user know they need to login first to register a site
      *
      * @return string
      */
     function b3_get_logged_in_registration_only_message() {
-        
+
         $user_input = get_site_option( 'b3_logged_in_registration_only', false );
         if ( false != $user_input ) {
             $logged_in_registration_only_message = htmlspecialchars_decode( $user_input );
         } else {
             $logged_in_registration_only_message = b3_default_logged_in_registration_only_message();
         }
-        
+
         return $logged_in_registration_only_message;
     }
-    
-    
+
+
     /**
      * Get the privacy text
      *
@@ -329,18 +329,18 @@
      * @return bool|mixed|string|void
      */
     function b3_get_privacy_text() {
-        
+
         $privacy_text = get_site_option( 'b3_privacy_text', false );
         if ( false != $privacy_text ) {
             $message = stripslashes( $privacy_text );
         } else {
             $message = b3_default_privacy_text();
         }
-        
+
         return $message;
     }
-    
-    
+
+
     /**
      * Get a unique activation url for a user
      *
@@ -351,21 +351,21 @@
      * @return string
      */
     function b3_get_activation_url( $user_data ) {
-        
+
         // Generate an activation key
         $key = wp_generate_password( 20, false );
-        
+
         // Set the activation key for the user
         global $wpdb;
         $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user_data->user_login ) );
-        
+
         $login_url      = b3_get_login_url();
         $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user_data->user_login ) ), $login_url );
-        
+
         return $activation_url;
     }
-    
-    
+
+
     /**
      * General opening of settings field
      *
@@ -378,8 +378,8 @@
         $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
         echo '<div class="b3_settings-field' . $hide_class . $modifier . '">';
     }
-    
-    
+
+
     /**
      * General opening of settings label
      *
@@ -391,8 +391,8 @@
         $hide_class = ( $hide != false ) ? ' hidden' : false;
         echo '<div class="b3_settings-label' . $hide_class . '">';
     }
-    
-    
+
+
     /**
      * Close a div.
      * This function is not really needed, but it prevents PhpStorm from throwing a ton of errors.
@@ -402,8 +402,8 @@
     function b3_get_close() {
         echo '</div>';
     }
-    
-    
+
+
     /**
      * Return submit button
      *
@@ -429,7 +429,7 @@
         }
         echo '<input class="button button-primary button--submit' . $button_modifier . '" type="submit" value="' . $submit_value . '" />';
     }
-    
+
     /**
      * Get register page id/link
      *
@@ -450,11 +450,11 @@
                 return get_the_permalink( $id );
             }
         }
-        
+
         return wp_registration_url();
     }
-    
-    
+
+
     /**
      * Get login page id/link
      *
@@ -463,20 +463,20 @@
      * @return bool|string
      */
     function b3_get_login_url( $return_id = false, $blog_id = false ) {
-        
+
         $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms' );
         $login_page_id    = get_site_option( 'b3_login_page_id' );
-        
+
         if ( class_exists( 'Sitepress' ) ) {
             $login_page_id = apply_filters( 'wpml_object_id', $login_page_id, 'page', true );
         }
-        
+
         if ( '1' == $disable_wp_forms ) {
             if ( false != $login_page_id ) {
                 if ( false != $return_id ) {
                     return $login_page_id;
                 }
-                
+
                 if ( get_post( $login_page_id ) ) {
                     if ( is_multisite() ) {
                         switch_to_blog( get_main_site_id() );
@@ -485,27 +485,27 @@
                     if ( is_multisite() ) {
                         restore_current_blog();
                     }
-                    
+
                     return $login_url;
                 }
             }
-            
+
             if ( false != $blog_id ) {
                 switch_to_blog( get_main_site_id() );
                 $login_url = get_the_permalink( $login_page_id );
                 restore_current_blog();
-                
+
                 return $login_url;
             }
-            
+
         } else {
             // @TODO: when forms are not forced
         }
-        
+
         return wp_login_url();
     }
-    
-    
+
+
     /**
      * Get logout page id/link
      *
@@ -526,11 +526,11 @@
                 return get_the_permalink( $id );
             }
         }
-        
+
         return wp_logout_url();
-        
+
     }
-    
+
     /**
      * Get account page page id/link
      *
@@ -553,10 +553,10 @@
         } else {
             // @TODO: return admin profile
         }
-        
+
         return false;
     }
-    
+
     /**
      * Get lost password page id/link
      *
@@ -572,10 +572,10 @@
         if ( false != $id && get_post( $id ) ) {
             return get_the_permalink( $id );
         }
-        
+
         return wp_lostpassword_url();
     }
-    
+
     /**
      * Get reset pass page id/link
      *
@@ -596,10 +596,10 @@
                 return get_the_permalink( $id );
             }
         }
-        
+
         return network_site_url( 'wp-login.php', 'login' ) . '?action=rp';
     }
-    
+
     /**
      * Get account page id/link
      *
@@ -628,10 +628,10 @@
         } else {
             return admin_url( 'admin.php?page=b3-user-approval' );
         }
-        
+
         return false;
     }
-    
+
     /**
      * Convert a GMT date/time to local
      *
@@ -646,7 +646,7 @@
         $time_format       = get_option( 'time_format' );
         $timezone          = get_option( 'timezone_string' );
         $registration_date = gmdate( $date_format . ' @ ' . $time_format, time() );
-        
+
         if ( false != $date_time_gmt ) {
             if ( ! empty( $timezone ) ) {
                 $new_date = new DateTime( $date_time_gmt, new DateTimeZone( 'UTC' ) );
@@ -657,14 +657,14 @@
                 $registration_date_ts     = $registration_date_gmt_ts + ( $gmt_offset * HOUR_IN_SECONDS );
                 $registration_date        = gmdate( $date_format . ' @ ' . $time_format, $registration_date_ts );
             }
-            
+
             return $registration_date;
         }
-        
+
         return $date_time_gmt;
     }
-    
-    
+
+
     /**
      * Get the message above registration form
      *
@@ -675,18 +675,18 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_registration() {
-        
+
         $register_message = get_site_option( 'b3_register_message', false );
         if ( false != $register_message ) {
             $message = $register_message;
         } else {
             $message = b3_get_default_message_above_registration();
         }
-        
+
         return $message;
     }
-    
-    
+
+
     /**
      * Get the message above login form
      *
@@ -697,15 +697,15 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_login() {
-        
+
         $login_message = get_site_option( 'b3_message_above_login', false );
         if ( false != $login_message ) {
             return $login_message;
         }
-        
+
     }
-    
-    
+
+
     /**
      * Get the message above lost password form
      *
@@ -716,18 +716,18 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_lost_password() {
-        
+
         $password_message = get_site_option( 'b3_message_above_lost_password', false );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
             $message = b3_get_default_message_above_lost_password();
         }
-        
+
         return $message;
     }
-    
-    
+
+
     /**
      * Get the message above request access form
      *
@@ -738,18 +738,18 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_request_access() {
-        
+
         $password_message = get_site_option( 'b3_message_above_request_access', false );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
             $message = b3_get_default_message_above_request_access();
         }
-        
+
         return $message;
     }
-    
-    
+
+
     /**
      * Reserved usernames
      *
@@ -758,24 +758,24 @@
      * @return array
      */
     function b3_get_reserved_usernames() {
-        
-        $default_reserved_names = [
+
+        $default_reserved_names = array(
             'admin',
             'administrator',
-        ];
-        
+        );
+
         $filtered_names = apply_filters( 'b3_reserved_usernames', [] );
         if ( ! is_array( $filtered_names ) ) {
             $filtered_names = [ $filtered_names ];
         }
-        
+
         $reserved_user_names = array_merge( $default_reserved_names, $filtered_names );
-        
+
         return $reserved_user_names;
-        
+
     }
-    
-    
+
+
     /**
      * Get protocol
      *
@@ -783,11 +783,11 @@
      */
     function b3_get_protocol() {
         $protocol = ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
-        
+
         return $protocol;
     }
-    
-    
+
+
     /**
      * Get current URL
      *
@@ -796,26 +796,26 @@
      * @return string
      */
     function b3_get_current_url( $include_query = false ) {
-        
+
         $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
         $url_array  = parse_url( $url );
         $port       = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
         $path       = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
         $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $path;
-        
-        if ( false != $include_query ) {
+
+        if ( false !== $include_query ) {
             if ( isset( $url_array[ 'query' ] ) ) {
                 $query_string = $url_array[ 'query' ];
                 $return_url   .= '?' . $query_string;
             }
-            
+
         }
-        
+
         return $return_url;
-        
+
     }
-    
-    
+
+
     /**
      * Copied from wp-login.php since we bypass it and can't hook in/piggyback on the function in this file.
      *
@@ -824,7 +824,7 @@
     function b3_retrieve_password() {
         $errors    = new WP_Error();
         $user_data = false;
-        
+
         if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
             $errors->add( 'empty_username', __( '<strong>Error</strong>: Enter a username or email address.' ) );
         } elseif ( strpos( $_POST['user_login'], '@' ) ) {
@@ -836,7 +836,7 @@
             $login     = trim( wp_unslash( $_POST['user_login'] ) );
             $user_data = get_user_by( 'login', $login );
         }
-        
+
         /**
          * Fires before errors are returned from a password reset request.
          *
@@ -849,25 +849,25 @@
          * @param WP_User|false    WP_User object if found, false if the user does not exist.
          */
         do_action( 'lostpassword_post', $errors, $user_data );
-        
+
         if ( $errors->has_errors() ) {
             return $errors;
         }
-        
+
         if ( ! $user_data ) {
             $errors->add( 'invalidcombo', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
             return $errors;
         }
-        
+
         // Redefining user_login ensures we return the right case in the email.
         $user_login = $user_data->user_login;
         $user_email = $user_data->user_email;
         $key        = get_password_reset_key( $user_data );
-        
+
         if ( is_wp_error( $key ) ) {
             return $key;
         }
-        
+
         if ( is_multisite() ) {
             $site_name = get_network()->site_name;
         } else {
@@ -877,7 +877,7 @@
              */
             $site_name = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
         }
-        
+
         $message = __( 'Someone has requested a password reset for the following account:' ) . "\r\n\r\n";
         /* translators: %s: Site name. */
         $message .= sprintf( __( 'Site Name: %s' ), $site_name ) . "\r\n\r\n";
@@ -886,10 +886,10 @@
         $message .= __( 'If this was a mistake, just ignore this email and nothing will happen.' ) . "\r\n\r\n";
         $message .= __( 'To reset your password, visit the following address:' ) . "\r\n\r\n";
         $message .= network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
-        
+
         /* translators: Password reset notification email subject. %s: Site title. */
         $title = sprintf( __( '[%s] Password Reset' ), $site_name );
-        
+
         /**
          * Filters the subject of the password reset email.
          *
@@ -901,7 +901,7 @@
          * @param WP_User $user_data  WP_User object.
          */
         $title = apply_filters( 'retrieve_password_title', $title, $user_login, $user_data );
-        
+
         /**
          * Filters the message body of the password reset mail.
          *
@@ -916,7 +916,7 @@
          * @param WP_User $user_data  WP_User object.
          */
         $message = apply_filters( 'retrieve_password_message', $message, $key, $user_login, $user_data );
-        
+
         if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) ) {
             $errors->add(
                 'retrieve_password_email_failure',
@@ -928,6 +928,6 @@
             );
             return $errors;
         }
-        
+
         return true;
     }

@@ -9,12 +9,10 @@
      * @since 1.0.0
      */
     function b3_add_registration_fields() {
-
         do_action( 'b3_add_first_last_name_fields' );
         do_action( 'b3_add_extra_fields_registration' );
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields', 'register' );
-
     }
     add_action( 'register_form', 'b3_add_registration_fields' );
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
@@ -56,7 +54,6 @@
         if ( isset( $_POST[ 'b3_privacy_accept' ] ) && 1 == $_POST[ 'b3_privacy_accept' ] ) {
             update_user_meta( $user_id, 'privacy_accept', true );
         }
-
     }
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
@@ -70,7 +67,7 @@
      */
     function b3_do_stuff_after_wp_register( $user_id ) {
         // get registration type
-        $registration_type = get_site_option( 'b3_registration_type', false );
+        $registration_type = get_site_option( 'b3_registration_type' );
         if ( 'request_access' == $registration_type ) {
             // change user role
             $user_object = new WP_User( $user_id );
@@ -91,7 +88,7 @@
      * @param $user_id
      */
     function b3_add_login_form_fields() {
-        $show_recaptcha   = get_site_option( 'b3_recaptcha_login', false );
+        $show_recaptcha   = get_site_option( 'b3_recaptcha_login' );
         if ( $show_recaptcha ) {
             do_action( 'b3_add_recaptcha_fields' );
         }
@@ -134,13 +131,13 @@
      */
     function b3_remove_admin_bar() {
         if ( ! is_multisite() ) {
-            $hide_admin_bar = get_site_option( 'b3_hide_admin_bar', false );
+            $hide_admin_bar = get_site_option( 'b3_hide_admin_bar' );
             if ( false != $hide_admin_bar ) {
                 $result = false;
                 $user   = wp_get_current_user();
                 $restricted_roles = get_site_option( 'b3_restrict_admin' );
                 $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
-    
+
                 if ( true == $result ) {
                     show_admin_bar( false );
                 }
@@ -173,7 +170,7 @@
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
 
-    
+
     /**
      * Do stuff after activate user (only)
      *
@@ -220,7 +217,7 @@
 
 
     /**
-     * Override activate new wpmu user message
+     * Override activate new wpmu user + blog message
      *
      * @param $domain
      * @param $path
@@ -233,10 +230,9 @@
 
         $activate_url = b3_get_login_url() . "?activate=user&key={$key}";
         $activate_url = esc_url( $activate_url );
-        $from_name    = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
-        $user         = get_user_by( 'login', $user_login );
-        $subject      = sprintf( b3_get_welcome_wpmu_user_blog_subject(), $from_name );
-        $message      = sprintf( b3_get_welcome_wpmu_user_blog_message( $user ), '<a href="' . esc_url( $activate_url ) . '">' . __( 'this link', 'b3-onboarding' ) . '</a>', esc_url( "http://{$domain}{$path}" ) );
+        $from_name    = ( '' != get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
+        $subject      = sprintf( b3_get_wpmu_activate_user_subject(), $from_name );
+        $message      = sprintf( b3_get_wpmu_activate_user_message(), $user_login, $activate_url );
         $message      = b3_replace_template_styling( $message );
         $message      = strtr( $message, b3_replace_email_vars() );
         $message      = htmlspecialchars_decode( stripslashes( $message ) );
@@ -258,7 +254,7 @@
      */
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
 
-        $user = get_userdata( $user_id );
+        $user    = get_userdata( $user_id );
         $subject = sprintf( b3_get_welcome_wpmu_user_blog_subject(), get_site_option( 'site_name' ), $title );
         $message = sprintf( b3_get_welcome_wpmu_user_blog_message(), get_site_url( $blog_id ), $user->user_login, $password, esc_url( b3_get_login_url( false, $blog_id ) ) );
         $message = b3_replace_template_styling( $message );

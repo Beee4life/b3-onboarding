@@ -616,9 +616,9 @@
      */
     function b3_get_default_message_above_lost_password() {
         if ( 1 == get_site_option( 'b3_register_email_only' ) ) {
-            return __( "Please enter your email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+            return __( 'Please enter your email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
         } else {
-            return __( "Please enter your username or email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+            return __( 'Please enter your username or email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
         }
     }
 
@@ -631,7 +631,7 @@
      * @return string
      */
     function b3_get_default_message_above_request_access() {
-        return __( "You have to request access for this website.", 'b3-onboarding' );
+        return __( 'You have to request access for this website.', 'b3-onboarding' );
     }
 
 

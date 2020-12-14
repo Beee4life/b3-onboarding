@@ -72,7 +72,7 @@
                 <div class="b3_settings-input b3_settings-input--text">
                     <select name="b3_recaptcha_version" id="b3_recaptcha_version">
                         <option value=""><?php esc_html_e( 'Choose', 'b3-onboarding' ); ?></option>
-                        <?php $versions = [ 2, 3 ]; ?>
+                        <?php $versions = array( 2, 3 ); ?>
                         <?php foreach( $versions as $version ) { ?>
                             <option value="<?php echo $version; ?>"<?php echo ( $recaptcha_version == $version ) ? ' selected="selected"' : false; ?>>v<?php echo $version; ?></option>
                         <?php } ?>
@@ -87,61 +87,6 @@
             <?php b3_get_submit_button( __( 'Save reCaptcha', 'b3-onboarding' ), false ); ?>
 
         </form>
-
-        <?php if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) { ?>
-
-            <?php b3_get_settings_field_open(); ?>
-            <?php
-            $modules = [
-                [
-                    'id'   => 'mailchimp',
-                    'name' => 'Mailchimp',
-                    'logo' => 'logo-mailchimp.png',
-                    'link' => '#',
-                ],
-                [
-                    'id'   => 'salesforce',
-                    'name' => 'Salesforce',
-                    'logo' => 'logo-salesforce.png',
-                    'link' => '#',
-                ],
-                [
-                    'id'   => 'aweber',
-                    'name' => 'AWeber',
-                    'logo' => 'logo-aweber.png',
-                    'link' => '#',
-                ],
-            ];
-            ?>
-            <div class="integrations">
-                <h3>
-                    <?php esc_html_e( 'More integrations', 'b3-onboarding' ); ?>
-                </h3>
-                <p>
-                    <?php esc_html_e( 'We understand there might be a need for more integrations.', 'b3-onboarding' ); ?>
-                    <br />
-                    <?php esc_html_e( "If we'll add more, the ones below are the first ones wer're gonna explore.", 'b3-onboarding' ); ?>
-                </p>
-
-                <ul class="b3_integrations--list"><!--
-                    <?php foreach( $modules as $module ) { ?>
-                    --><li class="b3_integrations--list-item b3_integrations--list-item--<?php echo $module[ 'id' ]; ?>">
-                        <div class="b3_integration__container">
-                            <div class="b3_integration__image">
-                                <img
-                                    src="<?php echo B3_PLUGIN_URL . 'assets/images/'; ?><?php echo $module[ 'logo' ]; ?>"
-                                    alt="<?php echo $module[ 'name' ]; ?>"/>
-                            </div>
-                            <div class="b3_integration__name">
-                                <?php echo $module[ 'name' ]; ?>
-                            </div>
-                        </div>
-                    </li><!--
-                    <?php } ?>
-                --></ul>
-            </div>
-            <?php b3_get_close(); ?>
-        <?php } ?>
 
         <?php
         $result = ob_get_clean();

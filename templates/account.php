@@ -70,7 +70,7 @@
 
         <?php
             $show_password_fields = apply_filters( 'show_password_fields', true, $current_user_object );
-            if ( $show_password_fields ) :
+            if ( $show_password_fields ) {
         ?>
         <div class="b3_form-element b3_form-element--password">
             <div class="password-input user-pass1-wrap">
@@ -112,7 +112,7 @@
                 <?php echo esc_html__( 'Confirm use of weak password', 'b3-onboarding' ); ?>
             </div>
         </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php if ( $user_delete ) { ?>
             <div class="b3_form-element b3_form-element--delete">

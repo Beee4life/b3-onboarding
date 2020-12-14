@@ -254,7 +254,6 @@
                         delete_option( $key );
                     }
                 }
-
             }
 
 
@@ -572,7 +571,7 @@
                 /*
                  * Includes sidebar widget function + call
                  */
-                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
                     include 'includes/class-b3-sidebar-widget.php';
                 }
             }
@@ -585,7 +584,7 @@
                 /*
                  * Includes dashboard widget function + call
                  */
-                if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
                     include 'includes/dashboard-widget.php';
                     if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
                         include 'includes/dashboard-widget-debug.php';
@@ -684,7 +683,6 @@
                                 __( 'Activate', 'b3-onboarding' )
                             );
                         }
-
                     }
                 }
 
@@ -749,7 +747,7 @@
             public function b3_admin_body_class( $classes ) {
 
                 if ( 'request_access' != get_site_option( 'b3_registration_type', false ) ) {
-                    $classes .= ' no-approval-page';
+                    $classes .= 'no-approval-page';
                 }
 
                 return $classes;
@@ -953,6 +951,11 @@
                                 if ( 'closed' == $registration_type ) {
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
+                                } elseif ( 'blog' == $registration_type ) {
+                                    $user       = get_userdata( get_current_user_id() );
+                                    $user_login = $user->user_login;
+                                    $user_email = $user->user_email;
+                                    $register   = true;
                                 } elseif ( false != get_site_option( 'b3_activate_recaptcha', false ) && ! $this->b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
@@ -962,7 +965,7 @@
 
                                 if ( true == $register ) {
                                     $signup_for = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
-                                    $user_valid = wpmu_validate_user_signup( $_POST[ 'user_name' ], $_POST[ 'user_email' ] );
+                                    $user_valid = wpmu_validate_user_signup( $user_login, $user_email );
                                     $errors     = $user_valid[ 'errors' ];
 
                                     if ( $errors->has_errors() ) {
@@ -1012,7 +1015,6 @@
                                     }
 
                                     if ( 'blog' == $signup_for && empty( $error_codes ) ) {
-
                                         $meta_data[ 'lang_id' ] = ( isset( $_POST[ 'lang_id' ] ) ) ? $_POST[ 'lang_id' ] : 1;
                                         $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? $_POST[ 'blog_public' ] : 1;
                                         $user                   = '';
@@ -1346,14 +1348,14 @@
                     if ( false == $redirect_url ) {
                         $redirect_url = home_url();
                     }
-                    wp_safe_redirect( $redirect_url );
                 } else {
                     if ( $redirect_to ) {
-                        wp_safe_redirect( $redirect_to );
+                        $redirect_url = $redirect_to;
                     } else {
-                        wp_safe_redirect( admin_url() );
+                        $redirect_url = admin_url();
                     }
                 }
+                wp_safe_redirect( $redirect_url );
                 exit;
             }
 
