@@ -33,8 +33,8 @@
             <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
 
-                <?php b3_get_settings_field_open(); ?>
-                    <?php if ( ! is_multisite() ) { ?>
+                <?php if ( ! is_multisite() ) { ?>
+                    <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
@@ -57,8 +57,12 @@
                                 <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
                             </div>
                         <?php } ?>
-                    <?php } ?>
-                <?php b3_get_close(); ?>
+                    <?php b3_get_close(); ?>
+                <?php } else { ?>
+                    <p>
+                        Right now there are no 'special' registration types, like in a single site. Once we add those, the registration settings will bemanaged on this place.
+                    </p>
+                <?php } ?>
 
                 <?php if ( 'closed' == get_site_option( 'b3_registration_type', false ) ) { ?>
 
