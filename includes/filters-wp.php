@@ -650,6 +650,17 @@ All at ###SITENAME###
     add_filter( 'wpmu_signup_blog_notification', 'b3_disable_signup_mu_user_blog_email' );
 
 
+    /**
+     * Disable new user mail with login credentials
+     *
+     * @param $blog_id
+     * @param $user_id
+     * @param $password
+     * @param $title
+     * @param $meta
+     *
+     * @return false
+     */
     function b3_disable_welcome_mu_user_blog_email( $blog_id, $user_id, $password, $title, $meta ) {
         return false;
     }
