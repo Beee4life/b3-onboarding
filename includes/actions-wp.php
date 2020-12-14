@@ -232,7 +232,7 @@
         $activate_url = esc_url( $activate_url );
         $from_name    = ( '' != get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
         $subject      = sprintf( b3_get_wpmu_activate_user_blog_subject(), $from_name );
-        $message      = sprintf( b3_get_wpmu_activate_user_blog_message(), $activate_url, 'http://'. $domain . $path );
+        $message      = sprintf( b3_get_wpmu_activate_user_blog_message(), $activate_url, b3_get_protocol() . '://' . $domain . $path );
         $message      = b3_replace_template_styling( $message );
         $message      = strtr( $message, b3_replace_email_vars() );
         $message      = htmlspecialchars_decode( stripslashes( $message ) );
