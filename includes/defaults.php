@@ -557,18 +557,18 @@
 
         $split_message = '';
         if ( false != $user_login ) {
-            $split_message .= 'Hi ' . $user_login . ",\n";
+            $split_message .= 'Hi %user_login%' . ",\n";
             $split_message .= '<br /><br />' . "\n";
         }
-        $split_message .= __( 'Your new site has been successfully set up at <a href="%1$s">%1$s</a>.', 'b3-onboarding') . "\n";
+        $split_message .= __( 'Your new site has been successfully set up at <a href="%home_url%">%home_url%</a>.', 'b3-onboarding') . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
         $split_message .= '<br />' . "\n";
-        $split_message .= __( 'Username', 'b3-onboarding' ) . ': ' . '%2$s' . "\n";
+        $split_message .= __( 'Username', 'b3-onboarding' ) . ': ' . '%user_login%' . "\n";
         $split_message .= '<br />' . "\n";
-        $split_message .= __( 'Password', 'b3-onboarding' ) . ': ' . '%3$s' . "\n";
+        $split_message .= __( 'Password', 'b3-onboarding' ) . ': ' . '%user_password%' . "\n";
         $split_message .= '<br /><br />' . "\n";
-        $split_message .= __( 'Login here: <a href="%4$s">%4$s</a>', 'b3-onboarding' ) . "\n";
+        $split_message .= __( 'Login here: <a href="%login_url%">%login_url%</a>', 'b3-onboarding' ) . "\n";
         $split_message .= '<br /><br />' . "\n";
         $split_message .= __( 'Enjoy your new site.', 'b3-onboarding' ) . "\n";
         $split_message .= '<br /><br />' . "\n";

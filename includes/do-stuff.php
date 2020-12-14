@@ -244,6 +244,12 @@
             '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
         );
 
+        if ( isset( $vars[ 'blog_id' ] ) ) {
+            switch_to_blog( $vars[ 'blog_id' ] );
+            $replacements[ '%site_name%' ] = get_option( 'blogname' );
+            restore_current_blog();
+        }
+
         return $replacements;
 
     }
@@ -285,14 +291,13 @@
             $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
         }
 
-        $blog_id = ( isset( $vars[ 'blog_id' ] ) ) ? : false;
-
         $replacements = array(
             '%account_page%'      => b3_get_account_url(),
+            '%login_url%'         => b3_get_login_url(),
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
             '%lostpass_url%'      => b3_get_lostpassword_url(),
-            '%home_url%'          => get_home_url( $blog_id, '/' ),
+            '%home_url%'          => get_home_url( '', '/' ),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
             '%network_name%'      => get_site_option( 'site_name' ),
             '%registration_date%' => $local_registration_date,
@@ -301,9 +306,21 @@
             '%user_login%'        => $user_login,
         );
 
+        if ( is_multisite() ) {
+            if ( isset( $vars[ 'blog_id' ] )  ) {
+                $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
+            }
+            if ( isset( $vars[ 'domain' ] ) && isset( $vars[ 'path' ] )  ) {
+                $replacements[ '%home_url%' ] = b3_get_protocol() . '://' . $vars[ 'domain' ] . $vars[ 'path' ];
+            }
+            if ( isset( $vars[ 'user_password' ] ) ) {
+                $replacements[ '%user_password%' ] = $vars[ 'user_password' ];
+            }
+            $replacements[ 'network_name' ] = get_option( 'name' );
+        }
+
         if ( false != $activation ) {
             if ( is_multisite() ) {
-                $replacements[ 'network_name' ] = get_option( 'name' );
                 if ( isset( $vars[ 'key' ] ) ) {
                     $activate_url                       = b3_get_login_url() . "?activate=user&key={$vars[ 'key' ]}";
                     $replacements[ '%activation_url%' ] = esc_url( $activate_url );

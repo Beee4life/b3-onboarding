@@ -931,3 +931,15 @@
 
         return true;
     }
+
+    function b3_get_signup_id( $domain ) {
+        if ( $domain ) {
+            $blog_id = get_blog_id_from_url( $domain );
+            if ( false != $blog_id ) {
+                return $blog_id;
+            }
+        }
+
+        return false;
+
+    }

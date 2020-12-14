@@ -228,12 +228,12 @@
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
 
-        $blog_id      = get_blog_id_from_url( $domain );
+        $blog_id      = b3_get_signup_id( $domain );
         $subject      = b3_get_wpmu_activate_user_blog_subject();
-        $subject      = strtr( $subject, b3_replace_subject_vars() );
+        $subject      = strtr( $subject, b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
         $message      = b3_get_wpmu_activate_user_blog_message();
         $message      = b3_replace_template_styling( $message );
-        $message      = strtr( $message, b3_replace_email_vars( array( 'blog_id' => $blog_id, 'key' => $key ), true ) );
+        $message      = strtr( $message, b3_replace_email_vars( array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
         $message      = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
@@ -253,14 +253,15 @@
      */
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
 
-        $user    = get_userdata( $user_id );
-        $subject = sprintf( b3_get_wpmu_activated_user_blog_subject(), get_site_option( 'site_name' ), $title );
-        $message = sprintf( b3_get_wpmu_activated_user_blog_message( $user->user_login ), get_site_url( $blog_id ), $user->user_login, $password, esc_url( b3_get_login_url( false, $blog_id ) ) );
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars() );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
+        $user_data = get_userdata( $user_id );
+        $subject   = b3_get_wpmu_activated_user_blog_subject();
+        $subject   = strtr( $subject, b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
+        $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
+        $message   = b3_replace_template_styling( $message );
+        $message   = strtr( $message, b3_replace_email_vars( array( 'blog_id' => $blog_id, 'user_data' => $user_data, 'user_password' => $password ) ) );
+        $message   = htmlspecialchars_decode( stripslashes( $message ) );
 
-        wp_mail( $user->user_email, $subject, $message, [] );
+        wp_mail( $user_data->user_email, $subject, $message, [] );
 
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
