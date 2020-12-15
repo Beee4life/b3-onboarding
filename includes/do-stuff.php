@@ -307,6 +307,9 @@
         );
 
         if ( is_multisite() ) {
+            $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
+            $replacements[ '%settings_url%' ] = $options_site_url;
+
             if ( isset( $vars[ 'blog_id' ] )  ) {
                 $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
             }
