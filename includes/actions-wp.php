@@ -204,8 +204,9 @@
      */
     function b3_override_new_mu_user_admin_email( $user_id ) {
         $user    = get_userdata( $user_id );
+        // @TODO: make function
         $subject = sprintf( __( 'New User Registration: %s' ), $user->user_login );
-        $message = b3_get_new_wpmu_user_message_admin( $user );
+        $message = b3_get_new_wpmu_user_message_admin();
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
