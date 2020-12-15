@@ -30,11 +30,12 @@
          * @param array $instance Saved values from database.
          */
         public function widget( $args, $instance ) {
-            $count_errors  = array();
-            $count_setting = 0;
-            $show_account  = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
-            $show_widget   = true;
-            $show_settings = false;
+            $count_errors       = array();
+            $count_setting      = 0;
+            $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
+            $show_widget        = true;
+            $show_register_link = false;
+            $show_settings      = false;
 
             if ( $show_account ) {
                 $account_id    = b3_get_account_url( true );
@@ -82,12 +83,12 @@
                         $count_errors[] = 'register';
                     } else {
                         if ( 'blog' == $registration_type && is_user_logged_in() ) {
-                            $show_register = true;
+                            $show_register_link = true;
                         } elseif ( ! is_user_logged_in() ) {
-                            $show_register = true;
+                            $show_register_link = true;
                         }
 
-                        if ( true == $show_register ) {
+                        if ( true == $show_register_link ) {
                             $register_title = get_the_title( $register_id );
                             $register_url   = get_the_permalink( $register_id );
                         }
@@ -148,7 +149,7 @@
                     if ( $show_login ) {
                         echo '<li><a href="' . $login_url . '">' . $login_title . '</a></li>';
                     }
-                    if ( isset( $register_url ) ) {
+                    if ( isset( $register_url ) && true == $show_register_link ) {
                         echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
                     }
                     if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
@@ -157,7 +158,7 @@
                         }
                     }
                 } else {
-                    if ( isset( $register_url ) && true == $show_register ) {
+                    if ( isset( $register_url ) && true == $show_register_link ) {
                         echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
                     }
                     if ( isset( $account_url ) && false != $account_url ) {
