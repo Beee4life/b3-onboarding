@@ -481,39 +481,16 @@
      *
      * @return string
      */
-    function b3_default_message_new_wpmu_user_admin( $user = false ) {
-
-        $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
-
-        if ( false != $user ) {
-            /* translators: New user notification email. 1: User login, 2: User IP address, 3: URL to Network Settings screen. */
-            $split_message = __( 'New user: %1$s', 'b3-onboarding' ) . "\n";
-            $split_message .= '<br /><br />' . "\n";
-            $split_message .= __( 'Remote IP address: %2$s.', 'b3-onboarding' ) . "\n";
-            $split_message .= '<br /><br />' . "\n";
-            $split_message .= __( 'Disable these notifications <a href="%3$s">here</a>.', 'b3-onboarding' );
-
-            $message = sprintf(
-                $split_message,
-                $user->user_login,
-                wp_unslash( $_SERVER[ 'REMOTE_ADDR' ] ),
-                $options_site_url
-            );
-        } else {
-            // for placeholder only
-            /* translators: New user notification email. 1: User IP address, 2: URL to Network Settings screen. */
-            $split_message = __( 'New user: dummy', 'b3-onboarding' ) . "\n";
-            $split_message .= '<br /><br />' . "\n";
-            $split_message .= __( 'Remote IP address: %1$s.', 'b3-onboarding' ) . "\n";
-            $split_message .= '<br /><br />' . "\n";
-            $split_message .= __( 'Disable these notifications <a href="%2$s">here</a>.', 'b3-onboarding' );
-
-            $message = sprintf(
-                $split_message,
-                wp_unslash( $_SERVER[ 'REMOTE_ADDR' ] ),
-                $options_site_url
-            );
-        }
+    function b3_default_message_new_wpmu_user_admin() {
+        $message = __( 'New user: %user_login%', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Disable these notifications <a href="%settings_url%">here</a>.', 'b3-onboarding' );
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $message .= '<br /><br />';
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
 
         return $message;
     }
@@ -531,20 +508,24 @@
 
     function b3_default_message_new_wpmu_user_blog( $user = false ) {
 
-        $split_message = '';
+        $message = '';
         if ( false != $user ) {
-            $split_message .= 'Hi %user_login%' . ",\n";
-            $split_message .= '<br /><br />' . "\n";
+            $message .= 'Hi %user_login%' . ",\n";
+            $message .= '<br /><br />' . "\n";
         }
-        $split_message .= __( 'To activate your registration, please click <a href="%activation_url%">here</a>.', 'b3-onboarding') . "\n";
-        $split_message .= '<br /><br />' . "\n";
-        $split_message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
-        $split_message .= '<br /><br />' . "\n";
-        $split_message .= __( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
-        $split_message .= '<br />' . "\n";
-        $split_message .= '<a href="%home_url%">%home_url%</a>' . "\n";
+        $message .= __( 'To activate your registration, please click <a href="%activation_url%">here</a>.', 'b3-onboarding') . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= '<a href="%home_url%">%home_url%</a>' . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $message .= '<br /><br />';
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
 
-        return $split_message;
+        return $message;
     }
 
 
@@ -555,26 +536,28 @@
 
     function b3_default_message_welcome_wpmu_user_blog( $user_login = false ) {
 
-        $split_message = '';
+        $message = '';
         if ( false != $user_login ) {
-            $split_message .= 'Hi %user_login%' . ",\n";
-            $split_message .= '<br /><br />' . "\n";
+            $message .= 'Hi %user_login%' . ",\n";
+            $message .= '<br /><br />' . "\n";
         }
-        $split_message .= __( 'Your new site has been successfully set up at <a href="%home_url%">%home_url%</a>.', 'b3-onboarding') . "\n";
-        $split_message .= '<br /><br />' . "\n";
-        $split_message .= __( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
-        $split_message .= '<br />' . "\n";
-        $split_message .= __( 'Username', 'b3-onboarding' ) . ': ' . '%user_login%' . "\n";
-        $split_message .= '<br />' . "\n";
-        $split_message .= __( 'Password', 'b3-onboarding' ) . ': ' . '%user_password%' . "\n";
-        $split_message .= '<br /><br />' . "\n";
-        $split_message .= __( 'Login here: <a href="%login_url%">%login_url%</a>', 'b3-onboarding' ) . "\n";
-        $split_message .= '<br /><br />' . "\n";
-        $split_message .= __( 'Enjoy your new site.', 'b3-onboarding' ) . "\n";
-        $split_message .= '<br /><br />' . "\n";
-        $split_message .= __( 'Afzender', 'b3-onboarding' ) . "\n";
+        $message .= __( 'Your new site has been successfully set up at <a href="%home_url%">%home_url%</a>.', 'b3-onboarding') . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Username', 'b3-onboarding' ) . ': ' . '%user_login%' . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Password', 'b3-onboarding' ) . ': ' . '%user_password%' . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Login here: <a href="%login_url%">%login_url%</a>', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Enjoy your new site.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $message .= '<br /><br />';
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
 
-        return $split_message;
+        return $message;
     }
 
 
