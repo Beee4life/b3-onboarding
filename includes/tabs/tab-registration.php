@@ -33,7 +33,13 @@
             <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
 
-                <?php if ( ! is_multisite() ) { ?>
+                <?php if ( is_multisite() ) { ?>
+                    <p>
+                        <?php esc_html_e( "Right now there are no 'special' registration types, like (request access) in a single site.", 'b3-onboarding' ); ?>
+                        <br />
+                        <?php esc_html_e( "Once we add new ones, the registration settings will be managed on this spot.", 'b3-onboarding' ); ?>
+                    </p>
+                <?php } else { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
@@ -58,12 +64,6 @@
                             </div>
                         <?php } ?>
                     <?php b3_get_close(); ?>
-                <?php } else { ?>
-                    <p>
-                        <?php esc_html_e( "Right now there are no 'special' registration types, like (request access) in a single site.", 'b3-onboarding' ); ?>
-                        <br />
-                        <?php esc_html_e( "Once we add new ones, the registration settings will be managed on this spot.", 'b3-onboarding' ); ?>
-                    </p>
                 <?php } ?>
 
                 <?php if ( 'closed' == get_site_option( 'b3_registration_type', false ) ) { ?>
