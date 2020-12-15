@@ -81,8 +81,16 @@
                     if ( false == $register_id ) {
                         $count_errors[] = 'register';
                     } else {
-                        $register_title = get_the_title( $register_id );
-                        $register_url   = get_the_permalink( $register_id );
+                        if ( 'blog' == $registration_type && is_user_logged_in() ) {
+                            $show_register = true;
+                        } elseif ( ! is_user_logged_in() ) {
+                            $show_register = true;
+                        }
+
+                        if ( true == $show_register ) {
+                            $register_title = get_the_title( $register_id );
+                            $register_url   = get_the_permalink( $register_id );
+                        }
                     }
                     $count_setting++;
                 }
@@ -149,6 +157,9 @@
                         }
                     }
                 } else {
+                    if ( isset( $register_url ) && true == $show_register ) {
+                        echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
+                    }
                     if ( isset( $account_url ) && false != $account_url ) {
                         echo '<li><a href="' . $account_url . '">' . $account_title . '</a></li>';
                     }
