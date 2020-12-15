@@ -135,8 +135,8 @@
      *
      * @return string
      */
-    function b3_get_new_wpmu_user_message_admin( $user = false ) {
-        $message = b3_default_message_new_wpmu_user_admin( $user );
+    function b3_get_new_wpmu_user_message_admin() {
+        $message = b3_default_message_new_wpmu_user_admin();
 
         return $message;
     }
