@@ -60,7 +60,7 @@
                     }
 
                     if ( isset( $_POST[ 'b3_main_logo' ] ) ) {
-                        update_site_option( 'b3_main_logo', $_POST[ 'b3_main_logo' ] );
+                        update_site_option( 'b3_main_logo', sanitize_file_name( $_POST[ 'b3_main_logo' ] ) );
                     }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
@@ -111,7 +111,7 @@
 
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                         if ( is_multisite() ) {
-                            $ms_registration_type = $_POST[ 'b3_registration_type' ];
+                            $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
                             if ( 'closed' == $ms_registration_type ) {
                                 $registration_type = 'none';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
@@ -140,7 +140,7 @@
                         }
                     }
 
-                    if ( 'closed' == get_site_option( 'b3_registration_type', false ) ) {
+                    if ( 'closed' == get_site_option( 'b3_registration_type' ) ) {
                         if ( isset( $_POST[ 'b3_registration_closed_message' ] ) ) {
                             update_site_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ) );
                         } else {
@@ -405,7 +405,7 @@
                         }
                     }
 
-                    if ( 'request_access' == get_site_option( 'b3_registration_type', false ) ) {
+                    if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
                         update_site_option( 'b3_account_approved_message', htmlspecialchars( $_POST[ 'b3_account_approved_message' ], ENT_QUOTES ) );
                         update_site_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ] );
                         update_site_option( 'b3_request_access_message_admin', htmlspecialchars( $_POST[ 'b3_request_access_message_admin' ] ) );
@@ -529,9 +529,9 @@
                     return;
                 } else {
 
-                    update_site_option( 'b3_recaptcha_public', $_POST[ 'b3_recaptcha_public' ] );
-                    update_site_option( 'b3_recaptcha_secret', $_POST[ 'b3_recaptcha_secret' ] );
-                    update_site_option( 'b3_recaptcha_version', $_POST[ 'b3_recaptcha_version' ] );
+                    update_site_option( 'b3_recaptcha_public', sanitize_key( $_POST[ 'b3_recaptcha_public' ] ) );
+                    update_site_option( 'b3_recaptcha_secret', sanitize_key( $_POST[ 'b3_recaptcha_secret' ] ) );
+                    update_site_option( 'b3_recaptcha_version', sanitize_text_field( $_POST[ 'b3_recaptcha_version' ] ) );
 
                     if ( isset( $_POST[ 'b3_recaptcha_on' ] ) ) {
                         update_site_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ] );
@@ -573,9 +573,9 @@
                     return;
                 } else {
 
-                    $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? $_POST[ 'b3_approve_user' ] : false;
-                    $reject      = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? $_POST[ 'b3_reject_user' ] : false;
-                    $user_id     = ( isset( $_POST[ 'b3_user_id' ] ) ) ? $_POST[ 'b3_user_id' ] : false;
+                    $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? true : false;
+                    $reject      = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? true : false;
+                    $user_id     = ( isset( $_POST[ 'b3_user_id' ] ) ) ? (int) $_POST[ 'b3_user_id' ] : false;
                     $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
                     if ( false != $approve && isset( $user_object->ID ) ) {
