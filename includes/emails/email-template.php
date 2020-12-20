@@ -4,7 +4,7 @@
      *
      * @since 1.0.0
      */
-    $stored_email_template = get_site_option( 'b3_email_template', false );
+    $stored_email_template = get_site_option( 'b3_email_template' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

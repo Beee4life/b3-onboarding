@@ -28,11 +28,11 @@
         );
 
         ob_start();
-        $background_color = get_site_option( 'b3_loginpage_bg_color', false );
-        $font_family      = get_site_option( 'b3_loginpage_font_family', false );
-        $font_size        = get_site_option( 'b3_loginpage_font_size', false );
-        $logo_height      = get_site_option( 'b3_loginpage_logo_height', false );
-        $logo_width       = get_site_option( 'b3_loginpage_logo_width', false );
+        $background_color = get_site_option( 'b3_loginpage_bg_color' );
+        $font_family      = get_site_option( 'b3_loginpage_font_family' );
+        $font_size        = get_site_option( 'b3_loginpage_font_size' );
+        $logo_height      = get_site_option( 'b3_loginpage_logo_height' );
+        $logo_width       = get_site_option( 'b3_loginpage_logo_width' );
 
         ?>
         <h2>

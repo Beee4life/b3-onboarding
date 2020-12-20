@@ -193,7 +193,7 @@
          * @param array $instance Previously saved values from database.
          */
         public function form( $instance ) {
-            $registration_type  = get_site_option( 'b3_registration_type', false );
+            $registration_type  = get_site_option( 'b3_registration_type' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : '';
             $show_login         = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : '';
             $show_logout        = ! empty( $instance[ 'show_logout' ] ) ? $instance[ 'show_logout' ] : '';

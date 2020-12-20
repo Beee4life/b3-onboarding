@@ -108,7 +108,7 @@
      */
     function b3_get_email_boxes() {
 
-        $registration_type = get_site_option( 'b3_registration_type', false );
+        $registration_type = get_site_option( 'b3_registration_type' );
         $email_boxes       = array();
 
         $email_boxes[] = array(
@@ -269,7 +269,7 @@
      * @return bool|false|mixed|string|void
      */
     function b3_get_main_logo() {
-        $custom_logo = get_site_option( 'b3_main_logo', false );
+        $custom_logo = get_site_option( 'b3_main_logo' );
 
         if ( false != $custom_logo ) {
             $main_logo = $custom_logo;
@@ -292,7 +292,7 @@
      */
     function b3_get_registration_closed_message() {
 
-        $user_input = get_site_option( 'b3_registration_closed_message', false );
+        $user_input = get_site_option( 'b3_registration_closed_message' );
         if ( false != $user_input ) {
             $registration_closed_message = htmlspecialchars_decode( $user_input );
         } else {
@@ -310,7 +310,7 @@
      */
     function b3_get_logged_in_registration_only_message() {
 
-        $user_input = get_site_option( 'b3_logged_in_registration_only', false );
+        $user_input = get_site_option( 'b3_logged_in_registration_only' );
         if ( false != $user_input ) {
             $logged_in_registration_only_message = htmlspecialchars_decode( $user_input );
         } else {
@@ -330,7 +330,7 @@
      */
     function b3_get_privacy_text() {
 
-        $privacy_text = get_site_option( 'b3_privacy_text', false );
+        $privacy_text = get_site_option( 'b3_privacy_text' );
         if ( false != $privacy_text ) {
             $message = stripslashes( $privacy_text );
         } else {
@@ -438,7 +438,7 @@
      * @return bool|string
      */
     function b3_get_register_url( $return_id = false ) {
-        $id = get_site_option( 'b3_register_page_id', false );
+        $id = get_site_option( 'b3_register_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
@@ -514,7 +514,7 @@
      * @return bool|string
      */
     function b3_get_logout_url( $return_id = false ) {
-        $id = get_site_option( 'b3_logout_page_id', false );
+        $id = get_site_option( 'b3_logout_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
@@ -539,7 +539,7 @@
      * @return bool|mixed
      */
     function b3_get_account_url( $return_id = false, $language = false ) {
-        $id = get_site_option( 'b3_account_page_id', false );
+        $id = get_site_option( 'b3_account_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true, $language );
         }
@@ -565,7 +565,7 @@
      * @return bool|string
      */
     function b3_get_lostpassword_url() {
-        $id = get_option( 'b3_lost_password_page_id', false );
+        $id = get_option( 'b3_lost_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
@@ -584,7 +584,7 @@
      * @return bool|string
      */
     function b3_get_reset_password_url( $return_id = false ) {
-        $id = get_option( 'b3_reset_password_page_id', false );
+        $id = get_option( 'b3_reset_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
@@ -611,7 +611,7 @@
      */
     function b3_get_user_approval_link( $return_id = false ) {
         if ( true == get_site_option( 'b3_front_end_approval' ) ) {
-            $id = get_site_option( 'b3_approval_page_id', false );
+            $id = get_site_option( 'b3_approval_page_id' );
             if ( class_exists( 'Sitepress' ) ) {
                 $id = apply_filters( 'wpml_object_id', $id, 'page', true );
             }
@@ -676,7 +676,7 @@
      */
     function b3_get_message_above_registration() {
 
-        $register_message = get_site_option( 'b3_register_message', false );
+        $register_message = get_site_option( 'b3_register_message' );
         if ( false != $register_message ) {
             $message = $register_message;
         } else {
@@ -698,7 +698,7 @@
      */
     function b3_get_message_above_login() {
 
-        $login_message = get_site_option( 'b3_message_above_login', false );
+        $login_message = get_site_option( 'b3_message_above_login' );
         if ( false != $login_message ) {
             return $login_message;
         }
@@ -717,7 +717,7 @@
      */
     function b3_get_message_above_lost_password() {
 
-        $password_message = get_site_option( 'b3_message_above_lost_password', false );
+        $password_message = get_site_option( 'b3_message_above_lost_password' );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
@@ -739,7 +739,7 @@
      */
     function b3_get_message_above_request_access() {
 
-        $password_message = get_site_option( 'b3_message_above_request_access', false );
+        $password_message = get_site_option( 'b3_message_above_request_access' );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {

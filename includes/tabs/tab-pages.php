@@ -13,42 +13,42 @@
             array(
                 'id'      => 'register_page',
                 'label'   => esc_html__( 'Register', 'b3-onboarding' ),
-                'page_id' => get_site_option( 'b3_register_page_id', false ),
+                'page_id' => get_site_option( 'b3_register_page_id' ),
             ),
             array(
                 'id'      => 'login_page',
                 'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
-                'page_id' => get_site_option( 'b3_login_page_id', false ),
+                'page_id' => get_site_option( 'b3_login_page_id' ),
             ),
             array(
                 'id'      => 'logout_page',
                 'label'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-                'page_id' => get_site_option( 'b3_logout_page_id', false ),
+                'page_id' => get_site_option( 'b3_logout_page_id' ),
             ),
             array(
                 'id'      => 'lost_password_page',
                 'label'   => esc_html__( 'Lost Password', 'b3-onboarding' ),
-                'page_id' => get_site_option( 'b3_lost_password_page_id', false ),
+                'page_id' => get_site_option( 'b3_lost_password_page_id' ),
             ),
             array(
                 'id'      => 'reset_password_page',
                 'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-                'page_id' => get_site_option( 'b3_reset_password_page_id', false ),
+                'page_id' => get_site_option( 'b3_reset_password_page_id' ),
             ),
             array(
                 'id'      => 'account_page',
                 'label'   => esc_html__( 'Account', 'b3-onboarding' ),
-                'page_id' => get_site_option( 'b3_account_page_id', false ),
+                'page_id' => get_site_option( 'b3_account_page_id' ),
             ),
         );
 
         $front_end_approval = array(
             'id'      => 'approval_page',
             'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
-            'page_id' => get_site_option( 'b3_approval_page_id', false ),
+            'page_id' => get_site_option( 'b3_approval_page_id' ),
         );
 
-        if ( true == get_site_option( 'b3_front_end_approval', false ) ) {
+        if ( true == get_site_option( 'b3_front_end_approval' ) ) {
             $b3_pages[] = $front_end_approval;
         }
 

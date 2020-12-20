@@ -233,7 +233,7 @@
      * @return string
      */
     function b3_default_account_approved_message() {
-        if ( true == get_site_option( 'b3_activate_custom_passwords', false ) ) {
+        if ( true == get_site_option( 'b3_activate_custom_passwords' ) ) {
             return sprintf( __( 'Welcome to %s. Your account has been approved and you can now login <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_login_url() ) );
         } else {
             return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_lostpassword_url() ) );
@@ -382,7 +382,7 @@
      */
     function b3_default_email_activation_message() {
 
-        if ( 1 == get_site_option( 'b3_register_email_only', false ) ) {
+        if ( 1 == get_site_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";

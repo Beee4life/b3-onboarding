@@ -4,8 +4,8 @@
      *
      * @since 2.6.0
      */
-    $new_wpmu_user_subject = get_site_option( 'b3_confirm_wpmu_user_subject', false );
-    $new_wpmu_user_message = get_site_option( 'b3_confirm_wpmu_user_message', false );
+    $new_wpmu_user_subject = get_site_option( 'b3_confirm_wpmu_user_subject' );
+    $new_wpmu_user_message = get_site_option( 'b3_confirm_wpmu_user_message' );
     $placeholder_subject   = sprintf( esc_attr( b3_default_wpmu_activate_user_subject() ), get_site_option( 'site_name' ) );
     $placeholder_message   = esc_attr( b3_default_wpmu_activate_user_message() );
 ?>

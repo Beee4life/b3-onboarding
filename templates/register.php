@@ -38,7 +38,7 @@
         <?php do_action( 'b3_do_before_submit_registration_form' ); ?>
 
         <div class="b3_form-element b3_form-element--submit">
-            <?php if ( ! is_multisite() && 'request_access' == get_site_option( 'b3_registration_type', false ) ) { ?>
+            <?php if ( ! is_multisite() && 'request_access' == get_site_option( 'b3_registration_type' ) ) { ?>
                 <?php $submit_label = esc_attr__( 'Request access', 'b3-onboarding' ); ?>
             <?php } else { ?>
                 <?php $submit_label = esc_attr__( 'Register', 'b3-onboarding' ); ?>

@@ -56,7 +56,7 @@
         foreach ( $page_definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
-            $stored_id = get_site_option( $slug, false );
+            $stored_id = get_site_option( $slug );
             if ( $stored_id ) {
                 $check_page = get_post( $stored_id );
                 if ( ! $check_page ) {
@@ -384,7 +384,7 @@
      */
     function b3_verify_privacy() {
         $error = false;
-        if ( 1 == get_option( 'b3_privacy', false ) ) {
+        if ( 1 == get_option( 'b3_privacy' ) ) {
             if ( ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
                 $error = true;
             }

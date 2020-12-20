@@ -10,7 +10,7 @@
      *
      */
     function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
-        $custom_passwords  = get_site_option( 'b3_activate_custom_passwords', false );
+        $custom_passwords  = get_site_option( 'b3_activate_custom_passwords' );
         $user_object       = get_userdata( $user_id );
         $user_login        = $user_object->user_login;
         $user_object->set_role( get_option( 'default_role' ) );
@@ -46,7 +46,7 @@
      * @since 2.5.0
      */
     function b3_do_stuff_before_reject_user_by_admin( $user_id ) {
-        if ( false == get_site_option( 'b3_disable_delete_user_email', false ) ) {
+        if ( false == get_site_option( 'b3_disable_delete_user_email' ) ) {
             $user_object = get_userdata( $user_id );
             $to          = $user_object->user_email;
             $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
@@ -75,7 +75,7 @@
      *
      */
     function b3_do_stuff_after_user_activated( $user_id ) {
-        if ( 1 != get_site_option( 'b3_disable_admin_notification_new_user', false ) ) {
+        if ( 1 != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
             // send 'new user' email to admin
             $user          = get_userdata( $user_id );
             $admin_to      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( 'email_activation' ) );
@@ -90,7 +90,7 @@
         }
 
         // send 'account activated' email to user
-        if ( 'email_activation' == get_site_option( 'b3_registration_type', false ) ) {
+        if ( 'email_activation' == get_site_option( 'b3_registration_type' ) ) {
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
             $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
@@ -111,8 +111,8 @@
      * @since 1.0.0
      */
     function b3_add_username_email_fields() {
-        $registration_type            = get_site_option( 'b3_registration_type', false );
-        $registration_with_email_only = get_site_option( 'b3_register_email_only', false );
+        $registration_type            = get_site_option( 'b3_registration_type' );
+        $registration_with_email_only = get_site_option( 'b3_register_email_only' );
 
         ob_start();
 
@@ -171,9 +171,9 @@
      * @since 0.8-beta
      */
     function b3_first_last_name_fields() {
-        $activate_first_last = get_site_option( 'b3_activate_first_last', false );
+        $activate_first_last = get_site_option( 'b3_activate_first_last' );
         if ( $activate_first_last ) {
-            $first_last_required = get_site_option( 'b3_first_last_required', false );
+            $first_last_required = get_site_option( 'b3_first_last_required' );
             $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : false;
             $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : false;
             $required            = ( true == $first_last_required ) ? ' required="required"' : false;
@@ -203,8 +203,8 @@
      * @since 0.8-beta
      */
     function b3_add_password_fields() {
-        $registration_type     = get_site_option( 'b3_registration_type', false );
-        $show_custom_passwords = get_site_option( 'b3_activate_custom_passwords', false );
+        $registration_type     = get_site_option( 'b3_registration_type' );
+        $show_custom_passwords = get_site_option( 'b3_activate_custom_passwords' );
         if ( $show_custom_passwords && in_array( $registration_type, [ 'email_activation', 'open' ] ) ) {
             ob_start();
             ?>
@@ -341,9 +341,9 @@
      *
      */
     function b3_add_recaptcha_fields( $form_type = 'register' ) {
-        $activate_recaptcha = get_site_option( 'b3_activate_recaptcha', false );
+        $activate_recaptcha = get_site_option( 'b3_activate_recaptcha' );
         $recaptcha_on       = get_site_option( 'b3_recaptcha_on', [] );
-        $recaptcha_public   = get_site_option( 'b3_recaptcha_public', false );
+        $recaptcha_public   = get_site_option( 'b3_recaptcha_public' );
         $recaptcha_version  = get_site_option( 'b3_recaptcha_version', '2' );
 
         if ( false != $activate_recaptcha ) {
@@ -369,7 +369,7 @@
      * Function to output a privacy checkbox
      */
     function b3_add_privacy_checkbox() {
-        $show_privacy = get_site_option( 'b3_privacy', false );
+        $show_privacy = get_site_option( 'b3_privacy' );
         if ( true == $show_privacy ) {
             do_action( 'b3_do_before_privacy_checkbox' );
             ?>
@@ -399,7 +399,7 @@
         if ( false != $attributes ) {
             $messages          = array();
             $show_errors       = false;
-            $registration_type = get_site_option( 'b3_registration_type', false );
+            $registration_type = get_site_option( 'b3_registration_type' );
 
             if ( isset( $attributes[ 'errors' ] ) && 0 < count( $attributes[ 'errors' ] ) ) {
                 $show_errors = true;
@@ -423,7 +423,7 @@
                             $messages[]  = $request_access_message;
                         }
                     } elseif ( 'closed' != $registration_type ) {
-                        $registration_message = apply_filters( 'b3_message_above_registration', false );
+                        $registration_message = apply_filters( 'b3_message_above_registration' );
                         if ( false != $registration_message ) {
                             $show_errors = true;
                             $messages[]  = $registration_message;

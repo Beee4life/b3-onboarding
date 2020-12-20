@@ -9,10 +9,10 @@
     function b3_render_recaptcha_tab() {
 
         ob_start();
-        $public_key        = get_site_option( 'b3_recaptcha_public', false );
+        $public_key        = get_site_option( 'b3_recaptcha_public' );
         $recaptcha_version = get_site_option( 'b3_recaptcha_version', 2 );
-        $secret_key        = get_site_option( 'b3_recaptcha_secret', false );
-        $recaptcha_login   = get_site_option( 'b3_recaptcha_login', false );
+        $secret_key        = get_site_option( 'b3_recaptcha_secret' );
+        $recaptcha_login   = get_site_option( 'b3_recaptcha_login' );
         $recaptcha_on      = get_site_option( 'b3_recaptcha_on', [] );
         ?>
         <h2>
@@ -84,7 +84,7 @@
                 <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
             </p>
 
-            <?php b3_get_submit_button( __( 'Save reCaptcha', 'b3-onboarding' ), false ); ?>
+            <?php b3_get_submit_button( __( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
 
         </form>
 

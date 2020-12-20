@@ -4,14 +4,14 @@
      *
      * @since 1.0.0
      */
-    $disable_admin_notification = get_site_option( 'b3_disable_admin_notification_new_user', false );
-    $new_user_email_addresses   = get_site_option( 'b3_new_user_notification_addresses', false );
-    $new_user_email_subject     = get_site_option( 'b3_new_user_subject', false );
-    $new_user_email_message     = get_site_option( 'b3_new_user_message', false );
+    $disable_admin_notification = get_site_option( 'b3_disable_admin_notification_new_user' );
+    $new_user_email_addresses   = get_site_option( 'b3_new_user_notification_addresses' );
+    $new_user_email_subject     = get_site_option( 'b3_new_user_subject' );
+    $new_user_email_message     = get_site_option( 'b3_new_user_message' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
-    <?php if ( 'email_activation' == get_site_option( 'b3_registration_type', false ) ) { ?>
+    <?php if ( 'email_activation' == get_site_option( 'b3_registration_type' ) ) { ?>
     <tr>
         <td colspan="2" class="b3__intro">
             <?php _e( '<b>NOTE:</b> This email is sent after the user confirms his/her email address, not on initial registration.', "b3-onboarding" ); ?>

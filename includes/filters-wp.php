@@ -5,7 +5,7 @@
      *
      * @since 2.0.0
      */
-    if ( 1 == get_site_option( 'b3_disable_admin_notification_password_change', false ) ) {
+    if ( 1 == get_site_option( 'b3_disable_admin_notification_password_change' ) ) {
         add_filter( 'wp_password_change_notification_email', '__return_false' );
     } else {
         add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
@@ -88,11 +88,11 @@
             return false;
         } else {
 
-            if ( false != get_site_option( 'b3_disable_admin_notification_new_user', false ) ) {
+            if ( false != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
                 return false;
             }
 
-            $registration_type = get_site_option( 'b3_registration_type', false );
+            $registration_type = get_site_option( 'b3_registration_type' );
 
             if ( 'request_access' == $registration_type ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
@@ -165,7 +165,7 @@
         if ( true == $send_custom_mail ) {
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
-            if ( 'request_access' == get_site_option( 'b3_registration_type', false ) ) {
+            if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
 
@@ -176,7 +176,7 @@
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
-            } elseif ( 'email_activation' == get_site_option( 'b3_registration_type', false ) ) {
+            } elseif ( 'email_activation' == get_site_option( 'b3_registration_type' ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_email_activation_subject_user', b3_get_email_activation_subject_user() );
 
@@ -187,7 +187,7 @@
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
-            } elseif ( 'open' == get_site_option( 'b3_registration_type', false ) ) {
+            } elseif ( 'open' == get_site_option( 'b3_registration_type' ) ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
 
@@ -276,7 +276,7 @@
      */
     function b3_registration_errors( $errors, $sanitized_user_login, $user_email ) {
 
-        if ( 1 == get_site_option( 'b3_first_last_required', false ) ) {
+        if ( 1 == get_site_option( 'b3_first_last_required' ) ) {
             if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
                 $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a first name.', 'b3-onboarding' ) ) );
             }
@@ -285,7 +285,7 @@
                 $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a last name.', 'b3-onboarding' ) ) );
             }
         }
-        if ( 1 == get_site_option( 'b3_activate_recaptcha', false ) ) {
+        if ( 1 == get_site_option( 'b3_activate_recaptcha' ) ) {
             $b3ob = new B3Onboarding();
             if ( ! $b3ob->b3_verify_recaptcha() ) {
                 $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'Recaptcha failed.', 'b3-onboarding' ) ) );
@@ -325,19 +325,19 @@
      */
     function b3_add_post_state( $post_states, $post ) {
 
-        if ( $post->ID == get_site_option( 'b3_account_page_id', false ) ) {
+        if ( $post->ID == get_site_option( 'b3_account_page_id' ) ) {
             $post_states[] = 'B3 : Account';
-        } elseif ( $post->ID == get_site_option( 'b3_register_page_id', false ) ) {
+        } elseif ( $post->ID == get_site_option( 'b3_register_page_id' ) ) {
             $post_states[] = 'B3 : Register';
-        } elseif ( $post->ID == get_site_option( 'b3_login_page_id', false ) ) {
+        } elseif ( $post->ID == get_site_option( 'b3_login_page_id' ) ) {
             $post_states[] = 'B3 : Login';
-        } elseif ( $post->ID == get_site_option( 'b3_logout_page_id', false ) ) {
+        } elseif ( $post->ID == get_site_option( 'b3_logout_page_id' ) ) {
             $post_states[] = 'B3 : Log out';
-        } elseif ( $post->ID == get_site_option( 'b3_lost_password_page_id', false ) ) {
+        } elseif ( $post->ID == get_site_option( 'b3_lost_password_page_id' ) ) {
             $post_states[] = 'B3 : Lost password';
-        } elseif ( $post->ID == get_site_option( 'b3_reset_password_page_id', false ) ) {
+        } elseif ( $post->ID == get_site_option( 'b3_reset_password_page_id' ) ) {
             $post_states[] = 'B3 : Reset password';
-        } elseif ( $post->ID == get_site_option( 'b3_approval_page_id', false ) ) {
+        } elseif ( $post->ID == get_site_option( 'b3_approval_page_id' ) ) {
             $post_states[] = 'B3 : User approval';
         }
 

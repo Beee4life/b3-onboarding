@@ -4,8 +4,8 @@
      *
      * @since 1.0.0
      */
-    $account_approved_email_subject = get_site_option( 'b3_account_approved_subject', false );
-    $account_approved_email_message = get_site_option( 'b3_account_approved_message', false );;
+    $account_approved_email_subject = get_site_option( 'b3_account_approved_subject' );
+    $account_approved_email_message = get_site_option( 'b3_account_approved_message' );;
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
