@@ -31,10 +31,7 @@
         class B3Onboarding {
 
             /**
-             * Initializes the plugin.
-             *
-             * To keep the initialization fast, only add filter and action
-             * hooks in the constructor.
+             * Set some values
              */
             function __construct() {
                 if ( ! defined( 'B3_PLUGIN_URL' ) ) {
