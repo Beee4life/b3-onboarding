@@ -8,8 +8,9 @@
     $registration_with_email_only = get_site_option( 'b3_register_email_only' );
     $required                     = ( true == get_site_option( 'b3_first_last_required' ) ) ? ' required="required"' : false;
     $user_delete                  = get_site_option( 'b3_user_may_delete' );
+    
+    do_action( 'b3_add_form_messages', $attributes );
 ?>
-<?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
 <div id="b3-account" class="b3_page b3_page--account">
     <form id="accountform" name="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
