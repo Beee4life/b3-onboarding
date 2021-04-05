@@ -269,21 +269,21 @@
                     </div>
 
                     <?php // @TODO: add languages option ?>
-                    <div class="b3_form-element b3_form-element--visbility">
-                        <p class="privacy-intro">
-                            <?php _e( 'Privacy:', 'b3-onboarding' ); ?>
-                            <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
-                            <br style="clear:both" />
-                            <label class="checkbox" for="blog_public_on">
-                                <input type="radio" id="blog_public_on" name="blog_public" value="1" />
-                                <?php _e( 'Yes' ); ?>
-                            </label>
-                            <label class="checkbox" for="blog_public_off">
-                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />
-                                <?php _e( 'No' ); ?>
-                            </label>
-                        </p>
-                    </div>
+<!--                        <div class="b3_form-element b3_form-element--visbility">-->
+<!--                            <p class="privacy-intro">-->
+<!--                                --><?php //_e( 'Privacy:', 'b3-onboarding' ); ?>
+<!--                                --><?php //_e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
+<!--                                <br style="clear:both" />-->
+<!--                                <label class="checkbox" for="blog_public_on">-->
+<!--                                    <input type="radio" id="blog_public_on" name="blog_public" value="1" />-->
+<!--                                    --><?php //_e( 'Yes' ); ?>
+<!--                                </label>-->
+<!--                                <label class="checkbox" for="blog_public_off">-->
+<!--                                    <input type="radio" id="blog_public_off" name="blog_public" value="0" />-->
+<!--                                    --><?php //_e( 'No' ); ?>
+<!--                                </label>-->
+<!--                            </p>-->
+<!--                        </div>-->
                 </div>
             <?php
                 }
@@ -422,7 +422,7 @@
                             $show_errors = true;
                             $messages[]  = $request_access_message;
                         }
-                    } elseif ( 'closed' != $registration_type ) {
+                    } elseif ( 'closed' == $registration_type ) {
                         $registration_message = apply_filters( 'b3_message_above_registration', b3_get_registration_closed_message() );
                         if ( false != $registration_message ) {
                             $show_errors = true;
