@@ -93,10 +93,6 @@
     vertical-align: top;
 }
 
-.b3_form-element:first-of-type {
-    margin-top: 0;
-}
-
 .b3_form-element--delete div {
     margin-top: 1rem;
 }
