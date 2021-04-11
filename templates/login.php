@@ -4,8 +4,7 @@
      *
      * @since 1.0.0
      */
-    $request_access = get_site_option( 'b3_registration_type' );
-    $label          = esc_attr__( 'Username or Email address', 'b3-onboarding' );
+    $label = esc_attr__( 'Username or Email address', 'b3-onboarding' );
 
     if ( 1 == get_site_option( 'b3_register_email_only' ) ) {
         $label = esc_attr__( 'Email address', 'b3-onboarding' );
@@ -45,7 +44,7 @@
         </div>
 
         <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php echo esc_attr( 'Log in', 'b3-onboarding' ); ?>">
+            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_attr_e( 'Log in', 'b3-onboarding' ); ?>">
             <?php if ( false !== $attributes[ 'redirect' ] ) { ?>
                 <input type="hidden" name="redirect_to" value="<?php echo esc_attr( $attributes[ 'redirect' ] ); ?>">
             <?php } ?>
