@@ -23,6 +23,7 @@
             'b3_account_rejected_message',
             'b3_account_rejected_subject',
             'b3_activate_custom_emails',
+            'b3_activate_custom_passwords',
             'b3_activate_first_last',
             'b3_activate_recaptcha',
             'b3_activated_wpmu_user_message',
