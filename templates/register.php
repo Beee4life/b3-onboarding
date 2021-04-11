@@ -24,7 +24,10 @@
         <?php do_action( 'b3_add_hidden_fields_registration' ); ?>
 
         <?php
-            if ( 'blog' != $registration_type ) {
+            // add vars for single site
+            if ( 'all' == $registration_type ) {
+                do_action( 'b3_add_username_email_fields' );
+            } elseif ( 'blog' != $registration_type ) {
                 do_action( 'b3_add_username_email_fields' );
             }
         ?>

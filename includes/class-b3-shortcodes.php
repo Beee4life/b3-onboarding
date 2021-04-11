@@ -43,7 +43,9 @@
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    if ( ! in_array( get_site_option( 'b3_registration_type' ), [ 'blog' ] ) ) {
+                    if ( 'all' == get_site_option( 'b3_registration_type' ) ) {
+                        // register site only, if registration type == user, he is blocked already
+                    } elseif ( ! in_array( get_site_option( 'b3_registration_type' ), [ 'blog' ] ) ) {
                         return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                     }
                 }
