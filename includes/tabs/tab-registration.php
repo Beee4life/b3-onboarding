@@ -69,12 +69,13 @@
                 <?php if ( 'closed' == get_site_option( 'b3_registration_type' ) ) { ?>
 
                     <?php $closed_message = get_site_option( 'b3_registration_closed_message' ); ?>
+                    <?php $default_closed_message = apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ); ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $closed_message ); ?>" value="<?php if ( $closed_message ) { echo stripslashes( $closed_message ); } ?>"/>
+                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $default_closed_message ); ?>" value="<?php if ( $closed_message ) { echo stripslashes( $closed_message ); } ?>"/>
                             <div class="b3_settings-input-description">
                                 <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
                             </div>
