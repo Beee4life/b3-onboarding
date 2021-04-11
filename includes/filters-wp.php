@@ -592,11 +592,7 @@ All at ###SITENAME###
      */
     function b3_prevent_update_registration_notification_option( $new_value, $old_value ) {
         if ( is_multisite() ) {
-            if ( 'no' == $new_value ) {
-                update_site_option( 'b3_disable_admin_notification_new_user', '1' );
-            } elseif ( 'yes' == $new_value ) {
-                delete_site_option( 'b3_disable_admin_notification_new_user' );
-            }
+            $new_value = 'no';
         }
 
         return $new_value;
