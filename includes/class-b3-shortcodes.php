@@ -63,16 +63,20 @@
                         $message = '<p class="b3_message">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
                         $message .= '<br />';
-                        $message .= esc_html__( 'Visit it on:', 'b3-onboarding' );
+                        $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
                         $message .= '<a href="' . esc_url( $home_url ) . '">' . esc_url( $home_url ) . '</a>';
                         $message .= '<br />';
-                        $message .= sprintf( __( 'You can manage your new site <a href="%s">here</a>', 'b3-onboarding' ), esc_url( $admin_url ) );
+                        $message .= sprintf( __( 'You can manage your new site <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( $admin_url ) );
                         $message .= '</p>';
 
                         return $message;
                     } else {
                         // fallback
-                        return '<p class="b3_message">Congratulations, you\'ve registered your new site.</p>';
+                        $message = '<p class="b3_message">';
+                        $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
+                        $message .= '</p>';
+
+                        return $message;
                     }
                 } else {
                     $attributes[ 'errors' ] = array();
