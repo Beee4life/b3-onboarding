@@ -565,7 +565,8 @@
      * @return bool|string
      */
     function b3_get_lostpassword_url() {
-        $id = get_option( 'b3_lost_password_page_id' );
+        // @TODO: check this on single site, if it returns correct ID
+        $id = get_site_option( 'b3_lost_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
