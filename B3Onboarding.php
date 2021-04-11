@@ -93,14 +93,14 @@
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
+                add_action( 'wp_loaded',                            array( $this, 'b3_include_files' ) );
 
                 // Multisite specific
                 add_action( 'wp_initialize_site',                   array( $this, 'b3_new_blog' ) );
-                // add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_wpmu_register' ) ); // ???
 
                 // Filters
                 $add_filter = false;
-                if ( is_multisite() && is_main_site() && isset( get_site_option( 'active_sitewide_plugins' )[ 'b3-onboarding/B3Onboarding.php' ] ) ) {
+                if ( is_multisite() && is_main_site() ) {
                     //@TODO: test on non main site
                     $add_filter = true;
                 } elseif ( ! is_multisite() ) {
@@ -121,6 +121,15 @@
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
                 add_filter( 'login_headertext',                     array( $this, 'b3_login_logo_url_title' ) );
 
+            }
+
+
+            /*
+             * Include files
+             *
+             * @since 2.6.0
+             */
+            public function b3_include_files() {
                 /*
                  * This file contains all actions on plugin hooks
                  */
@@ -167,7 +176,7 @@
                 /*
                  * This file contains all content for the help tabs/contextual help
                  */
-                include 'includes/help-tabs.php';
+                include 'includes/admin/help-tabs.php';
                 /*
                  * Functions + renders for admin pages/tabs
                  */
@@ -182,7 +191,6 @@
                  * Functions + renders for shortcodes/front-end forms
                  */
                 include 'includes/class-b3-shortcodes.php';
-
             }
 
 
@@ -542,16 +550,16 @@
 
                 if ( true == $add_menu ) {
                     if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
-                        include 'includes/admin-page.php'; // content for the settings page
+                        include 'includes/admin/admin-page.php'; // content for the settings page
                         add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
                         if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-                            include 'includes/user-approval-page.php'; // content for the settings page
+                            include 'includes/admin/user-approval-page.php'; // content for the settings page
                             add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                         }
 
                         if ( true == get_site_option( 'b3_debug_info' ) ) {
-                            include 'includes/debug-page.php'; // content for the settings page
+                            include 'includes/admin/debug-page.php'; // content for the settings page
                             add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                         }
                     }
