@@ -92,7 +92,6 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
-                // add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
@@ -2102,21 +2101,6 @@
 
                 if ( get_site_option( 'b3_activate_filter_validation' ) ) {
                     do_action( 'b3_verify_filter_input' );
-                }
-            }
-
-
-            /**
-             * Set network admin notice on "network Settings" screen
-             */
-            function b3_network_admin_notices() {
-                $screen = get_current_screen();
-                if ( 'settings-network' == $screen->id ) {
-                    echo sprintf( '<div class="notice notice-info"><p>'. __( 'The setting for "Allow new registrations" and "Registration notification" are linked by %s. Find them <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
-                        'B3 Onboarding',
-                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
-                        esc_html__( 'here', 'b3-onboarding' )
-                    );
                 }
             }
         }
