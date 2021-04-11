@@ -183,6 +183,7 @@
                  * Functions + renders for shortcodes/front-end forms
                  */
                 include 'includes/class-b3-shortcodes.php';
+
             }
 
 
@@ -1392,23 +1393,16 @@
                 if ( $requested_redirect_to ) {
                     $redirect_to = $requested_redirect_to;
                 } else {
-                    if ( is_multisite() ) {
-                        // do nothing for now, goes to site dashboard
-                    } else {
-                        // redirect url is not set
-                        if ( ! user_can( $user, 'manage_options' ) ) {
-                            // Non-admin users always go to their account page after login, if it's defined
-                            $account_page_url = b3_get_account_url();
-                            if ( false != $account_page_url ) {
-                                if ( ! in_array( $stored_roles, $user->roles ) ) {
-                                    $redirect_to = $account_page_url;
-                                } else {
-                                    // non-admin logged in
-                                    // $redirect_to set at start
-                                }
-                            } elseif ( current_user_can( 'read' ) ) {
-                                $redirect_to = get_edit_user_link( get_current_user_id() );
+
+                    if ( ! user_can( $user, 'manage_options' ) ) {
+                        // Non-admin users always go to their account page after login, if it's defined
+                        $account_page_url = b3_get_account_url();
+                        if ( false != $account_page_url ) {
+                            if ( ! in_array( $stored_roles, $user->roles ) ) {
+                                $redirect_to = $account_page_url;
                             }
+                        } elseif ( current_user_can( 'read' ) ) {
+                            $redirect_to = get_edit_user_link( get_current_user_id() );
                         }
                     }
                 }
