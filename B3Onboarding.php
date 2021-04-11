@@ -28,10 +28,13 @@
 
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
+        /**
+         * Class B3Onboarding
+         */
         class B3Onboarding {
 
             /**
-             * Set some values
+             * Construct
              */
             function __construct() {
                 if ( ! defined( 'B3_PLUGIN_URL' ) ) {
@@ -71,7 +74,6 @@
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
                 add_action( 'login_head',                           array( $this, 'b3_add_login_styling' ) );
-                add_action( 'admin_head',                           array( $this, 'b3_add_js_head' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
@@ -484,31 +486,6 @@
 
 
             /*
-             * Inline js to disable registration option
-             */
-            public function b3_add_js_head() {
-                if ( is_multisite() ) {
-                    // ?>
-                    <!--<script type="text/javascript">-->
-                    <!--    jQuery(document).ready(function () {-->
-                    <!--        jQuery('.form-table input[name="registration"]').prop('disabled', true);-->
-                    <!--    });-->
-                    <!--</script>-->
-                    <?php
-                } else {
-                    ?>
-                    <script type="text/javascript">
-                        jQuery(document).ready(function () {
-                            // $js .= "jQuery(document).ready(function(\$){ \$('input#users_can_register, select#default_role').attr('disabled', 'disabled'); });";
-                            jQuery('.form-table input[name="users_can_register"]').prop('disabled', true);
-                        });
-                    </script>
-                    <?php
-                }
-            }
-
-
-            /*
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
@@ -588,9 +565,9 @@
                  * Includes dashboard widget function + call
                  */
                 if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
-                    include 'includes/dashboard-widget.php';
+                    include 'includes/admin/dashboard-widget.php';
                     if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
-                        include 'includes/dashboard-widget-debug.php';
+                        include 'includes/admin/dashboard-widget-debug.php';
                     }
                 }
             }
@@ -1219,11 +1196,6 @@
                 global $current_user;
                 if ( is_user_logged_in() && is_admin() ) {
                     $user_role = reset( $current_user->roles );
-                    if ( is_multisite() && empty( $user_role ) ) {
-                        // @TODO: check this
-                        // $user_role = get_option( 'default_role' );
-                    }
-
                     if ( in_array( $user_role, get_site_option( 'b3_restrict_admin', [] ) ) ) {
                         $frontend_account_url = b3_get_account_url();
                         if ( false != $frontend_account_url ) {
