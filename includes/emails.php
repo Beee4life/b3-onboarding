@@ -31,7 +31,7 @@
      *
      * @return false|string
      */
-    function b3_basic_email_settings_field( $box = false ) {
+    function b3_basic_email_settings_field( $box = [] ) {
 
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
