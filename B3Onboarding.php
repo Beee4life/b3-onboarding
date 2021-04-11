@@ -1716,6 +1716,9 @@
                         return esc_html__( 'Check your email for a link to reset your password.', 'b3-onboarding' );
 
                     // Registration
+                    case 'pw_too_easy':
+                        return esc_html__( 'That password is too easy, please use a better one.', 'b3-onboarding' );
+
                     case 'registration_success':
                         if ( false == get_site_option( 'b3_activate_custom_passwords' ) ) {
                             return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
