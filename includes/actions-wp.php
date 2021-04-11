@@ -105,9 +105,18 @@
      */
     function b3_add_toolbar( $wp_admin_bar ) {
         if ( current_user_can( 'promote_users' ) ) {
-            if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
-                $approval_args  = array( 'role' => 'b3_approval' );
-                $approval_users = get_users( $approval_args );
+            if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
+
+                $approval_users = [];
+                if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
+                    $approval_args  = array( 'role' => 'b3_approval' );
+                    $approval_users = get_users( $approval_args );
+                } elseif ( 'request_access_subdomain' == get_site_option( 'b3_registration_type' ) ) {
+                    global $wpdb;
+                    $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
+                    $approval_users = $wpdb->get_results( $query );
+                }
+
                 if ( 0 < count( $approval_users ) ) {
                     $page_link = admin_url( 'admin.php?page=b3-user-approval' );
                     $approval_args = array(
@@ -121,7 +130,7 @@
             }
         }
     }
-    add_action( 'admin_bar_menu', 'b3_add_toolbar', 9999 );
+    add_action( 'admin_bar_menu', 'b3_add_toolbar', 80 );
 
 
     /**
