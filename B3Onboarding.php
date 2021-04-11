@@ -291,7 +291,6 @@
                 update_site_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                 update_site_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_site_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-                update_site_option( 'b3_version', $this->settings[ 'version' ] );
 
                 if ( false != get_site_option( 'wp_page_for_privacy_policy' ) ) {
                     update_site_option( 'b3_privacy_page', get_site_option( 'wp_page_for_privacy_policy' ) );
