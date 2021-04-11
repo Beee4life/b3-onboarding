@@ -345,17 +345,30 @@
         $recaptcha_version  = get_site_option( 'b3_recaptcha_version', '2' );
 
         if ( false != $activate_recaptcha ) {
-            if ( false != $recaptcha_public && '3' != $recaptcha_version ) {
-                if ( in_array( $form_type, $recaptcha_on ) ) {
-                    do_action( 'b3_do_before_recaptcha_' . $form_type );
+            if ( false != $recaptcha_public ) {
+                if ( '3' != $recaptcha_version ) {
+                    if ( in_array( $form_type, $recaptcha_on ) ) {
+                        do_action( 'b3_do_before_recaptcha_' . $form_type );
+                        ?>
+                        <div class="b3_form-element b3_form-element--recaptcha">
+                            <div class="recaptcha-container">
+                                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                            </div>
+                        </div>
+                        <?php
+                        do_action( 'b3_do_after_recaptcha_' . $form_type );
+                    }
+                }
+            } else {
+                if ( current_user_can( 'manage_options') ) {
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
-                        <div class="recaptcha-container">
-                            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-                        </div>
+                        <?php
+                            echo sprintf( esc_html__( "You didn't set a reCaptcha key yet. You can set it %s.", 'b3-onboarding' ),
+                                '<a href="' . esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' ) ) .'">' . esc_html__( 'here', 'b3-onboarding' ) . '</a>' );
+                        ?>
                     </div>
                     <?php
-                    do_action( 'b3_do_after_recaptcha_' . $form_type );
                 }
             }
         }
