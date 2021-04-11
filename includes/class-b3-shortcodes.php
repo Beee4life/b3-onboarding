@@ -115,6 +115,8 @@
                         }
                     }
 
+                    $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );;
+
                     B3Onboarding::b3_show_admin_notices();
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
@@ -198,7 +200,8 @@
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
 
-                $attributes[ 'errors' ] = $errors;
+                $attributes[ 'errors' ]            = $errors;
+                $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );;
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
@@ -366,7 +369,10 @@
                             $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
-                    $attributes[ 'errors' ] = $errors;
+                    $attributes[ 'errors' ]               = $errors;
+                    $attributes[ 'register_email_only' ]  = get_site_option( 'b3_register_email_only' );
+                    $attributes[ 'registration_type' ]    = get_site_option( 'b3_registration_type' );;
+                    $attributes[ 'show_first_last_name' ] = get_site_option( 'b3_activate_first_last' );
 
                     B3Onboarding::b3_show_admin_notices();
 

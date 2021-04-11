@@ -1,6 +1,4 @@
 <?php
-    $show_first_last_name = get_site_option( 'b3_activate_first_last' );
-    $register_email_only  = get_site_option( 'b3_register_email_only' );
     if ( is_multisite() ) {
         global $wpdb;
         $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
@@ -52,12 +50,12 @@
                         }
                     ?>
                 </th>
-                <?php if ( false == $register_email_only ) { ?>
+                <?php if ( false == $attributes[ 'register_email_only' ] ) { ?>
                     <th>
                         <?php echo esc_html__( 'User name', 'b3-onboarding' ); ?>
                     </th>
                 <?php } ?>
-                <?php if ( false != $show_first_last_name ) { ?>
+                <?php if ( false != $attributes[ 'show_first_last_name' ] ) { ?>
                     <th>
                         <?php echo esc_html__( 'First name', 'b3-onboarding' ); ?>
                     </th>
@@ -94,11 +92,11 @@
                         ?>
                     </td>
 
-                    <?php if ( false == $register_email_only ) { ?>
+                    <?php if ( false == $attributes[ 'register_email_only' ] ) { ?>
                         <td><?php echo $user->user_login; ?></td>
                     <?php } ?>
 
-                    <?php if ( false != $show_first_last_name ) { ?>
+                    <?php if ( false != $attributes[ 'show_first_last_name' ] ) { ?>
                         <td><?php echo $user->first_name; ?></td>
                         <td><?php echo $user->last_name; ?></td>
                     <?php } ?>

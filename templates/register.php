@@ -5,8 +5,6 @@
      * @since 1.0.0
      */
 
-    $registration_type = get_site_option( 'b3_registration_type' );
-
     do_action( 'b3_add_form_messages', $attributes );
 
     if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != $_REQUEST[ 'registered' ] ) {
@@ -27,7 +25,7 @@
 
         <?php
             // add vars for single site
-            if ( 'blog' != $registration_type ) {
+            if ( 'blog' != $attributes[ 'registration_type' ] ) {
                 do_action( 'b3_add_username_email_fields' );
             }
         ?>
