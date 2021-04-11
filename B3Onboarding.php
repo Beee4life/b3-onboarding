@@ -92,7 +92,6 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
-                // add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
@@ -1581,8 +1580,8 @@
              */
             public function b3_reset_user_password() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? sanitize_key( $_REQUEST[ 'rp_key' ] ) : false;
-                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? sanitize_user( $_REQUEST[ 'rp_login' ] ) : false;
+                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
+                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
 
                     if ( $rp_key && $rp_login ) {
                         $user = check_password_reset_key( $rp_key, $rp_login );
@@ -1716,6 +1715,9 @@
                         return esc_html__( 'Check your email for a link to reset your password.', 'b3-onboarding' );
 
                     // Registration
+                    case 'pw_too_easy':
+                        return esc_html__( 'That password is too easy, please use a better one.', 'b3-onboarding' );
+
                     case 'registration_success':
                         if ( false == get_site_option( 'b3_activate_custom_passwords' ) ) {
                             return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
@@ -2099,21 +2101,6 @@
 
                 if ( get_site_option( 'b3_activate_filter_validation' ) ) {
                     do_action( 'b3_verify_filter_input' );
-                }
-            }
-
-
-            /**
-             * Set network admin notice on "network Settings" screen
-             */
-            function b3_network_admin_notices() {
-                $screen = get_current_screen();
-                if ( 'settings-network' == $screen->id ) {
-                    echo sprintf( '<div class="notice notice-info"><p>'. __( 'The setting for "Allow new registrations" and "Registration notification" are linked by %s. Find them <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
-                        'B3 Onboarding',
-                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
-                        esc_html__( 'here', 'b3-onboarding' )
-                    );
                 }
             }
         }
