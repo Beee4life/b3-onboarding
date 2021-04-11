@@ -268,9 +268,9 @@
                     if ( is_main_site() ) {
                         update_option( 'b3_dashboard_widget', 1 );
                     }
-                    $admin_notification = get_site_option( 'registrationnotification' );
-                    if ( 'no' == $admin_notification ) {
-                        update_site_option( 'b3_disable_admin_notification_new_user', 1 );
+                    update_site_option( 'b3_disable_admin_notification_new_user', 1 );
+                    if ( 'yes' == get_site_option( 'registrationnotification' ) ) {
+                        update_site_option( 'registrationnotification', 'no' );
                     }
 
                     $public_registration = get_site_option( 'registration' );
