@@ -129,9 +129,7 @@
 
             <?php if ( 'all' == $registration_type ) { ?>
                 <div class="b3_form-element b3_form-element--signup-for">
-                    <div>
-                        <strong><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?>:</strong>
-                    </div>
+                    <label class="b3_form-label" for=""><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?></label>
                     <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
                     <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'A site' ) ); ?></label>
                     <input id="signupuser" type="radio" name="signup_for" value="user">
