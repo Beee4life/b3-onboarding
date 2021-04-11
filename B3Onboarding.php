@@ -1581,8 +1581,8 @@
              */
             public function b3_reset_user_password() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? sanitize_key( $_REQUEST[ 'rp_key' ] ) : false;
-                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? sanitize_user( $_REQUEST[ 'rp_login' ] ) : false;
+                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
+                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
 
                     if ( $rp_key && $rp_login ) {
                         $user = check_password_reset_key( $rp_key, $rp_login );
