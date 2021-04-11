@@ -581,7 +581,8 @@
                             do_action( 'b3_approve_wpmu_signup', $signup_info );
                             $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
                         } elseif ( false != $reject ) {
-                            // @TODO: create new action
+                            do_action( 'b3_before_reject_user', [ 'user_email' => $signup_info->user_email ] );
+                            $wpdb->delete( $wpdb->signups, array( 'signup_id' => $signup_info->signup_id ) );
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                         }
 
@@ -590,7 +591,7 @@
                             do_action( 'b3_approve_user', [ 'user_id' => $user_id ] );
                             $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
                         } elseif ( false != $reject ) {
-                            do_action( 'b3_before_reject_user', $user_id );
+                            do_action( 'b3_before_reject_user', [ 'user_id' => $user_id ] );
                             require_once( ABSPATH . 'wp-admin/includes/user.php' );
                             if ( true == wp_delete_user( $user_id ) ) {
                                 $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );

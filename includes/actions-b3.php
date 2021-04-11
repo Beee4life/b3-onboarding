@@ -67,14 +67,21 @@
      *
      * @since 2.5.0
      */
-    function b3_do_stuff_before_reject_user_by_admin( $user_id ) {
+    function b3_do_stuff_before_reject_user_by_admin( $user_info ) {
         if ( false == get_site_option( 'b3_disable_delete_user_email' ) ) {
-            $user_object = get_userdata( $user_id );
-            $to          = $user_object->user_email;
-            $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
-            $message     = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
+            $multisite = false;
+            $message   = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
+            $subject   = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
 
-            if ( in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
+            if ( isset( $user_info[ 'user_id' ] ) ) {
+                $user_object = get_userdata( $user_info[ 'user_id' ] );
+                $to          = $user_object->user_email;
+            } elseif ( isset( $user_info[ 'user_email' ] ) ) {
+                $multisite = true;
+                $to        = $user_info[ 'user_email' ];
+            }
+
+            if ( $multisite || in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
                 $message = b3_replace_template_styling( $message );
                 $message = strtr( $message, b3_replace_email_vars() );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
