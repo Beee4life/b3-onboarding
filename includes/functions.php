@@ -203,56 +203,55 @@
      */
     function b3_get_registration_types() {
         $registration_options = array();
-        $closed_option = array(
+        $closed_option        = array(
             array(
                 'value' => 'closed', // @TODO: maybe change to none
                 'label' => esc_html__( 'Closed (for everyone)', 'b3-onboarding' ),
             ),
         );
 
-        $normal_options = array(
-            array(
-                'value' => 'request_access',
-                'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
-            ),
-            array(
-                'value' => 'email_activation',
-                'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
-            ),
-            array(
-                'value' => 'open',
-                'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
-            ),
-        );
+        if ( ! is_multisite() ) {
+            $normal_options = array(
+                array(
+                    'value' => 'request_access',
+                    'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
+                ),
+                array(
+                    'value' => 'email_activation',
+                    'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
+                ),
+                array(
+                    'value' => 'open',
+                    'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
+                ),
+            );
+        }
 
-        $multisite_options = array(
-            // array(
-            //     'value' => 'request_access_subdomain',
-            //     'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
-            // ),
-            array(
-                'value' => 'user', // @TODO: maybe change to user
-                'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
-            ),
-            array(
-                'value' => 'blog', // @TODO: maybe change to blog
-                'label' => esc_html__( 'Logged in user may register a site', 'b3-onboarding' ),
-            ),
-            array(
-                'value' => 'all', // @TODO: maybe change to all
-                'label' => esc_html__( 'Visitor may register user + site', 'b3-onboarding' ),
-            ),
-        );
+        if ( is_multisite() ) {
+            $multisite_options = array(
+                array(
+                    'value' => 'user', // @TODO: maybe change to user
+                    'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
+                ),
+                array(
+                    'value' => 'blog', // @TODO: maybe change to blog
+                    'label' => esc_html__( 'Logged in user may register a site', 'b3-onboarding' ),
+                ),
+                array(
+                    'value' => 'all', // @TODO: maybe change to all
+                    'label' => esc_html__( 'Visitor may register user + site', 'b3-onboarding' ),
+                ),
+                array(
+                    'value' => 'request_access_subdomain',
+                    'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
+                ),
+            );
+        }
 
         if ( ! is_multisite() ) {
             $registration_options = array_merge( $closed_option, $registration_options, $normal_options );
         } else {
-            $mu_registration = get_site_option( 'registration' );
-            if ( ! is_main_site() ) {
-                if ( 'none' != $mu_registration ) {
-                    $registration_options = $normal_options;
-                }
-            } else {
+            if ( is_main_site() ) {
                 $registration_options = array_merge( $closed_option, $multisite_options );
             }
 

@@ -424,6 +424,7 @@
     }
     add_filter( 'wp_authenticate_user', 'b3_login_errors', 20, 2 );
 
+
     /**
      * Change content of password changed email
      * Not in use yet, prepare for coming setting/filter
@@ -558,6 +559,8 @@ All at ###SITENAME###
     /**
      * Check setting to update B3
      *
+     * @TODO: remove in favor of new settings
+     *
      * @param $new_value
      * @param $old_value
      *
@@ -573,6 +576,8 @@ All at ###SITENAME###
                 $b3_setting = 'blog';
             } elseif ( 'all' == $new_value ) {
                 $b3_setting = 'all';
+            } else {
+                $b3_setting = false;
             }
             update_site_option( 'b3_registration_type', $b3_setting );
         }

@@ -79,6 +79,7 @@
                         return $message;
                     }
                 } else {
+
                     $attributes[ 'errors' ] = array();
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
@@ -99,7 +100,7 @@
                                             $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
                                         }
                                     } else {
-                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
+                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                                     }
                                 }
                             }
@@ -109,11 +110,14 @@
                         // dummy is for demonstration setup
                         if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
+                        } elseif ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         }
                     }
 
-                    return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                    B3Onboarding::b3_show_admin_notices();
 
+                    return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
                 }
             }
 
@@ -363,6 +367,8 @@
                         }
                     }
                     $attributes[ 'errors' ] = $errors;
+
+                    B3Onboarding::b3_show_admin_notices();
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 

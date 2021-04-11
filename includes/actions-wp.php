@@ -232,16 +232,19 @@
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
 
-        $blog_id      = b3_get_signup_id( $domain );
-        $subject      = b3_get_wpmu_activate_user_blog_subject();
-        $subject      = strtr( $subject, b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
-        $message      = b3_get_wpmu_activate_user_blog_message();
-        $message      = b3_replace_template_styling( $message );
-        $message      = strtr( $message, b3_replace_email_vars( array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
-        $message      = htmlspecialchars_decode( stripslashes( $message ) );
+        if ( 'request_access_subdomain' == get_site_option( 'b3_registration_type' ) ) {
+            // @TODO: inform admin
+        } else {
+            $blog_id      = b3_get_signup_id( $domain );
+            $subject      = b3_get_wpmu_activate_user_blog_subject();
+            $subject      = strtr( $subject, b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
+            $message      = b3_get_wpmu_activate_user_blog_message();
+            $message      = b3_replace_template_styling( $message );
+            $message      = strtr( $message, b3_replace_email_vars( array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
+            $message      = htmlspecialchars_decode( stripslashes( $message ) );
 
-        wp_mail( $user_email, $subject, $message, [] );
-
+            wp_mail( $user_email, $subject, $message, [] );
+        }
     }
     add_action( 'after_signup_site', 'b3_override_new_mu_user_blog_email', 10, 6 );
 

@@ -113,23 +113,16 @@
                         if ( is_multisite() ) {
                             $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
                             if ( 'closed' == $ms_registration_type ) {
-                                $registration_type = 'none';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
                             } elseif ( 'request_access_subdomain' == $ms_registration_type ) {
-                                // not in use (yet)
-                                $registration_type = '';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
                             } elseif ( 'blog' == $ms_registration_type ) {
-                                $registration_type = 'blog';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
                             } elseif ( 'user' == $ms_registration_type ) {
-                                $registration_type = 'user';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
                             } elseif ( 'all' == $ms_registration_type ) {
-                                $registration_type = 'all';
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
                             }
-                            update_site_option( 'registration', $registration_type );
                         } else {
                             if ( 'closed' == $_POST[ 'b3_registration_type' ] ) {
                                 update_option( 'users_can_register', 0 );
@@ -546,7 +539,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_admin_form_handling' );
+    add_action( 'wp_loaded', 'b3_admin_form_handling', 1 );
 
 
     /**
@@ -575,29 +568,45 @@
 
                     $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? true : false;
                     $reject      = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? true : false;
+                    $signup_id   = ( isset( $_POST[ 'b3_signup_id' ] ) ) ? (int) $_POST[ 'b3_signup_id' ] : false;
                     $user_id     = ( isset( $_POST[ 'b3_user_id' ] ) ) ? (int) $_POST[ 'b3_user_id' ] : false;
                     $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
-                    if ( false != $approve && isset( $user_object->ID ) ) {
-                        do_action( 'b3_approve_user', $user_id );
-                        $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
-                    } elseif ( false != $reject && isset( $user_object->ID ) ) {
-                        do_action( 'b3_before_reject_user', $user_id );
-                        require_once( ABSPATH . 'wp-admin/includes/user.php' );
-                        if ( true == wp_delete_user( $user_id ) ) {
+                    if ( false != $signup_id ) {
+                        // multisite signup
+                        global $wpdb;
+                        $signup_info = $wpdb->get_row( "SELECT * FROM $wpdb->signups WHERE signup_id = $signup_id" );
+
+                        if ( false != $approve ) {
+                            do_action( 'b3_approve_wpmu_signup', $signup_info );
+                            $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
+                        } elseif ( false != $reject ) {
+                            // @TODO: create new action
                             $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
-                        } else {
-                            $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
+                        }
+
+                    } elseif ( isset( $user_object->ID ) ) {
+                        if ( false != $approve ) {
+                            do_action( 'b3_approve_user', [ 'user_id' => $user_id ] );
+                            $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
+                        } elseif ( false != $reject ) {
+                            do_action( 'b3_before_reject_user', $user_id );
+                            require_once( ABSPATH . 'wp-admin/includes/user.php' );
+                            if ( true == wp_delete_user( $user_id ) ) {
+                                $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                            } else {
+                                $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
+                            }
                         }
                     }
-                }
 
-                wp_safe_redirect( $redirect_url );
-                exit;
+                    wp_safe_redirect( $redirect_url );
+                    exit;
+                }
             }
         }
     }
-    add_action( 'init', 'b3_approve_deny_users' );
+    add_action( 'wp_loaded', 'b3_approve_deny_users' );
 
 
     /**

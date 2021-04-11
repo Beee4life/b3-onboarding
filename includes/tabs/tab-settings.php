@@ -75,7 +75,7 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php if ( ! is_multisite() && current_user_can( 'manage_options' ) && ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ) ) { ?>
+                <?php if ( current_user_can( 'manage_options' ) && ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ) ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>

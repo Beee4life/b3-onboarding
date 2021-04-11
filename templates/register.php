@@ -8,6 +8,8 @@
     $registration_type = get_site_option( 'b3_registration_type' );
 
     do_action( 'b3_add_form_messages', $attributes );
+
+    if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != $_REQUEST[ 'registered' ] ) {
 ?>
 
 <div id="b3-register" class="b3_page b3_page--register">
@@ -25,9 +27,7 @@
 
         <?php
             // add vars for single site
-            if ( 'all' == $registration_type ) {
-                do_action( 'b3_add_username_email_fields' );
-            } elseif ( 'blog' != $registration_type ) {
+            if ( 'blog' != $registration_type ) {
                 do_action( 'b3_add_username_email_fields' );
             }
         ?>
@@ -55,3 +55,4 @@
     </form>
 
 </div>
+<?php } ?>

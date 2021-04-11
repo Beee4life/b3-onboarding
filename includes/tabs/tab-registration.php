@@ -34,11 +34,23 @@
             <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
 
                 <?php if ( is_multisite() ) { ?>
-                    <p>
-                        <?php esc_html_e( "Right now there are no 'special' registration types, like (request access) in a single site.", 'b3-onboarding' ); ?>
-                        <br />
-                        <?php esc_html_e( "Once we add new ones, the registration settings will be managed on this spot.", 'b3-onboarding' ); ?>
-                    </p>
+                    <?php $options = b3_get_registration_types(); ?>
+                    <?php if ( ! empty( $options ) ) { ?>
+                        <?php foreach( $options as $option ) { ?>
+                            <div class="b3_settings-input b3_settings-input--radio">
+                                <div>
+                                    <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                    <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div class="b3_settings-input b3_settings-input--radio">
+                            <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
+                        </div>
+                    <?php } ?>
+
+
                 <?php } else { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>

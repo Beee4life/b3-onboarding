@@ -9,33 +9,55 @@
      * @since 1.0.0
      *
      */
-    function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
-        $custom_passwords  = get_site_option( 'b3_activate_custom_passwords' );
-        $user_object       = get_userdata( $user_id );
-        $user_login        = $user_object->user_login;
-        $user_object->set_role( get_option( 'default_role' ) );
+    function b3_do_stuff_after_new_user_approved_by_admin( $arguments ) {
 
-        if ( false == $custom_passwords ) {
-            // user needs a password
-            $key                 = get_password_reset_key( $user_object );
-            $reset_pass_url      = b3_get_reset_password_url();
-            $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
+        if ( is_multisite() ) {
+            // get activation key
         } else {
-            // user has set a custom password or requests access
-            $vars = array();
+            $custom_passwords  = get_site_option( 'b3_activate_custom_passwords' );
+            $user_object       = get_userdata( $arguments[ 'user_id' ] );
+            $user_login        = $user_object->user_login;
+            $user_object->set_role( get_option( 'default_role' ) );
+
+            if ( false == $custom_passwords ) {
+                // user needs a password
+                $key                 = get_password_reset_key( $user_object );
+                $reset_pass_url      = b3_get_reset_password_url();
+                $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
+            } else {
+                // user has set a custom password or requests access
+                $vars = array();
+            }
+
+            $to      = $user_object->user_email;
+            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = strtr( $subject, b3_replace_subject_vars() );
+            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_replace_template_styling( $message );
+            $message = strtr( $message, b3_replace_email_vars( $vars ) );
+            $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+            wp_mail( $to, $subject, $message, array() );
         }
-
-        $to      = $user_object->user_email;
-        $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
-        $subject = strtr( $subject, b3_replace_subject_vars() );
-        $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars( $vars ) );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
-
-        wp_mail( $to, $subject, $message, array() );
     }
     add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
+
+    function b3_approve_new_wpmu_signup( $signup_info = [] ) {
+        // update row
+        global $wpdb;
+        $meta_data              = unserialize( $signup_info->meta );
+        $meta_data[ 'public' ]  = 1;
+        $meta_data[ 'deleted' ] = 0;
+        $signup_info->meta      = serialize( $meta_data );
+
+        // set site to public and remove deleted status
+        $wpdb->update(
+            $wpdb->prefix . 'signups', array( 'meta' => $signup_info->meta ), array( 'signup_id' => $signup_info->signup_id ), array( '%s' )
+        );
+
+        $result = wpmu_activate_signup( $signup_info->activation_key );
+    }
+    add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
 
 
     /**
@@ -172,9 +194,12 @@
         $activate_first_last = get_site_option( 'b3_activate_first_last' );
         if ( $activate_first_last ) {
             $first_last_required = get_site_option( 'b3_first_last_required' );
-            $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : false;
-            $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : false;
+            $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : false;
+            $first_name          = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : $first_name;
+            $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : false;
+            $last_name           = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : $last_name;
             $required            = ( true == $first_last_required ) ? ' required="required"' : false;
+
             ob_start();
             do_action( 'b3_do_before_first_last_name' );
         ?>
@@ -405,9 +430,9 @@
      * @since 2.0.0
      *
      */
-    function b3_render_form_messages( $attributes = false ) {
+    function b3_render_form_messages( $attributes = [] ) {
 
-        if ( false != $attributes ) {
+        if ( ! empty( $attributes ) ) {
             $messages          = array();
             $show_errors       = false;
             $registration_type = get_site_option( 'b3_registration_type' );
@@ -460,6 +485,7 @@
         return false;
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
+
 
     function b3_add_action_links( $form_type = 'login' ) {
 
