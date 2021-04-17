@@ -123,6 +123,25 @@
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
                 add_filter( 'login_headertext',                     array( $this, 'b3_login_logo_url_title' ) );
 
+                include 'includes/actions-b3.php';
+                include 'includes/actions-wp.php';
+                include 'includes/class-b3-shortcodes.php';
+                include 'includes/do-stuff.php';
+                if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
+                    include 'includes/examples.php';
+                }
+                include 'includes/filters-b3.php';
+                include 'includes/filters-wp.php';
+                include 'includes/functions.php';
+                include 'includes/defaults.php';
+                include 'includes/emails.php';
+                include 'includes/form-handling.php';
+                include 'includes/tabs/tabs.php';
+                include 'includes/admin/help-tabs.php';
+                if ( get_site_option( 'b3_activate_filter_validation' ) ) {
+                    include 'includes/verify-filters.php';
+                }
+
             }
 
 
@@ -132,67 +151,6 @@
              * @since 2.6.0
              */
             public function b3_include_files() {
-                /*
-                 * This file contains all actions on plugin hooks
-                 */
-                include 'includes/actions-b3.php';
-                /*
-                 * This file contains important actions on WordPress hooks
-                 */
-                include 'includes/actions-wp.php';
-                /*
-                 * This file contains functions which return default values
-                 */
-                include 'includes/defaults.php';
-                /*
-                 * This file contains functions which 'do' something with a value
-                 */
-                include 'includes/do-stuff.php';
-                /*
-                 * Renders admin input fields
-                 */
-                include 'includes/emails.php';
-                /*
-                 * This file contains functions/includes for various example filters.
-                 * They're only loaded for testing purposes, when LOCALHOST is defined as true
-                 */
-                if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
-                    include 'includes/examples.php';
-                }
-                /*
-                 * This file contains simple functions which are called throughout the plugin
-                 */
-                include 'includes/functions.php';
-                /*
-                 * This file contains all filters on plugin hooks
-                 */
-                include 'includes/filters-b3.php';
-                /*
-                 * This file contains all 'WordPress' hooks
-                 */
-                include 'includes/filters-wp.php';
-                /*
-                 * Processes most forms
-                 */
-                include 'includes/form-handling.php';
-                /*
-                 * This file contains all content for the help tabs/contextual help
-                 */
-                include 'includes/admin/help-tabs.php';
-                /*
-                 * Functions + renders for admin pages/tabs
-                 */
-                include 'includes/tabs/tabs.php';
-                if ( get_site_option( 'b3_activate_filter_validation' ) ) {
-                    /*
-                     * Functions to verify filtered output
-                     */
-                    include 'includes/verify-filters.php';
-                }
-                /*
-                 * Functions + renders for shortcodes/front-end forms
-                 */
-                include 'includes/class-b3-shortcodes.php';
             }
 
 
@@ -517,7 +475,6 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-
                 $add_menu = false;
                 if ( is_multisite() && is_main_site() ) {
                     $add_menu = true;
@@ -528,7 +485,7 @@
                 if ( true == $add_menu ) {
                     if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
                         include 'includes/admin/admin-page.php'; // content for the settings page
-                        add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                        add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'read', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
                         if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                             include 'includes/admin/user-approval-page.php'; // content for the settings page
