@@ -19,9 +19,9 @@
         </h2>
 
         <p>
-            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+            <?php if ( is_main_site() ) { ?>
                 <?php esc_html_e( 'Here you can set default email settings.', 'b3-onboarding' ); ?>
-            <?php } elseif ( is_multisite() && ! is_main_site() ) { ?>
+            <?php } else { ?>
                 <?php esc_html_e( 'Most email settings are done in the main site.', 'b3-onboarding' ); ?>
             <?php } ?>
         </p>
@@ -29,7 +29,7 @@
         <form action="admin.php?page=b3-onboarding&tab=emails" method="post">
             <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
 
-            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+            <?php if ( is_main_site() ) { ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>

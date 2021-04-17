@@ -26,16 +26,16 @@
         </h2>
 
         <p>
-            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+            <?php if ( is_main_site() ) { ?>
                 <?php esc_html_e( 'Here you can set registration settings.', 'b3-onboarding' ); ?>
-            <?php } elseif ( is_multisite() && ! is_main_site() ) { ?>
+            <?php } else { ?>
                 <?php esc_html_e( 'These settings are set in the main site.', 'b3-onboarding' ); ?>
             <?php } ?>
         </p>
 
         <form action="admin.php?page=b3-onboarding&tab=registration" method="post">
             <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
-            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+            <?php if ( is_main_site() ) { ?>
 
                 <?php if ( is_multisite() ) { ?>
                     <?php $options = b3_get_registration_types(); ?>

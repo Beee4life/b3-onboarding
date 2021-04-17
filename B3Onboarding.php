@@ -448,17 +448,17 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                include 'includes/admin/admin-page.php'; // content for the settings page
+                include 'includes/admin/admin-page.php';
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
-                if ( is_multisite() && is_main_site() ) {
+                if ( is_main_site() ) {
                     if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-                        include 'includes/admin/user-approval-page.php'; // content for the settings page
+                        include 'includes/admin/user-approval-page.php';
                         add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                     }
 
                     if ( true == get_site_option( 'b3_debug_info' ) ) {
-                        include 'includes/admin/debug-page.php'; // content for the settings page
+                        include 'includes/admin/debug-page.php';
                         add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                     }
                 }
@@ -472,7 +472,7 @@
                 /*
                  * Includes sidebar widget function + call
                  */
-                if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
+                if ( is_main_site() ) {
                     include 'includes/class-b3-sidebar-widget.php';
                 }
             }
@@ -485,7 +485,7 @@
                 /*
                  * Includes dashboard widget function + call
                  */
-                if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
+                if ( is_main_site() ) {
                     include 'includes/admin/dashboard-widget.php';
                     if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
                         include 'includes/admin/dashboard-widget-debug.php';

@@ -23,9 +23,9 @@
         </h2>
 
         <p>
-            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+            <?php if ( is_main_site() ) { ?>
                 <?php esc_html_e( 'Here you can set various global settings for the plugin.', 'b3-onboarding' ); ?>
-            <?php } elseif ( is_multisite() && ! is_main_site() ) { ?>
+            <?php } else { ?>
                 <?php esc_html_e( 'All settings are set in the main site, except for the logo.', 'b3-onboarding' ); ?>
             <?php } ?>
         </p>
@@ -33,7 +33,7 @@
         <form action="admin.php?page=b3-onboarding" method="post">
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
-            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+            <?php if ( is_main_site() ) { ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_disable_wordpress_forms"><?php esc_html_e( 'Disable Wordpress forms', 'b3-onboarding' ); ?></label>

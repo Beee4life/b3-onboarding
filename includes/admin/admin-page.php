@@ -53,7 +53,7 @@
                                 'icon'    => 'admin-generic',
                             ),
                         );
-                        if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                        if ( is_main_site() ) {
                             $tabs[] = array(
                                 'id'      => 'registration',
                                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
@@ -83,8 +83,8 @@
                             'content' => b3_render_tab_content( 'emails' ),
                             'icon'    => 'email',
                         );
-
-                        if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+    
+                        if ( is_main_site() ) {
                             $tabs[] = array(
                                 'id'      => 'users',
                                 'title'   => esc_html__( 'Users', 'b3-onboarding' ),

@@ -116,7 +116,7 @@
             'id'    => 'email_settings',
             'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
         );
-        if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+        if ( is_main_site() ) {
             if ( in_array( $registration_type, array( 'request_access', 'request_access_subdomain' ) ) ) {
                 $email_boxes[] = array(
                     'id'    => 'request_access_user',
