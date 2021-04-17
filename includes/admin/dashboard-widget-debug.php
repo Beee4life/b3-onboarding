@@ -26,9 +26,11 @@
                     <li><a href="<?php echo $preview_page; ?>new-user-admin"><?php esc_html_e( 'New user (admin)', 'b3-onboarding' ); ?></a></li>
                     <li><a href="<?php echo $preview_page; ?>welcome-user"><?php esc_html_e( 'Welcome (user)', 'b3-onboarding' ); ?></a></li>
                 <?php } ?>
-                <li><a href="<?php echo $preview_page; ?>lostpass"><?php esc_html_e( 'Lost password (user)', 'b3-onboarding' ); ?></a></li>
-                <li><a href="<?php echo $preview_page; ?>styling"><?php esc_html_e( 'Styling', 'b3-onboarding' ); ?></a></li>
-                <li><a href="<?php echo $preview_page; ?>template"><?php esc_html_e( 'Template', 'b3-onboarding' ); ?></a></li>
+                <?php if ( is_main_site() ) { ?>
+                    <li><a href="<?php echo $preview_page; ?>lostpass"><?php esc_html_e( 'Lost password (user)', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>styling"><?php esc_html_e( 'Styling', 'b3-onboarding' ); ?></a></li>
+                    <li><a href="<?php echo $preview_page; ?>template"><?php esc_html_e( 'Template', 'b3-onboarding' ); ?></a></li>
+                <?php } ?>
             </ul>
         </div>
     <?php }
