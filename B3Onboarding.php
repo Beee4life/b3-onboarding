@@ -123,6 +123,7 @@
                 include 'includes/filters-b3.php';
                 include 'includes/filters-wp.php';
                 include 'includes/functions.php';
+                include 'includes/curl.php';
                 include 'includes/defaults.php';
                 include 'includes/emails.php';
                 include 'includes/form-handling.php';
