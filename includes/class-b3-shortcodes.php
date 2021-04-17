@@ -335,6 +335,8 @@
                     }
                     $attributes[ 'errors' ] = $errors;
 
+                    $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );
+
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {
                         $attributes[ 'updated' ] = $this->b3_get_return_message( $_REQUEST[ 'updated' ] );
                     }
