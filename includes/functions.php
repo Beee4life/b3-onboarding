@@ -91,6 +91,7 @@
             'b3_sidebar_widget', // set on activate
             'b3_style_wordpress_forms',
             'b3_users_may_delete',
+            'b3_version',
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
         );
@@ -150,7 +151,7 @@
                     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
                 );
             }
-            if ( is_main_site() ) {
+            if ( is_multisite() && is_main_site() ) {
                 $email_boxes[] = array(
                     'id'    => 'confirm_user_email',
                     'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
