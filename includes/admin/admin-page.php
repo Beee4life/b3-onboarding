@@ -52,19 +52,21 @@
                                 'content' => b3_render_tab_content( 'settings' ),
                                 'icon'    => 'admin-generic',
                             ),
-                            array(
+                        );
+                        if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+                            $tabs[] = array(
                                 'id'      => 'registration',
                                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'registration' ),
                                 'icon'    => 'shield',
-                            ),
-                            array(
+                            );
+                            $tabs[] = array(
                                 'id'      => 'pages',
                                 'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'pages' ),
                                 'icon'    => 'admin-page',
-                            ),
-                        );
+                            );
+                        }
 
                         if ( 1 == get_site_option( 'b3_style_wordpress_forms' ) ) {
                             $tabs[] = array(
@@ -82,20 +84,22 @@
                             'icon'    => 'email',
                         );
 
-                        $tabs[] = array(
-                            'id'      => 'users',
-                            'title'   => esc_html__( 'Users', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'users' ),
-                            'icon'    => 'admin-users',
-                        );
-
-                        if ( true == get_site_option( 'b3_activate_recaptcha' ) ) {
+                        if ( is_multisite() && is_main_site() || ! is_multisite() ) {
                             $tabs[] = array(
-                                'id'      => 'recaptcha',
-                                'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'recaptcha' ),
-                                'icon'    => 'plus-alt',
+                                'id'      => 'users',
+                                'title'   => esc_html__( 'Users', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'users' ),
+                                'icon'    => 'admin-users',
                             );
+
+                            if ( true == get_site_option( 'b3_activate_recaptcha' ) ) {
+                                $tabs[] = array(
+                                    'id'      => 'recaptcha',
+                                    'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
+                                    'content' => b3_render_tab_content( 'recaptcha' ),
+                                    'icon'    => 'plus-alt',
+                                );
+                            }
                         }
                     ?>
                     <div class="b3_tab-header">
