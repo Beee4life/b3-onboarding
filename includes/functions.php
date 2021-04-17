@@ -115,80 +115,82 @@
             'id'    => 'email_settings',
             'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
         );
-        if ( in_array( $registration_type, array( 'request_access', 'request_access_subdomain' ) ) ) {
+        if ( is_multisite() && is_main_site() || ! is_multisite() ) {
+            if ( in_array( $registration_type, array( 'request_access', 'request_access_subdomain' ) ) ) {
+                $email_boxes[] = array(
+                    'id'    => 'request_access_user',
+                    'title' => esc_html__( 'Request access email (user)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'request_access_admin',
+                    'title' => esc_html__( 'Request access email (admin)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'account_approved',
+                    'title' => esc_html__( 'Account approved email (user)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'account_rejected',
+                    'title' => esc_html__( 'Account rejected email (user)', 'b3-onboarding' ),
+                );
+            }
+            if ( in_array( $registration_type, array( 'email_activation' ) ) ) {
+                $email_boxes[] = array(
+                    'id'    => 'email_activation',
+                    'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'account_activated',
+                    'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
+                );
+            }
+            if ( in_array( $registration_type, array( 'open' ) ) ) {
+                $email_boxes[] = array(
+                    'id'    => 'welcome_email_user',
+                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+                );
+            }
+            if ( is_main_site() ) {
+                $email_boxes[] = array(
+                    'id'    => 'confirm_user_email',
+                    'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'activated_user_email',
+                    'title' => esc_html__( 'User activated (user only)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'confirm_user_site_email',
+                    'title' => esc_html__( 'Confirm email (user + site)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'activated_user_site_email',
+                    'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
+                );
+                $email_boxes[] = array(
+                    'id'    => 'new_wpmu_user_admin',
+                    'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+                );
+            }
+            if ( in_array( $registration_type, array( 'open', 'email_activation' ) ) ) {
+                $email_boxes[] = array(
+                    'id'    => 'new_user_admin',
+                    'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
+                );
+            }
             $email_boxes[] = array(
-                'id'    => 'request_access_user',
-                'title' => esc_html__( 'Request access email (user)', 'b3-onboarding' ),
+                'id'    => 'lost_password',
+                'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
             );
             $email_boxes[] = array(
-                'id'    => 'request_access_admin',
-                'title' => esc_html__( 'Request access email (admin)', 'b3-onboarding' ),
+                'id'    => 'email_styling',
+                'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
             );
             $email_boxes[] = array(
-                'id'    => 'account_approved',
-                'title' => esc_html__( 'Account approved email (user)', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'account_rejected',
-                'title' => esc_html__( 'Account rejected email (user)', 'b3-onboarding' ),
+                'id'    => 'email_template',
+                'title' => esc_html__( 'Email template', 'b3-onboarding' ),
             );
         }
-        if ( in_array( $registration_type, array( 'email_activation' ) ) ) {
-            $email_boxes[] = array(
-                'id'    => 'email_activation',
-                'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'account_activated',
-                'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
-            );
-        }
-        if ( in_array( $registration_type, array( 'open' ) ) ) {
-            $email_boxes[] = array(
-                'id'    => 'welcome_email_user',
-                'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-            );
-        }
-        if ( is_multisite() ) {
-            $email_boxes[] = array(
-                'id'    => 'confirm_user_email',
-                'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'activated_user_email',
-                'title' => esc_html__( 'User activated (user only)', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'confirm_user_site_email',
-                'title' => esc_html__( 'Confirm email (user + site)', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'activated_user_site_email',
-                'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'new_wpmu_user_admin',
-                'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
-            );
-        }
-        if ( in_array( $registration_type, array( 'open', 'email_activation' ) ) ) {
-            $email_boxes[] = array(
-                'id'    => 'new_user_admin',
-                'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
-            );
-        }
-        $email_boxes[] = array(
-            'id'    => 'lost_password',
-            'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
-        );
-        $email_boxes[] = array(
-            'id'    => 'email_styling',
-            'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
-        );
-        $email_boxes[] = array(
-            'id'    => 'email_template',
-            'title' => esc_html__( 'Email template', 'b3-onboarding' ),
-        );
 
         return $email_boxes;
     }
