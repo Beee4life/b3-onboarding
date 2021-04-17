@@ -13,4 +13,8 @@ jQuery(function($){
             $($subdomain_field).removeClass('hidden');
         }
     });
+
+    $('span.error__close').click(function(e){
+        $('p.b3_message').fadeOut(750);
+    });
 });
