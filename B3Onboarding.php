@@ -14,6 +14,7 @@
     License:            GPL v2 (or later)
     License URI:        https://www.gnu.org/licenses/gpl-2.0.html
     Domain Path:        /languages
+    Network:            true
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
      / _  / _/   _/   _/
