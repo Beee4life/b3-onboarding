@@ -26,7 +26,11 @@
         </h2>
 
         <p>
-            <?php esc_html_e( 'Here you can set registration settings.', 'b3-onboarding' ); ?>
+            <?php if ( is_multisite() && is_main_site() || ! is_multisite() ) { ?>
+                <?php esc_html_e( 'Here you can set registration settings.', 'b3-onboarding' ); ?>
+            <?php } elseif ( is_multisite() && ! is_main_site() ) { ?>
+                <?php esc_html_e( 'These settings are set in the main site.', 'b3-onboarding' ); ?>
+            <?php } ?>
         </p>
 
         <form action="admin.php?page=b3-onboarding&tab=registration" method="post">

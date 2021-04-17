@@ -14,7 +14,6 @@
     License:            GPL v2 (or later)
     License URI:        https://www.gnu.org/licenses/gpl-2.0.html
     Domain Path:        /languages
-    Network:            True
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
      / _  / _/   _/   _/
@@ -95,7 +94,6 @@
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
-                add_action( 'wp_loaded',                            array( $this, 'b3_include_files' ) );
 
                 // Multisite specific
                 add_action( 'wp_initialize_site',                   array( $this, 'b3_new_blog' ) );
@@ -146,35 +144,18 @@
 
 
             /*
-             * Include files
-             *
-             * @since 2.6.0
-             */
-            public function b3_include_files() {
-            }
-
-
-            /*
              * Do stuff upon plugin activation
              *
              * @since 2.0.0
              */
             public function b3_plugin_activation() {
 
-                if ( is_multisite() ) {
-                    if ( is_main_site() ) {
-                        // create necessary pages (main site)
-                        b3_setup_initial_pages();
-                        // set default values
-                        $this->b3_set_default_settings();
-                    }
-                } else {
+                // create necessary pages
+                b3_setup_initial_pages();
+                // set default values
+                $this->b3_set_default_settings();
 
-                    // create necessary pages
-                    b3_setup_initial_pages();
-                    // set default values
-                    $this->b3_set_default_settings();
-
+                if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
                         add_role( 'b3_activation', __( 'Awaiting activation' ), array() );
@@ -195,16 +176,18 @@
                 // set registration option accordingly
                 $registration_type = get_site_option( 'b3_registration_type' );
                 if ( is_multisite() ) {
-                    if ( 'closed' == $registration_type ) {
-                        update_site_option( 'registration', 'none' );
-                    } else {
-                        update_site_option( 'registration', 'all' );
+                    if ( is_main_site() ) {
+                        if ( 'closed' == $registration_type ) {
+                            update_site_option( 'registration', 'none' );
+                        } else {
+                            update_site_option( 'registration', 'all' );
+                        }
                     }
                 } else {
                     if ( 'closed' == $registration_type ) {
-                        update_site_option( 'users_can_register', '0' );
+                        update_option( 'users_can_register', '0' );
                     } else {
-                        update_site_option( 'users_can_register', '1' );
+                        update_option( 'users_can_register', '1' );
                     }
                 }
 
@@ -227,41 +210,45 @@
             public function b3_set_default_settings() {
 
                 if ( ! is_multisite() ) {
-                    update_option( 'b3_registration_type', 'open' );
                     update_option( 'b3_dashboard_widget', 1 );
+                    update_option( 'b3_disable_wordpress_forms', 1 );
+                    update_option( 'b3_logo_in_email', 1 );
+                    update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
+                    update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
+                    update_option( 'b3_registration_type', 'open' );
                     update_option( 'b3_hide_admin_bar', 1 );
+                    update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                     update_option( 'users_can_register', 0 );
+
                 } else {
 
                     if ( is_main_site() ) {
-                        update_option( 'b3_dashboard_widget', 1 );
-                    }
-                    update_site_option( 'b3_disable_admin_notification_new_user', 1 );
-                    if ( 'yes' == get_site_option( 'registrationnotification' ) ) {
+                        update_site_option( 'b3_activate_custom_emails', 1 );
+                        update_site_option( 'b3_dashboard_widget', 1 );
+                        update_site_option( 'b3_disable_admin_notification_new_user', 1 );
+                        update_site_option( 'b3_disable_wordpress_forms', 1 );
+                        update_site_option( 'b3_logo_in_email', 1 );
+                        update_site_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
+                        update_site_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                         update_site_option( 'registrationnotification', 'no' );
-                    }
 
-                    $public_registration = get_site_option( 'registration' );
-                    if ( 'user' == $public_registration ) {
-                        update_site_option( 'b3_registration_type', 'user' );
-                    } elseif ( 'blog' == $public_registration ) {
-                        update_site_option( 'b3_registration_type', 'blog' );
-                    } elseif ( 'all' == $public_registration ) {
-                        update_site_option( 'b3_registration_type', 'all' );
-                    } elseif ( 'none' == $public_registration ) {
-                        update_site_option( 'b3_registration_type', 'closed' );
+                        $public_registration = get_site_option( 'registration' );
+                        if ( 'user' == $public_registration ) {
+                            update_site_option( 'b3_registration_type', 'user' );
+                        } elseif ( 'blog' == $public_registration ) {
+                            update_site_option( 'b3_registration_type', 'blog' );
+                        } elseif ( 'all' == $public_registration ) {
+                            update_site_option( 'b3_registration_type', 'all' );
+                        } elseif ( 'none' == $public_registration ) {
+                            update_site_option( 'b3_registration_type', 'closed' );
+                        }
+                    } else {
+                        // @TODO: set settings for subsite registration, from setting set on main site
                     }
                 }
 
-                update_site_option( 'b3_activate_custom_emails', 1 );
-                update_site_option( 'b3_disable_wordpress_forms', 1 );
-                update_site_option( 'b3_logo_in_email', 1 );
-                update_site_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
-                update_site_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
-                update_site_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-
-                if ( false != get_site_option( 'wp_page_for_privacy_policy' ) ) {
-                    update_site_option( 'b3_privacy_page', get_site_option( 'wp_page_for_privacy_policy' ) );
+                if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
+                    update_option( 'b3_privacy_page', get_option( 'wp_page_for_privacy_policy' ) );
                 }
             }
 
@@ -483,19 +470,17 @@
                 }
 
                 if ( true == $add_menu ) {
-                    if ( ( is_multisite() && is_main_site() ) || ! is_multisite() ) {
-                        include 'includes/admin/admin-page.php'; // content for the settings page
-                        add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'read', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                    include 'includes/admin/admin-page.php'; // content for the settings page
+                    add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
-                        if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-                            include 'includes/admin/user-approval-page.php'; // content for the settings page
-                            add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
-                        }
+                    if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
+                        include 'includes/admin/user-approval-page.php'; // content for the settings page
+                        add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                    }
 
-                        if ( true == get_site_option( 'b3_debug_info' ) ) {
-                            include 'includes/admin/debug-page.php'; // content for the settings page
-                            add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
-                        }
+                    if ( true == get_site_option( 'b3_debug_info' ) ) {
+                        include 'includes/admin/debug-page.php'; // content for the settings page
+                        add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                     }
                 }
             }
@@ -893,29 +878,30 @@
 
                                 // if is_multisite
                                 $register = false;
-
-                                if ( 'closed' == $registration_type ) {
-                                    // Registration closed, display error
-                                    $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
-                                } elseif ( 'blog' == $registration_type ) {
-                                    $user       = get_userdata( get_current_user_id() );
-                                    $user_login = $user->user_login;
-                                    $user_email = $user->user_email;
-                                    $register   = true;
-                                } elseif ( 'request_access_subdomain' == $registration_type ) {
-                                    $register   = true;
-                                    $user_email = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
-                                    $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
-                                } elseif ( false != get_site_option( 'b3_activate_recaptcha' ) ) {
-                                    $recaptcha_on = get_site_option( 'b3_recaptcha_on' );
-                                    if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
-                                        if ( ! $this->b3_verify_recaptcha() ) {
-                                            // Recaptcha check failed, display error
-                                            $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                if ( is_main_site() ) {
+                                    if ( 'closed' == $registration_type ) {
+                                        // Registration closed, display error
+                                        $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
+                                    } elseif ( 'blog' == $registration_type ) {
+                                        $user       = get_userdata( get_current_user_id() );
+                                        $user_login = $user->user_login;
+                                        $user_email = $user->user_email;
+                                        $register   = true;
+                                    } elseif ( 'request_access_subdomain' == $registration_type ) {
+                                        $register   = true;
+                                        $user_email = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
+                                        $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
+                                    } elseif ( false != get_site_option( 'b3_activate_recaptcha' ) ) {
+                                        $recaptcha_on = get_site_option( 'b3_recaptcha_on' );
+                                        if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
+                                            if ( ! $this->b3_verify_recaptcha() ) {
+                                                // Recaptcha check failed, display error
+                                                $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                            }
                                         }
+                                    } else {
+                                        $register = true;
                                     }
-                                } else {
-                                    $register = true;
                                 }
 
                                 if ( true == $register ) {
@@ -1342,13 +1328,21 @@
 
                 if ( ! $user ) {
                     return $redirect_url;
+                } elseif ( is_wp_error( $user ) ) {
+                    // check if is
+                    if ( is_multisite() && ! is_main_site() ) {
+                        // a suser has not been created since it needs to be confirmed
+                        $no_user = true;
+                    }
                 }
 
                 if ( $requested_redirect_to ) {
                     $redirect_to = $requested_redirect_to;
                 } else {
 
-                    if ( ! user_can( $user, 'manage_options' ) ) {
+                    if ( isset( $no_user ) && true == $no_user ) {
+                        die('NO USER');
+                    } elseif ( ! user_can( $user, 'manage_options' ) ) {
                         // Non-admin users always go to their account page after login, if it's defined
                         $account_page_url = b3_get_account_url();
                         if ( false != $account_page_url ) {
@@ -1898,12 +1892,6 @@
             private function b3_register_wpmu_user( $user_name, $user_email, $domain, $blog_title, $path, $meta = array() ) {
 
                 $b3_register_type = get_site_option( 'b3_registration_type' );
-                $errors           = false;
-                if ( false != $user_name ) {
-                    $user = get_user_by( 'login', $user_name );
-                } else {
-                    $user = get_userdata( get_current_user_id() );
-                }
 
                 if ( is_main_site() ) {
                     if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all' ] )) {
@@ -1917,16 +1905,20 @@
                             return true;
                         }
                     } elseif ( 'blog' == $b3_register_type ) {
+                        if ( false != $user_name ) {
+                            $user = get_user_by( 'login', $user_name );
+                        } else {
+                            $user = get_userdata( get_current_user_id() );
+                        }
                         $blog_id = wpmu_create_blog( $domain, $path, $blog_title, $user->ID, apply_filters( 'add_signup_meta', $meta ), get_current_network_id() );
 
                         return $blog_id;
                     } else {
                         $errors = new WP_Error( 'unknown', $this->b3_get_return_message( 'unknown' ) );
                     }
-
                 }
 
-                if ( false != $errors ) {
+                if ( isset( $errors ) && false != $errors ) {
                     return $errors;
                 }
 

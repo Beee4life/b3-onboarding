@@ -139,8 +139,7 @@
      *
      * @since 1.0.0
      */
-    function b3_add_username_email_fields() {
-        $registration_type            = get_site_option( 'b3_registration_type' );
+    function b3_add_username_email_fields( $registration_type ) {
         $registration_with_email_only = get_site_option( 'b3_register_email_only' );
 
         ob_start();
@@ -260,9 +259,8 @@
      *
      * @since 1.0.0
      */
-    function b3_add_site_fields() {
+    function b3_add_site_fields( $registration_type ) {
         if ( is_multisite() ) {
-            $registration_type = get_site_option( 'b3_registration_type' );
             if ( in_array( $registration_type, array(
                     'request_access_subdomain',
                     'blog',
