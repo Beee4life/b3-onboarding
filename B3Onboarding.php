@@ -201,27 +201,23 @@
              */
             public function b3_set_default_settings() {
 
+                update_site_option( 'b3_activate_custom_emails', 1 );
+                update_site_option( 'b3_dashboard_widget', 1 );
+                update_site_option( 'b3_disable_wordpress_forms', 1 );
+                update_site_option( 'b3_logo_in_email', 1 );
+                update_site_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
+                update_site_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
+                update_site_option( 'b3_registration_type', 'open' );
+
                 if ( ! is_multisite() ) {
-                    update_option( 'b3_dashboard_widget', 1 );
-                    update_option( 'b3_disable_wordpress_forms', 1 );
-                    update_option( 'b3_logo_in_email', 1 );
-                    update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
-                    update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-                    update_option( 'b3_registration_type', 'open' );
-                    update_option( 'b3_hide_admin_bar', 1 );
-                    update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
-                    update_option( 'users_can_register', 0 );
+                    update_site_option( 'b3_hide_admin_bar', 1 );
+                    update_site_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
+                    update_site_option( 'users_can_register', 0 );
 
                 } else {
 
                     if ( is_main_site() ) {
-                        update_site_option( 'b3_activate_custom_emails', 1 );
-                        update_site_option( 'b3_dashboard_widget', 1 );
                         update_site_option( 'b3_disable_admin_notification_new_user', 1 );
-                        update_site_option( 'b3_disable_wordpress_forms', 1 );
-                        update_site_option( 'b3_logo_in_email', 1 );
-                        update_site_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
-                        update_site_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                         update_site_option( 'registrationnotification', 'no' );
 
                         $public_registration = get_site_option( 'registration' );
@@ -234,8 +230,6 @@
                         } elseif ( 'none' == $public_registration ) {
                             update_site_option( 'b3_registration_type', 'closed' );
                         }
-                    } else {
-                        // @TODO: set settings for subsite registration, from setting set on main site
                     }
                 }
 
