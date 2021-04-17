@@ -100,16 +100,7 @@
                 add_action( 'wp_initialize_site',                   array( $this, 'b3_new_blog' ) );
 
                 // Filters
-                $add_filter = false;
-                if ( is_multisite() && is_main_site() ) {
-                    //@TODO: test on non main site
-                    $add_filter = true;
-                } elseif ( ! is_multisite() ) {
-                    $add_filter = true;
-                }
-                if ( true == $add_filter ) {
-                    add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
-                }
+                add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
                 add_filter( 'admin_body_class',                     array( $this, 'b3_admin_body_class' ) );
                 add_filter( 'authenticate',                         array( $this, 'b3_maybe_redirect_at_authenticate' ), 101, 3 );
                 add_filter( 'login_redirect',                       array( $this, 'b3_redirect_after_login' ), 10, 3 );
@@ -463,17 +454,10 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                $add_menu = false;
+                include 'includes/admin/admin-page.php'; // content for the settings page
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+
                 if ( is_multisite() && is_main_site() ) {
-                    $add_menu = true;
-                } elseif ( ! is_multisite() ) {
-                    $add_menu = true;
-                }
-
-                if ( true == $add_menu ) {
-                    include 'includes/admin/admin-page.php'; // content for the settings page
-                    add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
-
                     if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                         include 'includes/admin/user-approval-page.php'; // content for the settings page
                         add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
