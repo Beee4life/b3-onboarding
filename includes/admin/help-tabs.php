@@ -121,4 +121,6 @@
             );
         }
     }
-    add_action( 'current_screen', 'b3_help_tabs', 5 );
+    if ( is_main_site() ) {
+        add_action( 'current_screen', 'b3_help_tabs', 5 );
+    }
