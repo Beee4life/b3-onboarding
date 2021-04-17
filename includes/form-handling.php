@@ -1,7 +1,6 @@
 <?php
-
     /**
-     * Function which handles admin page settings
+     * Form handling main admin page
      *
      * @since 1.0.0
      */
@@ -20,7 +19,6 @@
                         update_site_option( 'b3_disable_wordpress_forms', 1 );
                     } else {
                         delete_site_option( 'b3_disable_wordpress_forms' );
-                        delete_site_option( 'b3_style_wordpress_forms' );
                     }
 
                     if ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) {
@@ -73,7 +71,13 @@
         }
     }
     add_action( 'init', 'b3_setings_form_handling', 1 );
-
+    
+    
+    /**
+     * Form handling page settings
+     *
+     * @since 2.6.0
+     */
     function b3_pages_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
@@ -113,7 +117,13 @@
         }
     }
     add_action( 'init', 'b3_pages_form_handling', 1 );
-
+    
+    
+    /**
+     * Form handling email settings
+     *
+     * @since 2.6.0
+     */
     function b3_emails_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
@@ -211,8 +221,13 @@
         }
     }
     add_action( 'init', 'b3_emails_form_handling', 1 );
-
-
+    
+    
+    /**
+     * Form handling for login page settings
+     *
+     * @since 2.6.0
+     */
     function b3_loginpage_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_loginpage_nonce' ] ) ) {
@@ -263,7 +278,13 @@
         }
     }
     add_action( 'init', 'b3_loginpage_form_handling', 1 );
-
+    
+    
+    /**
+     * Form handling for email settings
+     *
+     * @since 2.6.0
+     */
     function b3_email_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
@@ -506,7 +527,13 @@
         }
     }
     add_action( 'init', 'b3_email_form_handling', 1 );
-
+    
+    
+    /**
+     * Form handling for user settings
+     *
+     * @since 2.6.0
+     */
     function b3_users_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
@@ -550,7 +577,13 @@
         }
     }
     add_action( 'init', 'b3_users_form_handling', 1 );
-
+    
+    
+    /**
+     * Form handling for reCaptcha settings
+     *
+     * @since 2.6.0
+     */
     function b3_recaptcha_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
@@ -580,6 +613,7 @@
     }
     add_action( 'init', 'b3_recaptcha_form_handling', 1 );
 
+    
     /**
      * Function which handles approve/deny user form
      *
