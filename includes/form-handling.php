@@ -607,7 +607,7 @@
             }
         }
     }
-    add_action( 'wp_loaded', 'b3_approve_deny_users' );
+    add_action( 'init', 'b3_approve_deny_users' );
 
 
     /**
