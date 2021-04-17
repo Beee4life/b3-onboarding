@@ -36,17 +36,17 @@
             'b3_confirm_wpmu_user_site_subject',
             'b3_confirm_wpmu_user_site_message',
             'b3_custom_emails',
-            'b3_dashboard_widget', // set on activate
+            'b3_dashboard_widget',
             'b3_debug_info',
             'b3_disable_action_links',
             'b3_disable_admin_notification_new_user', // @TODO: check
             'b3_disable_admin_notification_password_change',
             'b3_disable_delete_user_email',
-            'b3_disable_wordpress_forms', // set on activate
+            'b3_disable_wordpress_forms',
             'b3_email_activation_message',
             'b3_email_activation_subject',
-            'b3_email_styling', // set on activate
-            'b3_email_template', // set on activate
+            'b3_email_styling',
+            'b3_email_template',
             'b3_first_last_required',
             'b3_forgot_password_message',
             'b3_forgot_password_subject',
@@ -54,23 +54,23 @@
             'b3_front_end_approval',
             'b3_hide_admin_bar',
             'b3_link_color',
-            'b3_login_page_id', // set on activate
+            'b3_login_page_id',
             'b3_loginpage_bg_color', // @TODO: change
             'b3_loginpage_font_family', // @TODO: change
             'b3_loginpage_font_size', // @TODO: change
             'b3_loginpage_logo_height', // @TODO: change
             'b3_loginpage_logo_width', // @TODO: change
-            'b3_logo_in_email', // set on activate
-            'b3_logout_page_id', // set on activate
+            'b3_logo_in_email',
+            'b3_logout_page_id',
             'b3_lost_password_message',
             'b3_lost_password_subject',
-            'b3_lost_password_page_id', // set on activate
+            'b3_lost_password_page_id',
             'b3_main_logo',
             'b3_new_user_message',
             'b3_new_user_notification_addresses', // @TODO: check
             'b3_new_user_subject',
-            'b3_notification_sender_email', // set on activate
-            'b3_notification_sender_name', // set on activate
+            'b3_notification_sender_email',
+            'b3_notification_sender_name',
             'b3_privacy',
             'b3_privacy_page',
             'b3_privacy_text',
