@@ -18,16 +18,9 @@
 
                     if ( isset( $_POST[ 'b3_disable_wordpress_forms' ] ) && 1 == $_POST[ 'b3_disable_wordpress_forms' ] ) {
                         update_site_option( 'b3_disable_wordpress_forms', 1 );
-                        if ( is_multisite() && is_main_site() ) {
-                        } elseif ( ! is_multisite() ) {
-                            // update_option( 'b3_disable_wordpress_forms', 1 );
-                        }
                     } else {
                         delete_site_option( 'b3_disable_wordpress_forms' );
-                        if ( is_multisite() && is_main_site() ) {
-                        } elseif ( ! is_multisite() ) {
-                            // delete_option( 'b3_disable_wordpress_forms' );
-                        }
+                        delete_site_option( 'b3_style_wordpress_forms' );
                     }
 
                     if ( isset( $_POST[ 'b3_style_wordpress_forms' ] ) && 1 == $_POST[ 'b3_style_wordpress_forms' ] ) {
