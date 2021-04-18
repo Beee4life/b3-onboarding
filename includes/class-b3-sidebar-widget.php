@@ -32,12 +32,12 @@
         public function widget( $args, $instance ) {
             $count_errors       = array();
             $count_setting      = 0;
+            $main_logo          = get_site_option( 'b3_main_logo' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             $show_widget        = true;
             $show_register_link = false;
             $show_settings      = false;
-            $use_popup     = get_option( 'b3_use_popup', false );
-            $main_logo     = get_option( 'b3_main_logo', false );
+            $use_popup          = get_site_option( 'b3_use_popup' );
 
             if ( $show_account ) {
                 $account_id    = b3_get_account_url( true );
