@@ -12,7 +12,6 @@
         $public_key        = get_site_option( 'b3_recaptcha_public' );
         $recaptcha_version = get_site_option( 'b3_recaptcha_version', 2 );
         $secret_key        = get_site_option( 'b3_recaptcha_secret' );
-        $recaptcha_login   = get_site_option( 'b3_recaptcha_login' );
         $recaptcha_on      = get_site_option( 'b3_recaptcha_on', [] );
         ?>
         <h2>
