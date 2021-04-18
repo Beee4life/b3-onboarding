@@ -150,11 +150,11 @@
                 if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
-                        add_role( 'b3_activation', __( 'Awaiting activation' ), array() );
+                        add_role( 'b3_activation', __( 'Awaiting activation', 'b3-onboarding' ), array() );
                     }
                     $b3_approval = get_role( 'b3_approval' );
                     if ( ! $b3_approval ) {
-                        add_role( 'b3_approval', __( 'Awaiting approval' ), array() );
+                        add_role( 'b3_approval', __( 'Awaiting approval', 'b3-onboarding' ), array() );
                     }
                 }
 
