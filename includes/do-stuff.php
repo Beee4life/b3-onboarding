@@ -41,7 +41,7 @@
             ),
         );
 
-        b3_create_pages( $page_definitions, $create_new_site );
+        b3_create_pages( $page_definitions );
     }
 
     /**
@@ -50,9 +50,8 @@
      * @since 1.0.6
      *
      * @param array $page_definitions
-     * @param bool  $create_new_site
      */
-    function b3_create_pages( $page_definitions = array(), $create_new_site = false ) {
+    function b3_create_pages( $page_definitions = array() ) {
         foreach ( $page_definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
@@ -66,15 +65,13 @@
                 // no stored id, so continue
             }
 
-            $existing_page = array();
-            if ( false == $create_new_site ) {
-                $existing_page_args = array(
-                    'post_type'      => 'page',
-                    'posts_per_page' => 1,
-                    'pagename'       => $slug,
-                );
-                $existing_page = get_posts( $existing_page_args );
-            }
+            $existing_page_args = array(
+                'post_type'      => 'page',
+                'posts_per_page' => 1,
+                'pagename'       => $slug,
+            );
+            $existing_page = get_posts( $existing_page_args );
+
             if ( ! empty( $existing_page ) ) {
                 $add_shortcode = false;
                 $page_id       = $existing_page[ 0 ]->ID;
