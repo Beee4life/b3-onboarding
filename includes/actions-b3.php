@@ -376,7 +376,7 @@
 
         if ( false != $activate_recaptcha ) {
             if ( false != $recaptcha_public ) {
-                if ( '3' != $recaptcha_version ) {
+                if ( '2' == $recaptcha_version ) {
                     if ( in_array( $form_type, $recaptcha_on ) ) {
                         do_action( 'b3_do_before_recaptcha_' . $form_type );
                         ?>

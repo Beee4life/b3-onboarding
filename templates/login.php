@@ -10,8 +10,8 @@
         $label = esc_attr__( 'Email address', 'b3-onboarding' );
     }
 
+    do_action( 'b3_add_form_messages', $attributes );
 ?>
-<?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>

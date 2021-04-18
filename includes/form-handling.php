@@ -41,6 +41,7 @@
 
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
                         update_site_option( 'b3_activate_recaptcha', 1 );
+                        update_site_option( 'b3_recaptcha_on', ['register'] );
                     } else {
                         delete_site_option( 'b3_activate_recaptcha' );
                         delete_site_option( 'b3_recaptcha_on' );
@@ -602,14 +603,14 @@
                     return;
                 } else {
 
-                    update_site_option( 'b3_recaptcha_public', sanitize_key( $_POST[ 'b3_recaptcha_public' ] ) );
-                    update_site_option( 'b3_recaptcha_secret', sanitize_key( $_POST[ 'b3_recaptcha_secret' ] ) );
+                    update_site_option( 'b3_recaptcha_public', sanitize_text_field( $_POST[ 'b3_recaptcha_public' ] ) );
+                    update_site_option( 'b3_recaptcha_secret', sanitize_text_field( $_POST[ 'b3_recaptcha_secret' ] ) );
                     update_site_option( 'b3_recaptcha_version', sanitize_text_field( $_POST[ 'b3_recaptcha_version' ] ) );
 
                     if ( isset( $_POST[ 'b3_recaptcha_on' ] ) ) {
-                        update_site_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ] );
+                        // update_site_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ] );
                     } else {
-                        delete_site_option( 'b3_recaptcha_on' );
+                        // delete_site_option( 'b3_recaptcha_on' );
                     }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );

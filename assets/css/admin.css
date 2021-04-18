@@ -50,6 +50,14 @@
     font-weight: bold;
 }
 
+.b3_tab-content input[name="b3_recaptcha_version"] {
+    margin-left: 1rem;
+}
+
+.b3_tab-content input[name="b3_recaptcha_version"]:first-child {
+    margin-left: 0;
+}
+
 .b3 hr + h2 {
     margin-top: 1em;
 }

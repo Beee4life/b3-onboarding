@@ -74,6 +74,7 @@
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
                 add_action( 'login_head',                           array( $this, 'b3_add_login_styling' ) );
+                add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
@@ -412,6 +413,31 @@
             public function b3_enqueue_scripts_frontend() {
                 wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+                
+                // check for recaptcha
+                $activate_recaptcha = get_site_option( 'b3_activate_recaptcha' );
+                $recaptcha_version = get_site_option( 'b3_recaptcha_version' );
+                $recaptcha_public = get_site_option( 'b3_recaptcha_public' );
+                
+                if ( 3 == $recaptcha_version ) {
+                    // wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public, [], '', false );
+                }
+            }
+
+
+            /*
+             * Enqueue js for recaptcha
+             */
+            public function b3_add_rc3() {
+                if ( 1 == get_site_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
+                    ?>
+                    <script>
+                        function onSubmit(token) {
+                            document.getElementById('registerform').submit();
+                        }
+                    </script>
+                    <?php
+                }
             }
 
 
@@ -715,9 +741,11 @@
              */
             public function b3_add_captcha_js_to_footer() {
                 $recaptcha    = get_site_option( 'b3_activate_recaptcha' );
-                $recaptcha_on = get_site_option( 'b3_recaptcha_on', [] );
-                if ( true == $recaptcha && ! empty( $recaptcha_on ) ) {
-                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, true );
+                $recaptcha_on = get_site_option( 'b3_recaptcha_on', ['register'] );
+                if ( is_page( b3_get_register_url( true ) ) ) {
+                    if ( true == $recaptcha && ! empty( $recaptcha_on ) ) {
+                        wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, false );
+                    }
                 }
             }
 
@@ -798,12 +826,12 @@
                             }
 
                             if ( ! is_multisite() ) {
-                                // @TODO: check for disallowed user names
-
-                                $role = get_option( 'default_role', 'subscriber' );
+                                $register = true;
+                                $role     = get_option( 'default_role', 'subscriber' );
                                 if ( 'closed' == $registration_type ) {
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
+                                    $register     = false;
 
                                 } elseif ( false != get_site_option( 'b3_activate_recaptcha' ) ) {
                                     $recaptcha_on = get_site_option( 'b3_recaptcha_on' );
@@ -811,9 +839,12 @@
                                         if ( ! $this->b3_verify_recaptcha() ) {
                                             // Recaptcha check failed, display error
                                             $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                            $register     = false;
                                         }
                                     }
-                                } elseif ( 'closed' != $registration_type ) {
+                                }
+                                
+                                if ( true == $register && 'closed' != $registration_type ) {
                                     // Registration is not closed
                                     if ( 'request_access' == $registration_type ) {
                                         $role      = 'b3_approval';

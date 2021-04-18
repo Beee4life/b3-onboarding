@@ -6,7 +6,8 @@
      */
 
     do_action( 'b3_add_form_messages', $attributes );
-
+    $activate_recaptcha = ( isset( $attributes[ 'recaptcha' ] ) ) ? true : false;
+    $recaptcha_version  = ( false != $activate_recaptcha ) ? $attributes[ 'recaptcha' ][ 'version' ] : false;
     if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != $_REQUEST[ 'registered' ] ) {
 ?>
 
@@ -46,7 +47,11 @@
             <?php } else { ?>
                 <?php $submit_label = esc_attr__( 'Register', 'b3-onboarding' ); ?>
             <?php } ?>
-            <input type="submit" class="button" value="<?php echo $submit_label; ?>" />
+            <?php if ( $activate_recaptcha && 3 == $recaptcha_version ) { ?>
+                <input type="submit" class="button g-recaptcha" data-sitekey="<?php echo $attributes[ 'recaptcha' ][ 'public' ]; ?>" data-callback="onSubmit" data-action="submit" value="<?php echo $submit_label; ?>" />
+            <?php } else { ?>
+                <input type="submit" class="button" value="<?php echo $submit_label; ?>" />
+            <?php } ?>
         </div>
         <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
 

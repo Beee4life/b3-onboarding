@@ -121,6 +121,17 @@
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         }
                     }
+                    
+                    if ( 1 == get_site_option( 'b3_activate_recaptcha') && in_array( $attributes[ 'template' ], get_site_option( 'b3_recaptcha_on', ['register'] ) ) ) {
+                        // add recaptcha stuff
+                        $recaptcha_public  = get_site_option( 'b3_recaptcha_public' );
+                        $recaptcha_version = get_site_option( 'b3_recaptcha_version' );
+    
+                        $attributes[ 'recaptcha' ] = [
+                            'public'  => $recaptcha_public,
+                            'version' => $recaptcha_version,
+                        ];
+                    }
 
                     B3Onboarding::b3_show_admin_notices();
 
@@ -203,7 +214,7 @@
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
-
+    
                 $attributes[ 'errors' ]            = $errors;
                 $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );;
 
