@@ -119,8 +119,9 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 2.6.0
-* add option to request access to create a site (multisite)
-* add reCaptcha v3
+* added option to request access to create a site (multisite)
+* added reCaptcha v3
+* added user input for disallowed usernames
 
 2.5.0
 * improve html/css for account page
