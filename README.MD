@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.6.0 - released xx.11.20
+2.6.0 - released xx.04.21
 
 <a name="features"></a>
 ### Features
