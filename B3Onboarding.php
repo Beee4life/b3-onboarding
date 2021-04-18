@@ -245,8 +245,6 @@
              * @param $new_site
              */
             public function b3_new_blog( $new_site ) {
-                // @TODO: add setting if local account page is 'wanted'
-
                 /*
                  * Available vars:
                  * - blog_id (= site id)
