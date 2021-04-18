@@ -390,7 +390,16 @@
                     $attributes[ 'register_email_only' ]  = get_site_option( 'b3_register_email_only' );
                     $attributes[ 'registration_type' ]    = get_site_option( 'b3_registration_type' );;
                     $attributes[ 'show_first_last_name' ] = get_site_option( 'b3_activate_first_last' );
-
+    
+                    if ( is_multisite() ) {
+                        global $wpdb;
+                        $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
+                        $attributes[ 'users' ] = $wpdb->get_results( $query );
+                    } else {
+                        $user_args = array( 'role' => 'b3_approval' );
+                        $attributes[ 'users' ]     = get_users( $user_args );
+                    }
+    
                     B3Onboarding::b3_show_admin_notices();
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );

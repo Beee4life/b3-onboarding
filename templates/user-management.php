@@ -1,13 +1,4 @@
 <?php
-    if ( is_multisite() ) {
-        global $wpdb;
-        $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
-        $users = $wpdb->get_results( $query );
-    } else {
-        $user_args = array( 'role' => 'b3_approval' );
-        $users     = get_users( $user_args );
-    }
-
     if ( current_user_can( 'promote_users' ) ) {
         $user_approved    = esc_html__( 'User is successfully approved.', 'b3-onboarding' );
         $user_not_deleted = esc_html__( 'User is successfully rejected but there was an error deleting the account.', 'b3-onboarding' );
@@ -37,7 +28,7 @@
         <?php } ?>
     <?php } ?>
 
-    <?php if ( $users ) { ?>
+    <?php if ( ! empty( $attributes[ 'users' ] ) ) { ?>
         <table class="b3_table b3_table--user">
             <thead>
             <tr>
@@ -80,7 +71,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php foreach( $users as $user ) { ?>
+            <?php foreach( $attributes[ 'users' ] as $user ) { ?>
                 <tr>
                     <td>
                         <?php
