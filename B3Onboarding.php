@@ -1968,14 +1968,20 @@
                 if ( ! $attributes ) {
                     $attributes = array();
                 }
-
-                $template_paths = array(
-                    get_stylesheet_directory() . '/b3-onboarding/',
-                    get_stylesheet_directory() . '/plugins/b3-onboarding/',
-                    get_template_directory() . '/b3-onboarding/',
-                    get_template_directory() . '/plugins/b3-onboarding/',
-                    B3_PLUGIN_PATH . '/templates/',
-                );
+                
+                if ( 'user-management' == $template_name ) {
+                    $template_paths = array(
+                        B3_PLUGIN_PATH . '/templates/',
+                    );
+                } else {
+                    $template_paths = array(
+                        get_stylesheet_directory() . '/b3-onboarding/',
+                        get_stylesheet_directory() . '/plugins/b3-onboarding/',
+                        get_template_directory() . '/b3-onboarding/',
+                        get_template_directory() . '/plugins/b3-onboarding/',
+                        B3_PLUGIN_PATH . '/templates/',
+                    );
+                }
                 foreach( $template_paths as $possible_location ) {
                     if ( file_exists( $possible_location . $template_name . '.php' )) {
                         $location = $possible_location;
