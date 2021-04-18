@@ -756,6 +756,8 @@
     /**
      * Reserved usernames
      *
+     * @TODO: make user input
+     *
      * @since 2.0.4
      *
      * @return array
@@ -765,6 +767,12 @@
         $default_reserved_names = array(
             'admin',
             'administrator',
+            'www',
+            'web',
+            'root',
+            'main',
+            'invite',
+            'files',
         );
 
         $filtered_names = apply_filters( 'b3_reserved_usernames', [] );
