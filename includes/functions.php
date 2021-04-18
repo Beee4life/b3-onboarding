@@ -756,8 +756,6 @@
     /**
      * Reserved usernames
      *
-     * @TODO: make user input (in non-MS)
-     *
      * @since 2.0.4
      *
      * @return array
