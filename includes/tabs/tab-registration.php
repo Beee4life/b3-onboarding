@@ -9,6 +9,7 @@
     function b3_render_registration_tab() {
 
         $custom_passwords             = get_site_option( 'b3_activate_custom_passwords' );
+        $disallowed_username          = get_site_option( 'b3_disallowed_usernames' );
         $first_last                   = get_site_option( 'b3_activate_first_last' );
         $first_last_required          = get_site_option( 'b3_first_last_required' );
         $privacy                      = get_site_option( 'b3_privacy' );
@@ -82,7 +83,7 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php if ( 'closed' == get_site_option( 'b3_registration_type' ) ) { ?>
+                <?php if ( 'closed' == $registration_type ) { ?>
 
                     <?php $closed_message = get_site_option( 'b3_registration_closed_message' ); ?>
                     <?php $default_closed_message = apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ); ?>
@@ -110,7 +111,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_custom_passwords = ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'closed' ] ) ) ? true : false; ?>
+                        <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'closed' ] ) ) ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -144,13 +145,24 @@
                         <?php b3_get_close(); ?>
                     </div>
 
-                    <?php if ( 'open' == get_site_option( 'b3_registration_type' ) ) { ?>
+                    <?php if ( 'open' == $registration_type ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
                                 <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php if ( $redirect_set_password ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
+                    <?php } ?>
+
+                    <?php if ( ! is_multisite() && 'closed' != $registration_type ) { ?>
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--text">
+                                <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_username ) { echo stripslashes( $disallowed_username ); } ?>"/>
                             </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>
