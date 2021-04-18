@@ -780,7 +780,7 @@
             $filtered_names = [ $filtered_names ];
         }
 
-        $reserved_user_names = array_merge( $default_reserved_names, $filtered_names );
+        $reserved_user_names = array_unique( array_merge( $default_reserved_names, $filtered_names ) );
 
         return $reserved_user_names;
 
