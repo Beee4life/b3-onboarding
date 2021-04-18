@@ -85,7 +85,7 @@
 
                 <?php if ( 'closed' == $registration_type ) { ?>
 
-                    <?php $closed_message = get_site_option( 'b3_registration_closed_message' ); ?>
+                    <?php $closed_message = apply_filters( 'b3_registration_closed_message', get_site_option( 'b3_registration_closed_message' ) ); ?>
                     <?php $default_closed_message = apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ); ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
@@ -134,7 +134,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_first_last_required = ( 1 == get_site_option( 'b3_activate_first_last' ) ) ? false : true; ?>
+                        <?php $hide_first_last_required = ( 1 == $first_last ) ? false : true; ?>
                         <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
@@ -176,7 +176,7 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_privacy_settings = ( 1 == get_site_option( 'b3_privacy' ) ) ? false : true; ?>
+                    <?php $hide_privacy_settings = ( 1 == $privacy ) ? false : true; ?>
                     <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>

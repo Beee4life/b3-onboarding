@@ -13,6 +13,8 @@
         $hide_admin_bar          = get_site_option( 'b3_hide_admin_bar' );
         $roles                   = get_editable_roles();
         $user_may_delete         = get_site_option( 'b3_user_may_delete' );
+        $restrict_admin          = get_site_option( 'b3_restrict_admin' );
+        $registration_type       = get_site_option( 'b3_registration_type' );
         asort( $roles );
 
         ob_start();
@@ -28,7 +30,7 @@
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
-            <?php $hide_front_end_approval = ( 'request_access' == get_site_option( 'b3_registration_type' ) ) ? false : 'hidden'; ?>
+            <?php $hide_front_end_approval = ( 'request_access' == $registration_type ) ? false : 'hidden'; ?>
             <?php b3_get_settings_field_open($hide_front_end_approval ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
@@ -67,7 +69,7 @@
                     </p>
                     <?php
                         $dont_show_roles  = array( 'administrator', 'b3_approval', 'b3_activation' );
-                        $stored_roles     = ( is_array( get_site_option( 'b3_restrict_admin' ) ) ) ? get_site_option( 'b3_restrict_admin' ) : array( 'b3_activation', 'b3_approval' );
+                        $stored_roles     = ( is_array( $restrict_admin ) ) ? $restrict_admin : array( 'b3_activation', 'b3_approval' );
                         foreach( $roles as $name => $values ) {
                             if ( ! in_array( $name, $dont_show_roles ) ) {
                                 ?>
