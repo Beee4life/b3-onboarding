@@ -43,9 +43,6 @@
             <?php } ?>
 
             <?php if ( ! empty( $all_users ) ) { ?>
-                <h3>
-                    <?php esc_html_e( 'Last registered users', 'b3-onboarding' ); ?>
-                </h3>
 
                 <table class="b3_table">
                     <thead>
@@ -59,13 +56,9 @@
                         <?php foreach( $all_users as $user ) { ?>
                             <tr>
                                 <td>
-                                    <?php if ( current_user_can( 'edit_users' ) ) { ?>
                                     <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->ID ); ?>">
-                                    <?php } ?>
-                                    <?php echo $user->user_login; ?>
-                                    <?php if ( current_user_can( 'edit_users' ) ) { ?>
+                                        <?php echo $user->user_login; ?>
                                     </a>
-                                    <?php } ?>
                                 </td>
                                 <td>
                                     [<?php echo $user->ID; ?>]
@@ -78,9 +71,6 @@
                     </tbody>
                 </table>
             <?php } else { ?>
-                <h3>
-                    <?php esc_html_e( 'Last registered users', 'b3-onboarding' ); ?>
-                </h3>
                 <?php if ( 'closed' == get_site_option( 'b3_registration_type' ) ) { ?>
                     <p>
                         <?php printf( __( "You're the only user right now, but that can be because user registration is not allowed. Change it <a href=\"%s\">here</a>.", 'b3-onboarding' ), B3_PLUGIN_SETTINGS . '&tab=registration' ); ?>
@@ -95,7 +85,7 @@
         <?php
     }
     if ( current_user_can( 'promote_users' ) ) {
-        wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding', 'b3_dashboard_widget_function' );
+        wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding - Last registered users', 'b3_dashboard_widget_function' );
     }
 
 
