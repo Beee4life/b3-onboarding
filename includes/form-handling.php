@@ -74,6 +74,118 @@
     
     
     /**
+     * Form handling email settings
+     *
+     * @since 2.6.0
+     */
+    function b3_emails_form_handling() {
+        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+            if ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
+                if ( ! wp_verify_nonce( $_POST[ 'b3_registration_nonce' ], 'b3-registration-nonce' ) ) {
+                    B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
+                    
+                    return;
+                } else {
+                    
+                    if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
+                        if ( is_multisite() ) {
+                            $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
+                            if ( 'closed' == $ms_registration_type ) {
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'request_access_subdomain' == $ms_registration_type ) {
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'blog' == $ms_registration_type ) {
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'user' == $ms_registration_type ) {
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            } elseif ( 'all' == $ms_registration_type ) {
+                                update_site_option( 'b3_registration_type', $ms_registration_type );
+                            }
+                        } else {
+                            if ( 'closed' == $_POST[ 'b3_registration_type' ] ) {
+                                update_option( 'users_can_register', 0 );
+                            } else {
+                                update_option( 'users_can_register', 1 );
+                            }
+                            update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ] );
+                        }
+                    }
+                    
+                    if ( 'closed' == get_site_option( 'b3_registration_type' ) ) {
+                        if ( isset( $_POST[ 'b3_registration_closed_message' ] ) ) {
+                            update_site_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ) );
+                        } else {
+                            delete_site_option( 'b3_registration_closed_message' );
+                        }
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
+                        update_site_option( 'b3_register_email_only', 1 );
+                    } else {
+                        delete_site_option( 'b3_register_email_only' );
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) && 1 == $_POST[ 'b3_activate_custom_passwords' ] ) {
+                        update_site_option( 'b3_activate_custom_passwords', 1 );
+                    } else {
+                        delete_site_option( 'b3_activate_custom_passwords' );
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
+                        update_site_option( 'b3_first_last_required', 1 );
+                    } else {
+                        delete_site_option( 'b3_first_last_required' );
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_activate_first_last' ] ) && 1 == $_POST[ 'b3_activate_first_last' ] ) {
+                        update_site_option( 'b3_activate_first_last', 1 );
+                    } else {
+                        delete_site_option( 'b3_activate_first_last' );
+                        delete_site_option( 'b3_first_last_required' );
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_redirect_set_password' ] ) && 1 == $_POST[ 'b3_redirect_set_password' ] ) {
+                        update_site_option( 'b3_redirect_set_password', 1 );
+                    } else {
+                        delete_site_option( 'b3_redirect_set_password' );
+                    }
+                    
+                    if ( ! is_multisite() ) {
+                        if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && 1 == $_POST[ 'b3_disallowed_usernames' ] ) {
+                            update_site_option( 'b3_disallowed_usernames', sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] ) );
+                        } else {
+                            delete_site_option( 'b3_disallowed_usernames' );
+                        }
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
+                        update_site_option( 'b3_privacy', 1 );
+                    } else {
+                        delete_site_option( 'b3_privacy' );
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_privacy_page' ] ) ) {
+                        update_site_option( 'b3_privacy_page', $_POST[ 'b3_privacy_page' ] );
+                    } else {
+                        delete_site_option( 'b3_privacy_page' );
+                    }
+                    
+                    if ( isset( $_POST[ 'b3_privacy_text' ] ) ) {
+                        update_site_option( 'b3_privacy_text', htmlspecialchars( $_POST[ 'b3_privacy_text' ] ) );
+                    }
+                    
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Registration settings saved', 'b3-onboarding' ) );
+                    
+                    return;
+                    
+                }
+            }
+        }
+    }
+    add_action( 'init', 'b3_emails_form_handling', 1 );
+    
+    
+    /**
      * Form handling page settings
      *
      * @since 2.6.0
@@ -117,110 +229,6 @@
         }
     }
     add_action( 'init', 'b3_pages_form_handling', 1 );
-    
-    
-    /**
-     * Form handling email settings
-     *
-     * @since 2.6.0
-     */
-    function b3_emails_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            if ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
-                if ( ! wp_verify_nonce( $_POST[ 'b3_registration_nonce' ], 'b3-registration-nonce' ) ) {
-                    B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
-
-                    return;
-                } else {
-
-                    if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
-                        if ( is_multisite() ) {
-                            $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
-                            if ( 'closed' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'request_access_subdomain' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'blog' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'user' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'all' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            }
-                        } else {
-                            if ( 'closed' == $_POST[ 'b3_registration_type' ] ) {
-                                update_option( 'users_can_register', 0 );
-                            } else {
-                                update_option( 'users_can_register', 1 );
-                            }
-                            update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ] );
-                        }
-                    }
-
-                    if ( 'closed' == get_site_option( 'b3_registration_type' ) ) {
-                        if ( isset( $_POST[ 'b3_registration_closed_message' ] ) ) {
-                            update_site_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ) );
-                        } else {
-                            delete_site_option( 'b3_registration_closed_message' );
-                        }
-                    }
-
-                    if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
-                        update_site_option( 'b3_register_email_only', 1 );
-                    } else {
-                        delete_site_option( 'b3_register_email_only' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) && 1 == $_POST[ 'b3_activate_custom_passwords' ] ) {
-                        update_site_option( 'b3_activate_custom_passwords', 1 );
-                    } else {
-                        delete_site_option( 'b3_activate_custom_passwords' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
-                        update_site_option( 'b3_first_last_required', 1 );
-                    } else {
-                        delete_site_option( 'b3_first_last_required' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_activate_first_last' ] ) && 1 == $_POST[ 'b3_activate_first_last' ] ) {
-                        update_site_option( 'b3_activate_first_last', 1 );
-                    } else {
-                        delete_site_option( 'b3_activate_first_last' );
-                        delete_site_option( 'b3_first_last_required' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_redirect_set_password' ] ) && 1 == $_POST[ 'b3_redirect_set_password' ] ) {
-                        update_site_option( 'b3_redirect_set_password', 1 );
-                    } else {
-                        delete_site_option( 'b3_redirect_set_password' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
-                        update_site_option( 'b3_privacy', 1 );
-                    } else {
-                        delete_site_option( 'b3_privacy' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_privacy_page' ] ) ) {
-                        update_site_option( 'b3_privacy_page', $_POST[ 'b3_privacy_page' ] );
-                    } else {
-                        delete_site_option( 'b3_privacy_page' );
-                    }
-
-                    if ( isset( $_POST[ 'b3_privacy_text' ] ) ) {
-                        update_site_option( 'b3_privacy_text', htmlspecialchars( $_POST[ 'b3_privacy_text' ] ) );
-                    }
-
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Registration settings saved', 'b3-onboarding' ) );
-
-                    return;
-
-                }
-            }
-        }
-    }
-    add_action( 'init', 'b3_emails_form_handling', 1 );
     
     
     /**
