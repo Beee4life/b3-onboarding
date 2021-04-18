@@ -800,6 +800,8 @@
                             }
 
                             if ( ! is_multisite() ) {
+                                // @TODO: check for disallowed user names
+
                                 $role = get_option( 'default_role', 'subscriber' );
                                 if ( 'closed' == $registration_type ) {
                                     // Registration closed, display error
