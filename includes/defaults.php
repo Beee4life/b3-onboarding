@@ -56,7 +56,9 @@
      * @return false|string
      */
     function b3_default_email_footer() {
-        return __( 'This is an automated email from the website <a href="%home_url%">%blog_name%</a>.', 'b3-onboarding' );
+        $anchor = ( is_multisite() ) ? '%network_name%' : '%blog_name%';
+
+        return __( 'This is an automated email from the website <a href="%home_url%">' . $anchor . '</a>.', 'b3-onboarding' );
     }
 
 
@@ -106,7 +108,7 @@
     function b3_default_new_user_admin_message() {
         $admin_message = sprintf( __( 'A new user registered at %s on %s', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . ".\n";
         $admin_message .= '<br /><br />' . "\n";
-        if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
+        if ( true == get_site_option( 'b3_activate_custom_passwords' ) ) {
             $admin_message .= sprintf( __( 'User ID: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
         } else {
             $admin_message .= sprintf( __( 'User name: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";
@@ -139,13 +141,13 @@
      */
     function b3_default_account_activated_message() {
 
-        if ( true == get_option( 'b3_register_email_only' ) ) {
+        if ( true == get_site_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( 'Hi', 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = sprintf( esc_html__( 'Hi %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
         }
         $message .= '<br /><br />' . "\n";
-        if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
+        if ( true != get_site_option( 'b3_activate_custom_passwords' ) ) {
             $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%lostpass_url%' ) . "\n";
         } else {
             $message .= sprintf( __( 'you have confirmed your email address and can now login <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_login_url() ) . "\n";
@@ -231,7 +233,7 @@
      * @return string
      */
     function b3_default_account_approved_message() {
-        if ( true == get_option( 'b3_activate_custom_passwords', false ) ) {
+        if ( true == get_site_option( 'b3_activate_custom_passwords' ) ) {
             return sprintf( __( 'Welcome to %s. Your account has been approved and you can now login <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_login_url() ) );
         } else {
             return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_lostpassword_url() ) );
@@ -320,7 +322,7 @@
      * @return string
      */
     function b3_default_welcome_user_message() {
-        if ( true == get_option( 'b3_register_email_only' ) ) {
+        if ( true == get_site_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
@@ -328,7 +330,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
-        if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
+        if ( true != get_site_option( 'b3_activate_custom_passwords' ) ) {
             $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
             $message .= '<br /><br />' . "\n";
         }
@@ -341,7 +343,7 @@
 
 
     function b3_default_manual_welcome_user_message() {
-        if ( true == get_option( 'b3_register_email_only' ) ) {
+        if ( true == get_site_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
@@ -380,7 +382,7 @@
      */
     function b3_default_email_activation_message() {
 
-        if ( 1 == get_option( 'b3_register_email_only', false ) ) {
+        if ( 1 == get_site_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = sprintf( esc_html__( 'Welcome %s', 'b3-onboarding' ), '%user_login%' ) . ',' . "\n";
@@ -393,6 +395,167 @@
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+
+        return $message;
+    }
+
+
+    /**
+     * Default activate user email subject (WPMU)
+     *
+     * %s = Site name, translated/replaced by Wordpress
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_activate_user_subject() {
+        return __( '%s: Confirm your registration', 'b3-onboarding' );
+    }
+
+
+    /**
+     * Default activate user email message (WPMU)
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_activate_user_message() {
+        $message = __( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'To activate your account, please click <a href="%2$s">this link</a>.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
+
+        return $message;
+    }
+
+
+    /**
+     * Default user activated email message (WPMU)
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_user_activated_subject() {
+        return __( 'Welcome to %1$s', 'b3-onboarding' );
+    }
+
+
+    /**
+     * Default user activated email message (WPMU)
+     *
+     * @return string|void
+     */
+    function b3_default_wpmu_user_activated_message() {
+        $message = __( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Username: %2$s', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Password: %3$s', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'You can login <a href="%4$s">here</a>.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'The Team @ %5$s', 'b3-onboarding' );
+
+        return $message;
+    }
+
+
+    /**
+     * Default admin subject for new wpmu user (no site)
+     *
+     * @param false $user
+     *
+     * @return string
+     */
+    function b3_default_subject_new_wpmu_user_admin() {
+        return __( 'New User Registration: %s', 'b3-onboarding' );
+    }
+
+
+    /**
+     * Default admin message for new wpmu user (no site)
+     *
+     * @param false $user
+     *
+     * @return string
+     */
+    function b3_default_message_new_wpmu_user_admin() {
+        $message = __( 'New user: %user_login%', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Disable these notifications <a href="%settings_url%">here</a>.', 'b3-onboarding' );
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $message .= '<br /><br />';
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+
+        return $message;
+    }
+
+
+    function b3_default_subject_new_wpmu_user_blog( $user = false ) {
+
+        /* translators: New site notification email subject. 1: Network title, 2: New site URL. */
+        $subject = _x( '[%network_name%] Activate your account', 'New site notification email subject' );
+
+        return $subject;
+
+    }
+
+
+    function b3_default_message_new_wpmu_user_blog( $user = false ) {
+
+        $message = '';
+        if ( false != $user ) {
+            $message .= 'Hi %user_login%' . ",\n";
+            $message .= '<br /><br />' . "\n";
+        }
+        $message .= __( 'To activate your registration, please click <a href="%activation_url%">here</a>.', 'b3-onboarding') . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
+        $message .= '<br />' . "\n";
+        $message .= '<a href="%home_url%">%home_url%</a>' . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $message .= '<br /><br />';
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+
+        return $message;
+    }
+
+
+    function b3_default_subject_welcome_wpmu_user_blog() {
+        return 'New %network_name% Site: %site_name%';
+    }
+
+
+    function b3_default_message_welcome_wpmu_user_blog( $user_login = false ) {
+
+        $message = '';
+        if ( false != $user_login ) {
+            $message .= 'Hi %user_login%' . ",\n";
+            $message .= '<br /><br />' . "\n";
+        }
+        $message .= __( 'Your new site has been successfully set up at <a href="%home_url%">%home_url%</a>.', 'b3-onboarding') . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Username', 'b3-onboarding' ) . ': ' . '%user_login%' . "\n";
+        $message .= '<br />' . "\n";
+        $message .= __( 'Password', 'b3-onboarding' ) . ': ' . '%user_password%' . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Login here: <a href="%login_url%">%login_url%</a>', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Enjoy your new site.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $message .= '<br /><br />';
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
 
         return $message;
     }
@@ -423,6 +586,18 @@
 
 
     /**
+     * Return default registration register blog message
+     *
+     * @since 2.0.0
+     *
+     * @return string
+     */
+    function b3_default_logged_in_registration_only_message() {
+        return sprintf( __( 'You must first <a href="%s">log in</a>, and then you can create a new site.' ), wp_login_url() );
+    }
+
+
+    /**
      * Return default lost password message
      *
      * @since 2.0.0
@@ -430,10 +605,10 @@
      * @return string
      */
     function b3_get_default_message_above_lost_password() {
-        if ( 1 == get_option( 'b3_register_email_only' ) ) {
-            return __( "Please enter your email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+        if ( 1 == get_site_option( 'b3_register_email_only' ) ) {
+            return __( 'Please enter your email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
         } else {
-            return __( "Please enter your username or email address. You will receive an email with a link to (re)set your password.", 'b3-onboarding' );
+            return __( 'Please enter your username or email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
         }
     }
 
@@ -446,7 +621,7 @@
      * @return string
      */
     function b3_get_default_message_above_request_access() {
-        return __( "You have to request access for this website.", 'b3-onboarding' );
+        return __( 'You have to request access for this website.', 'b3-onboarding' );
     }
 
 
@@ -459,7 +634,7 @@
      */
     function b3_default_privacy_text() {
         $message      = __( 'Accept privacy settings', 'b3-onboarding' );
-        $privacy_page = get_option( 'b3_privacy_page' );
+        $privacy_page = get_site_option( 'b3_privacy_page' );
 
         if ( false != $privacy_page ) {
             $privacy_page_object = get_post( $privacy_page );

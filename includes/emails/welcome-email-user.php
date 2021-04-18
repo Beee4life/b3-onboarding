@@ -4,8 +4,8 @@
      *
      * @since 1.0.0
      */
-    $welcome_user_email_subject = get_option( 'b3_welcome_user_subject', false );
-    $welcome_user_email_message = get_option( 'b3_welcome_user_message', false );
+    $welcome_user_email_subject = get_site_option( 'b3_welcome_user_subject' );
+    $welcome_user_email_message = get_site_option( 'b3_welcome_user_message' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

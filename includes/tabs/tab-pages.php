@@ -13,42 +13,42 @@
             array(
                 'id'      => 'register_page',
                 'label'   => esc_html__( 'Register', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_register_page_id', false ),
+                'page_id' => get_site_option( 'b3_register_page_id' ),
             ),
             array(
                 'id'      => 'login_page',
                 'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_login_page_id', false ),
+                'page_id' => get_site_option( 'b3_login_page_id' ),
             ),
             array(
                 'id'      => 'logout_page',
                 'label'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_logout_page_id', false ),
+                'page_id' => get_site_option( 'b3_logout_page_id' ),
             ),
             array(
                 'id'      => 'lost_password_page',
                 'label'   => esc_html__( 'Lost Password', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_lost_password_page_id', false ),
+                'page_id' => get_site_option( 'b3_lost_password_page_id' ),
             ),
             array(
                 'id'      => 'reset_password_page',
                 'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_reset_password_page_id', false ),
+                'page_id' => get_site_option( 'b3_reset_password_page_id' ),
             ),
             array(
                 'id'      => 'account_page',
                 'label'   => esc_html__( 'Account', 'b3-onboarding' ),
-                'page_id' => get_option( 'b3_account_page_id', false ),
+                'page_id' => get_site_option( 'b3_account_page_id' ),
             ),
         );
 
         $front_end_approval = array(
             'id'      => 'approval_page',
             'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
-            'page_id' => get_option( 'b3_approval_page_id', false ),
+            'page_id' => get_site_option( 'b3_approval_page_id' ),
         );
 
-        if ( true == get_option( 'b3_front_end_approval', false ) ) {
+        if ( true == get_site_option( 'b3_front_end_approval' ) ) {
             $b3_pages[] = $front_end_approval;
         }
 
@@ -76,20 +76,27 @@
             <?php foreach( $b3_pages as $page ) { ?>
                 <div class="b3_select-page">
                     <?php b3_get_label_field_open(); ?>
-                    <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo $page[ 'label' ]; ?></label>
+                    <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo esc_attr( $page[ 'label' ] ); ?></label>
                     <?php b3_get_close(); ?>
 
                     <div class="b3_select-page__selector">
                         <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
-                            <option value=""> <?php esc_html_e( "Select a page", "b3-user-regiser" ); ?></option>
+                            <option value=""> <?php esc_attr_e( "Select a page", "b3-user-regiser" ); ?></option>
                             <?php if ( class_exists( 'SitePress' ) ) { ?>
                                 <?php $default_lang = apply_filters( 'wpml_default_language', null ); ?>
                                 <?php foreach( $all_pages as $active_page ) { ?>
-                                    <?php $post_language_information = wpml_get_language_information( '', $active_page->ID ); ?>
-                                    <?php if ( $post_language_information[ 'language_code' ] == $default_lang ) { ?>
+
+                                    <?php if ( function_exists( 'wpml_get_language_information' ) ) { ?>
+                                        <?php $post_language_information = wpml_get_language_information( '', $active_page->ID ); ?>
+                                        <?php if ( $post_language_information[ 'language_code' ] == $default_lang ) { ?>
+                                            <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
+                                            <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                                        <?php } ?>
+                                    <?php } else { ?>
                                         <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
                                         <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
                                     <?php } ?>
+
                                 <?php } ?>
                             <?php } else { ?>
                                 <?php foreach( $all_pages as $active_page ) { ?>
@@ -107,14 +114,14 @@
                             </a>
                         </div>
                     <?php } ?>
-                    <?php if ( false != get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
+                    <?php if ( false != get_site_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
                         <div class="b3_select-page__edit">
-                            <a href="<?php echo get_edit_post_link( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>">
+                            <a href="<?php echo get_edit_post_link( get_site_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>">
                                 <?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>
                             </a>
                         </div>
                         <div class="b3_select-page__link">
-                            <a href="<?php echo get_the_permalink( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Visit', 'b3-onboarding' ); ?>">
+                            <a href="<?php echo get_the_permalink( get_site_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_html_e( 'Visit', 'b3-onboarding' ); ?>">
                                 <?php esc_html_e( 'Visit', 'b3-onboarding' ); ?>
                             </a>
                         </div>

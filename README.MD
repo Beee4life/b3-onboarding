@@ -104,10 +104,9 @@ These are the things we have planned to add.
 * [X] disallow certain user names
 * [X] validate extra fields added through a filter
 * [X] look more into responsiveness
-* [ ] reCaptcha v3
-* [ ] add filter for username
-* [ ] make it work with Multisite
-* [ ] make it work with WPML
+* [X] reCaptcha v3
+* [X] make it work with Multisite
+* [X] make it work with WPML
 * [ ] add more filter and/or inputs
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
@@ -120,7 +119,8 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 2.6.0
-* ...
+* add option to request access to create a site (multisite)
+* add reCaptcha v3
 
 2.5.0
 * improve html/css for account page

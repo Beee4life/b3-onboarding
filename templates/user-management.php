@@ -1,8 +1,12 @@
 <?php
-    $show_first_last_name = get_option( 'b3_activate_first_last', false );
-    $register_email_only  = get_option( 'b3_register_email_only', false );
-    $user_args            = array( 'role' => 'b3_approval' );
-    $users                = get_users( $user_args );
+    if ( is_multisite() ) {
+        global $wpdb;
+        $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
+        $users = $wpdb->get_results( $query );
+    } else {
+        $user_args = array( 'role' => 'b3_approval' );
+        $users     = get_users( $user_args );
+    }
 
     if ( current_user_can( 'promote_users' ) ) {
         $user_approved    = esc_html__( 'User is successfully approved.', 'b3-onboarding' );
@@ -38,14 +42,20 @@
             <thead>
             <tr>
                 <th>
-                    <?php echo esc_html__( 'User ID', 'b3-onboarding' ); ?>
+                    <?php
+                        if ( is_multisite() ) {
+                            echo esc_html__( 'Signup ID', 'b3-onboarding' );
+                        } else {
+                            echo esc_html__( 'User ID', 'b3-onboarding' );
+                        }
+                    ?>
                 </th>
-                <?php if ( false == $register_email_only ) { ?>
+                <?php if ( false == $attributes[ 'register_email_only' ] ) { ?>
                     <th>
                         <?php echo esc_html__( 'User name', 'b3-onboarding' ); ?>
                     </th>
                 <?php } ?>
-                <?php if ( false != $show_first_last_name ) { ?>
+                <?php if ( false != $attributes[ 'show_first_last_name' ] ) { ?>
                     <th>
                         <?php echo esc_html__( 'First name', 'b3-onboarding' ); ?>
                     </th>
@@ -56,6 +66,14 @@
                 <th>
                     <?php echo esc_html__( 'Email', 'b3-onboarding' ); ?>
                 </th>
+                <?php if ( is_multisite() ) { ?>
+                    <th>
+                        <?php echo esc_html__( 'Domain', 'b3-onboarding' ); ?>
+                    </th>
+                    <th>
+                        <?php echo esc_html__( 'Site name', 'b3-onboarding' ); ?>
+                    </th>
+                <?php } ?>
                 <th>
                     <?php echo esc_html__( 'Actions', 'b3-onboarding' ); ?>
                 </th>
@@ -64,21 +82,42 @@
             <tbody>
             <?php foreach( $users as $user ) { ?>
                 <tr>
-                    <td><?php echo $user->ID; ?></td>
-                    <?php if ( false == $register_email_only ) { ?>
+                    <td>
+                        <?php
+                            if ( is_multisite() ) {
+                                echo $user->signup_id;
+                            } else {
+                                echo $user->ID;
+                            }
+                        ?>
+                    </td>
+
+                    <?php if ( false == $attributes[ 'register_email_only' ] ) { ?>
                         <td><?php echo $user->user_login; ?></td>
                     <?php } ?>
-                    <?php if ( false != $show_first_last_name ) { ?>
+
+                    <?php if ( false != $attributes[ 'show_first_last_name' ] ) { ?>
                         <td><?php echo $user->first_name; ?></td>
                         <td><?php echo $user->last_name; ?></td>
                     <?php } ?>
+
                     <td><?php echo $user->user_email; ?></td>
+
+                    <?php if ( is_multisite() ) { ?>
+                        <td><?php echo $user->domain; ?></td>
+                        <td><?php echo $user->title; ?></td>
+                    <?php } ?>
+
                     <td>
                         <form name="b3_user_management" action="" method="post">
                             <input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
-                            <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
-                            <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr( 'Approve', 'b3-onboarding' ); ?>" />
-                            <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr( 'Reject', 'b3-onboarding' ); ?>" />
+                            <input name="b3_approve_user" class="button" type="submit" value="<?php echo __( 'Approve', 'b3-onboarding' ); ?>" />
+                            <input name="b3_reject_user" class="button" type="submit" value="<?php echo __( 'Reject', 'b3-onboarding' ); ?>" />
+                            <?php if ( is_multisite() ) { ?>
+                                <input name="b3_signup_id" type="hidden" value="<?php echo $user->signup_id; ?>" />
+                            <?php } else { ?>
+                                <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
+                            <?php } ?>
                         </form>
                     </td>
                 </tr>

@@ -307,7 +307,7 @@
 
 
     /**
-     * Extend reserved usernames
+     * Extend disallowed usernames
      *
      * @since 2.0.x TODO
      *
@@ -315,14 +315,46 @@
      *
      * @return string|array
      */
-    function b3_reserved_usernames_example() {
+    function b3_disallowed_usernames_example() {
 
-        $reserved_user_names = [
+        $disallowed_user_names = [
             'username1',
             'username2',
         ];
 
-        return $reserved_user_names;
+        return $disallowed_user_names;
 
     }
-    // add_filter( 'b3_reserved_usernames', 'b3_reserved_usernames_example' );
+    // add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
+
+
+    /**
+     * Override label "A site"
+     *
+     * @since 2.6.0
+     *
+     * @param $label
+     *
+     * @return mixed
+     */
+    function b3_signup_for_site( $label ) {
+        return $label;
+    }
+    // add_filter( 'b3_signup_for_site', 'b3_signup_for_site' );
+
+
+    /**
+     * Override label "Just a user"
+     *
+     * @since 2.6.0
+     *
+     * @param $label
+     *
+     * @return mixed
+     */
+    function b3_signup_for_user( $label ) {
+        return $label;
+    }
+    // add_filter( 'b3_signup_for_user', 'b3_signup_for_user' );
+
+

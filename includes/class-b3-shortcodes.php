@@ -42,10 +42,49 @@
                 );
                 $attributes = shortcode_atts( $default_attributes, $user_variables );
 
+                if ( is_multisite() ) {
+                    $registration_type = get_site_option( 'b3_registration_type' );
+                } else {
+                    $registration_type = get_option( 'b3_registration_type' );
+                }
+                $attributes[ 'registration_type' ] = $registration_type;;
+
                 if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
-                } elseif ( 'closed' == get_option( 'b3_registration_type', false ) ) {
+                    if ( 'all' == $registration_type ) {
+                        // register site only, if registration type == user, he should be blocked already
+                    } elseif ( ! in_array( $registration_type, [ 'blog' ] ) ) {
+                        return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                    }
+                }
+
+                if ( in_array( $registration_type, [ 'closed', 'none' ] ) ) {
                     return '<p class="b3_message">' . apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) . '</p>';
+                } elseif ( in_array( $registration_type, [ 'blog' ] ) && ! is_user_logged_in() ) {
+                    return '<p class="b3_message">' . apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) . '</p>';
+                } elseif ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' == $_REQUEST[ 'registered' ] ) {
+                    if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
+                        switch_to_blog( $_GET['site_id'] );
+                        $home_url  = home_url( '/' );
+                        $admin_url = admin_url( '/' );
+                        restore_current_blog();
+                        $message = '<p class="b3_message">';
+                        $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
+                        $message .= '<br />';
+                        $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
+                        $message .= '<a href="' . esc_url( $home_url ) . '">' . esc_url( $home_url ) . '</a>';
+                        $message .= '<br />';
+                        $message .= sprintf( __( 'You can manage your new site <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( $admin_url ) );
+                        $message .= '</p>';
+
+                        return $message;
+                    } else {
+                        // fallback
+                        $message = '<p class="b3_message">';
+                        $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
+                        $message .= '</p>';
+
+                        return $message;
+                    }
                 } else {
 
                     $attributes[ 'errors' ] = array();
@@ -68,21 +107,35 @@
                                             $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
                                         }
                                     } else {
-                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
+                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                                     }
                                 }
                             }
                             $error_count++;
                         }
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                        // this is for demonstration setup
+                        // dummy is for demonstration setup
                         if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
+                        } elseif ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         }
                     }
+                    
+                    if ( 1 == get_site_option( 'b3_activate_recaptcha') && in_array( $attributes[ 'template' ], get_site_option( 'b3_recaptcha_on', ['register'] ) ) ) {
+                        // add recaptcha stuff
+                        $recaptcha_public  = get_site_option( 'b3_recaptcha_public' );
+                        $recaptcha_version = get_site_option( 'b3_recaptcha_version' );
+    
+                        $attributes[ 'recaptcha' ] = [
+                            'public'  => $recaptcha_public,
+                            'version' => $recaptcha_version,
+                        ];
+                    }
+
+                    B3Onboarding::b3_show_admin_notices();
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
-
                 }
             }
 
@@ -132,8 +185,7 @@
                     if ( is_multisite() ) {
                         $attributes[ 'messages' ][] = sprintf(
                             __( 'You have successfully registered to <strong>%s</strong>. We have emailed you an activation link.', 'b3-onboarding' ),
-                            get_bloginfo( 'name' )
-                        );
+                            get_site_option( 'site_name' ) );
                     } else {
                         if ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
                             // access_requested
@@ -151,6 +203,8 @@
                     }
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' == $_REQUEST[ 'activate' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
+                } elseif ( isset( $_REQUEST[ 'mu-activate' ] ) && 'success' == $_REQUEST[ 'mu-activate' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'mu_activate_success' );
                 } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' == $_REQUEST[ 'password' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'password_updated' );
                 } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' == $_REQUEST[ 'checkemail' ] ) {
@@ -160,8 +214,9 @@
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
-
-                $attributes[ 'errors' ] = $errors;
+    
+                $attributes[ 'errors' ]            = $errors;
+                $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );;
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
@@ -291,6 +346,8 @@
                     }
                     $attributes[ 'errors' ] = $errors;
 
+                    $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );
+
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {
                         $attributes[ 'updated' ] = $this->b3_get_return_message( $_REQUEST[ 'updated' ] );
                     }
@@ -329,7 +386,12 @@
                             $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
-                    $attributes[ 'errors' ] = $errors;
+                    $attributes[ 'errors' ]               = $errors;
+                    $attributes[ 'register_email_only' ]  = get_site_option( 'b3_register_email_only' );
+                    $attributes[ 'registration_type' ]    = get_site_option( 'b3_registration_type' );;
+                    $attributes[ 'show_first_last_name' ] = get_site_option( 'b3_activate_first_last' );
+
+                    B3Onboarding::b3_show_admin_notices();
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 

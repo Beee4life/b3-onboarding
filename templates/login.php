@@ -4,15 +4,14 @@
      *
      * @since 1.0.0
      */
-    $request_access = get_option( 'b3_registration_type', false );
-    $label          = esc_attr__( 'Username or Email address', 'b3-onboarding' );
+    $label = esc_attr__( 'Username or Email address', 'b3-onboarding' );
 
-    if ( 1 == get_option( 'b3_register_email_only', false ) ) {
+    if ( 1 == get_site_option( 'b3_register_email_only' ) ) {
         $label = esc_attr__( 'Email address', 'b3-onboarding' );
     }
 
+    do_action( 'b3_add_form_messages', $attributes );
 ?>
-<?php do_action( 'b3_add_form_messages', $attributes ); ?>
 
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
@@ -45,7 +44,7 @@
         </div>
 
         <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php echo esc_attr( 'Log in', 'b3-onboarding' ); ?>">
+            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="<?php esc_attr_e( 'Log in', 'b3-onboarding' ); ?>">
             <?php if ( false !== $attributes[ 'redirect' ] ) { ?>
                 <input type="hidden" name="redirect_to" value="<?php echo esc_attr( $attributes[ 'redirect' ] ); ?>">
             <?php } ?>

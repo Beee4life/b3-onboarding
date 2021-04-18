@@ -31,7 +31,7 @@
      *
      * @return false|string
      */
-    function b3_basic_email_settings_field( $box = false ) {
+    function b3_basic_email_settings_field( $box = [] ) {
 
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
@@ -101,10 +101,25 @@
                 case 'lost_password':
                     include 'emails/lost-password.php';
                     break;
+                // Multisite specific
+                case 'confirm_user_email':
+                    include 'emails/ms-confirm-user-email.php';
+                    break;
+                case 'activated_user_email':
+                    include 'emails/ms-activated-user-email.php';
+                    break;
+                case 'confirm_user_site_email':
+                    include 'emails/ms-confirm-user-site-email.php';
+                    break;
+                case 'activated_user_site_email':
+                    include 'emails/ms-activated-user-site-email.php';
+                    break;
+                case 'new_wpmu_user_admin':
+                    include 'emails/ms-new-user-admin.php';
+                    break;
                 case 'visitor_register':
                     include 'emails/ms-visitor-register.php';
                     break;
-                // Multisite specific
                 case 'visitor_register_site':
                     include 'emails/ms-visitor-register-site.php';
                     break;

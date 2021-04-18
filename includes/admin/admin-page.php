@@ -52,21 +52,23 @@
                                 'content' => b3_render_tab_content( 'settings' ),
                                 'icon'    => 'admin-generic',
                             ),
-                            array(
+                        );
+                        if ( is_main_site() ) {
+                            $tabs[] = array(
                                 'id'      => 'registration',
                                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'registration' ),
                                 'icon'    => 'shield',
-                            ),
-                            array(
+                            );
+                            $tabs[] = array(
                                 'id'      => 'pages',
                                 'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'pages' ),
                                 'icon'    => 'admin-page',
-                            ),
-                        );
+                            );
+                        }
 
-                        if ( 1 == get_option( 'b3_style_wordpress_forms', false ) ) {
+                        if ( 1 == get_site_option( 'b3_style_wordpress_forms' ) ) {
                             $tabs[] = array(
                                 'id'      => 'wordpress',
                                 'title'   => 'WordPress',
@@ -81,21 +83,23 @@
                             'content' => b3_render_tab_content( 'emails' ),
                             'icon'    => 'email',
                         );
-
-                        $tabs[] = array(
-                            'id'      => 'users',
-                            'title'   => esc_html__( 'Users', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'users' ),
-                            'icon'    => 'admin-users',
-                        );
-
-                        if ( true == get_option( 'b3_activate_recaptcha', false ) ) {
+    
+                        if ( is_main_site() ) {
                             $tabs[] = array(
-                                'id'      => 'recaptcha',
-                                'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'recaptcha' ),
-                                'icon'    => 'plus-alt',
+                                'id'      => 'users',
+                                'title'   => esc_html__( 'Users', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'users' ),
+                                'icon'    => 'admin-users',
                             );
+
+                            if ( true == get_site_option( 'b3_activate_recaptcha' ) ) {
+                                $tabs[] = array(
+                                    'id'      => 'recaptcha',
+                                    'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
+                                    'content' => b3_render_tab_content( 'recaptcha' ),
+                                    'icon'    => 'plus-alt',
+                                );
+                            }
                         }
                     ?>
                     <div class="b3_tab-header">
@@ -103,7 +107,7 @@
                             <?php
                                 $hide_wordpress = false;
                                 if ( 'wordpress' == $tab[ 'id' ] ) {
-                                    if ( 1 != get_option( 'b3_style_wordpress_forms', false ) ) {
+                                    if ( 1 != get_site_option( 'b3_style_wordpress_forms' ) ) {
                                         $hide_wordpress = ' hidden';
                                     }
                                 }

@@ -41,7 +41,7 @@
             ),
         );
 
-        b3_create_pages( $page_definitions, $create_new_site );
+        b3_create_pages( $page_definitions );
     }
 
     /**
@@ -50,13 +50,12 @@
      * @since 1.0.6
      *
      * @param array $page_definitions
-     * @param bool  $create_new_site
      */
-    function b3_create_pages( $page_definitions = array(), $create_new_site = false ) {
+    function b3_create_pages( $page_definitions = array() ) {
         foreach ( $page_definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
-            $stored_id = get_option( $slug, false );
+            $stored_id = get_site_option( $slug );
             if ( $stored_id ) {
                 $check_page = get_post( $stored_id );
                 if ( ! $check_page ) {
@@ -66,15 +65,13 @@
                 // no stored id, so continue
             }
 
-            $existing_page = array();
-            if ( false == $create_new_site ) {
-                $existing_page_args = [
-                    'post_type'      => 'page',
-                    'posts_per_page' => 1,
-                    'pagename'       => $slug,
-                ];
-                $existing_page = get_posts( $existing_page_args );
-            }
+            $existing_page_args = array(
+                'post_type'      => 'page',
+                'posts_per_page' => 1,
+                'pagename'       => $slug,
+            );
+            $existing_page = get_posts( $existing_page_args );
+
             if ( ! empty( $existing_page ) ) {
                 $add_shortcode = false;
                 $page_id       = $existing_page[ 0 ]->ID;
@@ -83,7 +80,7 @@
 
                 if ( false != $meta ) {
                     // page has _b3_page meta
-                    update_option( $page[ 'meta' ], $page_id );
+                    update_site_option( $page[ 'meta' ], $page_id );
                     if ( ! empty( $page_object->post_content ) ) {
                         if ( strpos( $page_object->post_content, $page[ 'content' ] ) === false ) {
                             $add_shortcode = true;
@@ -93,15 +90,14 @@
                     }
                 }
                 if ( true === $add_shortcode ) {
-                    $new_args = [
+                    $new_args = array(
                         'ID'           => $page_id,
                         'post_content' => $page[ 'content' ],
-                    ];
+                    );
                     wp_update_post( $new_args );
                 }
-            }
-            if ( empty( $existing_page ) ) {
-                $result = wp_insert_post( array(
+            } else {
+                $new_post_args = array(
                     'post_title'     => $page[ 'title' ],
                     'post_name'      => $slug,
                     'post_content'   => $page[ 'content' ],
@@ -109,11 +105,10 @@
                     'post_type'      => 'page',
                     'ping_status'    => 'closed',
                     'comment_status' => 'closed',
-                ),
-                    true
                 );
+                $result = wp_insert_post( $new_post_args, true );
                 if ( ! is_wp_error( $result ) ) {
-                    update_option( $page[ 'meta' ], $result, true );
+                    update_site_option( $page[ 'meta' ], $result );
                     update_post_meta( $result, '_b3_page', true );
                 }
             }
@@ -169,7 +164,6 @@
                         <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo $field_value; ?></textarea>
 
                     <?php } elseif ( in_array( $input_type, array( 'true_false' ) ) ) { ?>
-
                         <?php $selected = false; ?>
                         <label for="<?php echo $input_id; ?>" class="screen-reader-text"><?php echo $input_label; ?></label>
                         <input type="checkbox" id="<?php echo $input_id; ?>" name="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" /> <?php echo $input_description; ?>
@@ -183,7 +177,7 @@
                                     <div class="b3_input-option b3_input-option--<?php echo $input_type; ?>">
                                         <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
                                         <?php if ( in_array( $input_type, array( 'radio' ) ) ) { ?>
-                                            <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value ) ? ' checked="checked"' : false; ?>
+                                            <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                         <?php } elseif ( in_array( $input_type, array( 'checkbox' ) ) ) { ?>
                                             <?php $selected = ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) ? ' checked="checked"' : ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                         <?php } ?>
@@ -238,13 +232,20 @@
             }
         }
 
-        $user_login = ( true != get_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
+        $user_login = ( true != get_site_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
 
         $replacements = array(
-            '%blog_name%'   => get_option( 'blogname' ),
-            '%user_login%'  => $user_login,
-            '%first_name%'  => ( false != $user_data ) ? $user_data->first_name : false,
+            '%blog_name%'    => get_option( 'blogname' ),
+            '%network_name%' => get_site_option( 'site_name' ),
+            '%user_login%'   => $user_login,
+            '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
         );
+
+        if ( isset( $vars[ 'blog_id' ] ) ) {
+            switch_to_blog( $vars[ 'blog_id' ] );
+            $replacements[ '%site_name%' ] = get_option( 'blogname' );
+            restore_current_blog();
+        }
 
         return $replacements;
 
@@ -289,22 +290,50 @@
 
         $replacements = array(
             '%account_page%'      => b3_get_account_url(),
+            '%login_url%'         => b3_get_login_url(),
             '%blog_name%'         => get_option( 'blogname' ),
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
             '%lostpass_url%'      => b3_get_lostpassword_url(),
             '%home_url%'          => get_home_url( '', '/' ),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
+            '%network_name%'      => get_site_option( 'site_name' ),
             '%registration_date%' => $local_registration_date,
             '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
             '%user_ip%'           => $user_ip,
             '%user_login%'        => $user_login,
         );
-        // Replace %blog_name% if used in the footer
-        if ( strpos( $replacements[ '%email_footer%' ], '%' ) !== false ) {
-            $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
+
+        if ( is_multisite() ) {
+            $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
+            $replacements[ '%settings_url%' ] = $options_site_url;
+
+            if ( isset( $vars[ 'blog_id' ] )  ) {
+                $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
+            }
+            if ( isset( $vars[ 'domain' ] ) && isset( $vars[ 'path' ] )  ) {
+                $replacements[ '%home_url%' ] = b3_get_protocol() . '://' . $vars[ 'domain' ] . $vars[ 'path' ];
+            }
+            if ( isset( $vars[ 'user_password' ] ) ) {
+                $replacements[ '%user_password%' ] = $vars[ 'user_password' ];
+            }
+            $replacements[ 'network_name' ] = get_option( 'name' );
         }
+
         if ( false != $activation ) {
-            $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
+            if ( is_multisite() ) {
+                if ( isset( $vars[ 'key' ] ) ) {
+                    $activate_url                       = b3_get_login_url() . "?activate=user&key={$vars[ 'key' ]}";
+                    $replacements[ '%activation_url%' ] = esc_url( $activate_url );
+                }
+            } else {
+                $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
+            }
+        }
+
+        // @TODO: look why this is here, test in non-mu site
+        // Replace %blog_name% if used in the footer
+        if ( strpos( $replacements[ '%email_footer%' ], '%blog_name%' ) !== false ) {
+            // $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
         }
 
         return $replacements;
@@ -324,17 +353,17 @@
 
         if ( false != $message ) {
             $email_footer = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
-            $hide_logo    = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo    = ( '1' === get_site_option( 'b3_logo_in_email' ) ) ? false : true;
             $link_color   = apply_filters( 'b3_link_color', b3_get_link_color() );
             $styling      = apply_filters( 'b3_email_styling', b3_get_email_styling( $link_color ) );
             $template     = apply_filters( 'b3_email_template', b3_get_email_template( $hide_logo ) );
 
             if ( false != $styling && false != $template ) {
-                $replace_vars = [
+                $replace_vars = array(
                     '%email_footer%'  => $email_footer,
                     '%email_message%' => $message,
                     '%email_styling%' => $styling,
-                ];
+                );
                 $message = strtr( $template, $replace_vars );
             }
         }
@@ -352,7 +381,7 @@
      */
     function b3_verify_privacy() {
         $error = false;
-        if ( 1 == get_option( 'b3_privacy', false ) ) {
+        if ( 1 == get_option( 'b3_privacy' ) ) {
             if ( ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
                 $error = true;
             }
