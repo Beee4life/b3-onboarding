@@ -105,8 +105,8 @@ These are the things we have planned to add.
 * [X] validate extra fields added through a filter
 * [X] look more into responsiveness
 * [ ] reCaptcha v3
-* [ ] make it work with Multisite
-* [ ] make it work with WPML
+* [X] make it work with Multisite
+* [X] make it work with WPML
 * [ ] add more filter and/or inputs
 * [ ] add more security stuff
 * [ ] add code editor to styling/template inputs
@@ -118,6 +118,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+2.6.0
+* add option to request access to create a site (multisite)
+
 2.5.0
 * improve html/css for account page
 * improve protection of pages
