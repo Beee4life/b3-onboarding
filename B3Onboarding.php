@@ -1587,8 +1587,8 @@
                     case 'username_exists':
                         return esc_html__( 'This username is already in use.', 'b3-onboarding' );
 
-                    case 'reserved_username':
-                        return esc_html__( 'That user name is reserved, please choose another.', 'b3-onboarding' );
+                    case 'disallowed_username':
+                        return esc_html__( 'That user name is not allowed, please choose another.', 'b3-onboarding' );
 
                     case 'invalid_email':
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
@@ -1772,8 +1772,8 @@
                         return $errors;
                     }
 
-                    if ( in_array( $user_login, b3_get_reserved_usernames() ) ) {
-                        $errors->add( 'reserved_username', $this->b3_get_return_message( 'reserved_username' ) );
+                    if ( in_array( $user_login, b3_get_disallowed_usernames() ) ) {
+                        $errors->add( 'disallowed_username', $this->b3_get_return_message( 'disallowed_username' ) );
 
                         return $errors;
                     }

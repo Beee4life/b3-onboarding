@@ -762,7 +762,7 @@
      *
      * @return array
      */
-    function b3_get_reserved_usernames() {
+    function b3_get_disallowed_usernames() {
 
         $default_reserved_names = array(
             'admin',

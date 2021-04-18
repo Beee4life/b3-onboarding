@@ -307,7 +307,7 @@
 
 
     /**
-     * Extend reserved usernames
+     * Extend disallowed usernames
      *
      * @since 2.0.x TODO
      *
@@ -315,17 +315,17 @@
      *
      * @return string|array
      */
-    function b3_reserved_usernames_example() {
+    function b3_disallowed_usernames_example() {
 
-        $reserved_user_names = [
+        $disallowed_user_names = [
             'username1',
             'username2',
         ];
 
-        return $reserved_user_names;
+        return $disallowed_user_names;
 
     }
-    // add_filter( 'b3_reserved_usernames', 'b3_reserved_usernames_example' );
+    // add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
 
 
     /**
