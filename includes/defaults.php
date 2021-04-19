@@ -58,7 +58,7 @@
     function b3_default_email_footer() {
         $anchor = ( is_multisite() ) ? '%network_name%' : '%blog_name%';
 
-        return __( 'This is an automated email from the website <a href="%home_url%">' . $anchor . '</a>.', 'b3-onboarding' );
+        return sprintf( __( 'This is an automated email from the website <a href="%home_url%">%s</a>.', 'b3-onboarding' ), $anchor );
     }
 
 
