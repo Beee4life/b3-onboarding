@@ -233,16 +233,20 @@
         if ( is_multisite() ) {
             $multisite_options = array(
                 array(
-                    'value' => 'user', // @TODO: maybe change to user
+                    'value' => 'user',
                     'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
                 ),
                 array(
-                    'value' => 'blog', // @TODO: maybe change to blog
+                    'value' => 'blog',
                     'label' => esc_html__( 'Logged in user may register a site', 'b3-onboarding' ),
                 ),
                 array(
-                    'value' => 'all', // @TODO: maybe change to all
-                    'label' => esc_html__( 'Visitor may register user + site', 'b3-onboarding' ),
+                    'value' => 'all',
+                    'label' => esc_html__( 'Visitor may register user and/or site', 'b3-onboarding' ),
+                ),
+                array(
+                    'value' => 'site',
+                    'label' => esc_html__( "Visitor may register user + site (not 'just a user')", 'b3-onboarding' ),
                 ),
                 array(
                     'value' => 'request_access_subdomain',

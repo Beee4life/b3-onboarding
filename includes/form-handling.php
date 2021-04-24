@@ -97,15 +97,7 @@
                     if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                         if ( is_multisite() ) {
                             $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
-                            if ( 'closed' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'request_access_subdomain' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'blog' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'user' == $ms_registration_type ) {
-                                update_site_option( 'b3_registration_type', $ms_registration_type );
-                            } elseif ( 'all' == $ms_registration_type ) {
+                            if ( false != $ms_registration_type ) {
                                 update_site_option( 'b3_registration_type', $ms_registration_type );
                             }
                         } else {

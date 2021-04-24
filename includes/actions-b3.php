@@ -163,10 +163,10 @@
                     <input id="signupuser" type="radio" name="signup_for" value="user">
                     <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
                 </div>
+            <?php } elseif ( in_array( $registration_type, [ 'blog', 'site' ] ) ) { ?>
+                <input type="hidden" name="signup_for" value="blog" />
             <?php } elseif ( 'user' == $registration_type ) { ?>
                 <input type="hidden" name="signup_for" value="user" />
-            <?php } elseif ( 'blog' == $registration_type ) { ?>
-                <input type="hidden" name="signup_for" value="blog" />
             <?php } ?>
         <?php } else {
             if ( false == $registration_with_email_only ) {
@@ -265,6 +265,7 @@
                     'request_access_subdomain',
                     'blog',
                     'all',
+                    'site',
                 ) ) ) {
                 ob_start();
                 $register_for = apply_filters( 'b3_register_for', false );
@@ -272,8 +273,8 @@
             ?>
                 <div class="b3_form-element b3_form-element--site-fields">
                     <?php
-                        if ( 'blog' == $registration_type ) {
-                            $b3_message_above_new_blog = esc_html__( "Here you can register for a new site.", 'b3-onboarding' );
+                        if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
+                            $b3_message_above_new_blog = esc_html__( 'Here you can register your new site.', 'b3-onboarding' );
                             $notice = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
                             if ( false !== $notice ) {
                                 echo '<p>' . $notice . '</p>';
