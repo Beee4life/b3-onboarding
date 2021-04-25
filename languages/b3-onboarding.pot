@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2021-04-19 01:21+0200\n"
+"POT-Creation-Date: 2021-04-25 17:12+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -324,7 +324,7 @@ msgid ""
 "%s</a>"
 msgstr ""
 
-#: B3Onboarding.php:2060 B3Onboarding.php:2079 includes/actions-b3.php:398
+#: B3Onboarding.php:2060 B3Onboarding.php:2079 includes/actions-b3.php:399
 msgid "here"
 msgstr ""
 
@@ -383,51 +383,51 @@ msgstr ""
 msgid "Confirm Password"
 msgstr ""
 
-#: includes/actions-b3.php:276
-msgid "Here you can register for a new site."
-msgstr ""
-
-#: includes/actions-b3.php:286
-msgid "Site (sub) domain"
+#: includes/actions-b3.php:277
+msgid "Here you can register your new site."
 msgstr ""
 
 #: includes/actions-b3.php:287
+msgid "Site (sub) domain"
+msgstr ""
+
+#: includes/actions-b3.php:288
 msgid "customdomain"
 msgstr ""
 
-#: includes/actions-b3.php:289
+#: includes/actions-b3.php:290
 msgid "Site address"
 msgstr ""
 
-#: includes/actions-b3.php:290
+#: includes/actions-b3.php:291
 msgid "address"
 msgstr ""
 
-#: includes/actions-b3.php:295
+#: includes/actions-b3.php:296
 msgid "Site title"
 msgstr ""
 
-#: includes/actions-b3.php:397
+#: includes/actions-b3.php:398
 #, php-format
 msgid "You didn't set a reCaptcha key yet. You can set it %s."
 msgstr ""
 
-#: includes/actions-b3.php:475
+#: includes/actions-b3.php:476
 msgid "Enter your new password."
 msgstr ""
 
-#: includes/actions-b3.php:504 includes/actions-b3.php:521
+#: includes/actions-b3.php:505 includes/actions-b3.php:522
 #: includes/do-stuff.php:18
 msgid "Lost password"
 msgstr ""
 
-#: includes/actions-b3.php:509 includes/actions-b3.php:533
+#: includes/actions-b3.php:510 includes/actions-b3.php:534
 #: includes/do-stuff.php:33 includes/tabs/tab-pages.php:15
 #: templates/register.php:48
 msgid "Register"
 msgstr ""
 
-#: includes/actions-b3.php:517 includes/actions-b3.php:528
+#: includes/actions-b3.php:518 includes/actions-b3.php:529
 #: includes/tabs/tab-pages.php:20
 msgid "Log In"
 msgstr ""
@@ -881,7 +881,8 @@ msgid "Show settings link"
 msgstr ""
 
 #: includes/defaults.php:61
-msgid "This is an automated email from the website <a href=\"%home_url%\">"
+#, php-format
+msgid "This is an automated email from the website <a href=\"%s\">%s</a>."
 msgstr ""
 
 #: includes/defaults.php:97
@@ -1324,7 +1325,7 @@ msgstr ""
 #: includes/emails/new-user-admin.php:70
 #: includes/emails/request-access-admin.php:61
 #: includes/emails/request-access-user.php:38
-#: includes/emails/welcome-email-user.php:38 includes/functions.php:423
+#: includes/emails/welcome-email-user.php:38 includes/functions.php:427
 msgid "Save settings"
 msgstr ""
 
@@ -1510,9 +1511,9 @@ msgid ""
 msgstr ""
 
 #: includes/form-handling.php:13 includes/form-handling.php:92
-#: includes/form-handling.php:205 includes/form-handling.php:251
-#: includes/form-handling.php:307 includes/form-handling.php:557
-#: includes/form-handling.php:607 includes/form-handling.php:651
+#: includes/form-handling.php:197 includes/form-handling.php:243
+#: includes/form-handling.php:299 includes/form-handling.php:549
+#: includes/form-handling.php:599 includes/form-handling.php:643
 msgid "Something went wrong, please try again."
 msgstr ""
 
@@ -1520,58 +1521,58 @@ msgstr ""
 msgid "General settings saved"
 msgstr ""
 
-#: includes/form-handling.php:184
+#: includes/form-handling.php:176
 msgid "Registration settings saved"
 msgstr ""
 
-#: includes/form-handling.php:230
+#: includes/form-handling.php:222
 msgid "Pages settings saved"
 msgstr ""
 
-#: includes/form-handling.php:262
+#: includes/form-handling.php:254
 msgid "Your hex code is incorrect."
 msgstr ""
 
-#: includes/form-handling.php:287
+#: includes/form-handling.php:279
 msgid "Login page settings saved"
 msgstr ""
 
-#: includes/form-handling.php:314
+#: includes/form-handling.php:306
 msgid "That is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:338
+#: includes/form-handling.php:330
 msgid "The length of your hex color is incorrect."
 msgstr ""
 
-#: includes/form-handling.php:343
+#: includes/form-handling.php:335
 msgid "Your hex color is incorrect, it's missing a hashtag (#)."
 msgstr ""
 
-#: includes/form-handling.php:345
+#: includes/form-handling.php:337
 msgid ""
 "Your hex color is incorrect, it's missing a hashtag (#) and the color value "
 "is incorrect."
 msgstr ""
 
-#: includes/form-handling.php:433
+#: includes/form-handling.php:425
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:537
+#: includes/form-handling.php:529
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:587
+#: includes/form-handling.php:579
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:622
+#: includes/form-handling.php:614
 msgid "reCaptcha settings saved"
 msgstr ""
 
-#: includes/form-handling.php:719
+#: includes/form-handling.php:711
 msgid "You do not have permission to edit this user."
 msgstr ""
 
@@ -1644,55 +1645,59 @@ msgid "Logged in user may register a site"
 msgstr ""
 
 #: includes/functions.php:245
-msgid "Visitor may register user + site"
+msgid "Visitor may register user and/or site"
 msgstr ""
 
 #: includes/functions.php:249
+msgid "Visitor may register user + site (not 'just a user')"
+msgstr ""
+
+#: includes/functions.php:253
 msgid "Request access (admin approval + user domain request)"
 msgstr ""
 
-#: includes/functions.php:838
+#: includes/functions.php:842
 msgid "<strong>Error</strong>: Enter a username or email address."
 msgstr ""
 
-#: includes/functions.php:842 includes/functions.php:867
+#: includes/functions.php:846 includes/functions.php:871
 msgid ""
 "<strong>Error</strong>: There is no account with that username or email "
 "address."
 msgstr ""
 
-#: includes/functions.php:890
+#: includes/functions.php:894
 msgid "Someone has requested a password reset for the following account:"
 msgstr ""
 
 #. translators: %s: Site name.
-#: includes/functions.php:892
+#: includes/functions.php:896
 #, php-format
 msgid "Site Name: %s"
 msgstr ""
 
 #. translators: %s: User login.
-#: includes/functions.php:894
+#: includes/functions.php:898
 #, php-format
 msgid "Username: %s"
 msgstr ""
 
-#: includes/functions.php:895
+#: includes/functions.php:899
 msgid "If this was a mistake, just ignore this email and nothing will happen."
 msgstr ""
 
-#: includes/functions.php:896
+#: includes/functions.php:900
 msgid "To reset your password, visit the following address:"
 msgstr ""
 
 #. translators: Password reset notification email subject. %s: Site title.
-#: includes/functions.php:900
+#: includes/functions.php:904
 #, php-format
 msgid "[%s] Password Reset"
 msgstr ""
 
 #. translators: %s: Documentation URL.
-#: includes/functions.php:934
+#: includes/functions.php:938
 #, php-format
 msgid ""
 "<strong>Error</strong>: The email could not be sent. Your site may not be "
