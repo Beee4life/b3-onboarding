@@ -112,6 +112,7 @@ These are the things we have planned to add.
 * [ ] add code editor for styling/template inputs
 * [ ] remove `<br />` from email templates
 * [ ] create option to send preview email
+* [ ] add front-end management to multisite as well
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
