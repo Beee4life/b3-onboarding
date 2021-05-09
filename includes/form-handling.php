@@ -78,6 +78,7 @@
                 if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                     if ( is_multisite() ) {
                         $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
+                        update_site_option( 'registration', 'none' );
                         if ( false != $ms_registration_type ) {
                             update_site_option( 'b3_registration_type', $ms_registration_type );
                         }
