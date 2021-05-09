@@ -16,7 +16,7 @@
      * @return false|string
      */
     function b3_main_logo_example( $logo ) {
-        return 'http://your-url.com/assets/images/logo-salesforce.png';
+        return 'http://your-url.com/your-logo.png';
     }
     // add_filter( 'b3_main_logo', 'b3_main_logo_example' );
 
