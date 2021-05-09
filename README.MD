@@ -111,6 +111,7 @@ These are the things we have planned to add.
 * [ ] add more security stuff
 * [ ] add code editor for styling/template inputs
 * [ ] remove `<br />` from email templates
+* [ ] create option to send preview email
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
