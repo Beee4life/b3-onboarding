@@ -3,9 +3,9 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            2.6.0
+    Version:            2.6.0-beta
     Requires at least:  4.3
-    Tested up to:       5.5.1
+    Tested up to:       5.7.1
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.6.0',
+                    'version' => '2.6.0-beta',
                 );
 
                 // actions
@@ -2043,13 +2043,21 @@
              */
             public function b3_admin_notices() {
 
-                // beta notice
-                if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
-                    $message = __( "You're using a beta version, which is not finished yet and can give unexpected results.", 'b3-onboarding' );
-                    if ( ! defined( 'LOCALHOST' ) || defined( 'LOCALHOST' ) && false == LOCALHOST ) {
-                        echo '<div class="error"><p>' . $message . '.</p></div>';
-                    } else {
-                        echo '<div class="notice notice-warning"><p>' . $message . '.</p></div>';
+                $screen_ids = [
+                    'toplevel_page_b3-onboarding',
+                    'b3-onboarding_page_b3-debug',
+                    'b3-onboarding_page_b3-user-approval',
+                ];
+                
+                if ( in_array( get_current_screen()->id, $screen_ids ) ) {
+                    // beta notice
+                    if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
+                        $message = sprintf( __( "You're using a beta version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
+                        if ( ! defined( 'LOCALHOST' ) || defined( 'LOCALHOST' ) && false == LOCALHOST ) {
+                            echo '<div class="error"><p>' . $message . '.</p></div>';
+                        } else {
+                            echo '<div class="notice notice-warning"><p>' . $message . '.</p></div>';
+                        }
                     }
                 }
 
@@ -2062,6 +2070,7 @@
                 }
 
                 // manual actions
+                // @TODO: use error for this
                 if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'activate', 'sendactivation' ) ) ) {
                     echo '<div id="message" class="updated"><p>';
                     if ( 'activate' == $_GET[ 'update' ] ) {
@@ -2073,6 +2082,7 @@
                 }
 
                 global $pagenow;
+                // @TODO: look into this
                 if ( is_blog_admin() && $pagenow === "options-general.php" && ! isset ( $_GET['page'] ) && ! is_multisite() ) {
                     echo sprintf( '<div class="notice notice-info"><p>'. __( 'B3 OnBoarding takes control over the \'Membership\' option. You can change this <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
