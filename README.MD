@@ -107,9 +107,9 @@ These are the things we have planned to add.
 * [X] reCaptcha v3
 * [X] make it work with Multisite
 * [X] make it work with WPML
-* [ ] add more filter and/or inputs
+* [ ] add more filters and inputs
 * [ ] add more security stuff
-* [ ] add code editor to styling/template inputs
+* [ ] add code editor for styling/template inputs
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
