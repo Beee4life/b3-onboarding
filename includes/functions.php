@@ -1,6 +1,6 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit;
-    
+
     include 'download.php';
     include 'functions-email-general.php';
     include 'functions-email-single.php';
@@ -44,7 +44,6 @@
             'b3_disable_admin_notification_new_user', // @TODO: check
             'b3_disable_admin_notification_password_change',
             'b3_disable_delete_user_email',
-            'b3_disable_wordpress_forms',
             'b3_email_activation_message',
             'b3_email_activation_subject',
             'b3_email_styling',
@@ -91,7 +90,6 @@
             'b3_reset_password_page_id', // set on activate
             'b3_restrict_admin', // set on activate
             'b3_sidebar_widget', // set on activate
-            'b3_style_wordpress_forms',
             'b3_use_popup',
             'b3_users_may_delete',
             'b3_version',
@@ -473,43 +471,36 @@
      */
     function b3_get_login_url( $return_id = false, $blog_id = false ) {
 
-        $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms' );
-        $disable_wp_forms = 1;
-        $login_page_id    = get_site_option( 'b3_login_page_id' );
+        $login_page_id = get_site_option( 'b3_login_page_id' );
 
         if ( class_exists( 'Sitepress' ) ) {
             $login_page_id = apply_filters( 'wpml_object_id', $login_page_id, 'page', true );
         }
 
-        if ( '1' == $disable_wp_forms ) {
-            if ( false != $login_page_id ) {
-                if ( false != $return_id ) {
-                    return $login_page_id;
-                }
-
-                if ( get_post( $login_page_id ) ) {
-                    if ( is_multisite() ) {
-                        switch_to_blog( get_main_site_id() );
-                    }
-                    $login_url = get_the_permalink( $login_page_id );
-                    if ( is_multisite() ) {
-                        restore_current_blog();
-                    }
-
-                    return $login_url;
-                }
+        if ( false != $login_page_id ) {
+            if ( false != $return_id ) {
+                return $login_page_id;
             }
 
-            if ( false != $blog_id ) {
-                switch_to_blog( get_main_site_id() );
+            if ( get_post( $login_page_id ) ) {
+                if ( is_multisite() ) {
+                    switch_to_blog( get_main_site_id() );
+                }
                 $login_url = get_the_permalink( $login_page_id );
-                restore_current_blog();
+                if ( is_multisite() ) {
+                    restore_current_blog();
+                }
 
                 return $login_url;
             }
+        }
 
-        } else {
-            // @TODO: when forms are not forced
+        if ( false != $blog_id ) {
+            switch_to_blog( get_main_site_id() );
+            $login_url = get_the_permalink( $login_page_id );
+            restore_current_blog();
+
+            return $login_url;
         }
 
         return wp_login_url();
@@ -946,8 +937,8 @@
 
         return true;
     }
-    
-    
+
+
     /**
      * For email override in new user + blog
      *

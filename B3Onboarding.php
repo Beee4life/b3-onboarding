@@ -73,7 +73,6 @@
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
-                add_action( 'login_head',                           array( $this, 'b3_add_login_styling' ) );
                 add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
@@ -272,141 +271,6 @@
             }
 
 
-            /**
-             * Add login styling
-             *
-             * @since 2.0.0
-             */
-            public function b3_add_login_styling() {
-                $extra_fields    = apply_filters( 'b3_extra_fields', array() );
-                $logo            = apply_filters( 'b3_main_logo', b3_get_main_logo() );
-                $logo_height     = get_site_option( 'b3_loginpage_logo_height' );
-                $logo_width      = get_site_option( 'b3_loginpage_logo_width' );
-                $privacy         = get_site_option( 'b3_privacy' );
-                $recaptcha       = get_site_option( 'b3_activate_recaptcha' );
-                $recaptcha_login = get_site_option( 'b3_recaptcha_login' );
-                $style_pages     = get_site_option( 'b3_style_wordpress_forms' );
-
-                echo '<style type="text/css">';
-                echo "\n";
-                if ( $style_pages ) {
-                    $bg_color    = get_site_option( 'b3_loginpage_bg_color' );
-                    $font_family = get_site_option( 'b3_loginpage_font_family' );
-                    $font_size   = get_site_option( 'b3_loginpage_font_size' );
-
-                    if ( $bg_color ) {
-                        echo "\nbody { background: #" . $bg_color . "; }\n";
-                    }
-                    if ( $font_family || $font_size ) {
-                        echo '#login { ';
-                        if ( $font_family ) {
-                            echo 'font-family: ' . $font_family . ';';
-                        }
-                        if ( $font_size ) {
-                            echo 'font-size: ' . $font_size . 'px;';
-                        }
-                        if ( $recaptcha || $recaptcha_login ) {
-                            echo 'min-width: 352px;';
-                        }
-                        echo " }\n";
-                        if ( $recaptcha || $recaptcha_login ) {
-                            echo '.recaptcha-container {';
-                            echo 'margin: 0 0 1rem 0;';
-                            echo '}';
-                            echo "\n";
-                        }
-                        if ( $font_size ) {
-                            echo '.login label { font-size: ' . $font_size . 'px; }';
-                            echo "\n";
-                        }
-                    }
-                }
-
-                if ( $logo ) {
-                    echo '.login h1 a { ';
-                    echo 'background-image: url(' . $logo . '); ';
-                    echo 'background-image: none, url(' . $logo . '); ';
-                    echo 'background-repeat: no-repeat; ';
-                    echo 'padding: 0; ';
-                    if ( $logo_width ) {
-                        echo 'background-size: ' . $logo_width . 'px; ';
-                        echo 'width: ' . $logo_width . 'px; ';
-                    }
-                    if ( $logo_height ) {
-                        echo 'height: ' . $logo_height . 'px; ';
-                    }
-                    echo 'max-width: 320px; ';
-                    echo 'max-height: 150px;';
-                    echo ' }';
-                }
-
-                if ( ! $style_pages && ( $recaptcha || $recaptcha_login ) ) {
-                    echo '#login { min-width: 352px; }';
-                    echo "\n";
-                }
-
-                echo '.login form .input, .login input[type="text"], .login input[type="password"] { margin: 0 6px 0 0; }';
-                echo "\n";
-                echo '.login form#lostpasswordform input[type="text"] { margin: 0 6px 16px 0;; }';
-                echo "\n";
-                echo '.login form p, .b3_form-element { margin: 1em 0 0 0; }';
-                echo "\n";
-                echo '.login form#loginform .user-pass-wrap { margin: 1em 0; }';
-                echo "\n";
-                echo '.login form p:first-child { margin-top: 0; }';
-                echo "\n";
-
-                if ( ! empty( $extra_fields ) ) {
-                    echo '.login label.b3_form-label { width: 100%; }';
-                    echo "\n";
-
-                    echo '.login input[type="text"].b3_form-input--text { ';
-                    echo 'font-size: 14px;';
-                    echo 'min-height: 30px;';
-                    echo 'padding: 0 8px;';
-                    echo ' }';
-                    echo "\n";
-
-                    echo '.login input[type="text"].b3_form-input--text input { padding: 0 8px; }';
-                    echo "\n";
-
-                    echo 'input.b3_form-input--number, input.b3_form-input--url { ';
-                    echo 'line-height: 1.33333333;';
-                    echo 'width: 100%;';
-                    echo ' }';
-                    echo "\n";
-
-                    echo '.b3_form-input--textarea { ';
-                    echo 'border-width: 0.0625rem;';
-                    echo 'line-height: 1.33333333;';
-                    echo 'padding: 8px;';
-                    echo 'width: 100%;';
-                    echo ' }';
-                    echo "\n";
-
-                    echo '.b3_input-option { margin-bottom: 0.5em; }';
-                    echo "\n";
-
-                    echo '.b3_form-element--select select { ';
-                    echo 'line-height: 1.33333333;';
-                    echo 'padding: 8px;';
-                    echo 'width: 100%;';
-                    echo ' }';
-                    echo "\n";
-                }
-
-                echo '.recaptcha-container {margin: 0 0 1rem 0; }';
-                echo "\n";
-
-                if ( $privacy ) {
-                    echo '.b3_form-element--privacy { margin-bottom: 1em; }';
-                }
-
-                echo '</style>';
-                echo "\n";
-            }
-
-
             /*
              * Enqueue scripts front-end
              */
@@ -430,12 +294,12 @@
 
                 wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
-                
+
                 // check for recaptcha
                 $activate_recaptcha = get_site_option( 'b3_activate_recaptcha' );
                 $recaptcha_version = get_site_option( 'b3_recaptcha_version' );
                 $recaptcha_public = get_site_option( 'b3_recaptcha_public' );
-                
+
                 if ( 3 == $recaptcha_version ) {
                     // wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public, [], '', false );
                 }
@@ -860,7 +724,7 @@
                                         }
                                     }
                                 }
-                                
+
                                 if ( true == $register && 'closed' != $registration_type ) {
                                     // Registration is not closed
                                     if ( 'request_access' == $registration_type ) {
@@ -1358,7 +1222,7 @@
                 if ( $requested_redirect_to ) {
                     $redirect_to = $requested_redirect_to;
                 } else {
-                    
+
                     if ( is_wp_error( $user ) ) {
                         return b3_get_login_url();
                     }
@@ -1963,7 +1827,7 @@
                 if ( ! $attributes ) {
                     $attributes = array();
                 }
-                
+
                 if ( 'user-management' == $template_name ) {
                     $template_paths = array(
                         B3_PLUGIN_PATH . '/templates/',
@@ -2043,7 +1907,7 @@
                     'b3-onboarding_page_b3-debug',
                     'b3-onboarding_page_b3-user-approval',
                 ];
-                
+
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
                     // beta notice
                     if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {

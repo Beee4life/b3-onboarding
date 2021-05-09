@@ -24,24 +24,6 @@
             }
         });
 
-        var $wordpress_setting = '.b3_settings-field--wp-forms';
-        $('#b3_disable_wordpress_forms').change(function() {
-            if (document.getElementById('b3_disable_wordpress_forms').checked) {
-                $($wordpress_setting).addClass('hidden');
-            } else {
-                $($wordpress_setting).removeClass('hidden');
-            }
-        });
-
-        var $wordpress_tab = '.b3_tab-button--wordpress';
-        $('#b3_style_wordpress_forms').change(function() {
-            if (document.getElementById('b3_style_wordpress_forms').checked) {
-                $($wordpress_tab).removeClass('hidden');
-            } else {
-                $($wordpress_tab).addClass('hidden');
-            }
-        });
-
         var $validation_note = '.b3_settings-input-description--validation';
         $('#b3_activate_filter_validation').change(function() {
             if (document.getElementById('b3_activate_filter_validation').checked) {

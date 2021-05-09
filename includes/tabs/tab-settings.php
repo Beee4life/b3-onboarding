@@ -6,19 +6,17 @@
      *
      * @return false|string
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) exit;
-    
+
     function b3_render_settings_tab() {
 
         $activate_filter_validation = get_site_option( 'b3_activate_filter_validation' );
         $disable_action_links       = get_site_option( 'b3_disable_action_links' );
-        $disable_wordpress_forms    = get_site_option( 'b3_disable_wordpress_forms' );
         $debug_info                 = get_site_option( 'b3_debug_info' );
         $main_logo                  = get_site_option( 'b3_main_logo' );
         $recaptcha                  = get_site_option( 'b3_activate_recaptcha' );
         $registration_type          = get_site_option( 'b3_registration_type' );
-        $style_wordpress_forms      = get_site_option( 'b3_style_wordpress_forms' );
         $use_popup                  = get_site_option( 'b3_use_popup', false );
         ob_start();
         ?>
@@ -38,25 +36,6 @@
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
             <?php if ( is_main_site() ) { ?>
-                <?php b3_get_settings_field_open(1); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_disable_wordpress_forms"><?php esc_html_e( 'Disable Wordpress forms', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_disable_wordpress_forms" name="b3_disable_wordpress_forms" value="1" <?php if ( $disable_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to disable WordPress' forms and force using yours.", 'b3-onboarding' ); ?>
-                    </div>
-                <?php b3_get_close(); ?>
-
-                <?php $hide_wordpress_checkbox = ( 1 == $disable_wordpress_forms ) ? 'hidden' : false; ?>
-                <?php b3_get_settings_field_open( $hide_wordpress_checkbox, 'wp-forms' ); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_style_wordpress_forms"><?php esc_html_e( 'Style Wordpress forms', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_style_wordpress_forms" name="b3_style_wordpress_forms" value="1" <?php if ( $style_wordpress_forms ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "Check this box to activate custom settings for WordPress' forms.", 'b3-onboarding' ); ?>
-                    </div>
-                <?php b3_get_close(); ?>
-    
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_use_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
@@ -65,7 +44,7 @@
                         <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php if ( $use_popup ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to show the login form in a popup (from the widget link).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
-    
+
                 <?php if ( 'closed' != $registration_type ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>

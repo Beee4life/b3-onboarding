@@ -68,22 +68,13 @@
                             );
                         }
 
-                        if ( 1 == get_site_option( 'b3_style_wordpress_forms' ) ) {
-                            $tabs[] = array(
-                                'id'      => 'wordpress',
-                                'title'   => 'WordPress',
-                                'content' => b3_render_tab_content( 'wordpress' ),
-                                'icon'    => 'art',
-                            );
-                        }
-
                         $tabs[] = array(
                             'id'      => 'emails',
                             'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
                             'content' => b3_render_tab_content( 'emails' ),
                             'icon'    => 'email',
                         );
-    
+
                         if ( is_main_site() ) {
                             $tabs[] = array(
                                 'id'      => 'users',
@@ -104,14 +95,6 @@
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
-                            <?php
-                                $hide_wordpress = false;
-                                if ( 'wordpress' == $tab[ 'id' ] ) {
-                                    if ( 1 != get_site_option( 'b3_style_wordpress_forms' ) ) {
-                                        $hide_wordpress = ' hidden';
-                                    }
-                                }
-                            ?>
                             <button class="b3_tab-button b3_tab-button--<?php echo $tab[ 'id' ]; ?><?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?><?php echo $hide_wordpress; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
                                 <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
                                     <i class="dashicons dashicons-<?php echo $tab[ 'icon' ]; ?>"></i>
