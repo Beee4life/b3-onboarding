@@ -95,7 +95,7 @@
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
-                            <button class="b3_tab-button b3_tab-button--<?php echo $tab[ 'id' ]; ?><?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?><?php echo $hide_wordpress; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
+                            <button class="b3_tab-button b3_tab-button--<?php echo $tab[ 'id' ]; ?><?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
                                 <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
                                     <i class="dashicons dashicons-<?php echo $tab[ 'icon' ]; ?>"></i>
                                 <?php } ?>
