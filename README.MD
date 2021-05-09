@@ -110,6 +110,7 @@ These are the things we have planned to add.
 * [ ] add more filters and inputs
 * [ ] add more security stuff
 * [ ] add code editor for styling/template inputs
+* [ ] remove `<br />` from email templates
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
