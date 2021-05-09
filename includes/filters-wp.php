@@ -609,8 +609,6 @@ All at ###SITENAME###
     /**
      * Disable WPMU user signup email to take it over
      *
-     * @TODO: check if vars can be removed
-     *
      * @param       $user_login
      * @param       $user_email
      * @param       $key
@@ -626,8 +624,6 @@ All at ###SITENAME###
 
     /**
      * Disable WPMU user welcome email to take it over
-     *
-     * @TODO: check if vars can be removed
      *
      * @param $user_id
      * @param $password

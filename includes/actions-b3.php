@@ -100,7 +100,6 @@
      * @since 1.0.0
      *
      * @TODO: check for a WordPress hook to hook to
-     * @TODO: look into filter 'registration_redirect'
      *
      */
     function b3_do_stuff_after_user_activated( $user_id ) {
@@ -563,8 +562,7 @@
      *
      * @since 2.5.0
      *
-     * @TODO: add if to determine if user's registration type (still) matches current,
-     * otherwise incorrect email will be sent
+     * @TODO: add if to determine if user's registration type (still) matches current, otherwise incorrect email will be sent
      *
      * @param $user_id
      */
