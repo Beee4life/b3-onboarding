@@ -151,23 +151,28 @@
                     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
                 );
             }
-            if ( is_multisite() && is_main_site() ) {
-                $email_boxes[] = array(
-                    'id'    => 'confirm_user_email',
-                    'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
-                );
-                $email_boxes[] = array(
-                    'id'    => 'activated_user_email',
-                    'title' => esc_html__( 'User activated (user only)', 'b3-onboarding' ),
-                );
-                $email_boxes[] = array(
-                    'id'    => 'confirm_user_site_email',
-                    'title' => esc_html__( 'Confirm email (user + site)', 'b3-onboarding' ),
-                );
-                $email_boxes[] = array(
-                    'id'    => 'activated_user_site_email',
-                    'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
-                );
+            if ( is_multisite() ) {
+                if ( in_array( $registration_type, array( 'user' ) ) ) {
+                    $email_boxes[] = array(
+                        'id'    => 'confirm_user_email',
+                        'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
+                    );
+                    $email_boxes[] = array(
+                        'id'    => 'activated_user_email',
+                        'title' => esc_html__( 'User activated (user only)', 'b3-onboarding' ),
+                    );
+                } elseif ( in_array( $registration_type, array( 'site' ) ) ) {
+                    $email_boxes[] = array(
+                        'id'    => 'confirm_user_site_email',
+                        'title' => esc_html__( 'Confirm email (user + site)', 'b3-onboarding' ),
+                    );
+                    $email_boxes[] = array(
+                        'id'    => 'activated_user_site_email',
+                        'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
+                    );
+                } elseif ( in_array( $registration_type, array( 'all' ) ) ) {
+                    // c@TODO: create user input
+                }
                 $email_boxes[] = array(
                     'id'    => 'new_wpmu_user_admin',
                     'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
