@@ -82,6 +82,7 @@
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
+                add_action( 'before_signup_header',                 array( $this, 'b3_redirect_to_custom_mu_register' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
                 add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
@@ -1043,27 +1044,34 @@
 
             /**
              * Redirects the user to the custom registration page instead
+             * of wp-signup.php
+             */
+            public function b3_redirect_to_custom_mu_register() {
+                if ( is_user_logged_in() ) {
+                    // only redirect if blog != registration_type
+                    if ( 'blog' != get_site_option( 'b3_registration_type' ) ) {
+                        $this->b3_redirect_logged_in_user();
+                    }
+                } else {
+                    $register_url = b3_get_register_url();
+                    if ( false != $register_url ) {
+                        wp_safe_redirect( $register_url );
+                    } else {
+                        wp_safe_redirect( wp_registration_url() );
+                    }
+                    exit;
+                }
+            }
+
+
+            /**
+             * Redirects the user to the custom registration page instead
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_register() {
 
                 if ( ! is_multisite() ) {
                     if ( isset( $_GET[ 'action' ] ) && 'register' == $_GET[ 'action' ] ) {
-                        if ( is_user_logged_in() ) {
-                            $this->b3_redirect_logged_in_user();
-                        } else {
-                            $register_url = b3_get_register_url();
-                            if ( false != $register_url ) {
-                                wp_safe_redirect( $register_url );
-                            } else {
-                                wp_safe_redirect( wp_registration_url() );
-                            }
-                            exit;
-                        }
-                    }
-                } else {
-                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                        // @TODO: maybe add if ( isset( $_GET[ 'register' ] ) && 'register' == $_GET[ 'register' ] ) {
                         if ( is_user_logged_in() ) {
                             $this->b3_redirect_logged_in_user();
                         } else {
