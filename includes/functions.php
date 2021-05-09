@@ -474,6 +474,7 @@
     function b3_get_login_url( $return_id = false, $blog_id = false ) {
 
         $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms' );
+        $disable_wp_forms = 1;
         $login_page_id    = get_site_option( 'b3_login_page_id' );
 
         if ( class_exists( 'Sitepress' ) ) {
