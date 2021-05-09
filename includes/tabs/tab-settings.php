@@ -28,7 +28,7 @@
 
         <p>
             <?php if ( is_main_site() ) { ?>
-                <?php esc_html_e( 'Here you can set various global settings for the plugin.', 'b3-onboarding' ); ?>
+                <?php esc_html_e( "Here you can set some settings for the plugin (which didn't fit on other tabs).", 'b3-onboarding' ); ?>
             <?php } else { ?>
                 <?php esc_html_e( 'All settings are set in the main site, except for the logo.', 'b3-onboarding' ); ?>
             <?php } ?>
@@ -38,7 +38,7 @@
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
             <?php if ( is_main_site() ) { ?>
-                <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_settings_field_open(1); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_disable_wordpress_forms"><?php esc_html_e( 'Disable Wordpress forms', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
