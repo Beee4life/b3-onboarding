@@ -6,9 +6,9 @@
      *
      * @return false|string
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) exit;
-    
+
     function b3_render_registration_tab() {
 
         $custom_passwords             = get_site_option( 'b3_activate_custom_passwords' );
@@ -44,22 +44,31 @@
                 <?php if ( is_multisite() ) { ?>
                     <?php $options = b3_get_registration_types(); ?>
                     <?php if ( ! empty( $options ) ) { ?>
-                        <?php foreach( $options as $option ) { ?>
-                            <div class="b3_settings-input b3_settings-input--radio">
-                                <div>
-                                    <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                    <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <p>
+                                <?php echo sprintf( __( 'This setting \'controls\' the Registration type on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
+                            </p>
+                            <?php foreach( $options as $option ) { ?>
+                                <div class="b3_settings-input b3_settings-input--radio">
+                                    <div>
+                                        <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                        <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php } ?>
+                            <?php } ?>
+                        <?php b3_get_close(); ?>
+
                     <?php } else { ?>
                         <div class="b3_settings-input b3_settings-input--radio">
                             <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
                         </div>
                     <?php } ?>
 
-
                 <?php } else { ?>
+
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
