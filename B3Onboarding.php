@@ -485,6 +485,7 @@
                         }
                     } elseif ( 'request_access' == $registration_type ) {
                         if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
+                            unset($actions['resetpassword']);
                             $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
                                 add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
                                     wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
@@ -1931,7 +1932,7 @@
                 }
 
                 // manual actions
-                // @TODO: use error for this
+                // @TODO: look into this, when used
                 if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'activate', 'sendactivation' ) ) ) {
                     echo '<div id="message" class="updated"><p>';
                     if ( 'activate' == $_GET[ 'update' ] ) {
