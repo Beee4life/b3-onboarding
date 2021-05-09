@@ -528,33 +528,37 @@ All at ###SITENAME###
      * @return false|mixed|string|void
      */
     function b3_prevent_update_registration_option( $new_value, $old_value ) {
-        $b3_setting = get_site_option( 'b3_registration_type' );
-        if ( is_multisite() && is_main_site() ) {
-            if ( 'closed' == $b3_setting ) {
-                $b3_setting = 'none';
-            } elseif ( 'user' == $b3_setting ) {
-                $b3_setting = 'user';
-            } elseif ( 'blog' == $b3_setting ) {
-                $b3_setting = 'blog';
-            } elseif ( 'all' == $b3_setting ) {
-                $b3_setting = 'all';
-            } else {
-                $b3_setting = 'all';
+        if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
+            $b3_setting = $_POST[ 'b3_registration_type' ];
+            
+            if ( is_multisite() && is_main_site() ) {
+                if ( 'closed' == $b3_setting ) {
+                    $b3_setting = 'none';
+                } elseif ( 'user' == $b3_setting ) {
+                    $b3_setting = 'user';
+                } elseif ( 'blog' == $b3_setting ) {
+                    $b3_setting = 'blog';
+                } elseif ( 'all' == $b3_setting ) {
+                    $b3_setting = 'all';
+                } else {
+                    $b3_setting = 'all';
+                }
+            } elseif ( ! is_multisite() ) {
+                if ( 'closed' == $b3_setting ) {
+                    $b3_setting = '0';
+                } else {
+                    $b3_setting = '1';
+                }
             }
-        } elseif ( ! is_multisite() ) {
-            if ( 'closed' == $b3_setting ) {
-                $b3_setting = '0';
-            } else {
-                $b3_setting = '1';
-            }
+    
+            return $b3_setting;
+    
         }
 
-        $new_value = $b3_setting;
-
-        return $new_value;
+        return $old_value;
 
     }
-    add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multissite
+    add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multisite || main site
 
 
     /**
