@@ -328,9 +328,9 @@
                 }
 
                 if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == $_POST[ 'b3_activate_custom_emails' ] ) {
-                    update_site_option( 'b3_custom_emails', 1 );
+                    update_site_option( 'b3_activate_custom_emails', 1 );
                 } else {
-                    delete_site_option( 'b3_custom_emails' );
+                    delete_site_option( 'b3_activate_custom_emails' );
                 }
 
                 if ( isset( $_POST[ 'b3_logo_in_email' ] ) && 1 == $_POST[ 'b3_logo_in_email' ] ) {
