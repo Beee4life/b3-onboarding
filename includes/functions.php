@@ -447,16 +447,16 @@
      * @return bool|string
      */
     function b3_get_register_url( $return_id = false ) {
-        $id = get_site_option( 'b3_register_page_id' );
+        $register_page_id = get_site_option( 'b3_register_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
-            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            $register_page_id = apply_filters( 'wpml_object_id', $register_page_id, 'page', true );
         }
-        if ( false != $id ) {
+        if ( false != $register_page_id ) {
             if ( false != $return_id ) {
-                return $id;
+                return $register_page_id;
             }
-            if ( get_post( $id ) ) {
-                return get_the_permalink( $id );
+            if ( get_post( $register_page_id ) ) {
+                return get_the_permalink( $register_page_id );
             }
         }
 
@@ -549,16 +549,16 @@
      * @return bool|mixed
      */
     function b3_get_account_url( $return_id = false, $language = false ) {
-        $id = get_site_option( 'b3_account_page_id' );
+        $account_page_id = get_site_option( 'b3_account_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
-            $id = apply_filters( 'wpml_object_id', $id, 'page', true, $language );
+            $account_page_id = apply_filters( 'wpml_object_id', $account_page_id, 'page', true, $language );
         }
-        if ( false != $id ) {
+        if ( false != $account_page_id ) {
             if ( false != $return_id ) {
-                return $id;
+                return $account_page_id;
             }
-            if ( get_post( $id ) ) {
-                return get_the_permalink( $id );
+            if ( get_post( $account_page_id ) ) {
+                return get_the_permalink( $account_page_id );
             }
         } else {
             // @TODO: return admin profile
@@ -576,12 +576,12 @@
      */
     function b3_get_lostpassword_url() {
         // @TODO: check this on single site, if it returns correct ID
-        $id = get_site_option( 'b3_lost_password_page_id' );
+        $lost_password_page_id = get_site_option( 'b3_lost_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
-            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            $lost_password_page_id = apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true );
         }
-        if ( false != $id && get_post( $id ) ) {
-            return get_the_permalink( $id );
+        if ( false != $lost_password_page_id && get_post( $lost_password_page_id ) ) {
+            return get_the_permalink( $lost_password_page_id );
         }
 
         return wp_lostpassword_url();
@@ -595,16 +595,16 @@
      * @return bool|string
      */
     function b3_get_reset_password_url( $return_id = false ) {
-        $id = get_option( 'b3_reset_password_page_id' );
+        $reset_pass_page_id = get_option( 'b3_reset_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
-            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+            $reset_pass_page_id = apply_filters( 'wpml_object_id', $reset_pass_page_id, 'page', true );
         }
-        if ( false != $id ) {
+        if ( false != $reset_pass_page_id ) {
             if ( true == $return_id ) {
-                return $id;
+                return $reset_pass_page_id;
             }
-            if ( get_post( $id ) ) {
-                return get_the_permalink( $id );
+            if ( get_post( $reset_pass_page_id ) ) {
+                return get_the_permalink( $reset_pass_page_id );
             }
         }
 
@@ -622,16 +622,16 @@
      */
     function b3_get_user_approval_link( $return_id = false ) {
         if ( true == get_site_option( 'b3_front_end_approval' ) ) {
-            $id = get_site_option( 'b3_approval_page_id' );
+            $user_approval_page_id = get_site_option( 'b3_approval_page_id' );
             if ( class_exists( 'Sitepress' ) ) {
-                $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+                $user_approval_page_id = apply_filters( 'wpml_object_id', $user_approval_page_id, 'page', true );
             }
-            if ( false != $id ) {
+            if ( false != $user_approval_page_id ) {
                 if ( true == $return_id ) {
-                    return $id;
+                    return $user_approval_page_id;
                 }
-                if ( get_post( $id ) ) {
-                    return get_the_permalink( $id );
+                if ( get_post( $user_approval_page_id ) ) {
+                    return get_the_permalink( $user_approval_page_id );
                 } else {
                     return admin_url( 'admin.php?page=b3-user-approval' );
                 }
@@ -946,7 +946,15 @@
 
         return true;
     }
-
+    
+    
+    /**
+     * For email override in new user + blog
+     *
+     * @param $domain
+     *
+     * @return false|int
+     */
     function b3_get_signup_id( $domain ) {
         if ( $domain ) {
             $blog_id = get_blog_id_from_url( $domain );
