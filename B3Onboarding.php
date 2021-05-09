@@ -221,17 +221,17 @@
                         update_site_option( 'b3_dashboard_widget', 1 );
                         update_site_option( 'b3_disable_admin_notification_new_user', 1 );
                         update_site_option( 'registrationnotification', 'no' );
+                        update_site_option( 'b3_registration_type', get_site_option( 'registration' ) );
 
-                        $public_registration = get_site_option( 'registration' );
-                        if ( 'user' == $public_registration ) {
-                            update_site_option( 'b3_registration_type', 'user' );
-                        } elseif ( 'blog' == $public_registration ) {
-                            update_site_option( 'b3_registration_type', 'blog' );
-                        } elseif ( 'all' == $public_registration ) {
-                            update_site_option( 'b3_registration_type', 'all' );
-                        } elseif ( 'none' == $public_registration ) {
-                            update_site_option( 'b3_registration_type', 'closed' );
-                        }
+                        // $public_registration = get_site_option( 'registration' );
+                        // if ( 'user' == $public_registration ) {
+                        // } elseif ( 'blog' == $public_registration ) {
+                        //     update_site_option( 'b3_registration_type', 'blog' );
+                        // } elseif ( 'all' == $public_registration ) {
+                        //     update_site_option( 'b3_registration_type', 'all' );
+                        // } elseif ( 'none' == $public_registration ) {
+                        //     update_site_option( 'b3_registration_type', 'closed' );
+                        // }
                     }
                 }
 
