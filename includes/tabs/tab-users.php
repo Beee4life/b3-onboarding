@@ -6,9 +6,9 @@
      *
      * @return false|string
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) exit;
-    
+
     function b3_render_users_tab() {
 
         $front_end_approval      = get_site_option( 'b3_front_end_approval' );
@@ -33,6 +33,7 @@
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
+            <?php $hide_for_multisite = ( is_multisite() ) ? true : false; ?>
             <?php $hide_front_end_approval = ( 'request_access' == $registration_type ) ? false : 'hidden'; ?>
             <?php b3_get_settings_field_open($hide_front_end_approval ); ?>
                 <?php b3_get_label_field_open(); ?>
@@ -58,7 +59,7 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_settings_field_open(); ?>
+            <?php b3_get_settings_field_open($hide_for_multisite); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
