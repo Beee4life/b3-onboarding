@@ -1944,7 +1944,8 @@
                 global $pagenow;
                 // @TODO: look into this
                 if ( is_blog_admin() && $pagenow === "options-general.php" && ! isset ( $_GET['page'] ) && ! is_multisite() ) {
-                    echo sprintf( '<div class="notice notice-info"><p>'. __( 'B3 OnBoarding takes control over the \'Membership\' option. You can change this <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                    echo sprintf( '<div class="notice notice-info"><p>'. __( '%s takes control over the \'Membership\' option. You can change this <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                        'B3 OnBoarding',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
                         esc_html__( 'here', 'b3-onboarding' )
                     );
@@ -1960,8 +1961,11 @@
              */
             public function b3_network_admin_notices() {
                 if ( 'settings-network' == get_current_screen()->id ) {
-                    echo sprintf( '<div class="notice notice-info"><p>'. __( 'B3 OnBoarding takes control over the \'Registration\' option. You can change this <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                    echo sprintf( '<div class="notice notice-info"><p>'. __( '%s overrides the \'Registration\' option and the \'Registration notification\'. You can change the registration type <a href="%s">%s</a> and the registration notification <a href="%s">%s</a>.', 'b3-onboarding' ) . '</p></div>',
+                        'B3 OnBoarding',
                         esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
+                        esc_html__( 'here', 'b3-onboarding' ),
+                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) ),
                         esc_html__( 'here', 'b3-onboarding' )
                     );
                 }
