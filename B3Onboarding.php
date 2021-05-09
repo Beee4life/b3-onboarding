@@ -1191,31 +1191,22 @@
             public function b3_redirect_to_custom_register() {
 
                 if ( ! is_multisite() ) {
-                    if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
-                        if ( ! isset( $_REQUEST[ 'b3_form' ] ) || isset( $_REQUEST[ 'b3_form' ] ) && 'register' != $_REQUEST[ 'b3_form' ] ) {
+                    if ( isset( $_GET[ 'action' ] ) && 'register' == $_GET[ 'action' ] ) {
+                        if ( is_user_logged_in() ) {
+                            $this->b3_redirect_logged_in_user();
+                        } else {
                             $register_url = b3_get_register_url();
                             if ( false != $register_url ) {
                                 wp_safe_redirect( $register_url );
-                                exit;
-                            }
-                        }
-                    } else {
-                        if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_site_option( 'b3_disable_wordpress_forms' ) ) {
-                            if ( is_user_logged_in() ) {
-                                $this->b3_redirect_logged_in_user();
                             } else {
-                                $register_url = b3_get_register_url();
-                                if ( false != $register_url ) {
-                                    wp_safe_redirect( $register_url );
-                                } else {
-                                    wp_safe_redirect( wp_registration_url() );
-                                }
-                                exit;
+                                wp_safe_redirect( wp_registration_url() );
                             }
+                            exit;
                         }
                     }
                 } else {
-                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_site_option( 'b3_disable_wordpress_forms' ) ) {
+                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                        // @TODO: maybe add if ( isset( $_GET[ 'register' ] ) && 'register' == $_GET[ 'register' ] ) {
                         if ( is_user_logged_in() ) {
                             $this->b3_redirect_logged_in_user();
                         } else {
@@ -1237,8 +1228,8 @@
              */
             public function b3_redirect_to_custom_login() {
 
-                $disable_wp_forms = get_site_option( 'b3_disable_wordpress_forms' );
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == $disable_wp_forms ) {
+                // @TODO: check also for MU
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
                     if ( is_user_logged_in() ) {
@@ -1247,7 +1238,7 @@
                     }
 
                     $blog_id = ( is_multisite() ) ? get_current_blog_id() : false;
-                    $login_url = b3_get_login_url( '', $blog_id );
+                    $login_url = b3_get_login_url( false, $blog_id );
 
                     if ( ! empty( $redirect_to ) ) {
                         $login_url = add_query_arg( 'redirect_to', $redirect_to, $login_url );
@@ -1264,7 +1255,7 @@
              * wp-login.php?action=lostpassword.
              */
             public function b3_redirect_to_custom_lostpassword() {
-                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && 1 == get_site_option( 'b3_disable_wordpress_forms' ) ) {
+                if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( is_user_logged_in() ) {
                         $this->b3_redirect_logged_in_user();
                         exit;
@@ -1367,6 +1358,10 @@
                 if ( $requested_redirect_to ) {
                     $redirect_to = $requested_redirect_to;
                 } else {
+                    
+                    if ( is_wp_error( $user ) ) {
+                        return b3_get_login_url();
+                    }
 
                     if ( isset( $no_user ) && true == $no_user ) {
                         die('NO USER');
