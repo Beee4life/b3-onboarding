@@ -97,6 +97,7 @@
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
+                add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
                 add_action( 'wp_initialize_site',                   array( $this, 'b3_new_blog' ) );
 
                 // Filters
@@ -1951,6 +1952,18 @@
 
                 if ( get_site_option( 'b3_activate_filter_validation' ) ) {
                     do_action( 'b3_verify_filter_input' );
+                }
+            }
+
+            /**
+             * Network admin notices
+             */
+            public function b3_network_admin_notices() {
+                if ( 'settings-network' == get_current_screen()->id ) {
+                    echo sprintf( '<div class="notice notice-info"><p>'. __( 'B3 OnBoarding takes control over the \'Registration\' option. You can change this <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
+                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ),
+                        esc_html__( 'here', 'b3-onboarding' )
+                    );
                 }
             }
         }
