@@ -275,7 +275,14 @@
             }
         }
 
-        $registration_date_gmt   = ( isset( $vars[ 'registration_date' ] ) ) ? $vars[ 'registration_date' ] : ( isset( $vars[ 'user_data' ]->user_registered ) ) ? $vars[ 'user_data' ]->user_registered : false;
+        if ( isset( $vars[ 'registration_date' ] ) ) {
+            $registration_date_gmt = $vars[ 'registration_date' ];
+        } elseif ( isset( $vars[ 'user_data' ]->user_registered ) ) {
+            $registration_date_gmt = $vars[ 'user_data' ]->user_registered;
+        } else {
+            $registration_date_gmt = false;
+        }
+
         $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
         $user_login              = ( false != $user_data && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
 
@@ -330,12 +337,6 @@
             } else {
                 $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
             }
-        }
-
-        // @TODO: look why this is here, test in non-mu site
-        // Replace %blog_name% if used in the footer
-        if ( strpos( $replacements[ '%email_footer%' ], '%blog_name%' ) !== false ) {
-            // $replacements[ '%email_footer%' ] = str_replace( '%blog_name%', get_option( 'blogname' ), $replacements[ '%email_footer%' ] );
         }
 
         return $replacements;
