@@ -223,6 +223,7 @@
                         update_site_option( 'registrationnotification', 'no' );
                         update_site_option( 'b3_registration_type', get_site_option( 'registration' ) );
 
+                        // @TODO: remove after test
                         // $public_registration = get_site_option( 'registration' );
                         // if ( 'user' == $public_registration ) {
                         // } elseif ( 'blog' == $public_registration ) {
