@@ -643,7 +643,7 @@
     }
 
     /**
-     * Convert a GMT date/time to local
+     * Convert a GMT date/time to local, in system defined date/time format
      *
      * @param bool $date_time_gmt
      *
