@@ -37,7 +37,6 @@
             'b3_confirm_wpmu_user_message',
             'b3_confirm_wpmu_user_site_subject',
             'b3_confirm_wpmu_user_site_message',
-            'b3_custom_emails',
             'b3_dashboard_widget',
             'b3_debug_info',
             'b3_disable_action_links',
