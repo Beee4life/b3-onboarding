@@ -465,6 +465,7 @@
                         update_site_option( 'b3_request_access_subject_user', $_POST[ 'b3_request_access_subject_user' ] );
                         update_site_option( 'b3_account_rejected_message', htmlspecialchars( $_POST[ 'b3_account_rejected_message' ], ENT_QUOTES ) );
                         update_site_option( 'b3_account_rejected_subject', $_POST[ 'b3_account_rejected_subject' ] );
+                        update_site_option( 'b3_disable_wordpress_forms', 1 );
 
                         if ( isset( $_POST[ 'b3_disable_delete_user_email' ] ) && 1 == $_POST[ 'b3_disable_delete_user_email' ] ) {
                             update_site_option( 'b3_disable_delete_user_email', 1 );
