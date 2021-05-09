@@ -20,6 +20,8 @@
                 'id'      => 'b3-settings',
                 'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
                 'content' => '<h3>' . esc_html__( 'Settings', 'b3-onboarding' ) . '</h3>
+                    <p>' . esc_html__( 'reCaptcha settings will show after you save the checked option.', 'b3-onboarding' ) . '</p>
+                    <p>' . esc_html__( "Filter validation can be cpu intensive. Don't leave it on, on production.", 'b3-onboarding' ) . '</p>
                     <p>' . esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) . '</p>
                     '
             ) );
@@ -29,7 +31,6 @@
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                 'content' => '<h3>' . esc_html__( 'Registration', 'b3-onboarding' ) . '</h3>
                     <p>' . esc_html__( "Your general setting for if 'users can register' can register is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) . '</p>
-                    <p>' . esc_html__( 'If you want to add a reCaptcha verification, make sure you get the v2 keys. V3 is not supported yet.', 'b3-onboarding' ) . '</p>
                     <p>' . sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ) . '</p>
                     '
             ) );
@@ -44,8 +45,6 @@
                     <ul>
                         <li>%activation_url% (' . __( 'only in user activation email', 'b3-onboarding' ) . ')</li>
                         <li>%blog_name% <sup>&sup1;</sup></li>
-                        <li>%email_footer% <sup>&sup1;</sup></li>
-                        <li>%email_styling% <sup>&sup1;</sup></li>
                         <li>%home_url% <sup>&sup1;</sup></li>
                         <li>%registration_date% <sup>&sup1;</sup></li>
                         <li>%reset_url% <sup>&sup3;</sup></li>
