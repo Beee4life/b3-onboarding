@@ -128,7 +128,7 @@
                     </p>
                     <p>
                         <label>
-                            <input type="text" name="b3_main_logo" id="b3_main_logo" value="<?php echo $main_logo; ?>" />
+                            <input type="url" name="b3_main_logo" id="b3_main_logo" value="<?php echo $main_logo; ?>" />
                         </label>
                         <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">
                             <?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?>
