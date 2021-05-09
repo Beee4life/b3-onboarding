@@ -4,6 +4,9 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     $disable_admin_notification         = get_site_option( 'b3_disable_admin_notification_new_user' );
     $request_access_email_addresses     = get_site_option( 'b3_request_access_notification_addresses' );
     $request_access_email_subject_admin = get_site_option( 'b3_request_access_subject_admin' );

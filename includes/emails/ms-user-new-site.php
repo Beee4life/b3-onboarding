@@ -4,6 +4,9 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

@@ -4,6 +4,9 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     $current_user_object          = get_userdata( get_current_user_id() );
     $registration_with_email_only = get_site_option( 'b3_register_email_only' );
     $required                     = ( true == get_site_option( 'b3_first_last_required' ) ) ? ' required="required"' : false;

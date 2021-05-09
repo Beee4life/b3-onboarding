@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <ul class="debug-list">
     <li class="debug-list-part">
         <b>SERVER INFO</b>

@@ -6,6 +6,9 @@
      *
      * @return false|string
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     function b3_render_settings_tab() {
 
         $activate_filter_validation = get_site_option( 'b3_activate_filter_validation' );

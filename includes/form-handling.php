@@ -606,9 +606,9 @@
                     update_site_option( 'b3_recaptcha_version', sanitize_text_field( $_POST[ 'b3_recaptcha_version' ] ) );
 
                     if ( isset( $_POST[ 'b3_recaptcha_on' ] ) ) {
-                        // update_site_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ] );
+                        update_site_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ] );
                     } else {
-                        // delete_site_option( 'b3_recaptcha_on' );
+                        delete_site_option( 'b3_recaptcha_on' );
                     }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );

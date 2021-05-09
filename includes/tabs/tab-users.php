@@ -6,6 +6,9 @@
      *
      * @return false|string
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     function b3_render_users_tab() {
 
         $front_end_approval      = get_site_option( 'b3_front_end_approval' );

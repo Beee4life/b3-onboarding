@@ -4,6 +4,9 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     $label = esc_attr__( 'Username or Email address', 'b3-onboarding' );
 
     if ( 1 == get_site_option( 'b3_register_email_only' ) ) {

@@ -4,7 +4,9 @@
      *
      * @since 1.0.0
      */
-
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     do_action( 'b3_add_form_messages', $attributes );
     $activate_recaptcha = ( isset( $attributes[ 'recaptcha' ] ) ) ? true : false;
     $recaptcha_version  = ( false != $activate_recaptcha ) ? $attributes[ 'recaptcha' ][ 'version' ] : false;

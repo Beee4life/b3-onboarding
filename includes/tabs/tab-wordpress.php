@@ -6,6 +6,9 @@
      *
      * @return false|string
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     function b3_render_wordpress_tab() {
 
         $fonts = array(

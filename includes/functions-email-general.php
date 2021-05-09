@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     /**
      * Return email styling and default styling if false
      *

@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     /**
      * Create initial pages upon activation
      *

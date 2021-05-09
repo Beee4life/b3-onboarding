@@ -298,21 +298,21 @@
                     </div>
 
                     <?php // @TODO: add languages option ?>
-<!--                        <div class="b3_form-element b3_form-element--visbility">-->
-<!--                            <p class="privacy-intro">-->
-<!--                                --><?php //_e( 'Privacy:', 'b3-onboarding' ); ?>
-<!--                                --><?php //_e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
-<!--                                <br style="clear:both" />-->
-<!--                                <label class="checkbox" for="blog_public_on">-->
-<!--                                    <input type="radio" id="blog_public_on" name="blog_public" value="1" />-->
-<!--                                    --><?php //_e( 'Yes' ); ?>
-<!--                                </label>-->
-<!--                                <label class="checkbox" for="blog_public_off">-->
-<!--                                    <input type="radio" id="blog_public_off" name="blog_public" value="0" />-->
-<!--                                    --><?php //_e( 'No' ); ?>
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                        </div>-->
+                    <div class="b3_form-element b3_form-element--visbility">
+                        <p class="privacy-intro">
+                            <?php _e( 'Privacy:', 'b3-onboarding' ); ?>
+                            <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
+                            <br style="clear:both" />
+                            <label class="checkbox" for="blog_public_on">
+                                <input type="radio" id="blog_public_on" name="blog_public" value="1" />
+                                <?php _e( 'Yes' ); ?>
+                            </label>
+                            <label class="checkbox" for="blog_public_off">
+                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />
+                                <?php _e( 'No' ); ?>
+                            </label>
+                        </p>
+                    </div>
                 </div>
             <?php
                 }
@@ -491,8 +491,13 @@
         return false;
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
-
-
+    
+    
+    /**
+     * Action links on custom forms
+     *
+     * @param string $form_type
+     */
     function b3_add_action_links( $form_type = 'login' ) {
 
         if ( true != apply_filters( 'b3_disable_action_links', get_site_option( 'b3_disable_action_links' ) ) ) {

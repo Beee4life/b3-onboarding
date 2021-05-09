@@ -1,9 +1,6 @@
 <?php
-    // exit if accessed directly
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
-
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     // check if class already exists
     if ( ! class_exists( 'B3Shortcodes' ) ) :
 

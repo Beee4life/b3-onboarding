@@ -1,5 +1,6 @@
 <?php
-
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     /**
      * Disable admin notification on password change
      *

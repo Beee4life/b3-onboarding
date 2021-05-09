@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     /*
      * Includes filters for various 'parts'
      *

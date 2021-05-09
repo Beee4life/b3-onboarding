@@ -4,6 +4,9 @@
      *
      * @since 2.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     function b3_debug_page() {
 
         if ( ! current_user_can( 'manage_options' ) ) {

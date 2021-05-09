@@ -4,6 +4,9 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     $disable_admin_notification = get_site_option( 'b3_disable_delete_user_email' );
     $reject_user_email_subject  = get_site_option( 'b3_account_rejected_subject' );
     $reject_user_email_message  = get_site_option( 'b3_account_rejected_message' );

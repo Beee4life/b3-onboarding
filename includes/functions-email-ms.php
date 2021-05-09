@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     /**
      * Get email subject for activate wpmu user (user only, no site)
      *

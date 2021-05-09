@@ -1,4 +1,10 @@
 <?php
+    /*
+     * Template for user management
+     */
+    
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     if ( current_user_can( 'promote_users' ) ) {
         $user_approved    = esc_html__( 'User is successfully approved.', 'b3-onboarding' );
         $user_not_deleted = esc_html__( 'User is successfully rejected but there was an error deleting the account.', 'b3-onboarding' );

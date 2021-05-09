@@ -6,6 +6,9 @@
      *
      * @return false|string
      */
+
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
     function b3_render_emails_tab() {
 
         $activate_custom_emails = get_site_option( 'b3_activate_custom_emails' );
