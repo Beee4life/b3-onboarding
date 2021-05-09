@@ -76,14 +76,12 @@
                         );
 
                         if ( is_main_site() ) {
-                            if ( ! is_multisite() ) {
-                                $tabs[] = array(
-                                    'id'      => 'users',
-                                    'title'   => esc_html__( 'Users', 'b3-onboarding' ),
-                                    'content' => b3_render_tab_content( 'users' ),
-                                    'icon'    => 'admin-users',
-                                );
-                            }
+                            $tabs[] = array(
+                                'id'      => 'users',
+                                'title'   => esc_html__( 'Users', 'b3-onboarding' ),
+                                'content' => b3_render_tab_content( 'users' ),
+                                'icon'    => 'admin-users',
+                            );
 
                             if ( true == get_site_option( 'b3_activate_recaptcha' ) ) {
                                 $tabs[] = array(
