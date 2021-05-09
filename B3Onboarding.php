@@ -528,7 +528,7 @@
                         case 'activate' :
                             check_admin_referer( 'manual-activation' );
                             do_action( 'b3_manual_user_activate', $user_id );
-                            $redirect_to = add_query_arg( 'update', 'manually-activated', $redirect_to );
+                            $redirect_to = add_query_arg( 'update', 'activated', $redirect_to );
                             break;
 
                         case 'resendactivation' :
@@ -1933,14 +1933,17 @@
 
                 // manual actions
                 // @TODO: look into this, when used
-                if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'activate', 'sendactivation' ) ) ) {
-                    echo '<div id="message" class="updated"><p>';
-                    if ( 'activate' == $_GET[ 'update' ] ) {
-                        _e( 'User activated.', 'b3-onboarding' );
-                    } elseif ( 'sendactivation' == $_GET[ 'update' ] ) {
-                        _e( 'Activation mail resent.', 'b3-onboarding' );
+                if ( isset( $_GET[ 'update' ] ) ) {
+                    if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
+                        echo '<div id="message" class="updated"><p>';
+                        if ( 'activated' == $_GET[ 'update' ] ) {
+                            _e( 'User activated.', 'b3-onboarding' );
+                        } elseif ( 'sendactivation' == $_GET[ 'update' ] ) {
+                            error_log('activation mail resent');
+                            _e( 'Activation mail resent.', 'b3-onboarding' );
+                        }
+                        echo '</p></div>';
                     }
-                    echo '</p></div>';
                 }
 
                 global $pagenow;
