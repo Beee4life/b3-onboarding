@@ -48,7 +48,13 @@
                     $count_errors[] = 'account';
                 } else {
                     $account_title = get_the_title( $account_id );
+                    if ( false == $account_title ) {
+                        $count_errors[] = 'account_title';
+                    }
                     $account_url   = get_the_permalink( $account_id );
+                    if ( false == $account_url ) {
+                        $count_errors[] = 'account_link';
+                    }
                 }
                 $count_setting++;
             }
@@ -102,32 +108,25 @@
 
             if ( current_user_can( 'manage_options' ) ) {
                 $show_settings = ( false != $instance[ 'show_settings' ] ) ? $instance[ 'show_settings' ] : false;
-                if ( false == $show_settings ) {
-                    $count_errors[] = 'settings';
+                if ( $show_settings ) {
+                    $count_setting++;
                 }
 
                 $show_user_approval = ! empty( $instance[ 'show_approval' ] ) ? $instance[ 'show_approval' ] : false;
                 if ( $show_user_approval ) {
-                    $approval_link = b3_get_user_approval_link();
-                    $approval_link = ( false != $approval_link ) ? $approval_link : admin_url( '/admin.php?page=b3-user-approval' );
-                    if ( false == $approval_link ) {
-                        $count_errors[] = 'approval';
-                    }
                     $count_setting++;
                 }
             }
-
-            if ( $count_errors ) {
-                if ( $count_setting == count( $count_errors ) ) {
-                    $show_widget = false;
-                    if ( current_user_can( 'manage_options' ) ) {
-                        echo $args[ 'before_widget' ];
-                        if ( ! empty( $instance[ 'title' ] ) ) {
-                            echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
-                        }
-                        echo '<p class="widget-no-settings">' . sprintf( __( 'You haven\'t set any widget settings. Configure them <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( admin_url( 'widgets.php' ) ) ) . '</p>';
-                        echo $args[ 'after_widget' ];
+            
+            if ( 0 == $count_setting ) {
+                $show_widget = false;
+                if ( current_user_can( 'manage_options' ) ) {
+                    echo $args[ 'before_widget' ];
+                    if ( ! empty( $instance[ 'title' ] ) ) {
+                        echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
                     }
+                    echo '<p class="widget-no-settings">' . sprintf( __( 'You haven\'t set any widget settings. Configure them <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( admin_url( 'widgets.php' ) ) ) . '</p>';
+                    echo $args[ 'after_widget' ];
                 }
             }
 
