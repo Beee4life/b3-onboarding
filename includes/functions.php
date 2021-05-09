@@ -243,7 +243,7 @@
                 ),
                 array(
                     'value' => 'blog',
-                    'label' => esc_html__( 'Logged in user may register a site', 'b3-onboarding' ),
+                    'label' => esc_html__( 'Logged in user may register a site (no public new user registration)', 'b3-onboarding' ),
                 ),
                 array(
                     'value' => 'all',
@@ -251,7 +251,7 @@
                 ),
                 array(
                     'value' => 'site',
-                    'label' => esc_html__( "Visitor may register user + site (not 'just a user')", 'b3-onboarding' ),
+                    'label' => esc_html__( "Visitor may register user + site (must register site)", 'b3-onboarding' ),
                 ),
                 array(
                     'value' => 'request_access_subdomain',
