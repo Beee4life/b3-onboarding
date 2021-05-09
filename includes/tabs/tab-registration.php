@@ -173,7 +173,7 @@
                         <?php b3_get_close(); ?>
                     <?php } ?>
 
-                    <?php if ( 'closed' != $registration_type ) { ?>
+                    <?php if ( ! is_multisite() && 'closed' != $registration_type ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>
