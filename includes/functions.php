@@ -659,7 +659,8 @@
 
         if ( false != $date_time_gmt ) {
             if ( ! empty( $timezone ) ) {
-                $new_date          = new DateTime( $date_time_gmt, new DateTimeZone( $timezone ) );
+                $new_date = new DateTime( $date_time_gmt, new DateTimeZone( 'UTC' ) );
+                $new_date->setTimeZone( new DateTimeZone( $timezone ) );
                 $registration_date = $new_date->format( $date_format . ' @ ' . $time_format );
             } elseif ( ! empty( $gmt_offset ) ) {
                 $registration_date = gmdate( $date_format . ' @ ' . $time_format, strtotime( $date_time_gmt ) + ( $gmt_offset * HOUR_IN_SECONDS ) );
