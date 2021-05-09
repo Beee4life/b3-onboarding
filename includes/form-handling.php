@@ -66,7 +66,9 @@
                     }
 
                     if ( isset( $_POST[ 'b3_main_logo' ] ) ) {
-                        update_site_option( 'b3_main_logo', sanitize_file_name( $_POST[ 'b3_main_logo' ] ) );
+                        update_site_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ) );
+                    } else {
+                        delete_site_option( 'b3_main_logo' );
                     }
 
                     B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
