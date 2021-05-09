@@ -1,6 +1,6 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit;
-    
+
     /**
      * Disable admin notification on password change
      *
@@ -528,34 +528,7 @@ All at ###SITENAME###
      * @return false|mixed|string|void
      */
     function b3_prevent_update_registration_option( $new_value, $old_value ) {
-        if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
-            $b3_setting = $_POST[ 'b3_registration_type' ];
-            
-            if ( is_multisite() && is_main_site() ) {
-                if ( 'closed' == $b3_setting ) {
-                    $b3_setting = 'none';
-                } elseif ( 'user' == $b3_setting ) {
-                    $b3_setting = 'user';
-                } elseif ( 'blog' == $b3_setting ) {
-                    $b3_setting = 'blog';
-                } elseif ( 'all' == $b3_setting ) {
-                    $b3_setting = 'all';
-                } else {
-                    $b3_setting = 'all';
-                }
-            } elseif ( ! is_multisite() ) {
-                if ( 'closed' == $b3_setting ) {
-                    $b3_setting = '0';
-                } else {
-                    $b3_setting = '1';
-                }
-            }
-    
-            return $b3_setting;
-    
-        }
-
-        return $old_value;
+        return 0;
 
     }
     add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multisite || main site
@@ -572,22 +545,7 @@ All at ###SITENAME###
      * @return mixed
      */
     function b3_check_network_registration_option( $new_value, $old_value ) {
-        if ( is_multisite() ) {
-            if ( 'none' == $new_value ) {
-                $b3_setting = 'closed';
-            } elseif ( 'user' == $new_value ) {
-                $b3_setting = 'user';
-            } elseif ( 'blog' == $new_value ) {
-                $b3_setting = 'blog';
-            } elseif ( 'all' == $new_value ) {
-                $b3_setting = 'all';
-            } else {
-                $b3_setting = false;
-            }
-            update_site_option( 'b3_registration_type', $b3_setting );
-        }
-
-        return $new_value;
+        return 'none';
     }
     add_filter( 'pre_update_site_option_registration', 'b3_check_network_registration_option', 10, 2 ); // multisite
 
@@ -601,11 +559,7 @@ All at ###SITENAME###
      * @return string
      */
     function b3_prevent_update_registration_notification_option( $new_value, $old_value ) {
-        if ( is_multisite() ) {
-            $new_value = 'no';
-        }
-
-        return $new_value;
+        return 'no';
     }
     add_filter( 'pre_update_site_option_registrationnotification', 'b3_prevent_update_registration_notification_option', 10, 2 );
 
