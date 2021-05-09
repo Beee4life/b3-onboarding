@@ -90,6 +90,15 @@
             }
         });
 
+        var $redirect_after_register = '.b3_settings-field--redirect';
+        $('#b3_activate_custom_passwords').change(function() {
+            if (document.getElementById('b3_activate_custom_passwords').checked) {
+                $($redirect_after_register).addClass('hidden');
+            } else {
+                $($redirect_after_register).removeClass('hidden');
+            }
+        });
+
         var $custom_passwords = '.b3_settings-field--custom-passwords';
         $('input[name="b3_registration_type"]').change(function() {
             if (document.getElementById('b3_registration_type_request_access').checked) {

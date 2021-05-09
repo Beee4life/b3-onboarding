@@ -132,8 +132,10 @@
                 }
 
                 if ( ! is_multisite() ) {
-                    if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && 1 == $_POST[ 'b3_disallowed_usernames' ] ) {
-                        update_site_option( 'b3_disallowed_usernames', sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] ) );
+                    if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) ) {
+                        $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
+                        $new_value       = explode( ' ', $sanitized_value );
+                        update_site_option( 'b3_disallowed_usernames', $new_value );
                     } else {
                         delete_site_option( 'b3_disallowed_usernames' );
                     }

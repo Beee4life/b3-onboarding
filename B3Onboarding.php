@@ -480,11 +480,13 @@
                 if ( $current_user->ID != $user_object->ID ) {
                     if ( 'email_activation' == $registration_type ) {
                         if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
-                            $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), __( 'Activate', 'b3-onboarding' ) );
+                            unset( $actions[ 'resetpassword' ] );
                             $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), __( 'Resend activation', 'b3-onboarding' ) );
+                            $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), __( 'Activate', 'b3-onboarding' ) );
                         }
                     } elseif ( 'request_access' == $registration_type ) {
                         if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
+                            unset( $actions[ 'resetpassword' ] );
                             $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
                                 add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
                                     wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
@@ -527,7 +529,7 @@
                         case 'activate' :
                             check_admin_referer( 'manual-activation' );
                             do_action( 'b3_manual_user_activate', $user_id );
-                            $redirect_to = add_query_arg( 'update', 'manually-activated', $redirect_to );
+                            $redirect_to = add_query_arg( 'update', 'activated', $redirect_to );
                             break;
 
                         case 'resendactivation' :
@@ -1931,15 +1933,18 @@
                 }
 
                 // manual actions
-                // @TODO: use error for this
-                if ( isset( $_GET[ 'update' ] ) && in_array( $_GET[ 'update' ], array( 'activate', 'sendactivation' ) ) ) {
-                    echo '<div id="message" class="updated"><p>';
-                    if ( 'activate' == $_GET[ 'update' ] ) {
-                        _e( 'User activated.', 'b3-onboarding' );
-                    } elseif ( 'sendactivation' == $_GET[ 'update' ] ) {
-                        _e( 'Activation mail resent.', 'b3-onboarding' );
+                // @TODO: look into this, when used
+                if ( isset( $_GET[ 'update' ] ) ) {
+                    if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
+                        echo '<div id="message" class="updated"><p>';
+                        if ( 'activated' == $_GET[ 'update' ] ) {
+                            _e( 'User activated.', 'b3-onboarding' );
+                        } elseif ( 'sendactivation' == $_GET[ 'update' ] ) {
+                            error_log('activation mail resent');
+                            _e( 'Activation mail resent.', 'b3-onboarding' );
+                        }
+                        echo '</p></div>';
                     }
-                    echo '</p></div>';
                 }
 
                 global $pagenow;
