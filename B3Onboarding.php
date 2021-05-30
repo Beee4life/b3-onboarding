@@ -65,7 +65,7 @@
             public function init() {
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '2.6.0-beta',
+                    'version' => '2.6.0',
                 );
 
                 // actions
