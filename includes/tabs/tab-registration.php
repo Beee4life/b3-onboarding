@@ -6,8 +6,10 @@
      *
      * @return false|string
      */
-
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     function b3_render_registration_tab() {
 
@@ -173,17 +175,6 @@
                         <?php b3_get_close(); ?>
                     <?php } ?>
 
-                    <?php if ( ! is_multisite() && 'closed' != $registration_type ) { ?>
-                        <?php b3_get_settings_field_open(); ?>
-                            <?php b3_get_label_field_open(); ?>
-                                <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>
-                            <?php b3_get_close(); ?>
-                            <div class="b3_settings-input b3_settings-input--text">
-                                <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
-                            </div>
-                        <?php b3_get_close(); ?>
-                    <?php } ?>
-
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
@@ -222,6 +213,20 @@
                             </select>
                         </div>
                     <?php b3_get_close(); ?>
+
+                    <?php if ( ! is_multisite() && 'closed' != $registration_type ) { ?>
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--text">
+                                <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
+                                <div>
+                                    <small><?php esc_html_e( '(separate multiple user names with a space)', 'b3-onboarding' ); ?></small>
+                                </div>
+                            </div>
+                        <?php b3_get_close(); ?>
+                    <?php } ?>
                 <?php } ?>
             <?php } ?>
 
