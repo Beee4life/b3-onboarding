@@ -5,7 +5,7 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            2.6.0-beta
     Requires at least:  4.3
-    Tested up to:       5.7.1
+    Tested up to:       5.7.2
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
