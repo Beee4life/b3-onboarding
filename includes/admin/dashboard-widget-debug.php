@@ -4,6 +4,11 @@
      *
      * @since 2.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     function b3_dashboard_widget_debug_function() {
         $preview_page = admin_url( 'admin.php?page=b3-onboarding&preview=', '' );
         ?>

@@ -5,7 +5,9 @@
      * @since 1.0.0
      */
     
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
     
     $request_access_email_subject_user   = get_site_option( 'b3_request_access_subject_user' );;
     $request_access_email_message_user   = get_site_option( 'b3_request_access_message_user' );;

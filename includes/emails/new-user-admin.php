@@ -5,7 +5,9 @@
      * @since 1.0.0
      */
     
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
     
     $disable_admin_notification = get_site_option( 'b3_disable_admin_notification_new_user' );
     $new_user_email_addresses   = get_site_option( 'b3_new_user_notification_addresses' );

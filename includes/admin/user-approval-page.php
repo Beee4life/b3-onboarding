@@ -4,6 +4,11 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     function b3_user_approval() {
 
         if ( ! current_user_can( 'manage_options' ) ) {

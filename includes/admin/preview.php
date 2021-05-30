@@ -4,8 +4,10 @@
      *
      * @since 2.0.0
      */
-
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 ?>
 <div class="b3_preview">
     <?php

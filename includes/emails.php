@@ -1,5 +1,7 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
     
     /**
      * Render email settings field with fold out

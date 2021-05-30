@@ -1,5 +1,7 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     include 'download.php';
     include 'functions-email-general.php';

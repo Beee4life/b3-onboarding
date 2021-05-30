@@ -4,6 +4,11 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     $email_activation_subject = get_site_option( 'b3_email_activation_subject' );
     $email_activation_message = get_site_option( 'b3_email_activation_message' );
 ?>

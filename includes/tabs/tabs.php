@@ -8,8 +8,10 @@
      *
      * @return string
      */
-
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     include 'tab-emails.php';
     include 'tab-recaptcha.php';

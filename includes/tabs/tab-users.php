@@ -6,8 +6,10 @@
      *
      * @return false|string
      */
-
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     function b3_render_users_tab() {
 

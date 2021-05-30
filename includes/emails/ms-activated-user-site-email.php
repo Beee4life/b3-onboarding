@@ -4,6 +4,11 @@
      *
      * @since 2.6.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     $activated_wpmu_user_site_subject = get_site_option( 'b3_activated_wpmu_user_site_subject' );
     $activated_wpmu_user_site_message = get_site_option( 'b3_activated_wpmu_user_site_message' );
     $placeholder_subject              = b3_default_subject_welcome_wpmu_user_blog();

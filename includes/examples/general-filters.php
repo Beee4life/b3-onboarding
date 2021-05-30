@@ -3,6 +3,10 @@
     #####################
     ## General filters ##
     #####################
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     /**
      * Filter main logo

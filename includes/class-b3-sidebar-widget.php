@@ -1,5 +1,7 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
     
     /**
      * Class B3_Sidebar_Widget

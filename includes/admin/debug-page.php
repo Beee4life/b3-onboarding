@@ -5,7 +5,9 @@
      * @since 2.0.0
      */
     
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     function b3_debug_page() {
 

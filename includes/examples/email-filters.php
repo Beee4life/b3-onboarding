@@ -3,6 +3,10 @@
     ###################
     ## Email filters ##
     ###################
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     /**
      * Filters the sender email address

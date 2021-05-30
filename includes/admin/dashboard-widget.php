@@ -4,6 +4,11 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     function b3_dashboard_widget_function() {
         $approval_args = array(
             'role' => 'b3_approval'

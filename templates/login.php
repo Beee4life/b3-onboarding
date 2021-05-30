@@ -5,7 +5,9 @@
      * @since 1.0.0
      */
     
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     $label = esc_attr__( 'Username or Email address', 'b3-onboarding' );
 

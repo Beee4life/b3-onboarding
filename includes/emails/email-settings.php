@@ -4,6 +4,11 @@
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     $notification_sender_email = get_site_option( 'b3_notification_sender_email' );
     $notification_sender_name  = get_site_option( 'b3_notification_sender_name' );
 ?>

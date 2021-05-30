@@ -3,6 +3,10 @@
     ##################
     ## Form filters ##
     ##################
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     /**
      * Add hidden fields to form (filter only)

@@ -3,7 +3,11 @@
     ######################
     ## Redirect filters ##
     ######################
-
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     /**
      * Redirect after user register
      *

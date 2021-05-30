@@ -3,7 +3,9 @@
      * Template for user management
      */
     
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
     if ( current_user_can( 'promote_users' ) ) {
         $user_approved    = esc_html__( 'User is successfully approved.', 'b3-onboarding' );

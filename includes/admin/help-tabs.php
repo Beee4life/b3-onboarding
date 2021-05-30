@@ -6,6 +6,11 @@
      *
      * @param $screen    object
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     function b3_help_tabs( $screen ) {
 
         $screen_array = array(
