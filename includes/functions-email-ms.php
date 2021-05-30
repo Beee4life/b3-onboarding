@@ -1,5 +1,7 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
     
     /**
      * Get email subject for activate wpmu user (user only, no site)
@@ -94,7 +96,13 @@
 
         return $message;
     }
-
+    
+    
+    /**
+     * Subject for WPMU user activated
+     *
+     * @return false|mixed|string
+     */
     function b3_get_wpmu_activated_user_blog_subject() {
         $subject = get_site_option( 'b3_activated_wpmu_user_site_subject' );
         if ( ! $subject ) {
@@ -103,7 +111,15 @@
 
         return $subject;
     }
-
+    
+    
+    /**
+     * Message for WPMU user activated
+     *
+     * @param $user_login
+     *
+     * @return false|mixed|string
+     */
     function b3_get_wpmu_activated_user_blog_message( $user_login ) {
         $message = get_site_option( 'b3_activated_wpmu_user_site_message' );
         if ( ! $message ) {
