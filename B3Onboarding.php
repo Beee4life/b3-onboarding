@@ -99,7 +99,6 @@
 
                 // Multisite specific
                 add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
-                add_action( 'wp_initialize_site',                   array( $this, 'b3_new_blog' ) );
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -232,27 +231,6 @@
             }
 
             /**
-             * Do upon new blog
-             *
-             * @param $new_site
-             */
-            public function b3_new_blog( $new_site ) {
-                /*
-                 * Available vars:
-                 * - blog_id (= site id)
-                 * - domain
-                 * - path
-                 * - site id (= network id)
-                 * - lang_id
-                 */
-
-                // switch_to_blog( $new_site->blog_id );
-                // @TODO: create new page account
-                // restore_current_blog();
-
-            }
-
-            /**
              * Load plugin text domain
              */
             public function b3_load_plugin_text_domain() {
@@ -286,15 +264,6 @@
 
                 wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
-
-                // check for recaptcha
-                $activate_recaptcha = get_site_option( 'b3_activate_recaptcha' );
-                $recaptcha_version = get_site_option( 'b3_recaptcha_version' );
-                $recaptcha_public = get_site_option( 'b3_recaptcha_public' );
-
-                if ( 3 == $recaptcha_version ) {
-                    // wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public, [], '', false );
-                }
             }
 
 
