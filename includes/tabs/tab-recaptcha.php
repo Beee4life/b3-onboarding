@@ -38,7 +38,6 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox b3_settings-input--recaptcha">
                     <input type="checkbox" id="b3_recaptcha_registration" name="b3_recaptcha_on[]" value="register" <?php if ( in_array( 'register', $recaptcha_on ) ) { ?>checked="checked"<?php } ?>/> <label for="b3_recaptcha_registration"><?php esc_html_e( 'Registration form', 'b3-onboarding' ); ?></label>
-<!--                    <input type="checkbox" id="b3_recaptcha_login" name="b3_recaptcha_on[]" value="login" --><?php //if ( in_array( 'login', $recaptcha_on ) ) { ?><!--checked="checked"--><?php //} ?><!--/> <label for="b3_recaptcha_login">--><?php //esc_html_e( 'Login form', 'b3-onboarding' ); ?><!--</label>-->
                 </div>
             <?php b3_get_close(); ?>
     
