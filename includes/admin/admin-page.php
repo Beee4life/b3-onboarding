@@ -1,10 +1,14 @@
 <?php
-
     /**
      * Content for the 'settings page'
      *
      * @since 1.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     function b3_user_register_settings() {
 
         if ( ! current_user_can( 'manage_options' ) ) {
@@ -52,26 +56,19 @@
                                 'content' => b3_render_tab_content( 'settings' ),
                                 'icon'    => 'admin-generic',
                             ),
-                            array(
+                        );
+                        if ( is_main_site() ) {
+                            $tabs[] = array(
                                 'id'      => 'registration',
                                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'registration' ),
                                 'icon'    => 'shield',
-                            ),
-                            array(
+                            );
+                            $tabs[] = array(
                                 'id'      => 'pages',
                                 'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
                                 'content' => b3_render_tab_content( 'pages' ),
                                 'icon'    => 'admin-page',
-                            ),
-                        );
-
-                        if ( 1 == get_option( 'b3_style_wordpress_forms', false ) ) {
-                            $tabs[] = array(
-                                'id'      => 'wordpress',
-                                'title'   => 'WordPress',
-                                'content' => b3_render_tab_content( 'wordpress' ),
-                                'icon'    => 'art',
                             );
                         }
 
@@ -82,33 +79,29 @@
                             'icon'    => 'email',
                         );
 
-                        $tabs[] = array(
-                            'id'      => 'users',
-                            'title'   => esc_html__( 'Users', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'users' ),
-                            'icon'    => 'admin-users',
-                        );
+                        if ( is_main_site() ) {
+                            if ( ! is_multisite() ) {
+                                $tabs[] = array(
+                                    'id'      => 'users',
+                                    'title'   => esc_html__( 'Users', 'b3-onboarding' ),
+                                    'content' => b3_render_tab_content( 'users' ),
+                                    'icon'    => 'admin-users',
+                                );
+                            }
 
-                        if ( true == get_option( 'b3_activate_recaptcha', false ) ) {
-                            $tabs[] = array(
-                                'id'      => 'recaptcha',
-                                'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'recaptcha' ),
-                                'icon'    => 'plus-alt',
-                            );
+                            if ( true == get_site_option( 'b3_activate_recaptcha' ) ) {
+                                $tabs[] = array(
+                                    'id'      => 'recaptcha',
+                                    'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
+                                    'content' => b3_render_tab_content( 'recaptcha' ),
+                                    'icon'    => 'plus-alt',
+                                );
+                            }
                         }
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>
-                            <?php
-                                $hide_wordpress = false;
-                                if ( 'wordpress' == $tab[ 'id' ] ) {
-                                    if ( 1 != get_option( 'b3_style_wordpress_forms', false ) ) {
-                                        $hide_wordpress = ' hidden';
-                                    }
-                                }
-                            ?>
-                            <button class="b3_tab-button b3_tab-button--<?php echo $tab[ 'id' ]; ?><?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?><?php echo $hide_wordpress; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
+                            <button class="b3_tab-button b3_tab-button--<?php echo $tab[ 'id' ]; ?><?php echo ( $tab[ 'id' ] == $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
                                 <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
                                     <i class="dashicons dashicons-<?php echo $tab[ 'icon' ]; ?>"></i>
                                 <?php } ?>

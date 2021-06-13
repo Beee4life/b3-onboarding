@@ -9,33 +9,55 @@
      * @since 1.0.0
      *
      */
-    function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
-        $registration_type = get_option( 'b3_registration_type', false );
-        $custom_passwords  = get_option( 'b3_activate_custom_passwords', false );
-        $user_object       = get_userdata( $user_id );
-        $user_login        = $user_object->user_login;
-        $user_object->set_role( get_option( 'default_role' ) );
+    function b3_do_stuff_after_new_user_approved_by_admin( $arguments ) {
 
-        if ( false == $custom_passwords ) {
-            // user needs a password
-            $key                 = get_password_reset_key( $user_object );
-            $reset_pass_url      = b3_get_reset_password_url();
-            $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
+        if ( is_multisite() ) {
+            // get activation key
         } else {
-            // user has set a custom password
+            $custom_passwords  = get_site_option( 'b3_activate_custom_passwords' );
+            $user_object       = get_userdata( $arguments[ 'user_id' ] );
+            $user_login        = $user_object->user_login;
+            $user_object->set_role( get_option( 'default_role' ) );
+
+            if ( false == $custom_passwords ) {
+                // user needs a password
+                $key                 = get_password_reset_key( $user_object );
+                $reset_pass_url      = b3_get_reset_password_url();
+                $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
+            } else {
+                // user has set a custom password or requests access
+                $vars = array();
+            }
+
+            $to      = $user_object->user_email;
+            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = strtr( $subject, b3_replace_subject_vars() );
+            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_replace_template_styling( $message );
+            $message = strtr( $message, b3_replace_email_vars( $vars ) );
+            $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+            wp_mail( $to, $subject, $message, array() );
         }
-
-        $to      = $user_object->user_email;
-        $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
-        $subject = strtr( $subject, b3_replace_subject_vars() );
-        $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars( $vars ) );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
-
-        wp_mail( $to, $subject, $message, array() );
     }
     add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
+
+    function b3_approve_new_wpmu_signup( $signup_info = [] ) {
+        // update row
+        global $wpdb;
+        $meta_data              = unserialize( $signup_info->meta );
+        $meta_data[ 'public' ]  = 1;
+        $meta_data[ 'deleted' ] = 0;
+        $signup_info->meta      = serialize( $meta_data );
+
+        // set site to public and remove deleted status
+        $wpdb->update(
+            $wpdb->prefix . 'signups', array( 'meta' => $signup_info->meta ), array( 'signup_id' => $signup_info->signup_id ), array( '%s' )
+        );
+
+        $result = wpmu_activate_signup( $signup_info->activation_key );
+    }
+    add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
 
 
     /**
@@ -45,14 +67,21 @@
      *
      * @since 2.5.0
      */
-    function b3_do_stuff_before_reject_user_by_admin( $user_id ) {
-        if ( false == get_option( 'b3_disable_delete_user_email', false ) ) {
-            $user_object = get_userdata( $user_id );
-            $to          = $user_object->user_email;
-            $subject     = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
-            $message     = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
+    function b3_do_stuff_before_reject_user_by_admin( $user_info ) {
+        if ( false == get_site_option( 'b3_disable_delete_user_email' ) ) {
+            $multisite = false;
+            $message   = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
+            $subject   = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
 
-            if ( in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
+            if ( isset( $user_info[ 'user_id' ] ) ) {
+                $user_object = get_userdata( $user_info[ 'user_id' ] );
+                $to          = $user_object->user_email;
+            } elseif ( isset( $user_info[ 'user_email' ] ) ) {
+                $multisite = true;
+                $to        = $user_info[ 'user_email' ];
+            }
+
+            if ( $multisite || in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
                 $message = b3_replace_template_styling( $message );
                 $message = strtr( $message, b3_replace_email_vars() );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -70,12 +99,11 @@
      *
      * @since 1.0.0
      *
-     * @TODO  : check for a WordPress hook to hook to
-     * @TODO  : look into filter 'registration_redirect'
+     * @TODO: check for a WordPress hook to hook to
      *
      */
     function b3_do_stuff_after_user_activated( $user_id ) {
-        if ( 1 != get_option( 'b3_disable_admin_notification_new_user', false ) ) {
+        if ( 1 != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
             // send 'new user' email to admin
             $user          = get_userdata( $user_id );
             $admin_to      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( 'email_activation' ) );
@@ -90,7 +118,7 @@
         }
 
         // send 'account activated' email to user
-        if ( 'email_activation' == get_option( 'b3_registration_type', false ) ) {
+        if ( 'email_activation' == get_site_option( 'b3_registration_type' ) ) {
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
             $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
@@ -110,25 +138,52 @@
      *
      * @since 1.0.0
      */
-    function b3_add_username_email_fields() {
-        $registration_with_email_only = get_option( 'b3_register_email_only', false );
+    function b3_add_username_email_fields( $registration_type ) {
+        $registration_with_email_only = get_site_option( 'b3_register_email_only' );
 
         ob_start();
 
-        if ( false == $registration_with_email_only ) {
-        ?>
-        <div class="b3_form-element b3_form-element--login">
-            <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-            <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
-        </div>
-        <?php } else { ?>
-            <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
-        <?php } ?>
-        <div class="b3_form-element b3_form-element--email">
-            <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-            <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
-        </div>
-        <?php
+        if ( is_multisite() ) {
+            ?>
+            <div class="b3_form-element b3_form-element--login">
+                <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="text" name="user_name" id="b3_user_login" class="b3_form--input" autocapitalize="none" autocomplete="off" spellcheck="false" maxlength="60" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+            </div>
+            <div class="b3_form-element b3_form-element--email">
+                <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
+            </div>
+
+            <?php if ( 'all' == $registration_type ) { ?>
+                <div class="b3_form-element b3_form-element--signup-for">
+                    <label class="b3_form-label" for=""><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?></label>
+                    <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
+                    <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'A site' ) ); ?></label>
+                    <input id="signupuser" type="radio" name="signup_for" value="user">
+                    <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
+                </div>
+            <?php } elseif ( in_array( $registration_type, [ 'blog', 'site' ] ) ) { ?>
+                <input type="hidden" name="signup_for" value="blog" />
+            <?php } elseif ( 'user' == $registration_type ) { ?>
+                <input type="hidden" name="signup_for" value="user" />
+            <?php } ?>
+        <?php } else {
+            if ( false == $registration_with_email_only ) {
+                ?>
+                <div class="b3_form-element b3_form-element--login">
+                    <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                    <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+                </div>
+            <?php } else { ?>
+                <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
+            <?php } ?>
+            <div class="b3_form-element b3_form-element--email">
+                <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
+            </div>
+            <?php
+        }
+
         $output = ob_get_clean();
         echo $output;
     }
@@ -141,12 +196,15 @@
      * @since 0.8-beta
      */
     function b3_first_last_name_fields() {
-        $activate_first_last = get_option( 'b3_activate_first_last', false );
+        $activate_first_last = get_site_option( 'b3_activate_first_last' );
         if ( $activate_first_last ) {
-            $first_last_required = get_option( 'b3_first_last_required', false );
-            $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : false;
-            $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : false;
+            $first_last_required = get_site_option( 'b3_first_last_required' );
+            $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : false;
+            $first_name          = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : $first_name;
+            $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : false;
+            $last_name           = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : $last_name;
             $required            = ( true == $first_last_required ) ? ' required="required"' : false;
+
             ob_start();
             do_action( 'b3_do_before_first_last_name' );
         ?>
@@ -168,13 +226,13 @@
 
 
     /**
-     * Output the password fields (not in use yet, needs more testing)
+     * Output the password fields
      *
      * @since 0.8-beta
      */
     function b3_add_password_fields() {
-        $registration_type     = get_option( 'b3_registration_type', false );
-        $show_custom_passwords = get_option( 'b3_activate_custom_passwords', false );
+        $registration_type     = get_site_option( 'b3_registration_type' );
+        $show_custom_passwords = get_site_option( 'b3_activate_custom_passwords' );
         if ( $show_custom_passwords && in_array( $registration_type, [ 'email_activation', 'open' ] ) ) {
             ob_start();
             ?>
@@ -196,30 +254,73 @@
 
 
     /**
-     * Add field for subdomain when WPMU is active (not used yet)
+     * Add field for subdomain when WPMU is active
      *
      * @since 1.0.0
      */
-    function b3_add_subdomain_field() {
+    function b3_add_site_fields( $registration_type ) {
         if ( is_multisite() ) {
-            $show_subdomain = get_option( 'b3_show_subdomain_field', false );
-            if ( 'all' == get_site_option( 'registration' ) && in_array( get_option( 'b3_registration_type', false ), array(
+            if ( in_array( $registration_type, array(
                     'request_access_subdomain',
-                    'ms_register_site_user',
+                    'blog',
+                    'all',
+                    'site',
                 ) ) ) {
                 ob_start();
+                $register_for = apply_filters( 'b3_register_for', false );
+                if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
             ?>
-                <div class="b3_form-element b3_form-element--register">
-                    <label class="b3_form-label" for="b3_subdomain"><?php esc_html_e( 'Desired (sub) domain', 'b3-onboarding' ); ?></label>
-                    <input name="b3_subdomain" id="b3_subdomain" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>        .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>" required/>
+                <div class="b3_form-element b3_form-element--site-fields">
+                    <?php
+                        if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
+                            $b3_message_above_new_blog = esc_html__( 'Here you can register your new site.', 'b3-onboarding' );
+                            $notice = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
+                            if ( false !== $notice ) {
+                                echo '<p>' . $notice . '</p>';
+                            }
+                        }
+                    ?>
+                    <div class="b3_form-element b3_form-element--subdomain">
+                        <?php $current_network = get_network(); ?>
+                        <?php if ( is_subdomain_install() ) { ?>
+                            <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site (sub) domain', 'b3-onboarding' ); ?></label>
+                            <input name="blogname" id="blogname" value="abcd" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>" />.<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>
+                        <?php } else { ?>
+                            <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site address', 'b3-onboarding' ); ?></label>
+                            <?php echo $current_network->domain . $current_network->path; ?><input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'address', 'b3-onboarding' ); ?>" />
+                        <?php } ?>
+                    </div>
+
+                    <div class="b3_form-element b3_form-element--site-title">
+                        <label class="b3_form-label" for="blog_title"><?php esc_html_e( 'Site title', 'b3-onboarding' ); ?></label>
+                        <input name="blog_title" id="blog_title" value="abcd" type="text" class="b3_form--input" />
+                    </div>
+
+                    <?php // @TODO: add languages option ?>
+                    <div class="b3_form-element b3_form-element--visbility">
+                        <p class="privacy-intro">
+                            <?php _e( 'Privacy:', 'b3-onboarding' ); ?>
+                            <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
+                            <br style="clear:both" />
+                            <label class="checkbox" for="blog_public_on">
+                                <input type="radio" id="blog_public_on" name="blog_public" value="1" />
+                                <?php _e( 'Yes' ); ?>
+                            </label>
+                            <label class="checkbox" for="blog_public_off">
+                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />
+                                <?php _e( 'No' ); ?>
+                            </label>
+                        </p>
+                    </div>
                 </div>
             <?php
+                }
                 $output = ob_get_clean();
                 echo $output;
             }
         }
     }
-    add_action( 'b3_add_subdomain_field', 'b3_add_subdomain_field' );
+    add_action( 'b3_add_site_fields', 'b3_add_site_fields' );
 
 
     /**
@@ -252,6 +353,9 @@
             }
             echo $hidden_fields;
         }
+        if ( is_multisite() && 'blog' == get_site_option( 'b3_registration_type' ) ) {
+            echo '<input type="hidden" name="signup_for" value="blog" />';
+        }
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
 
@@ -265,23 +369,36 @@
      *
      */
     function b3_add_recaptcha_fields( $form_type = 'register' ) {
-        $activate_recaptcha = get_option( 'b3_activate_recaptcha', false );
-        $recaptcha_on       = get_option( 'b3_recaptcha_on', [] );
-        $recaptcha_public   = get_option( 'b3_recaptcha_public', false );
-        $recaptcha_version  = get_option( 'b3_recaptcha_version', '2' );
+        $activate_recaptcha = get_site_option( 'b3_activate_recaptcha' );
+        $recaptcha_on       = get_site_option( 'b3_recaptcha_on', [] );
+        $recaptcha_public   = get_site_option( 'b3_recaptcha_public' );
+        $recaptcha_version  = get_site_option( 'b3_recaptcha_version', '2' );
 
         if ( false != $activate_recaptcha ) {
-            if ( false != $recaptcha_public && '3' != $recaptcha_version ) {
-                if ( in_array( $form_type, $recaptcha_on ) ) {
-                    do_action( 'b3_do_before_recaptcha_' . $form_type );
+            if ( false != $recaptcha_public ) {
+                if ( '2' == $recaptcha_version ) {
+                    if ( in_array( $form_type, $recaptcha_on ) ) {
+                        do_action( 'b3_do_before_recaptcha_' . $form_type );
+                        ?>
+                        <div class="b3_form-element b3_form-element--recaptcha">
+                            <div class="recaptcha-container">
+                                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                            </div>
+                        </div>
+                        <?php
+                        do_action( 'b3_do_after_recaptcha_' . $form_type );
+                    }
+                }
+            } else {
+                if ( current_user_can( 'manage_options') ) {
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
-                        <div class="recaptcha-container">
-                            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-                        </div>
+                        <?php
+                            echo sprintf( esc_html__( "You didn't set a reCaptcha key yet. You can set it %s.", 'b3-onboarding' ),
+                                '<a href="' . esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' ) ) .'">' . esc_html__( 'here', 'b3-onboarding' ) . '</a>' );
+                        ?>
                     </div>
                     <?php
-                    do_action( 'b3_do_after_recaptcha_' . $form_type );
                 }
             }
         }
@@ -293,7 +410,7 @@
      * Function to output a privacy checkbox
      */
     function b3_add_privacy_checkbox() {
-        $show_privacy = get_option( 'b3_privacy', false );
+        $show_privacy = get_site_option( 'b3_privacy' );
         if ( true == $show_privacy ) {
             do_action( 'b3_do_before_privacy_checkbox' );
             ?>
@@ -318,12 +435,12 @@
      * @since 2.0.0
      *
      */
-    function b3_render_form_messages( $attributes = false ) {
+    function b3_render_form_messages( $attributes = [] ) {
 
-        if ( false != $attributes ) {
+        if ( ! empty( $attributes ) ) {
             $messages          = array();
             $show_errors       = false;
-            $registration_type = get_option( 'b3_registration_type', false );
+            $registration_type = get_site_option( 'b3_registration_type' );
 
             if ( isset( $attributes[ 'errors' ] ) && 0 < count( $attributes[ 'errors' ] ) ) {
                 $show_errors = true;
@@ -346,8 +463,8 @@
                             $show_errors = true;
                             $messages[]  = $request_access_message;
                         }
-                    } elseif ( 'closed' != $registration_type ) {
-                        $registration_message = apply_filters( 'b3_message_above_registration', false );
+                    } elseif ( 'closed' == $registration_type ) {
+                        $registration_message = apply_filters( 'b3_message_above_registration', b3_get_registration_closed_message() );
                         if ( false != $registration_message ) {
                             $show_errors = true;
                             $messages[]  = $registration_message;
@@ -373,10 +490,16 @@
         return false;
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
-
+    
+    
+    /**
+     * Action links on custom forms
+     *
+     * @param string $form_type
+     */
     function b3_add_action_links( $form_type = 'login' ) {
 
-        if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links', false ) ) ) {
+        if ( true != apply_filters( 'b3_disable_action_links', get_site_option( 'b3_disable_action_links' ) ) ) {
             $page_types = array();
 
             switch( $form_type ) {
@@ -386,7 +509,7 @@
                         'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
                         'link'  => b3_get_lostpassword_url(),
                     ];
-                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
+                    if ( 'closed' != get_site_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),
@@ -410,7 +533,7 @@
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_url(),
                     ];
-                    if ( 'closed' != get_option( 'b3_registration_type', false ) ) {
+                    if ( 'closed' != get_site_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),
@@ -439,8 +562,7 @@
      *
      * @since 2.5.0
      *
-     * @TODO: add if to determine if user's registration type (still) matches current,
-     * otherwise incorrect email will be sent
+     * @TODO: add if to determine if user's registration type (still) matches current, otherwise incorrect email will be sent
      *
      * @param $user_id
      */

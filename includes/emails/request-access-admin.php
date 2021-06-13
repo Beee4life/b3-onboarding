@@ -4,10 +4,15 @@
      *
      * @since 1.0.0
      */
-    $disable_admin_notification         = get_option( 'b3_disable_admin_notification_new_user', false );
-    $request_access_email_addresses     = get_option( 'b3_request_access_notification_addresses', false );
-    $request_access_email_subject_admin = get_option( 'b3_request_access_subject_admin', false );
-    $request_access_email_message_admin = get_option( 'b3_request_access_message_admin', false );
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
+    $disable_admin_notification         = get_site_option( 'b3_disable_admin_notification_new_user' );
+    $request_access_email_addresses     = get_site_option( 'b3_request_access_notification_addresses' );
+    $request_access_email_subject_admin = get_site_option( 'b3_request_access_subject_admin' );
+    $request_access_email_message_admin = get_site_option( 'b3_request_access_message_admin' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -21,7 +26,7 @@
             <label for="b3__input--request-access-notification-addresses" class=""><?php esc_html_e( 'Email addresses', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--request-access-notification-addresses" name="b3_request_access_notification_addresses" placeholder="<?php echo get_option( 'admin_email' ); ?>" type="text" value="<?php echo esc_attr( $request_access_email_addresses ); ?>" />
+            <input class="" id="b3__input--request-access-notification-addresses" name="b3_request_access_notification_addresses" placeholder="<?php echo get_site_option( 'admin_email' ); ?>" type="text" value="<?php echo esc_attr( $request_access_email_addresses ); ?>" />
         </td>
     </tr>
     <tr>

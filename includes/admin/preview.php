@@ -4,13 +4,17 @@
      *
      * @since 2.0.0
      */
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 ?>
 <div class="b3_preview">
     <?php
         $message = false;
         $subject = false;
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo = ( '1' === get_site_option( 'b3_logo_in_email' ) ) ? false : true;
             $preview   = $_GET[ 'preview' ];
             $user      = get_userdata( get_current_user_id() );
 
@@ -23,6 +27,31 @@
             switch( $preview ) {
                 case 'template':
                     $message = $lorem_ipsum;
+                    break;
+                case 'mu-confirm-user-email':
+                    // @TODO: add filter
+                    $message = b3_get_wpmu_activate_user_message();
+                    $subject = b3_get_wpmu_activate_user_subject();
+                    break;
+                case 'mu-user-activated':
+                    // @TODO: add filter
+                    $message = b3_get_wpmu_user_activated_message();
+                    $subject = b3_get_wpmu_user_activated_subject();
+                    break;
+                case 'mu-confirm-user-site-email':
+                    // @TODO: add filter
+                    $message = b3_get_wpmu_activate_user_blog_message();
+                    $subject = b3_get_wpmu_activate_user_blog_subject();
+                    break;
+                case 'mu-user-site-activated':
+                    // @TODO: add filter
+                    $message = b3_get_wpmu_user_activated_message();
+                    $subject = b3_get_wpmu_user_activated_subject();
+                    break;
+                case 'mu-new-user-admin':
+                    // @TODO: add filter
+                    $message = b3_get_new_wpmu_user_message_admin();
+                    $subject = b3_get_new_wpmu_user_subject_admin();
                     break;
                 case 'account-approved':
                     $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );

@@ -1,5 +1,8 @@
 <?php
-
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     /**
      * Class B3_Sidebar_Widget
      */
@@ -30,11 +33,14 @@
          * @param array $instance Saved values from database.
          */
         public function widget( $args, $instance ) {
-            $count_errors  = [];
-            $count_setting = 0;
-            $show_account  = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
-            $show_widget   = true;
-            $show_settings = false;
+            $count_errors       = array();
+            $count_setting      = 0;
+            $main_logo          = get_site_option( 'b3_main_logo' );
+            $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
+            $show_widget        = true;
+            $show_register_link = false;
+            $show_settings      = false;
+            $use_popup          = get_site_option( 'b3_use_popup' );
 
             if ( $show_account ) {
                 $account_id    = b3_get_account_url( true );
@@ -43,8 +49,14 @@
                 if ( false == $account_id ) {
                     $count_errors[] = 'account';
                 } else {
-                    $account_title  = get_the_title( $account_id );
-                    $account_url    = get_the_permalink( $account_id );
+                    $account_title = get_the_title( $account_id );
+                    if ( false == $account_title ) {
+                        $count_errors[] = 'account_title';
+                    }
+                    $account_url   = get_the_permalink( $account_id );
+                    if ( false == $account_url ) {
+                        $count_errors[] = 'account_link';
+                    }
                 }
                 $count_setting++;
             }
@@ -57,8 +69,8 @@
                 if ( false == $login_id ) {
                     $count_errors[] = 'login';
                 } else {
-                    $login_title  = get_the_title( $login_id );
-                    $login_url    = get_the_permalink( $login_id );
+                    $login_title = get_the_title( $login_id );
+                    $login_url   = get_the_permalink( $login_id );
                 }
                 $count_setting++;
             }
@@ -74,46 +86,49 @@
 
             $show_register = ! empty( $instance[ 'show_register' ] ) ? $instance[ 'show_register' ] : false;
             if ( $show_register ) {
-                $register_id    = b3_get_register_url( true );
-                $register_title = esc_html__( 'Login', 'b3-onboarding' );
-                $register_url   = b3_get_register_url();
-                if ( false == $register_id ) {
-                    $count_errors[] = 'register';
-                } else {
-                    $register_title = get_the_title( $register_id );
-                    $register_url   = get_the_permalink( $register_id );
-                }
-                $count_setting++;
-            }
+                $register_id       = b3_get_register_url( true );
+                $registration_type = get_site_option( 'b3_registration_type' );
 
-            if ( current_user_can( 'manage_options' ) ) {
-                $show_settings = ( false != $instance[ 'show_settings' ] ) ? $instance[ 'show_settings' ] : false;
-                if ( false == $show_settings ) {
-                    $count_errors[] = 'settings';
-                }
+                if ( 'closed' != $registration_type ) {
+                    if ( false == $register_id ) {
+                        $count_errors[] = 'register';
+                    } else {
+                        if ( 'blog' == $registration_type && is_user_logged_in() ) {
+                            $show_register_link = true;
+                        } elseif ( ! is_user_logged_in() ) {
+                            $show_register_link = true;
+                        }
 
-                $show_user_approval = ! empty( $instance[ 'show_approval' ] ) ? $instance[ 'show_approval' ] : false;
-                if ( $show_user_approval ) {
-                    $approval_link = b3_get_user_approval_link();
-                    $approval_link = ( false != $approval_link ) ? $approval_link : admin_url( '/admin.php?page=b3-user-approval' );
-                    if ( false == $approval_link ) {
-                        $count_errors[] = 'approval';
+                        if ( true == $show_register_link ) {
+                            $register_title = get_the_title( $register_id );
+                            $register_url   = get_the_permalink( $register_id );
+                        }
                     }
                     $count_setting++;
                 }
             }
 
-            if ( $count_errors ) {
-                if ( $count_setting == count( $count_errors ) ) {
-                    $show_widget = false;
-                    if ( current_user_can( 'manage_options' ) ) {
-                        echo $args[ 'before_widget' ];
-                        if ( ! empty( $instance[ 'title' ] ) ) {
-                            echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
-                        }
-                        echo '<p class="widget-no-settings">' . sprintf( __( 'You haven\'t set any widget settings. Configure them <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( admin_url( 'widgets.php' ) ) ) . '</p>';
-                        echo $args[ 'after_widget' ];
+            if ( current_user_can( 'manage_options' ) ) {
+                $show_settings = ( false != $instance[ 'show_settings' ] ) ? $instance[ 'show_settings' ] : false;
+                if ( $show_settings ) {
+                    $count_setting++;
+                }
+
+                $show_user_approval = ! empty( $instance[ 'show_approval' ] ) ? $instance[ 'show_approval' ] : false;
+                if ( $show_user_approval ) {
+                    $count_setting++;
+                }
+            }
+            
+            if ( 0 == $count_setting ) {
+                $show_widget = false;
+                if ( current_user_can( 'manage_options' ) ) {
+                    echo $args[ 'before_widget' ];
+                    if ( ! empty( $instance[ 'title' ] ) ) {
+                        echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
                     }
+                    echo '<p class="widget-no-settings">' . sprintf( __( 'You haven\'t set any widget settings. Configure them <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( admin_url( 'widgets.php' ) ) ) . '</p>';
+                    echo $args[ 'after_widget' ];
                 }
             }
 
@@ -136,12 +151,34 @@
                 echo '<ul>';
                 if ( ! is_user_logged_in() ) {
                     if ( $show_login ) {
-                        echo '<li><a href="' . $login_url . '">' . $login_title . '</a></li>';
+                        echo '<li>';
+                        if ( true == $use_popup ) {
+                            echo '<a href="#login-form" rel="modal:open">' . $login_title . '</a>';
+                            echo '<div id="login-form" class="modal">';
+                            if ( false != $main_logo ) {
+                                echo '<div class="modal__logo">';
+                                echo '<img src="' . $main_logo . '" alt="" />';
+                                echo '</div>';
+                            }
+                            echo do_shortcode('[login-form]');
+                            echo '</div>';
+                        } else {
+                            echo '<a href="' . $login_url . '">' . $login_title . '</a>';
+                        }
+                        echo '</li>';
                     }
-                    if ( $show_register ) {
+                    if ( isset( $register_url ) && true == $show_register_link ) {
                         echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
                     }
+                    if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
+                        foreach( $custom_links as $link ) {
+                            echo '<li><a href="' . $link[ 'link' ] . '">' . $link[ 'label' ] . '</a></li>';
+                        }
+                    }
                 } else {
+                    if ( isset( $register_url ) && true == $show_register_link ) {
+                        echo '<li><a href="' . $register_url . '">' . $register_title . '</a></li>';
+                    }
                     if ( isset( $account_url ) && false != $account_url ) {
                         echo '<li><a href="' . $account_url . '">' . $account_title . '</a></li>';
                     }
@@ -174,14 +211,14 @@
          * @param array $instance Previously saved values from database.
          */
         public function form( $instance ) {
-            $registration_type  = get_option( 'b3_registration_type', false );
+            $registration_type  = get_site_option( 'b3_registration_type' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : '';
             $show_login         = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : '';
             $show_logout        = ! empty( $instance[ 'show_logout' ] ) ? $instance[ 'show_logout' ] : '';
             $show_register      = ! empty( $instance[ 'show_register' ] ) ? $instance[ 'show_register' ] : '';
             $show_settings      = ! empty( $instance[ 'show_settings' ] ) ? $instance[ 'show_settings' ] : '';
             $show_user_approval = ! empty( $instance[ 'show_approval' ] ) ? $instance[ 'show_approval' ] : '';
-            $title              = ! empty( $instance[ 'title' ] ) ? $instance[ 'title' ] : esc_html__( 'User menu', 'b3-onboarding' );
+            $title              = ! empty( $instance[ 'title' ] ) ? $instance[ 'title' ] : '';
             ?>
             <p>
                 <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'b3-onboarding' ); ?></label>

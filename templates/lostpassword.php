@@ -4,7 +4,11 @@
      *
      * @since 1.0.0
      */
-
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     $localhost_email = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : '';
 ?>
 <?php do_action( 'b3_add_form_messages', $attributes ); ?>

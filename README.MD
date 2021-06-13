@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-2.5.0 - released 03.11.20
+3.0 - released 13.06.21
 
 <a name="features"></a>
 ### Features
@@ -104,12 +104,15 @@ These are the things we have planned to add.
 * [X] disallow certain user names
 * [X] validate extra fields added through a filter
 * [X] look more into responsiveness
-* [ ] reCaptcha v3
-* [ ] make it work with Multisite
-* [ ] make it work with WPML
-* [ ] add more filter and/or inputs
+* [X] reCaptcha v3
+* [X] make it work with Multisite
+* [X] make it work with WPML
+* [ ] add more filters and inputs
 * [ ] add more security stuff
-* [ ] add code editor to styling/template inputs
+* [ ] add code editor for styling/template inputs
+* [ ] remove `<br />` from email templates
+* [ ] create option to send preview email
+* [ ] add front-end management to multisite as well
 * [ ] multi-page registration forms
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
@@ -118,6 +121,12 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.0
+* added option to request access to create a site (multisite)
+* added reCaptcha v3
+* added user input for disallowed usernames
+* alot of MU stuff
+
 2.5.0
 * improve html/css for account page
 * improve protection of pages
@@ -130,6 +139,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * added new filters to override registration (confirmation) messages
 * added option to manually activate user
 * added option to disable password changed email (for user)
+* added option to register with email only
 
 2.4.0
 * fix for preventing login when email/user is not confirmed yet

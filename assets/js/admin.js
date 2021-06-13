@@ -1,46 +1,26 @@
-jQuery(document).ready(function() {
-    var content = ".foldout__content";
-    jQuery(content).hide();
-
-    jQuery(".foldout__toggle").click(function() {
-        if (jQuery(content).hasClass('hidden')){
-            jQuery(content).removeClass('hidden');
-        }
-        jQuery(this).next(content).toggle('fast');
-        if (jQuery(this).hasClass('open')){
-            jQuery(this).removeClass('open');
-        } else {
-            jQuery(this).addClass('open');
-        }
-
-        if (jQuery(this).find('i.dashicons').hasClass('dashicons-plus')){
-            jQuery(this).find('i.dashicons').removeClass('dashicons-plus');
-            jQuery(this).find('i.dashicons').addClass('dashicons-no');
-        } else if (jQuery(this).find('i.dashicons').hasClass('dashicons-no')){
-            jQuery(this).find('i.dashicons').removeClass('dashicons-no');
-            jQuery(this).find('i.dashicons').addClass('dashicons-plus');
-        }
-    });
-});
-
 (function($) {
     $(document).ready(function() {
 
-        var $wordpress_setting = '.b3_settings-field--wp-forms';
-        $('#b3_disable_wordpress_forms').change(function() {
-            if (document.getElementById('b3_disable_wordpress_forms').checked) {
-                $($wordpress_setting).addClass('hidden');
-            } else {
-                $($wordpress_setting).removeClass('hidden');
-            }
-        });
+        var content = ".foldout__content";
+        $(content).hide();
 
-        var $wordpress_tab = '.b3_tab-button--wordpress';
-        $('#b3_style_wordpress_forms').change(function() {
-            if (document.getElementById('b3_style_wordpress_forms').checked) {
-                $($wordpress_tab).removeClass('hidden');
+        $(".foldout__toggle").click(function() {
+            if ($(content).hasClass('hidden')){
+                $(content).removeClass('hidden');
+            }
+            $(this).next(content).toggle('fast');
+            if ($(this).hasClass('open')){
+                $(this).removeClass('open');
             } else {
-                $($wordpress_tab).addClass('hidden');
+                $(this).addClass('open');
+            }
+
+            if ($(this).find('i.dashicons').hasClass('dashicons-plus')){
+                $(this).find('i.dashicons').removeClass('dashicons-plus');
+                $(this).find('i.dashicons').addClass('dashicons-no');
+            } else if ($(this).find('i.dashicons').hasClass('dashicons-no')){
+                $(this).find('i.dashicons').removeClass('dashicons-no');
+                $(this).find('i.dashicons').addClass('dashicons-plus');
             }
         });
 
@@ -107,6 +87,15 @@ jQuery(document).ready(function() {
                 $($front_end_approval).removeClass('hidden');
             } else {
                 $($front_end_approval).addClass('hidden');
+            }
+        });
+
+        var $redirect_after_register = '.b3_settings-field--redirect';
+        $('#b3_activate_custom_passwords').change(function() {
+            if (document.getElementById('b3_activate_custom_passwords').checked) {
+                $($redirect_after_register).addClass('hidden');
+            } else {
+                $($redirect_after_register).removeClass('hidden');
             }
         });
 

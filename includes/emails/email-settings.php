@@ -4,8 +4,13 @@
      *
      * @since 1.0.0
      */
-    $notification_sender_email = get_option( 'b3_notification_sender_email', false );
-    $notification_sender_name  = get_option( 'b3_notification_sender_name', false );
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
+    $notification_sender_email = get_site_option( 'b3_notification_sender_email' );
+    $notification_sender_name  = get_site_option( 'b3_notification_sender_name' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

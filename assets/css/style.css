@@ -93,10 +93,6 @@
     vertical-align: top;
 }
 
-.b3_form-element:first-of-type {
-    margin-top: 0;
-}
-
 .b3_form-element--delete div {
     margin-top: 1rem;
 }
@@ -237,6 +233,22 @@ ul.b3_form-links li:last-child {
 /* Admin topbar notification for user approval */
 #wpadminbar .topbar_approve_user a.ab-item {
     color: #ee6102;
+}
+
+/* Modal */
+
+.modal {
+    padding: 15px;
+}
+
+.modal__logo {
+    margin-bottom: 1rem;
+    text-align:    center;
+}
+
+.modal__logo img {
+    max-height: 100px;
+    width:      auto;
 }
 
 /* Misc */

@@ -50,6 +50,14 @@
     font-weight: bold;
 }
 
+.b3_tab-content input[name="b3_recaptcha_version"] {
+    margin-left: 1rem;
+}
+
+.b3_tab-content input[name="b3_recaptcha_version"]:first-child {
+    margin-left: 0;
+}
+
 .b3 hr + h2 {
     margin-top: 1em;
 }
@@ -414,7 +422,7 @@ ul.b3_integrations--list {
     padding:   5px 0 0 0;
 }
 
-.no-approval-page #adminmenu .toplevel_page_b3-onboarding ul li:nth-child(3),
+/*.no-approval-page #adminmenu .toplevel_page_b3-onboarding ul li:nth-child(3),*/
 .hidden {
     display: none;
 }

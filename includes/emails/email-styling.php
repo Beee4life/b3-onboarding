@@ -4,7 +4,12 @@
      *
      * @since 1.0.0
      */
-    $stored_email_styling = get_option( 'b3_email_styling', false );
+    
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
+    $stored_email_styling = get_site_option( 'b3_email_styling' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
