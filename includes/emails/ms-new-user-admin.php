@@ -2,7 +2,7 @@
     /*
      * Input fields for 'New user' email (admin)
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     
     if ( ! defined( 'ABSPATH' ) ) {

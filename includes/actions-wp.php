@@ -159,7 +159,7 @@
     /**
      * Do stuff after signup WPMU user (only)
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param       $user_login
      * @param       $user_email
@@ -183,7 +183,7 @@
     /**
      * Do stuff after activate user (only)
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param       $user_id
      * @param       $password
@@ -207,7 +207,7 @@
     /**
      * Send admin message for new wpmu user (no site)
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param $user_id
      */

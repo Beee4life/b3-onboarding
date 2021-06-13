@@ -2,7 +2,7 @@
     /*
      * Input fields for 'Confirm email for new user + site' (MS)
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     $new_wpmu_user_subject = get_site_option( 'b3_activate_wpmu_user_site_subject' );
     $new_wpmu_user_message = get_site_option( 'b3_activate_wpmu_user_site_message' );

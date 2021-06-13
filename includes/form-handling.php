@@ -65,7 +65,7 @@
     /**
      * Form handling email settings
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     function b3_registration_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_registration_nonce' ] ) ) {
@@ -170,7 +170,7 @@
     /**
      * Form handling page settings
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     function b3_pages_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_pages_nonce' ] ) ) {
@@ -215,7 +215,7 @@
      *
      * @TODO: remove
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     function b3_loginpage_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
@@ -272,7 +272,7 @@
     /**
      * Form handling for email settings
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     function b3_email_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_emails_nonce' ] ) ) {
@@ -519,7 +519,7 @@
     /**
      * Form handling for user settings
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     function b3_users_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_users_nonce' ] ) ) {
@@ -567,7 +567,7 @@
     /**
      * Form handling for reCaptcha settings
      *
-     * @since 2.6.0
+     * @since 3.0
      */
     function b3_recaptcha_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {

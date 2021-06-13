@@ -6,7 +6,7 @@
     /**
      * Get email subject for activate wpmu user (user only, no site)
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @return string|void
      */
@@ -20,7 +20,7 @@
     /**
      * Get email message for activate wpmu user (user only, no site)
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @return string|void
      */
@@ -34,7 +34,7 @@
     /**
      * Get email subject for activated wpmu user (user only, no site)
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @return string|void
      */
@@ -48,7 +48,7 @@
     /**
      * Get email message for activated wpmu user (user only, no site)
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @return string|void
      */
@@ -62,7 +62,7 @@
     /**
      * Get activate email subject for user + site
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param false $user
      *
@@ -81,7 +81,7 @@
     /**
      * Get activate email message for user + site
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param false $user
      *
@@ -133,7 +133,7 @@
     /**
      * Get admin email subject for new user
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param false $user
      *

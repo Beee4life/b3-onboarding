@@ -335,7 +335,7 @@
     /**
      * Override label "A site"
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param $label
      *
@@ -350,7 +350,7 @@
     /**
      * Override label "Just a user"
      *
-     * @since 2.6.0
+     * @since 3.0
      *
      * @param $label
      *
