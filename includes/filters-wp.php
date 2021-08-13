@@ -256,6 +256,8 @@
      * @return mixed
      */
     function b3_new_site_email( $new_site_email, $site, $user ) {
+        // @TODO: add filter to NOT send email
+        // @TODO: add filter for message
         $user_email                  = b3_get_new_site_created_message();
         $user_email                  = b3_replace_template_styling( $user_email );
         $user_email                  = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user, 'site' => $site ) ) );
