@@ -1752,7 +1752,7 @@
                 $b3_register_type = get_site_option( 'b3_registration_type' );
 
                 if ( is_main_site() ) {
-                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all' ] )) {
+                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all', 'site' ] )) {
                         if ( false == $domain ) {
                             wpmu_signup_user( $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
 
