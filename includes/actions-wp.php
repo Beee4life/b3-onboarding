@@ -211,19 +211,20 @@
      *
      * @param $user_id
      */
-    function b3_override_new_mu_user_admin_email( $user_id ) {
+    function b3_override_new_mu_user_admin_email( $new_user_id ) {
 
-        $disable_admin_notification  = get_site_option( 'b3_disable_admin_notification_new_user' );
+        $disable_admin_notification = get_site_option( 'b3_disable_admin_notification_new_user' );
         if ( true != $disable_admin_notification ) {
-            $user    = get_userdata( $user_id );
+            $admin_user  = get_userdata( 1 );
+            $new_user    = get_userdata( $new_user_id );
             // @TODO: make function
-            $subject = sprintf( __( 'New User Registration: %s' ), $user->user_login );
+            $subject = sprintf( __( 'New User Registration: %s' ), $new_user->user_login );
             $message = b3_get_new_wpmu_user_message_admin();
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_replace_email_vars() );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
 
-            wp_mail( $user->user_email, $subject, $message, [] );
+            wp_mail( $admin_user->user_email, $subject, $message, [] );
         }
     }
     add_action( 'wpmu_new_user', 'b3_override_new_mu_user_admin_email' );
