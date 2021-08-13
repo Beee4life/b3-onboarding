@@ -600,8 +600,19 @@
             if ( true == $return_id ) {
                 return $reset_pass_page_id;
             }
-            if ( get_post( $reset_pass_page_id ) ) {
-                return get_the_permalink( $reset_pass_page_id );
+            if ( ! is_main_site() ) {
+                $blog_id = ( defined( 'BLOG_ID_CURRENT_SITE' ) ) ? BLOG_ID_CURRENT_SITE : 1;
+                switch_to_blog($blog_id);
+            }
+            $reset_post = get_post( $reset_pass_page_id );
+            if ( $reset_post ) {
+                $link = get_the_permalink( $reset_pass_page_id );
+            }
+            if ( ! is_main_site() ) {
+                restore_current_blog();
+            }
+            if ( isset( $link ) ) {
+                return $link;
             }
         }
 
