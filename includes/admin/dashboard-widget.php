@@ -57,7 +57,6 @@
             <?php } ?>
 
             <?php if ( ! empty( $all_users ) ) { ?>
-
                 <table class="b3_table">
                     <thead>
                     <tr>
