@@ -4,7 +4,7 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -20,15 +20,23 @@
         );
         $activation_users = get_users( $activation_args );
 
-        $all_args = array(
-            'exclude'      => array( get_current_user_id() ),
-            'number'       => '5',
-            'orderby'      => 'registered',
-            'order'        => 'DESC',
-            'role__not_in' => array( 'b3_activation', 'b3_approval' ),
-        );
-        $all_users = get_users( $all_args );
+        // get all sites in network
+        $all_users = [];
+        $sites     = get_sites( [ 'fields' => 'ids' ] );
 
+        if ( ! empty( $sites ) ) {
+            foreach( $sites as $site_id ) {
+                $all_args = array(
+                    'exclude'      => array( get_current_user_id() ),
+                    'blog_id'      => $site_id,
+                    'number'       => '5',
+                    'orderby'      => 'registered',
+                    'order'        => 'DESC',
+                    'role__not_in' => array( 'b3_activation', 'b3_approval' ),
+                );
+                $all_users = array_merge_recursive( $all_users, get_users( $all_args ) );
+            }
+        }
         ?>
         <div class="b3_widget--dashboard">
             <?php if ( count( $approval_users ) > 0  || count( $activation_users ) > 0 ) { ?>
