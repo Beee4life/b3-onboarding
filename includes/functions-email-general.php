@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Return email styling and default styling if false
      *
@@ -189,6 +189,13 @@
         } else {
             $message = b3_default_welcome_user_message();
         }
+
+        return $message;
+    }
+
+
+    function b3_get_new_site_created_message() {
+        $message = b3_default_message_new_site_created();
 
         return $message;
     }
