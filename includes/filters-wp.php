@@ -133,7 +133,15 @@
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
 
             } elseif ( in_array( $registration_type, array( 'blog' ) ) ) {
-                error_log('set email for blog');
+                $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
+                // @TODO: make filter ?
+                $wp_new_user_notification_email_admin[ 'subject' ] = b3_default_subject_new_wpmu_user_admin();
+
+                $message = b3_get_new_wpmu_user_message_admin();
+                $message = b3_replace_template_styling( $message );
+                $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+                $message = htmlspecialchars_decode( stripslashes( $message ) );
+                $wp_new_user_notification_email_admin[ 'message' ] = $message;
             }
         }
 
@@ -159,10 +167,12 @@
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
 
         // check if use of own styling/templates
+        $registration_type = get_site_option( 'b3_registration_type' );
         $send_custom_mail = true;
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
+            error_log('user = manually added');
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
                 $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
@@ -181,8 +191,8 @@
         if ( true == $send_custom_mail ) {
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
-            if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
 
+            if ( 'request_access' == $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
 
                 $user_email = apply_filters( 'b3_request_access_message_user', b3_get_request_access_message_user() );
@@ -192,7 +202,7 @@
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
-            } elseif ( 'email_activation' == get_site_option( 'b3_registration_type' ) ) {
+            } elseif ( 'email_activation' == $registration_type ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_email_activation_subject_user', b3_get_email_activation_subject_user() );
 
@@ -203,9 +213,18 @@
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
-            } elseif ( 'open' == get_site_option( 'b3_registration_type' ) ) {
+            } elseif ( 'open' == $registration_type ) {
 
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+
+                $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                $user_email = b3_replace_template_styling( $user_email );
+                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
+                $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
+
+                $wp_new_user_notification_email[ 'message' ] = $user_email;
+
+            } elseif ( 'blog' == $registration_type ) {
 
                 $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
                 $user_email = b3_replace_template_styling( $user_email );
@@ -224,7 +243,7 @@
 
 
     /**
-     * Filter to override new site email
+     * Filter to override new site email (New Site Created)
      *
      * @TODO
      *
@@ -237,9 +256,13 @@
      * @return mixed
      */
     function b3_new_site_email( $new_site_email, $site, $user ) {
-        error_log($new_site_email['to']);
-        error_log($new_site_email['subject']);
-        error_log($new_site_email['message']);
+        $user_email                  = b3_get_new_site_created_message();
+        $user_email                  = b3_replace_template_styling( $user_email );
+        $user_email                  = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user, 'site' => $site ) ) );
+        error_log($user_email);
+        $user_email                  = htmlspecialchars_decode( stripslashes( $user_email ) );
+        $new_site_email[ 'message' ] = $user_email;
+
         return $new_site_email;
     }
     add_filter( 'new_site_email', 'b3_new_site_email', 10, 3 );
