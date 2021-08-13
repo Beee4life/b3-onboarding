@@ -261,7 +261,6 @@
         $user_email                  = b3_get_new_site_created_message();
         $user_email                  = b3_replace_template_styling( $user_email );
         $user_email                  = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user, 'site' => $site ) ) );
-        error_log($user_email);
         $user_email                  = htmlspecialchars_decode( stripslashes( $user_email ) );
         $new_site_email[ 'message' ] = $user_email;
 
