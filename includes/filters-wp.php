@@ -4,17 +4,6 @@
     }
 
     /**
-     * Disable admin notification on password change
-     *
-     * @since 2.0.0
-     */
-    if ( 1 == get_site_option( 'b3_disable_admin_notification_password_change' ) ) {
-        add_filter( 'wp_password_change_notification_email', '__return_false' );
-    } else {
-        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
-    }
-
-    /**
      * Filter password change notification mail (admin)
      *
      * @since 2.0.0
@@ -38,6 +27,18 @@
         return $wp_password_change_notification_email;
 
     }
+
+    /**
+     * Disable admin notification on password change
+     *
+     * @since 2.0.0
+     */
+    if ( 1 == get_site_option( 'b3_disable_admin_notification_password_change' ) ) {
+        add_filter( 'wp_password_change_notification_email', '__return_false' );
+    } else {
+        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
+    }
+
 
     /**
      * Filter password change notification mail (user)
@@ -76,6 +77,8 @@
     /**
      * Override new user notification for admin
      *
+     * Filter: wp_new_user_notification_email_admin
+     *
      * @since 1.0.6
      *
      * @param $wp_new_user_notification_email_admin
@@ -88,6 +91,7 @@
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
+            error_log('user manually added');
             return false;
         } else {
 
@@ -128,6 +132,8 @@
 
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
 
+            } elseif ( in_array( $registration_type, array( 'blog' ) ) ) {
+                error_log('set email for blog');
             }
         }
 
@@ -139,6 +145,8 @@
 
     /**
      * Override new user notification email for user
+     *
+     * Filter: wp_new_user_notification_email
      *
      * @since 1.0.6
      *
@@ -207,13 +215,34 @@
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
             }
-
         }
 
         return $wp_new_user_notification_email;
 
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
+
+
+    /**
+     * Filter to override new site email
+     *
+     * @TODO
+     *
+     * @param $new_site_email
+     * @param $site
+     * @param $user
+     *
+     * @since 3.1.0
+     *
+     * @return mixed
+     */
+    function b3_new_site_email( $new_site_email, $site, $user ) {
+        error_log($new_site_email['to']);
+        error_log($new_site_email['subject']);
+        error_log($new_site_email['message']);
+        return $new_site_email;
+    }
+    add_filter( 'new_site_email', 'b3_new_site_email', 10, 3 );
 
 
     /**
