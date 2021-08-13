@@ -190,6 +190,7 @@
      * @param array $meta
      */
     function b3_after_activate_user( $user_id, $password, $meta = array() ) {
+        // @TODO: check if can be replaced by filter
         $current_network = get_network();
         $user            = get_userdata( $user_id );
         $subject         = sprintf( apply_filters( 'b3_wpmu_user_activated_subject', b3_get_wpmu_user_activated_subject() ), $current_network->site_name, $user->user_login );
@@ -205,32 +206,6 @@
 
 
     /**
-     * Send admin message for new wpmu user (no site)
-     *
-     * @since 3.0
-     *
-     * @param $user_id
-     */
-    function b3_override_new_mu_user_admin_email( $new_user_id ) {
-
-        $disable_admin_notification = get_site_option( 'b3_disable_admin_notification_new_user' );
-        if ( true != $disable_admin_notification ) {
-            $admin_user  = get_userdata( 1 );
-            $new_user    = get_userdata( $new_user_id );
-            // @TODO: make function
-            $subject = sprintf( __( 'New User Registration: %s' ), $new_user->user_login );
-            $message = b3_get_new_wpmu_user_message_admin();
-            $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_replace_email_vars() );
-            $message = htmlspecialchars_decode( stripslashes( $message ) );
-
-            wp_mail( $admin_user->user_email, $subject, $message, [] );
-        }
-    }
-    add_action( 'wpmu_new_user', 'b3_override_new_mu_user_admin_email' );
-
-
-    /**
      * Override activate new wpmu user + blog message
      *
      * @param $domain
@@ -242,6 +217,7 @@
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
 
+        // @TODO: check if can be replaced by filter
         if ( 'request_access_subdomain' == get_site_option( 'b3_registration_type' ) ) {
             // @TODO: inform admin
         } else {
