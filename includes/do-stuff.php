@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Create initial pages upon activation
      *
@@ -131,7 +131,7 @@
      * @return bool|false|string
      */
     function b3_render_extra_field( $extra_field = [], $value = false ) {
-    
+
         $container_class   = ( isset( $extra_field[ 'container_class' ] ) && ! empty( $extra_field[ 'container_class' ] ) ) ? $extra_field[ 'container_class' ] : false;
         $input_id          = ( isset( $extra_field[ 'id' ] ) && ! empty( $extra_field[ 'id' ] ) ) ? $extra_field[ 'id' ] : false;
         $input_class       = ( isset( $extra_field[ 'input_class' ] ) && ! empty( $extra_field[ 'input_class' ] ) ) ? '' . $extra_field[ 'input_class' ] : false;
@@ -142,7 +142,7 @@
         $input_type        = ( isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
         $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : array();
         $field_value       = ( isset( $_POST[ $input_id ] ) ) ? $_POST[ $input_id ] : '';
-    
+
         if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {
             ob_start();
             ?>
@@ -167,17 +167,17 @@
                     <?php } else { ?>
                         <input type="<?php echo $input_type; ?>" name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?>value="<?php echo $field_value; ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php }  ?>
-            
+
                 <?php } elseif ( 'textarea' == $input_type ) { ?>
                     <textarea name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . $extra_field[ 'placeholder' ] . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo $field_value; ?></textarea>
-            
+
                 <?php } elseif ( in_array( $input_type, array( 'true_false' ) ) ) { ?>
                     <?php $selected = false; ?>
                     <label for="<?php echo $input_id; ?>" class="screen-reader-text"><?php echo $input_label; ?></label>
                     <input type="checkbox" id="<?php echo $input_id; ?>" name="<?php echo $input_id; ?>" class="b3_form-input b3_form-input--<?php echo $input_type; ?> b3_form-input--<?php echo $input_class; ?> <?php echo $input_class; ?>" /> <?php echo $input_description; ?>
-            
+
                 <?php } elseif ( in_array( $input_type, array( 'radio', 'checkbox' ) ) ) { ?>
-                
+
                     <?php if ( $input_options ) { ?>
                         <?php $counter = 1; ?>
                         <div class="b3_input-options">
@@ -203,7 +203,7 @@
                             <?php } ?>
                         </div>
                     <?php } ?>
-            
+
                 <?php } elseif ( 'select' == $input_type ) { ?>
                     <select name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="<?php echo $input_class; ?>">
                         <?php if ( $input_options ) { ?>
@@ -219,7 +219,7 @@
             </div>
             <?php
             $output = ob_get_clean();
-        
+
             return $output;
         }
 
@@ -286,6 +286,7 @@
                 $vars[ 'user_data' ] = $user_data;
             }
         }
+        $blog_id = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
 
         if ( isset( $vars[ 'registration_date' ] ) ) {
             $registration_date_gmt = $vars[ 'registration_date' ];
@@ -312,10 +313,10 @@
         $replacements = array(
             '%account_page%'      => b3_get_account_url(),
             '%login_url%'         => b3_get_login_url(),
-            '%blog_name%'         => get_option( 'blogname' ),
+            '%blog_name%'         => get_blog_option( $blog_id, 'blogname' ), // check in single site
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
             '%lostpass_url%'      => b3_get_lostpassword_url(),
-            '%home_url%'          => get_home_url( '', '/' ),
+            '%home_url%'          => get_home_url( $blog_id, '/' ),
             '%logo%'              => apply_filters( 'b3_main_logo', b3_get_main_logo() ),
             '%network_name%'      => get_site_option( 'site_name' ),
             '%registration_date%' => $local_registration_date,
