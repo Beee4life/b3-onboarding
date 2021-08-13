@@ -516,9 +516,9 @@
         // @TODO: add if for when user is manually added
         $message = __( 'New site created by: %user_login%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= __( 'Address: %home_url%', 'b3-onboarding' ) . "\n";
+        $message .= __( 'Site address: %home_url%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= __( 'Name: %blog_name%', 'b3-onboarding' ) . "\n";
+        $message .= __( 'Site name: %blog_name%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
         $message .= '<br /><br />';
