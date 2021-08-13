@@ -25,6 +25,7 @@
         $sites     = get_sites( [ 'fields' => 'ids' ] );
 
         if ( ! empty( $sites ) ) {
+            // @TODO: test in single site
             foreach( $sites as $site_id ) {
                 $all_args = array(
                     'exclude'      => array( get_current_user_id() ),
