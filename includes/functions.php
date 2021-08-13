@@ -147,7 +147,7 @@
                     'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
                 );
             }
-            if ( in_array( $registration_type, array( 'open' ) ) ) {
+            if ( in_array( $registration_type, array( 'open', 'blog', 'all', 'site' ) ) ) {
                 $email_boxes[] = array(
                     'id'    => 'welcome_email_user',
                     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
