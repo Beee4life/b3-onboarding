@@ -592,7 +592,7 @@
      * @return bool|string
      */
     function b3_get_reset_password_url( $return_id = false ) {
-        $reset_pass_page_id = get_option( 'b3_reset_password_page_id' );
+        $reset_pass_page_id = get_site_option( 'b3_reset_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $reset_pass_page_id = apply_filters( 'wpml_object_id', $reset_pass_page_id, 'page', true );
         }
