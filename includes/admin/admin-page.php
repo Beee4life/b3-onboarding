@@ -4,7 +4,7 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -43,11 +43,7 @@
 
                 <div class="b3_tabs">
                     <?php
-                        if ( isset( $_GET[ 'tab' ] ) ) {
-                            $default_tab = $_GET[ 'tab' ];
-                        } else {
-                            $default_tab = 'settings';
-                        }
+                        $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'settings';
 
                         $tabs = array(
                             array(
