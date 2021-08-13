@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Return default email styling
      *
@@ -486,6 +486,7 @@
      * @return string
      */
     function b3_default_message_new_wpmu_user_admin() {
+        // @TODO: add if for when user is manually added
         $message = __( 'New user: %user_login%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
