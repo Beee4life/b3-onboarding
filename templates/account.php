@@ -4,7 +4,7 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -38,7 +38,8 @@
             <?php if ( ! empty( $user_sites ) ) { ?>
                 <?php $path      = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false; ?>
                 <?php $site_info = array_shift( $user_sites ); ?>
-                <?php $url       = get_admin_url( $site_info->userblog_id, $path ); ?>
+                <?php // @TODO: document this filter ?>
+                <?php $url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $path ), $site_info ); ?>
                 <div class="b3_form-element">
                     <label class="b3_form-label" for="yoursites"><?php esc_attr_e( 'Your site(s)', 'b3-onboarding' ); ?></label>
                     <a href="<?php echo $url; ?>">
