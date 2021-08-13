@@ -132,7 +132,6 @@
                 if ( get_site_option( 'b3_activate_filter_validation' ) ) {
                     include 'includes/verify-filters.php';
                 }
-
             }
 
 
