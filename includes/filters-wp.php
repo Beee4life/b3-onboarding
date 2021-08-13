@@ -92,7 +92,12 @@
         } else {
 
             if ( false != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
-                return false;
+                $wp_new_user_notification_email_admin = [
+                    'to'      => '',
+                    'subject' => '',
+                    'headers' => [],
+                    'message' => '',
+                ];
             }
 
             $registration_type = get_site_option( 'b3_registration_type' );
