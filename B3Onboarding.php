@@ -649,13 +649,15 @@
                         } else {
 
                             $meta_data         = array();
+                            $registration_type = get_site_option( 'b3_registration_type' );
                             $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( $_POST[ 'user_email' ] ) : false;
-                            if ( ! is_email( $user_email ) ) {
+
+                            if ( 'blog' != $registration_type && ! is_email( $user_email ) ) {
                                 $redirect_url = add_query_arg( 'registration-error', 'invalid_email', $redirect_url );
                                 wp_safe_redirect( $redirect_url );
                                 exit;
                             }
-                            $registration_type = get_site_option( 'b3_registration_type' );
+
                             if ( is_multisite() ) {
                                 $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( $_POST[ 'user_name' ] ) : false;
                             } else {
