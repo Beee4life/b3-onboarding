@@ -346,6 +346,13 @@
     }
 
 
+    /**
+     * Override MANUAL welcome user email
+     *
+     * @TODO: compare with previous
+     *
+     * @return string
+     */
     function b3_default_manual_welcome_user_message() {
         if ( true == get_site_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( 'Welcome', 'b3-onboarding' ) . ',' . "\n";
@@ -492,6 +499,26 @@
         $message .= __( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Disable these notifications <a href="%settings_url%">here</a>.', 'b3-onboarding' );
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
+        $message .= '<br /><br />';
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+
+        return $message;
+    }
+
+
+    /**
+     * Default "New Site Created" email message
+     * @return string
+     */
+    function b3_default_message_new_site_created() {
+        // @TODO: add if for when user is manually added
+        $message = __( 'New site created by: %user_login%', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Address: %home_url%', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Name: %blog_name%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
         $message .= '<br /><br />';
