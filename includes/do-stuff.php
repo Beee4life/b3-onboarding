@@ -313,7 +313,7 @@
         $replacements = array(
             '%account_page%'      => b3_get_account_url(),
             '%login_url%'         => b3_get_login_url(),
-            '%blog_name%'         => get_blog_option( $blog_id, 'blogname' ), // check in single site
+            '%blog_name%'         => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
             '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
             '%lostpass_url%'      => b3_get_lostpassword_url(),
             '%home_url%'          => get_home_url( $blog_id, '/' ),
