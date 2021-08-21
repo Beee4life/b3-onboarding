@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Render email settings field with fold out
      *
@@ -119,6 +119,9 @@
                     break;
                 case 'new_wpmu_user_admin':
                     include 'emails/ms-new-user-admin.php';
+                    break;
+                case 'welcome_wpmu_user_manual':
+                    include 'emails/ms-user-welcome.php';
                     break;
                 case 'visitor_register':
                     include 'emails/ms-visitor-register.php';
