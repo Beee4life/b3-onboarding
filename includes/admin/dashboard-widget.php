@@ -22,7 +22,12 @@
 
         // get all sites in network
         $all_users = [];
-        $sites     = get_sites( [ 'fields' => 'ids' ] );
+        if ( is_multisite() ) {
+            $sites = get_sites( [ 'fields' => 'ids' ] );
+        } else {
+            // @TODO: check this on multisite
+            $sites = [1];
+        }
 
         if ( ! empty( $sites ) ) {
             // @TODO: test in single site
