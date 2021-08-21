@@ -4,7 +4,7 @@
      *
      * @since 2.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -87,6 +87,10 @@
                     $subject = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
                     break;
                 case 'welcome-user':
+                    $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                    $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+                    break;
+                case 'welcome-user-manual':
                     $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
                     $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                     break;
