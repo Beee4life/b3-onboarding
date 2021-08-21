@@ -33,13 +33,13 @@
             </p>
         <?php } ?>
 
-        <?php if ( is_multisite() && in_array( $attributes[ 'registration_type' ], [ 'all', 'blog', 'request_access_subdomain'] ) ) { ?>
+        <?php if ( is_multisite() && in_array( $attributes[ 'registration_type' ], [ 'all', 'blog', 'request_access_subdomain' ] ) ) { ?>
             <?php $user_sites = get_blogs_of_user( get_current_user_id() ); ?>
             <?php if ( ! empty( $user_sites ) ) { ?>
-                <?php $path      = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false; ?>
+                <?php $url_path  = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false; ?>
                 <?php $site_info = array_shift( $user_sites ); ?>
                 <?php // @TODO: document this filter ?>
-                <?php $url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $path ), $site_info ); ?>
+                <?php $url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $url_path ), $site_info ); ?>
                 <div class="b3_form-element">
                     <label class="b3_form-label" for="yoursites"><?php esc_attr_e( 'Your site(s)', 'b3-onboarding' ); ?></label>
                     <a href="<?php echo $url; ?>">
