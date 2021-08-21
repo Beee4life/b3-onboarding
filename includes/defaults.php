@@ -678,3 +678,15 @@
 
         return $message;
     }
+
+    function b3_default_welcome_mu_user_subject() {
+        $network_info = get_network();
+
+        return sprintf( __( '[%s] Login Details', 'b3-onboarding' ), $network_info->site_name );
+    }
+
+    function b3_default_welcome_mu_user_message() {
+        // @TODO
+        // default: Username: dummy To set your password, visit the following address: http://agency.127.0.0.1.nip.io/wp-login.php?action=rp&key=nbrwFmdlO7cAGXZtyAXU&login=dummy http://agency.127.0.0.1.nip.io/cms/wp-login.php
+        return '';
+    }
