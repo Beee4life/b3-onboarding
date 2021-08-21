@@ -173,12 +173,19 @@
                         'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
                     );
                 } elseif ( in_array( $registration_type, array( 'all' ) ) ) {
-                    // c@TODO: create user input
+                    // @TODO: create user input
                 }
                 $email_boxes[] = array(
                     'id'    => 'new_wpmu_user_admin',
                     'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
                 );
+                if ( in_array( $registration_type, array( 'closed' ) ) ) {
+                    // @TODO: create user input
+                    $email_boxes[] = array(
+                        'id'    => 'welcome_wpmu_user_manual',
+                        'title' => esc_html__( 'Welcome manual user (user)', 'b3-onboarding' ),
+                    );
+                }
             }
             if ( in_array( $registration_type, array( 'open', 'email_activation' ) ) ) {
                 $email_boxes[] = array(
