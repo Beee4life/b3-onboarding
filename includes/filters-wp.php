@@ -118,6 +118,7 @@
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
 
             } elseif ( in_array( $registration_type, [ 'email_activation' ] ) ) {
+                // @TODO: test this again
                 // we don't want the email when a user registers, but only when he/she activates
                 return false;
 
@@ -225,6 +226,15 @@
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
 
             } elseif ( 'blog' == $registration_type ) {
+
+                $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                $user_email = b3_replace_template_styling( $user_email );
+                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
+                $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
+
+                $wp_new_user_notification_email[ 'message' ] = $user_email;
+
+            } elseif ( 'closed' == $registration_type ) {
 
                 $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
                 $user_email = b3_replace_template_styling( $user_email );
