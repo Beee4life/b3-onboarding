@@ -149,9 +149,7 @@
      */
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
 
-        // check if use of own styling/templates
         $registration_type = get_site_option( 'b3_registration_type' );
-        $send_custom_mail  = true;
 
         if ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false ) {
             // user is manually added
@@ -160,14 +158,13 @@
                 $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
                 $wp_new_user_notification_email[ 'headers' ] = array();
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-
                 $user_email = apply_filters( 'b3_manual_welcome_user_message', b3_get_manual_welcome_user_message() );
-                $user_email = b3_replace_template_styling( $user_email );
-                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
-                $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
-                $wp_new_user_notification_email[ 'message' ] = $user_email;
             }
-        } elseif ( true == $send_custom_mail ) {
+        } elseif ( strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) {
+            $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+            $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
+
+        } else {
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
 
@@ -192,6 +189,9 @@
                 $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
 
             }
+        }
+
+        if ( isset( $user_email ) ) {
             $user_email = b3_replace_template_styling( $user_email );
             if ( 'email_activation' == $registration_type ) {
                 $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ), true ) );
@@ -252,6 +252,7 @@
         return $new_site_email;
     }
     add_filter( 'new_site_email', 'b3_new_site_email', 10, 3 );
+
 
     /**
      * Returns the message subject for the password reset mail.
@@ -575,7 +576,6 @@ All at ###SITENAME###
      */
     function b3_prevent_update_registration_option( $new_value, $old_value ) {
         return 0;
-
     }
     add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multisite || main site
 
