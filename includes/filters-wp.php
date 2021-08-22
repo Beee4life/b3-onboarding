@@ -90,6 +90,10 @@
      */
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
 
+        echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
+        if ( in_array( $_POST[ '_wp_http_referer' ], [ '/wp-admin/network/user-new.php', '' ] ) ) {
+            $wp_new_user_notification_email_admin[ 'to' ] = '';
+        }
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added, so we don't need a notification
             $wp_new_user_notification_email_admin[ 'to' ] = '';
@@ -97,13 +101,9 @@
         } else {
 
             $registration_type = get_site_option( 'b3_registration_type' );
-            if ( false != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
-                $wp_new_user_notification_email_admin = [
-                    'to'      => '',
-                    'subject' => '',
-                    'headers' => [],
-                    'message' => '',
-                ];
+
+            if ( '/wp-admin/network/user-new.php' == $_POST[ '_wp_http_referer' ] || false != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
+                $wp_new_user_notification_email_admin[ 'to' ] = '';
 
             } elseif ( 'request_access' == $registration_type ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
@@ -168,7 +168,7 @@
 
         // check if use of own styling/templates
         $registration_type = get_site_option( 'b3_registration_type' );
-        $send_custom_mail = true;
+        $send_custom_mail  = true;
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
@@ -233,7 +233,9 @@
 
             } elseif ( 'closed' == $registration_type ) {
 
-                $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+
+                $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
                 $user_email = b3_replace_template_styling( $user_email );
                 $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
