@@ -349,7 +349,7 @@
     /**
      * Override MANUAL welcome user email
      *
-     * @TODO: compare with previous
+     * @TODO: compare/merge with previous
      *
      * @return string
      */
