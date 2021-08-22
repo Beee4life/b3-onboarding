@@ -171,7 +171,6 @@
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
-            error_log('user = manually added');
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
                 $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
@@ -187,7 +186,6 @@
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
             }
         } elseif ( true == $send_custom_mail ) {
-            error_log('OOPS');
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
 
