@@ -98,45 +98,33 @@
 
             $registration_type = get_site_option( 'b3_registration_type' );
 
-            if ( false != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
+            if ( false != get_site_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
+                // we don't want the email when a user registers, but only when he/she activates
+                $admin_email = false;
                 $wp_new_user_notification_email_admin[ 'to' ] = '';
 
             } elseif ( 'request_access' == $registration_type ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
-
                 $admin_email = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
-                $admin_email = b3_replace_template_styling( $admin_email );
-                $admin_email = strtr( $admin_email, b3_replace_email_vars() );
-                $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
-
-                $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
-
-            } elseif ( in_array( $registration_type, [ 'email_activation' ] ) ) {
-                // we don't want the email when a user registers, but only when he/she activates
-                $wp_new_user_notification_email_admin[ 'to' ] = '';
 
             } elseif ( in_array( $registration_type, array( 'open' ) ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
-
                 $admin_email = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
-                $admin_email = b3_replace_template_styling( $admin_email );
-                $admin_email = strtr( $admin_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
-                $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
-
-                $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
 
             } elseif ( in_array( $registration_type, array( 'blog' ) ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                // @TODO: make filter ?
+                // @TODO: add filters
                 $wp_new_user_notification_email_admin[ 'subject' ] = b3_default_subject_new_wpmu_user_admin();
+                $admin_email = b3_get_new_wpmu_user_message_admin();
 
-                $message = b3_get_new_wpmu_user_message_admin();
-                $message = b3_replace_template_styling( $message );
-                $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
-                $message = htmlspecialchars_decode( stripslashes( $message ) );
-                $wp_new_user_notification_email_admin[ 'message' ] = $message;
+            }
+            if ( false != $admin_email ) {
+                $admin_email = b3_replace_template_styling( $admin_email );
+                $admin_email = strtr( $admin_email, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+                $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
+                $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
             }
         }
 
@@ -176,7 +164,6 @@
                 $user_email = b3_replace_template_styling( $user_email );
                 $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
                 $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
-
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
             }
         } elseif ( true == $send_custom_mail ) {
