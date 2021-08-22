@@ -90,17 +90,17 @@
      */
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
 
-        if ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false ) {
+        if ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false || strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) {
             // manually added, so no email
             $wp_new_user_notification_email_admin[ 'to' ] = '';
 
         } else {
 
+            $admin_email       = false;
             $registration_type = get_site_option( 'b3_registration_type' );
 
             if ( false != get_site_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
                 // we don't want the email when a user registers, but only when he/she activates
-                $admin_email = false;
                 $wp_new_user_notification_email_admin[ 'to' ] = '';
 
             } elseif ( 'request_access' == $registration_type ) {
@@ -148,10 +148,11 @@
      * @return mixed
      */
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
-    
+
         // check if use of own styling/templates
         $registration_type = get_site_option( 'b3_registration_type' );
         $send_custom_mail  = true;
+
         if ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false ) {
             // user is manually added
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
@@ -209,9 +210,28 @@
 
 
     /**
-     * Filter to override new site email (New Site Created)
+     * Disable admin email when registration is closed
      *
-     * @TODO
+     * @param $status
+     * @param $site
+     * @param $user
+     *
+     * @since 3.1.0
+     *
+     * @return false|mixed
+     */
+    function b3_disable_admin_email( $status, $site, $user ) {
+        if ( 'closed' == get_site_option( 'b3_registration_type' ) ) {
+            return false;
+        }
+
+        return $status;
+    }
+    add_filter( 'send_new_site_email', 'b3_disable_admin_email', 10, 3 );
+
+
+    /**
+     * Filter to override new site email (New Site Created)
      *
      * @param $new_site_email
      * @param $site
@@ -222,8 +242,7 @@
      * @return mixed
      */
     function b3_new_site_email( $new_site_email, $site, $user ) {
-        // @TODO: add filter to NOT send email
-        // @TODO: add filter for message
+        // @TODO: add filter + (maybe) user input for message
         $user_email                  = b3_get_new_site_created_message();
         $user_email                  = b3_replace_template_styling( $user_email );
         $user_email                  = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user, 'site' => $site ) ) );
@@ -233,7 +252,6 @@
         return $new_site_email;
     }
     add_filter( 'new_site_email', 'b3_new_site_email', 10, 3 );
-
 
     /**
      * Returns the message subject for the password reset mail.
