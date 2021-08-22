@@ -37,12 +37,12 @@
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--welcome-user-message" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--welcome-user-message-manual" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
             <br />
             <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=welcome-user' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--welcome-user-message" name="b3_welcome_user_message" placeholder="<?php echo $placeholder_message; ?>" rows="6"><?php echo stripslashes( $new_user_message ); ?></textarea>
+            <textarea id="b3__input--welcome-user-message-manual" name="b3_welcome_user_message_manual" placeholder="<?php echo $placeholder_message; ?>" rows="6"><?php echo stripslashes( $new_user_message ); ?></textarea>
         </td>
     </tr>
     <tr>

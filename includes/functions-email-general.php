@@ -501,7 +501,12 @@
      * @return string
      */
     function b3_get_manual_welcome_user_message() {
-        $message = b3_default_manual_welcome_user_message();
-
+        $manual_welcome_message = get_site_option( 'b3_welcome_user_message_manual' );
+        if ( false != $manual_welcome_message ) {
+            $message = $manual_welcome_message;
+        } else {
+            $message = b3_default_manual_welcome_user_message();
+        }
+    
         return $message;
     }

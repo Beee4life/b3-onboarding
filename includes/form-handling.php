@@ -383,13 +383,14 @@
                 }
 
                 /* specific boxes */
-                if ( in_array( get_site_option( 'b3_registration_type' ), array( 'closed' ) ) ) {
-                    if ( isset( $_POST[ 'b3_welcome_user_message' ] ) ) {
-                        update_site_option( 'b3_welcome_user_message', htmlspecialchars( $_POST[ 'b3_welcome_user_message' ] ) );
-                    }
-                    if ( isset( $_POST[ 'b3_welcome_user_subject' ] ) ) {
-                        update_site_option( 'b3_welcome_user_subject', stripslashes( $_POST[ 'b3_welcome_user_subject' ] ) );
-                    }
+                if ( isset( $_POST[ 'b3_welcome_user_subject' ] ) ) {
+                    update_site_option( 'b3_welcome_user_subject', stripslashes( $_POST[ 'b3_welcome_user_subject' ] ) );
+                }
+                if ( isset( $_POST[ 'b3_welcome_user_message' ] ) ) {
+                    update_site_option( 'b3_welcome_user_message', htmlspecialchars( $_POST[ 'b3_welcome_user_message' ] ) );
+                }
+                if ( isset( $_POST[ 'b3_welcome_user_message_manual' ] ) ) {
+                    update_site_option( 'b3_welcome_user_message_manual', htmlspecialchars( $_POST[ 'b3_welcome_user_message_manual' ] ) );
                 }
 
                 if ( in_array( get_site_option( 'b3_registration_type' ), array( 'open', 'email_activation' ) ) ) {
