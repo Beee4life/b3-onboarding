@@ -74,6 +74,7 @@
     }
     add_filter( 'email_change_email', 'b3_password_changed_email_user', 5, 3 );
 
+
     /**
      * Override new user notification for admin
      *
@@ -103,7 +104,7 @@
                     'headers' => [],
                     'message' => '',
                 ];
-                
+
             } elseif ( 'request_access' == $registration_type ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
@@ -119,7 +120,7 @@
                 // @TODO: test this again
                 // we don't want the email when a user registers, but only when he/she activates
                 $wp_new_user_notification_email_admin[ 'to' ] = '';
-                
+
             } elseif ( in_array( $registration_type, array( 'open' ) ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
@@ -171,14 +172,13 @@
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
             // user is manually added
-            error_log('user = manually added');
             if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                 // user must get AN email, from WP or custom
                 $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
                 $wp_new_user_notification_email[ 'headers' ] = array();
                 // @TODO: change to manual mail
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-                
+
                 $user_email = apply_filters( 'b3_manual_welcome_user_message', b3_get_manual_welcome_user_message() );
                 $user_email = b3_replace_template_styling( $user_email );
                 $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
@@ -187,7 +187,6 @@
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
             }
         } elseif ( true == $send_custom_mail ) {
-            error_log('OOPS');
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
 
