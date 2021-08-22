@@ -68,9 +68,9 @@
      *
      * @return bool|false|string
      */
-    function b3_foldout_content( $box = false ) {
+    function b3_foldout_content( $box = [] ) {
 
-        if ( false != $box ) {
+        if ( ! empty( $box ) ) {
 
             ob_start();
             switch( $box[ 'id' ] ) {
@@ -104,6 +104,12 @@
                 case 'lost_password':
                     include 'emails/lost-password.php';
                     break;
+                case 'welcome_user':
+                    include 'emails/welcome-user.php';
+                    break;
+                case 'welcome_user_manual':
+                    include 'emails/welcome-user-manual.php';
+                    break;
                 // Multisite specific
                 case 'confirm_user_email':
                     include 'emails/ms-confirm-user-email.php';
@@ -119,9 +125,6 @@
                     break;
                 case 'new_wpmu_user_admin':
                     include 'emails/ms-new-user-admin.php';
-                    break;
-                case 'welcome_wpmu_user_manual':
-                    include 'emails/ms-user-welcome.php';
                     break;
                 case 'visitor_register':
                     include 'emails/ms-visitor-register.php';

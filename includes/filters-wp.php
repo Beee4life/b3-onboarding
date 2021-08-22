@@ -90,11 +90,12 @@
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
 
         if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
-            // user is manually added
-            error_log('user manually added');
-            return false;
+            // user is manually added, so we don't need a notification
+            $wp_new_user_notification_email_admin[ 'to' ] = '';
+
         } else {
 
+            $registration_type = get_site_option( 'b3_registration_type' );
             if ( false != get_site_option( 'b3_disable_admin_notification_new_user' ) ) {
                 $wp_new_user_notification_email_admin = [
                     'to'      => '',
@@ -102,11 +103,8 @@
                     'headers' => [],
                     'message' => '',
                 ];
-            }
-
-            $registration_type = get_site_option( 'b3_registration_type' );
-
-            if ( 'request_access' == $registration_type ) {
+                
+            } elseif ( 'request_access' == $registration_type ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
 
@@ -120,8 +118,8 @@
             } elseif ( in_array( $registration_type, [ 'email_activation' ] ) ) {
                 // @TODO: test this again
                 // we don't want the email when a user registers, but only when he/she activates
-                return false;
-
+                $wp_new_user_notification_email_admin[ 'to' ] = '';
+                
             } elseif ( in_array( $registration_type, array( 'open' ) ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
@@ -178,8 +176,9 @@
                 // user must get AN email, from WP or custom
                 $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
                 $wp_new_user_notification_email[ 'headers' ] = array();
+                // @TODO: change to manual mail
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-
+                
                 $user_email = apply_filters( 'b3_manual_welcome_user_message', b3_get_manual_welcome_user_message() );
                 $user_email = b3_replace_template_styling( $user_email );
                 $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
@@ -187,9 +186,8 @@
 
                 $wp_new_user_notification_email[ 'message' ] = $user_email;
             }
-        }
-
-        if ( true == $send_custom_mail ) {
+        } elseif ( true == $send_custom_mail ) {
+            error_log('OOPS');
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
 
