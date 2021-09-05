@@ -8,9 +8,14 @@
      *
      * @since 1.0.6
      *
-     * @param bool $create_new_site
+     * @param bool $site_id
      */
-    function b3_setup_initial_pages() {
+    function b3_setup_initial_pages( $site_id = false ) {
+        if ( false == $site_id ) {
+            $site_id = get_current_blog_id();
+        }
+
+        switch_to_blog($site_id);
 
         $page_definitions = array(
             _x( 'account', 'slug', 'b3-onboarding' ) => array(
@@ -44,8 +49,9 @@
                 'meta'    => 'b3_reset_password_page_id'
             ),
         );
-
         b3_create_pages( $page_definitions );
+
+        restore_current_blog();
     }
 
     /**
@@ -59,7 +65,7 @@
         foreach ( $page_definitions as $slug => $page ) {
 
             // Check if there's a page assigned already
-            $stored_id = get_site_option( $slug );
+            $stored_id = get_option( $slug );
             if ( $stored_id ) {
                 $check_page = get_post( $stored_id );
                 if ( ! $check_page ) {
@@ -80,11 +86,10 @@
                 $add_shortcode = false;
                 $page_id       = $existing_page[ 0 ]->ID;
                 $page_object   = get_post( $page_id );
-                $meta          = get_post_meta( $page_id, '_b3_page', true );
 
-                if ( false != $meta ) {
+                if ( false != get_post_meta( $page_id, '_b3_page', true ) ) {
                     // page has _b3_page meta
-                    update_site_option( $page[ 'meta' ], $page_id );
+                    update_option( $page[ 'meta' ], $page_id );
                     if ( ! empty( $page_object->post_content ) ) {
                         if ( strpos( $page_object->post_content, $page[ 'content' ] ) === false ) {
                             $add_shortcode = true;
@@ -112,7 +117,7 @@
                 );
                 $result = wp_insert_post( $new_post_args, true );
                 if ( ! is_wp_error( $result ) ) {
-                    update_site_option( $page[ 'meta' ], $result );
+                    update_option( $page[ 'meta' ], $result );
                     update_post_meta( $result, '_b3_page', true );
                 }
             }
