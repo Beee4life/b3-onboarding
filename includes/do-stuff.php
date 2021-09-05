@@ -10,7 +10,7 @@
      *
      * @param bool $create_new_site
      */
-    function b3_setup_initial_pages( $create_new_site = false ) {
+    function b3_setup_initial_pages() {
 
         $page_definitions = array(
             _x( 'account', 'slug', 'b3-onboarding' ) => array(
