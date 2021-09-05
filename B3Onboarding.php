@@ -80,11 +80,11 @@
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
-                add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
+                // add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'before_signup_header',                 array( $this, 'b3_redirect_to_custom_mu_register' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
-                add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
+                // add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
@@ -99,6 +99,7 @@
 
                 // Multisite specific
                 add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
+                add_action( 'wp_insert_site',                       array( $this, 'b3_after_create_site' ) );
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -1942,6 +1943,17 @@
                         esc_html__( 'here', 'b3-onboarding' )
                     );
                 }
+            }
+
+            public function b3_after_create_site( $site ) {
+                switch_to_blog( $site->blog_id );
+
+                // create necessary pages
+                b3_setup_initial_pages( $site->blog_id );
+                // set default values
+                $this->b3_set_default_settings();
+
+                restore_current_blog();
             }
         }
 
