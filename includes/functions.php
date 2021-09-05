@@ -491,7 +491,16 @@
      */
     function b3_get_login_url( $return_id = false, $blog_id = false ) {
 
-        $login_page_id = get_site_option( 'b3_login_page_id' );
+        if ( false == $blog_id ) {
+            $blog_id = get_current_blog_id();
+        }
+
+        $login_page_id = get_option( 'b3_login_page_id' );
+        if ( false == $login_page_id ) {
+            // get page by path
+            $login_page = get_page_by_path( 'login', '');
+            // echo '<pre>'; var_dump($login_page); echo '</pre>'; exit;
+        }
 
         if ( class_exists( 'Sitepress' ) ) {
             $login_page_id = apply_filters( 'wpml_object_id', $login_page_id, 'page', true );
