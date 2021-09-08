@@ -299,7 +299,7 @@
 
         // get reset pass id
         $reset_pass_url      = b3_get_reset_password_url();
-        $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
+        $vars[ 'reset_url' ] = $reset_pass_url . '&action=rp&key=' . $key . '&login=' . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
         $message             = b3_replace_template_styling( $message );
         $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
 
@@ -371,22 +371,20 @@
      */
     function b3_add_post_state( $post_states, $post ) {
 
-        if ( is_main_site() ) {
-            if ( $post->ID == get_site_option( 'b3_account_page_id' ) ) {
-                $post_states[] = 'B3 : Account';
-            } elseif ( $post->ID == get_site_option( 'b3_register_page_id' ) ) {
-                $post_states[] = 'B3 : Register';
-            } elseif ( $post->ID == get_site_option( 'b3_login_page_id' ) ) {
-                $post_states[] = 'B3 : Login';
-            } elseif ( $post->ID == get_site_option( 'b3_logout_page_id' ) ) {
-                $post_states[] = 'B3 : Log out';
-            } elseif ( $post->ID == get_site_option( 'b3_lost_password_page_id' ) ) {
-                $post_states[] = 'B3 : Lost password';
-            } elseif ( $post->ID == get_site_option( 'b3_reset_password_page_id' ) ) {
-                $post_states[] = 'B3 : Reset password';
-            } elseif ( $post->ID == get_site_option( 'b3_approval_page_id' ) ) {
-                $post_states[] = 'B3 : User approval';
-            }
+        if ( $post->ID == get_option( 'b3_account_page_id' ) ) {
+            $post_states[] = 'B3 : Account';
+        } elseif ( $post->ID == get_option( 'b3_register_page_id' ) ) {
+            $post_states[] = 'B3 : Register';
+        } elseif ( $post->ID == get_option( 'b3_login_page_id' ) ) {
+            $post_states[] = 'B3 : Login';
+        } elseif ( $post->ID == get_option( 'b3_logout_page_id' ) ) {
+            $post_states[] = 'B3 : Log out';
+        } elseif ( $post->ID == get_option( 'b3_lost_password_page_id' ) ) {
+            $post_states[] = 'B3 : Lost password';
+        } elseif ( $post->ID == get_option( 'b3_reset_password_page_id' ) ) {
+            $post_states[] = 'B3 : Reset password';
+        } elseif ( $post->ID == get_option( 'b3_approval_page_id' ) ) {
+            $post_states[] = 'B3 : User approval';
         }
 
         return $post_states;
