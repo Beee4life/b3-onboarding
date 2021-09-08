@@ -4,11 +4,11 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     $localhost_email = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : '';
 ?>
 <?php do_action( 'b3_add_form_messages', $attributes ); ?>
@@ -22,6 +22,7 @@
     <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
         <input name="b3_form" value="lostpass" type="hidden" />
         <input name="b3_lost_pass" value="<?php echo wp_create_nonce( 'b3-lost-pass' ); ?>" type="hidden" />
+        <input name="b3_site_id" value="<?php echo get_current_blog_id(); ?>" type="hidden" />
 
         <div class="b3_form-element">
             <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?></label>
