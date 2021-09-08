@@ -492,7 +492,9 @@
     function b3_get_login_url( $return_id = false, $blog_id = false ) {
 
         if ( false != $blog_id ) {
-            switch_to_blog($blog_id);
+            if ( is_multisite() ) {
+                switch_to_blog($blog_id);
+            }
         }
 
         $login_page_id = get_option( 'b3_login_page_id' );
@@ -503,12 +505,17 @@
 
         if ( false != $login_page_id ) {
             if ( false != $return_id ) {
-                restore_current_blog();
+                if ( is_multisite() ) {
+                    restore_current_blog();
+                }
                 return $login_page_id;
             }
 
             if ( get_post( $login_page_id ) ) {
                 $login_url = get_the_permalink( $login_page_id );
+                if ( is_multisite() ) {
+                    restore_current_blog();
+                }
 
                 return $login_url;
             }
