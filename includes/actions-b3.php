@@ -23,7 +23,7 @@
                 // user needs a password
                 $key                 = get_password_reset_key( $user_object );
                 $reset_pass_url      = b3_get_reset_password_url();
-                $vars[ 'reset_url' ] = $reset_pass_url . "?action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
+                $vars[ 'reset_url' ] = $reset_pass_url . "&action=rp&key=" . $key . "&login=" . rawurlencode( $user_login );
             } else {
                 // user has set a custom password or requests access
                 $vars = array();
@@ -490,8 +490,8 @@
         return false;
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
-    
-    
+
+
     /**
      * Action links on custom forms
      *
@@ -499,7 +499,7 @@
      */
     function b3_add_action_links( $form_type = 'login' ) {
 
-        if ( true != apply_filters( 'b3_disable_action_links', get_site_option( 'b3_disable_action_links' ) ) ) {
+        if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
             $page_types = array();
 
             switch( $form_type ) {
@@ -509,7 +509,7 @@
                         'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
                         'link'  => b3_get_lostpassword_url(),
                     ];
-                    if ( 'closed' != get_site_option( 'b3_registration_type' ) ) {
+                    if ( 'closed' != get_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),
@@ -533,7 +533,7 @@
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_url(),
                     ];
-                    if ( 'closed' != get_site_option( 'b3_registration_type' ) ) {
+                    if ( 'closed' != get_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),
