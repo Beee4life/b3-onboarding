@@ -465,7 +465,7 @@
      * @return bool|string
      */
     function b3_get_register_url( $return_id = false ) {
-        $register_page_id = get_site_option( 'b3_register_page_id' );
+        $register_page_id = get_option( 'b3_register_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $register_page_id = apply_filters( 'wpml_object_id', $register_page_id, 'page', true );
         }
@@ -491,16 +491,11 @@
      */
     function b3_get_login_url( $return_id = false, $blog_id = false ) {
 
-        if ( false == $blog_id ) {
-            $blog_id = get_current_blog_id();
+        if ( false != $blog_id ) {
+            switch_to_blog($blog_id);
         }
 
         $login_page_id = get_option( 'b3_login_page_id' );
-        if ( false == $login_page_id ) {
-            // get page by path
-            $login_page = get_page_by_path( 'login', '');
-            // echo '<pre>'; var_dump($login_page); echo '</pre>'; exit;
-        }
 
         if ( class_exists( 'Sitepress' ) ) {
             $login_page_id = apply_filters( 'wpml_object_id', $login_page_id, 'page', true );
@@ -508,28 +503,15 @@
 
         if ( false != $login_page_id ) {
             if ( false != $return_id ) {
+                restore_current_blog();
                 return $login_page_id;
             }
 
             if ( get_post( $login_page_id ) ) {
-                if ( is_multisite() ) {
-                    switch_to_blog( get_main_site_id() );
-                }
                 $login_url = get_the_permalink( $login_page_id );
-                if ( is_multisite() ) {
-                    restore_current_blog();
-                }
 
                 return $login_url;
             }
-        }
-
-        if ( false != $blog_id ) {
-            switch_to_blog( get_main_site_id() );
-            $login_url = get_the_permalink( $login_page_id );
-            restore_current_blog();
-
-            return $login_url;
         }
 
         return wp_login_url();
@@ -569,7 +551,7 @@
      * @return bool|mixed
      */
     function b3_get_account_url( $return_id = false, $language = false ) {
-        $account_page_id = get_site_option( 'b3_account_page_id' );
+        $account_page_id = get_option( 'b3_account_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $account_page_id = apply_filters( 'wpml_object_id', $account_page_id, 'page', true, $language );
         }
@@ -596,7 +578,7 @@
      */
     function b3_get_lostpassword_url() {
         // @TODO: check this on single site, if it returns correct ID
-        $lost_password_page_id = get_site_option( 'b3_lost_password_page_id' );
+        $lost_password_page_id = get_option( 'b3_lost_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $lost_password_page_id = apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true );
         }
@@ -615,7 +597,8 @@
      * @return bool|string
      */
     function b3_get_reset_password_url( $return_id = false ) {
-        $reset_pass_page_id = get_site_option( 'b3_reset_password_page_id' );
+        // switch_to_blog(get_main_site_id());
+        $reset_pass_page_id = get_option( 'b3_reset_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $reset_pass_page_id = apply_filters( 'wpml_object_id', $reset_pass_page_id, 'page', true );
         }
@@ -623,17 +606,18 @@
             if ( true == $return_id ) {
                 return $reset_pass_page_id;
             }
-            if ( ! is_main_site() ) {
-                $blog_id = ( defined( 'BLOG_ID_CURRENT_SITE' ) ) ? BLOG_ID_CURRENT_SITE : 1;
-                switch_to_blog($blog_id);
-            }
+            // if ( ! is_main_site() ) {
+            //     $blog_id = ( defined( 'BLOG_ID_CURRENT_SITE' ) ) ? BLOG_ID_CURRENT_SITE : 1;
+            //     switch_to_blog($blog_id);
+            // }
             $reset_post = get_post( $reset_pass_page_id );
             if ( $reset_post ) {
                 $link = get_the_permalink( $reset_pass_page_id );
             }
-            if ( ! is_main_site() ) {
-                restore_current_blog();
-            }
+            // restore_current_blog();
+            // if ( ! is_main_site() ) {
+            //     restore_current_blog();
+            // }
             if ( isset( $link ) ) {
                 return $link;
             }
@@ -652,8 +636,8 @@
      * @return bool|mixed|void
      */
     function b3_get_user_approval_link( $return_id = false ) {
-        if ( true == get_site_option( 'b3_front_end_approval' ) ) {
-            $user_approval_page_id = get_site_option( 'b3_approval_page_id' );
+        if ( true == get_option( 'b3_front_end_approval' ) ) {
+            $user_approval_page_id = get_option( 'b3_approval_page_id' );
             if ( class_exists( 'Sitepress' ) ) {
                 $user_approval_page_id = apply_filters( 'wpml_object_id', $user_approval_page_id, 'page', true );
             }
