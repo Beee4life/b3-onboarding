@@ -80,11 +80,11 @@
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
-                // add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
+                add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'before_signup_header',                 array( $this, 'b3_redirect_to_custom_mu_register' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
-                // add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
+                add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
@@ -99,7 +99,7 @@
 
                 // Multisite specific
                 add_action( 'network_admin_notices',                array( $this, 'b3_network_admin_notices' ) );
-                add_action( 'wp_insert_site',                       array( $this, 'b3_after_create_site' ) );
+                add_action( 'wp_initialize_site',                   array( $this, 'b3_after_create_site' ) );
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -202,26 +202,26 @@
              */
             public function b3_set_default_settings() {
 
-                update_site_option( 'b3_activate_custom_emails', 1 );
-                update_site_option( 'b3_disable_wordpress_forms', 1 );
-                update_site_option( 'b3_logo_in_email', 1 );
-                update_site_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
-                update_site_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-                update_site_option( 'b3_registration_type', 'open' );
+                update_option( 'b3_activate_custom_emails', 1 );
+                update_option( 'b3_disable_wordpress_forms', 1 );
+                update_option( 'b3_logo_in_email', 1 );
+                update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
+                update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
+                update_option( 'b3_registration_type', 'open' );
 
                 if ( ! is_multisite() ) {
-                    update_site_option( 'b3_dashboard_widget', 1 );
-                    update_site_option( 'b3_hide_admin_bar', 1 );
-                    update_site_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
-                    update_site_option( 'users_can_register', 0 );
+                    update_option( 'b3_dashboard_widget', 1 );
+                    update_option( 'b3_hide_admin_bar', 1 );
+                    update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
+                    update_option( 'users_can_register', 0 );
 
                 } else {
 
                     if ( is_main_site() ) {
-                        update_site_option( 'b3_dashboard_widget', 1 );
-                        update_site_option( 'b3_disable_admin_notification_new_user', 1 );
-                        update_site_option( 'registrationnotification', 'no' );
-                        update_site_option( 'b3_registration_type', get_site_option( 'registration' ) );
+                        update_option( 'b3_dashboard_widget', 1 );
+                        update_option( 'b3_disable_admin_notification_new_user', 1 );
+                        update_option( 'registrationnotification', 'no' );
+                        update_option( 'b3_registration_type', get_site_option( 'registration' ) );
                     }
                 }
 
@@ -955,6 +955,7 @@
                 }
 
                 if ( isset( $redirect_url ) ) {
+                    error_log('redirect_url (template redirect): '.$redirect_url);
                     wp_safe_redirect( $redirect_url );
                     exit;
                 }
@@ -1064,7 +1065,6 @@
              */
             public function b3_redirect_to_custom_login() {
 
-                // @TODO: check also for MU
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
@@ -1073,8 +1073,7 @@
                         exit;
                     }
 
-                    $blog_id = ( is_multisite() ) ? get_current_blog_id() : false;
-                    $login_url = b3_get_login_url( false, $blog_id );
+                    $login_url = b3_get_login_url();
 
                     if ( ! empty( $redirect_to ) ) {
                         $login_url = add_query_arg( 'redirect_to', $redirect_to, $login_url );
@@ -1112,8 +1111,10 @@
              */
             public function b3_redirect_to_custom_reset_password() {
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                    error_log('GET');
                     // Verify key / login combo
                     $redirect_url = b3_get_reset_password_url();
+                    error_log('redirect:' . $redirect_url);
 
                     if ( isset( $_REQUEST[ 'key' ] ) && isset( $_REQUEST[ 'login' ] ) ) {
                         $key   = sanitize_key( $_REQUEST[ 'key' ] );
@@ -1121,6 +1122,7 @@
                         $user  = check_password_reset_key( $key, $login );
 
                         if ( ! $user || is_wp_error( $user ) ) {
+                            error_log('no user or error');
                             $login_url = b3_get_login_url();
                             if ( $user && $user->get_error_code() === 'expired_key' ) {
                                 $redirect_url = add_query_arg( 'login', 'expiredkey', $login_url );
@@ -1246,57 +1248,57 @@
              */
             public function b3_do_user_activate() {
                 if ( is_multisite() ) {
-                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' == $_GET[ 'activate' ] ) {
+                    if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                        if ( isset( $_GET[ 'activate' ] ) && 'user' == $_GET[ 'activate' ] ) {
+                            $redirect_url = b3_get_login_url();
+                            $valid_error_codes = array( 'already_active', 'blog_taken' );
+                            list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
+                            $activate_cookie = 'wp-activate-' . COOKIEHASH;
+                            $key             = '';
+                            $result          = null;
 
-                        $redirect_url      = b3_get_login_url();
-                        $valid_error_codes = array( 'already_active', 'blog_taken' );
-                        list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
-                        $activate_cookie = 'wp-activate-' . COOKIEHASH;
-                        $key             = '';
-                        $result          = null;
+                            if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
+                                wp_die( __( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), __( 'An error occurred during the activation' ), 400 );
+                            } elseif ( ! empty( $_GET[ 'key' ] ) ) {
+                                $key = sanitize_key( $_GET[ 'key' ] );
+                            } elseif ( ! empty( $_POST[ 'key' ] ) ) {
+                                $key = sanitize_key( $_POST[ 'key' ] );
+                            }
 
-                        if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
-                            wp_die( __( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), __( 'An error occurred during the activation' ), 400 );
-                        } elseif ( ! empty( $_GET[ 'key' ] ) ) {
-                            $key = sanitize_key( $_GET[ 'key' ] );
-                        } elseif ( ! empty( $_POST[ 'key' ] ) ) {
-                            $key = sanitize_key( $_POST[ 'key' ] );
-                        }
+                            if ( $key ) {
+                                $redirect_url = remove_query_arg( 'key' );
 
-                        if ( $key ) {
-                            $redirect_url = remove_query_arg( 'key' );
+                                if ( remove_query_arg( false ) !== $redirect_url ) {
+                                    setcookie( $activate_cookie, $key, 0, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
+                                    wp_safe_redirect( $redirect_url );
+                                    exit;
+                                } else {
+                                    $result = wpmu_activate_signup( $key );
+                                }
+                            }
 
-                            if ( remove_query_arg( false ) !== $redirect_url ) {
-                                setcookie( $activate_cookie, $key, 0, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
+                            if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
+                                $key    = $_COOKIE[ $activate_cookie ];
+                                $result = wpmu_activate_signup( $key );
+                                setcookie( $activate_cookie, ' ', time() - YEAR_IN_SECONDS, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
+                            }
+
+                            if ( null === $result || ( is_wp_error( $result ) && 'invalid_key' === $result->get_error_code() ) ) {
+                                status_header( 404 );
+                            } elseif ( is_wp_error( $result ) ) {
+                                $error_code = $result->get_error_code();
+
+                                if ( ! in_array( $error_code, $valid_error_codes, true ) ) {
+                                    status_header( 400 );
+                                }
+                            }
+
+                            if ( ! is_wp_error( $result ) ) {
+                                $redirect_url = add_query_arg( array( 'mu-activate' => 'success' ), $redirect_url );
                                 wp_safe_redirect( $redirect_url );
                                 exit;
-                            } else {
-                                $result = wpmu_activate_signup( $key );
                             }
                         }
-
-                        if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
-                            $key    = $_COOKIE[ $activate_cookie ];
-                            $result = wpmu_activate_signup( $key );
-                            setcookie( $activate_cookie, ' ', time() - YEAR_IN_SECONDS, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
-                        }
-
-                        if ( null === $result || ( is_wp_error( $result ) && 'invalid_key' === $result->get_error_code() ) ) {
-                            status_header( 404 );
-                        } elseif ( is_wp_error( $result ) ) {
-                            $error_code = $result->get_error_code();
-
-                            if ( ! in_array( $error_code, $valid_error_codes, true ) ) {
-                                status_header( 400 );
-                            }
-                        }
-
-                        if ( ! is_wp_error( $result ) ) {
-                            $redirect_url = add_query_arg( array( 'mu-activate' => 'success' ), $redirect_url );
-                            wp_safe_redirect( $redirect_url );
-                            exit;
-                        }
-
                     }
                 } else {
 
@@ -1370,7 +1372,11 @@
                             $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
                         } else {
                             // Email sent
-                            $redirect_url = b3_get_login_url();
+                            $site_id = get_current_blog_id();
+                            if ( isset( $_POST[ 'b3_site_id' ] ) ) {
+                                $site_id = $_POST[ 'b3_site_id' ];
+                            }
+                            $redirect_url = b3_get_login_url( false, $site_id );
                             $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
                         }
 
@@ -1946,14 +1952,11 @@
             }
 
             public function b3_after_create_site( $site ) {
-                switch_to_blog( $site->blog_id );
 
                 // create necessary pages
                 b3_setup_initial_pages( $site->blog_id );
                 // set default values
                 $this->b3_set_default_settings();
-
-                restore_current_blog();
             }
         }
 
