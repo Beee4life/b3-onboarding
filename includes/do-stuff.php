@@ -17,6 +17,8 @@
 
         switch_to_blog($site_id);
 
+        $login_slug = ( is_main_site() ) ? 'login' : 'user-login';
+
         $page_definitions = array(
             _x( 'account', 'slug', 'b3-onboarding' ) => array(
                 'title'   => esc_html__( 'Account', 'b3-onboarding' ),
@@ -28,7 +30,7 @@
                 'content' => '[lostpass-form]',
                 'meta'    => 'b3_lost_password_page_id'
             ),
-            _x( 'login', 'slug', 'b3-onboarding' )           => array(
+            _x( $login_slug, 'slug', 'b3-onboarding' )           => array(
                 'title'   => esc_html__( 'Login', 'b3-onboarding' ),
                 'content' => '[login-form]',
                 'meta'    => 'b3_login_page_id'
