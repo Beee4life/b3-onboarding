@@ -130,7 +130,7 @@
                 include 'includes/form-handling.php';
                 include 'includes/tabs/tabs.php';
                 include 'includes/admin/help-tabs.php';
-                if ( get_site_option( 'b3_activate_filter_validation' ) ) {
+                if ( get_option( 'b3_activate_filter_validation' ) ) {
                     include 'includes/verify-filters.php';
                 }
             }
@@ -203,7 +203,6 @@
             public function b3_set_default_settings() {
 
                 update_option( 'b3_activate_custom_emails', 1 );
-                update_option( 'b3_disable_wordpress_forms', 1 );
                 update_option( 'b3_logo_in_email', 1 );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
