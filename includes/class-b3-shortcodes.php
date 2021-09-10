@@ -45,7 +45,7 @@
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_multisite() ) {
-                    $registration_type = get_site_option( 'b3_registration_type' );
+                    $registration_type = get_option( 'b3_registration_type' );
                 } else {
                     $registration_type = get_option( 'b3_registration_type' );
                 }
@@ -127,10 +127,10 @@
                         }
                     }
 
-                    if ( 1 == get_site_option( 'b3_activate_recaptcha' ) && in_array( $attributes[ 'template' ], get_site_option( 'b3_recaptcha_on', [ 'register' ] ) ) ) {
+                    if ( 1 == get_option( 'b3_activate_recaptcha' ) && in_array( $attributes[ 'template' ], get_option( 'b3_recaptcha_on', [ 'register' ] ) ) ) {
                         // add recaptcha stuff
-                        $recaptcha_public  = get_site_option( 'b3_recaptcha_public' );
-                        $recaptcha_version = get_site_option( 'b3_recaptcha_version' );
+                        $recaptcha_public  = get_option( 'b3_recaptcha_public' );
+                        $recaptcha_version = get_option( 'b3_recaptcha_version' );
 
                         $attributes[ 'recaptcha' ] = [
                             'public'  => $recaptcha_public,
@@ -219,7 +219,7 @@
                 }
 
                 $attributes[ 'errors' ]            = $errors;
-                $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );;
+                $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );;
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
@@ -349,7 +349,7 @@
                     }
                     $attributes[ 'errors' ] = $errors;
 
-                    $attributes[ 'registration_type' ] = get_site_option( 'b3_registration_type' );
+                    $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
 
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {
                         $attributes[ 'updated' ] = $this->b3_get_return_message( $_REQUEST[ 'updated' ] );
@@ -390,9 +390,9 @@
                         }
                     }
                     $attributes[ 'errors' ]              = $errors;
-                    $attributes[ 'register_email_only' ] = get_site_option( 'b3_register_email_only' );
-                    $attributes[ 'registration_type' ]   = get_site_option( 'b3_registration_type' );;
-                    $attributes[ 'show_first_last_name' ] = get_site_option( 'b3_activate_first_last' );
+                    $attributes[ 'register_email_only' ] = get_option( 'b3_register_email_only' );
+                    $attributes[ 'registration_type' ]   = get_option( 'b3_registration_type' );;
+                    $attributes[ 'show_first_last_name' ] = get_option( 'b3_activate_first_last' );
 
                     if ( is_multisite() ) {
                         global $wpdb;

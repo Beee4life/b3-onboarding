@@ -4,14 +4,14 @@
      *
      * @since 3.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
-    $disable_admin_notification  = get_site_option( 'b3_disable_admin_notification_new_user' );
-    $new_wpmu_user_subject_admin = get_site_option( 'b3_new_wpmu_user_admin_subject' );
-    $new_wpmu_user_message_admin = get_site_option( 'b3_new_wpmu_user_admin_message' );
+
+    $disable_admin_notification  = get_option( 'b3_disable_admin_notification_new_user' );
+    $new_wpmu_user_subject_admin = get_option( 'b3_new_wpmu_user_admin_subject' );
+    $new_wpmu_user_message_admin = get_option( 'b3_new_wpmu_user_admin_message' );
     $placeholder_subject         = esc_attr( b3_get_new_wpmu_user_subject_admin() );
     $placeholder_message         = esc_attr( b3_get_new_wpmu_user_message_admin() );
 ?>

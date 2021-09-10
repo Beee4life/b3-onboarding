@@ -253,7 +253,7 @@
             }
         }
 
-        $user_login = ( true != get_site_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
+        $user_login = ( true != get_option( 'b3_register_email_only' ) && false != $user_data ) ? $user_data->user_login : false;
 
         $replacements = array(
             '%blog_name%'    => get_option( 'blogname' ),
@@ -376,7 +376,7 @@
 
         if ( false != $message ) {
             $email_footer = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
-            $hide_logo    = ( '1' === get_site_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo    = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
             $link_color   = apply_filters( 'b3_link_color', b3_get_link_color() );
             $styling      = apply_filters( 'b3_email_styling', b3_get_email_styling( $link_color ) );
             $template     = apply_filters( 'b3_email_template', b3_get_email_template( $hide_logo ) );

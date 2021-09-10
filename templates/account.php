@@ -10,9 +10,9 @@
     }
 
     $current_user_object          = get_userdata( get_current_user_id() );
-    $registration_with_email_only = get_site_option( 'b3_register_email_only' );
-    $required                     = ( true == get_site_option( 'b3_first_last_required' ) ) ? ' required="required"' : false;
-    $user_delete                  = get_site_option( 'b3_user_may_delete' );
+    $registration_with_email_only = get_option( 'b3_register_email_only' );
+    $required                     = ( true == get_option( 'b3_first_last_required' ) ) ? ' required="required"' : false;
+    $user_delete                  = get_option( 'b3_user_may_delete' );
 
     do_action( 'b3_add_form_messages', $attributes );
 ?>
@@ -66,7 +66,7 @@
 
             <input type="text" name="email" id="email" value="<?php esc_attr_e( $current_user_object->user_email ); ?>" class="input regular-text" />
             <?php
-                $new_email = get_site_option( $current_user_object->ID . '_new_email' );
+                $new_email = get_option( $current_user_object->ID . '_new_email' );
                 if ( $new_email && $new_email[ 'newemail' ] != $current_user_object->user_email ) : ?>
                     <div class="updated inline">
                         <p>

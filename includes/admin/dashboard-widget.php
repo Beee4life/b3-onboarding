@@ -50,7 +50,7 @@
                 <p>
                     <?php
                         if ( count( $approval_users ) > 0 ) {
-                            if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
+                            if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                                 echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
                             } else {
                                 echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type. That\'s why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it <a href="%s">here</a>.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ) );
@@ -90,7 +90,7 @@
                     </tbody>
                 </table>
             <?php } else { ?>
-                <?php if ( 'closed' == get_site_option( 'b3_registration_type' ) ) { ?>
+                <?php if ( 'closed' == get_option( 'b3_registration_type' ) ) { ?>
                     <p>
                         <?php printf( __( "You're the only user right now, but that can be because user registration is not allowed. Change it <a href=\"%s\">here</a>.", 'b3-onboarding' ), B3_PLUGIN_SETTINGS . '&tab=registration' ); ?>
                     </p>

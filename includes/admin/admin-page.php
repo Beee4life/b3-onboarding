@@ -85,7 +85,7 @@
                                 );
                             }
 
-                            if ( true == get_site_option( 'b3_activate_recaptcha' ) ) {
+                            if ( true == get_option( 'b3_activate_recaptcha' ) ) {
                                 $tabs[] = array(
                                     'id'      => 'recaptcha',
                                     'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),

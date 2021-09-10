@@ -8,13 +8,13 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     // @TODO: check for manual/through site
-    $new_user_subject    = get_site_option( 'b3_welcome_user_subject' );
-    $new_user_message    = get_site_option( 'b3_welcome_user_message' );
+    $new_user_subject    = get_option( 'b3_welcome_user_subject' );
+    $new_user_message    = get_option( 'b3_welcome_user_message' );
     $placeholder_subject = esc_attr( b3_default_welcome_user_subject() );
-    
-    if ( 'closed' == get_site_option( 'b3_registration_type' ) ) {
+
+    if ( 'closed' == get_option( 'b3_registration_type' ) ) {
         $placeholder_message = esc_attr( b3_default_manual_welcome_user_message() );
     } else {
         $placeholder_message = esc_attr( b3_default_welcome_user_message() );

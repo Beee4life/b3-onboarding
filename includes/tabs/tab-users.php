@@ -6,20 +6,20 @@
      *
      * @return false|string
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
     function b3_render_users_tab() {
 
-        $front_end_approval      = get_site_option( 'b3_front_end_approval' );
-        $front_end_approval_page = get_site_option( 'b3_approval_page_id' );
-        $hide_admin_bar          = get_site_option( 'b3_hide_admin_bar' );
+        $front_end_approval      = get_option( 'b3_front_end_approval' );
+        $front_end_approval_page = get_option( 'b3_approval_page_id' );
+        $hide_admin_bar          = get_option( 'b3_hide_admin_bar' );
         $roles                   = get_editable_roles();
-        $user_may_delete         = get_site_option( 'b3_user_may_delete' );
-        $restrict_admin          = get_site_option( 'b3_restrict_admin' );
-        $registration_type       = get_site_option( 'b3_registration_type' );
+        $user_may_delete         = get_option( 'b3_user_may_delete' );
+        $restrict_admin          = get_option( 'b3_restrict_admin' );
+        $registration_type       = get_option( 'b3_registration_type' );
         asort( $roles );
 
         ob_start();

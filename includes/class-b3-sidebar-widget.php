@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Class B3_Sidebar_Widget
      */
@@ -35,12 +35,12 @@
         public function widget( $args, $instance ) {
             $count_errors       = array();
             $count_setting      = 0;
-            $main_logo          = get_site_option( 'b3_main_logo' );
+            $main_logo          = get_option( 'b3_main_logo' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             $show_widget        = true;
             $show_register_link = false;
             $show_settings      = false;
-            $use_popup          = get_site_option( 'b3_use_popup' );
+            $use_popup          = get_option( 'b3_use_popup' );
 
             if ( $show_account ) {
                 $account_id    = b3_get_account_url( true );
@@ -87,7 +87,7 @@
             $show_register = ! empty( $instance[ 'show_register' ] ) ? $instance[ 'show_register' ] : false;
             if ( $show_register ) {
                 $register_id       = b3_get_register_url( true );
-                $registration_type = get_site_option( 'b3_registration_type' );
+                $registration_type = get_option( 'b3_registration_type' );
 
                 if ( 'closed' != $registration_type ) {
                     if ( false == $register_id ) {
@@ -119,7 +119,7 @@
                     $count_setting++;
                 }
             }
-            
+
             if ( 0 == $count_setting ) {
                 $show_widget = false;
                 if ( current_user_can( 'manage_options' ) ) {
@@ -211,7 +211,7 @@
          * @param array $instance Previously saved values from database.
          */
         public function form( $instance ) {
-            $registration_type  = get_site_option( 'b3_registration_type' );
+            $registration_type  = get_option( 'b3_registration_type' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : '';
             $show_login         = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : '';
             $show_logout        = ! empty( $instance[ 'show_logout' ] ) ? $instance[ 'show_logout' ] : '';

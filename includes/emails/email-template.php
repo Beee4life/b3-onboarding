@@ -4,12 +4,12 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
-    $stored_email_template = get_site_option( 'b3_email_template' );
+    $stored_email_template = get_option( 'b3_email_template' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

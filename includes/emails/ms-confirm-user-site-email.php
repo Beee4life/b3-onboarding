@@ -4,8 +4,8 @@
      *
      * @since 3.0
      */
-    $new_wpmu_user_subject = get_site_option( 'b3_activate_wpmu_user_site_subject' );
-    $new_wpmu_user_message = get_site_option( 'b3_activate_wpmu_user_site_message' );
+    $new_wpmu_user_subject = get_option( 'b3_activate_wpmu_user_site_subject' );
+    $new_wpmu_user_message = get_option( 'b3_activate_wpmu_user_site_message' );
     $placeholder_subject   = b3_default_subject_new_wpmu_user_blog();
     $placeholder_subject   = strtr( $placeholder_subject, b3_replace_subject_vars() );
     $placeholder_message   = esc_attr( b3_default_message_new_wpmu_user_blog() );

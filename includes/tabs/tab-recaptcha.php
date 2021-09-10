@@ -6,18 +6,18 @@
      *
      * @return false|string
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     function b3_render_recaptcha_tab() {
 
         ob_start();
-        $public_key        = get_site_option( 'b3_recaptcha_public' );
-        $recaptcha_version = get_site_option( 'b3_recaptcha_version', 2 );
-        $secret_key        = get_site_option( 'b3_recaptcha_secret' );
-        $recaptcha_on      = get_site_option( 'b3_recaptcha_on', [] );
+        $public_key        = get_option( 'b3_recaptcha_public' );
+        $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
+        $secret_key        = get_option( 'b3_recaptcha_secret' );
+        $recaptcha_on      = get_option( 'b3_recaptcha_on', [] );
         ?>
         <h2>
             <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
@@ -40,7 +40,7 @@
                     <input type="checkbox" id="b3_recaptcha_registration" name="b3_recaptcha_on[]" value="register" <?php if ( in_array( 'register', $recaptcha_on ) ) { ?>checked="checked"<?php } ?>/> <label for="b3_recaptcha_registration"><?php esc_html_e( 'Registration form', 'b3-onboarding' ); ?></label>
                 </div>
             <?php b3_get_close(); ?>
-    
+
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_recaptcha_version"><?php esc_html_e( 'reCaptcha version', 'b3-onboarding' ); ?></label>

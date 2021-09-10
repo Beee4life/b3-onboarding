@@ -4,13 +4,13 @@
      *
      * @since 3.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
-    $activated_wpmu_user_site_subject = get_site_option( 'b3_activated_wpmu_user_site_subject' );
-    $activated_wpmu_user_site_message = get_site_option( 'b3_activated_wpmu_user_site_message' );
+    $activated_wpmu_user_site_subject = get_option( 'b3_activated_wpmu_user_site_subject' );
+    $activated_wpmu_user_site_message = get_option( 'b3_activated_wpmu_user_site_message' );
     $placeholder_subject              = b3_default_subject_welcome_wpmu_user_blog();
     $placeholder_subject              = strtr( $placeholder_subject, b3_replace_subject_vars() );
     $placeholder_message              = esc_attr( b3_default_message_welcome_wpmu_user_blog() );

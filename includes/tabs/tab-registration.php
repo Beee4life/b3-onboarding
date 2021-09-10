@@ -6,28 +6,28 @@
      *
      * @return false|string
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
     function b3_render_registration_tab() {
 
-        $custom_passwords             = get_site_option( 'b3_activate_custom_passwords' );
+        $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $disallowed_usernames         = false;
-        $disallowed_usernames_array   = get_site_option( 'b3_disallowed_usernames' );
+        $disallowed_usernames_array   = get_option( 'b3_disallowed_usernames' );
         if ( is_array( $disallowed_usernames_array ) && ! empty( $disallowed_usernames_array ) ) {
             $disallowed_usernames = implode( ' ', $disallowed_usernames_array );
         }
-        $first_last                   = get_site_option( 'b3_activate_first_last' );
-        $first_last_required          = get_site_option( 'b3_first_last_required' );
-        $privacy                      = get_site_option( 'b3_privacy' );
-        $privacy_page                 = get_site_option( 'b3_privacy_page' );
+        $first_last                   = get_option( 'b3_activate_first_last' );
+        $first_last_required          = get_option( 'b3_first_last_required' );
+        $privacy                      = get_option( 'b3_privacy' );
+        $privacy_page                 = get_option( 'b3_privacy_page' );
         $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
-        $privacy_text                 = get_site_option( 'b3_privacy_text' );
-        $redirect_set_password        = get_site_option( 'b3_redirect_set_password' );
-        $registration_type            = get_site_option( 'b3_registration_type' );
-        $registration_with_email_only = get_site_option( 'b3_register_email_only' );
+        $privacy_text                 = get_option( 'b3_privacy_text' );
+        $redirect_set_password        = get_option( 'b3_redirect_set_password' );
+        $registration_type            = get_option( 'b3_registration_type' );
+        $registration_with_email_only = get_option( 'b3_register_email_only' );
 
         ob_start();
         ?>
@@ -103,7 +103,7 @@
 
                 <?php if ( 'closed' == $registration_type ) { ?>
 
-                    <?php $closed_message = apply_filters( 'b3_registration_closed_message', get_site_option( 'b3_registration_closed_message' ) ); ?>
+                    <?php $closed_message = apply_filters( 'b3_registration_closed_message', get_option( 'b3_registration_closed_message' ) ); ?>
                     <?php $default_closed_message = apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ); ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>

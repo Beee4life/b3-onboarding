@@ -4,13 +4,13 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
-    $account_activated_email_subject = get_site_option( 'b3_account_activated_subject' );
-    $account_activated_email_message = get_site_option( 'b3_account_activated_message' );
+    $account_activated_email_subject = get_option( 'b3_account_activated_subject' );
+    $account_activated_email_message = get_option( 'b3_account_activated_message' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

@@ -70,7 +70,7 @@
             // user is manually added
         } else {
             // get registration type
-            $registration_type = get_site_option( 'b3_registration_type' );
+            $registration_type = get_option( 'b3_registration_type' );
             if ( 'request_access' == $registration_type ) {
                 // change user role
                 $user_object = new WP_User( $user_id );
@@ -92,7 +92,7 @@
      * @param $user_id
      */
     function b3_add_login_form_fields() {
-        $show_recaptcha   = get_site_option( 'b3_recaptcha_login' );
+        $show_recaptcha   = get_option( 'b3_recaptcha_login' );
         if ( $show_recaptcha ) {
             do_action( 'b3_add_recaptcha_fields' );
         }
@@ -109,13 +109,13 @@
      */
     function b3_add_toolbar( $wp_admin_bar ) {
         if ( current_user_can( 'promote_users' ) ) {
-            if ( in_array( get_site_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
+            if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
 
                 $approval_users = [];
-                if ( 'request_access' == get_site_option( 'b3_registration_type' ) ) {
+                if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                     $approval_args  = array( 'role' => 'b3_approval' );
                     $approval_users = get_users( $approval_args );
-                } elseif ( 'request_access_subdomain' == get_site_option( 'b3_registration_type' ) ) {
+                } elseif ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
                     global $wpdb;
                     $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
                     $approval_users = $wpdb->get_results( $query );
@@ -144,11 +144,11 @@
      */
     function b3_remove_admin_bar() {
         if ( ! is_multisite() ) {
-            $hide_admin_bar = get_site_option( 'b3_hide_admin_bar' );
+            $hide_admin_bar = get_option( 'b3_hide_admin_bar' );
             if ( false != $hide_admin_bar ) {
                 $result = false;
                 $user   = wp_get_current_user();
-                $restricted_roles = get_site_option( 'b3_restrict_admin' );
+                $restricted_roles = get_option( 'b3_restrict_admin' );
                 $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
 
                 if ( true == $result ) {
@@ -222,7 +222,7 @@
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
 
         // @TODO: check if can be replaced by filter
-        if ( 'request_access_subdomain' == get_site_option( 'b3_registration_type' ) ) {
+        if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
             // @TODO: inform admin
         } else {
             $blog_id      = b3_get_signup_id( $domain );
