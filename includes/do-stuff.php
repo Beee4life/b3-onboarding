@@ -11,11 +11,9 @@
      * @param bool $site_id
      */
     function b3_setup_initial_pages( $site_id = false ) {
-        if ( false == $site_id ) {
-            $site_id = get_current_blog_id();
+        if ( false != $site_id && is_multisite() ) {
+            switch_to_blog($site_id);
         }
-
-        switch_to_blog($site_id);
 
         $login_slug = ( is_main_site() ) ? 'login' : 'user-login';
 
@@ -53,7 +51,9 @@
         );
         b3_create_pages( $page_definitions );
 
-        restore_current_blog();
+        if ( false != $site_id && is_multisite() ) {
+            restore_current_blog();
+        }
     }
 
     /**
