@@ -24,7 +24,7 @@
                 // user needs a password
                 $key                 = get_password_reset_key( $user_object );
                 $reset_pass_url      = b3_get_reset_password_url();
-                $vars[ 'reset_url' ] = $reset_pass_url . '&action=rp&key=' . $key . '&login=' . rawurlencode( $user_login );
+                $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_login );
             } else {
                 // user has set a custom password or requests access
                 $vars = array();
