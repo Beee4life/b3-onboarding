@@ -362,7 +362,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'You can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
+        $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
@@ -677,16 +677,4 @@
         }
 
         return $message;
-    }
-
-    function b3_default_welcome_mu_user_subject() {
-        $network_info = get_network();
-
-        return sprintf( __( '[%s] Login Details', 'b3-onboarding' ), $network_info->site_name );
-    }
-
-    function b3_default_welcome_mu_user_message() {
-        // @TODO
-        // default: Username: dummy To set your password, visit the following address: http://agency.127.0.0.1.nip.io/wp-login.php?action=rp&key=nbrwFmdlO7cAGXZtyAXU&login=dummy http://agency.127.0.0.1.nip.io/cms/wp-login.php
-        return '';
     }
