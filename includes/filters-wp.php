@@ -186,7 +186,7 @@
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
 
-            } elseif ( 'closed' == $registration_type ) {
+            } elseif ( 'none' == $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
 
@@ -223,7 +223,7 @@
      * @return false|mixed
      */
     function b3_disable_admin_email( $status, $site, $user ) {
-        if ( 'closed' == get_option( 'b3_registration_type' ) ) {
+        if ( 'none' == get_option( 'b3_registration_type' ) ) {
             return false;
         }
 
@@ -301,8 +301,7 @@
 
         // get reset pass id
         $reset_pass_url      = b3_get_reset_password_url();
-        $concatenate         = ( is_multisite() ) ? '&' : '?';
-        $vars[ 'reset_url' ] = $reset_pass_url . $concatenate . 'action=rp&key=' . $key . '&login=' . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
+        $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
         $message             = b3_replace_template_styling( $message );
         $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
 
@@ -406,12 +405,12 @@
      *
      * @return string
      */
-    function b3_logout_link( $permalink, $post_id ) {
+    function b3_logout_link( $logout_link, $post_id ) {
         if ( b3_get_logout_url( true ) == $post_id ) {
-            $permalink = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $permalink );
+            $logout_link = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $logout_link );
         }
 
-        return $permalink;
+        return $logout_link;
 
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
