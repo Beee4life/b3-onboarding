@@ -51,19 +51,12 @@
                 }
                 $attributes[ 'registration_type' ] = $registration_type;;
 
-                if ( is_user_logged_in() ) {
-                    if ( 'all' == $registration_type ) {
-                        // register site only, if registration type == user, he should be blocked already
-                    } elseif ( ! in_array( $registration_type, [ 'blog' ] ) ) {
-                        return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
-                    }
+                if ( is_user_logged_in() && 'blog' != $registration_type ) {
+                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                 }
 
-                if ( in_array( $registration_type, [ 'closed', 'none' ] ) ) {
-                    return '<p class="b3_message">' . apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) . '</p>';
-                } elseif ( in_array( $registration_type, [ 'blog' ] ) && ! is_user_logged_in() ) {
-                    return '<p class="b3_message">' . apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) . '</p>';
-                } elseif ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' == $_REQUEST[ 'registered' ] ) {
+                // show info after new site register
+                if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' == $_REQUEST[ 'registered' ] ) {
                     if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
                         switch_to_blog( $_GET[ 'site_id' ] );
                         $home_url  = home_url( '/' );
@@ -90,6 +83,12 @@
 
                         return $message;
                     }
+                }
+
+                if ( 'none' == $registration_type ) {
+                    return '<p class="b3_message">' . apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) . '</p>';
+                } elseif ( 'blog' == $registration_type && ! is_user_logged_in() ) {
+                    return '<p class="b3_message">' . apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) . '</p>';
                 } else {
 
                     $attributes[ 'errors' ] = array();
