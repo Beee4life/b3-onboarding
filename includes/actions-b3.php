@@ -13,6 +13,7 @@
 
         if ( is_multisite() ) {
             // get activation key
+            error_log('@TODO: b3_do_stuff_after_new_user_approved_by_admin');
         } else {
             $custom_passwords  = get_option( 'b3_activate_custom_passwords' );
             $user_object       = get_userdata( $arguments[ 'user_id' ] );
@@ -463,7 +464,7 @@
                             $show_errors = true;
                             $messages[]  = $request_access_message;
                         }
-                    } elseif ( 'closed' == $registration_type ) {
+                    } elseif ( 'none' == $registration_type ) {
                         $registration_message = apply_filters( 'b3_message_above_registration', b3_get_registration_closed_message() );
                         if ( false != $registration_message ) {
                             $show_errors = true;
@@ -509,7 +510,7 @@
                         'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
                         'link'  => b3_get_lostpassword_url(),
                     ];
-                    if ( 'closed' != get_option( 'b3_registration_type' ) ) {
+                    if ( 'none' != get_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),
@@ -533,7 +534,7 @@
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_url(),
                     ];
-                    if ( 'closed' != get_option( 'b3_registration_type' ) ) {
+                    if ( 'none' != get_option( 'b3_registration_type' ) ) {
                         $page_types[ 'register' ] = [
                             'title' => esc_html__( 'Register', 'b3-onboarding' ),
                             'link'  => b3_get_register_url(),
