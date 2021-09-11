@@ -43,7 +43,7 @@
                 <div class="b3_form-element">
                     <label class="b3_form-label" for="yoursites"><?php esc_attr_e( 'Your site(s)', 'b3-onboarding' ); ?></label>
                     <a href="<?php echo $url; ?>">
-                        <?php esc_html_e( 'Dashboard', 'b3-onboarding' ); ?>
+                        <?php echo $site_info->blogname; ?>
                     </a>
                 </div>
             <?php } ?>
