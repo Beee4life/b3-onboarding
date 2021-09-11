@@ -38,7 +38,7 @@
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
             <?php if ( is_main_site() ) { ?>
-                <?php if ( 'closed' != $registration_type ) { ?>
+                <?php if ( 'none' != $registration_type ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>

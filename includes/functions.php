@@ -153,7 +153,7 @@
                     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
                 );
             }
-            if ( in_array( $registration_type, array( 'closed' ) ) ) {
+            if ( in_array( $registration_type, array( 'none' ) ) ) {
                 $email_boxes[] = array(
                     'id'    => 'welcome_user_manual',
                     'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
@@ -187,7 +187,7 @@
                         'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
                     );
                 }
-                if ( ! in_array( $registration_type, array( 'closed' ) ) ) {
+                if ( ! in_array( $registration_type, array( 'none' ) ) ) {
                     $email_boxes[] = array(
                         'id'    => 'new_wpmu_user_admin',
                         'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
@@ -229,7 +229,7 @@
         $registration_options = array();
         $closed_option        = array(
             array(
-                'value' => 'closed', // @TODO: maybe change to none
+                'value' => 'none', // @TODO: maybe change to none
                 'label' => esc_html__( 'Closed (for everyone)', 'b3-onboarding' ),
             ),
         );

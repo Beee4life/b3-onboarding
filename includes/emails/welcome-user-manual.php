@@ -14,7 +14,7 @@
     $new_user_message    = get_option( 'b3_welcome_user_message' );
     $placeholder_subject = esc_attr( b3_default_welcome_user_subject() );
 
-    if ( 'closed' == get_option( 'b3_registration_type' ) ) {
+    if ( 'none' == get_option( 'b3_registration_type' ) ) {
         $placeholder_message = esc_attr( b3_default_manual_welcome_user_message() );
     } else {
         $placeholder_message = esc_attr( b3_default_welcome_user_message() );

@@ -89,7 +89,7 @@
                 $register_id       = b3_get_register_url( true );
                 $registration_type = get_option( 'b3_registration_type' );
 
-                if ( 'closed' != $registration_type ) {
+                if ( 'none' != $registration_type ) {
                     if ( false == $register_id ) {
                         $count_errors[] = 'register';
                     } else {

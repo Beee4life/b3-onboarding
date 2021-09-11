@@ -90,7 +90,7 @@
                     </tbody>
                 </table>
             <?php } else { ?>
-                <?php if ( 'closed' == get_option( 'b3_registration_type' ) ) { ?>
+                <?php if ( 'none' == get_option( 'b3_registration_type' ) ) { ?>
                     <p>
                         <?php printf( __( "You're the only user right now, but that can be because user registration is not allowed. Change it <a href=\"%s\">here</a>.", 'b3-onboarding' ), B3_PLUGIN_SETTINGS . '&tab=registration' ); ?>
                     </p>

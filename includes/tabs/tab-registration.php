@@ -101,7 +101,7 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php if ( 'closed' == $registration_type ) { ?>
+                <?php if ( 'none' == $registration_type ) { ?>
 
                     <?php $closed_message = apply_filters( 'b3_registration_closed_message', get_option( 'b3_registration_closed_message' ) ); ?>
                     <?php $default_closed_message = apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ); ?>
@@ -129,7 +129,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'closed' ] ) ) ? true : false; ?>
+                        <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'none' ] ) ) ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -214,7 +214,7 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php if ( ! is_multisite() && 'closed' != $registration_type ) { ?>
+                    <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>

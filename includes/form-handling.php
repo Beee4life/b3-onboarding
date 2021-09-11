@@ -59,7 +59,7 @@
 
 
     /**
-     * Form handling email settings
+     * Form handling registration settings
      *
      * @since 3.0
      */
@@ -72,12 +72,11 @@
                 if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                     if ( is_multisite() ) {
                         $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
-                        update_site_option( 'registration', 'none' );
                         if ( false != $ms_registration_type ) {
-                            update_site_option( 'b3_registration_type', $ms_registration_type );
+                            update_option( 'b3_registration_type', $ms_registration_type );
                         }
                     } else {
-                        if ( 'closed' == $_POST[ 'b3_registration_type' ] ) {
+                        if ( 'none' == $_POST[ 'b3_registration_type' ] ) {
                             update_option( 'users_can_register', 0 );
                         } else {
                             update_option( 'users_can_register', 1 );
@@ -86,7 +85,7 @@
                     }
                 }
 
-                if ( 'closed' == get_option( 'b3_registration_type' ) ) {
+                if ( 'none' == get_option( 'b3_registration_type' ) ) {
                     if ( isset( $_POST[ 'b3_registration_closed_message' ] ) ) {
                         update_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ) );
                     } else {
