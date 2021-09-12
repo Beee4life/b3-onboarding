@@ -44,56 +44,7 @@
                 <div class="b3_tabs">
                     <?php
                         $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'settings';
-
-                        $tabs = array(
-                            array(
-                                'id'      => 'settings',
-                                'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'settings' ),
-                                'icon'    => 'admin-generic',
-                            ),
-                        );
-                        if ( is_main_site() ) {
-                            $tabs[] = array(
-                                'id'      => 'registration',
-                                'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'registration' ),
-                                'icon'    => 'shield',
-                            );
-                            $tabs[] = array(
-                                'id'      => 'pages',
-                                'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
-                                'content' => b3_render_tab_content( 'pages' ),
-                                'icon'    => 'admin-page',
-                            );
-                        }
-
-                        $tabs[] = array(
-                            'id'      => 'emails',
-                            'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
-                            'content' => b3_render_tab_content( 'emails' ),
-                            'icon'    => 'email',
-                        );
-
-                        if ( is_main_site() ) {
-                            if ( ! is_multisite() ) {
-                                $tabs[] = array(
-                                    'id'      => 'users',
-                                    'title'   => esc_html__( 'Users', 'b3-onboarding' ),
-                                    'content' => b3_render_tab_content( 'users' ),
-                                    'icon'    => 'admin-users',
-                                );
-                            }
-
-                            if ( true == get_option( 'b3_activate_recaptcha' ) ) {
-                                $tabs[] = array(
-                                    'id'      => 'recaptcha',
-                                    'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
-                                    'content' => b3_render_tab_content( 'recaptcha' ),
-                                    'icon'    => 'plus-alt',
-                                );
-                            }
-                        }
+                        $tabs        = b3_get_admin_tabs();
                     ?>
                     <div class="b3_tab-header">
                         <?php foreach ( $tabs as $tab ) { ?>

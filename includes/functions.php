@@ -142,18 +142,20 @@
                     'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
                 );
             }
-            if ( in_array( $registration_type, array( 'open', 'blog', 'all', 'site' ) ) ) {
-                $email_boxes[] = array(
-                    'id'    => 'welcome_user',
-                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-                );
-            }
-            if ( in_array( $registration_type, array( 'none' ) ) ) {
-                $email_boxes[] = array(
-                    'id'    => 'welcome_user_manual',
-                    'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-                );
-            }
+        }
+        if ( in_array( $registration_type, array( 'open', 'blog', 'all', 'site' ) ) ) {
+            $email_boxes[] = array(
+                'id'    => 'welcome_user',
+                'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+            );
+        }
+        if ( in_array( $registration_type, array( 'none' ) ) ) {
+            $email_boxes[] = array(
+                'id'    => 'welcome_user_manual',
+                'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+            );
+        }
+        if ( is_main_site() ) {
             if ( is_multisite() ) {
                 if ( in_array( $registration_type, array( 'user' ) ) ) {
                     // $email_boxes[] = array(
@@ -195,10 +197,12 @@
                     'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
                 );
             }
-            $email_boxes[] = array(
-                'id'    => 'lost_password',
-                'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
-            );
+        }
+        $email_boxes[] = array(
+            'id'    => 'lost_password',
+            'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
+        );
+        if ( is_main_site() ) {
             $email_boxes[] = array(
                 'id'    => 'email_styling',
                 'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
@@ -919,6 +923,7 @@
         /* translators: Password reset notification email subject. %s: Site title. */
         $title = sprintf( __( '[%s] Password Reset' ), $site_name );
 
+
         /**
          * Filters the subject of the password reset email.
          *
@@ -978,5 +983,62 @@
         }
 
         return false;
+
+    }
+
+
+    function b3_get_admin_tabs() {
+        $tabs = array(
+            array(
+                'id'      => 'settings',
+                'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
+                'content' => b3_render_tab_content( 'settings' ),
+                'icon'    => 'admin-generic',
+            ),
+        );
+
+        if ( is_main_site() ) {
+            $tabs[] = array(
+                'id'      => 'registration',
+                'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
+                'content' => b3_render_tab_content( 'registration' ),
+                'icon'    => 'shield',
+            );
+        }
+        $tabs[] = array(
+            'id'      => 'pages',
+            'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
+            'content' => b3_render_tab_content( 'pages' ),
+            'icon'    => 'admin-page',
+        );
+
+        $tabs[] = array(
+            'id'      => 'emails',
+            'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
+            'content' => b3_render_tab_content( 'emails' ),
+            'icon'    => 'email',
+        );
+
+        if ( is_main_site() ) {
+            if ( ! is_multisite() ) {
+                $tabs[] = array(
+                    'id'      => 'users',
+                    'title'   => esc_html__( 'Users', 'b3-onboarding' ),
+                    'content' => b3_render_tab_content( 'users' ),
+                    'icon'    => 'admin-users',
+                );
+            }
+
+            if ( true == get_option( 'b3_activate_recaptcha' ) ) {
+                $tabs[] = array(
+                    'id'      => 'recaptcha',
+                    'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
+                    'content' => b3_render_tab_content( 'recaptcha' ),
+                    'icon'    => 'plus-alt',
+                );
+            }
+        }
+
+        return $tabs;
 
     }
