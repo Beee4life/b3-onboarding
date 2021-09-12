@@ -57,11 +57,6 @@
             'b3_hide_admin_bar',
             'b3_link_color',
             'b3_login_page_id',
-            'b3_loginpage_bg_color', // @TODO: change
-            'b3_loginpage_font_family', // @TODO: change
-            'b3_loginpage_font_size', // @TODO: change
-            'b3_loginpage_logo_height', // @TODO: change
-            'b3_loginpage_logo_width', // @TODO: change
             'b3_logo_in_email',
             'b3_logout_page_id',
             'b3_lost_password_message',
@@ -81,7 +76,7 @@
             'b3_recaptcha_secret',
             'b3_recaptcha_version',
             'b3_register_page_id', // set on activate
-            'b3_registration_closed_message', // @TODO: check
+            'b3_registration_closed_message',
             'b3_registration_type', // set on activate
             'b3_request_access_message_admin',
             'b3_request_access_message_user',
@@ -568,7 +563,7 @@
                 return get_the_permalink( $account_page_id );
             }
         } else {
-            // @TODO: return admin profile
+            return admin_url( 'profile.php' );
         }
 
         return false;
@@ -582,7 +577,6 @@
      * @return bool|string
      */
     function b3_get_lostpassword_url() {
-        // @TODO: check this on single site, if it returns correct ID
         $lost_password_page_id = get_option( 'b3_lost_password_page_id' );
         if ( class_exists( 'Sitepress' ) ) {
             $lost_password_page_id = apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true );
