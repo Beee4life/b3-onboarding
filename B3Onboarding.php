@@ -209,25 +209,30 @@
             public function b3_set_default_settings( $blog_id = false ) {
 
                 if ( false != $blog_id ) {
-                    switch_to_blog($blog_id);
+                    switch_to_blog( $blog_id );
                 }
                 update_option( 'b3_activate_custom_emails', 1 );
                 update_option( 'b3_logo_in_email', 1 );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-                update_option( 'b3_registration_type', 'open' );
+                update_option( 'b3_disable_admin_notification_new_user', 1 );
+                update_option( 'b3_disable_user_notification_password_change', 1 );
+
+                if ( class_exists( 'Disable_Comments' ) ) {
+                    update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
+                }
 
                 if ( ! is_multisite() ) {
                     update_option( 'b3_dashboard_widget', 1 );
                     update_option( 'b3_hide_admin_bar', 1 );
                     update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                     update_option( 'users_can_register', 0 );
+                    update_option( 'b3_registration_type', 'none' );
 
                 } else {
 
                     if ( is_main_site() && false == $blog_id ) {
                         update_option( 'b3_dashboard_widget', 1 );
-                        update_option( 'b3_disable_admin_notification_new_user', 1 );
                         update_option( 'b3_registration_type', get_site_option( 'registration' ) );
                         update_site_option( 'registrationnotification', 'no' );
                     }
@@ -328,18 +333,18 @@
              */
             public function b3_add_admin_pages() {
                 if ( is_main_site() ) {
-                    include 'includes/admin/admin-page.php';
-                    add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                }
+                include 'includes/admin/admin-page.php';
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
-                    if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-                        include 'includes/admin/user-approval-page.php';
-                        add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
-                    }
+                if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
+                    include 'includes/admin/user-approval-page.php';
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                }
 
-                    if ( true == get_option( 'b3_debug_info' ) ) {
-                        include 'includes/admin/debug-page.php';
-                        add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
-                    }
+                if ( true == get_option( 'b3_debug_info' ) ) {
+                    include 'includes/admin/debug-page.php';
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                 }
             }
 
