@@ -30,7 +30,7 @@
             <?php if ( is_main_site() ) { ?>
                 <?php esc_html_e( "Here you can set some settings for the plugin (which didn't fit on other tabs).", 'b3-onboarding' ); ?>
             <?php } else { ?>
-                <?php esc_html_e( 'All settings are set in the main site, except for the logo.', 'b3-onboarding' ); ?>
+                <?php esc_html_e( 'Most settings are set in the main site.', 'b3-onboarding' ); ?>
             <?php } ?>
         </p>
 
