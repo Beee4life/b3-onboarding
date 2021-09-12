@@ -194,6 +194,11 @@
     }
 
 
+    /**
+     * New site created message
+     *
+     * @return string
+     */
     function b3_get_new_site_created_message() {
         // @TODO: add user input option
         $message = b3_default_message_new_site_created();

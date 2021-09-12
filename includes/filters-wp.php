@@ -115,7 +115,7 @@
 
             } elseif ( in_array( $registration_type, array( 'blog' ) ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                // @TODO: add filters
+                // @TODO: add filter
                 $wp_new_user_notification_email_admin[ 'subject' ] = b3_default_subject_new_wpmu_user_admin();
                 $admin_email = b3_get_new_wpmu_user_message_admin();
 
@@ -582,8 +582,6 @@ All at ###SITENAME###
 
     /**
      * Check setting to update B3
-     *
-     * @TODO: remove in favor of new settings
      *
      * @param $new_value
      * @param $old_value

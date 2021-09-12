@@ -25,12 +25,11 @@
         if ( is_multisite() ) {
             $sites = get_sites( [ 'fields' => 'ids' ] );
         } else {
-            // @TODO: check this on multisite
+            // @TODO: test this on single site
             $sites = [1];
         }
 
         if ( ! empty( $sites ) ) {
-            // @TODO: test in single site
             // @TODO: get users not connected to a network
             foreach( $sites as $site_id ) {
                 $all_args = array(

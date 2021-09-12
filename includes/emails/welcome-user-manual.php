@@ -9,7 +9,7 @@
         exit;
     }
 
-    // @TODO: check for manual/through site
+    // @TODO: check for manual/added through site
     $new_user_subject    = get_option( 'b3_welcome_user_subject' );
     $new_user_message    = get_option( 'b3_welcome_user_message' );
     $placeholder_subject = esc_attr( b3_default_welcome_user_subject() );

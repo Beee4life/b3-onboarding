@@ -493,7 +493,6 @@
      * @return string
      */
     function b3_default_message_new_wpmu_user_admin() {
-        // @TODO: add if for when user is manually added
         $message = __( 'New user: %user_login%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
@@ -513,7 +512,7 @@
      * @return string
      */
     function b3_default_message_new_site_created() {
-        // @TODO: add if for when user is manually added
+        // @TODO: add if for when added by admin
         $message = __( 'New site created by: %user_login%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Site address: %home_url%', 'b3-onboarding' ) . "\n";

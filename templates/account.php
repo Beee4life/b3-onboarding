@@ -55,7 +55,7 @@
             <?php } else { ?>
                 <label class="b3_form-label" for="b3_user_login"><?php esc_attr_e( 'User ID', 'b3-onboarding' ); ?></label>
             <?php } ?>
-            <?php // @TODO: just echo, not in disabled input ?>
+            <?php // @TODO: just echo it, but not in a disabled input ?>
             <input type="text" name="user_login" id="user_login" value="<?php esc_attr_e( $current_user_object->user_login ); ?>" disabled="disabled" />
         </div>
 
