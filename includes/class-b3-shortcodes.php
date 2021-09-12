@@ -71,7 +71,7 @@
                         $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
                         $message .= '<a href="' . esc_url( $home_url ) . '">' . esc_url( $home_url ) . '</a>';
                         $message .= '<br />';
-                        $message .= sprintf( __( 'You can manage your new site <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( $admin_url ) );
+                        $message .= sprintf( __( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $message .= '</p>';
 
                         return $message;
