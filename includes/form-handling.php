@@ -199,61 +199,6 @@
 
 
     /**
-     * Form handling for login page settings
-     *
-     * @TODO: remove
-     *
-     * @since 3.0
-     */
-    function b3_loginpage_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            if ( isset( $_POST[ 'b3_loginpage_nonce' ] ) ) {
-
-                if ( ! wp_verify_nonce( $_POST[ 'b3_loginpage_nonce' ], 'b3-loginpage-nonce' ) ) {
-                    B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
-                } else {
-
-                    if ( ! empty( $_POST[ 'b3_loginpage_bg_color' ] ) ) {
-                        $color = $_POST[ 'b3_loginpage_bg_color' ];
-                        if ( '#' == substr( $_POST[ 'b3_loginpage_bg_color' ], 0, 1 ) ) {
-                            $color = substr( $_POST[ 'b3_loginpage_bg_color' ], 1 );
-                        }
-                        if ( empty( sanitize_hex_color_no_hash( $color ) ) ) {
-                            B3Onboarding::b3_errors()->add( 'error_wrong_hexlength', esc_html__( 'Your hex code is incorrect.', 'b3-onboarding' ) );
-
-                            return;
-                        }
-                        update_option( 'b3_loginpage_bg_color', $color );
-                    } else {
-                        delete_option( 'b3_loginpage_bg_color' );
-                    }
-
-                    update_option( 'b3_loginpage_font_family', $_POST[ 'b3_loginpage_font_family' ] );
-                    update_option( 'b3_loginpage_font_size', $_POST[ 'b3_loginpage_font_size' ] );
-
-                    $max_width  = 320;
-                    $max_height = 150;
-                    if ( $_POST[ 'b3_loginpage_logo_width' ] >= $max_width ) {
-                        update_option( 'b3_loginpage_logo_width', $max_width );
-                    } else {
-                        update_option( 'b3_loginpage_logo_width', $_POST[ 'b3_loginpage_logo_width' ] );
-                    }
-                    if ( $_POST[ 'b3_loginpage_logo_height' ] >= $max_height ) {
-                        update_option( 'b3_loginpage_logo_height', $max_height );
-                    } else {
-                        update_option( 'b3_loginpage_logo_height', $_POST[ 'b3_loginpage_logo_height' ] );
-                    }
-
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Login page settings saved', 'b3-onboarding' ) );
-
-                }
-            }
-        }
-    }
-    add_action( 'init', 'b3_loginpage_form_handling', 1 );
-
-
-    /**
      * Form handling for email settings
      *
      * @since 3.0
