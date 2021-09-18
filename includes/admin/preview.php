@@ -91,7 +91,7 @@
                     $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                     break;
                 case 'welcome-user-manual':
-                    $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                    $message = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
                     $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                     break;
                 case 'styling':

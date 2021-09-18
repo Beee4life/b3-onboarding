@@ -506,11 +506,21 @@
      * @return string
      */
     function b3_get_manual_welcome_user_message() {
-        $manual_welcome_message = get_option( 'b3_welcome_user_message' );
+        $manual_welcome_message = get_option( 'b3_welcome_user_message_manual' );
         if ( false != $manual_welcome_message ) {
             $message = $manual_welcome_message;
         } else {
             $message = b3_default_manual_welcome_user_message();
+        }
+
+        return $message;
+    }
+
+    function b3_get_email_intro( $welcome = 'Welcome' ) {
+        if ( true == get_option( 'b3_register_email_only' ) ) {
+            $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
+        } else {
+            $message = sprintf( esc_html__( '%s %s', 'b3-onboarding' ), $welcome, '%user_login%' ) . ',' . "\n";
         }
 
         return $message;

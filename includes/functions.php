@@ -149,10 +149,10 @@
                 'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
             );
         }
-        if ( in_array( $registration_type, array( 'none' ) ) ) {
+        if ( in_array( $registration_type, array( 'open', 'blog', 'all', 'site', 'none' ) ) ) {
             $email_boxes[] = array(
                 'id'    => 'welcome_user_manual',
-                'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
+                'title' => esc_html__( 'Welcome email (user) - added by admin', 'b3-onboarding' ),
             );
         }
         if ( is_main_site() ) {
