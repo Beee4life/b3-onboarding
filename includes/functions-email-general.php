@@ -516,6 +516,15 @@
         return $message;
     }
 
+    /**
+     * Get email intro
+     *
+     * @since 3.1.0
+     *
+     * @param false $welcome
+     *
+     * @return string
+     */
     function b3_get_email_intro( $welcome = false ) {
         $welcome = ( false == $welcome ) ? __( 'Welcome', 'b3-onboarding' ) : $welcome;
         if ( true == get_option( 'b3_register_email_only' ) ) {
