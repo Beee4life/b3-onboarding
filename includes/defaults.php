@@ -145,7 +145,7 @@
      */
     function b3_default_account_activated_message() {
 
-        $message = b3_get_email_intro( 'Hi' );
+        $message = b3_get_email_intro( __( 'Hi', 'b3-onboarding' ) );
         $message .= '<br /><br />' . "\n";
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
             $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%lostpass_url%' ) . "\n";
@@ -285,19 +285,19 @@
      * @return string
      */
     function b3_default_lost_password_message() {
-        $default_message = b3_get_email_intro( 'Hi' );
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( 'To (re)set your password, go to <a href="%reset_url%">this page</a>.', 'b3-onboarding' ) . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $default_message .= '<br /><br />' . "\n";
-        $default_message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message = b3_get_email_intro( __( 'Hi', 'b3-onboarding' ) );
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'To (re)set your password, go to <a href="%reset_url%">this page</a>.', 'b3-onboarding' ) . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
+        $message .= '<br /><br />' . "\n";
+        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
-        return $default_message;
+        return $message;
 
     }
 
