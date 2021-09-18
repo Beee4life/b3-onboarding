@@ -516,7 +516,8 @@
         return $message;
     }
 
-    function b3_get_email_intro( $welcome = 'Welcome' ) {
+    function b3_get_email_intro( $welcome = false ) {
+        $welcome = ( false == $welcome ) ? __( 'Welcome', 'b3-onboarding' ) : $welcome;
         if ( true == get_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
         } else {
