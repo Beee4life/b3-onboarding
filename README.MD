@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-3.0 - released 13.06.21
+3.1.0 - released xx.xx.21
 
 <a name="features"></a>
 ### Features
@@ -121,7 +121,10 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.0
+3.1.0
+* improved multisite functions
+
+* 3.0
 * added option to request access to create a site (multisite)
 * added reCaptcha v3
 * added user input for disallowed usernames
