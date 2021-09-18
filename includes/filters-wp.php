@@ -154,18 +154,23 @@
         if ( isset( $_POST[ '_wp_http_referer' ] ) ) {
             if ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false ) {
                 // user is manually added
+                if ( is_multisite() ) {
+                } else {
+                }
+
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                     // user must get AN email, from WP or custom
                     $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
                     $wp_new_user_notification_email[ 'headers' ] = array();
                     $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-                    $user_email = apply_filters( 'b3_manual_welcome_user_message', b3_get_manual_welcome_user_message() );
+                    $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
                 }
             } elseif ( strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) {
+                // user is manually added
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
-
             }
+
         } else {
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
