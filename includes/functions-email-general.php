@@ -506,7 +506,7 @@
      * @return string
      */
     function b3_get_manual_welcome_user_message() {
-        $manual_welcome_message = get_option( 'b3_welcome_user_message_manual' );
+        $manual_welcome_message = get_option( 'b3_welcome_user_message' );
         if ( false != $manual_welcome_message ) {
             $message = $manual_welcome_message;
         } else {
