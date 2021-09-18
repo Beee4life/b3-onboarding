@@ -124,16 +124,6 @@
                     delete_option( 'b3_redirect_set_password' );
                 }
 
-                if ( ! is_multisite() ) {
-                    if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) ) {
-                        $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
-                        $new_value       = explode( ' ', $sanitized_value );
-                        update_option( 'b3_disallowed_usernames', $new_value );
-                    } else {
-                        delete_option( 'b3_disallowed_usernames' );
-                    }
-                }
-
                 if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
                     update_option( 'b3_privacy', 1 );
                 } else {
@@ -477,10 +467,14 @@
                     delete_option( 'b3_approval_page_id' );
                 }
 
-                if ( isset( $_POST[ 'b3_user_may_delete' ] ) && 1 == $_POST[ 'b3_user_may_delete' ] ) {
-                    update_option( 'b3_user_may_delete', 1 );
-                } else {
-                    delete_option( 'b3_user_may_delete' );
+                if ( ! is_multisite() ) {
+                    if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
+                        $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
+                        $new_value       = explode( ' ', $sanitized_value );
+                        update_option( 'b3_disallowed_usernames', $new_value );
+                    } else {
+                        delete_option( 'b3_disallowed_usernames' );
+                    }
                 }
 
                 if ( isset( $_POST[ 'b3_restrict_admin' ] ) ) {
@@ -493,6 +487,12 @@
                     update_option( 'b3_hide_admin_bar', 1 );
                 } else {
                     delete_option( 'b3_hide_admin_bar' );
+                }
+
+                if ( isset( $_POST[ 'b3_user_may_delete' ] ) && 1 == $_POST[ 'b3_user_may_delete' ] ) {
+                    update_option( 'b3_user_may_delete', 1 );
+                } else {
+                    delete_option( 'b3_user_may_delete' );
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'User settings saved', 'b3-onboarding' ) );

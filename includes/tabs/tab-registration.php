@@ -14,11 +14,6 @@
     function b3_render_registration_tab() {
 
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
-        $disallowed_usernames         = false;
-        $disallowed_usernames_array   = get_option( 'b3_disallowed_usernames' );
-        if ( is_array( $disallowed_usernames_array ) && ! empty( $disallowed_usernames_array ) ) {
-            $disallowed_usernames = implode( ' ', $disallowed_usernames_array );
-        }
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
         $privacy                      = get_option( 'b3_privacy' );
@@ -214,19 +209,6 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
-                        <?php b3_get_settings_field_open(); ?>
-                            <?php b3_get_label_field_open(); ?>
-                                <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>
-                            <?php b3_get_close(); ?>
-                            <div class="b3_settings-input b3_settings-input--text">
-                                <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
-                                <div>
-                                    <small><?php esc_html_e( '(separate multiple user names with a space)', 'b3-onboarding' ); ?></small>
-                                </div>
-                            </div>
-                        <?php b3_get_close(); ?>
-                    <?php } ?>
                 <?php } ?>
             <?php } ?>
 

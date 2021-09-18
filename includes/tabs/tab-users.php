@@ -13,6 +13,11 @@
 
     function b3_render_users_tab() {
 
+        $disallowed_usernames         = false;
+        $disallowed_usernames_array   = get_option( 'b3_disallowed_usernames' );
+        if ( is_array( $disallowed_usernames_array ) && ! empty( $disallowed_usernames_array ) ) {
+            $disallowed_usernames = implode( ' ', $disallowed_usernames_array );
+        }
         $front_end_approval      = get_option( 'b3_front_end_approval' );
         $front_end_approval_page = get_option( 'b3_approval_page_id' );
         $hide_admin_bar          = get_option( 'b3_hide_admin_bar' );
@@ -52,15 +57,6 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_settings_field_open(); ?>
-                <?php b3_get_label_field_open(); ?>
-                    <label for="b3_user_may_delete"><?php esc_html_e( 'User may delete account', 'b3-onboarding' ); ?></label>
-                <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
-                    <input type="checkbox" id="b3_user_may_delete" name="b3_user_may_delete" value="1" <?php if ( $user_may_delete ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to allow the user to delete his/her account (through custom profile page).', 'b3-onboarding' ); ?>
-                </div>
-            <?php b3_get_close(); ?>
-
             <?php b3_get_settings_field_open($hide_for_multisite); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
@@ -90,6 +86,20 @@
                 </div>
             <?php b3_get_close(); ?>
 
+            <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--text">
+                        <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
+                        <div>
+                            <small><?php esc_html_e( '(separate multiple user names with a space)', 'b3-onboarding' ); ?></small>
+                        </div>
+                    </div>
+                <?php b3_get_close(); ?>
+            <?php } ?>
+
             <?php if ( ! is_multisite() ) { ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
@@ -100,8 +110,18 @@
                     </div>
                 <?php b3_get_close(); ?>
 
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_user_may_delete"><?php esc_html_e( 'User may delete account', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_user_may_delete" name="b3_user_may_delete" value="1" <?php if ( $user_may_delete ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to allow the user to delete his/her account (through custom profile page).', 'b3-onboarding' ); ?>
+                    </div>
+                <?php b3_get_close(); ?>
+
                 <?php b3_get_submit_button(); ?>
             <?php } ?>
+
         </form>
 
         <?php
