@@ -465,10 +465,12 @@
                             $messages[]  = $request_access_message;
                         }
                     } elseif ( 'none' == $registration_type ) {
-                        $registration_message = apply_filters( 'b3_message_above_registration', b3_get_registration_closed_message() );
-                        if ( false != $registration_message ) {
-                            $show_errors = true;
-                            $messages[]  = $registration_message;
+                        if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
+                            $registration_message = apply_filters( 'b3_message_above_registration', b3_get_registration_closed_message() );
+                            if ( false != $registration_message ) {
+                                $show_errors = true;
+                                $messages[]  = $registration_message;
+                            }
                         }
                     }
                 } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
