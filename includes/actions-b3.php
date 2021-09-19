@@ -525,7 +525,7 @@
                         'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                         'link'  => b3_get_login_url(),
                     ];
-                    $page_types[ 'fogotpassword' ] = [
+                    $page_types[ 'forgotpassword' ] = [
                         'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
                         'link'  => b3_get_lostpassword_url(),
                     ];
