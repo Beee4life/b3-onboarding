@@ -464,9 +464,13 @@
                             $show_errors = true;
                             $messages[]  = $request_access_message;
                         }
-                    } elseif ( 'none' == $registration_type ) {
+                    } else {
                         if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
-                            $registration_message = apply_filters( 'b3_message_above_registration', b3_get_registration_closed_message() );
+                            $message = false;
+                            if ( 'closed' == $registration_type ) {
+                                $message = b3_get_registration_closed_message();
+                            }
+                            $registration_message = apply_filters( 'b3_message_above_registration', $message );
                             if ( false != $registration_message ) {
                                 $show_errors = true;
                                 $messages[]  = $registration_message;
