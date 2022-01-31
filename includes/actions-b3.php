@@ -464,6 +464,12 @@
                             $show_errors = true;
                             $messages[]  = $request_access_message;
                         }
+                    } elseif ( 'email_activation' == $registration_type ) {
+                        $registration_message = apply_filters( 'b3_message_above_registration', false );
+                        if ( false != $registration_message ) {
+                            $show_errors = true;
+                            $messages[]  = $registration_message;
+                        }
                     } else {
                         if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
                             $message = false;
