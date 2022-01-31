@@ -610,6 +610,7 @@
             define( 'IS_PROFILE_PAGE', true );
         }
 
+        // @TODO: check this
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
             $current_user = wp_get_current_user();
             check_admin_referer( 'update-user_' . $current_user->ID );
