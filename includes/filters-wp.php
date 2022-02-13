@@ -4,7 +4,7 @@
     }
 
     /**
-     * Filter password change notification mail (admin)
+     * Disable/filter password change notification mail (admin)
      *
      * @since 2.0.0
      *
@@ -24,24 +24,23 @@
         $wp_password_change_notification_email[ 'subject' ] = $subject;
         $wp_password_change_notification_email[ 'message' ] = $message;
 
+        if ( 1 == get_option( 'b3_disable_admin_notification_password_change' ) ) {
+            $wp_password_change_notification_email = [
+                'to'      => false,
+                'subject' => false,
+                'message' => false,
+                'headers' => false,
+            ];
+        }
+
         return $wp_password_change_notification_email;
 
     }
-
-    /**
-     * Disable admin notification on password change
-     *
-     * @since 2.0.0
-     */
-    if ( 1 == get_option( 'b3_disable_admin_notification_password_change' ) ) {
-        add_filter( 'wp_password_change_notification_email', '__return_false' );
-    } else {
-        add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
-    }
+    add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
 
 
     /**
-     * Filter password change notification mail (user)
+     * Filter email change notification mail (user)
      *
      * @since 2.3.0
      *
@@ -51,7 +50,7 @@
      *
      * @return mixed
      */
-    function b3_password_changed_email_user( $change_email, $user, $userdata ) {
+    function b3_email_changed_email_user( $change_email, $user, $userdata ) {
         if ( true == get_option( 'b3_register_email_only' ) ) {
             $new_message = 'Hi,';
         } else {
@@ -72,7 +71,7 @@
         return $change_email;
 
     }
-    add_filter( 'email_change_email', 'b3_password_changed_email_user', 5, 3 );
+    add_filter( 'email_change_email', 'b3_email_changed_email_user', 5, 3 );
 
 
     /**
@@ -479,8 +478,7 @@
 
 
     /**
-     * Change content of password changed email
-     * Not in use yet, prepare for coming setting/filter
+     * Change content of password changed email (when user changed, when logged in)
      *
      * @param $pass_change_email
      * @param $user
@@ -489,34 +487,37 @@
      * @return array|bool
      */
     function b3_content_password_change_notification( $pass_change_email, $user, $userdata ) {
-
         // if admin disabled notification option
         if ( true == get_option( 'b3_disable_password_change_email' ) ) {
             return false;
         }
 
         // @TODO: add if for email only registration
-
         $pass_change_text = __(
             'Hi ###USERNAME###,
-
-This notice confirms that your password was changed on ###SITENAME###.
-
-If you did not change your password, please contact the Site Administrator at
-###ADMIN_EMAIL###
-
-This email has been sent to ###EMAIL###.
-
-Regards,
-All at ###SITENAME###
-###SITEURL###', 'b3-onboarding'
+            <br><br>
+            This notice confirms that your password was changed on ###SITENAME###.
+            <br><br>
+            If you did not change your password, please contact the Site Administrator at ###ADMIN_EMAIL###
+            <br><br>
+            This email has been sent to ###EMAIL###.
+            <br><br>
+            Regards,
+            <br>
+            All at ###SITENAME###
+            <br>
+            ###SITEURL###', 'b3-onboarding'
         );
+
+        $message = b3_replace_template_styling( $pass_change_text );
+        $message = strtr( $message, b3_replace_email_vars() );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
 
         $pass_change_email = array(
             'to'      => $user[ 'user_email' ],
             /* translators: Password change notification email subject. %s: Site title. */
             'subject' => __( '[%s] Password Changed' ),
-            'message' => $pass_change_text,
+            'message' => $message,
             'headers' => '',
         );
 
