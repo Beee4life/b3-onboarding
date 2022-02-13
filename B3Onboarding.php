@@ -183,21 +183,6 @@
                         update_option( 'users_can_register', '1' );
                     }
                 }
-
-                if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
-                    $meta_keys   = b3_get_all_custom_meta_keys();
-                    $meta_keys[] = 'widget_b3-widget';
-                    if ( is_multisite() ) {
-                        foreach( $meta_keys as $key ) {
-                            delete_site_option( $key );
-                            delete_option( $key );
-                        }
-                    } else {
-                        foreach( $meta_keys as $key ) {
-                            delete_option( $key );
-                        }
-                    }
-                }
             }
 
 
