@@ -730,6 +730,8 @@
             return $login_message;
         }
 
+        return false;
+
     }
 
 
