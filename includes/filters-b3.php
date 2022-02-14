@@ -33,6 +33,5 @@
         }
 
         return $error_array;
-
     }
     add_filter( 'b3_extra_fields_validation', 'b3_extra_fields_validation' );

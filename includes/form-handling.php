@@ -51,7 +51,6 @@
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
-
             }
         }
     }
@@ -141,7 +140,6 @@
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Registration settings saved', 'b3-onboarding' ) );
-
             }
         }
     }
@@ -181,7 +179,6 @@
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Pages settings saved', 'b3-onboarding' ) );
-
             }
         }
     }
@@ -441,7 +438,6 @@
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Email settings saved', 'b3-onboarding' ) );
-
             }
         }
     }
@@ -496,7 +492,6 @@
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'User settings saved', 'b3-onboarding' ) );
-
             }
         }
     }
@@ -526,7 +521,6 @@
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );
-
             }
         }
     }
@@ -541,7 +535,6 @@
     function b3_approve_deny_users() {
 
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
-
             $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
             if ( ! is_admin() ) {
                 $approval_link = b3_get_user_approval_link();

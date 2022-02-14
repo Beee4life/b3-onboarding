@@ -121,7 +121,6 @@
 
                 <?php b3_get_submit_button(); ?>
             <?php } ?>
-
         </form>
 
         <?php

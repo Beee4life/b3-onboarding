@@ -12,11 +12,11 @@
     }
 
     function b3_render_emails_tab() {
-
         $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
         $link_color             = get_option( 'b3_link_color' );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
+
         ob_start();
         ?>
         <h2>

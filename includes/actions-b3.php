@@ -43,6 +43,12 @@
     }
     add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
 
+
+    /**
+     * Approve new WPMU signup
+     *
+     * @param array $signup_info
+     */
     function b3_approve_new_wpmu_signup( $signup_info = [] ) {
         // update row
         global $wpdb;
@@ -206,8 +212,8 @@
             $last_name           = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : $last_name;
             $required            = ( true == $first_last_required ) ? ' required="required"' : false;
 
-            ob_start();
             do_action( 'b3_do_before_first_last_name' );
+            ob_start();
         ?>
             <div class="b3_form-element b3_form-element--register">
                 <label class="b3_form-label" for="b3_first_name"><?php esc_html_e( 'First name', 'b3-onboarding' ); ?><?php if ( $required ) { ?> <strong>*</strong><?php } ?></label>
@@ -218,9 +224,9 @@
                 <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo $last_name; ?>"<?php echo $required; ?>>
             </div>
         <?php
-            do_action( 'b3_do_after_first_last_name' );
             $output = ob_get_clean();
             echo $output;
+            do_action( 'b3_do_after_first_last_name' );
         }
     }
     add_action( 'b3_add_first_last_name_fields', 'b3_first_last_name_fields' );
@@ -267,8 +273,8 @@
                     'all',
                     'site',
                 ) ) ) {
-                ob_start();
                 $register_for = apply_filters( 'b3_register_for', false );
+                ob_start();
                 if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
             ?>
                 <div class="b3_form-element b3_form-element--site-fields">
@@ -492,9 +498,7 @@
             if ( true == $show_errors && ! empty( $messages ) ) {
                 echo '<div class="b3_message">';
                 foreach( $messages as $message ) {
-                    echo '<p>';
-                    echo $message;
-                    echo '</p>';
+                    echo sprintf( '<p>%s</p>', $message );
                 }
                 echo '</div>';
             }
@@ -561,7 +565,7 @@
             if ( count( $page_types ) > 0 ) {
                 echo '<ul class="b3_form-links">';
                 foreach( $page_types as $key => $values ) {
-                    echo '<li><a href="' . $values[ 'link' ] . '" rel="nofollow">' . $values[ 'title' ] . '</a></li>';
+                    echo sprintf( '<li><a href="%s" rel="nofollow">%s</a></li>', $values[ 'link' ], $values[ 'title' ] );
                 }
                 echo '</ul>';
             }

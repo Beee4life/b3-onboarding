@@ -492,6 +492,7 @@
 
     /**
      * Default "New Site Created" email message
+     *
      * @return string
      */
     function b3_default_message_new_site_created() {
@@ -510,6 +511,13 @@
     }
 
 
+    /**
+     * Default subject new wpmu user (blog)
+     *
+     * @param false $user
+     *
+     * @return string|void
+     */
     function b3_default_subject_new_wpmu_user_blog( $user = false ) {
 
         /* translators: New site notification email subject. 1: Network title, 2: New site URL. */
@@ -520,6 +528,13 @@
     }
 
 
+    /**
+     * Default message new wpmu user (blog)
+     *
+     * @param false $user
+     *
+     * @return string
+     */
     function b3_default_message_new_wpmu_user_blog( $user = false ) {
 
         $message = '';
@@ -543,13 +558,24 @@
     }
 
 
+    /**
+     * Default subject welcome new wpmu user (blog)
+     *
+     * @return string
+     */
     function b3_default_subject_welcome_wpmu_user_blog() {
         return 'New %network_name% Site: %site_name%';
     }
 
 
+    /**
+     * Default message welcome new wpmu user (blog)
+     *
+     * @param false $user_login
+     *
+     * @return string
+     */
     function b3_default_message_welcome_wpmu_user_blog( $user_login = false ) {
-
         $message = '';
         if ( false != $user_login ) {
             $message .= 'Hi %user_login%' . ",\n";

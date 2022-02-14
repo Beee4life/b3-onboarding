@@ -86,9 +86,9 @@
                 }
 
                 if ( 'none' == $registration_type && ! current_user_can( 'manage_network' ) ) {
-                    return '<p class="b3_message">' . apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) . '</p>';
+                    return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) );
                 } elseif ( 'blog' == $registration_type && ! is_user_logged_in() ) {
-                    return '<p class="b3_message">' . apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) . '</p>';
+                    return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) );
                 } else {
 
                     $attributes[ 'errors' ] = array();
@@ -290,8 +290,8 @@
                     if ( isset( $_REQUEST[ 'login' ] ) && isset( $_REQUEST[ 'key' ] ) ) {
                         $attributes[ 'login' ] = $_REQUEST[ 'login' ];
                         $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
+                        $errors                = array();
 
-                        $errors = array();
                         if ( isset( $_REQUEST[ 'error' ] ) ) {
                             $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                             foreach ( $error_codes as $code ) {
@@ -303,7 +303,6 @@
                         return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
                     } else {
-
                         // error message for password reset
                         $message = esc_html__( 'This is not a valid password reset link.', 'b3-onboarding' );
                         $message .= '<br />';
@@ -312,7 +311,6 @@
                         $message .= sprintf( __( "If you haven't received any email, please <a href=\"%s\">click here</a>.", 'b3-onboarding' ), b3_get_lostpassword_url() );
 
                         return $message;
-
                     }
                 }
             }
@@ -332,22 +330,20 @@
 
                 if ( is_user_logged_in() ) {
                     wp_enqueue_script( 'user-profile' );
+                    $errors             = array();
                     $default_attributes = array(
                         'title'    => false,
                         'template' => 'account',
                     );
                     $attributes         = shortcode_atts( $default_attributes, $user_variables );
 
-                    $errors = array();
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
-
                         foreach ( $error_codes as $code ) {
                             $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
                     $attributes[ 'errors' ] = $errors;
-
                     $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
 
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {
@@ -355,7 +351,6 @@
                     }
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
-
                 }
 
                 return false;
@@ -383,7 +378,6 @@
                     $errors = array();
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
-
                         foreach ( $error_codes as $code ) {
                             $errors[] = $this->b3_get_return_message( $code );
                         }
@@ -405,15 +399,12 @@
                     B3Onboarding::b3_show_admin_notices();
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
-
                 }
 
                 return false;
-
             }
         }
 
         new B3_Shortcodes();
-
     }
 

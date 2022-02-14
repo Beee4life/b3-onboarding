@@ -12,7 +12,6 @@
     }
 
     function b3_render_registration_tab() {
-
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
@@ -213,8 +212,8 @@
             <?php } ?>
 
             <?php b3_get_submit_button(); ?>
-
         </form>
+
         <?php
         $result = ob_get_clean();
 

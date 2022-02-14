@@ -12,7 +12,6 @@
     }
 
     function b3_render_settings_tab() {
-
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
         $disable_action_links       = get_option( 'b3_disable_action_links' );
         $debug_info                 = get_option( 'b3_debug_info' );
@@ -20,6 +19,7 @@
         $recaptcha                  = get_option( 'b3_activate_recaptcha' );
         $registration_type          = get_option( 'b3_registration_type' );
         $use_popup                  = get_option( 'b3_use_popup', false );
+
         ob_start();
         ?>
         <h2>

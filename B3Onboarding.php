@@ -158,7 +158,6 @@
                         add_role( 'b3_approval', __( 'Awaiting approval', 'b3-onboarding' ), array() );
                     }
                 }
-
             }
 
 
@@ -247,7 +246,6 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
-
                 if ( ! is_admin() ) {
                     wp_deregister_script( 'jquery' ); // Deregister the included library
                     wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js', array(), '2.1.4', true );
@@ -317,8 +315,6 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                if ( is_main_site() ) {
-                }
                 include 'includes/admin/admin-page.php';
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
@@ -338,9 +334,6 @@
              * Register widgets (if activated)
              */
             public function b3_register_widgets() {
-                /*
-                 * Includes sidebar widget function + call
-                 */
                 if ( is_main_site() ) {
                     include 'includes/class-b3-sidebar-widget.php';
                 }
@@ -387,7 +380,6 @@
              */
             public function b3_email_from( $original_email_address ) {
                 // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
-
                 $from_email = apply_filters( 'b3_notification_sender_email', b3_get_notification_sender_email() );
                 if ( false != $from_email ) {
                     return $from_email;
@@ -404,7 +396,6 @@
              * @return  string
              */
             public function b3_email_from_name( $original_from_name ) {
-
                 $sender_name = apply_filters( 'b3_notification_sender_name', b3_get_notification_sender_name() );
                 if ( false != $sender_name ) {
                     return $sender_name;
@@ -434,7 +425,6 @@
              * @return mixed
              */
             public function b3_user_row_actions( $actions, $user_object ) {
-
                 $current_user      = wp_get_current_user();
                 $registration_type = get_option( 'b3_registration_type' );
 
@@ -504,7 +494,6 @@
 
                     wp_safe_redirect( $redirect_to );
                     exit;
-
                 }
             }
 
@@ -517,7 +506,6 @@
              * @return string
              */
             public function b3_admin_body_class( $classes ) {
-
                 if ( 'request_access' != get_option( 'b3_registration_type' ) ) {
                     $classes .= 'no-approval-page';
                 }
@@ -640,7 +628,6 @@
              * Handle registration form
              */
             public function b3_registration_form_handling() {
-
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user' ] ) ) {
                         $redirect_url = b3_get_register_url();
@@ -734,7 +721,6 @@
                                 }
 
                             } else {
-
                                 // if is_multisite
                                 $register = false;
                                 if ( is_main_site() ) {
@@ -1042,7 +1028,6 @@
              * of wp-login.php?action=register.
              */
             public function b3_redirect_to_custom_register() {
-
                 if ( ! is_multisite() ) {
                     if ( isset( $_GET[ 'action' ] ) && 'register' == $_GET[ 'action' ] ) {
                         if ( is_user_logged_in() ) {
@@ -1065,7 +1050,6 @@
              * Force user to custom login page instead of wp-login.php.
              */
             public function b3_redirect_to_custom_login() {
-
                 if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
@@ -1177,7 +1161,6 @@
              * @return string Redirect URL
              */
             public function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-
                 $stored_roles  = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
                 $redirect_url  = get_home_url();
 
@@ -1290,8 +1273,8 @@
                             }
                         }
                     }
-                } else {
 
+                } else {
                     if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                         if ( ! empty( $_GET[ 'action' ] ) && 'activate' == $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
 
@@ -1352,7 +1335,6 @@
              */
             public function b3_do_password_lost() {
                 if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-
                     if ( isset( $_POST[ 'b3_form' ] ) && 'lostpass' == $_POST[ 'b3_form' ] ) {
                         $errors = b3_retrieve_password();
 
@@ -1439,9 +1421,8 @@
              * @return string               An error message.
              */
             public function b3_get_return_message( $error_code, $sprintf = false ) {
-                switch( $error_code ) {
 
-                    // Return messages
+                switch( $error_code ) {
                     case 'empty_username':
                         return esc_html__( 'Please enter a user name', 'b3-onboarding' );
 
@@ -1745,7 +1726,6 @@
              * @return bool|WP_Error
              */
             private function b3_register_wpmu_user( $user_name, $user_email, $domain, $blog_title, $path, $meta = array() ) {
-
                 $b3_register_type = get_option( 'b3_registration_type' );
 
                 if ( is_main_site() ) {
@@ -1844,6 +1824,7 @@
                 return get_home_url();
             }
 
+
             /**
              * For filter 'login_headertitle', replaces the page-title on the login page
              *
@@ -1863,13 +1844,13 @@
                 return $title;
             }
 
+
             /**
              * Add admin notices
              *
              * @since 1.0.6
              */
             public function b3_admin_notices() {
-
                 $screen_ids = [
                     'toplevel_page_b3-onboarding',
                     'b3-onboarding_page_b3-debug',
@@ -1923,6 +1904,7 @@
                 }
             }
 
+
             /**
              * Network admin notices
              */
@@ -1936,6 +1918,11 @@
                 }
             }
 
+            /**
+             * Do stuff after create site
+             *
+             * @param $site
+             */
             public function b3_after_create_site( $site ) {
 
                 // create necessary pages

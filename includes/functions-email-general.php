@@ -428,7 +428,6 @@
      * @return mixed|string
      */
     function b3_get_new_user_message() {
-
         $new_user_message = get_option( 'b3_new_user_message' );
         if ( false != $new_user_message ) {
             $message = $new_user_message;
@@ -465,7 +464,6 @@
      * @return bool|mixed|void
      */
     function b3_get_notification_sender_email() {
-
         $sender_email = get_option( 'b3_notification_sender_email' );
         if ( false == $sender_email ) {
             $admin_email = get_site_option( 'admin_email' );
@@ -485,7 +483,6 @@
      * @return bool|mixed|void
      */
     function b3_get_notification_sender_name() {
-
         $sender_name = get_option( 'b3_notification_sender_name' );
         if ( false == $sender_name ) {
             $blog_name = get_option( 'blogname' );

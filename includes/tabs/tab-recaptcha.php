@@ -12,12 +12,12 @@
     }
 
     function b3_render_recaptcha_tab() {
-
-        ob_start();
         $public_key        = get_option( 'b3_recaptcha_public' );
         $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
         $secret_key        = get_option( 'b3_recaptcha_secret' );
         $recaptcha_on      = get_option( 'b3_recaptcha_on', [] );
+
+        ob_start();
         ?>
         <h2>
             <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
@@ -76,12 +76,10 @@
             </p>
 
             <?php b3_get_submit_button( __( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
-
         </form>
 
         <?php
         $result = ob_get_clean();
 
         return $result;
-
     }

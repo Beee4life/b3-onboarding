@@ -2,7 +2,7 @@
     /*
      * Template for user management
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -11,32 +11,33 @@
         $user_approved    = esc_html__( 'User is successfully approved.', 'b3-onboarding' );
         $user_not_deleted = esc_html__( 'User is successfully rejected but there was an error deleting the account.', 'b3-onboarding' );
         $user_rejected    = esc_html__( 'User is successfully rejected and the account is deleted.', 'b3-onboarding' );
-    ?>
 
-    <?php if ( ! empty( $_GET[ 'user' ] ) ) { ?>
-        <?php if ( is_admin() ) { ?>
-            <?php if ( 'approved' == $_GET[ 'user' ] ) { ?>
-                <?php B3Onboarding::b3_errors()->add( 'success_user_approved', $user_approved ); ?>
-            <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
-                <?php B3Onboarding::b3_errors()->add( 'success_user_rejected', $user_rejected ); ?>
-            <?php } elseif ( 'not-deleted' == $_GET[ 'user' ] ) { ?>
-                <?php B3Onboarding::b3_errors()->add( 'error_user_delete', $user_not_deleted ); ?>
-            <?php } ?>
-            <?php B3Onboarding::b3_show_admin_notices(); ?>
-        <?php } else { ?>
-            <p class="b3_message">
-                <?php if ( 'approved' == $_GET[ 'user' ] ) { ?>
-                    <?php echo $user_approved ?>
-                <?php } elseif ( 'rejected' == $_GET[ 'user' ] ) { ?>
-                    <?php echo $user_rejected; ?>
-                <?php } elseif ( 'not-deleted' == $_GET[ 'user' ] ) { ?>
-                    <?php echo $user_not_deleted; ?>
-                <?php } ?>
-            </p>
-        <?php } ?>
-    <?php } ?>
+        if ( ! empty( $_GET[ 'user' ] ) ) {
+            if ( is_admin() ) {
+                if ( 'approved' == $_GET[ 'user' ] ) {
+                    B3Onboarding::b3_errors()->add( 'success_user_approved', $user_approved );
+                } elseif ( 'rejected' == $_GET[ 'user' ] ) {
+                    B3Onboarding::b3_errors()->add( 'success_user_rejected', $user_rejected );
+                } elseif ( 'not-deleted' == $_GET[ 'user' ] ) {
+                    B3Onboarding::b3_errors()->add( 'error_user_delete', $user_not_deleted );
+                }
+                B3Onboarding::b3_show_admin_notices();
+            } else {
+                $message = false;
+                if ( 'approved' == $_GET[ 'user' ] ) {
+                    echo $user_approved;
+                } elseif ( 'rejected' == $_GET[ 'user' ] ) {
+                    echo $user_rejected;
+                } elseif ( 'not-deleted' == $_GET[ 'user' ] ) {
+                    echo $user_not_deleted;
+                }
+                if ( $message ) {
+                    echo sprintf( '<p class="b3_message">%s</p>', $message );
+                }
+            }
+        }
 
-    <?php if ( ! empty( $attributes[ 'users' ] ) ) { ?>
+        if ( ! empty( $attributes[ 'users' ] ) ) { ?>
         <table class="b3_table b3_table--user">
             <thead>
             <tr>
@@ -50,32 +51,18 @@
                     ?>
                 </th>
                 <?php if ( false == $attributes[ 'register_email_only' ] ) { ?>
-                    <th>
-                        <?php echo esc_html__( 'User name', 'b3-onboarding' ); ?>
-                    </th>
+                    <th><?php echo esc_html__( 'User name', 'b3-onboarding' ); ?></th>
                 <?php } ?>
                 <?php if ( false != $attributes[ 'show_first_last_name' ] ) { ?>
-                    <th>
-                        <?php echo esc_html__( 'First name', 'b3-onboarding' ); ?>
-                    </th>
-                    <th>
-                        <?php echo esc_html__( 'Last name', 'b3-onboarding' ); ?>
-                    </th>
+                    <th><?php echo esc_html__( 'First name', 'b3-onboarding' ); ?></th>
+                    <th><?php echo esc_html__( 'Last name', 'b3-onboarding' ); ?></th>
                 <?php } ?>
-                <th>
-                    <?php echo esc_html__( 'Email', 'b3-onboarding' ); ?>
-                </th>
+                <th><?php echo esc_html__( 'Email', 'b3-onboarding' ); ?></th>
                 <?php if ( is_multisite() ) { ?>
-                    <th>
-                        <?php echo esc_html__( 'Domain', 'b3-onboarding' ); ?>
-                    </th>
-                    <th>
-                        <?php echo esc_html__( 'Site name', 'b3-onboarding' ); ?>
-                    </th>
+                    <th><?php echo esc_html__( 'Domain', 'b3-onboarding' ); ?></th>
+                    <th><?php echo esc_html__( 'Site name', 'b3-onboarding' ); ?></th>
                 <?php } ?>
-                <th>
-                    <?php echo esc_html__( 'Actions', 'b3-onboarding' ); ?>
-                </th>
+                <th><?php echo esc_html__( 'Actions', 'b3-onboarding' ); ?></th>
             </tr>
             </thead>
             <tbody>
@@ -124,8 +111,6 @@
             </tbody>
         </table>
     <?php } else { ?>
-        <p>
-            <?php esc_html_e( 'No (more) users to approve.', 'b3-onboarding' ); ?>
-        </p>
+        <p><?php esc_html_e( 'No (more) users to approve.', 'b3-onboarding' ); ?></p>
     <?php }
     }

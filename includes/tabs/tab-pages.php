@@ -12,7 +12,6 @@
     }
 
     function b3_render_pages_tab() {
-
         // get stored pages
         $b3_pages = array(
             array(
@@ -138,8 +137,8 @@
             <p><small><?php esc_html_e( 'Links open in new window/tab.', 'b3-onboarding' ); ?></small></p>
 
             <?php b3_get_submit_button(); ?>
-
         </form>
+
         <?php
         $result = ob_get_clean();
 

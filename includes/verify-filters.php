@@ -164,9 +164,8 @@
 
         if ( ! empty( $error_messages ) ) {
             foreach( $error_messages as $message ) {
-                echo '<div class="error"><p>' . $message . '</p></div>';
+                echo sprintf( '<div class="error"><p>%s</p></div>', $message );
             }
         }
-
     }
     add_action( 'b3_verify_filter_input', 'b3_verify_filter_input' );
