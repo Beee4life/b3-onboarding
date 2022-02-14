@@ -10,13 +10,12 @@
     }
 
     $localhost_email = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : '';
+
+    do_action( 'b3_add_form_messages', $attributes );
 ?>
-<?php do_action( 'b3_add_form_messages', $attributes ); ?>
 <div class="b3_page b3_page--lostpass">
     <?php if ( $attributes[ 'title' ] ) { ?>
-        <h3>
-            <?php echo $attributes[ 'title' ]; ?>
-        </h3>
+        <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
     <?php } ?>
 
     <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">

@@ -10,19 +10,15 @@
     }
 
     $label = esc_attr__( 'Username or Email address', 'b3-onboarding' );
-
     if ( 1 == get_option( 'b3_register_email_only' ) ) {
         $label = esc_attr__( 'Email address', 'b3-onboarding' );
     }
 
     do_action( 'b3_add_form_messages', $attributes );
 ?>
-
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
-        <h3>
-            <?php echo $attributes[ 'title' ]; ?>
-        </h3>
+        <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
     <?php } ?>
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">

@@ -9,32 +9,30 @@
         exit;
     }
 
-    $current_user_object          = get_userdata( get_current_user_id() );
-    $registration_with_email_only = get_option( 'b3_register_email_only' );
-    $required                     = ( true == get_option( 'b3_first_last_required' ) ) ? ' required="required"' : false;
-    $user_delete                  = get_option( 'b3_user_may_delete' );
+    $current_user_object = get_userdata( get_current_user_id() );
+    $required            = ( true == get_option( 'b3_first_last_required' ) ) ? ' required="required"' : false;
 
     do_action( 'b3_add_form_messages', $attributes );
 ?>
 
 <div id="b3-account" class="b3_page b3_page--account">
-    <form id="accountform" name="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
+    <form id="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
         <?php wp_nonce_field( 'update-user_' . $current_user_object->ID ); ?>
         <input type="hidden" name="admin_bar_front" id="admin_bar_front" value="<?php echo get_user_meta( $current_user_object->ID, 'show_admin_bar_front', true ); ?>" />
         <input type="hidden" name="from" value="profile" />
+        <input type="hidden" name="instance" value="1" />
+        <input type="hidden" name="user_id" id="user_id" value="<?php echo $current_user_object->ID; ?>" />
         <input type="hidden" name="action" value="profile" />
         <input type="hidden" name="checkuser_id" value="<?php echo $current_user_object->ID; ?>" />
         <input type="hidden" name="nickname" id="nickname" value="<?php echo ( isset( $current_user_object->nickname ) ) ? esc_attr( $current_user_object->nickname ) : esc_attr( $current_user_object->user_login ); ?>" class="regular-text" />
 
         <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
-            <p class="b3_message">
-                <?php esc_html_e( 'Profile saved', 'b3-onboarding' ); ?>
-                <span class="error__close"><?php esc_html_e( 'close', 'b3-onboarding' ); ?></span>
-            </p>
+            <?php echo sprintf( '<p class="b3_message">%s</p>', esc_html__( 'Profile saved', 'b3-onboarding' ) ); ?>
         <?php } ?>
 
+        <?php // @TODO: create action for this ?>
         <?php if ( is_multisite() && in_array( $attributes[ 'registration_type' ], [ 'all', 'blog', 'request_access_subdomain' ] ) ) { ?>
-            <?php $user_sites = get_blogs_of_user( get_current_user_id() ); ?>
+            <?php $user_sites = get_blogs_of_user( $current_user_object->ID ); ?>
             <?php if ( ! empty( $user_sites ) ) { ?>
                 <?php $url_path  = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false; ?>
                 <?php $site_info = array_shift( $user_sites ); ?>
@@ -50,7 +48,7 @@
         <?php } ?>
 
         <div class="b3_form-element">
-            <?php if ( false == $registration_with_email_only ) { ?>
+            <?php if ( false == get_option( 'b3_register_email_only' ) ) { ?>
                 <label class="b3_form-label" for="user_login"><?php esc_attr_e( 'Username', 'b3-onboarding' ); ?></label>
             <?php } else { ?>
                 <label class="b3_form-label" for="b3_user_login"><?php esc_attr_e( 'User ID', 'b3-onboarding' ); ?></label>
@@ -136,7 +134,7 @@
         </div>
         <?php } ?>
 
-        <?php if ( $user_delete ) { ?>
+        <?php if ( get_option( 'b3_user_may_delete', false ) ) { ?>
             <div class="b3_form-element b3_form-element--delete">
                 <strong>
                     <?php esc_html_e( 'Delete account', 'b3-onboarding' ); ?>
@@ -152,9 +150,6 @@
         <?php } ?>
 
         <div class="b3_form-element">
-            <input type="hidden" name="action" value="profile" />
-            <input type="hidden" name="instance" value="1" />
-            <input type="hidden" name="user_id" id="user_id" value="<?php echo $current_user_object->ID; ?>" />
             <input type="submit" class="button button--small button--submit" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
         </div>
 
