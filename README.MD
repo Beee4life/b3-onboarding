@@ -32,7 +32,7 @@ Also you can get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-3.1.0 - released xx.xx.21
+3.1.0 - released 1x.02.21
 
 <a name="features"></a>
 ### Features
@@ -123,6 +123,8 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.1.0
 * improved multisite functions
+* optimized user templates
+* optimized filters
 
 * 3.0
 * added option to request access to create a site (multisite)
