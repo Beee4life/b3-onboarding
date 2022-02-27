@@ -45,10 +45,13 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' ); ?>
+                            <?php $show_note = ( 1 == $recaptcha ) ? false : true; ?>
                             <?php $hide_recaptcha_note = ( 1 == $recaptcha ) ? false : ' hidden'; ?>
-                            <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
-                                <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
-                            </div>
+                            <?php if ( $show_note ) { ?>
+                                <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
+                                    <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                                </div>
+                            <?php } ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
