@@ -5,7 +5,7 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            3.1.0
     Requires at least:  4.3
-    Tested up to:       5.8
+    Tested up to:       5.9.1
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -269,6 +269,8 @@
 
             /*
              * Enqueue js for recaptcha
+             *
+             * @TODO: localize
              */
             public function b3_add_rc3() {
                 if ( 1 == get_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
