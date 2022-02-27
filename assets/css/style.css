@@ -251,6 +251,10 @@ ul.b3_form-links li:last-child {
     width:      auto;
 }
 
+.modal .b3_form-element:first-of-type {
+  margin-top: 1rem;
+}
+
 /* Misc */
 .widget .widget-no-settings {
     border:  1px dashed red;
