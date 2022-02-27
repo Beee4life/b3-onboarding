@@ -73,30 +73,18 @@
                     <tbody>
                         <?php foreach( $all_users as $user ) { ?>
                             <tr>
-                                <td>
-                                    <a href="<?php echo admin_url( 'user-edit.php?user_id=' . $user->ID ); ?>">
-                                        <?php echo $user->user_login; ?>
-                                    </a>
-                                </td>
-                                <td>
-                                    [<?php echo $user->ID; ?>]
-                                </td>
-                                <td>
-                                    (<?php echo b3_get_local_date_time( $user->user_registered ); ?>)
-                                </td>
+                                <?php echo sprintf( '<td><a href="%s">%s</a></td>', admin_url( 'user-edit.php?user_id=' . $user->ID ), $user->user_login ); ?>
+                                <?php echo sprintf( '<td>[%s]</td>', $user->ID ); ?>
+                                <?php echo sprintf( '<td>(%s)</td>', b3_get_local_date_time( $user->user_registered ) ); ?>
                             </tr>
                         <?php } ?>
                     </tbody>
                 </table>
             <?php } else { ?>
                 <?php if ( 'none' == get_option( 'b3_registration_type' ) ) { ?>
-                    <p>
-                        <?php printf( __( "You're the only user right now, but that can be because user registration is not allowed. Change it <a href=\"%s\">here</a>.", 'b3-onboarding' ), B3_PLUGIN_SETTINGS . '&tab=registration' ); ?>
-                    </p>
+                    <?php echo sprintf( '<p>%s</p>', sprintf( __( "You're the only user right now, but that can be because user registration is not allowed. Change it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SETTINGS . '&tab=registration', __( 'here', 'b3-onboarding' ) ) ) ); ?>
                 <?php } else { ?>
-                    <p>
-                        <?php esc_html_e( "You're the only (activated) user right now.", 'b3-onboarding' ); ?>
-                    </p>
+                    <?php echo sprintf( '<p>%s</p>', esc_html__( "You're the only (activated) user right now.", 'b3-onboarding' ) ); ?>
                 <?php } ?>
             <?php } ?>
         </div>

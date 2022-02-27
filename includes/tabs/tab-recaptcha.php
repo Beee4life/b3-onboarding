@@ -18,10 +18,10 @@
         $recaptcha_on      = get_option( 'b3_recaptcha_on', [] );
 
         ob_start();
+
+        echo sprintf( '<h2>%s</h2>', esc_html__( 'Recaptcha', 'b3-onboarding' ) );
+
         ?>
-        <h2>
-            <?php esc_html_e( 'Recaptcha', 'b3-onboarding' ); ?>
-        </h2>
 
         <p>
             <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
@@ -71,11 +71,9 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <p>
-                <?php echo sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ); ?>
-            </p>
+            <?php echo sprintf( '<p>%s</p>', sprintf( __( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), __( 'here', 'b3-onboarding' ) ) ) ); ?>
 
-            <?php b3_get_submit_button( __( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
+            <?php b3_get_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
         </form>
 
         <?php

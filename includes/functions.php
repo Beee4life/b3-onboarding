@@ -441,7 +441,7 @@
         // validate user value
         if ( false != $submit_value ) {
             if ( ! is_string( $submit_value ) ) {
-                // throw error
+                // @TODO: throw error
             }
         } else {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
@@ -453,7 +453,7 @@
                 $button_modifier = false;
             }
         }
-        echo '<input class="button button-primary button--submit' . $button_modifier . '" type="submit" value="' . $submit_value . '" />';
+        echo sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_modifier, $submit_value );
     }
 
     /**

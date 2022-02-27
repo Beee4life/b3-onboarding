@@ -50,9 +50,7 @@
                     <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php if ( $front_end_approval ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate front-end user approval.', 'b3-onboarding' ); ?>
                     <?php if ( false == $front_end_approval_page ) { ?>
                         <?php $hide_user_approval_note = ( 1 == $front_end_approval ) ? false : ' hidden'; ?>
-                        <div class="b3_settings-input-description b3_settings-input-description--approval<?php echo $hide_user_approval_note; ?>">
-                            <?php esc_html_e( "You still need to set an approval page (after you save the settings).", 'b3-onboarding' ); ?>
-                        </div>
+                        <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--approval%s">%s</div>', $hide_user_approval_note, esc_html__( "You still need to set an approval page (after you save the settings).", 'b3-onboarding' ) ); ?>
                     <?php } ?>
                 </div>
             <?php b3_get_close(); ?>
@@ -66,9 +64,8 @@
                     <?php foreach( $hidden_roles as $role ) { ?>
                         <input type="hidden" id="b3_restrict_<?php echo $role; ?>" name="b3_restrict_admin[]" value="<?php echo $role; ?>" />
                     <?php } ?>
-                    <p>
-                        <?php _e( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ); ?>
-                    </p>
+                    <?php echo sprintf( '<p>%s</p>', __( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
+
                     <?php
                         $dont_show_roles  = array( 'administrator', 'b3_approval', 'b3_activation' );
                         $stored_roles     = ( is_array( $restrict_admin ) ) ? $restrict_admin : array( 'b3_activation', 'b3_approval' );
@@ -93,9 +90,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--text">
                         <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
-                        <div>
-                            <small><?php esc_html_e( '(separate multiple user names with a space)', 'b3-onboarding' ); ?></small>
-                        </div>
+                        <?php echo sprintf( '<div><small>%s</small></div>', esc_html__( '(separate multiple user names with a space)', 'b3-onboarding' ) ); ?>
                     </div>
                 <?php b3_get_close(); ?>
             <?php } ?>

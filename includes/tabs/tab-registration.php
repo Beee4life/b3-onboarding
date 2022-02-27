@@ -24,10 +24,9 @@
         $registration_with_email_only = get_option( 'b3_register_email_only' );
 
         ob_start();
+
+        echo sprintf( '<h2>%s</h2>', esc_html__( 'Registration', 'b3-onboarding' ) );
         ?>
-        <h2>
-            <?php esc_html_e( 'Registration', 'b3-onboarding' ); ?>
-        </h2>
 
         <p>
             <?php if ( is_main_site() ) { ?>
@@ -48,9 +47,7 @@
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
-                            <p>
-                                <?php echo sprintf( __( 'This setting \'controls\' the Registration type on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), network_admin_url( 'settings.php' ) ); ?>
-                            </p>
+                            <?php echo sprintf( '<p>%s</p>', __( "This setting 'controls' the Registration type on the %s", sprintf( '<a href="%s">%s</a>', network_admin_url( 'settings.php' ), __( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
                             <?php foreach( $options as $option ) { ?>
                                 <div class="b3_settings-input b3_settings-input--radio">
                                     <div>
@@ -62,9 +59,7 @@
                         <?php b3_get_close(); ?>
 
                     <?php } else { ?>
-                        <div class="b3_settings-input b3_settings-input--radio">
-                            <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
-                        </div>
+                        <?php echo sprintf( '<div class="b3_settings-input b3_settings-input--radio">%s</div>', esc_html__( 'Registrations are disabled.','b3-onboarding' ) ); ?>
                     <?php } ?>
 
                 <?php } else { ?>
@@ -73,9 +68,8 @@
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
-                        <p>
-                            <?php echo sprintf( __( 'These settings are now the global settings and \'control\' the values on the <a href="%s">Settings page</a>.', 'b3-onboarding' ), admin_url( 'options-general.php' ) ); ?>
-                        </p>
+
+                        <?php echo sprintf( '<p>%s</p>', sprintf( __( "These settings are now the global settings and 'control' the values on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php' ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
 
                         <?php $options = b3_get_registration_types(); ?>
                         <?php if ( ! empty( $options ) ) { ?>
@@ -88,9 +82,7 @@
                                 </div>
                             <?php } ?>
                         <?php } else { ?>
-                            <div class="b3_settings-input b3_settings-input--radio">
-                                <?php esc_html_e( 'Registrations are disabled.','b3-onboarding' ); ?>
-                            </div>
+                            <?php echo sprintf( '<div class="b3_settings-input b3_settings-input--radio">%s</div>', esc_html__( 'Registrations are disabled.','b3-onboarding' ) ); ?>
                         <?php } ?>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -105,9 +97,7 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $default_closed_message ); ?>" value="<?php if ( $closed_message ) { echo stripslashes( $closed_message ); } ?>"/>
-                            <div class="b3_settings-input-description">
-                                <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
-                            </div>
+                            <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -185,9 +175,7 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo stripslashes( $privacy_text ); } ?>"/>
-                            <div class="b3_settings-input-description">
-                                <?php esc_html_e( 'Links are allowed.', 'b3-onboarding' ); ?>
-                            </div>
+                            <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 

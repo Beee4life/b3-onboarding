@@ -69,13 +69,8 @@
         ?>
         <form action="admin.php?page=b3-onboarding&tab=pages" method="post">
             <input name="b3_pages_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>" />
-            <h2>
-                <?php esc_html_e( 'Pages', 'b3-onboarding' ); ?>
-            </h2>
-
-            <p>
-                <?php esc_html_e( "Here you can set which pages are assigned for the various 'actions'.", "b3-onboarding" ); ?>
-            </p>
+            <?php echo sprintf( '<h2>%s</h2>', esc_html__( 'Pages', 'b3-onboarding' ) ); ?>
+            <?php echo sprintf( '<p>%s</p>', esc_html__( "Here you can set which pages are assigned for the various 'actions'.", 'b3-onboarding' ) ); ?>
 
             <?php foreach( $b3_pages as $page ) { ?>
                 <div class="b3_select-page">
