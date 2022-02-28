@@ -130,7 +130,7 @@
                 include 'includes/emails.php';
                 include 'includes/form-handling.php';
                 include 'includes/tabs/tabs.php';
-                include 'includes/admin/help-tabs.php';
+                include 'admin/help-tabs.php';
                 if ( get_option( 'b3_activate_filter_validation' ) ) {
                     include 'includes/verify-filters.php';
                 }
@@ -318,16 +318,16 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                include 'includes/admin/admin-page.php';
+                include 'admin/admin-page.php';
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-                    include 'includes/admin/user-approval-page.php';
+                    include 'admin/user-approval-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                 }
 
                 if ( true == get_option( 'b3_debug_info' ) ) {
-                    include 'includes/admin/debug-page.php';
+                    include 'admin/debug-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                 }
             }
@@ -351,9 +351,9 @@
                  * Includes dashboard widget function + call
                  */
                 if ( is_main_site() ) {
-                    include 'includes/admin/dashboard-widget.php';
+                    include 'admin/dashboard-widget.php';
                     if ( is_localhost() ) {
-                        include 'includes/admin/dashboard-widget-debug.php';
+                        include 'admin/dashboard-widget-debug.php';
                     }
                 }
             }
