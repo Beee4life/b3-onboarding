@@ -135,6 +135,7 @@
         <?php } ?>
 
         <?php if ( get_option( 'b3_user_may_delete', false ) ) { ?>
+            <?php // @TODO: create action or include ?>
             <div class="b3_form-element b3_form-element--delete">
                 <strong>
                     <?php esc_html_e( 'Delete account', 'b3-onboarding' ); ?>
