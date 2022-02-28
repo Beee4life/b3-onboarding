@@ -30,12 +30,12 @@
             /**
              * Renders the register form
              *
+             * @since 1.0.0
+             *
              * @param      $user_variables
              * @param null $content
              *
              * @return mixed|string|void
-             * @since 1.0.0
-             *
              */
             public function b3_render_register_form( $user_variables, $content = null ) {
                 $default_attributes = array(
@@ -147,12 +147,12 @@
             /**
              * A shortcode for rendering the login form.
              *
+             * @since 1.0.0
+             *
              * @param array $attributes Shortcode attributes.
              * @param string $content The text content for shortcode. Not used.
              *
              * @return string  The shortcode output
-             * @since 1.0.0
-             *
              */
             public function b3_render_login_form( $user_variables, $content = null ) {
 
@@ -228,12 +228,12 @@
             /**
              * A shortcode for rendering the password lost form.
              *
+             * @since 1.0.0
+             *
              * @param array $attributes Shortcode attributes.
              * @param string $content The text content for shortcode. Not used.
              *
              * @return string  The shortcode output
-             * @since 1.0.0
-             *
              */
             public function b3_render_lost_password_form( $user_variables, $content = null ) {
 
@@ -270,12 +270,12 @@
             /**
              * A shortcode for rendering the reset password form.
              *
+             * @since 1.0.0
+             *
              * @param array $attributes Shortcode attributes.
              * @param string $content The text content for shortcode. Not used.
              *
              * @return string  The shortcode output
-             * @since 1.0.0
-             *
              */
             public function b3_render_reset_password_form( $user_variables, $content = null ) {
                 $default_attributes = array(
@@ -319,12 +319,12 @@
             /**
              * Render user/account page
              *
+             * @since 1.0.0
+             *
              * @param      $user_variables
              * @param null $content
              *
              * @return bool|string
-             * @since 1.0.0
-             *
              */
             public function b3_render_account_page( $user_variables, $content = null ) {
 
@@ -360,12 +360,12 @@
             /**
              * Render user management page
              *
+             * @since 1.0.0
+             *
              * @param      $user_variables
              * @param null $content
              *
              * @return bool|string
-             * @since 1.0.0
-             *
              */
             public function b3_render_user_approval_page( $user_variables, $content = null ) {
                 if ( current_user_can( 'promote_users' ) ) {

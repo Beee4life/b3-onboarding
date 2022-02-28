@@ -4,10 +4,10 @@
     /**
      * Approve a user
      *
-     * @param $user_id
-     *
      * @since 1.0.0
      *
+     * @param $arguments
+     * @return void
      */
     function b3_do_stuff_after_new_user_approved_by_admin( $arguments ) {
 
@@ -62,7 +62,7 @@
             $wpdb->prefix . 'signups', array( 'meta' => $signup_info->meta ), array( 'signup_id' => $signup_info->signup_id ), array( '%s' )
         );
 
-        $result = wpmu_activate_signup( $signup_info->activation_key );
+        wpmu_activate_signup( $signup_info->activation_key );
     }
     add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
 
@@ -70,9 +70,10 @@
     /**
      * Reject a user (by admin)
      *
-     * @param $user_id
-     *
      * @since 2.5.0
+     *
+     * @param $user_info
+     * @return void
      */
     function b3_do_stuff_before_reject_user_by_admin( $user_info ) {
         if ( false == get_option( 'b3_disable_delete_user_email' ) ) {
@@ -102,12 +103,12 @@
     /**
      * Do stuff after user clicked activate link
      *
-     * @param $user_id
-     *
      * @since 1.0.0
      *
      * @TODO: check for a WordPress hook to hook to
      *
+     * @param $user_id
+     * @return void
      */
     function b3_do_stuff_after_user_activated( $user_id ) {
         if ( 1 != get_option( 'b3_disable_admin_notification_new_user' ) ) {
@@ -144,6 +145,9 @@
      * Ouptuts default login/email field
      *
      * @since 1.0.0
+     *
+     * @param $registration_type
+     * @return void
      */
     function b3_add_username_email_fields( $registration_type ) {
         $registration_with_email_only = get_option( 'b3_register_email_only' );
@@ -264,6 +268,9 @@
      * Add field for subdomain when WPMU is active
      *
      * @since 1.0.0
+     *
+     * @param $registration_type
+     * @return void
      */
     function b3_add_site_fields( $registration_type ) {
         if ( is_multisite() ) {
@@ -370,10 +377,9 @@
     /**
      * Add reCAPTCHA check
      *
-     * @param string $form_type
-     *
      * @since 2.0.0
      *
+     * @param string $form_type
      */
     function b3_add_recaptcha_fields( $form_type = 'register' ) {
         $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
@@ -437,7 +443,6 @@
      * Echo error/info message above a (custom) form
      *
      * @param $attributes
-     *
      * @return void
      */
     function b3_render_form_messages( $attributes = [] ) {
