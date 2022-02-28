@@ -326,7 +326,7 @@
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
                 }
 
-                if ( true == get_option( 'b3_debug_info' ) ) {
+                if ( true == get_option( 'b3_debug_info' ) || is_localhost() ) {
                     include 'admin/debug-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
                 }
