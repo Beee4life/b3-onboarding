@@ -34,7 +34,6 @@
         }
 
         return $wp_password_change_notification_email;
-
     }
     add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
 
@@ -69,7 +68,6 @@
         $change_email[ 'message' ] = $new_message;
 
         return $change_email;
-
     }
     add_filter( 'email_change_email', 'b3_email_changed_email_user', 5, 3 );
 
@@ -88,7 +86,6 @@
      * @return mixed
      */
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
-
         if ( isset( $_POST[ '_wp_http_referer' ] ) && ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false || strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) ) {
             // manually added, so no email
             $wp_new_user_notification_email_admin[ 'to' ] = '';
@@ -128,7 +125,6 @@
         }
 
         return $wp_new_user_notification_email_admin;
-
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
@@ -147,7 +143,6 @@
      * @return mixed
      */
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
-
         $registration_type = get_option( 'b3_registration_type' );
 
         if ( isset( $_POST[ '_wp_http_referer' ] ) ) {
