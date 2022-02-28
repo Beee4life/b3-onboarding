@@ -5,7 +5,6 @@
 
     include 'download.php';
     include 'functions-email-general.php';
-    include 'functions-email-single.php';
     include 'functions-email-ms.php';
 
     /**
