@@ -44,7 +44,7 @@
                 'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
                 'content' => sprintf( '<h3>%s</h3>', esc_html__( 'reCaptcha', 'b3-onboarding' ) ) .
                     sprintf( '<p>%s</p>', esc_html__( "The reCaptcha settings will show on a new tab after you the checked and saved the 'reCaptcha' setting on the registration tab.", 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', sprintf( __( 'Get your (free) reCaptcha keys %s', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), __( 'here', 'b3-onboarding' ) ) ) )
+                    sprintf( '<p>%s</p>', sprintf( __( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), __( 'here', 'b3-onboarding' ) ) ) )
             ) );
 
             $screen->add_help_tab( array(

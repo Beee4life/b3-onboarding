@@ -48,7 +48,7 @@
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
-                            <?php echo sprintf( '<p>%s</p>', __( "This setting 'controls' the Registration type on the %s", sprintf( '<a href="%s">%s</a>', network_admin_url( 'settings.php' ), __( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
+                            <?php echo sprintf( '<p>%s</p>', __( "This setting 'controls' the Registration type on the %s.", sprintf( '<a href="%s">%s</a>', network_admin_url( 'settings.php' ), __( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
                             <?php foreach( $options as $option ) { ?>
                                 <div class="b3_settings-input b3_settings-input--radio">
                                     <div>
