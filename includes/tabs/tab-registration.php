@@ -15,7 +15,7 @@
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
-        $honeypot                     = get_option( 'b3_$honeypot' );
+        $honeypot                     = get_option( 'b3_honeypot' );
         $privacy                      = get_option( 'b3_privacy' );
         $privacy_page                 = get_option( 'b3_privacy_page' );
         $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
