@@ -496,7 +496,11 @@
             }
 
             if ( true == $show_errors && ! empty( $messages ) ) {
-                echo '<div class="b3_message">';
+                if ( isset( $attributes[ 'errors' ] ) ) {
+                    echo '<div class="b3_message b3_message--error">';
+                } else {
+                    echo '<div class="b3_message">';
+                }
                 foreach( $messages as $message ) {
                     echo sprintf( '<p>%s</p>', $message );
                 }
