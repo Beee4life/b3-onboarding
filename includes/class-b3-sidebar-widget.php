@@ -127,7 +127,7 @@
                     if ( ! empty( $instance[ 'title' ] ) ) {
                         echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
                     }
-                    echo '<p class="widget-no-settings">' . sprintf( __( 'You haven\'t set any widget settings. Configure them <a href="%s">here</a>.', 'b3-onboarding' ), esc_url( admin_url( 'widgets.php' ) ) ) . '</p>';
+                    echo sprintf( '<p class="widget-no-settings">%s</p>', sprintf( __( "You haven't set any widget settings. Configure them %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'widgets.php' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
                     echo $args[ 'after_widget' ];
                 }
             }
@@ -156,9 +156,7 @@
                             echo '<a href="#login-form" rel="modal:open">' . $login_title . '</a>';
                             echo '<div id="login-form" class="modal">';
                             if ( false != $main_logo ) {
-                                echo '<div class="modal__logo">';
-                                echo '<img src="' . $main_logo . '" alt="" />';
-                                echo '</div>';
+                                echo sprintf( '<div class="modal__logo"><img src="%s" alt="" /></div>', $main_logo );
                             }
                             echo do_shortcode('[login-form]');
                             echo '</div>';

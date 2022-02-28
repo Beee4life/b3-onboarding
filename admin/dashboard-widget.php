@@ -10,18 +10,11 @@
     }
 
     function b3_dashboard_widget_function() {
-        $approval_args = array(
-            'role' => 'b3_approval'
-        );
-        $approval_users = get_users( $approval_args );
-
-        $activation_args = array(
-            'role' => 'b3_activation'
-        );
-        $activation_users = get_users( $activation_args );
+        $activation_users = get_users( [ 'role' => 'b3_activation' ] );
+        $all_users        = [];
+        $approval_users   = get_users( [ 'role' => 'b3_approval' ] );
 
         // get all sites in network
-        $all_users = [];
         if ( is_multisite() ) {
             $sites = get_sites( [ 'fields' => 'ids' ] );
         } else {
@@ -50,9 +43,18 @@
                     <?php
                         if ( count( $approval_users ) > 0 ) {
                             if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                                echo sprintf( __( 'There %s %d %s awaiting approval. <a href="%s">Click here</a> to manage %s.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ), _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
+                                echo sprintf( __( 'There %s %d %s awaiting approval. %s to manage %s.', 'b3-onboarding' ),
+                                    _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
+                                    count( $approval_users ),
+                                    _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
+                                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
+                                    _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
                             } else {
-                                echo sprintf( __( 'There %s %d %s awaiting approval but you changed the registration type. That\'s why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it <a href="%s">here</a>.', 'b3-onboarding' ), _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ), count( $approval_users ), _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ), admin_url( 'admin.php?page=b3-user-approval' ) );
+                                echo sprintf( __( "There %s %d %s awaiting approval but you changed the registration type. That's why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %s.", 'b3-onboarding' ),
+                                    _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
+                                    count( $approval_users ),
+                                    _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
+                                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
                             }
                         } elseif ( count( $activation_users ) > 0 ) {
                             echo sprintf( esc_html__( 'There %s %d %s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
@@ -65,9 +67,9 @@
                 <table class="b3_table">
                     <thead>
                     <tr>
-                        <th>Login</th>
-                        <th>ID</th>
-                        <th>Reg. date</th>
+                        <?php echo sprintf( '<th>%s</th>', esc_html__( 'Login', 'b3-onboarding' ) ); ?>
+                        <?php echo sprintf( '<th>%s</th>', esc_html__( 'ID', 'b3-onboarding' ) ); ?>
+                        <?php echo sprintf( '<th>%s</th>', esc_html__( 'Reg. date', 'b3-onboarding' ) ); ?>
                     </tr>
                     </thead>
                     <tbody>

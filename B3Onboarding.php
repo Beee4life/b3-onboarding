@@ -213,7 +213,6 @@
                     update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
                     update_option( 'users_can_register', 0 );
                     update_option( 'b3_registration_type', 'none' );
-
                 } else {
                     if ( is_main_site() && false == $blog_id ) {
                         update_option( 'b3_dashboard_widget', 1 );
@@ -262,8 +261,8 @@
                     );
                 }
 
-                wp_enqueue_style( 'b3-ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
-                wp_enqueue_script( 'b3-ob-js', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+                wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
+                wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
             }
 
 
@@ -289,8 +288,8 @@
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
-                wp_enqueue_style( 'b3-ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
-                wp_enqueue_script( 'b3-ob-js-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+                wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
+                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
 
                 // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // Bail out early if we are not on a page add/edit screen.
@@ -557,14 +556,10 @@
                         echo '<div class="' . $notice_class . 'is-dismissible">';
                         foreach ( $codes as $code ) {
                             $message = B3Onboarding::b3_errors()->get_error_message( $code );
-                            echo '<p>';
-                            if ( true == $prefix ) {
-                                echo '<strong>' . $prefix . ':</strong> ';
-                            }
-                            echo $message;
-                            echo '</p>';
+                            $message = ( true == $prefix ) ? '<strong>' . $prefix . ':</strong> ' . $message : $message;
+                            echo sprintf( '<p>%s</p>', $message );
                         }
-                        echo '<button type="button" class="notice-dismiss"><span class="screen-reader-text">' . esc_html__( 'Dismiss this notice', 'b3-onboarding' ) . '</span></button>';
+                        echo '<button type="button" class="notice-dismiss"><span class="screen-reader-text">' . esc_attr__( 'Dismiss this notice', 'b3-onboarding' ) . '</span></button>';
                         echo '</div>';
                     }
                 }
@@ -1125,6 +1120,7 @@
                 }
             }
 
+
             /**
              * Redirects the user to the correct page depending on whether he / she
              * is an admin or not.
@@ -1434,9 +1430,9 @@
                     case 'incorrect_password':
                         $error_message = esc_html__( "The username or password you entered wasn't quite right.", 'b3-onboarding' );
                         $error_message .= '<br />';
-                        $error_message .= __( 'Did you <a href="%s">forget</a> your password ?', 'b3-onboarding' );
+                        $error_message .= sprintf( esc_attr__( 'Did you %s your password ?', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_lostpassword_url(), esc_attr__( 'forget', 'b3-onboarding' ) ) );
 
-                        return sprintf( $error_message, wp_lostpassword_url() );
+                        return $error_message;
 
                     case 'logged_out':
                         return esc_html__( "You are logged out.", 'b3-onboarding' );
@@ -1472,9 +1468,9 @@
 
                     case 'empty_field':
                         if ( false != $sprintf ) {
-                            return sprintf( esc_html__( 'You didn\'t select an option for "%s".', 'b3-onboarding' ), $sprintf );
+                            return sprintf( esc_html__( "You didn't select an option for '%s'.", 'b3-onboarding' ), $sprintf );
                         } else {
-                            return esc_html__( 'You didn\'t select an option.', 'b3-onboarding' );
+                            return esc_html__( "You didn't select an option.", 'b3-onboarding' );
                         }
 
                     case 'access_requested':
@@ -1874,23 +1870,19 @@
                 ];
 
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
-                    // beta notice
                     if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                         $message = sprintf( __( "You're using a beta version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
                         if ( is_localhost() ) {
-                            echo '<div class="notice notice-warning"><p>' . $message . '.</p></div>';
+                            echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $message );
                         } else {
-                            echo '<div class="error"><p>' . $message . '.</p></div>';
+                            echo sprintf( '<div class="error"><p>%s</p></div>', $message );
                         }
                     }
                 }
 
                 // no page for front-end approval
                 if ( false == get_option( 'b3_approval_page_id' ) && true == get_option( 'b3_front_end_approval' ) ) {
-                    echo sprintf( '<div class="error"><p>'. __( 'You have not set a page for front-end user approval. Set it <a href="%s">%s</a>', 'b3-onboarding' ) . '.</p></div>',
-                        esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ),
-                        esc_html__( 'here', 'b3-onboarding' )
-                    );
+                    echo sprintf( '<div class="error"><p>%s</p></div>', sprintf( esc_html__( 'You have not set a page for front-end user approval. Set it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
                 }
 
                 // manual actions
