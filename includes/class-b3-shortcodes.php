@@ -65,7 +65,7 @@
                         $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
                         restore_current_blog();
 
-                        $message = '<p class="b3_message">';
+                        $message = '<p class="b3_message b3_message--success">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
                         $message .= '<br />';
                         $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
@@ -77,7 +77,7 @@
                         return $message;
                     } else {
                         // fallback
-                        $message = '<p class="b3_message">';
+                        $message = '<p class="b3_message b3_message--success">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
                         $message .= '</p>';
 
