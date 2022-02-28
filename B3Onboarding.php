@@ -9,7 +9,7 @@
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
-    Tags:               user, management, registration, login, lost password, reset password, account, multisite, wpml, multilang, onboarding, user registration, user management
+    Tags:               user, management, registration, login, lost password, reset password, account, multisite, wpml, multilang, onboarding, onboard, user registration, user management, forms, email, override
     Text-domain:        b3-onboarding
     License:            GPL v2 (or later)
     License URI:        https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,7 +23,7 @@
     */
 
     if ( ! defined( 'ABSPATH' ) ) {
-        exit; // Exit if accessed directly
+        exit;
     }
 
     if ( ! class_exists( 'B3Onboarding' ) ) {
