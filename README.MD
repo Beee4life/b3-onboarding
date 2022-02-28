@@ -116,9 +116,10 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.1.0
 * improved multisite functions
+* added honeypot feature
 * optimized user templates
-* optimized filters
-* new filters
+* optimized user templates
+* new/optimized filters
   * b3_localhost()
 
 
