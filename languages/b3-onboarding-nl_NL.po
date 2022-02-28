@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-02-28 15:26+0100\n"
-"PO-Revision-Date: 2022-02-28 15:30+0100\n"
+"POT-Creation-Date: 2022-02-28 17:14+0100\n"
+"PO-Revision-Date: 2022-02-28 17:16+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -29,57 +29,57 @@ msgstr "In afwachting van activatie"
 msgid "Awaiting approval"
 msgstr "In behandeling"
 
-#: B3Onboarding.php:309
+#: B3Onboarding.php:307
 msgid "Upload or choose your custom logo"
 msgstr "Upload of kies je logo"
 
-#: B3Onboarding.php:310
+#: B3Onboarding.php:308
 msgid "Insert logo"
 msgstr "Logo invoegen"
 
-#: B3Onboarding.php:326
+#: B3Onboarding.php:324
 msgid "User Approval"
 msgstr "Toegangsmanagement"
 
-#: B3Onboarding.php:331
+#: B3Onboarding.php:329
 msgid "Debug info"
 msgstr "Debug informatie"
 
-#: B3Onboarding.php:370 admin/help-tabs.php:26 admin/help-tabs.php:27
-#: includes/class-b3-sidebar-widget.php:186 includes/functions.php:994
+#: B3Onboarding.php:368 admin/help-tabs.php:26 admin/help-tabs.php:27
+#: includes/class-b3-sidebar-widget.php:184 includes/functions.php:994
 #: includes/tabs/tab-settings.php:24
 msgid "Settings"
 msgstr "Instellingen"
 
-#: B3Onboarding.php:438
+#: B3Onboarding.php:436
 msgid "Resend activation"
 msgstr "Verstuur activatie"
 
-#: B3Onboarding.php:439 B3Onboarding.php:448
+#: B3Onboarding.php:437 B3Onboarding.php:446
 msgid "Activate"
 msgstr "Activeer"
 
-#: B3Onboarding.php:467
+#: B3Onboarding.php:465
 msgid "There's no user with that ID."
 msgstr "Er is geen gebruiker met dat ID."
 
-#: B3Onboarding.php:469
+#: B3Onboarding.php:467
 msgid "You're not allowed to edit that user."
 msgstr "Je hebt niet voldoende rechten om deze gebruiker te bewerken."
 
-#: B3Onboarding.php:546 B3Onboarding.php:555
+#: B3Onboarding.php:544 B3Onboarding.php:553
 msgid "Error"
 msgstr "Fout"
 
-#: B3Onboarding.php:549
+#: B3Onboarding.php:547
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: B3Onboarding.php:568
+#: B3Onboarding.php:562
 msgid "Dismiss this notice"
 msgstr "Verberg deze melding"
 
-#: B3Onboarding.php:1237
+#: B3Onboarding.php:1232
 msgid ""
 "A key value mismatch has been detected. Please follow the link provided in "
 "your activation email."
@@ -87,87 +87,91 @@ msgstr ""
 "Een verkeerde waarde is gedetecteerd. Gebruik aub de link in je activatie "
 "email."
 
-#: B3Onboarding.php:1237
+#: B3Onboarding.php:1232
 msgid "An error occurred during the activation"
 msgstr "Er heeft een error plaatsgevonden tijdens activatie"
 
-#: B3Onboarding.php:1290 B3Onboarding.php:1294
+#: B3Onboarding.php:1285 B3Onboarding.php:1289
 msgid "Invalid key"
 msgstr "Ongeldige code"
 
-#: B3Onboarding.php:1301
+#: B3Onboarding.php:1296
 msgid "Invalid user"
 msgstr "Ongeldige gebruiker"
 
-#: B3Onboarding.php:1430
+#: B3Onboarding.php:1425
 msgid "Please enter a user name"
 msgstr "Vul een gebruikersnaam in"
 
-#: B3Onboarding.php:1433
+#: B3Onboarding.php:1428
 msgid "Please enter a password."
 msgstr "Vul aub een wachtwoord in."
 
-#: B3Onboarding.php:1436
+#: B3Onboarding.php:1431
 msgid "The username or password you entered wasn't quite right."
 msgstr ""
 "De gebruikersnaam of het wachtwoord dat je hebt ingevuld was niet correct."
 
-#: B3Onboarding.php:1438
+#: B3Onboarding.php:1433
 #, php-format
-msgid "Did you <a href=\"%s\">forget</a> your password ?"
-msgstr "Heb je je <a href=\"%s\">wachtwoord</a> vergeten ?"
+msgid "Did you %s your password ?"
+msgstr "Heb je je wachtwoord %s ?"
 
-#: B3Onboarding.php:1443
+#: B3Onboarding.php:1433
+msgid "forget"
+msgstr "vergeten"
+
+#: B3Onboarding.php:1438
 msgid "You are logged out."
 msgstr "Je bent uitgelogd."
 
-#: B3Onboarding.php:1447
+#: B3Onboarding.php:1442
 msgid "This username is already in use."
 msgstr "De ingevoerde gebruikersnaam is al in gebruik."
 
-#: B3Onboarding.php:1450
+#: B3Onboarding.php:1445
 msgid "That user name is not allowed, please choose another."
 msgstr "Deze gebruikersnaam is niet toegestaan, kies aub een andere."
 
-#: B3Onboarding.php:1453 B3Onboarding.php:1457
+#: B3Onboarding.php:1448 B3Onboarding.php:1452
 msgid "The email address you entered is not valid."
 msgstr "Dit email adres is niet geldig."
 
-#: B3Onboarding.php:1459
+#: B3Onboarding.php:1454
 msgid "The user login you entered is not valid."
 msgstr "Deze login is niet geldig."
 
-#: B3Onboarding.php:1463
+#: B3Onboarding.php:1458
 msgid "An account already exists with this email address."
 msgstr "Een account bestaat al met dit email adres."
 
-#: B3Onboarding.php:1466 includes/defaults.php:623
+#: B3Onboarding.php:1461 includes/defaults.php:623
 msgid "Registering new users is currently not allowed."
 msgstr "Het registreren van nieuwe gebruikers is niet mogelijk op dit moment."
 
-#: B3Onboarding.php:1469
+#: B3Onboarding.php:1464
 msgid "The Google reCAPTCHA check failed. Are you a robot?"
 msgstr "De Google reCAPTCHA controle is mislukt. Ben je een robot?"
 
-#: B3Onboarding.php:1472 includes/filters-wp.php:354
+#: B3Onboarding.php:1467 includes/filters-wp.php:354
 msgid "You have to accept the privacy statement."
 msgstr "Je moet de privacy instellingen accepteren."
 
-#: B3Onboarding.php:1476
+#: B3Onboarding.php:1471
 #, php-format
-msgid "You didn't select an option for \"%s\"."
-msgstr "Je hebt geen optie geselecteerd voor \"%s\"."
+msgid "You didn't select an option for '%s'."
+msgstr "Je hebt geen optie geselecteerd voor '%s'."
 
-#: B3Onboarding.php:1478
+#: B3Onboarding.php:1473
 msgid "You didn't select an option."
 msgstr "Je hebt geen optie geselecteerd."
 
-#: B3Onboarding.php:1482
+#: B3Onboarding.php:1477
 msgid "You have sucessfully requested access. Someone will check your request."
 msgstr ""
 "Je hebt succesvol toegang aangevraagd. Iemand zal je verzoek beoordelen."
 
-#: B3Onboarding.php:1486
+#: B3Onboarding.php:1481
 msgid ""
 "You have sucessfully registered but need to confirm your email address "
 "first. Please check your email for an activation link."
@@ -175,35 +179,35 @@ msgstr ""
 "Je hebt je succesvol geregistreerd, maar moet eerst nog je email bevestigen. "
 "Check je email voor een activatie link."
 
-#: B3Onboarding.php:1490
+#: B3Onboarding.php:1485
 msgid "No robo signups."
 msgstr "Geen robo registraties."
 
-#: B3Onboarding.php:1494
+#: B3Onboarding.php:1489
 msgid "There are no users registered with this email address."
 msgstr "Er is geen gebruiker geregistreer met dit email adres."
 
-#: B3Onboarding.php:1497
+#: B3Onboarding.php:1492
 msgid "You have to get approved first."
 msgstr "Je account moet eerst goedgekeurd worden."
 
-#: B3Onboarding.php:1500
+#: B3Onboarding.php:1495
 msgid "You have to confirm your email address first. Please check your inbox."
 msgstr "Je moet eerst je email bevestigen. Check aub je inbox."
 
-#: B3Onboarding.php:1503
+#: B3Onboarding.php:1498
 msgid "Your password has been changed. You can login now."
 msgstr "Je wachtwoord is gewijzigd. Je kan nu inloggen."
 
-#: B3Onboarding.php:1506
+#: B3Onboarding.php:1501
 msgid "Check your email for a link to reset your password."
 msgstr "Controleer je e-mail voor de reset link."
 
-#: B3Onboarding.php:1510
+#: B3Onboarding.php:1505
 msgid "That password is too easy, please use a better one."
 msgstr "Dat wachtwoord is te gemakkelijk, kies aub een betere."
 
-#: B3Onboarding.php:1514
+#: B3Onboarding.php:1509
 msgid ""
 "You have successfully registered. Please check your email for a link to set "
 "your password."
@@ -211,11 +215,11 @@ msgstr ""
 "Je hebt succesvol geregistreerd. Check aub je email voor een link om je "
 "wachtwoord in te stellen."
 
-#: B3Onboarding.php:1516
+#: B3Onboarding.php:1511
 msgid "You have successfully registered. You can now login."
 msgstr "Je hebt je succesvol geregistreerd. Je kan nu inloggen."
 
-#: B3Onboarding.php:1521
+#: B3Onboarding.php:1516
 #, php-format
 msgid ""
 "You have successfully registered to %s. Enter your email address to set your "
@@ -224,7 +228,7 @@ msgstr ""
 "Je hebt succesvol geregistreerd op %s. Vul je email adres in om je "
 "wachtwoord in te stellen."
 
-#: B3Onboarding.php:1528
+#: B3Onboarding.php:1523
 msgid ""
 "You have successfully activated your account. You can initiate a password "
 "(re)set below."
@@ -232,76 +236,76 @@ msgstr ""
 "Je hebt succesvol je account bevestigd. Je kan hieronder een wachtwoord "
 "(re)set initiëren."
 
-#: B3Onboarding.php:1530
+#: B3Onboarding.php:1525
 msgid "You have successfully activated your account. You can now login."
 msgstr "Je hebt je account succesvol geactiveerd. Je kan nu inloggen."
 
-#: B3Onboarding.php:1534
+#: B3Onboarding.php:1529
 msgid ""
 "You have successfully activated your account. Your password has been emailed "
 "to you."
 msgstr ""
 "Je hebt je account succesvol geactiveerd. Je wachtwoord is naar je gemaild."
 
-#: B3Onboarding.php:1537
+#: B3Onboarding.php:1532
 msgid "The activation link you used is not valid."
 msgstr "De activatie link is niet geldig."
 
-#: B3Onboarding.php:1540
+#: B3Onboarding.php:1535
 msgid "There appears to be no user account associated with this link."
 msgstr "Er lijkt geen gebruiker te zijn met deze link."
 
-#: B3Onboarding.php:1545
+#: B3Onboarding.php:1540
 msgid "The password reset link you used is not valid anymore."
 msgstr "De wachtwoord reset link die je hebt gebruikt is niet meer geldig."
 
-#: B3Onboarding.php:1549
+#: B3Onboarding.php:1544
 msgid "The two passwords you entered don't match."
 msgstr "De wachtwoorden die je hebt ingevuld komen niet overeen."
 
-#: B3Onboarding.php:1552
+#: B3Onboarding.php:1547
 msgid "Sorry, we don't accept empty passwords."
 msgstr "Sorry, we accepteren geen lege wachtwoorden."
 
-#: B3Onboarding.php:1555
+#: B3Onboarding.php:1550
 msgid "Sorry, that password is too easy."
 msgstr "Sorry, dat wachtwoord is te gemakkelijk."
 
-#: B3Onboarding.php:1559
+#: B3Onboarding.php:1554
 msgid "Sorry, this domain has already been taken."
 msgstr "Sorry, dit domein is al geregistreerd."
 
-#: B3Onboarding.php:1562
+#: B3Onboarding.php:1557
 msgid "Please enter a site address."
 msgstr "Vul een sitenaam in."
 
-#: B3Onboarding.php:1565
+#: B3Onboarding.php:1560
 msgid "Site name must be at least 4 characters."
 msgstr "Site naam moet minstens 4 karakters lang zijn."
 
-#: B3Onboarding.php:1568
+#: B3Onboarding.php:1563
 msgid "Sorry, site names must have letters too."
 msgstr "Sorry, site namen moeten ook letters hebben."
 
-#: B3Onboarding.php:1571
+#: B3Onboarding.php:1566
 msgid "Please enter a title."
 msgstr "Vul een titel in."
 
-#: B3Onboarding.php:1574
+#: B3Onboarding.php:1569
 msgid ""
 "You have successfully registered. Please check your email for an activation "
 "link."
 msgstr ""
 "Je hebt succesvol geregistreerd. Bekijk aub je email voor een activatie link."
 
-#: B3Onboarding.php:1577
+#: B3Onboarding.php:1572
 msgid ""
 "That username is currently reserved but may be available in a couple of days."
 msgstr ""
 "Die gebruikersnaam is op dit moment gereserveerd, maar kan beschikbaar komen "
 "over een paar dagen."
 
-#: B3Onboarding.php:1580
+#: B3Onboarding.php:1575
 msgid ""
 "That email address has already been used. Please check your inbox for an "
 "activation email. It will become available in a couple of days if you do "
@@ -310,19 +314,19 @@ msgstr ""
 "Dit email adres is al gebruikt. Kijk in je inbox voor een activatie email. "
 "Als je niks doet is hij over een paar dagen weer beschikbaar."
 
-#: B3Onboarding.php:1584
+#: B3Onboarding.php:1579
 msgid "Your account has been deleted."
 msgstr "Je account is verwijderd."
 
-#: B3Onboarding.php:1590
+#: B3Onboarding.php:1585
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
-#: B3Onboarding.php:1594
+#: B3Onboarding.php:1589
 msgid "You can't use a space there."
 msgstr "Je kan hier geen spatie gebruiken."
 
-#: B3Onboarding.php:1598
+#: B3Onboarding.php:1593
 msgid ""
 "You have just registered an account successfully but since this is a "
 "demonstration setup, your user account has been deleted immediately again."
@@ -330,11 +334,11 @@ msgstr ""
 "Je hebt zojuist succesvol geregistreerd voor een account maar aangezien dit "
 "een demonstratie setup is, is je gebruikers account gelijk weer verwijderd."
 
-#: B3Onboarding.php:1604
+#: B3Onboarding.php:1599
 msgid "An unknown error occurred. Please try again later."
 msgstr "Er is een onbekende fout opgetreden. Probeer later nog eens."
 
-#: B3Onboarding.php:1880
+#: B3Onboarding.php:1874
 #, php-format
 msgid ""
 "You're using a beta version of %s, which is not released yet and can give "
@@ -343,40 +347,40 @@ msgstr ""
 "Je gebruikt een beta-versie van %s, welke nog niet af is en dus onverwachte "
 "resultaten kan geven."
 
-#: B3Onboarding.php:1891
+#: B3Onboarding.php:1885
 #, php-format
-msgid ""
-"You have not set a page for front-end user approval. Set it <a href=\"%s\">"
-"%s</a>"
+msgid "You have not set a page for front-end user approval. Set it %s."
 msgstr ""
 "Je hebt nog geen pagina ingesteld voor front-end gebruikersgoedkeuring. Stel "
-"dit <a href=\"%s\">%s</a> in"
+"dit %s in."
 
-#: B3Onboarding.php:1893 B3Onboarding.php:1915 B3Onboarding.php:1932
-#: B3Onboarding.php:1933 admin/dashboard-widget.php:85 admin/help-tabs.php:47
+#: B3Onboarding.php:1885 B3Onboarding.php:1906 B3Onboarding.php:1923
+#: B3Onboarding.php:1924 admin/dashboard-widget.php:57
+#: admin/dashboard-widget.php:87 admin/help-tabs.php:47
 #: includes/actions-b3.php:411 includes/class-b3-shortcodes.php:74
-#: includes/defaults.php:236 includes/defaults.php:238
-#: includes/defaults.php:329 includes/defaults.php:352
-#: includes/defaults.php:450 includes/defaults.php:482
-#: includes/defaults.php:544 includes/tabs/tab-recaptcha.php:74
+#: includes/class-b3-sidebar-widget.php:130 includes/defaults.php:236
+#: includes/defaults.php:238 includes/defaults.php:329
+#: includes/defaults.php:352 includes/defaults.php:450
+#: includes/defaults.php:482 includes/defaults.php:544
+#: includes/tabs/tab-recaptcha.php:74
 msgid "here"
 msgstr "hier"
 
-#: B3Onboarding.php:1903
+#: B3Onboarding.php:1894
 msgid "User activated."
 msgstr "Gebruiker geactiveerd."
 
-#: B3Onboarding.php:1905
+#: B3Onboarding.php:1896
 msgid "Activation mail resent."
 msgstr "Activatie mail opnieuw verzonden."
 
-#: B3Onboarding.php:1913
+#: B3Onboarding.php:1904
 #, php-format
 msgid "%s takes control over the 'Membership' option. You can change this %s."
 msgstr ""
 "%s neemt controle over van de 'Membership' optie. Je kan deze %s wijzigen."
 
-#: B3Onboarding.php:1930
+#: B3Onboarding.php:1921
 #, php-format
 msgid ""
 "%s overrides the 'Registration' option and the 'Registration notification'. "
@@ -463,53 +467,66 @@ msgstr "Stijl"
 msgid "Template"
 msgstr "Template"
 
-#: admin/dashboard-widget.php:53
+#: admin/dashboard-widget.php:46
 #, php-format
-msgid ""
-"There %s %d %s awaiting approval. <a href=\"%s\">Click here</a> to manage %s."
-msgstr ""
-"Er zijn %s %d %s in afwachting van goedkeuring. <a href=\"%s\">Klik hier</a> "
-"om %s te beheren."
+msgid "There %s %d %s awaiting approval. %s to manage %s."
+msgstr "Er zijn %s %d %s in afwachting van goedkeuring. %s om %s te beheren."
 
-#: admin/dashboard-widget.php:53 admin/dashboard-widget.php:55
-#: admin/dashboard-widget.php:58
+#: admin/dashboard-widget.php:47 admin/dashboard-widget.php:54
+#: admin/dashboard-widget.php:60
 msgid "is"
 msgid_plural "are"
 msgstr[0] "is"
 msgstr[1] "zijn"
 
-#: admin/dashboard-widget.php:53 admin/dashboard-widget.php:55
-#: admin/dashboard-widget.php:58
+#: admin/dashboard-widget.php:49 admin/dashboard-widget.php:56
+#: admin/dashboard-widget.php:60
 msgid "user"
 msgid_plural "users"
 msgstr[0] "gebruiker"
 msgstr[1] "gebruikers"
 
-#: admin/dashboard-widget.php:53
+#: admin/dashboard-widget.php:50
+msgid "Click here"
+msgstr "Klik hier"
+
+#: admin/dashboard-widget.php:51
 msgid "this user"
 msgid_plural "these users"
 msgstr[0] "deze gebruiker"
 msgstr[1] "deze gebruikers"
 
-#: admin/dashboard-widget.php:55
+#: admin/dashboard-widget.php:53
 #, php-format
 msgid ""
 "There %s %d %s awaiting approval but you changed the registration type. "
 "That's why the user approval page is not showing in the admin menu and there "
-"are no notifications in the admin bar, but you can reach it <a href=\"%s"
-"\">here</a>."
+"are no notifications in the admin bar, but you can reach it %s."
 msgstr ""
 "Er %s %d %s in afwachting van goedkeuring maar je hebt het registratie type "
 "gewijzigd. Hierdoor zie de gebruikersbeheer pagina niet meer zichtbaar in "
-"het menu en zijn er geen notificaties in de admin bar. Je kan de pagina <a "
-"href=\"%s\">hier</a> bekijken."
+"het menu en zijn er geen notificaties in de admin bar. Je kan de pagina %s "
+"bekijken."
 
-#: admin/dashboard-widget.php:58
+#: admin/dashboard-widget.php:60
 #, php-format
 msgid "There %s %d %s pending email activation."
 msgstr "Er zijn %s %d %s in afwachting van email bevestiging."
 
-#: admin/dashboard-widget.php:85
+#: admin/dashboard-widget.php:70 includes/class-b3-sidebar-widget.php:67
+#: includes/do-stuff.php:30
+msgid "Login"
+msgstr "Inloggen"
+
+#: admin/dashboard-widget.php:71
+msgid "ID"
+msgstr "ID"
+
+#: admin/dashboard-widget.php:72
+msgid "Reg. date"
+msgstr "Reg. datum"
+
+#: admin/dashboard-widget.php:87
 #, php-format
 msgid ""
 "You're the only user right now, but that can be because user registration is "
@@ -518,7 +535,7 @@ msgstr ""
 "Je bent de enige gebruiker op dit moment, maar dit kan komen omdat het niet "
 "toegestaan is voor gebruikers om te registreren. Wijzig dit %s."
 
-#: admin/dashboard-widget.php:87
+#: admin/dashboard-widget.php:89
 msgid "You're the only (activated) user right now."
 msgstr "Je bent de enige gebruiker op dit moment."
 
@@ -901,60 +918,53 @@ msgstr "Aangepast gebruikers menu"
 msgid "Account"
 msgstr "Account"
 
-#: includes/class-b3-sidebar-widget.php:67 includes/do-stuff.php:30
-msgid "Login"
-msgstr "Inloggen"
-
 #: includes/class-b3-sidebar-widget.php:130
 #, php-format
-msgid ""
-"You haven't set any widget settings. Configure them <a href=\"%s\">here</a>."
-msgstr ""
-"Je hebt nog geen pagina ingesteld voor front-end gebruikersgoedkeuring. Stel "
-"dit <a href=\"%s\">hier</a> in."
+msgid "You haven't set any widget settings. Configure them %s."
+msgstr "Je hebt nog niks ingesteld voor de widget. Stel her %s in."
 
-#: includes/class-b3-sidebar-widget.php:195 includes/do-stuff.php:35
+#: includes/class-b3-sidebar-widget.php:193 includes/do-stuff.php:35
 #: includes/tabs/tab-pages.php:29
 msgid "Log Out"
 msgstr "Uitloggen"
 
-#: includes/class-b3-sidebar-widget.php:224
+#: includes/class-b3-sidebar-widget.php:222
 msgid "Title:"
 msgstr "Titel:"
 
-#: includes/class-b3-sidebar-widget.php:227
+#: includes/class-b3-sidebar-widget.php:225
 msgid "Logged Out"
 msgstr "Uitgelogd"
 
-#: includes/class-b3-sidebar-widget.php:230
+#: includes/class-b3-sidebar-widget.php:228
 msgid "Show register link"
 msgstr "Toon registratie link"
 
-#: includes/class-b3-sidebar-widget.php:234
+#: includes/class-b3-sidebar-widget.php:232
 msgid "Show login link"
 msgstr "Toon login link"
 
-#: includes/class-b3-sidebar-widget.php:236
+#: includes/class-b3-sidebar-widget.php:234
 msgid "Logged In"
 msgstr "Ingelogd"
 
-#: includes/class-b3-sidebar-widget.php:239
+#: includes/class-b3-sidebar-widget.php:237
 msgid "Show account link"
 msgstr "Toon account link"
 
-#: includes/class-b3-sidebar-widget.php:243
+#: includes/class-b3-sidebar-widget.php:241
 msgid "Show log out link"
 msgstr "Toon log out link"
 
-#: includes/class-b3-sidebar-widget.php:245
+#: includes/class-b3-sidebar-widget.php:243
 msgid "Admin only"
 msgstr "Alleen voor beheerders"
 
-#: includes/class-b3-sidebar-widget.php:249
+#: includes/class-b3-sidebar-widget.php:247
 msgid "Show user management link"
 msgstr "Toon gebruikersmanagement pagina"
 
-#: includes/class-b3-sidebar-widget.php:254
+#: includes/class-b3-sidebar-widget.php:252
 msgid "Show settings link"
 msgstr "Toon instellingen link"
 
