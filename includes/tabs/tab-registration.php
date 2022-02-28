@@ -15,10 +15,12 @@
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
+        $honeypot                     = get_option( 'b3_$honeypot' );
         $privacy                      = get_option( 'b3_privacy' );
         $privacy_page                 = get_option( 'b3_privacy_page' );
         $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
         $privacy_text                 = get_option( 'b3_privacy_text' );
+        $recaptcha                    = get_option( 'b3_activate_recaptcha' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
@@ -39,7 +41,6 @@
         <form action="admin.php?page=b3-onboarding&tab=registration" method="post">
             <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
             <?php if ( is_main_site() ) { ?>
-
                 <?php if ( is_multisite() ) { ?>
                     <?php $options = b3_get_registration_types(); ?>
                     <?php if ( ! empty( $options ) ) { ?>
@@ -161,10 +162,56 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
+                            <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/>
+                            <?php
+                                if ( 1 == $recaptcha ) {
+                                    esc_html_e( 'Uncheck this box to deactivate reCAPTCHA.', 'b3-onboarding' );
+                                } else {
+                                    esc_html_e( 'Check this box to activate reCAPTCHA.', 'b3-onboarding' );
+                                }
+                            ?>
+                            <?php $show_note = ( 1 == $recaptcha ) ? false : true; ?>
+                            <?php $hide_recaptcha_note = ( 1 == $recaptcha ) ? false : ' hidden'; ?>
+                            <?php if ( $show_note ) { ?>
+                                <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
+                                    <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_honeypot"><?php esc_html_e( 'Honeypot', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_honeypot" name="b3_honeypot" value="1" <?php if ( $honeypot ) { ?>checked="checked"<?php } ?>/>
+                            <?php
+                                if ( 1 == $honeypot ) {
+                                    esc_html_e( 'Uncheck this box to deactivate the honeypot option.', 'b3-onboarding' );
+                                } else {
+                                    esc_html_e( 'Check this box to activate a honeypot option.', 'b3-onboarding' );
+                                }
+                            ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a privacy checkbox.', 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/>
+                            <?php
+                                if ( 1 == $privacy ) {
+                                    esc_html_e( 'Uncheck this box to deactivate the privacy checkbox.', 'b3-onboarding' );
+                                } else {
+                                    esc_html_e( 'Check this box to activate a privacy checkbox.', 'b3-onboarding' );
+                                }
+                            ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -197,7 +244,7 @@
                     <?php b3_get_close(); ?>
 
                 <?php } ?>
-            <?php } ?>
+            <?php } // end is_main_site ?>
 
             <?php b3_get_submit_button(); ?>
         </form>

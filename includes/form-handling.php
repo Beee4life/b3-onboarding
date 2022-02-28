@@ -12,24 +12,22 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
-                if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {
-                    update_option( 'b3_use_popup', 1 );
-                } else {
-                    delete_option( 'b3_use_popup' );
-                }
-
                 if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
                     update_option( 'b3_disable_action_links', 1 );
                 } else {
                     delete_option( 'b3_disable_action_links' );
                 }
 
-                if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
-                    update_option( 'b3_activate_recaptcha', 1 );
-                    update_option( 'b3_recaptcha_on', ['register'] );
+                if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {
+                    update_option( 'b3_use_popup', 1 );
                 } else {
-                    delete_option( 'b3_activate_recaptcha' );
-                    delete_option( 'b3_recaptcha_on' );
+                    delete_option( 'b3_use_popup' );
+                }
+
+                if ( isset( $_POST[ 'b3_activate_filter_validation' ] ) && 1 == $_POST[ 'b3_activate_filter_validation' ] ) {
+                    update_option( 'b3_activate_filter_validation', 1 );
+                } else {
+                    delete_option( 'b3_activate_filter_validation' );
                 }
 
                 if ( isset( $_POST[ 'b3_debug_info' ] ) && 1 == $_POST[ 'b3_debug_info' ] ) {
@@ -38,10 +36,10 @@
                     delete_option( 'b3_debug_info' );
                 }
 
-                if ( isset( $_POST[ 'b3_activate_filter_validation' ] ) && 1 == $_POST[ 'b3_activate_filter_validation' ] ) {
-                    update_option( 'b3_activate_filter_validation', 1 );
+                if ( isset( $_POST[ 'b3_preserve_settings' ] ) && 1 == $_POST[ 'b3_preserve_settings' ] ) {
+                    update_option( 'b3_preserve_settings', 1 );
                 } else {
-                    delete_option( 'b3_activate_filter_validation' );
+                    delete_option( 'b3_preserve_settings' );
                 }
 
                 if ( isset( $_POST[ 'b3_main_logo' ] ) ) {
@@ -90,6 +88,14 @@
                     } else {
                         delete_option( 'b3_registration_closed_message' );
                     }
+                } else {
+                    if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
+                        update_option( 'b3_activate_recaptcha', 1 );
+                        update_option( 'b3_recaptcha_on', ['register'] );
+                    } else {
+                        delete_option( 'b3_activate_recaptcha' );
+                        delete_option( 'b3_recaptcha_on' );
+                    }
                 }
 
                 if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
@@ -121,6 +127,12 @@
                     update_option( 'b3_redirect_set_password', 1 );
                 } else {
                     delete_option( 'b3_redirect_set_password' );
+                }
+
+                if ( isset( $_POST[ 'b3_honeypot' ] ) && 1 == $_POST[ 'b3_honeypot' ] ) {
+                    update_option( 'b3_honeypot', 1 );
+                } else {
+                    delete_option( 'b3_honeypot' );
                 }
 
                 if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
