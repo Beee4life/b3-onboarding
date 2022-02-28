@@ -111,6 +111,6 @@
             </tbody>
         </table>
     <?php } else { ?>
-        <p><?php esc_html_e( 'No (more) users to approve.', 'b3-onboarding' ); ?></p>
+        <?php echo sprintf( '<p>%s</p>', esc_html__( 'No (more) users to approve.', 'b3-onboarding' ) ); ?>
     <?php }
     }
