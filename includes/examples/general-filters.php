@@ -3,7 +3,7 @@
     #####################
     ## General filters ##
     #####################
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -20,7 +20,7 @@
      * @return false|string
      */
     function b3_main_logo_example( $logo ) {
-        return 'http://your-url.com/your-logo.png';
+        return 'https://your-url.com/your-logo.png';
     }
     // add_filter( 'b3_main_logo', 'b3_main_logo_example' );
 
@@ -48,7 +48,6 @@
      * @return array|string[][]
      */
     function b3_widget_links_example( $links ) {
-
         $new_links = [
             [
                 'link' => 'https://your-link.com',
