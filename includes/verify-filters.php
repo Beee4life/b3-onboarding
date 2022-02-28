@@ -24,6 +24,7 @@
             'b3_email_template'                        => array( 'string' ),
             'b3_extra_fields'                          => array( 'array', 'extra' ),
             'b3_hidden_fields'                         => array( 'array', 'hidden' ),
+            'b3_localhost'                             => array( 'bool' ),
             'b3_localhost_email'                       => array( 'email' ),
             'b3_localhost_username'                    => array( 'string' ),
             'b3_logged_in_registration_only_message'   => array( 'string' ),
