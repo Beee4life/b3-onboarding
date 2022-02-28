@@ -318,6 +318,8 @@
     /**
      * Check for errors on WordPress' own registration form
      *
+     * @TODO: do still need this because they're disabled ?
+     *
      * @since 1.0.0
      *
      * @param $errors
