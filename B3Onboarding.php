@@ -73,27 +73,27 @@
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
-                add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
+                add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
+                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
+                add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
-                add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
-                add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'before_signup_header',                 array( $this, 'b3_redirect_to_custom_mu_register' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
                 add_action( 'login_form_login',                     array( $this, 'b3_redirect_to_custom_login' ) );
                 add_action( 'login_form_lostpassword',              array( $this, 'b3_redirect_to_custom_lostpassword' ) );
                 add_action( 'login_form_resetpass',                 array( $this, 'b3_redirect_to_custom_reset_password' ) );
                 add_action( 'login_form_rp',                        array( $this, 'b3_redirect_to_custom_reset_password' ) );
+                add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
+                add_action( 'init',                                 array( $this, 'b3_redirect_to_custom_profile' ) );
                 add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_user_activate' ) );
                 add_action( 'init',                                 array( $this, 'b3_do_password_lost' ) );
                 add_action( 'init',                                 array( $this, 'b3_reset_user_password' ) );
-                add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
-                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
                 add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
@@ -215,7 +215,6 @@
                     update_option( 'b3_registration_type', 'none' );
 
                 } else {
-
                     if ( is_main_site() && false == $blog_id ) {
                         update_option( 'b3_dashboard_widget', 1 );
                         update_option( 'b3_registration_type', get_site_option( 'registration' ) );
