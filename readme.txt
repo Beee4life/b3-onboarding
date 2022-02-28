@@ -25,3 +25,25 @@ There are a ton of things, which you can set through the admin pages or with the
 1. Copy the `b3-onboarding` folder into your `wp-content/plugins` folder.
 1. Activate the `B3 OnBoarding` plugin via the plugins admin page. If you run a multisite, it needs to be network activated.
 1. (optional) Change any setting you want.
+
+== Changelog ==
+3.1.0
+* improved multisite functions
+* added honeypot feature
+* added 'prevent delete settings on uninstall' setting
+* added new filters
+* added status class to messages
+* optimized existing filters
+* optimized user templates
+* reformatted debug info page
+
+* 3.0
+* added option to request access to create a site (multisite)
+* added reCaptcha v3
+* added user input for disallowed usernames
+* alot of MU stuff
+
+For older changelogs see the [website]().
+
+== Update Notice ==
+A ton of new features, so you'd better upgrade.
