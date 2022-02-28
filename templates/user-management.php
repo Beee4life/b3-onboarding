@@ -25,11 +25,11 @@
             } else {
                 $message = false;
                 if ( 'approved' == $_GET[ 'user' ] ) {
-                    echo $user_approved;
+                    $message = $user_approved;
                 } elseif ( 'rejected' == $_GET[ 'user' ] ) {
-                    echo $user_rejected;
+                    $message = $user_rejected;
                 } elseif ( 'not-deleted' == $_GET[ 'user' ] ) {
-                    echo $user_not_deleted;
+                    $message = $user_not_deleted;
                 }
                 if ( $message ) {
                     echo sprintf( '<p class="b3_message">%s</p>', $message );
