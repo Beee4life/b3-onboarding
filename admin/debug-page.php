@@ -4,7 +4,7 @@
      *
      * @since 2.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -16,7 +16,7 @@
         }
         ?>
 
-        <div class="wrap b3 b3__admin">
+        <div class="wrap b3 b3_admin b3_admin--debug">
             <h1 id="b3__admin-title">
                 Debug info
             </h1>
