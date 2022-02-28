@@ -146,8 +146,7 @@
         if ( ! is_multisite() ) {
             $hide_admin_bar = get_option( 'b3_hide_admin_bar' );
             if ( false != $hide_admin_bar ) {
-                $result = false;
-                $user   = wp_get_current_user();
+                $user             = wp_get_current_user();
                 $restricted_roles = get_option( 'b3_restrict_admin' );
                 $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
 
@@ -220,7 +219,6 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-
         // @TODO: check if can be replaced by filter
         if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
             // @TODO: maybe inform admin

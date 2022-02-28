@@ -525,7 +525,6 @@
             $page_types = array();
 
             switch( $form_type ) {
-
                 case 'login':
                     $page_types[ 'lostpassword' ] = [
                         'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
