@@ -34,10 +34,8 @@
 
             if ( ! is_multisite() ) {
                 do_action( 'b3_add_password_fields' );
-            } else {
-                if ( is_main_site() ) {
-                    do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
-                }
+            } elseif ( is_main_site() ) {
+                do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
             }
             do_action( 'b3_register_form' );
             do_action( 'b3_do_before_submit_registration_form' );
