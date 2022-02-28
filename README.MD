@@ -20,24 +20,24 @@
 
 This plugin was built to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
+You can customise every aspect of the onboarding process, such as control the look and feel of (almost) evvery email sent out by Wordpress.
 
-There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
+There are even new features which Wordpress doesn't even offer, such as approving (or reject) a user before they're activated. And there are a ton of other things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
 
 **What 'problems' does this plugin solve ?**
 
 This plugin gives you all the freedom to change/use different parts, without being forced to use other features. You can extend this plugin in any way you want with filters/hooks or through a settings page.
 
-Also you can get rid of those default Wordpress forms and use your own.
+You can now get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-3.1.0 - released 1x.02.21
+3.1.0 - released xx.03.21
 
 <a name="features"></a>
 ### Features
 
-* custom forms/pages
+* override the following forms/pages
   * register
   * login
   * log out
@@ -94,26 +94,19 @@ Some functions are not (yet) available through the admin pages and some will nev
 
 <a name="disclaimer"></a>
 ### Disclaimer
-1. Not entirely ready for multisite yet, we're working on it.
-1. Not tested with Gutenberg.
+1. Not 100% ready for multisite yet, but almost. Not all emails are 'caught' yet.
+1. Not tested with Gutenberg, not even once. Zero guarantees it will work.
 
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
-* [X] use custom passwords
-* [X] disallow certain user names
-* [X] validate extra fields added through a filter
-* [X] look more into responsiveness
-* [X] reCaptcha v3
-* [X] make it work with Multisite
-* [X] make it work with WPML
-* [ ] add more filters and inputs
 * [ ] add more security stuff
 * [ ] add code editor for styling/template inputs
 * [ ] remove `<br />` from email templates
-* [ ] create option to send preview email
+* [ ] create option to send a preview email
 * [ ] add front-end management to multisite as well
 * [ ] multi-page registration forms
+* [ ] integration with Woocommerce
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
@@ -125,6 +118,9 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * improved multisite functions
 * optimized user templates
 * optimized filters
+* new filters
+  * b3_localhost()
+
 
 * 3.0
 * added option to request access to create a site (multisite)
