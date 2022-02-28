@@ -1486,6 +1486,9 @@
                         $confirm_email_string = esc_html__( 'You have sucessfully registered but need to confirm your email address first. Please check your email for an activation link.', 'b3-onboarding' );
                         return apply_filters( 'b3_registration_confirm_email_message', $confirm_email_string );
 
+                    case 'honeypot':
+                        return esc_html__( 'No robo signups.', 'b3-onboarding' );
+
                     // Lost password
                     case 'invalidcombo':
                         return esc_html__( 'There are no users registered with this email address.', 'b3-onboarding' );
@@ -1629,7 +1632,9 @@
                 if ( get_option( 'b3_honeypot' ) ) {
                     if ( isset( $_POST[ 'b3_pooh' ] ) ) {
                         // error because is robot
-                        return;
+                        $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
+
+                        return $errors;
                     }
                 }
 
