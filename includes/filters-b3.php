@@ -1,5 +1,55 @@
 <?php
     /**
+     * Add hidden fields
+     *
+     * @param $fields
+     *
+     * @return mixed|string[]
+     */
+    function b3_add_hidden_fields( $fields ) {
+        $fields[ 'b3_form' ]          = 'register';
+        $fields[ 'b3_register_user' ] = wp_create_nonce( 'b3-register-user' );
+
+        return $fields;
+    }
+    add_filter( 'b3_hidden_fields', 'b3_add_hidden_fields' );
+
+
+    /**
+     * Add honeypot field
+     *
+     * @param $fields
+     *
+     * @return mixed
+     */
+    function b3_add_extra_fields( $fields ) {
+        if ( get_option( 'b3_honeypot' ) ) {
+            $id          = 'b3_pooh';
+            $input_class = '';
+
+            $fields[] = [
+                'container_class' => 'honeypot',
+                'id'              => $id,
+                'input_class'     => $input_class,
+                'label'           => 'Checkbox',
+                'options'         => [
+                    [
+                        // 'input_class' => $input_class . '--checkbox',
+                        'label'       => 'Checkbox label 1',
+                        'name'        => $id,
+                        'value'       => 'value1',
+                    ],
+                ],
+                'required'        => false,
+                'type'            => 'checkbox',
+            ];
+        }
+        return $fields;
+    }
+    add_filter( 'b3_extra_fields', 'b3_add_extra_fields' );
+
+
+    /**
      * Validate custom fields
      *
      * @return array

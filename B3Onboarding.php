@@ -1607,10 +1607,12 @@
              *
              * @since 1.0.6
              *
-             * @param string $user_login
-             * @param string $user_email
+             * @param $user_email
+             * @param $user_login
+             * @param $registration_type
+             * @param $role
              *
-             * @return int|WP_Error
+             * @return int|void|WP_Error
              */
             private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
                 $errors                       = new WP_Error();
@@ -1623,6 +1625,13 @@
                     'role'       => $role,
                 );
                 $use_custom_passwords = true;
+
+                if ( get_option( 'b3_honeypot' ) ) {
+                    if ( isset( $_POST[ 'b3_pooh' ] ) ) {
+                        // error because is robot
+                        return;
+                    }
+                }
 
                 if ( false == $registration_with_email_only ) {
                     if ( username_exists( $user_login ) ) {

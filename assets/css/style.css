@@ -101,6 +101,10 @@
     font-size: 1.15rem;
 }
 
+.b3_form-element--honeypot {
+  display: none;
+}
+
 /* Label on password reset input */
 .b3_page .b3_form-label--email {
     width: 150px;
