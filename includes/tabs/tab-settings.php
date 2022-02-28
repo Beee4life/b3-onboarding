@@ -70,7 +70,7 @@
                         <label for="b3_use_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php if ( $use_popup ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to show the login form in a popup (from the widget link).', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php if ( $use_popup ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to show the login form in a popup (right now only available for the login link in the B3 widget).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -79,7 +79,7 @@
                         <label for="b3_activate_filter_validation"><?php esc_html_e( 'Activate filter validation', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php if ( $activate_filter_validation ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php if ( $activate_filter_validation ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' ); ?> <?php esc_html_e( "It's fairly cpu intensive, don't leave it on too long, on production.", 'b3-onboarding' ); ?>
                         <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo $hide_validation_note; ?>">
                             <?php esc_html_e( 'Don\'t forget to turn it of later on, the validation is a bit cpu intensive.', 'b3-onboarding' ); ?>
@@ -87,7 +87,7 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php if ( current_user_can( 'manage_options' ) && ( ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ) ) { ?>
+                <?php if ( current_user_can( 'manage_options' ) && is_localhost() ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>
