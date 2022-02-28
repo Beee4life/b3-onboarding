@@ -6,7 +6,7 @@
      *
      * @param $screen    object
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -24,29 +24,36 @@
             $screen->add_help_tab( array(
                 'id'      => 'b3-settings',
                 'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Settings', 'b3-onboarding' ) . '</h3>
-                    <p>' . esc_html__( 'reCaptcha settings will show after you save the checked option.', 'b3-onboarding' ) . '</p>
-                    <p>' . esc_html__( "Filter validation can be cpu intensive. Don't leave it on, on production.", 'b3-onboarding' ) . '</p>
-                    <p>' . esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) . '</p>
-                    '
+                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Settings', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'You can disable the links below the form button on login/registration forms.', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'You can use a popup for the login form, when using the B3 sidebar widget.', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'You can use a popup for the login form, when using the B3 sidebar widget.', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'Activate the debug page.', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) )
             ) );
 
             $screen->add_help_tab( array(
                 'id'      => 'b3-registration',
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Registration', 'b3-onboarding' ) . '</h3>
-                    <p>' . esc_html__( "Your general setting for if 'users can register' can register is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) . '</p>
-                    <p>' . sprintf( __( 'Get your (free) reCaptcha keys <a href="%s" target="_blank" rel="noopener">here</a>.', 'b3-onboarding' ), esc_url( 'https://www.google.com/recaptcha/admin#list' ) ) . '</p>
-                    '
+                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Registration', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( "Your general setting for if 'users can register' can register is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) )
+            ) );
+
+            $screen->add_help_tab( array(
+                'id'      => 'b3-recaptcha',
+                'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
+                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'reCaptcha', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( "The reCaptcha settings will show on a new tab after you the checked and saved the 'reCaptcha' setting on the registration tab.", 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', sprintf( __( 'Get your (free) reCaptcha keys %s', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), __( 'here', 'b3-onboarding' ) ) ) )
             ) );
 
             $screen->add_help_tab( array(
                 'id'      => 'b3-emails',
                 'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Emails', 'b3-onboarding' ) . '</h3>
-                    <p>' . esc_html__( 'You can add any HTML you want in the email messages. Be sure to use the preview mode, before using it.', 'b3-onboarding' ) . '</p>
-                    <p>' . esc_html__( 'Save yourself a lot of work per email and use the template option. This is then wrapped around each message.', 'b3-onboarding' ) . '</p>
-                    <p>' . esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) . '</p>
+                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Emails', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'You can add any HTML you want in the email messages. Be sure to use the preview mode, before using it.', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'Save yourself a lot of work per email and use the template option. This is then wrapped around each message.', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) ) . '
                     <ul>
                         <li>%activation_url% (' . __( 'only in user activation email', 'b3-onboarding' ) . ')</li>
                         <li>%blog_name% <sup>&sup1;</sup></li>
@@ -107,14 +114,15 @@
             $screen->add_help_tab( array(
                 'id'      => 'b3-developers',
                 'title'   => esc_html__( 'Developers', 'b3-onboarding' ),
-                'content' => '<h3>' . esc_html__( 'Developers', 'b3-onboarding' ) . '</h3>
-                        <p>' . sprintf( __( 'If you\'re a developer, you might want to check out <a href="%s" rel="noopener" target="_blank">this FAQ topic</a> (if you haven\'t already).', 'b3-onboarding' ), esc_url( B3_PLUGIN_SITE . '/faq/localhost-development/' ) ) . '</p>' .
-                        '<p>' . esc_html__( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) . '</p>'
+                // 'content' => '<h3>' . esc_html__( 'Developers', 'b3-onboarding' ) . '</h3>
+                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Developers', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', sprintf( __( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/localhost-development/' ), __( 'this FAQ topic', 'b3-onboarding' ) ) ) ) .
+                    sprintf( '<p>%s</p>', __( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) )
             ) );
 
             get_current_screen()->set_help_sidebar(
-                '<p><strong>' . esc_html__( 'More info', 'b3-onboarding' ) . '</strong></p>' .
-                '<p><a href="' . B3_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo">' . __( 'Official site', 'b3-onboarding' ) . '</a></p>'
+                sprintf( '<p><b>%s</b></p>', esc_html__( 'More info', 'b3-onboarding' ) ) .
+                sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', __( 'Official site', 'b3-onboarding' ) ) )
             );
         }
     }
