@@ -436,11 +436,9 @@
     /**
      * Echo error/info message above a (custom) form
      *
-     * @param bool $attributes
+     * @param $attributes
      *
-     * @return bool
-     * @since 2.0.0
-     *
+     * @return void
      */
     function b3_render_form_messages( $attributes = [] ) {
 
@@ -507,8 +505,6 @@
                 echo '</div>';
             }
         }
-
-        return false;
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
 
