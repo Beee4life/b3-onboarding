@@ -154,11 +154,11 @@
             ?>
             <div class="b3_form-element b3_form-element--login">
                 <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="text" name="user_name" id="b3_user_login" class="b3_form--input" autocapitalize="none" autocomplete="off" spellcheck="false" maxlength="60" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+                <input type="text" name="user_name" id="b3_user_login" class="b3_form--input" autocapitalize="none" autocomplete="off" spellcheck="false" maxlength="60" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
             </div>
             <div class="b3_form-element b3_form-element--email">
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
             </div>
 
             <?php if ( 'all' == $registration_type ) { ?>
@@ -179,14 +179,14 @@
                 ?>
                 <div class="b3_form-element b3_form-element--login">
                     <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+                    <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
                 </div>
             <?php } else { ?>
                 <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
             <?php } ?>
             <div class="b3_form-element b3_form-element--email">
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
             </div>
             <?php
         }
@@ -207,9 +207,9 @@
         if ( $activate_first_last ) {
             $first_last_required = get_option( 'b3_first_last_required' );
             $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : false;
-            $first_name          = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'First' : $first_name;
+            $first_name          = is_localhost() ? 'First' : $first_name;
             $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : false;
-            $last_name           = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? 'Last' : $last_name;
+            $last_name           = is_localhost() ? 'Last' : $last_name;
             $required            = ( true == $first_last_required ) ? ' required="required"' : false;
 
             do_action( 'b3_do_before_first_last_name' );

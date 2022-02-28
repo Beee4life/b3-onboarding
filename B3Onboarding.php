@@ -115,11 +115,12 @@
                 add_filter( 'login_headerurl',                      array( $this, 'b3_login_logo_url' ) );
                 add_filter( 'login_headertext',                     array( $this, 'b3_login_logo_url_title' ) );
 
+                include 'includes/true-false.php';
                 include 'includes/actions-b3.php';
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
                 include 'includes/do-stuff.php';
-                if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
+                if ( is_localhost() ) {
                     include 'includes/examples.php';
                 }
                 include 'includes/filters-b3.php';
@@ -351,7 +352,7 @@
                  */
                 if ( is_main_site() ) {
                     include 'includes/admin/dashboard-widget.php';
-                    if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
+                    if ( is_localhost() ) {
                         include 'includes/admin/dashboard-widget-debug.php';
                     }
                 }
@@ -1863,10 +1864,10 @@
                     // beta notice
                     if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                         $message = sprintf( __( "You're using a beta version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
-                        if ( ! defined( 'LOCALHOST' ) || defined( 'LOCALHOST' ) && false == LOCALHOST ) {
-                            echo '<div class="error"><p>' . $message . '.</p></div>';
-                        } else {
+                        if ( is_localhost() ) {
                             echo '<div class="notice notice-warning"><p>' . $message . '.</p></div>';
+                        } else {
+                            echo '<div class="error"><p>' . $message . '.</p></div>';
                         }
                     }
                 }

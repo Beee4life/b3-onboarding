@@ -9,7 +9,7 @@
         exit;
     }
 
-    $localhost_email = ( defined( 'LOCALHOST' ) && true == LOCALHOST ) ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : '';
+    $localhost_email = is_localhost() ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : '';
 
     do_action( 'b3_add_form_messages', $attributes );
 ?>
