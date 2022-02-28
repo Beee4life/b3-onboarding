@@ -11,7 +11,7 @@
 
     function b3_user_register_settings() {
 
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( apply_filters( 'b3_user_cap', 'manage_options' ) ) ) {
             wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-onboarding' ) );
         }
         ?>

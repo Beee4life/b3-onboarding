@@ -317,16 +317,16 @@
              */
             public function b3_add_admin_pages() {
                 include 'admin/admin-page.php';
-                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', 'manage_options', 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                     include 'admin/user-approval-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), 'manage_options', 'b3-user-approval', 'b3_user_approval' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
 
                 if ( true == get_option( 'b3_debug_info' ) || is_localhost() ) {
                     include 'admin/debug-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), 'manage_options', 'b3-debug', 'b3_debug_page' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
                 }
             }
 
