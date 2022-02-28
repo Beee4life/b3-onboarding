@@ -62,7 +62,7 @@
     function b3_default_email_footer() {
         $anchor = ( is_multisite() ) ? '%network_name%' : '%blog_name%';
 
-        return sprintf( __( 'This is an automated email from the website <a href="%s">%s</a>.', 'b3-onboarding' ), '%home_url%', $anchor );
+        return sprintf( __( 'This is an automated email from the website %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', $anchor ) );
     }
 
 
@@ -144,13 +144,12 @@
      * @return string
      */
     function b3_default_account_activated_message() {
-
         $message = b3_get_email_intro( __( 'Hi', 'b3-onboarding' ) );
         $message .= '<br /><br />' . "\n";
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
-            $message .= sprintf( __( 'you have confirmed your email address and can now set your password through <a href="%s">this link</a>.', 'b3-onboarding' ), '%lostpass_url%' ) . "\n";
+            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now set your password through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%lostpass_url%', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
         } else {
-            $message .= sprintf( __( 'you have confirmed your email address and can now login <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_login_url() ) . "\n";
+            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'login here', 'b3-onboarding' ) ) ) . "\n";
         }
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
@@ -183,7 +182,7 @@
     function b3_default_request_access_message_admin() {
         $approval_link                = b3_get_user_approval_link();
         $user_approval_page           = ( false != $approval_link ) ? $approval_link : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
-        $request_access_message_admin = sprintf( __( 'A new user has requested access. You can approve/deny him/her on the "<a href="%s">User approval</a>" page.', 'b3-onboarding' ), $user_approval_page );
+        $request_access_message_admin = sprintf( __( 'A new user has requested access. You can approve/deny him/her on the "%s" page.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $user_approval_page, __( 'User approval', 'b3-onboarding' ) ) );
 
         return $request_access_message_admin;
     }
@@ -234,9 +233,9 @@
      */
     function b3_default_account_approved_message() {
         if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
-            return sprintf( __( 'Welcome to %s. Your account has been approved and you can now login <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_login_url() ) );
+            return sprintf( __( 'Welcome to %s. Your account has been approved and you can now login %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_login_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
         } else {
-            return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password <a href="%s">here</a>.', 'b3-onboarding' ), get_option( 'blogname' ), esc_url( b3_get_lostpassword_url() ) );
+            return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
         }
     }
 
@@ -291,7 +290,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= __( 'To (re)set your password, go to <a href="%reset_url%">this page</a>.', 'b3-onboarding' ) . "\n";
+        $message .= sprintf(__( 'To (re)set your password, go to %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%reset_url%', esc_html__( 'this page', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
@@ -327,7 +326,7 @@
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
-            $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
+            $message .= sprintf( __( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
             $message .= '<br /><br />' . "\n";
         }
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
@@ -350,7 +349,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'You can set your password <a href="%s">here</a>.', 'b3-onboarding' ), b3_get_lostpassword_url() ) . "\n";
+        $message .= sprintf( __( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
@@ -384,7 +383,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= sprintf( __( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= sprintf( __( 'You only need to confirm your email address through <a href="%s">this link</a>.', 'b3-onboarding' ), '%activation_url%' ) . "\n";
+        $message .= sprintf( __( 'You only need to confirm your email address through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $message .= '<br /><br />' . "\n";
@@ -414,7 +413,7 @@
     function b3_default_wpmu_activate_user_message() {
         $message = __( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= __( 'To activate your account, please click <a href="%2$s">this link</a>.', 'b3-onboarding' ) . "\n";
+        $message .= sprintf( __( 'To activate your account, please click %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%2$s', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
 
@@ -448,7 +447,7 @@
         $message .= '<br />' . "\n";
         $message .= __( 'Password: %3$s', 'b3-onboarding' ) . "\n";
         $message .= '<br />' . "\n";
-        $message .= __( 'You can login <a href="%4$s">here</a>.', 'b3-onboarding' ) . "\n";
+        $message .= sprintf( __( 'You can login %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%4$s', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'The Team @ %5$s', 'b3-onboarding' );
 
@@ -480,7 +479,7 @@
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= __( 'Disable these notifications <a href="%settings_url%">here</a>.', 'b3-onboarding' );
+        $message .= sprintf( __( 'Disable these notifications %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%settings_url%', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
         $message .= '<br /><br />';
@@ -542,7 +541,7 @@
             $message .= 'Hi %user_login%' . ",\n";
             $message .= '<br /><br />' . "\n";
         }
-        $message .= __( 'To activate your registration, please click <a href="%activation_url%">here</a>.', 'b3-onboarding') . "\n";
+        $message .= sprintf( __( 'To activate your registration, please click %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
@@ -581,7 +580,7 @@
             $message .= 'Hi %user_login%' . ",\n";
             $message .= '<br /><br />' . "\n";
         }
-        $message .= __( 'Your new site has been successfully set up at <a href="%home_url%">%home_url%</a>.', 'b3-onboarding') . "\n";
+        $message .= sprintf( __( 'Your new site has been successfully set up at %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', '%home_url%' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
         $message .= '<br />' . "\n";
@@ -589,7 +588,7 @@
         $message .= '<br />' . "\n";
         $message .= __( 'Password', 'b3-onboarding' ) . ': ' . '%user_password%' . "\n";
         $message .= '<br /><br />' . "\n";
-        $message .= __( 'Login here: <a href="%login_url%">%login_url%</a>', 'b3-onboarding' ) . "\n";
+        $message .= sprintf( __( 'Login here: %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%login_url%', '%login_url%' ) ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Enjoy your new site.', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
@@ -633,7 +632,7 @@
      * @return string
      */
     function b3_default_logged_in_registration_only_message() {
-        return sprintf( __( 'You must first <a href="%s">log in</a>, and then you can create a new site.' ), wp_login_url() );
+        return sprintf( __( 'You must first %s, and then you can create a new site.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_login_url(), esc_html__( 'log in', 'b3-onboarding' ) ) ) . "\n";
     }
 
 
@@ -680,7 +679,7 @@
             $privacy_page_object = get_post( $privacy_page );
             if ( is_object( $privacy_page_object ) ) {
                 $link    = get_the_permalink( $privacy_page_object );
-                $message = sprintf( __( 'Accept <a href="%s" target="_blank" rel="noopener">privacy settings</a>', 'b3-onboarding' ), esc_url( $link ) );
+                $message = sprintf( __( 'Accept %s', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html__( 'privacy settings', 'b3-onboarding' ) ) ) . "\n";
             }
         }
 
