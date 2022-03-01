@@ -639,7 +639,6 @@
 
                             if ( get_option( 'b3_honeypot' ) ) {
                                 if ( isset( $_POST[ 'b3_pooh' ] ) ) {
-                                    // error because is robot
                                     $errors = new WP_Error();
                                     $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
 
