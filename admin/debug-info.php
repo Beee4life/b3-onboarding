@@ -128,7 +128,7 @@
     </div>
 
     <div class="b3-debug-right">
-        <div class="b3-debug-header">B3 VALUES</div>
+        <div class="b3-debug-header">B3 META VALUES</div>
         <table class="b3_table b3_table--debug b3_table--debug-meta">
             <?php
                 $b3_values = b3_get_all_custom_meta_keys();
@@ -142,7 +142,7 @@
                         if ( 'b3_email_template' == $meta_key ) {
                             $value = 'Set';
                         }
-                        $meta_value = ($value) ? $value : esc_html__( 'empty', 'b3-onboarding');
+                        $meta_value = ($value) ? $value : esc_html__( 'not set', 'b3-onboarding');
                     }
 
                     echo '<tr>';
