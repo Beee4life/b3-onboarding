@@ -1928,7 +1928,6 @@
              * @param $site
              */
             public function b3_after_create_site( $site ) {
-
                 // create necessary pages
                 b3_setup_initial_pages( $site->blog_id );
                 // set default values
