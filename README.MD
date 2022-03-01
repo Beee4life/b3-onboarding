@@ -131,7 +131,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * added option to request access to create a site (multisite)
 * added reCaptcha v3
 * added user input for disallowed usernames
-* alot of MU stuff
+* a lot of MU stuff
 
 2.5.0
 * improve html/css for account page
