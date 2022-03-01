@@ -334,7 +334,6 @@
                 $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a last name.', 'b3-onboarding' ) ) );
             }
         }
-        error_log('HIT');
 
         // @TODO: check on MS
         if ( 1 == get_option( 'b3_activate_recaptcha' ) ) {
