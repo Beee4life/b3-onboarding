@@ -46,9 +46,9 @@
             <?php } ?>
 
             <?php if ( $activate_recaptcha && 3 == $recaptcha_version ) { ?>
-                <input type="submit" class="button g-recaptcha" data-sitekey="<?php echo $attributes[ 'recaptcha' ][ 'public' ]; ?>" data-callback="onSubmit" data-action="submit" value="<?php echo $submit_label; ?>" />
+                <?php echo sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', $attributes[ 'recaptcha' ][ 'public' ], $submit_label ); ?>
             <?php } else { ?>
-                <input type="submit" class="button" value="<?php echo $submit_label; ?>" />
+                <?php echo sprintf( '<input type="submit" class="button" value="%s" />', $submit_label ); ?>
             <?php } ?>
         </div>
 
