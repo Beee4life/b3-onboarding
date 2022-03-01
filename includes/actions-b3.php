@@ -463,38 +463,40 @@
                     $messages[] = $message;
                 }
             } else {
-                if ( isset( $attributes[ 'template' ] ) && 'lostpassword' == $attributes[ 'template' ] ) {
-                    $show_errors = true;
-                    $messages[]  = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
-                } elseif ( isset( $attributes[ 'template' ] ) && 'register' == $attributes[ 'template' ] ) {
-                    if ( 'request_access' == $registration_type ) {
-                        $request_access_message = __( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
-                        if ( false != $request_access_message ) {
-                            $show_errors = true;
-                            $messages[]  = $request_access_message;
-                        }
-                    } elseif ( 'email_activation' == $registration_type ) {
-                        $registration_message = apply_filters( 'b3_message_above_registration', false );
-                        if ( false != $registration_message ) {
-                            $show_errors = true;
-                            $messages[]  = $registration_message;
-                        }
-                    } else {
-                        if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
-                            $message = false;
-                            if ( 'closed' == $registration_type ) {
-                                $message = b3_get_registration_closed_message();
+                if ( isset( $attributes[ 'template' ] ) ) {
+                    if ( 'lostpassword' == $attributes[ 'template' ] ) {
+                        $show_errors = true;
+                        $messages[]  = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
+                    } elseif ( 'register' == $attributes[ 'template' ] ) {
+                        if ( 'request_access' == $registration_type ) {
+                            $request_access_message = __( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
+                            if ( false != $request_access_message ) {
+                                $show_errors = true;
+                                $messages[]  = $request_access_message;
                             }
-                            $registration_message = apply_filters( 'b3_message_above_registration', $message );
+                        } elseif ( 'email_activation' == $registration_type ) {
+                            $registration_message = apply_filters( 'b3_message_above_registration', false );
                             if ( false != $registration_message ) {
                                 $show_errors = true;
                                 $messages[]  = $registration_message;
                             }
+                        } else {
+                            if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
+                                $message = false;
+                                if ( 'closed' == $registration_type ) {
+                                    $message = b3_get_registration_closed_message();
+                                }
+                                $registration_message = apply_filters( 'b3_message_above_registration', $message );
+                                if ( false != $registration_message ) {
+                                    $show_errors = true;
+                                    $messages[]  = $registration_message;
+                                }
+                            }
                         }
+                    } elseif ( 'resetpass' == $attributes[ 'template' ] ) {
+                        $show_errors = true;
+                        $messages[]  = esc_html__( 'Enter your new password.', 'b3-onboarding' );
                     }
-                } elseif ( isset( $attributes[ 'template' ] ) && 'resetpass' == $attributes[ 'template' ] ) {
-                    $show_errors = true;
-                    $messages[]  = esc_html__( 'Enter your new password.', 'b3-onboarding' );
                 }
             }
 
