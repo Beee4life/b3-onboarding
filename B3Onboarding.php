@@ -1897,7 +1897,7 @@
 
                 global $pagenow;
                 if ( is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
-                    echo sprintf( '<div class="notice notice-info"><p>'. __( "%s takes control over the 'Membership' option. You can change this %s.", 'b3-onboarding' ) . '.</p></div>',
+                    echo sprintf( '<div class="notice notice-info"><p>'. __( "%s takes control over the 'Membership' option. You can change this %s.", 'b3-onboarding' ) . '</p></div>',
                         'B3 OnBoarding',
                         sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) )
                     );
