@@ -582,7 +582,7 @@
 
 
             /**
-             * Checks that the reCAPTCHA parameter sent with the registration
+             * Checks that the reCAPTCHA parameter (both versions) sent with the registration
              * request is valid.
              *
              * @return bool True if the CAPTCHA is OK, otherwise false.
@@ -597,7 +597,6 @@
                 $recaptcha_secret = get_option( 'b3_recaptcha_secret' );
                 $success          = false;
                 if ( false != $recaptcha_secret ) {
-                    // Verify the captcha response from Google
                     $response = wp_remote_post(
                         'https://www.google.com/recaptcha/api/siteverify',
                         array(
