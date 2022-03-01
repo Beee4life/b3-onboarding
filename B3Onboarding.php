@@ -638,16 +638,20 @@
                             $registration_type = get_option( 'b3_registration_type' );
                             $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( $_POST[ 'user_email' ] ) : false;
 
+                            if ( get_option( 'b3_honeypot' ) ) {
+                                if ( isset( $_POST[ 'b3_pooh' ] ) ) {
+                                    // error because is robot
+                                    $errors = new WP_Error();
+                                    $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
+
+                                    return $errors;
+                                }
+                            }
+
                             if ( 'blog' != $registration_type && ! is_email( $user_email ) ) {
                                 $redirect_url = add_query_arg( 'registration-error', 'invalid_email', $redirect_url );
                                 wp_safe_redirect( $redirect_url );
                                 exit;
-                            }
-
-                            if ( is_multisite() ) {
-                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( $_POST[ 'user_name' ] ) : false;
-                            } else {
-                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
                             }
 
                             if ( isset( $_POST[ 'first_name' ] ) ) {
@@ -655,6 +659,12 @@
                             }
                             if ( isset( $_POST[ 'last_name' ] ) ) {
                                 $meta_data[ 'last_name' ] = sanitize_text_field( $_POST[ 'last_name' ] );
+                            }
+
+                            if ( is_multisite() ) {
+                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( $_POST[ 'user_name' ] ) : false;
+                            } else {
+                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
                             }
 
                             if ( ! is_multisite() ) {
@@ -1623,15 +1633,6 @@
                     'role'       => $role,
                 );
                 $use_custom_passwords = true;
-
-                if ( get_option( 'b3_honeypot' ) ) {
-                    if ( isset( $_POST[ 'b3_pooh' ] ) ) {
-                        // error because is robot
-                        $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
-
-                        return $errors;
-                    }
-                }
 
                 if ( false == $registration_with_email_only ) {
                     if ( username_exists( $user_login ) ) {
