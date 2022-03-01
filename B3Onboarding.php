@@ -661,13 +661,8 @@
                                 $meta_data[ 'last_name' ] = sanitize_text_field( $_POST[ 'last_name' ] );
                             }
 
-                            if ( is_multisite() ) {
-                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( $_POST[ 'user_name' ] ) : false;
-                            } else {
-                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
-                            }
-
                             if ( ! is_multisite() ) {
+                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
                                 $register = true;
                                 $role     = get_option( 'default_role', 'subscriber' );
                                 if ( 'none' == $registration_type ) {
@@ -729,7 +724,9 @@
 
                             } else {
                                 // if is_multisite
-                                $register = false;
+                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( $_POST[ 'user_name' ] ) : false;
+                                $register   = false;
+
                                 if ( is_main_site() ) {
                                     if ( 'none' == $registration_type ) {
                                         // Registration closed, display error
