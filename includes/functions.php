@@ -1001,7 +1001,8 @@
      */
     function b3_get_preview_link( $id ) {
         if ( $id ) {
-            return sprintf( __( '<a href="%s" target="_blank" rel="noopener">%s</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
+            return sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( B3_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
+            // return sprintf( __( '<a href="%s" target="_blank" rel="noopener">%s</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
         }
 
         return false;
