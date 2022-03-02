@@ -43,12 +43,8 @@
                     'template' => 'register',
                 );
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
-
-                if ( is_multisite() ) {
-                    $registration_type = get_option( 'b3_registration_type' );
-                } else {
-                    $registration_type = get_option( 'b3_registration_type' );
-                }
+    
+                $registration_type                 = get_option( 'b3_registration_type' );
                 $attributes[ 'registration_type' ] = $registration_type;;
 
                 if ( is_user_logged_in() && 'blog' != $registration_type && ! current_user_can( 'manage_network' ) ) {
@@ -61,7 +57,6 @@
                         switch_to_blog( $_GET[ 'site_id' ] );
                         $home_url  = home_url( '/' );
                         $site_info = get_site( $_GET[ 'site_id' ] );
-                        // @TODO: document this filter
                         $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
                         restore_current_blog();
 
@@ -86,9 +81,13 @@
                 }
 
                 if ( 'none' == $registration_type && ! current_user_can( 'manage_network' ) ) {
+                    // registration closed
                     return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) );
+                    
                 } elseif ( 'blog' == $registration_type && ! is_user_logged_in() ) {
+                    // logged in registration only
                     return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) );
+                    
                 } else {
 
                     $attributes[ 'errors' ] = array();
@@ -117,6 +116,7 @@
                             }
                             $error_count++;
                         }
+                        
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                         // dummy is for demonstration setup
                         if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
@@ -127,7 +127,6 @@
                     }
 
                     if ( 1 == get_option( 'b3_activate_recaptcha' ) && in_array( $attributes[ 'template' ], get_option( 'b3_recaptcha_on', [ 'register' ] ) ) ) {
-                        // add recaptcha stuff
                         $recaptcha_public  = get_option( 'b3_recaptcha_public' );
                         $recaptcha_version = get_option( 'b3_recaptcha_version' );
 
@@ -168,7 +167,9 @@
 
                 // Pass the redirect parameter to the WordPress login functionality: but
                 // only if a valid redirect URL has been passed as request parameter, use it.
-                $attributes[ 'redirect' ] = false;
+                $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
+                $attributes[ 'redirect' ]          = false;
+                
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
@@ -216,9 +217,8 @@
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
-
-                $attributes[ 'errors' ]            = $errors;
-                $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );;
+    
+                $attributes[ 'errors' ] = $errors;
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
