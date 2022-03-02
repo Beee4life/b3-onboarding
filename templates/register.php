@@ -24,7 +24,6 @@
         <?php
             do_action( 'b3_add_hidden_fields_registration' );
 
-            // add vars for single site
             if ( 'blog' != $attributes[ 'registration_type' ] ) {
                 do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
             }
@@ -34,6 +33,7 @@
             } elseif ( is_main_site() ) {
                 do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
             }
+            // @TODO: look into adding do_action register_form
             do_action( 'b3_register_form' );
             do_action( 'b3_do_before_submit_registration_form' );
         ?>
