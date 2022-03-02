@@ -267,7 +267,7 @@
      * @return string
      */
     function b3_default_account_rejected_message() {
-        $message = esc_html__( "We're sorry to tell you, your account has been rejected.", 'b3-onboarding' );
+        $message = sprintf( esc_html__( "We're sorry to tell you, your request for access to %s has been rejected.", 'b3-onboarding' ), get_option( 'blogname' ) );
         $message .= '<br><br>';
         $message .= b3_default_greetings();
 
