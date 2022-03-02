@@ -125,7 +125,7 @@
 
 
     /**
-     * Return default account rejected subject (user)
+     * Return default account activated subject (user)
      *
      * @since 2.0.0
      *
@@ -159,7 +159,7 @@
 
 
     /**
-     * Return default account approved subject (admin)
+     * Return default request access subject (admin)
      *
      * @since 2.0.0
      *
@@ -171,7 +171,7 @@
 
 
     /**
-     * Return default account approved message (admin)
+     * Return default request access message (admin)
      *
      * @since 2.0.0
      *
@@ -187,7 +187,7 @@
 
 
     /**
-     * Return default account approved subject (user)
+     * Return default request access subject (user)
      *
      * @since 2.0.0
      *
@@ -199,7 +199,7 @@
 
 
     /**
-     * Return default account approved message (user)
+     * Return default request access message (user)
      *
      * @since 2.0.0
      *
@@ -236,10 +236,14 @@
      */
     function b3_default_account_approved_message() {
         if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
-            return sprintf( __( 'Welcome to %s. Your account has been approved and you can now login %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_login_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
+            $message = sprintf( __( 'Welcome to %s. Your account has been approved and you can now login %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_login_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
         } else {
-            return sprintf( __( 'Welcome to %s. Your account has been approved and you can now set your password %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
+            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
         }
+        $message .= '<br><br>';
+        $message .= b3_default_greetings();
+
+        return $message;
     }
 
 
@@ -263,7 +267,11 @@
      * @return string
      */
     function b3_default_account_rejected_message() {
-        return esc_html__( 'Your account request has been rejected.', 'b3-onboarding' );
+        $message = esc_html__( "We're sorry to tell you, your account has been rejected.", 'b3-onboarding' );
+        $message .= '<br><br>';
+        $message .= b3_default_greetings();
+
+        return $message;
     }
 
 
