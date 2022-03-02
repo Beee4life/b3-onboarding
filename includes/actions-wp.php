@@ -220,19 +220,21 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        // @TODO: check if can be replaced by filter
         if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
-            // @TODO: maybe inform admin
+            $subject = b3_default_request_access_subject_user();
+            $message = b3_default_request_access_message_user();
+            do_action( 'b3_inform_admin', 'request_access' );
+            
         } else {
-            $blog_id      = b3_get_signup_id( $domain );
-            $subject      = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
-            $message      = b3_get_wpmu_activate_user_blog_message();
-            $message      = b3_replace_template_styling( $message );
-            $message      = strtr( $message, b3_replace_email_vars( array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
-            $message      = htmlspecialchars_decode( stripslashes( $message ) );
-
-            wp_mail( $user_email, $subject, $message, [] );
+            $blog_id = b3_get_signup_id( $domain );
+            $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
+            $message = b3_get_wpmu_activate_user_blog_message();
         }
+        $message      = b3_replace_template_styling( $message );
+        $message      = strtr( $message, b3_replace_email_vars( array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
+        $message      = htmlspecialchars_decode( stripslashes( $message ) );
+
+        wp_mail( $user_email, $subject, $message, [] );
     }
     add_action( 'after_signup_site', 'b3_override_new_mu_user_blog_email', 10, 6 );
 
