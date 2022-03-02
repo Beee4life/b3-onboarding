@@ -12,7 +12,7 @@
 
         return $fields;
     }
-    add_filter( 'b3_hidden_fields', 'b3_add_hidden_fields' );
+    add_filter( 'b3_hidden_fields', 'b3_add_hidden_fields', 5 );
 
 
     /**
