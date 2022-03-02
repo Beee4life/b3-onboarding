@@ -249,7 +249,7 @@
                     <?php b3_get_close(); ?>
 
                 <?php } ?>
-            <?php } // end is_main_site ?>
+            <?php } ?>
 
             <?php b3_get_submit_button(); ?>
         </form>
