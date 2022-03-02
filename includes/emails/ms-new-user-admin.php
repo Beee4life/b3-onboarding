@@ -1,6 +1,6 @@
 <?php
     /*
-     * Input fields for 'New user' email (admin)
+     * Input fields for 'New wpmu user' email (admin)
      *
      * @since 3.0
      */
