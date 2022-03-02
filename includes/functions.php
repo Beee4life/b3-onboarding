@@ -1042,3 +1042,42 @@
 
         return $tabs;
     }
+    
+    
+    /**
+     * Checks that the reCAPTCHA parameter (both versions) sent with the registration
+     * request is valid.
+     *
+     * @return bool True if the CAPTCHA is OK, otherwise false.
+     */
+    function b3_verify_recaptcha() {
+        if ( isset ( $_POST[ 'g-recaptcha-response' ] ) ) {
+            $recaptcha_response = $_POST[ 'g-recaptcha-response' ];
+        } else {
+            return false;
+        }
+    
+        $recaptcha_secret = get_option( 'b3_recaptcha_secret' );
+        $success          = false;
+        if ( false != $recaptcha_secret ) {
+            $response = wp_remote_post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                array(
+                    'body' => array(
+                        'secret' => $recaptcha_secret,
+                        'response' => $recaptcha_response
+                    )
+                )
+            );
+        
+            $response_body = wp_remote_retrieve_body( $response );
+            $response_code = wp_remote_retrieve_response_code( $response );
+        
+            if ( 200 == $response_code && $response && is_array( $response ) ) {
+                $decoded_response = json_decode( $response_body );
+                $success          = $decoded_response->success;
+            }
+        }
+    
+        return $success;
+    }

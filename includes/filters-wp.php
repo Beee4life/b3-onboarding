@@ -337,8 +337,7 @@
 
         // @TODO: check on MS
         if ( 1 == get_option( 'b3_activate_recaptcha' ) ) {
-            $b3ob = new B3Onboarding();
-            if ( ! $b3ob->b3_verify_recaptcha() ) {
+            if ( b3_verify_recaptcha() ) {
                 $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'Recaptcha failed.', 'b3-onboarding' ) ) );
             }
         }
