@@ -17,7 +17,7 @@
         $first_last_required          = get_option( 'b3_first_last_required' );
         $honeypot                     = get_option( 'b3_honeypot' );
         $privacy                      = get_option( 'b3_privacy' );
-        $privacy_page                 = get_option( 'b3_privacy_page' );
+        $privacy_page                 = get_option( 'b3_privacy_page_id' );
         $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
         $privacy_text                 = get_option( 'b3_privacy_text' );
         $recaptcha                    = get_option( 'b3_activate_recaptcha' );
@@ -233,12 +233,12 @@
 
                     <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_privacy_page"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
+                            <label for="b3_privacy_page_id"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC', 'suppress_filters' => false ); ?>
                             <?php $all_pages = get_posts( $page_args ); ?>
-                            <select name="b3_privacy_page" id="b3_privacy_page">
+                            <select name="b3_privacy_page_id" id="b3_privacy_page_id">
                                 <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
                                 <?php foreach( $all_pages as $page ) { ?>
                                     <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>

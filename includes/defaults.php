@@ -673,7 +673,7 @@
      */
     function b3_default_privacy_text() {
         $message      = __( 'Accept privacy settings', 'b3-onboarding' );
-        $privacy_page = get_option( 'b3_privacy_page' );
+        $privacy_page = get_option( 'b3_privacy_page_id' );
 
         if ( false != $privacy_page ) {
             $privacy_page_object = get_post( $privacy_page );

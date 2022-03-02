@@ -141,10 +141,10 @@
                     delete_option( 'b3_privacy' );
                 }
 
-                if ( isset( $_POST[ 'b3_privacy_page' ] ) ) {
-                    update_option( 'b3_privacy_page', $_POST[ 'b3_privacy_page' ] );
+                if ( isset( $_POST[ 'b3_privacy_page_id' ] ) ) {
+                    update_option( 'b3_privacy_page_id', $_POST[ 'b3_privacy_page_id' ] );
                 } else {
-                    delete_option( 'b3_privacy_page' );
+                    delete_option( 'b3_privacy_page_id' );
                 }
 
                 if ( isset( $_POST[ 'b3_privacy_text' ] ) ) {

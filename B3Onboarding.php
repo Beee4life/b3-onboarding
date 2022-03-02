@@ -202,6 +202,7 @@
                 update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
                 update_option( 'b3_disable_admin_notification_new_user', 1 );
                 update_option( 'b3_disable_user_notification_password_change', 1 );
+                update_option( 'b3ob_version', $this->settings[ 'version' ] );
 
                 if ( class_exists( 'Disable_Comments' ) ) {
                     update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
@@ -222,7 +223,7 @@
                 }
 
                 if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
-                    update_option( 'b3_privacy_page', get_option( 'wp_page_for_privacy_policy' ) );
+                    update_option( 'b3_privacy_page_id', get_option( 'wp_page_for_privacy_policy' ) );
                 }
 
                 if ( false != $blog_id ) {
