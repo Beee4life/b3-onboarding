@@ -16,13 +16,13 @@
      */
     function b3_get_all_custom_meta_keys() {
 
-        // @TODO: keep this list updated
+        // Keep this list updated
         $meta_keys = array(
             'b3_account_activated_message',
             'b3_account_activated_subject',
             'b3_account_approved_message',
             'b3_account_approved_subject',
-            'b3_account_page_id', // set on activate
+            'b3_account_page_id',
             'b3_account_rejected_message',
             'b3_account_rejected_subject',
             'b3_activate_custom_emails',
@@ -41,9 +41,10 @@
             'b3_dashboard_widget',
             'b3_debug_info',
             'b3_disable_action_links',
-            'b3_disable_admin_notification_new_user', // @TODO: check
+            'b3_disable_admin_notification_new_user',
             'b3_disable_admin_notification_password_change',
             'b3_disable_delete_user_email',
+            'b3_disable_user_notification_password_change',
             'b3_email_activation_message',
             'b3_email_activation_subject',
             'b3_email_styling',
@@ -64,7 +65,7 @@
             'b3_lost_password_page_id',
             'b3_main_logo',
             'b3_new_user_message',
-            'b3_new_user_notification_addresses', // @TODO: check
+            'b3_new_user_notification_addresses',
             'b3_new_user_subject',
             'b3_notification_sender_email',
             'b3_notification_sender_name',
@@ -76,17 +77,17 @@
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
             'b3_recaptcha_version',
-            'b3_register_page_id', // set on activate
+            'b3_register_page_id',
             'b3_registration_closed_message',
-            'b3_registration_type', // set on activate
+            'b3_registration_type',
             'b3_request_access_message_admin',
             'b3_request_access_message_user',
             'b3_request_access_notification_addresses',
             'b3_request_access_subject_admin',
             'b3_request_access_subject_user',
-            'b3_reset_password_page_id', // set on activate
-            'b3_restrict_admin', // set on activate
-            'b3_sidebar_widget', // set on activate
+            'b3_reset_password_page_id',
+            'b3_restrict_admin',
+            'b3_sidebar_widget',
             'b3_use_popup',
             'b3_users_may_delete',
             'b3_version',
@@ -229,7 +230,7 @@
         $registration_options = array();
         $closed_option        = array(
             array(
-                'value' => 'none', // @TODO: maybe change to none
+                'value' => 'none',
                 'label' => esc_html__( 'Closed (for everyone)', 'b3-onboarding' ),
             ),
         );
@@ -1040,4 +1041,43 @@
         }
 
         return $tabs;
+    }
+    
+    
+    /**
+     * Checks that the reCAPTCHA parameter (both versions) sent with the registration
+     * request is valid.
+     *
+     * @return bool True if the CAPTCHA is OK, otherwise false.
+     */
+    function b3_verify_recaptcha() {
+        if ( isset ( $_POST[ 'g-recaptcha-response' ] ) ) {
+            $recaptcha_response = $_POST[ 'g-recaptcha-response' ];
+        } else {
+            return false;
+        }
+    
+        $recaptcha_secret = get_option( 'b3_recaptcha_secret' );
+        $success          = false;
+        if ( false != $recaptcha_secret ) {
+            $response = wp_remote_post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                array(
+                    'body' => array(
+                        'secret' => $recaptcha_secret,
+                        'response' => $recaptcha_response
+                    )
+                )
+            );
+        
+            $response_body = wp_remote_retrieve_body( $response );
+            $response_code = wp_remote_retrieve_response_code( $response );
+        
+            if ( 200 == $response_code && $response && is_array( $response ) ) {
+                $decoded_response = json_decode( $response_body );
+                $success          = $decoded_response->success;
+            }
+        }
+    
+        return $success;
     }

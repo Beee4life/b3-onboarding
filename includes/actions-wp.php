@@ -4,7 +4,7 @@
      */
 
     /**
-     * Add custom fields to WordPress' default register form
+     * Add custom fields to WordPress' default register form hook
      *
      * @since 1.0.0
      */

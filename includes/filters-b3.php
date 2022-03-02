@@ -12,7 +12,7 @@
 
         return $fields;
     }
-    add_filter( 'b3_hidden_fields', 'b3_add_hidden_fields' );
+    add_filter( 'b3_hidden_fields', 'b3_add_hidden_fields', 5 );
 
 
     /**
@@ -28,16 +28,15 @@
             $input_class = '';
 
             $fields[] = [
-                'container_class' => 'honeypot',
+                'container_class' => 'pooh',
                 'id'              => $id,
                 'input_class'     => $input_class,
-                'label'           => 'Checkbox',
+                'label'           => false,
                 'options'         => [
                     [
-                        // 'input_class' => $input_class . '--checkbox',
-                        'label'       => 'Checkbox label 1',
+                        'label'       => '',
                         'name'        => $id,
-                        'value'       => 'value1',
+                        'value'       => '1',
                     ],
                 ],
                 'required'        => false,

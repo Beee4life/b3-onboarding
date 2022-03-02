@@ -15,7 +15,7 @@
             'b3_account_rejected_message'              => array( 'string' ),
             'b3_account_rejected_subject'              => array( 'string' ),
             'b3_custom_register_inform'                => array( 'string' ),
-            'b3_dashboard_url'                         => array( 'string' ), // @TODO: check
+            'b3_dashboard_url'                         => array( 'string' ),
             'b3_disable_action_links'                  => array( 'bool', 'string' ),
             'b3_disallowed_usernames'                  => array( 'array' ),
             'b3_email_activation_message_user'         => array( 'string' ),
@@ -24,7 +24,7 @@
             'b3_email_styling'                         => array( 'string' ),
             'b3_email_template'                        => array( 'string' ),
             'b3_extra_fields'                          => array( 'array', 'extra' ),
-            'b3_extra_fields_validation'               => array( 'array' ), // @TODO: check
+            'b3_extra_fields_validation'               => array( 'array' ),
             'b3_hidden_fields'                         => array( 'array', 'hidden' ),
             'b3_link_color'                            => array( 'hex_color' ),
             'b3_localhost'                             => array( 'bool' ),
@@ -43,7 +43,7 @@
             'b3_new_user_notification_addresses'       => array( 'email' ),
             'b3_new_user_subject'                      => array( 'string' ),
             'b3_notification_sender_email'             => array( 'email' ),
-            'b3_notification_sender_name'              => array( 'string' ), // @TODO: check
+            'b3_notification_sender_name'              => array( 'string' ),
             'b3_privacy_text'                          => array( 'string' ),
             'b3_redirect_after_register'               => array( 'url' ),
             'b3_register_for'                          => array( 'string' ),
@@ -54,7 +54,7 @@
             'b3_request_access_message_user'           => array( 'string' ),
             'b3_request_access_subject_admin'          => array( 'string' ),
             'b3_request_access_subject_user'           => array( 'string' ),
-            'b3_reserved_usernames'                    => array( 'array' ), // @TODO: check
+            'b3_reserved_usernames'                    => array( 'array' ),
             'b3_signup_for_site'                       => array( 'string' ),
             'b3_signup_for_user'                       => array( 'string' ),
             'b3_user_cap'                              => array( 'string' ),

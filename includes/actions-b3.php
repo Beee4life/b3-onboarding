@@ -464,11 +464,26 @@
                 }
             } else {
                 if ( isset( $attributes[ 'template' ] ) ) {
-                    if ( 'lostpassword' == $attributes[ 'template' ] ) {
-                        $show_errors = true;
-                        $messages[]  = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
+                    if ( 'login' == $attributes[ 'template' ] ) {
+                        $login_form_message = __( apply_filters( 'b3_message_above_login', false ) );
+                        if ( false != $login_form_message ) {
+                            $show_errors = true;
+                            $messages[]  = $login_form_message;
+                        }
                     } elseif ( 'register' == $attributes[ 'template' ] ) {
-                        if ( 'request_access' == $registration_type ) {
+                        // Single site
+                        // * request_access
+                        // * email_activation
+                        // open
+
+                        // Multisite
+                        // blog (set in b3_render_form_messages())
+                        // user
+                        // all
+                        // site
+                        // * request_access_subdomain
+                        // all
+                        if ( strpos( $registration_type, 'request_access' ) !== false ) {
                             $request_access_message = __( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
                             if ( false != $request_access_message ) {
                                 $show_errors = true;
@@ -493,6 +508,9 @@
                                 }
                             }
                         }
+                    } elseif ( 'lostpassword' == $attributes[ 'template' ] ) {
+                        $show_errors = true;
+                        $messages[]  = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
                     } elseif ( 'resetpass' == $attributes[ 'template' ] ) {
                         $show_errors = true;
                         $messages[]  = esc_html__( 'Enter your new password.', 'b3-onboarding' );

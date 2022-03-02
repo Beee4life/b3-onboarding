@@ -268,8 +268,6 @@
 
             /*
              * Enqueue js for recaptcha
-             *
-             * @TODO: localize
              */
             public function b3_add_rc3() {
                 if ( 1 == get_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
@@ -582,45 +580,6 @@
 
 
             /**
-             * Checks that the reCAPTCHA parameter (both versions) sent with the registration
-             * request is valid.
-             *
-             * @return bool True if the CAPTCHA is OK, otherwise false.
-             */
-            public function b3_verify_recaptcha() {
-                if ( isset ( $_POST[ 'g-recaptcha-response' ] ) ) {
-                    $recaptcha_response = $_POST[ 'g-recaptcha-response' ];
-                } else {
-                    return false;
-                }
-
-                $recaptcha_secret = get_option( 'b3_recaptcha_secret' );
-                $success          = false;
-                if ( false != $recaptcha_secret ) {
-                    $response = wp_remote_post(
-                        'https://www.google.com/recaptcha/api/siteverify',
-                        array(
-                            'body' => array(
-                                'secret' => $recaptcha_secret,
-                                'response' => $recaptcha_response
-                            )
-                        )
-                    );
-
-                    $response_body = wp_remote_retrieve_body( $response );
-                    $response_code = wp_remote_retrieve_response_code( $response );
-
-                    if ( 200 == $response_code && $response && is_array( $response ) ) {
-                        $decoded_response = json_decode( $response_body );
-                        $success          = $decoded_response->success;
-                    }
-                }
-
-                return $success;
-            }
-
-
-            /**
              * Handle registration form
              */
             public function b3_registration_form_handling() {
@@ -671,7 +630,7 @@
                                 } elseif ( false != get_option( 'b3_activate_recaptcha' ) ) {
                                     $recaptcha_on = get_option( 'b3_recaptcha_on' );
                                     if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
-                                        if ( ! $this->b3_verify_recaptcha() ) {
+                                        if ( ! b3_verify_recaptcha() ) {
                                             // Recaptcha check failed, display error
                                             $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
                                             $register     = false;
@@ -706,7 +665,7 @@
                                                 $redirect_url = $reset_password_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
                                                 $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
-                                                // @TODO: also add to wp form register + MU register
+                                                // @TODO: B4L: also add to MU register
                                             } else {
                                                 $login_url    = b3_get_login_url();
                                                 $redirect_url = $login_url;
@@ -741,7 +700,7 @@
                                     } elseif ( false != get_option( 'b3_activate_recaptcha' ) ) {
                                         $recaptcha_on = get_option( 'b3_recaptcha_on' );
                                         if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
-                                            if ( ! $this->b3_verify_recaptcha() ) {
+                                            if ( ! b3_verify_recaptcha() ) {
                                                 // Recaptcha check failed, display error
                                                 $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
                                             }
@@ -1805,13 +1764,9 @@
                 }
 
                 ob_start();
-
                 do_action( 'b3_do_before_' . $template_name );
-
                 include $location . $template_name . '.php';
-
                 do_action( 'b3_do_after_' . $template_name );
-
                 $html = ob_get_contents();
                 ob_end_clean();
 
@@ -1882,7 +1837,7 @@
                 }
 
                 // manual actions
-                // @TODO: look into this, when used
+                // @TODO: B4L: look into this, when is it used
                 if ( isset( $_GET[ 'update' ] ) ) {
                     if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
                         echo '<div id="message" class="updated"><p>';

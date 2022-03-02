@@ -340,7 +340,7 @@
     /**
      * Override MANUAL welcome user email
      *
-     * @TODO: compare/merge with previous
+     * @TODO: compare/merge with b3_default_welcome_user_message()
      *
      * @return string
      */
@@ -495,7 +495,7 @@
      * @return string
      */
     function b3_default_message_new_site_created() {
-        // @TODO: add if for when added by admin
+        // @TODO: B4L: add if for when added by admin
         $message = __( 'New site created by: %user_login%', 'b3-onboarding' ) . "\n";
         $message .= '<br /><br />' . "\n";
         $message .= __( 'Site address: %home_url%', 'b3-onboarding' ) . "\n";

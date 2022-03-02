@@ -18,7 +18,7 @@
         if ( is_multisite() ) {
             $sites = get_sites( [ 'fields' => 'ids' ] );
         } else {
-            // @TODO: test this on single site
+            // @TODO: B4L: test this on single site
             $sites = [1];
         }
 

@@ -313,7 +313,7 @@
     /**
      * Check for errors on WordPress' own registration form
      *
-     * @TODO: do still need this because they're disabled ?
+     * @TODO: do still need this because they should be disabled ?
      *
      * @since 1.0.0
      *
@@ -324,7 +324,7 @@
      * @return mixed
      */
     function b3_registration_errors( $errors, $sanitized_user_login, $user_email ) {
-
+        error_log( 'wp registration errors' );
         if ( 1 == get_option( 'b3_first_last_required' ) ) {
             if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
                 $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a first name.', 'b3-onboarding' ) ) );
@@ -337,8 +337,7 @@
 
         // @TODO: check on MS
         if ( 1 == get_option( 'b3_activate_recaptcha' ) ) {
-            $b3ob = new B3Onboarding();
-            if ( ! $b3ob->b3_verify_recaptcha() ) {
+            if ( b3_verify_recaptcha() ) {
                 $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'Recaptcha failed.', 'b3-onboarding' ) ) );
             }
         }
@@ -490,10 +489,11 @@
         if ( true == get_option( 'b3_disable_password_change_email' ) ) {
             return false;
         }
+        
+        $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
 
-        // @TODO: add if for email only registration
-        $pass_change_text = __(
-            'Hi ###USERNAME###,
+        $pass_change_text = sprintf( __(
+            'Hi %s,
             <br><br>
             This notice confirms that your password was changed on ###SITENAME###.
             <br><br>
@@ -506,7 +506,7 @@
             All at ###SITENAME###
             <br>
             ###SITEURL###', 'b3-onboarding'
-        );
+        ), $salutation );
 
         $message = b3_replace_template_styling( $pass_change_text );
         $message = strtr( $message, b3_replace_email_vars() );
@@ -539,12 +539,11 @@
 
         // if admin disabled notification option
         // option doesn't exist in admin (yet)
+    
+        $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
 
-        // @TODO: add if for no email setting
-        // @TODO: add if for email only registration
-
-        $pass_change_text = __(
-            'Hi ###USERNAME###,
+        $pass_change_text = sprintf( __(
+            'Hi %s,
 
 This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL###.
 
@@ -556,7 +555,7 @@ This email has been sent to ###EMAIL###.
 Regards,
 All at ###SITENAME###
 ###SITEURL###', 'b3-onboarding'
-        );
+        ), $salutation );
 
         $email_change_email = array(
             'to'      => $user[ 'user_email' ],
