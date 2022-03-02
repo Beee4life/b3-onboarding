@@ -31,13 +31,12 @@
                 'container_class' => 'pooh',
                 'id'              => $id,
                 'input_class'     => $input_class,
-                'label'           => 'Checkbox',
+                'label'           => false,
                 'options'         => [
                     [
-                        // 'input_class' => $input_class . '--checkbox',
-                        'label'       => 'Checkbox label 1',
+                        'label'       => '',
                         'name'        => $id,
-                        'value'       => 'value1',
+                        'value'       => '1',
                     ],
                 ],
                 'required'        => false,
