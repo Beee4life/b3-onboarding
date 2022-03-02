@@ -69,6 +69,7 @@
         if ( is_main_site() ) {
             if ( is_multisite() ) {
                 if ( in_array( $registration_type, array( 'user' ) ) ) {
+                    // @TODO: test this
                     // $email_boxes[] = array(
                     //     'id'    => 'email_activation',
                     //     'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
@@ -900,21 +901,13 @@
     function b3_get_admin_tabs() {
         $tabs = array(
             array(
-                'id'      => 'settings',
-                'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
-                'content' => b3_render_tab_content( 'settings' ),
-                'icon'    => 'admin-generic',
-            ),
-        );
-
-        if ( is_main_site() ) {
-            $tabs[] = array(
                 'id'      => 'registration',
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                 'content' => b3_render_tab_content( 'registration' ),
                 'icon'    => 'shield',
-            );
-        }
+            ),
+        );
+
         $tabs[] = array(
             'id'      => 'pages',
             'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
@@ -948,6 +941,13 @@
                 );
             }
         }
+
+        $tabs[] = array(
+            'id'      => 'settings',
+            'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
+            'content' => b3_render_tab_content( 'settings' ),
+            'icon'    => 'admin-generic',
+        );
 
         return $tabs;
     }
