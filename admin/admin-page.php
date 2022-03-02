@@ -17,25 +17,20 @@
         ?>
 
         <div class="wrap b3 b3__admin">
-
-            <?php if ( ! empty( $_GET[ 'preview' ] ) ) { ?>
-                <?php
+            <?php
+                if ( ! empty( $_GET[ 'preview' ] ) ) {
+                    $page_title = esc_html__( 'Email preview', 'b3-onboarding' );
                     if ( 'styling' == $_GET[ 'preview' ] ) {
                         $page_title = esc_html__( 'Styling preview', 'b3-onboarding' );
                     } elseif ( 'template' == $_GET[ 'preview' ] ) {
                         $page_title = esc_html__( 'Template preview', 'b3-onboarding' );
-                    } else {
-                        $page_title = esc_html__( 'Email preview', 'b3-onboarding' );
                     }
-
+    
                     echo sprintf( '<h1 id="b3__admin-title">%s</h1>', $page_title );
-
                     include 'preview.php';
-                ?>
-
-            <?php } else { ?>
-                <?php
-                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'settings';
+    
+                } else {
+                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'registration';
                     $tabs        = b3_get_admin_tabs();
 
                     echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html__( 'B3 OnBoarding settings', 'b3-onboarding' ) );
@@ -66,7 +61,7 @@
                             <?php } ?>
                         </div>
                     </div>
-                <?php } // end tabs ?>
-            <?php } // end if preview ?>
+                <?php } ?>
+            <?php } ?>
         </div>
     <?php }
