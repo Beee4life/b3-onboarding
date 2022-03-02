@@ -85,13 +85,13 @@
                     delete_option( 'b3_privacy' );
                 }
 
-                if ( isset( $_POST[ 'b3_privacy_page_id' ] ) ) {
+                if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
                     update_option( 'b3_privacy_page_id', $_POST[ 'b3_privacy_page_id' ] );
                 } else {
                     delete_option( 'b3_privacy_page_id' );
                 }
 
-                if ( isset( $_POST[ 'b3_privacy_text' ] ) ) {
+                if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
                     update_option( 'b3_privacy_text', htmlspecialchars( $_POST[ 'b3_privacy_text' ] ) );
                 }
 
@@ -270,25 +270,38 @@
                 }
 
                 /* specific boxes */
-                if ( isset( $_POST[ 'b3_welcome_user_subject' ] ) ) {
+                if ( isset( $_POST[ 'b3_welcome_user_subject' ] ) && ! empty( $_POST[ 'b3_welcome_user_subject' ] ) ) {
                     update_option( 'b3_welcome_user_subject', stripslashes( $_POST[ 'b3_welcome_user_subject' ] ) );
+                } else {
+                    delete_option( 'b3_welcome_user_subject' );
                 }
-                if ( isset( $_POST[ 'b3_welcome_user_message' ] ) ) {
+                if ( isset( $_POST[ 'b3_welcome_user_message' ] ) && ! empty( $_POST[ 'b3_welcome_user_message' ] ) ) {
                     update_option( 'b3_welcome_user_message', htmlspecialchars( $_POST[ 'b3_welcome_user_message' ] ) );
+                } else {
+                    delete_option( 'b3_welcome_user_message' );
                 }
-                if ( isset( $_POST[ 'b3_welcome_user_message_manual' ] ) ) {
+                if ( isset( $_POST[ 'b3_welcome_user_message_manual' ] ) && ! empty( $_POST[ 'b3_welcome_user_message_manual' ] ) ) {
                     update_option( 'b3_welcome_user_message_manual', htmlspecialchars( $_POST[ 'b3_welcome_user_message_manual' ] ) );
+                } else {
+                    delete_option( 'b3_welcome_user_message_manual' );
                 }
 
                 if ( in_array( get_option( 'b3_registration_type' ), array( 'open', 'email_activation' ) ) ) {
-                    if ( isset( $_POST[ 'b3_account_activated_subject' ] ) ) {
-                        update_option( 'b3_account_activated_subject', $_POST[ 'b3_account_activated_subject' ] );
+                    if ( isset( $_POST[ 'b3_account_activated_subject' ] ) && ! empty( $_POST[ 'b3_account_activated_subject' ] ) ) {
+                        update_option( 'b3_account_activated_subject', stripslashes( $_POST[ 'b3_account_activated_subject' ] ) );
+                    } else {
+                        delete_option( 'b3_account_activated_subject' );
                     }
-                    if ( isset( $_POST[ 'b3_account_activated_message' ] ) ) {
+                    if ( isset( $_POST[ 'b3_account_activated_message' ] ) && ! empty( $_POST[ 'b3_account_activated_message' ] ) ) {
                         update_option( 'b3_account_activated_message', htmlspecialchars( $_POST[ 'b3_account_activated_message' ] ) );
+                    } else {
+                        delete_option( 'b3_account_activated_message' );
                     }
-
-                    update_option( 'b3_new_user_message', htmlspecialchars( $_POST[ 'b3_new_user_message' ] ) );
+                    if ( isset( $_POST[ 'b3_new_user_message' ] ) && ! empty( $_POST[ 'b3_new_user_message' ] ) ) {
+                        update_option( 'b3_new_user_message', htmlspecialchars( $_POST[ 'b3_new_user_message' ] ) );
+                    } else {
+                        delete_option( 'b3_new_user_message' );
+                    }
 
                     if ( isset( $_POST[ 'b3_new_user_notification_addresses' ] ) && ! empty( $_POST[ 'b3_new_user_notification_addresses' ] ) ) {
                         $email_array = explode( ',', $_POST[ 'b3_new_user_notification_addresses' ] );
@@ -312,11 +325,23 @@
                         delete_option( 'b3_new_user_notification_addresses' );
                     }
 
-                    update_option( 'b3_new_user_subject', $_POST[ 'b3_new_user_subject' ] );
+                    if ( isset( $_POST[ 'b3_new_user_subject' ] ) && ! empty( $_POST[ 'b3_new_user_subject' ] ) ) {
+                        update_option( 'b3_new_user_subject', htmlspecialchars( $_POST[ 'b3_new_user_subject' ] ) );
+                    } else {
+                        delete_option( 'b3_new_user_subject' );
+                    }
 
                     if ( in_array( get_option( 'b3_registration_type' ), array( 'email_activation' ) ) ) {
-                        update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ) );
-                        update_option( 'b3_email_activation_message', htmlspecialchars( $_POST[ 'b3_email_activation_message' ] ) );
+                        if ( isset( $_POST[ 'b3_email_activation_subject' ] ) && ! empty( $_POST[ 'b3_email_activation_subject' ] ) ) {
+                            update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ) );
+                        } else {
+                            delete_option( 'b3_email_activation_subject' );
+                        }
+                        if ( isset( $_POST[ 'b3_email_activation_message' ] ) && ! empty( $_POST[ 'b3_email_activation_message' ] ) ) {
+                            update_option( 'b3_email_activation_message', htmlspecialchars( $_POST[ 'b3_email_activation_message' ] ) );
+                        } else {
+                            delete_option( 'b3_email_activation_message' );
+                        }
                     }
                 }
 
@@ -359,7 +384,6 @@
                     } else {
                         delete_option( 'b3_activated_wpmu_user_message' );
                     }
-
                     if ( isset( $_POST[ 'b3_activate_wpmu_user_site_subject' ] ) && ! empty( $_POST[ 'b3_activate_wpmu_user_site_subject' ] ) ) {
                         update_option( 'b3_activate_wpmu_user_site_subject', stripslashes( $_POST[ 'b3_activate_wpmu_user_site_subject' ] ) );
                     } else {
@@ -380,7 +404,6 @@
                     } else {
                         delete_option( 'b3_activated_wpmu_user_site_message' );
                     }
-
                     if ( isset( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) && ! empty( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ) {
                         update_option( 'b3_new_wpmu_user_admin_subject', stripslashes( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) );
                     } else {
