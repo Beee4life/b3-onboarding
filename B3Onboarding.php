@@ -1829,6 +1829,13 @@
                         } else {
                             echo sprintf( '<div class="error"><p>%s</p></div>', $message );
                         }
+                    } else {
+                        if ( 'none' != get_option( 'b3_registration_type' ) ) {
+                            if ( false == get_option( 'b3_register_page_id' ) ) {
+                                $message = sprintf( __( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                                echo sprintf( '<div class="error"><p>%s</p></div>', $message );
+                            }
+                        }
                     }
                 }
 
