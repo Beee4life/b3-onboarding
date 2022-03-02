@@ -1805,13 +1805,9 @@
                 }
 
                 ob_start();
-
                 do_action( 'b3_do_before_' . $template_name );
-
                 include $location . $template_name . '.php';
-
                 do_action( 'b3_do_after_' . $template_name );
-
                 $html = ob_get_contents();
                 ob_end_clean();
 
