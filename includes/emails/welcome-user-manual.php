@@ -1,6 +1,6 @@
 <?php
     /*
-     * Input fields for welcome new user email, when register closed
+     * Input fields for manually welcome new user email, when registration is closed
      *
      * @since 1.0.0
      */
@@ -17,7 +17,7 @@
     if ( 'none' == get_option( 'b3_registration_type' ) ) {
         $placeholder_message = esc_attr( b3_default_manual_welcome_user_message() );
     } else {
-        $placeholder_message = esc_attr( b3_default_welcome_user_message() );
+        $placeholder_message = esc_attr( b3_default_manual_welcome_user_message() );
     }
 ?>
 <table class="b3_table b3_table--emails">
