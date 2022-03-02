@@ -414,7 +414,6 @@
     /**
      * Check if a remote file exists
      *
-     * @TODO: check if ext-curl is installed/needed
      * @TODO: look into wp_remote_get
      *
      * @since 2.0.0

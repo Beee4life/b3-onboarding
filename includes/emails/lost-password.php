@@ -5,7 +5,7 @@
      * @since 1.0.0
      */
     $disable_admin_notification = get_option( 'b3_disable_admin_notification_password_change' );
-    $disable_user_notification  = get_option( 'b3_disable_user_notification_password_change' ); // @TODO: add to docs/site
+    $disable_user_notification  = get_option( 'b3_disable_user_notification_password_change' );
     $lost_password_subject      = get_option( 'b3_lost_password_subject' );
     $lost_password_message      = get_option( 'b3_lost_password_message' );
 ?>

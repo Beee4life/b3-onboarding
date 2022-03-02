@@ -313,7 +313,7 @@
     /**
      * Check for errors on WordPress' own registration form
      *
-     * @TODO: do still need this because they're disabled ?
+     * @TODO: do still need this because they should be disabled ?
      *
      * @since 1.0.0
      *
@@ -324,7 +324,7 @@
      * @return mixed
      */
     function b3_registration_errors( $errors, $sanitized_user_login, $user_email ) {
-
+        error_log( 'wp registration errors' );
         if ( 1 == get_option( 'b3_first_last_required' ) ) {
             if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
                 $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a first name.', 'b3-onboarding' ) ) );

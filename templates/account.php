@@ -36,7 +36,6 @@
             <?php if ( ! empty( $user_sites ) ) { ?>
                 <?php $url_path  = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false; ?>
                 <?php $site_info = array_shift( $user_sites ); ?>
-                <?php // @TODO: document this filter ?>
                 <?php $url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $url_path ), $site_info ); ?>
                 <div class="b3_form-element">
                     <label class="b3_form-label" for="yoursites"><?php esc_attr_e( 'Your site(s)', 'b3-onboarding' ); ?></label>
@@ -53,7 +52,7 @@
             <?php } else { ?>
                 <label class="b3_form-label" for="b3_user_login"><?php esc_attr_e( 'User ID', 'b3-onboarding' ); ?></label>
             <?php } ?>
-            <?php // @TODO: just echo it, but not in a disabled input ?>
+            <?php // @TODO: just echo it (as text), but not in a disabled input ?>
             <input type="text" name="user_login" id="user_login" value="<?php esc_attr_e( $current_user_object->user_login ); ?>" disabled="disabled" />
         </div>
 
