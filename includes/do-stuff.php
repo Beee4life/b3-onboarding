@@ -143,7 +143,7 @@
         $input_description = ( isset( $extra_field[ 'input_description' ] ) && ! empty( $extra_field[ 'input_description' ] ) ) ? '' . $extra_field[ 'input_description' ] : false;
         $input_label       = ( isset( $extra_field[ 'label' ] ) && ! empty( $extra_field[ 'label' ] ) ) ? $extra_field[ 'label' ] : false;
         $input_placeholder = ( isset( $extra_field[ 'placeholder' ] ) && ! empty( $extra_field[ 'placeholder' ] ) ) ? $extra_field[ 'placeholder' ] : false;
-        $input_required    = ( isset( $extra_field[ 'required' ] ) && ! empty( $extra_field[ 'required' ] ) ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
+        $input_required    = ( isset( $extra_field[ 'required' ] ) && false != $extra_field[ 'required' ] ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
         $input_type        = ( isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
         $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : array();
         $field_value       = ( isset( $_POST[ $input_id ] ) ) ? $_POST[ $input_id ] : '';
@@ -152,7 +152,9 @@
             ob_start();
             ?>
             <div class="b3_form-element b3_form-element--<?php echo $input_type; ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo $container_class; ?> <?php echo $container_class; } ?>">
+                <?php if ( $input_label && $input_id ) { ?>
                 <label class="b3_form-label" for="<?php echo $input_id; ?>"><?php echo $input_label; ?><?php echo $input_required; ?></label>
+                <?php } ?>
                 <?php if ( in_array( $input_type, array( 'text' , 'number', 'url' ) ) ) { ?>
                     <?php $field_value =  ( false != $value && is_string( $value ) ) ? $value : false; ?>
                     <?php if ( in_array( $input_type, array( 'number' ) ) ) { ?>
@@ -192,8 +194,13 @@
                                             }
                                         ?>
                                     <?php } ?>
-                                    <label for="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                    <input class="b3_form-input b3_form-input--<?php echo $input_type; ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo $option_class; ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?><?php } ?>" name="<?php echo $option[ 'name' ]; if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo $input_type; ?>" value="<?php echo $option[ 'value' ]; ?>"<?php echo $selected; ?>> <?php echo $option[ 'label' ]; ?>
+    
+                                    <?php if ( isset( $option[ 'name' ] ) && ! empty( $option[ 'name' ] && isset( $option[ 'label' ] ) && ! empty( $option[ 'label' ] ) ) ) { ?>
+                                        <label for="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                    <?php } ?>
+                                    <?php if ( isset( $option[ 'name' ] ) && isset( $option[ 'label' ] ) ) { ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo $input_type; ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo $option_class; ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo $option[ 'name' ]; ?>_<?php echo $counter; ?><?php } ?>" name="<?php echo $option[ 'name' ]; if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo $input_type; ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? $option[ 'value' ] : '' ); ?>"<?php echo $selected; ?>> <?php echo $option[ 'label' ]; ?>
+                                    <?php } ?>
                                 </div>
                                 <?php $counter++; ?>
                             <?php } ?>
