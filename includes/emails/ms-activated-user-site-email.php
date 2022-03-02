@@ -34,7 +34,7 @@
         <th class="align-top">
             <label for="b3__input--activated-wpmu-user-site-message" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
             <br />
-            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=mu-user-site-activated' ) ); ?>
+            <?php echo b3_get_preview_link( 'mu-user-site-activated' ); ?>
         </th>
         <td>
             <textarea id="b3__input--activated-wpmu-user-site-message" name="b3_activated_wpmu_user_site_message" placeholder="<?php echo $placeholder_message; ?>" rows="6"><?php echo stripslashes( $activated_wpmu_user_site_message ); ?></textarea>

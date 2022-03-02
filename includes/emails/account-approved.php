@@ -31,7 +31,7 @@
         <th class="align-top">
             <label for="b3__input--account-approved__message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br />
-            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-approved' ) ); ?>
+            <?php echo b3_get_preview_link( 'account-approved' ); ?>
         </th>
         <td>
             <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_attr( b3_default_account_approved_message() ); ?>" rows="6"><?php echo stripslashes( $account_approved_email_message ); ?></textarea>

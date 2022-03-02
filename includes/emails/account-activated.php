@@ -31,7 +31,7 @@
         <th class="align-top">
             <label for="b3__input--account-activated__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br /><br />
-            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-activated' ) ); ?>
+            <?php echo b3_get_preview_link( 'account-activated' ); ?>
         </th>
         <td>
             <textarea id="b3__input--account-activated__message" name="b3_account_activated_message" placeholder="<?php echo esc_attr( b3_default_account_activated_message() ); ?>" rows="6"><?php echo stripslashes( $account_activated_email_message ); ?></textarea>

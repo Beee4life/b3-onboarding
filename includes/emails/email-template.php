@@ -22,7 +22,7 @@
         <th class="align-top">
             <label for="b3__input--email-template" class=""><?php esc_html_e( 'Email template', 'b3-onboarding' ); ?></label>
             <br />
-            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=template' ) ); ?>
+            <?php echo b3_get_preview_link( 'template' ); ?>
             <br />
             <?php echo sprintf( __( '<a href="%s">Download template</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_URL . 'includes/download.php?file=default-email-template.html&sentby=b3' ) ); ?>
         </th>

@@ -28,7 +28,7 @@
         <th class="align-top">
             <label for="b3__input--lost-password-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br />
-            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=lostpass' ) ); ?>
+            <?php echo b3_get_preview_link( 'lostpass' ); ?>
         </th>
         <td>
             <?php esc_html_e( "Be sure to include %reset_url% in your email, otherwise the user can't reset his/her password.", "b3-onboarding" ); ?>

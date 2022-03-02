@@ -34,7 +34,7 @@
         <th class="align-top">
             <label for="b3__input--new-wpmu-user-admin-message" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
             <br />
-            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=mu-new-user-admin' ) ); ?>
+            <?php echo b3_get_preview_link( 'mu-new-user-admin' ); ?>
         </th>
         <td>
             <textarea id="b3__input--new-wpmu-user-admin-message" name="b3_new_wpmu_user_admin_message" placeholder="<?php echo $placeholder_message; ?>" rows="6"><?php echo stripslashes( $new_wpmu_user_message_admin ); ?></textarea>
