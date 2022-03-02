@@ -27,7 +27,7 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--activated-wpmu-user-message" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
-            <br />
+            <br>
             <?php echo b3_get_preview_link( 'mu-user-activated' ); ?>
         </th>
         <td>

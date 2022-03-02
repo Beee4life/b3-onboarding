@@ -82,7 +82,7 @@
         <div class="b3_form-element">
             <label class="b3_form-label" for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php esc_attr_e( $current_user_object->first_name ); ?>"<?php echo $required; ?> />
-            <br /><br />
+            <br><br>
             <label class="b3_form-label" for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php esc_attr_e( $current_user_object->last_name ); ?>"<?php echo $required; ?> />
         </div>
@@ -139,7 +139,7 @@
                 <strong>
                     <?php esc_html_e( 'Delete account', 'b3-onboarding' ); ?>
                 </strong>
-                <br />
+                <br>
                 <label for="b3_delete_account">
                     <?php esc_attr_e( 'If you click this button, your entire user profile will be deleted.', 'b3-onboarding' ); ?>
                 </label>

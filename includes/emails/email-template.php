@@ -21,9 +21,9 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--email-template" class=""><?php esc_html_e( 'Email template', 'b3-onboarding' ); ?></label>
-            <br />
+            <br>
             <?php echo b3_get_preview_link( 'template' ); ?>
-            <br />
+            <br>
             <?php echo sprintf(  '<a href="%s">%s</a>', esc_url( B3_PLUGIN_URL . 'includes/download.php?file=default-email-template.html&sentby=b3' ), esc_html__( 'Download template', 'b3-onboarding' ) ); ?>
         </th>
         <td>

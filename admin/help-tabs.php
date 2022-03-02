@@ -64,9 +64,9 @@
                         <li>%user_login% <sup>&sup1;</sup></li>
                     </ul>
                     <sup>&sup1;</sup> ' . __( 'available in every email', 'b3-onboarding' ) . '
-                    <br />
+                    <br>
                     <sup>&sup2;</sup> ' . __( 'only available in admin notification', 'b3-onboarding' ) . '
-                    <br />
+                    <br>
                     <sup>&sup3;</sup> ' . __( 'only available in password reset email', 'b3-onboarding' ) . '
                     '
             ) );
@@ -79,32 +79,32 @@
                     <ul>
                     <li>
                         <b>[register-form]</b>
-                        <br />
+                        <br>
                         ' . esc_html__( 'This renders the registration page.', 'b3-onboarding' ) . '
                     </li>
                     <li>
                         <b>[login-form]</b>
-                        <br />
+                        <br>
                         ' . esc_html__( 'This renders the login page.', 'b3-onboarding' ) . '
                     </li>
                     <li>
                         <b>[lostpass-form]</b>
-                        <br />
+                        <br>
                         ' . esc_html__( 'This renders the lost password page.', 'b3-onboarding' ) . '
                     </li>
                     <li>
                         <b>[resetpass-form]</b>
-                        <br />
+                        <br>
                         ' . esc_html__( 'This renders the reset password page.', 'b3-onboarding' ) . '
                     </li>
                     <li>
                         <b>[account-page]</b>
-                        <br />
+                        <br>
                         ' . esc_html__( 'This renders the account page.', 'b3-onboarding' ) . '
                     </li>
                     <li>
                         <b>[user-management]</b>
-                        <br />
+                        <br>
                         ' . esc_html__( 'This renders the user management page.', 'b3-onboarding' ) . '
                     </li>
                     </ul>

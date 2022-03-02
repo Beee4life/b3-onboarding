@@ -62,10 +62,10 @@
 
                         $message = '<p class="b3_message b3_message--success">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
-                        $message .= '<br />';
+                        $message .= '<br>';
                         $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
                         $message .= '<a href="' . esc_url( $home_url ) . '">' . esc_url( $home_url ) . '</a>';
-                        $message .= '<br />';
+                        $message .= '<br>';
                         $message .= sprintf( __( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $message .= '</p>';
 
@@ -305,9 +305,9 @@
                     } else {
                         // error message for password reset
                         $message = esc_html__( 'This is not a valid password reset link.', 'b3-onboarding' );
-                        $message .= '<br />';
+                        $message .= '<br>';
                         $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
-                        $message .= '<br />';
+                        $message .= '<br>';
                         $message .= sprintf( __( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), '' ) );
 
                         return $message;

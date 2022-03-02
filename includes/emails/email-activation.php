@@ -30,12 +30,12 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--email-activation__message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
-            <br />
+            <br>
             <?php echo b3_get_preview_link( 'email-activation' ); ?>
         </th>
         <td>
             <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %activation_url%, %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %site_url%, %user_ip%, %user_login%
-            <br /><br />
+            <br><br>
             <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_attr( b3_default_email_activation_message() ); ?>" rows="6"><?php echo stripslashes( $email_activation_message ); ?></textarea>
         </td>
     </tr>

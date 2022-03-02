@@ -45,7 +45,7 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--request-access-message-admin" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
-            <br />
+            <br>
             <?php echo b3_get_preview_link( 'request-access-admin' ); ?>
         </th>
         <td>

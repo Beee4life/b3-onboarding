@@ -25,7 +25,7 @@
 
         <p>
             <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
-            <br />
+            <br>
             <?php esc_html_e( 'Both keys must be entered, for reCaptcha to work.', 'b3-onboarding' ); ?>
         </p>
 

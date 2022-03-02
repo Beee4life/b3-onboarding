@@ -30,7 +30,7 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--account-activated__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
-            <br /><br />
+            <br><br>
             <?php echo b3_get_preview_link( 'account-activated' ); ?>
         </th>
         <td>

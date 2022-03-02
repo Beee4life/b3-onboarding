@@ -1395,7 +1395,7 @@
 
                     case 'incorrect_password':
                         $error_message = esc_html__( "The username or password you entered wasn't quite right.", 'b3-onboarding' );
-                        $error_message .= '<br />';
+                        $error_message .= '<br>';
                         $error_message .= sprintf( esc_attr__( 'Did you %s your password ?', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_lostpassword_url(), esc_attr__( 'forget', 'b3-onboarding' ) ) );
 
                         return $error_message;

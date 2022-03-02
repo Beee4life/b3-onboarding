@@ -27,14 +27,14 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--lost-password-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
-            <br />
+            <br>
             <?php echo b3_get_preview_link( 'lostpass' ); ?>
         </th>
         <td>
             <?php esc_html_e( "Be sure to include %reset_url% in your email, otherwise the user can't reset his/her password.", "b3-onboarding" ); ?>
-            <br />
+            <br>
             <?php esc_html_e( "Other available variables are:", "b3-onboarding" ); ?> %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %site_url%, %user_ip%, %user_login%
-            <br />
+            <br>
             <textarea id="b3__input--lost-password-message" name="b3_lost_password_message" placeholder="<?php echo esc_attr( b3_default_lost_password_message() ); ?>" rows="6"><?php echo stripslashes( $lost_password_message ); ?></textarea>
         </td>
     </tr>
@@ -44,7 +44,7 @@
             <label>
                 <input name="b3_disable_user_notification_password_change" type="checkbox" value="1" <?php if ( 1 == $disable_user_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable user notification on password change', 'b3-onboarding' ); ?>
             </label>
-            <br />
+            <br>
             <label>
                 <input name="b3_disable_admin_notification_password_change" type="checkbox" value="1" <?php if ( 1 == $disable_admin_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable admin notification on password change', 'b3-onboarding' ); ?>
             </label>

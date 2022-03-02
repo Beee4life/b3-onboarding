@@ -31,7 +31,7 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--account-rejected__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
-            <br />
+            <br>
             <?php echo b3_get_preview_link( 'account-rejected' ); ?>
         </th>
         <td>
