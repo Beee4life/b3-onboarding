@@ -28,7 +28,7 @@
             $input_class = '';
 
             $fields[] = [
-                'container_class' => 'honeypot',
+                'container_class' => 'pooh',
                 'id'              => $id,
                 'input_class'     => $input_class,
                 'label'           => 'Checkbox',
