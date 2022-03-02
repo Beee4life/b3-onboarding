@@ -347,8 +347,6 @@
     /**
      * Override MANUAL welcome user email
      *
-     * @TODO: compare/merge with b3_default_welcome_user_message()
-     *
      * @return string
      */
     function b3_default_manual_welcome_user_message() {
@@ -356,7 +354,7 @@
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= sprintf( __( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
+        $message .= sprintf( __( 'You can (re)set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= b3_default_greetings();
 
