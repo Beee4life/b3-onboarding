@@ -472,30 +472,24 @@
                         }
                     } elseif ( 'register' == $attributes[ 'template' ] ) {
                         // Single site
-                        // request_access
-                        // email_activation
+                        // * request_access
+                        // * email_activation
                         // open
 
                         // Multisite
-                        // blog
+                        // blog (set in b3_render_form_messages())
                         // user
                         // all
                         // site
-                        // request_access_subdomain
+                        // * request_access_subdomain
                         // all
-                        if ( 'request_access' == $registration_type ) {
+                        if ( strpos( $registration_type, 'request_access' ) !== false ) {
                             $request_access_message = __( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
                             if ( false != $request_access_message ) {
                                 $show_errors = true;
                                 $messages[]  = $request_access_message;
                             }
                         } elseif ( 'email_activation' == $registration_type ) {
-                            $registration_message = apply_filters( 'b3_message_above_registration', false );
-                            if ( false != $registration_message ) {
-                                $show_errors = true;
-                                $messages[]  = $registration_message;
-                            }
-                        } elseif ( 'all' == $registration_type ) {
                             $registration_message = apply_filters( 'b3_message_above_registration', false );
                             if ( false != $registration_message ) {
                                 $show_errors = true;
