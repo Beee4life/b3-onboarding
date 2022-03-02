@@ -13,6 +13,7 @@
     <?php
         $message = false;
         $subject = false;
+
         if ( isset( $_GET[ 'preview' ] ) ) {
             $hide_logo = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
             $preview   = $_GET[ 'preview' ];
