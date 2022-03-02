@@ -18,7 +18,7 @@
         $honeypot                     = get_option( 'b3_honeypot' );
         $privacy                      = get_option( 'b3_privacy' );
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
-        $privacy_page_placeholder     = __( '<a href="">Click here</a> for more info.', 'b3-onboarding' );
+        $privacy_page_placeholder     = sprintf( __( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
         $privacy_text                 = get_option( 'b3_privacy_text' );
         $recaptcha                    = get_option( 'b3_activate_recaptcha' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
