@@ -648,3 +648,34 @@
         }
     }
     add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
+    
+    
+    /**
+     * Inform admin about something
+     *
+     * @param $type
+     *
+     * @return void
+     */
+    function b3_inform_admin( $type ) {
+        if ( $type ) {
+            switch( $type ) {
+                case 'request_access':
+                    $subject = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
+                    $message = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
+                    break;
+                default:
+                    $subject = '';
+                    $message = '';
+            }
+            
+            if ( ! empty( $subject ) && ! empty( $message ) ) {
+                $admin_to = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( get_option( 'b3_registration-type' ) ) );
+                $message  = b3_replace_template_styling( $message );
+                $message = strtr( $message, b3_replace_email_vars() );
+                $message  = htmlspecialchars_decode( stripslashes( $message ) );
+                wp_mail( $admin_to, $subject, $message, array() );
+            }
+        }
+    }
+    add_action( 'b3_inform_admin', 'b3_inform_admin' );
