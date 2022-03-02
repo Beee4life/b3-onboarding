@@ -32,7 +32,7 @@
             <?php } ?>
         </p>
 
-        <form action="admin.php?page=b3-onboarding" method="post">
+        <form action="admin.php?page=b3-onboarding&tab=settings" method="post">
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
 
             <?php if ( is_main_site() ) { ?>
@@ -89,26 +89,28 @@
 
                 <hr />
             <?php } ?>
-
-            <h2>
-                <?php esc_html_e( 'Logo', 'b3-onboarding' ); ?>
-            </h2>
-
-            <?php b3_get_settings_field_open(); ?>
-                <div id="b3-main-logo-settings">
-                    <p>
-                        <?php esc_html_e( "This is the logo used in email headers.", 'b3-onboarding' ); ?>
-                    </p>
-                    <p>
-                        <label>
-                            <input type="url" name="b3_main_logo" id="b3_main_logo" value="<?php echo $main_logo; ?>" />
-                        </label>
-                        <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">
-                            <?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?>
-                        </a>
-                    </p>
-                </div>
-            <?php b3_get_close(); ?>
+            
+            <?php if ( false == apply_filters( 'b3_main_logo', false ) ) { ?>
+                <h2>
+                    <?php esc_html_e( 'Logo', 'b3-onboarding' ); ?>
+                </h2>
+    
+                <?php b3_get_settings_field_open(); ?>
+                    <div id="b3-main-logo-settings">
+                        <p>
+                            <?php esc_html_e( "This is the logo used in email headers.", 'b3-onboarding' ); ?>
+                        </p>
+                        <p>
+                            <label>
+                                <input type="url" name="b3_main_logo" id="b3_main_logo" value="<?php echo $main_logo; ?>" />
+                            </label>
+                            <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">
+                                <?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?>
+                            </a>
+                        </p>
+                    </div>
+                <?php b3_get_close(); ?>
+            <?php } ?>
 
             <?php b3_get_submit_button(); ?>
         </form>
