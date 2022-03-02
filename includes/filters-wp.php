@@ -490,10 +490,11 @@
         if ( true == get_option( 'b3_disable_password_change_email' ) ) {
             return false;
         }
+        
+        $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
 
-        // @TODO: add if for email only registration
-        $pass_change_text = __(
-            'Hi ###USERNAME###,
+        $pass_change_text = sprintf( __(
+            'Hi %s,
             <br><br>
             This notice confirms that your password was changed on ###SITENAME###.
             <br><br>
@@ -506,7 +507,7 @@
             All at ###SITENAME###
             <br>
             ###SITEURL###', 'b3-onboarding'
-        );
+        ), $salutation );
 
         $message = b3_replace_template_styling( $pass_change_text );
         $message = strtr( $message, b3_replace_email_vars() );
@@ -539,12 +540,11 @@
 
         // if admin disabled notification option
         // option doesn't exist in admin (yet)
+    
+        $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
 
-        // @TODO: add if for no email setting
-        // @TODO: add if for email only registration
-
-        $pass_change_text = __(
-            'Hi ###USERNAME###,
+        $pass_change_text = sprintf( __(
+            'Hi %s,
 
 This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL###.
 
@@ -556,7 +556,7 @@ This email has been sent to ###EMAIL###.
 Regards,
 All at ###SITENAME###
 ###SITEURL###', 'b3-onboarding'
-        );
+        ), $salutation );
 
         $email_change_email = array(
             'to'      => $user[ 'user_email' ],
