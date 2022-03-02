@@ -69,9 +69,9 @@
                         <p>
                             <?php
                                 printf(
-                                    esc_html__( 'There is a pending change of your e-mail to %1$s. <a href="%2$s">Cancel</a>', 'b3-onboarding' ),
+                                    esc_html__( 'There is a pending change of your e-mail to %s. %s', 'b3-onboarding' ),
                                     '<code>' . $new_email[ 'newemail' ] . '</code>',
-                                    esc_url( self_admin_url( 'profile.php?dismiss=' . $current_user_object->ID . '_new_email' ) )
+                                    sprintf( '<a href="%s">%s</a>', esc_url( self_admin_url( 'profile.php?dismiss=' . $current_user_object->ID . '_new_email' ) ), esc_html__( 'Cancel', 'b3-onboarding' ) )
                                 );
                             ?>
                         </p>

@@ -308,7 +308,7 @@
                         $message .= '<br />';
                         $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
                         $message .= '<br />';
-                        $message .= sprintf( __( "If you haven't received any email, please <a href=\"%s\">click here</a>.", 'b3-onboarding' ), b3_get_lostpassword_url() );
+                        $message .= sprintf( __( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), '' ) );
 
                         return $message;
                     }

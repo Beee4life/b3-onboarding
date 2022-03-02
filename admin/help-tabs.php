@@ -71,7 +71,7 @@
                     '
             ) );
 
-            $shortcode_info = '<p>' . sprintf( __( 'More info about the use of shortcodes and their variables, please see <a href="%s">here</a>.', 'b3-onboarding'  ), esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ) ) . '</p>';
+            $shortcode_info = '<p>' . sprintf( __( 'More info about the use of shortcodes and their variables, please see %s.', 'b3-onboarding'  ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ), esc_html__( 'here', 'b3-onboarding' ) ) ) . '</p>';
             $screen->add_help_tab( array(
                 'id'      => 'b3-shortcodes',
                 'title'   => esc_html__( 'Shortcodes', 'b3-onboarding' ),
