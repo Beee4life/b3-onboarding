@@ -152,9 +152,7 @@
             $message .= sprintf( esc_html__( 'you have confirmed your email address and can now %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'login here', 'b3-onboarding' ) ) ) . "\n";
         }
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -208,7 +206,12 @@
      * @return string
      */
     function b3_default_request_access_message_user() {
-        return sprintf( __( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) );
+        ob_start();
+        echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) );
+        echo '<br><br>';
+        echo b3_default_greetings();
+
+        return ob_get_clean();
     }
 
 
@@ -292,9 +295,7 @@
         $message .= '<br><br>' . "\n";
         $message .= sprintf(__( 'To (re)set your password, go to %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%reset_url%', esc_html__( 'this page', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= b3_default_greetings();
 
         return $message;
 
@@ -329,9 +330,7 @@
             $message .= sprintf( __( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
             $message .= '<br><br>' . "\n";
         }
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -351,9 +350,7 @@
         $message .= '<br><br>' . "\n";
         $message .= sprintf( __( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -385,9 +382,7 @@
         $message .= '<br><br>' . "\n";
         $message .= sprintf( __( 'You only need to confirm your email address through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -481,9 +476,7 @@
         $message .= '<br><br>' . "\n";
         $message .= sprintf( __( 'Disable these notifications %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%settings_url%', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
-        $message .= '<br><br>';
-        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -502,9 +495,7 @@
         $message .= '<br><br>' . "\n";
         $message .= __( 'Site name: %blog_name%', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
-        $message .= '<br><br>';
-        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -549,9 +540,7 @@
         $message .= '<br>' . "\n";
         $message .= '<a href="%home_url%">%home_url%</a>' . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
-        $message .= '<br><br>';
-        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -592,9 +581,7 @@
         $message .= '<br><br>' . "\n";
         $message .= __( 'Enjoy your new site.', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= __( 'Greetings', 'b3-onboarding' ) . ',';
-        $message .= '<br><br>';
-        $message .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) );
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -684,4 +671,18 @@
         }
 
         return $message;
+    }
+
+
+    /**
+     * Return default greetings under each mail
+     *
+     * @return string
+     */
+    function b3_default_greetings() {
+        $greetings = __( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
+        $greetings .= '<br><br>' . "\n";
+        $greetings .= sprintf( __( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+
+        return $greetings;
     }
