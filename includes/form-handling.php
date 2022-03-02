@@ -346,6 +346,7 @@
                 }
 
                 if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                    // @TODO: add ifs for non-empty values
                     update_option( 'b3_account_approved_message', htmlspecialchars( $_POST[ 'b3_account_approved_message' ], ENT_QUOTES ) );
                     update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ] );
                     update_option( 'b3_request_access_message_admin', htmlspecialchars( $_POST[ 'b3_request_access_message_admin' ] ) );
@@ -452,13 +453,13 @@
                     }
                 }
 
-                if ( isset( $_POST[ 'b3_restrict_admin' ] ) ) {
+                if ( isset( $_POST[ 'b3_restrict_admin' ] ) && ! empty( $_POST[ 'b3_restrict_admin' ] ) ) {
                     update_option( 'b3_restrict_admin', $_POST[ 'b3_restrict_admin' ] );
                 } else {
                     delete_option( 'b3_restrict_admin' );
                 }
 
-                if ( isset( $_POST[ 'b3_hide_admin_bar' ] ) ) {
+                if ( isset( $_POST[ 'b3_hide_admin_bar' ] ) && ! empty( $_POST[ 'b3_hide_admin_bar' ] ) ) {
                     update_option( 'b3_hide_admin_bar', 1 );
                 } else {
                     delete_option( 'b3_hide_admin_bar' );
@@ -489,11 +490,25 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
-                update_option( 'b3_recaptcha_public', sanitize_text_field( $_POST[ 'b3_recaptcha_public' ] ) );
-                update_option( 'b3_recaptcha_secret', sanitize_text_field( $_POST[ 'b3_recaptcha_secret' ] ) );
-                update_option( 'b3_recaptcha_version', sanitize_text_field( $_POST[ 'b3_recaptcha_version' ] ) );
+                if ( isset( $_POST[ 'b3_recaptcha_public' ] ) && ! empty( $_POST[ 'b3_recaptcha_public' ] ) ) {
+                    update_option( 'b3_recaptcha_public', sanitize_text_field( $_POST[ 'b3_recaptcha_public' ] ) );
+                } else {
+                    delete_option( 'b3_recaptcha_public' );
+                }
 
-                if ( isset( $_POST[ 'b3_recaptcha_on' ] ) ) {
+                if ( isset( $_POST[ 'b3_recaptcha_secret' ] ) && ! empty( $_POST[ 'b3_recaptcha_secret' ] ) ) {
+                    update_option( 'b3_recaptcha_secret', sanitize_text_field( $_POST[ 'b3_recaptcha_secret' ] ) );
+                } else {
+                    delete_option( 'b3_recaptcha_secret' );
+                }
+
+                if ( isset( $_POST[ 'b3_recaptcha_version' ] ) && ! empty( $_POST[ 'b3_recaptcha_version' ] ) ) {
+                    update_option( 'b3_recaptcha_version', sanitize_text_field( $_POST[ 'b3_recaptcha_version' ] ) );
+                } else {
+                    delete_option( 'b3_recaptcha_version' );
+                }
+
+                if ( isset( $_POST[ 'b3_recaptcha_on' ] ) && ! empty( $_POST[ 'b3_recaptcha_on' ] ) ) {
                     update_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ] );
                 } else {
                     delete_option( 'b3_recaptcha_on' );
@@ -549,7 +564,7 @@
                     delete_option( 'b3_preserve_settings' );
                 }
 
-                if ( isset( $_POST[ 'b3_main_logo' ] ) ) {
+                if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
                     update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ) );
                 } else {
                     delete_option( 'b3_main_logo' );
