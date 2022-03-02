@@ -43,7 +43,7 @@
                     'template' => 'register',
                 );
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
-    
+
                 $registration_type                 = get_option( 'b3_registration_type' );
                 $attributes[ 'registration_type' ] = $registration_type;;
 
@@ -83,11 +83,11 @@
                 if ( 'none' == $registration_type && ! current_user_can( 'manage_network' ) ) {
                     // registration closed
                     return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) );
-                    
+
                 } elseif ( 'blog' == $registration_type && ! is_user_logged_in() ) {
                     // logged in registration only
                     return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) );
-                    
+
                 } else {
 
                     $attributes[ 'errors' ] = array();
@@ -116,7 +116,7 @@
                             }
                             $error_count++;
                         }
-                        
+
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                         // dummy is for demonstration setup
                         if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
@@ -169,7 +169,7 @@
                 // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
                 $attributes[ 'redirect' ]          = false;
-                
+
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
@@ -217,7 +217,7 @@
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' == $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
-    
+
                 $attributes[ 'errors' ] = $errors;
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
