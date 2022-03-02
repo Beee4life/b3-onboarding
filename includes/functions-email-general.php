@@ -527,7 +527,7 @@
         if ( true == get_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
         } else {
-            $message = $welcome .' %user_login%' . "\n";
+            $message = $welcome . ' %user_login%' . ',' . "\n";
         }
 
         return $message;
