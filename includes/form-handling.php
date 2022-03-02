@@ -27,7 +27,7 @@
                 }
 
                 if ( 'none' == get_option( 'b3_registration_type' ) ) {
-                    if ( isset( $_POST[ 'b3_registration_closed_message' ] ) ) {
+                    if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
                         update_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ) );
                     } else {
                         delete_option( 'b3_registration_closed_message' );
@@ -481,64 +481,64 @@
         }
     }
     add_action( 'init', 'b3_recaptcha_form_handling', 1 );
-    
-    
+
+
     /**
      * Form handling main admin page
      *
      * @since 1.0.0
      */
     function b3_setings_form_handling() {
-        
+
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
-            
+
             if ( ! wp_verify_nonce( $_POST[ 'b3ob_settings_nonce' ], 'b3ob-settings-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
-                
+
                 if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
                     update_option( 'b3_disable_action_links', 1 );
                 } else {
                     delete_option( 'b3_disable_action_links' );
                 }
-                
+
                 if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {
                     update_option( 'b3_use_popup', 1 );
                 } else {
                     delete_option( 'b3_use_popup' );
                 }
-                
+
                 if ( isset( $_POST[ 'b3_activate_filter_validation' ] ) && 1 == $_POST[ 'b3_activate_filter_validation' ] ) {
                     update_option( 'b3_activate_filter_validation', 1 );
                 } else {
                     delete_option( 'b3_activate_filter_validation' );
                 }
-                
+
                 if ( isset( $_POST[ 'b3_debug_info' ] ) && 1 == $_POST[ 'b3_debug_info' ] ) {
                     update_option( 'b3_debug_info', 1 );
                 } else {
                     delete_option( 'b3_debug_info' );
                 }
-                
+
                 if ( isset( $_POST[ 'b3_preserve_settings' ] ) && 1 == $_POST[ 'b3_preserve_settings' ] ) {
                     update_option( 'b3_preserve_settings', 1 );
                 } else {
                     delete_option( 'b3_preserve_settings' );
                 }
-                
+
                 if ( isset( $_POST[ 'b3_main_logo' ] ) ) {
                     update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ) );
                 } else {
                     delete_option( 'b3_main_logo' );
                 }
-                
+
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
             }
         }
     }
     add_action( 'init', 'b3_setings_form_handling', 1 );
-    
-    
+
+
     /**
      * Function which handles approve/deny user form
      *
