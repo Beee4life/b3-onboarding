@@ -485,9 +485,15 @@
      * @return array|bool
      */
     function b3_content_password_change_notification( $pass_change_email, $user, $userdata ) {
-        // if admin disabled notification option
-        if ( true == get_option( 'b3_disable_password_change_email' ) ) {
-            return false;
+        // if admin disabled user notification option
+        if ( true == get_option( 'b3_disable_user_notification_password_change' ) ) {
+            $pass_change_email = array(
+                'to'      => false,
+                'subject' => false,
+                'message' => false,
+                'headers' => false,
+            );
+            return $pass_change_email;
         }
 
         $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
