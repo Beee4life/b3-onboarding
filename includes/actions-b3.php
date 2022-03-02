@@ -471,9 +471,12 @@
                             $messages[]  = $login_form_message;
                         }
                     } elseif ( 'register' == $attributes[ 'template' ] ) {
-                        // normal
-                        // MS
-                        // none
+                        // Single site
+                        // request_access
+                        // email_activation
+                        // open
+
+                        // Multisite
                         // blog
                         // user
                         // all
