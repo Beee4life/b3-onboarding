@@ -197,7 +197,6 @@
                     switch_to_blog( $blog_id );
                 }
                 update_option( 'b3_activate_custom_emails', 1 );
-                update_option( 'b3_disable_admin_notification_new_user', 1 );
                 update_option( 'b3_disable_user_notification_password_change', 1 );
                 update_option( 'b3_logo_in_email', 1 );
                 update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
@@ -1844,7 +1843,7 @@
                 if ( false == get_option( 'b3_approval_page_id' ) && true == get_option( 'b3_front_end_approval' ) ) {
                     echo sprintf( '<div class="error"><p>%s</p></div>', sprintf( esc_html__( 'You have not set a page for front-end user approval. Set it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
                 }
-    
+
                 // manual actions
                 // @TODO: B4L: look into this, when is it used
                 if ( isset( $_GET[ 'update' ] ) ) {
@@ -1858,7 +1857,7 @@
                         echo '</p></div>';
                     }
                 }
-    
+
                 global $pagenow;
                 if ( is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
                     echo sprintf( '<div class="notice notice-info"><p>'. __( "%s takes control over the 'Membership' option. You can change this %s.", 'b3-onboarding' ) . '</p></div>',
