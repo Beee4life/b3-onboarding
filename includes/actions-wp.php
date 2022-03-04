@@ -177,7 +177,7 @@
             $message         = b3_replace_template_styling( $message );
             $message         = strtr( $message, b3_replace_email_vars() );
             $message         = htmlspecialchars_decode( stripslashes( $message ) );
-    
+
             wp_mail( $user_email, $subject, $message, [] );
         }
     }
@@ -224,7 +224,7 @@
             $subject = b3_default_request_access_subject_user();
             $message = b3_default_request_access_message_user();
             do_action( 'b3_inform_admin', 'request_access' );
-            
+
         } else {
             $blog_id = b3_get_signup_id( $domain );
             $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
@@ -261,3 +261,18 @@
 
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
+
+
+    /**
+     * Network admin notices
+     */
+    function b3_network_admin_notices() {
+        if ( 'settings-network' == get_current_screen()->id ) {
+            echo sprintf( '<div class="notice notice-info"><p>'. __( "%s overrides the 'Registration' option and the 'Registration notification'. You can change the registration type %s and the registration notification %s.", 'b3-onboarding' ) . '</p></div>',
+                'B3 OnBoarding',
+                sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ),
+                sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) ), esc_html__( 'here', 'b3-onboarding' ) )
+            );
+        }
+    }
+    add_action( 'network_admin_notices', 'b3_network_admin_notices' );

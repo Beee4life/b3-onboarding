@@ -673,3 +673,131 @@ All at ###SITENAME###
         return false;
     }
     add_filter( 'wpmu_welcome_notification', 'b3_disable_welcome_mu_user_blog_email', 10, 5 );
+
+
+    /**
+     * Add to admin body class
+     *
+     * @param $classes
+     *
+     * @return string
+     */
+    function b3_admin_body_class( $classes ) {
+        if ( 'request_access' != get_option( 'b3_registration_type' ) ) {
+            $classes .= 'no-approval-page';
+        }
+
+        return $classes;
+    }
+    add_filter( 'admin_body_class', 'b3_admin_body_class' );
+
+
+    /**
+     * For filter 'wp_mail_from', returns a proper from-address when sending e-mails
+     *
+     * @param   string $original_email_address
+     * @return  string
+     */
+    function b3_email_from( $original_email_address ) {
+        // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
+        $from_email = apply_filters( 'b3_notification_sender_email', b3_get_notification_sender_email() );
+        if ( false != $from_email ) {
+            return $from_email;
+        }
+
+        return $original_email_address;
+    }
+    add_filter( 'wp_mail_from', 'b3_email_from' );
+
+
+    /**
+     * For filter 'wp_mail_from_name', returns a proper from-name when sending e-mails
+     *
+     * @param   string $original_email_from
+     * @return  string
+     */
+    function b3_email_from_name( $original_from_name ) {
+        $sender_name = apply_filters( 'b3_notification_sender_name', b3_get_notification_sender_name() );
+        if ( false != $sender_name ) {
+            return $sender_name;
+        }
+
+        return $original_from_name;
+    }
+    add_filter( 'wp_mail_from_name', 'b3_email_from_name' );
+
+
+    /**
+     * For filter 'wp_mail_content_type', overrides content-type
+     * Always return HTML
+     *
+     * @return  string
+     */
+    function b3_email_content_type( $content_type ) {
+        return 'text/html';
+    }
+    add_filter( 'wp_mail_content_type', 'b3_email_content_type' );
+
+
+    /**
+     * Add user actions on users.php
+     *
+     * @param $actions
+     * @param $user_object
+     *
+     * @return mixed
+     */
+    function b3_user_row_actions( $actions, $user_object ) {
+        $current_user      = wp_get_current_user();
+        $registration_type = get_option( 'b3_registration_type' );
+
+        if ( $current_user->ID != $user_object->ID ) {
+            if ( 'email_activation' == $registration_type ) {
+                if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
+                    unset( $actions[ 'resetpassword' ] );
+                    $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), __( 'Resend activation', 'b3-onboarding' ) );
+                    $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), __( 'Activate', 'b3-onboarding' ) );
+                }
+            } elseif ( 'request_access' == $registration_type ) {
+                if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
+                    unset( $actions[ 'resetpassword' ] );
+                    $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
+                        add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
+                            wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
+                        ),
+                        __( 'Activate', 'b3-onboarding' )
+                    );
+                }
+            }
+        }
+
+        return $actions;
+    }
+    add_filter( 'user_row_actions', 'b3_user_row_actions', 10, 2 );
+
+
+    /**
+     * Redirect the user after authentication if there were any errors.
+     *
+     * @param Wp_User|Wp_Error  $user       The signed in user, or the errors that have occurred during login.
+     * @param string            $username   The user name used to log in.
+     * @param string            $password   The password used to log in.
+     *
+     * @return Wp_User|Wp_Error The logged in user, or error information if there were errors.
+     */
+    function b3_maybe_redirect_at_authenticate( $user, $username, $password ) {
+        // Check if the earlier authenticate filter (most likely, the default WordPress authentication) functions have found errors
+        if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
+            if ( is_wp_error( $user ) ) {
+                $error_codes = join( ',', $user->get_error_codes() );
+                $login_url   = b3_get_login_url();
+                $login_url   = add_query_arg( 'login', $error_codes, $login_url );
+
+                wp_safe_redirect( $login_url );
+                exit;
+            }
+        }
+
+        return $user;
+    }
+    add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );

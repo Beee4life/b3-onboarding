@@ -648,8 +648,8 @@
         }
     }
     add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
-    
-    
+
+
     /**
      * Inform admin about something
      *
@@ -668,7 +668,7 @@
                     $subject = '';
                     $message = '';
             }
-            
+
             if ( ! empty( $subject ) && ! empty( $message ) ) {
                 $admin_to = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( get_option( 'b3_registration-type' ) ) );
                 $message  = b3_replace_template_styling( $message );
@@ -679,3 +679,37 @@
         }
     }
     add_action( 'b3_inform_admin', 'b3_inform_admin' );
+
+
+    /**
+     * Redirect a user
+     *
+     * @param $redirect_type
+     * @param $redirect_to
+     *
+     * @return void
+     */
+    function b3_redirect( $redirect_type, $redirect_to = null ) {
+        if ( 'logged_in' == $redirect_type ) {
+            $current_user = wp_get_current_user();
+            $user_role    = reset( $current_user->roles );
+            if ( in_array( $user_role, get_option( 'b3_restrict_admin', [] ) ) ) {
+                $redirect_url = b3_get_account_url();
+                if ( false == $redirect_url ) {
+                    $redirect_url = home_url();
+                }
+            } else {
+                if ( $redirect_to ) {
+                    $redirect_url = $redirect_to;
+                } else {
+                    $redirect_url = admin_url();
+                }
+            }
+        }
+
+        if ( isset( $redirect_url ) ) {
+            wp_safe_redirect( $redirect_url );
+            exit;
+        }
+    }
+    add_action( 'b3_redirect', 'b3_redirect', 10, 2 );
