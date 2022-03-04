@@ -130,11 +130,11 @@
                 if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
-                        add_role( 'b3_activation', __( 'Awaiting activation', 'b3-onboarding' ), array() );
+                        add_role( 'b3_activation', esc_html__( 'Awaiting activation', 'b3-onboarding' ), array() );
                     }
                     $b3_approval = get_role( 'b3_approval' );
                     if ( ! $b3_approval ) {
-                        add_role( 'b3_approval', __( 'Awaiting approval', 'b3-onboarding' ), array() );
+                        add_role( 'b3_approval', esc_html__( 'Awaiting approval', 'b3-onboarding' ), array() );
                     }
                 }
             }
@@ -282,8 +282,8 @@
                 wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ], true );
                 wp_localize_script( 'b3-media', 'b3_media',
                     array(
-                        'title'     => __( 'Upload or choose your custom logo', 'b3-onboarding' ),
-                        'button'    => __( 'Insert logo', 'b3-onboarding' ),
+                        'title'     => esc_html__( 'Upload or choose your custom logo', 'b3-onboarding' ),
+                        'button'    => esc_html__( 'Insert logo', 'b3-onboarding' ),
                     )
                 );
                 wp_enqueue_script( 'b3-media' );
@@ -299,12 +299,12 @@
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                     include 'admin/user-approval-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'User Approval', 'b3-onboarding' ), __( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
 
                 if ( true == get_option( 'b3_debug_info' ) || is_localhost() ) {
                     include 'admin/debug-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . __( 'Debug info', 'b3-onboarding' ), __( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
                 }
             }
 
@@ -360,9 +360,9 @@
                 if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'activate', 'resendactivation' ) ) ) {
                     $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
                     if ( ! $user_id ) {
-                        wp_die( __( "There's no user with that ID.", 'b3-onboarding' ) );
+                        wp_die( esc_html__( "There's no user with that ID.", 'b3-onboarding' ) );
                     } elseif ( ! current_user_can( 'edit_user', $user_id ) ) {
-                        wp_die( __( "You're not allowed to edit that user.", 'b3-onboarding' ) );
+                        wp_die( esc_html__( "You're not allowed to edit that user.", 'b3-onboarding' ) );
                     }
 
                     $user = new WP_User( $user_id );
@@ -1196,7 +1196,7 @@
 
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
                     if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
-                        $message = sprintf( __( "You're using a beta version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
+                        $message = sprintf( esc_html__( "You're using a beta version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
                         if ( is_localhost() ) {
                             echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $message );
                         } else {
@@ -1205,7 +1205,7 @@
                     } else {
                         if ( 'none' != get_option( 'b3_registration_type' ) ) {
                             if ( false == get_option( 'b3_register_page_id' ) ) {
-                                $message = sprintf( __( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                                $message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
                                 echo sprintf( '<div class="error"><p>%s</p></div>', $message );
                             }
                         }
@@ -1233,7 +1233,7 @@
 
                 global $pagenow;
                 if ( is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
-                    echo sprintf( '<div class="notice notice-info"><p>'. __( "%s takes control over the 'Membership' option. You can change this %s.", 'b3-onboarding' ) . '</p></div>',
+                    echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( "%s takes control over the 'Membership' option. You can change this %s.", 'b3-onboarding' ) . '</p></div>',
                         'B3 OnBoarding',
                         sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) )
                     );

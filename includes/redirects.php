@@ -234,7 +234,7 @@
                     $result          = null;
 
                     if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
-                        wp_die( __( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), __( 'An error occurred during the activation' ), 400 );
+                        wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), esc_html__( 'An error occurred during the activation' ), 400 );
                     } elseif ( ! empty( $_GET[ 'key' ] ) ) {
                         $key = sanitize_key( $_GET[ 'key' ] );
                     } elseif ( ! empty( $_POST[ 'key' ] ) ) {
@@ -287,18 +287,18 @@
                     $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
 
                     if ( empty( $key ) || ! is_string( $key ) ) {
-                        $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                        $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
                     }
 
                     if ( empty( $_GET[ 'user_login' ] ) || ! is_string( $_GET[ 'user_login' ] ) ) {
-                        $errors = new WP_Error( 'invalid_key', __( 'Invalid key', 'b3-onboarding' ) );
+                        $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
                     }
 
                     // Validate activation key
                     $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, sanitize_user( $_GET[ 'user_login' ] ) ) );
 
                     if ( empty( $user ) ) {
-                        $errors = new WP_Error( 'invalid_user', __( 'Invalid user', 'b3-onboarding' ) );
+                        $errors = new WP_Error( 'invalid_user', esc_attr__( 'Invalid user', 'b3-onboarding' ) );
                     }
 
                     if ( is_wp_error( $errors ) ) {

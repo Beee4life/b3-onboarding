@@ -766,11 +766,11 @@
         $user_data = false;
 
         if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
-            $errors->add( 'empty_username', __( '<strong>Error</strong>: Enter a username or email address.' ) );
+            $errors->add( 'empty_username', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'Enter a username or email address', 'b3-onboarding' ) ) );
         } elseif ( strpos( $_POST['user_login'], '@' ) ) {
             $user_data = get_user_by( 'email', trim( wp_unslash( $_POST['user_login'] ) ) );
             if ( empty( $user_data ) ) {
-                $errors->add( 'invalid_email', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
+                $errors->add( 'invalid_email', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'There is no account with that username or email address', 'b3-onboarding' ) ) );
             }
         } else {
             $login     = trim( wp_unslash( $_POST['user_login'] ) );
@@ -795,7 +795,7 @@
         }
 
         if ( ! $user_data ) {
-            $errors->add( 'invalidcombo', __( '<strong>Error</strong>: There is no account with that username or email address.' ) );
+            $errors->add( 'invalidcombo', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'There is no account with that username or email address', 'b3-onboarding' ) ) );
             return $errors;
         }
 
@@ -818,13 +818,13 @@
             $site_name = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
         }
 
-        $message = __( 'Someone has requested a password reset for the following account:' ) . "\r\n\r\n";
+        $message = esc_html__( 'Someone has requested a password reset for the following account:' ) . "\r\n\r\n";
         /* translators: %s: Site name. */
-        $message .= sprintf( __( 'Site Name: %s' ), $site_name ) . "\r\n\r\n";
+        $message .= sprintf( esc_html__( 'Site Name: %s' ), $site_name ) . "\r\n\r\n";
         /* translators: %s: User login. */
-        $message .= sprintf( __( 'Username: %s' ), $user_login ) . "\r\n\r\n";
-        $message .= __( 'If this was a mistake, just ignore this email and nothing will happen.' ) . "\r\n\r\n";
-        $message .= __( 'To reset your password, visit the following address:' ) . "\r\n\r\n";
+        $message .= sprintf( esc_html__( 'Username: %s' ), $user_login ) . "\r\n\r\n";
+        $message .= esc_html__( 'If this was a mistake, just ignore this email and nothing will happen.' ) . "\r\n\r\n";
+        $message .= esc_html__( 'To reset your password, visit the following address:' ) . "\r\n\r\n";
         $message .= network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
 
         /* translators: Password reset notification email subject. %s: Site title. */
@@ -861,10 +861,12 @@
         if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) ) {
             $errors->add(
                 'retrieve_password_email_failure',
-                sprintf(
-                /* translators: %s: Documentation URL. */
-                    __( '<strong>Error</strong>: The email could not be sent. Your site may not be correctly configured to send emails. %s.' ),
-                    sprintf( '<a href="%s">%s</a>.', esc_url( 'https://wordpress.org/support/article/resetting-your-password/' ), esc_html__( 'Get support for resetting your password', 'b3-onboarding' ) )
+                sprintf( '<strong>%s</strong>: %s',
+                    esc_html__( 'Error', 'b3-onboarding' ),
+                    sprintf( __( 'The email could not be sent. Your site may not be correctly configured to send emails. %s.' ),
+                        sprintf( '<a href="%s">%s</a>',
+                            esc_url( 'https://wordpress.org/support/article/resetting-your-password/' ),
+                            esc_html__( 'Get support for resetting your password', 'b3-onboarding' ) ) )
                 )
             );
             return $errors;
@@ -1002,7 +1004,6 @@
     function b3_get_preview_link( $id ) {
         if ( $id ) {
             return sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( B3_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
-            // return sprintf( __( '<a href="%s" target="_blank" rel="noopener">%s</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
         }
 
         return false;

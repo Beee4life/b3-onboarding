@@ -64,7 +64,7 @@
                     <?php foreach( $hidden_roles as $role ) { ?>
                         <input type="hidden" id="b3_restrict_<?php echo $role; ?>" name="b3_restrict_admin[]" value="<?php echo $role; ?>" />
                     <?php } ?>
-                    <?php echo sprintf( '<p>%s</p>', __( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
+                    <?php echo sprintf( '<p>%s</p>', esc_html__( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
 
                     <?php
                         $dont_show_roles  = array( 'administrator', 'b3_approval', 'b3_activation' );

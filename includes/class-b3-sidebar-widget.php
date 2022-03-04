@@ -17,7 +17,7 @@
                 'B3 User menu',
                 array(
                     'classname'   => 'b3__widget--user',
-                    'description' => __( 'Custom user widget', 'b3-onboarding' ),
+                    'description' => esc_html__( 'Custom user widget', 'b3-onboarding' ),
                 )
             );
         }
@@ -127,7 +127,7 @@
                     if ( ! empty( $instance[ 'title' ] ) ) {
                         echo $args[ 'before_title' ] . apply_filters( 'widget_title', $instance[ 'title' ] ) . $args[ 'after_title' ];
                     }
-                    echo sprintf( '<p class="widget-no-settings">%s</p>', sprintf( __( "You haven't set any widget settings. Configure them %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'widgets.php' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
+                    echo sprintf( '<p class="widget-no-settings">%s</p>', sprintf( esc_html__( "You haven't set any widget settings. Configure them %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'widgets.php' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
                     echo $args[ 'after_widget' ];
                 }
             }

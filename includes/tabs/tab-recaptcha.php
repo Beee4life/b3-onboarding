@@ -71,7 +71,7 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php echo sprintf( '<p>%s</p>', sprintf( __( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), __( 'here', 'b3-onboarding' ) ) ) ); ?>
+            <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), esc_html__( 'here', 'b3-onboarding' ) ) ) ); ?>
 
             <?php b3_get_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
         </form>

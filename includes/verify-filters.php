@@ -75,51 +75,51 @@
                 if ( in_array( 'email', $validation ) ) {
                     if ( is_string( $filter_output ) ) {
                         if ( ! is_email( trim( $filter_output ) ) ) {
-                            $error_messages[] = sprintf( __( 'The email address "%s", which you set in the filter "%s", is invalid.', 'b3-onboarding' ), $filter_output, $filter );
+                            $error_messages[] = sprintf( esc_html__( 'The email address "%s", which you set in the filter "%s", is invalid.', 'b3-onboarding' ), $filter_output, $filter );
                         }
                     } elseif ( is_array( $filter_output ) ) {
                         foreach( $filter_output as $email ) {
                             if ( ! is_email( trim( $email ) ) ) {
-                                $error_messages[] = sprintf( __( 'The email address "%s", which you set in the filter "%s", is invalid.', 'b3-onboarding' ), $email, $filter );
+                                $error_messages[] = sprintf( esc_html__( 'The email address "%s", which you set in the filter "%s", is invalid.', 'b3-onboarding' ), $email, $filter );
                             }
                         }
                     } else {
-                        $error_messages[] = sprintf( __( 'The value, which you set in the filter "%s", is not a string or an array.', 'b3-onboarding' ), $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not a string or an array.', 'b3-onboarding' ), $filter );
                     }
 
                 } elseif ( in_array( 'url', $validation ) ) {
                     if ( filter_var( $filter_output, FILTER_VALIDATE_URL ) === false ) {
-                        $error_messages[] = sprintf( __( 'The url, which you set in the filter "%s", is not a valid url.', 'b3-onboarding' ), $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The url, which you set in the filter "%s", is not a valid url.', 'b3-onboarding' ), $filter );
                     } else {
                         if ( in_array( 'file', $validation ) ) {
                             if ( false === b3_check_remote_file( $filter_output ) ) {
-                                $error_messages[] = sprintf( __( 'The url, which you set in the filter "%s", does not exist or is unreachable.', 'b3-onboarding' ), $filter );
+                                $error_messages[] = sprintf( esc_html__( 'The url, which you set in the filter "%s", does not exist or is unreachable.', 'b3-onboarding' ), $filter );
                             }
                         }
                     }
 
                 } elseif ( in_array( 'hex_color', $validation ) ) {
                     if ( false == $filter_output ) {
-                        $error_messages[] = sprintf( __( 'The color, which you set in the filter "%s", is not invalid.', 'b3-onboarding' ), $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The color, which you set in the filter "%s", is not invalid.', 'b3-onboarding' ), $filter );
                     } elseif ( false == is_string( $filter_output ) ) {
-                        $error_messages[] = sprintf( __( 'The color (%s), which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $filter_output, $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The color (%s), which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $filter_output, $filter );
                     } elseif ( false == sanitize_hex_color( $filter_output ) ) {
-                        $error_messages[] = sprintf( __( 'The color (%s), which you set in the filter "%s", is invalid.', 'b3-onboarding' ), $filter_output, $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The color (%s), which you set in the filter "%s", is invalid.', 'b3-onboarding' ), $filter_output, $filter );
                     }
 
                 } elseif ( in_array( 'array', $validation ) ) {
                     if ( ! is_array( $filter_output ) ) {
-                        $error_messages[] = sprintf( __( 'The value, which you set in the filter "%s", is not an array.', 'b3-onboarding' ), $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not an array.', 'b3-onboarding' ), $filter );
                     } elseif ( empty( $filter_output ) ) {
-                        $error_messages[] = sprintf( __( 'The value, which you set in the filter "%s", is an empty array.', 'b3-onboarding' ), $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is an empty array.', 'b3-onboarding' ), $filter );
                     } else {
                         if ( in_array( 'hidden', $validation ) ) {
                             foreach( $filter_output as $key => $value ) {
                                 if ( ! is_string( $key ) ) {
-                                    $error_messages[] = sprintf( __( 'The field ID "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
+                                    $error_messages[] = sprintf( esc_html__( 'The field ID "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
                                 }
                                 if ( ! is_string( $value ) ) {
-                                    $error_messages[] = sprintf( __( 'The field value "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
+                                    $error_messages[] = sprintf( esc_html__( 'The field value "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
                                 }
                             }
                         } elseif ( in_array( 'extra', $validation ) ) {
@@ -131,19 +131,19 @@
                                         } elseif ( isset( $field[ 'id' ] ) ) {
                                             $replace = $field[ 'id' ];
                                         }
-                                        $error_messages[] = sprintf( __( 'You didn\'t set a field type for "%s".', 'b3-onboarding' ), $replace );
+                                        $error_messages[] = sprintf( esc_html__( 'You didn\'t set a field type for "%s".', 'b3-onboarding' ), $replace );
                                     } else {
-                                        $error_messages[] = __( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
+                                        $error_messages[] = esc_html__( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
                                     }
                                 } else {
                                     if ( ! isset( $field[ 'label' ] ) && isset( $field[ 'id' ] ) ) {
-                                        $error_messages[] = sprintf( __( 'A label for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'id' ], $filter );
+                                        $error_messages[] = sprintf( esc_html__( 'A label for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'id' ], $filter );
                                     }
                                     if ( ! isset( $field[ 'id' ] ) && isset( $field[ 'label' ] ) ) {
-                                        $error_messages[] = sprintf( __( 'An ID for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'label' ], $filter );
+                                        $error_messages[] = sprintf( esc_html__( 'An ID for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'label' ], $filter );
                                     }
                                     if ( ! isset( $field[ 'id' ] ) && ! isset( $field[ 'label' ] ) ) {
-                                        $error_messages[] = sprintf( __( 'An ID and label for your option in the filter "%s" is required.', 'b3-onboarding' ), $filter );
+                                        $error_messages[] = sprintf( esc_html__( 'An ID and label for your option in the filter "%s" is required.', 'b3-onboarding' ), $filter );
                                     }
                                     if ( in_array( $field[ 'type' ], [ 'checkbox', 'radio', 'select' ] ) ) {
                                         if ( ! isset( $field[ 'options' ] ) ) {
@@ -153,9 +153,9 @@
                                                 } elseif ( isset( $field[ 'id' ] ) ) {
                                                     $replace = $field[ 'id' ];
                                                 }
-                                                $error_messages[] = sprintf( __( 'You didn\'t set any options for the field "%s".', 'b3-onboarding' ), $replace );
+                                                $error_messages[] = sprintf( esc_html__( 'You didn\'t set any options for the field "%s".', 'b3-onboarding' ), $replace );
                                             } else {
-                                                $error_messages[] = __( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
+                                                $error_messages[] = esc_html__( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
                                             }
                                         }
                                     }
@@ -165,7 +165,7 @@
                     }
                 } elseif ( in_array( 'string', $validation ) ) {
                     if ( ! is_string( $filter_output ) ) {
-                        $error_messages[] = sprintf( __( 'The value, which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $filter );
+                        $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $filter );
                     }
                 }
             }

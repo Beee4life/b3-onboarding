@@ -66,7 +66,7 @@
                         $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
                         $message .= '<a href="' . esc_url( $home_url ) . '">' . esc_url( $home_url ) . '</a>';
                         $message .= '<br>';
-                        $message .= sprintf( __( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                        $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $message .= '</p>';
 
                         return $message;
@@ -308,7 +308,7 @@
                         $message .= '<br>';
                         $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
                         $message .= '<br>';
-                        $message .= sprintf( __( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), '' ) );
+                        $message .= sprintf( esc_html__( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), '' ) );
 
                         return $message;
                     }

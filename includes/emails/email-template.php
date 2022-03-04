@@ -15,7 +15,7 @@
     <tbody>
     <tr>
         <td colspan="2">
-            <?php echo __( 'This is the default email template.', 'b3-onboarding' ); ?>
+            <?php echo esc_html__( 'This is the default email template.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>

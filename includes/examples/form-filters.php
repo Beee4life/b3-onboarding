@@ -41,7 +41,7 @@
         $container_class = 'container-class';
         $id              = 'id';
         $input_class     = 'input-class';
-        $placeholder     = __( 'Placeholder text', 'b3-onboarding' );
+        $placeholder     = esc_attr__( 'Placeholder text', 'b3-onboarding' );
 
         $fields = [
             [

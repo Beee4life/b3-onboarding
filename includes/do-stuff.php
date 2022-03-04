@@ -210,7 +210,7 @@
                 <?php } elseif ( 'select' == $input_type ) { ?>
                     <select name="<?php echo $input_id; ?>" id="<?php echo $input_id; ?>" class="<?php echo $input_class; ?>">
                         <?php if ( $input_options ) { ?>
-                            <?php $input_placeholder_select = ( $input_placeholder ) ? $input_placeholder : __( 'Select an option', 'b3-onboarding' ); ?>
+                            <?php $input_placeholder_select = ( $input_placeholder ) ? $input_placeholder : esc_attr__( 'Select an option', 'b3-onboarding' ); ?>
                             <option value=""><?php echo $input_placeholder_select; ?></option>
                             <?php foreach( $input_options as $option ) { ?>
                                 <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value ) ? ' selected="selected"' : false; ?>

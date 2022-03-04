@@ -19,7 +19,7 @@
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
-        $subject = __( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
+        $subject = esc_attr__( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
 
         $wp_password_change_notification_email[ 'subject' ] = $subject;
         $wp_password_change_notification_email[ 'message' ] = $message;
@@ -325,18 +325,18 @@
         error_log( 'wp registration errors' );
         if ( 1 == get_option( 'b3_first_last_required' ) ) {
             if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
-                $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a first name.', 'b3-onboarding' ) ) );
+                $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'You must include a first name.', 'b3-onboarding' ) ) );
             }
 
             if ( empty( $_POST[ 'last_name' ] ) || ! empty( $_POST[ 'last_name' ] ) && trim( $_POST[ 'last_name' ] ) == '' ) {
-                $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You must include a last name.', 'b3-onboarding' ) ) );
+                $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'You must include a last name.', 'b3-onboarding' ) ) );
             }
         }
 
         // @TODO: check on MS
         if ( 1 == get_option( 'b3_activate_recaptcha' ) ) {
             if ( b3_verify_recaptcha() ) {
-                $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'Recaptcha failed.', 'b3-onboarding' ) ) );
+                $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'Recaptcha failed.', 'b3-onboarding' ) ) );
             }
         }
 
@@ -350,7 +350,7 @@
 
         $privacy_error = b3_verify_privacy();
         if ( true == $privacy_error ) {
-            $errors->add( 'no_privacy', sprintf( '<strong>%s</strong>: %s', __( 'ERROR', 'b3-onboarding' ), __( 'You have to accept the privacy statement.', 'b3-onboarding' ) ) );
+            $errors->add( 'no_privacy', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' ) ) );
 
             return $errors;
         }
@@ -755,8 +755,8 @@ All at ###SITENAME###
             if ( 'email_activation' == $registration_type ) {
                 if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
                     unset( $actions[ 'resetpassword' ] );
-                    $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), __( 'Resend activation', 'b3-onboarding' ) );
-                    $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), __( 'Activate', 'b3-onboarding' ) );
+                    $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), esc_attr__( 'Resend activation', 'b3-onboarding' ) );
+                    $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), esc_attr__( 'Activate', 'b3-onboarding' ) );
                 }
             } elseif ( 'request_access' == $registration_type ) {
                 if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
@@ -765,7 +765,7 @@ All at ###SITENAME###
                         add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
                             wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
                         ),
-                        __( 'Activate', 'b3-onboarding' )
+                        esc_attr__( 'Activate', 'b3-onboarding' )
                     );
                 }
             }

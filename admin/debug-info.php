@@ -70,7 +70,7 @@
             <table class="b3_table b3_table--debug">
                 <tr>
                     <td>Main site</td>
-                    <td><?php echo ( is_main_site() ) ? __( 'Yes', 'b3-onboarding' ) : __( 'No', 'b3-onboarding' ); ?> </td>
+                    <td><?php echo ( is_main_site() ) ? esc_html__( 'Yes', 'b3-onboarding' ) : esc_html__( 'No', 'b3-onboarding' ); ?> </td>
                 </tr>
                 <tr>
                     <td>Main registration</td>

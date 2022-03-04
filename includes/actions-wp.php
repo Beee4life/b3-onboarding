@@ -125,7 +125,7 @@
                     $page_link = admin_url( 'admin.php?page=b3-user-approval' );
                     $approval_args = array(
                         'id'    => 'approval',
-                        'title' => '&rarr; ' . __( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
+                        'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
                         'href'  => $page_link,
                         'meta'  => array( 'class' => 'topbar_approve_user' ),
                     );
@@ -268,7 +268,7 @@
      */
     function b3_network_admin_notices() {
         if ( 'settings-network' == get_current_screen()->id ) {
-            echo sprintf( '<div class="notice notice-info"><p>'. __( "%s overrides the 'Registration' option and the 'Registration notification'. You can change the registration type %s and the registration notification %s.", 'b3-onboarding' ) . '</p></div>',
+            echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( "%s overrides the 'Registration' option and the 'Registration notification'. You can change the registration type %s and the registration notification %s.", 'b3-onboarding' ) . '</p></div>',
                 'B3 OnBoarding',
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ),
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) ), esc_html__( 'here', 'b3-onboarding' ) )

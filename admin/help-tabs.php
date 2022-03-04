@@ -44,7 +44,7 @@
                 'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
                 'content' => sprintf( '<h3>%s</h3>', esc_html__( 'reCaptcha', 'b3-onboarding' ) ) .
                     sprintf( '<p>%s</p>', esc_html__( "The reCaptcha settings will show on a new tab after you the checked and saved the 'reCaptcha' setting on the registration tab.", 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', sprintf( __( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), __( 'here', 'b3-onboarding' ) ) ) )
+                    sprintf( '<p>%s</p>', sprintf( esc_html__( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), esc_html__( 'here', 'b3-onboarding' ) ) ) )
             ) );
 
             $screen->add_help_tab( array(
@@ -55,7 +55,7 @@
                     sprintf( '<p>%s</p>', esc_html__( 'Save yourself a lot of work per email and use the template option. This is then wrapped around each message.', 'b3-onboarding' ) ) .
                     sprintf( '<p>%s</p>', esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) ) . '
                     <ul>
-                        <li>%activation_url% (' . __( 'only in user activation email', 'b3-onboarding' ) . ')</li>
+                        <li>%activation_url% (' . esc_html__( 'only in user activation email', 'b3-onboarding' ) . ')</li>
                         <li>%blog_name% <sup>&sup1;</sup></li>
                         <li>%home_url% <sup>&sup1;</sup></li>
                         <li>%registration_date% <sup>&sup1;</sup></li>
@@ -63,15 +63,15 @@
                         <li>%user_ip% <sup>&sup1;</sup></li>
                         <li>%user_login% <sup>&sup1;</sup></li>
                     </ul>
-                    <sup>&sup1;</sup> ' . __( 'available in every email', 'b3-onboarding' ) . '
+                    <sup>&sup1;</sup> ' . esc_html__( 'available in every email', 'b3-onboarding' ) . '
                     <br>
-                    <sup>&sup2;</sup> ' . __( 'only available in admin notification', 'b3-onboarding' ) . '
+                    <sup>&sup2;</sup> ' . esc_html__( 'only available in admin notification', 'b3-onboarding' ) . '
                     <br>
-                    <sup>&sup3;</sup> ' . __( 'only available in password reset email', 'b3-onboarding' ) . '
+                    <sup>&sup3;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' ) . '
                     '
             ) );
 
-            $shortcode_info = '<p>' . sprintf( __( 'More info about the use of shortcodes and their variables, please see %s.', 'b3-onboarding'  ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ), esc_html__( 'here', 'b3-onboarding' ) ) ) . '</p>';
+            $shortcode_info = '<p>' . sprintf( esc_html__( 'More info about the use of shortcodes and their variables, please see %s.', 'b3-onboarding'  ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ), esc_html__( 'here', 'b3-onboarding' ) ) ) . '</p>';
             $screen->add_help_tab( array(
                 'id'      => 'b3-shortcodes',
                 'title'   => esc_html__( 'Shortcodes', 'b3-onboarding' ),
@@ -116,13 +116,13 @@
                 'title'   => esc_html__( 'Developers', 'b3-onboarding' ),
                 // 'content' => '<h3>' . esc_html__( 'Developers', 'b3-onboarding' ) . '</h3>
                 'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Developers', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', sprintf( __( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/localhost-development/' ), __( 'this FAQ topic', 'b3-onboarding' ) ) ) ) .
-                    sprintf( '<p>%s</p>', __( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) )
+                    sprintf( '<p>%s</p>', sprintf( esc_html__( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/localhost-development/' ), esc_html__( 'this FAQ topic', 'b3-onboarding' ) ) ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) )
             ) );
 
             get_current_screen()->set_help_sidebar(
                 sprintf( '<p><b>%s</b></p>', esc_html__( 'More info', 'b3-onboarding' ) ) .
-                sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', __( 'Official site', 'b3-onboarding' ) ) )
+                sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) )
             );
         }
     }

@@ -97,8 +97,8 @@
                     <td>
                         <form name="b3_user_management" action="" method="post">
                             <input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
-                            <input name="b3_approve_user" class="button" type="submit" value="<?php echo __( 'Approve', 'b3-onboarding' ); ?>" />
-                            <input name="b3_reject_user" class="button" type="submit" value="<?php echo __( 'Reject', 'b3-onboarding' ); ?>" />
+                            <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>" />
+                            <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>" />
                             <?php if ( is_multisite() ) { ?>
                                 <input name="b3_signup_id" type="hidden" value="<?php echo $user->signup_id; ?>" />
                             <?php } else { ?>

@@ -309,7 +309,7 @@
                             foreach( $email_array as $email ) {
                                 $email = trim( $email );
                                 if ( ! is_email( $email ) ) {
-                                    B3Onboarding::b3_errors()->add( 'error_invalid_email', sprintf( __( '"%s" is not a valid email address.', 'b3-onboarding' ), $email ) );
+                                    B3Onboarding::b3_errors()->add( 'error_invalid_email', sprintf( esc_html__( '"%s" is not a valid email address.', 'b3-onboarding' ), $email ) );
 
                                     return;
                                 } else {
@@ -660,7 +660,7 @@
             wp_enqueue_script( 'user-profile' );
 
             if ( ! current_user_can( 'edit_user', $current_user->ID ) ) {
-                wp_die( __( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
+                wp_die( esc_html__( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
             }
             if ( isset( $_POST[ 'b3_delete_account' ] ) ) {
                 $redirect_url = b3_get_login_url();

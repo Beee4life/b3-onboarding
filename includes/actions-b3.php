@@ -169,9 +169,9 @@
                 <div class="b3_form-element b3_form-element--signup-for">
                     <label class="b3_form-label" for=""><?php esc_html_e( 'Register for', 'b3-onboarding' ); ?></label>
                     <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
-                    <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', __( 'A site' ) ); ?></label>
+                    <label class="checkbox" for="signupblog"><?php echo apply_filters( 'b3_signup_for_site', esc_attr__( 'A site' ) ); ?></label>
                     <input id="signupuser" type="radio" name="signup_for" value="user">
-                    <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', __( 'Just a user' ) ); ?></label>
+                    <label class="checkbox" for="signupuser"><?php echo apply_filters( 'b3_signup_for_user', esc_attr__( 'Just a user' ) ); ?></label>
                 </div>
             <?php } elseif ( in_array( $registration_type, [ 'blog', 'site' ] ) ) { ?>
                 <input type="hidden" name="signup_for" value="blog" />
@@ -465,7 +465,7 @@
             } else {
                 if ( isset( $attributes[ 'template' ] ) ) {
                     if ( 'login' == $attributes[ 'template' ] ) {
-                        $login_form_message = __( apply_filters( 'b3_message_above_login', false ) );
+                        $login_form_message = apply_filters( 'b3_message_above_login', false );
                         if ( false != $login_form_message ) {
                             $show_errors = true;
                             $messages[]  = $login_form_message;
@@ -484,7 +484,7 @@
                         // * request_access_subdomain
                         // all
                         if ( strpos( $registration_type, 'request_access' ) !== false ) {
-                            $request_access_message = __( apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() ) );
+                            $request_access_message = apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() );
                             if ( false != $request_access_message ) {
                                 $show_errors = true;
                                 $messages[]  = $request_access_message;
