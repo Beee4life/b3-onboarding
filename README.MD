@@ -127,7 +127,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * optimized user templates
 * reformatted debug info page
 
-* 3.0
+3.0
 * added option to request access to create a site (multisite)
 * added reCaptcha v3
 * added user input for disallowed usernames
