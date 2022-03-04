@@ -80,7 +80,6 @@
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
-                add_action( 'wp_logout',                            array( $this, 'b3_redirect_after_logout' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'before_signup_header',                 array( $this, 'b3_redirect_to_custom_mu_register' ) );
                 add_action( 'login_form_register',                  array( $this, 'b3_redirect_to_custom_register' ) );
@@ -128,6 +127,7 @@
                 include 'includes/functions.php';
                 include 'includes/defaults.php';
                 include 'includes/emails.php';
+                include 'includes/redirects.php';
                 include 'includes/form-handling.php';
                 include 'includes/tabs/tabs.php';
                 include 'admin/help-tabs.php';
@@ -1162,18 +1162,6 @@
                 }
 
                 return $redirect_to;
-            }
-
-
-            /**
-             * Redirect to custom login page after the user has been logged out.
-             *
-             * @since 1.0.6
-             */
-            public function b3_redirect_after_logout() {
-                $redirect_url = add_query_arg( 'logout', 'true', b3_get_login_url() );
-                wp_safe_redirect( $redirect_url );
-                exit;
             }
 
 
