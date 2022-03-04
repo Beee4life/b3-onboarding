@@ -53,7 +53,7 @@
     <tr>
         <th>&nbsp;</th>
         <td>
-            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>" />
+            <input class="button button-primary" type="submit" value="<?php esc_attr_e( 'Save settings', 'b3-onboarding' ); ?>" />
         </td>
     </tr>
     </tbody>
