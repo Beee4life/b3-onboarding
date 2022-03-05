@@ -56,6 +56,11 @@
                     $plugin_site = 'https://b3onboarding.berryplasman.com';
                     define( 'B3_PLUGIN_SITE', $plugin_site );
                 }
+
+                $this->settings = array(
+                    'path'    => trailingslashit( dirname( __FILE__ ) ),
+                    'version' => '3.1.0',
+                );
             }
 
 
@@ -63,11 +68,6 @@
              * This initializes the whole shabang
              */
             public function init() {
-                $this->settings = array(
-                    'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '3.1.0',
-                );
-
                 // actions
                 register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
@@ -127,6 +127,7 @@
                 // set default values
                 b3_set_default_settings();
 
+                // @TODO: check if this is needed on MS
                 if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
@@ -914,7 +915,7 @@
                     case 'no_space':
                         return esc_html__( "You can't use a space there.", 'b3-onboarding' );
 
-                    // Website
+                    // Used on website for showcase
                     case 'dummy':
                         return esc_html__( 'You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again.', 'b3-onboarding' );
 
