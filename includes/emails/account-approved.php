@@ -21,15 +21,15 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--account-approved__subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--account-approved__subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--account-approved__subject" name="b3_account_approved_subject" placeholder="<?php echo esc_attr( b3_default_account_approved_subject() ); ?>" type="text" value="<?php echo esc_attr( $account_approved_email_subject ); ?>" />
+            <input id="b3__input--account-approved__subject" name="b3_account_approved_subject" placeholder="<?php echo esc_attr( b3_default_account_approved_subject() ); ?>" type="text" value="<?php echo esc_attr( $account_approved_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--account-approved__message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--account-approved__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo b3_get_preview_link( 'account-approved' ); ?>
         </th>

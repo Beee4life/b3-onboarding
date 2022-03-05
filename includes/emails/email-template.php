@@ -20,7 +20,7 @@
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--email-template" class=""><?php esc_html_e( 'Email template', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--email-template"><?php esc_html_e( 'Email template', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo b3_get_preview_link( 'template' ); ?>
             <br>

@@ -18,15 +18,15 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--confirm-wpmu-user-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--confirm-wpmu-user-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--confirm-wpmu-user-subject" name="b3_confirm_wpmu_user_subject" type="text" placeholder="<?php echo $placeholder_subject; ?>" value="<?php echo esc_attr( $new_wpmu_user_subject ); ?>" />
+            <input id="b3__input--confirm-wpmu-user-subject" name="b3_confirm_wpmu_user_subject" type="text" placeholder="<?php echo $placeholder_subject; ?>" value="<?php echo esc_attr( $new_wpmu_user_subject ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--confirm-wpmu-user-message" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--confirm-wpmu-user-message"><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo b3_get_preview_link( 'mu-confirm-user-email' ); ?>
         </th>

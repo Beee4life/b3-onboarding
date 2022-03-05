@@ -20,7 +20,7 @@
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--email-styling" class=""><?php esc_html_e( 'Email styling', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--email-styling"><?php esc_html_e( 'Email styling', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SETTINGS . '&preview=styling' ), esc_html__( 'Preview', 'b3-onboarding' ) ); ?>
             <br>

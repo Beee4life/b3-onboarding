@@ -30,10 +30,10 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--new-user-notification-addresses" class=""><?php esc_html_e( 'Email addresses', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--new-user-notification-addresses"><?php esc_html_e( 'Email addresses', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--new-user-notification-addresses" name="b3_new_user_notification_addresses" placeholder="<?php echo esc_attr( get_site_option( 'admin_email' ) ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_addresses ); ?>" />
+            <input id="b3__input--new-user-notification-addresses" name="b3_new_user_notification_addresses" placeholder="<?php echo esc_attr( get_site_option( 'admin_email' ) ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_addresses ); ?>" />
         </td>
     </tr>
     <tr>
@@ -43,15 +43,15 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--new-user-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--new-user-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo esc_attr( b3_default_new_user_admin_subject() ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_subject ); ?>" />
+            <input id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo esc_attr( b3_default_new_user_admin_subject() ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--new-user-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--new-user-message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo b3_get_preview_link( 'new-user-admin' ); ?>
         </th>

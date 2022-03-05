@@ -21,15 +21,15 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--email-activation__subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--email-activation__subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--email-activation__subject" name="b3_email_activation_subject" placeholder="<?php echo esc_attr( b3_default_email_activation_subject() ); ?>" type="text" value="<?php echo esc_attr( $email_activation_subject ); ?>" />
+            <input id="b3__input--email-activation__subject" name="b3_email_activation_subject" placeholder="<?php echo esc_attr( b3_default_email_activation_subject() ); ?>" type="text" value="<?php echo esc_attr( $email_activation_subject ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--email-activation__message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--email-activation__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo b3_get_preview_link( 'email-activation' ); ?>
         </th>

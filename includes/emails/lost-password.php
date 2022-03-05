@@ -18,15 +18,15 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--lost-password-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--lost-password-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--lost-password-subject" name="b3_lost_password_subject" type="text" placeholder="<?php echo esc_attr( b3_default_lost_password_subject() ); ?>" value="<?php echo esc_attr( $lost_password_subject ); ?>" />
+            <input id="b3__input--lost-password-subject" name="b3_lost_password_subject" type="text" placeholder="<?php echo esc_attr( b3_default_lost_password_subject() ); ?>" value="<?php echo esc_attr( $lost_password_subject ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--lost-password-message" class=""><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--lost-password-message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo b3_get_preview_link( 'lostpass' ); ?>
         </th>

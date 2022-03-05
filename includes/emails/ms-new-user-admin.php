@@ -24,15 +24,15 @@
     </tr>
     <tr>
         <th>
-            <label for="b3__input--new-wpmu-user-admin-subject" class=""><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--new-wpmu-user-admin-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input class="" id="b3__input--new-wpmu-user-admin-subject" name="b3_new_wpmu_user_admin_subject" type="text" placeholder="<?php echo $placeholder_subject; ?>" value="<?php echo esc_attr( $new_wpmu_user_subject_admin ); ?>" />
+            <input id="b3__input--new-wpmu-user-admin-subject" name="b3_new_wpmu_user_admin_subject" type="text" placeholder="<?php echo $placeholder_subject; ?>" value="<?php echo esc_attr( $new_wpmu_user_subject_admin ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
-            <label for="b3__input--new-wpmu-user-admin-message" class=""><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
+            <label for="b3__input--new-wpmu-user-admin-message"><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
             <br>
             <?php echo b3_get_preview_link( 'mu-new-user-admin' ); ?>
         </th>
