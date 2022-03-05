@@ -119,10 +119,11 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.1.0
 * improved multisite functions
-* added honeypot feature
-* added 'prevent delete settings on uninstall' setting
-* added new filters
+* added honeypot option
+* added reset to default option
+* added option to 'prevent delete settings on uninstall'
 * added status class to messages
+* added new filters
 * optimized existing filters
 * optimized user templates
 * reformatted debug info page
