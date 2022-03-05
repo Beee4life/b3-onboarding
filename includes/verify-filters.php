@@ -14,6 +14,7 @@
             'b3_account_approved_subject'              => array( 'string' ),
             'b3_account_rejected_message'              => array( 'string' ),
             'b3_account_rejected_subject'              => array( 'string' ),
+            'b3_attributes'                            => array( 'array' ),
             'b3_custom_register_inform'                => array( 'string' ),
             'b3_dashboard_url'                         => array( 'string' ),
             'b3_disable_action_links'                  => array( 'bool', 'string' ),
