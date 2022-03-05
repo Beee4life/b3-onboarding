@@ -732,5 +732,7 @@
         // init new settings
         $blog_id = is_multisite() ? get_current_blog_id() : false;
         b3_set_default_settings( $blog_id );
+        
+        // @TODO: set pages
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );
