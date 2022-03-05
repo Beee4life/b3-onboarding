@@ -35,8 +35,6 @@
             <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" autocomplete="current-password">
         </div>
 
-        <?php do_action( 'b3_add_recaptcha_fields', $attributes[ 'template' ] ); ?>
-
         <div class="b3_form-element">
             <p class="rememberme">
                 <input name="rememberme" type="checkbox" id="rememberme" value="forever">
