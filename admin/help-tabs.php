@@ -22,17 +22,6 @@
 
         if ( 'toplevel_page_b3-onboarding' == $screen->id ) {
             $screen->add_help_tab( array(
-                'id'      => 'b3-settings',
-                'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
-                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Settings', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', esc_html__( 'You can disable the links below the form button on login/registration forms.', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', esc_html__( 'You can use a popup for the login form, when using the B3 sidebar widget.', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', esc_html__( 'You can use a popup for the login form, when using the B3 sidebar widget.', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', esc_html__( 'Activate the debug page.', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) )
-            ) );
-
-            $screen->add_help_tab( array(
                 'id'      => 'b3-registration',
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                 'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Registration', 'b3-onboarding' ) ) .
@@ -109,6 +98,17 @@
                     </li>
                     </ul>
                     ' . $shortcode_info
+            ) );
+
+            $screen->add_help_tab( array(
+                'id'      => 'b3-settings',
+                'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
+                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Settings', 'b3-onboarding' ) ) .
+                             sprintf( '<p>%s</p>', esc_html__( 'You can disable the links below the form button on login/registration forms.', 'b3-onboarding' ) ) .
+                             sprintf( '<p>%s</p>', esc_html__( 'You can use a popup for the login form, when using the B3 sidebar widget.', 'b3-onboarding' ) ) .
+                             sprintf( '<p>%s</p>', esc_html__( 'You can use a popup for the login form, when using the B3 sidebar widget.', 'b3-onboarding' ) ) .
+                             sprintf( '<p>%s</p>', esc_html__( 'Activate the debug page.', 'b3-onboarding' ) ) .
+                             sprintf( '<p>%s</p>', esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) )
             ) );
 
             $screen->add_help_tab( array(
