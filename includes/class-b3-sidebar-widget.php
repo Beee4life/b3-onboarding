@@ -58,7 +58,7 @@
             }
 
             if ( $show_register ) {
-                $register_url       = b3_get_register_url( true );
+                $register_url      = b3_get_register_url( true );
                 $registration_type = get_option( 'b3_registration_type' );
 
                 if ( 'none' != $registration_type && false != $register_url ) {
