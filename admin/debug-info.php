@@ -100,7 +100,6 @@
             <?php
                 $plugins = get_plugins();
                 foreach( $plugins as $key => $value ) {
-                    // echo '<pre>'; var_dump($value); echo '</pre>'; exit;
                     if ( is_plugin_active( $key ) ) {
                         echo '<tr>';
                         echo sprintf( '<td>%s</td>', $value[ 'Name' ] );
