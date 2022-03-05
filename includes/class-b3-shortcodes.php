@@ -350,6 +350,8 @@
                         $attributes[ 'updated' ] = $this->b3_get_return_message( $_REQUEST[ 'updated' ] );
                     }
 
+                    $attributes = apply_filters( 'b3_attributes', $attributes );
+
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
                 }
 
