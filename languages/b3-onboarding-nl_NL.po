@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-03-05 19:44+0100\n"
-"PO-Revision-Date: 2022-03-05 19:49+0100\n"
+"POT-Creation-Date: 2022-03-05 19:50+0100\n"
+"PO-Revision-Date: 2022-03-05 19:50+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -328,13 +328,13 @@ msgstr "Je hebt nog geen pagina ingesteld voor registratie. Stel dit %s in."
 
 #: B3Onboarding.php:1163 B3Onboarding.php:1172 B3Onboarding.php:1193
 #: admin/dashboard-widget.php:56 admin/dashboard-widget.php:86
-#: includes/actions-b3.php:411 includes/actions-wp.php:273
-#: includes/actions-wp.php:274 includes/class-b3-shortcodes.php:69
-#: includes/class-b3-sidebar-widget.php:130 includes/defaults.php:239
-#: includes/defaults.php:241 includes/defaults.php:338
-#: includes/defaults.php:357 includes/defaults.php:451
-#: includes/defaults.php:483 includes/defaults.php:541
-#: includes/tabs/tab-recaptcha.php:74
+#: admin/help-tabs.php:98 includes/actions-b3.php:411
+#: includes/actions-wp.php:273 includes/actions-wp.php:274
+#: includes/class-b3-shortcodes.php:69 includes/class-b3-sidebar-widget.php:130
+#: includes/defaults.php:239 includes/defaults.php:241
+#: includes/defaults.php:338 includes/defaults.php:357
+#: includes/defaults.php:451 includes/defaults.php:483
+#: includes/defaults.php:541 includes/tabs/tab-recaptcha.php:74
 msgid "here"
 msgstr "hier"
 
@@ -649,6 +649,13 @@ msgstr "Dit rendert de account pagina."
 #: admin/help-tabs.php:96
 msgid "This renders the user management page."
 msgstr "Dit rendert de gebruikersgoedkeuring pagina."
+
+#: admin/help-tabs.php:98
+#, php-format
+msgid ""
+"More info about the use of shortcodes and their variables, please see %s."
+msgstr ""
+"Meer info over het gebruik van shortcodes en hun variabelen, kijk aub %s."
 
 #: admin/help-tabs.php:110
 msgid "This page has various global settings, such as:"
@@ -2581,12 +2588,6 @@ msgstr "https://berryplasman.com"
 #~ "The reCaptcha settings will show on a new tab after you the checked and "
 #~ "saved the 'reCaptcha' setting on the registration tab."
 #~ msgstr "ReCaptcha instellingen zijn te zien nadat je hebt opgeslagen."
-
-#, php-format
-#~ msgid ""
-#~ "More info about the use of shortcodes and their variables, please see %s."
-#~ msgstr ""
-#~ "Meer info over het gebruik van shortcodes en hun variabelen, kijk aub %s."
 
 #~ msgid "<strong>Error</strong>: Enter a username or email address."
 #~ msgstr "<strong>Fout</strong>: Vul een gebruikersnaam of email adres in."
