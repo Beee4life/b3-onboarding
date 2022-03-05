@@ -95,7 +95,7 @@
             echo sprintf( '<li><b>%s</b><br>%s</li>', '[account-page]', esc_html__( 'This renders the account page.', 'b3-onboarding' ) );
             echo sprintf( '<li><b>%s</b><br>%s</li>', '[user-management]', esc_html__( 'This renders the user management page.', 'b3-onboarding' ) );
             echo '</ul>';
-            // echo '<p>' . sprintf( esc_html__( 'More info about the use of shortcodes and their variables, please see %s.', 'b3-onboarding'  ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ), esc_html__( 'here', 'b3-onboarding' ) ) ) . '</p>';
+            echo '<p>' . sprintf( esc_html__( 'More info about the use of shortcodes and their variables, please see %s.', 'b3-onboarding'  ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ), esc_html__( 'here', 'b3-onboarding' ) ) ) . '</p>';
             $shortcodes_message = ob_get_clean();
 
             $tabs[] = [
