@@ -19,7 +19,6 @@
         ob_start();
         echo sprintf( '<h2>%s</h2>', esc_html__( 'Recaptcha', 'b3-onboarding' ) );
         ?>
-
         <p>
             <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
             <br>
@@ -46,7 +45,7 @@
                     <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
-                    <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key ) { echo $public_key; } ?>" />
+                    <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key ) { echo esc_attr( $public_key ); } ?>" />
                 </div>
             <?php b3_get_close(); ?>
 
@@ -55,7 +54,7 @@
                     <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
-                    <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key ) { echo $secret_key; } ?>" />
+                    <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key ) { echo esc_attr( $secret_key ); } ?>" />
                 </div>
             <?php b3_get_close(); ?>
 

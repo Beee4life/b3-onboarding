@@ -388,15 +388,14 @@
      *
      * @since 2.0.0
      *
-     * @param $errors
+     * @return bool
      */
     function b3_verify_privacy() {
-        $error = false;
         if ( 1 == get_option( 'b3_privacy' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
-            $error = true;
+            return false;
         }
 
-        return $error;
+        return true;
     }
 
 

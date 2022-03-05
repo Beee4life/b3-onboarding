@@ -321,10 +321,8 @@
         }
 
         // @TODO: check on MS
-        if ( 1 == get_option( 'b3_activate_recaptcha' ) ) {
-            if ( b3_verify_recaptcha() ) {
-                $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'Recaptcha failed.', 'b3-onboarding' ) ) );
-            }
+        if ( 1 == get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
+            $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'Recaptcha failed.', 'b3-onboarding' ) ) );
         }
 
         $extra_field_errors = apply_filters( 'b3_extra_fields_validation', [] );
@@ -335,8 +333,7 @@
             return $errors;
         }
 
-        $privacy_error = b3_verify_privacy();
-        if ( true == $privacy_error ) {
+        if ( ! b3_verify_privacy() ) {
             $errors->add( 'no_privacy', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' ) ) );
 
             return $errors;

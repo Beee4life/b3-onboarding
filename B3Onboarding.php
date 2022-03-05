@@ -922,7 +922,6 @@
              */
             private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
                 $errors                       = new WP_Error();
-                $privacy_error                = b3_verify_privacy();
                 $registration_with_email_only = get_option( 'b3_register_email_only' );
                 $user_data                    = array(
                     'user_login' => $user_login,
@@ -988,7 +987,7 @@
                     }
                 }
 
-                if ( true == $privacy_error ) {
+                if ( ! b3_verify_privacy() ) {
                     $errors->add( 'no_privacy', $this->b3_get_return_message( 'no_privacy' ) );
 
                     return $errors;

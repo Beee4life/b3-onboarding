@@ -84,22 +84,6 @@
 
 
     /**
-     * Add recaptcha to login form
-     *
-     * @since 2.0.0
-     *
-     * @param $user_id
-     */
-    function b3_add_login_form_fields() {
-        $show_recaptcha = get_option( 'b3_recaptcha_login' );
-        if ( $show_recaptcha ) {
-            do_action( 'b3_add_recaptcha_fields' );
-        }
-    }
-    add_action( 'login_form', 'b3_add_login_form_fields' );
-
-
-    /**
      * Add approval to admin bar
      *
      * @since 2.0.0

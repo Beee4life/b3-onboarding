@@ -484,11 +484,10 @@
      */
     function b3_recaptcha_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
-
             if ( ! wp_verify_nonce( $_POST[ 'b3_recaptcha_nonce' ], 'b3-recaptcha-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
-            } else {
 
+            } else {
                 if ( isset( $_POST[ 'b3_recaptcha_public' ] ) && ! empty( $_POST[ 'b3_recaptcha_public' ] ) ) {
                     update_option( 'b3_recaptcha_public', sanitize_text_field( $_POST[ 'b3_recaptcha_public' ] ) );
                 } else {
