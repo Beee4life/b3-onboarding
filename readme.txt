@@ -43,7 +43,7 @@ There are a ton of things, which you can set through the admin pages or with the
 * added user input for disallowed usernames
 * alot of MU stuff
 
-For older changelogs see the [website]().
+For older changelogs see the [website](https://b3onboarding.berryplasman.com).
 
 == Update Notice ==
 A ton of new features, so you'd better upgrade.
