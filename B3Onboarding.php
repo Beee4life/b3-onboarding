@@ -75,8 +75,8 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_recaptcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_recaptcha_js_to_footer' ) );
-                add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
+                add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
@@ -198,22 +198,6 @@
 
                 wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
-            }
-
-
-            /*
-             * Enqueue js for recaptcha
-             */
-            public function b3_add_rc3() {
-                if ( 1 == get_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
-                    ?>
-                    <script>
-                        function onSubmit(token) {
-                            document.getElementById('registerform').submit();
-                        }
-                    </script>
-                    <?php
-                }
             }
 
 
@@ -407,11 +391,24 @@
              * at the end of the page.
              */
             public function b3_add_recaptcha_js_to_footer() {
-                $recaptcha = get_option( 'b3_activate_recaptcha' );
-                if ( is_page( b3_get_register_url( true ) ) ) {
-                    if ( true == $recaptcha ) {
-                        wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array() );
-                    }
+                if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
+                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array() );
+                }
+            }
+
+
+            /*
+             * Enqueue js for recaptcha
+             */
+            public function b3_add_rc3() {
+                if ( 1 == get_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
+                    ?>
+                    <script>
+                        function onSubmit(token) {
+                            document.getElementById('registerform').submit();
+                        }
+                    </script>
+                    <?php
                 }
             }
 
@@ -464,12 +461,10 @@
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
                                     $register     = false;
 
-                                } elseif ( false != get_option( 'b3_activate_recaptcha' ) ) {
-                                    if ( ! b3_verify_recaptcha() ) {
-                                        // Recaptcha check failed, display error
-                                        $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-                                        $register     = false;
-                                    }
+                                } elseif ( false != get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
+                                    // Recaptcha check failed, display error
+                                    $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                    $register     = false;
                                 }
 
                                 if ( true == $register && 'none' != $registration_type ) {
@@ -531,11 +526,9 @@
                                         $register   = true;
                                         $user_email = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                                         $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
-                                    } elseif ( false != get_option( 'b3_activate_recaptcha' ) ) {
-                                        if ( ! b3_verify_recaptcha() ) {
-                                            // Recaptcha check failed, display error
-                                            $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-                                        }
+                                    } elseif ( false != get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
+                                        // Recaptcha check failed, display error
+                                        $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
                                     } else {
                                         $register = true;
                                     }

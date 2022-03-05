@@ -378,10 +378,8 @@
      * Add reCAPTCHA check
      *
      * @since 2.0.0
-     *
-     * @param string $form_type
      */
-    function b3_add_recaptcha_fields( $form_type = 'register' ) {
+    function b3_add_recaptcha_fields() {
         $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
         $recaptcha_public   = get_option( 'b3_recaptcha_public' );
         $recaptcha_version  = get_option( 'b3_recaptcha_version', '2' );
@@ -389,7 +387,7 @@
         if ( false != $activate_recaptcha ) {
             if ( false != $recaptcha_public ) {
                 if ( '2' == $recaptcha_version ) {
-                    do_action( 'b3_do_before_recaptcha_' . $form_type );
+                    do_action( 'b3_do_before_recaptcha_register' );
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
                         <div class="recaptcha-container">
@@ -397,18 +395,13 @@
                         </div>
                     </div>
                     <?php
-                    do_action( 'b3_do_after_recaptcha_' . $form_type );
+                    do_action( 'b3_do_after_recaptcha_register' );
                 }
             } else {
                 if ( current_user_can( 'manage_options') ) {
-                    ?>
-                    <div class="b3_form-element b3_form-element--recaptcha">
-                        <?php
-                            echo sprintf( esc_html__( "You didn't set a reCaptcha key yet. You can set it %s.", 'b3-onboarding' ),
-                                '<a href="' . esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' ) ) .'">' . esc_html__( 'here', 'b3-onboarding' ) . '</a>' );
-                        ?>
-                    </div>
-                    <?php
+                    $message = sprintf( esc_html__( "You didn't set a reCaptcha key yet. You can set it %s.", 'b3-onboarding' ),
+                        '<a href="' . esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' ) ) .'">' . esc_html__( 'here', 'b3-onboarding' ) . '</a>' );
+                    echo sprintf( '<div class="b3_form-element b3_form-element--recaptcha">%s</div>', $message );
                 }
             }
         }
@@ -423,13 +416,12 @@
         $show_privacy = get_option( 'b3_privacy' );
         if ( true == $show_privacy ) {
             do_action( 'b3_do_before_privacy_checkbox' );
-            ?>
-            <div class="b3_form-element b3_form-element--privacy">
-                <label>
-                    <input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1"/> <?php echo htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) ); ?>
-                </label>
-            </div>
-            <?php
+
+            $input = '<input name="b3_privacy_accept" type="checkbox" id="b3_privacy_accept" value="1"/>';
+            $label = htmlspecialchars_decode( apply_filters( 'b3_privacy_text', b3_get_privacy_text() ) );
+
+            echo sprintf( '<div class="b3_form-element b3_form-element--privacy"><label>%s</label> %s</div>', $label, $input );
+
             do_action( 'b3_do_after_privacy_checkbox' );
         }
     }
@@ -440,10 +432,10 @@
      * Echo error/info message above a (custom) form
      *
      * @param $attributes
+     *
      * @return void
      */
     function b3_render_form_messages( $attributes = [] ) {
-
         if ( ! empty( $attributes ) ) {
             $messages          = array();
             $show_errors       = false;
@@ -537,45 +529,41 @@
      * @param string $form_type
      */
     function b3_add_action_links( $form_type = 'login' ) {
-
         if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
-            $page_types = array();
+            $links = array();
+
+            $values = [
+                'login' => [
+                    'title' => esc_html__( 'Log In', 'b3-onboarding' ),
+                    'link'  => b3_get_login_url(),
+                ],
+                'lostpassword' => [
+                    'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
+                    'link'  => b3_get_lostpassword_url(),
+                ],
+                'register' => [
+                    'title' => esc_html__( 'Register', 'b3-onboarding' ),
+                    'link'  => b3_get_register_url(),
+                ],
+            ];
 
             switch( $form_type ) {
                 case 'login':
-                    $page_types[ 'lostpassword' ] = [
-                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
-                        'link'  => b3_get_lostpassword_url(),
-                    ];
+                    $links[] = $values['lostpassword'];
                     if ( 'none' != get_option( 'b3_registration_type' ) ) {
-                        $page_types[ 'register' ] = [
-                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
-                            'link'  => b3_get_register_url(),
-                        ];
+                        $links[] = $values['register'];
                     }
                     break;
 
                 case 'register':
-                    $page_types[ 'login' ] = [
-                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_url(),
-                    ];
-                    $page_types[ 'forgotpassword' ] = [
-                        'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
-                        'link'  => b3_get_lostpassword_url(),
-                    ];
+                    $links[] = $values[ 'login' ];
+                    $links[] = $values[ 'lostpassword' ];
                     break;
 
                 case 'lostpassword':
-                    $page_types[ 'login' ] = [
-                        'title' => esc_html__( 'Log In', 'b3-onboarding' ),
-                        'link'  => b3_get_login_url(),
-                    ];
+                    $links[] = 'lostpassword';
                     if ( 'none' != get_option( 'b3_registration_type' ) ) {
-                        $page_types[ 'register' ] = [
-                            'title' => esc_html__( 'Register', 'b3-onboarding' ),
-                            'link'  => b3_get_register_url(),
-                        ];
+                        $links[] = 'register';
                     }
                     break;
 
@@ -583,9 +571,9 @@
                     break;
             }
 
-            if ( count( $page_types ) > 0 ) {
+            if ( count( $links ) > 0 ) {
                 echo '<ul class="b3_form-links">';
-                foreach( $page_types as $key => $values ) {
+                foreach( $links as $key => $values ) {
                     echo sprintf( '<li><a href="%s" rel="nofollow">%s</a></li>', $values[ 'link' ], $values[ 'title' ] );
                 }
                 echo '</ul>';
