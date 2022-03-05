@@ -18,12 +18,11 @@
         if ( is_multisite() ) {
             $sites = get_sites( [ 'fields' => 'ids' ] );
         } else {
-            // @TODO: B4L: test this on single site
             $sites = [1];
         }
 
         if ( ! empty( $sites ) ) {
-            // @TODO: get users not connected to a network
+            // @TODO: also get users not connected to a network
             foreach( $sites as $site_id ) {
                 $all_args = array(
                     'exclude'      => array( get_current_user_id() ),
