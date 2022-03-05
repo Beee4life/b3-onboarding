@@ -30,5 +30,4 @@
         foreach( $roles as $role ) {
             remove_role( $role );
         }
-
     }
