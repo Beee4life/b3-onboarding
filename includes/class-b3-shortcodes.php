@@ -12,9 +12,8 @@
          * @since 2.0.0
          */
         class B3_Shortcodes extends B3Onboarding {
-
             /**
-             * B3_Shortcodes constructor.
+             * B3_Shortcodes constructor
              */
             public function __construct() {
                 parent::__construct();
@@ -26,6 +25,7 @@
                 add_shortcode( 'resetpass-form',    array( $this, 'b3_render_reset_password_form' ) );
                 add_shortcode( 'user-management',   array( $this, 'b3_render_user_approval_page' ) );
             }
+
 
             /**
              * Renders the register form
@@ -48,10 +48,9 @@
                 $attributes[ 'registration_type' ] = $registration_type;;
 
                 if ( is_user_logged_in() && 'blog' != $registration_type && ! current_user_can( 'manage_network' ) ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
-                // show info after new site register
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' == $_REQUEST[ 'registered' ] ) {
                     if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
                         switch_to_blog( $_GET[ 'site_id' ] );
@@ -89,7 +88,6 @@
                     return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) );
 
                 } else {
-
                     $attributes[ 'errors' ] = array();
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
@@ -118,15 +116,15 @@
                         }
 
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                        // dummy is for demonstration setup
-                        if ( 'dummy' == $_REQUEST[ 'registered' ] ) {
+                        if ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
-                        } elseif ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
+                        } elseif ( 'dummy' == $_REQUEST[ 'registered' ] ) {
+                            // dummy is for demonstration setup
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         }
                     }
 
-                    if ( 1 == get_option( 'b3_activate_recaptcha' ) && in_array( $attributes[ 'template' ], get_option( 'b3_recaptcha_on', [ 'register' ] ) ) ) {
+                    if ( 1 == get_option( 'b3_activate_recaptcha' ) && 'register' == $attributes[ 'template' ] ) {
                         $recaptcha_public  = get_option( 'b3_recaptcha_public' );
                         $recaptcha_version = get_option( 'b3_recaptcha_version' );
 
@@ -154,7 +152,6 @@
              * @return string  The shortcode output
              */
             public function b3_render_login_form( $user_variables, $content = null ) {
-
                 $default_attributes = array(
                     'title'    => false,
                     'template' => 'login',
@@ -188,7 +185,7 @@
 
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( is_multisite() ) {
-                        $attributes[ 'messages' ][] = sprintf( __( 'You have successfully registered to <strong>%s</strong>. We have emailed you an activation link.', 'b3-onboarding' ), get_site_option( 'site_name' ) );
+                        $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
                     } else {
                         if ( 'access_requested' == $_REQUEST[ 'registered' ] ) {
                             // access_requested
@@ -221,7 +218,6 @@
                 $attributes[ 'errors' ] = $errors;
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
-
             }
 
 
@@ -236,7 +232,6 @@
              * @return string  The shortcode output
              */
             public function b3_render_lost_password_form( $user_variables, $content = null ) {
-
                 $default_attributes = array(
                     'title'    => false,
                     'template' => 'lostpassword',
@@ -244,7 +239,7 @@
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
 
                 if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
                 $attributes[ 'errors' ] = array();
@@ -263,7 +258,6 @@
                 }
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
-
             }
 
 
@@ -327,7 +321,6 @@
              * @return bool|string
              */
             public function b3_render_account_page( $user_variables, $content = null ) {
-
                 if ( is_user_logged_in() ) {
                     wp_enqueue_script( 'user-profile' );
                     $errors             = array();
@@ -384,9 +377,9 @@
                             $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
-                    $attributes[ 'errors' ]              = $errors;
-                    $attributes[ 'register_email_only' ] = get_option( 'b3_register_email_only' );
-                    $attributes[ 'registration_type' ]   = get_option( 'b3_registration_type' );;
+                    $attributes[ 'errors' ]               = $errors;
+                    $attributes[ 'register_email_only' ]  = get_option( 'b3_register_email_only' );
+                    $attributes[ 'registration_type' ]    = get_option( 'b3_registration_type' );
                     $attributes[ 'show_first_last_name' ] = get_option( 'b3_activate_first_last' );
 
                     if ( is_multisite() ) {
@@ -409,4 +402,3 @@
 
         new B3_Shortcodes();
     }
-

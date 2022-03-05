@@ -52,8 +52,8 @@
                             <?php foreach( $options as $option ) { ?>
                                 <div class="b3_settings-input b3_settings-input--radio">
                                     <div>
-                                        <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                        <label for="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -77,8 +77,8 @@
                             <?php foreach( $options as $option ) { ?>
                                 <div class="b3_settings-input b3_settings-input--radio">
                                     <div>
-                                        <label for="b3_registration_type_<?php echo $option[ 'value' ]; ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input type="radio" id="b3_registration_type_<?php echo $option[ 'value' ]; ?>" name="b3_registration_type" value="<?php echo $option[ 'value' ]; ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                        <label for="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
+                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -89,7 +89,6 @@
                 <?php } ?>
 
                 <?php if ( 'none' == $registration_type ) { ?>
-
                     <?php $filter_message = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) ); ?>
                     <?php $closed_message = htmlspecialchars( get_option( 'b3_registration_closed_message' ) ); ?>
                     <?php $default_closed_message = b3_get_registration_closed_message(); ?>
@@ -242,7 +241,7 @@
                                 <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
                                 <?php foreach( $all_pages as $page ) { ?>
                                     <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
-                                    <option value="<?php echo $page->ID; ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
+                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

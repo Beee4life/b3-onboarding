@@ -39,7 +39,7 @@
                 <?php $url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $url_path ), $site_info ); ?>
                 <div class="b3_form-element">
                     <label class="b3_form-label" for="yoursites"><?php esc_attr_e( 'Your site(s)', 'b3-onboarding' ); ?></label>
-                    <a href="<?php echo $url; ?>">
+                    <a href="<?php echo esc_url( $url ); ?>">
                         <?php echo $site_info->blogname; ?>
                     </a>
                 </div>

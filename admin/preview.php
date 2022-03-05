@@ -119,7 +119,7 @@
 
             <?php if ( false != $subject ) { ?>
                 <p>
-                    <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo $subject; ?>"
+                    <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo esc_html($subject); ?>"
                 </p>
             <?php } ?>
 

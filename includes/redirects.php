@@ -20,7 +20,6 @@
         if ( is_user_logged_in() ) {
             // only redirect if blog != registration_type
             if ( 'blog' != get_option( 'b3_registration_type' ) ) {
-                // $this->b3_redirect_logged_in_user();
                 do_action( 'b3_redirect', 'logged_in' );
             }
         } else {
@@ -43,7 +42,6 @@
         if ( ! is_multisite() ) {
             if ( isset( $_GET[ 'action' ] ) && 'register' == $_GET[ 'action' ] ) {
                 if ( is_user_logged_in() ) {
-                    // $this->b3_redirect_logged_in_user();
                     do_action( 'b3_redirect', 'logged_in' );
                 } else {
                     $register_url = b3_get_register_url();
@@ -67,7 +65,6 @@
             $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
             if ( is_user_logged_in() ) {
-                // $this->b3_redirect_logged_in_user( $redirect_to );
                 do_action( 'b3_redirect', 'logged_in', $redirect_to );
             }
 
@@ -89,8 +86,6 @@
     function b3_redirect_to_custom_lostpassword() {
         if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( is_user_logged_in() ) {
-                // $this->b3_redirect_logged_in_user();
-                // exit;
                 do_action( 'b3_redirect', 'logged_in' );
             }
 

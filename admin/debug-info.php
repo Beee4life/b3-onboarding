@@ -132,21 +132,23 @@
             <?php
                 $b3_values = b3_get_all_custom_meta_keys();
                 foreach( $b3_values as $meta_key ) {
-                    $meta_value = '';
-                    $value      = get_option( $meta_key );
+                    $value = get_option( $meta_key );
+
+                    $html_allowed = [
+                        'b3_privacy_text',
+                        'message',
+                    ];
 
                     if ( is_array( $value ) ) {
                         $meta_value = 'array( ' . implode( ', ', $value ) . ' )';
                     } else {
-                        if ( 'b3_email_template' == $meta_key ) {
-                            $value = 'Set';
-                        }
-                        $meta_value = ($value) ? $value : esc_html__( 'not set', 'b3-onboarding');
+                        $value = ( 'b3_email_template' == $meta_key ) ? 'Set' : $value;
+                        $meta_value = (! $value) ? esc_html__( 'not set', 'b3-onboarding') : $value;
                     }
 
                     echo '<tr>';
                     echo sprintf( '<td>%s</td>', $meta_key );
-                    echo sprintf( '<td>%s</td>', $meta_value );
+                    echo sprintf( '<td>%s</td>', esc_html( $meta_value ) );
                     echo '</tr>';
                 }
             ?>

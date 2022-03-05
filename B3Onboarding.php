@@ -73,8 +73,8 @@
                 register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
 
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
-                add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_captcha_js_to_footer' ) );
-                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_captcha_js_to_footer' ) );
+                add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_recaptcha_js_to_footer' ) );
+                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_recaptcha_js_to_footer' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
@@ -298,8 +298,7 @@
              * @return mixed
              */
             public function b3_settings_link( $links ) {
-                $settings_link = '<a href="admin.php?page=b3-onboarding">' . esc_html__( 'Settings', 'b3-onboarding' ) . '</a>';
-                // add if for if add-ons are active
+                $settings_link = sprintf( '<a href="admin.php?page=b3-onboarding">%s</a>', esc_html__( 'Settings', 'b3-onboarding' ) );
                 array_unshift( $links, $settings_link );
 
                 return $links;
@@ -407,12 +406,11 @@
              * An action function used to include the reCAPTCHA JavaScript file
              * at the end of the page.
              */
-            public function b3_add_captcha_js_to_footer() {
-                $recaptcha    = get_option( 'b3_activate_recaptcha' );
-                $recaptcha_on = get_option( 'b3_recaptcha_on', ['register'] );
+            public function b3_add_recaptcha_js_to_footer() {
+                $recaptcha = get_option( 'b3_activate_recaptcha' );
                 if ( is_page( b3_get_register_url( true ) ) ) {
-                    if ( true == $recaptcha && ! empty( $recaptcha_on ) ) {
-                        wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array(), false, false );
+                    if ( true == $recaptcha ) {
+                        wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array() );
                     }
                 }
             }
@@ -467,13 +465,10 @@
                                     $register     = false;
 
                                 } elseif ( false != get_option( 'b3_activate_recaptcha' ) ) {
-                                    $recaptcha_on = get_option( 'b3_recaptcha_on' );
-                                    if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
-                                        if ( ! b3_verify_recaptcha() ) {
-                                            // Recaptcha check failed, display error
-                                            $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-                                            $register     = false;
-                                        }
+                                    if ( ! b3_verify_recaptcha() ) {
+                                        // Recaptcha check failed, display error
+                                        $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
+                                        $register     = false;
                                     }
                                 }
 
@@ -537,12 +532,9 @@
                                         $user_email = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                                         $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
                                     } elseif ( false != get_option( 'b3_activate_recaptcha' ) ) {
-                                        $recaptcha_on = get_option( 'b3_recaptcha_on' );
-                                        if ( is_array( $recaptcha_on ) && in_array( 'register', $recaptcha_on ) ) {
-                                            if ( ! b3_verify_recaptcha() ) {
-                                                // Recaptcha check failed, display error
-                                                $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-                                            }
+                                        if ( ! b3_verify_recaptcha() ) {
+                                            // Recaptcha check failed, display error
+                                            $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
                                         }
                                     } else {
                                         $register = true;
@@ -679,10 +671,6 @@
                 }
             }
 
-
-            ## REDIRECTS
-
-            ## Redirect away from default WP pages
 
             /**
              * Resets the user's password if the password reset form was submitted (with custom passwords)

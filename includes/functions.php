@@ -16,7 +16,6 @@
      * @return array
      */
     function b3_get_email_boxes() {
-
         $registration_type = get_option( 'b3_registration_type' );
         $email_boxes       = array();
 
@@ -229,7 +228,6 @@
      * @return string
      */
     function b3_get_registration_closed_message() {
-
         $user_input = get_option( 'b3_registration_closed_message' );
         if ( false != $user_input ) {
             $registration_closed_message = htmlspecialchars_decode( $user_input );
@@ -247,7 +245,6 @@
      * @return string
      */
     function b3_get_logged_in_registration_only_message() {
-
         $user_input = get_option( 'b3_logged_in_registration_only' );
         if ( false != $user_input ) {
             $logged_in_registration_only_message = htmlspecialchars_decode( $user_input );
@@ -267,7 +264,6 @@
      * @return bool|mixed|string|void
      */
     function b3_get_privacy_text() {
-
         $privacy_text = get_option( 'b3_privacy_text' );
         if ( false != $privacy_text ) {
             $message = stripslashes( $privacy_text );
@@ -289,12 +285,11 @@
      * @return string
      */
     function b3_get_activation_url( $user_data ) {
-
         // Generate an activation key
         $key = wp_generate_password( 20, false );
 
-        // Set the activation key for the user
         global $wpdb;
+        // Set the activation key for the user
         $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user_data->user_login ) );
 
         $login_url      = b3_get_login_url();
@@ -572,26 +567,16 @@
     /**
      * Convert a GMT date/time to local, in system defined date/time format
      *
-     * @param bool $date_time_gmt
+     * @param $date_time_gmt
      *
-     * @return bool|false|string
+     * @return false|mixed|string|null
      * @throws Exception
      */
     function b3_get_local_date_time( $date_time_gmt = false ) {
-        $date_format       = get_option( 'date_format' );
-        $gmt_offset        = get_option( 'gmt_offset' );
-        $time_format       = get_option( 'time_format' );
-        $timezone          = get_option( 'timezone_string' );
-        $registration_date = gmdate( $date_format . ' @ ' . $time_format, time() );
-
         if ( false != $date_time_gmt ) {
-            if ( ! empty( $timezone ) ) {
-                $new_date = new DateTime( $date_time_gmt, new DateTimeZone( 'UTC' ) );
-                $new_date->setTimeZone( new DateTimeZone( $timezone ) );
-                $registration_date = $new_date->format( $date_format . ' @ ' . $time_format );
-            } elseif ( ! empty( $gmt_offset ) ) {
-                $registration_date = gmdate( $date_format . ' @ ' . $time_format, strtotime( $date_time_gmt ) + ( $gmt_offset * HOUR_IN_SECONDS ) );
-            }
+            $date_time = new DateTime( $date_time_gmt );
+            $date_time->setTimezone( new DateTimeZone( wp_timezone_string() ) );
+            $registration_date = $date_time->format( get_option( 'date_format' ) ) . ' @ ' . $date_time->format( get_option( 'time_format' ) );
 
             return $registration_date;
         }
@@ -610,12 +595,11 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_registration() {
-
         $register_message = get_option( 'b3_register_message' );
         if ( false != $register_message ) {
             $message = $register_message;
         } else {
-            $message = b3_get_default_message_above_registration();
+            $message = b3_default_message_above_registration();
         }
 
         return $message;
@@ -632,7 +616,6 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_login() {
-
         $login_message = get_option( 'b3_message_above_login' );
         if ( false != $login_message ) {
             return $login_message;
@@ -652,12 +635,11 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_lost_password() {
-
         $password_message = get_option( 'b3_message_above_lost_password' );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
-            $message = b3_get_default_message_above_lost_password();
+            $message = b3_default_message_above_lost_password();
         }
 
         return $message;
@@ -674,12 +656,11 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_request_access() {
-
         $password_message = get_option( 'b3_message_above_request_access' );
         if ( false != $password_message ) {
             $message = $password_message;
         } else {
-            $message = b3_get_default_message_above_request_access();
+            $message = b3_default_message_above_request_access();
         }
 
         return $message;
@@ -694,7 +675,6 @@
      * @return array
      */
     function b3_get_disallowed_usernames() {
-
         $default_reserved_names = array(
             'admin',
             'administrator',
@@ -723,9 +703,7 @@
      * @return string
      */
     function b3_get_protocol() {
-        $protocol = ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
-
-        return $protocol;
+        return ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
     }
 
 
@@ -737,7 +715,6 @@
      * @return string
      */
     function b3_get_current_url( $include_query = false ) {
-
         $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
         $url_array  = parse_url( $url );
         $port       = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
@@ -1008,8 +985,15 @@
 
         return false;
     }
-    
-    
+
+
+    /**
+     * Get plugin file (from name)
+     *
+     * @param $plugin_name
+     *
+     * @return int|string|null
+     */
     function b3_get_plugin_file( $plugin_name ) {
         require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
         $plugins = get_plugins();
@@ -1018,24 +1002,24 @@
                 return $plugin_file;
             }
         }
-        
+
         return null;
     }
-    
-    
+
+
     /**
      * Set default settings
      *
      * @since 2.0.0
      */
     function b3_set_default_settings( $blog_id = false ) {
-        
+
         if ( false != $blog_id ) {
             switch_to_blog( $blog_id );
         }
-    
+
         $plugin_data = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . b3_get_plugin_file( 'B3 OnBoarding' ) );
-    
+
         update_option( 'b3_activate_custom_emails', 1 );
         update_option( 'b3_disable_admin_notification_password_change', 1 );
         update_option( 'b3_disable_user_notification_password_change', 1 );
@@ -1043,11 +1027,11 @@
         update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
         update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
         update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
-        
+
         if ( class_exists( 'Disable_Comments' ) ) {
             update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
         }
-        
+
         if ( ! is_multisite() ) {
             update_option( 'b3_dashboard_widget', 1 );
             update_option( 'b3_hide_admin_bar', 1 );
@@ -1061,11 +1045,11 @@
                 update_site_option( 'registrationnotification', 'no' );
             }
         }
-        
+
         if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
             update_option( 'b3_privacy_page_id', get_option( 'wp_page_for_privacy_policy' ) );
         }
-        
+
         if ( false != $blog_id ) {
             restore_current_blog();
         }

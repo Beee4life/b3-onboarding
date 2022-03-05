@@ -35,10 +35,8 @@
                 } else {
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == $_POST[ 'b3_activate_recaptcha' ] ) {
                         update_option( 'b3_activate_recaptcha', 1 );
-                        update_option( 'b3_recaptcha_on', ['register'] );
                     } else {
                         delete_option( 'b3_activate_recaptcha' );
-                        delete_option( 'b3_recaptcha_on' );
                     }
                 }
 
@@ -109,11 +107,10 @@
      */
     function b3_pages_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_pages_nonce' ] ) ) {
-
             if ( ! wp_verify_nonce( $_POST[ 'b3_pages_nonce' ], 'b3-pages-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
-            } else {
 
+            } else {
                 $page_ids = array(
                     'b3_account_page_id',
                     'b3_lost_password_page_id',
@@ -508,12 +505,6 @@
                     delete_option( 'b3_recaptcha_version' );
                 }
 
-                if ( isset( $_POST[ 'b3_recaptcha_on' ] ) && ! empty( $_POST[ 'b3_recaptcha_on' ] ) ) {
-                    update_option( 'b3_recaptcha_on', $_POST[ 'b3_recaptcha_on' ] );
-                } else {
-                    delete_option( 'b3_recaptcha_on' );
-                }
-
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );
             }
         }
@@ -575,7 +566,7 @@
                 } else {
                     delete_option( 'b3_main_logo' );
                 }
-                
+
                 if ( true == $reset ) {
                     B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings.', 'b3-onboarding' ) );
                 } else {
@@ -594,7 +585,6 @@
      * @since 1.0.4
      */
     function b3_approve_deny_users() {
-
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
             $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
             if ( ! is_admin() ) {

@@ -72,7 +72,6 @@
             // get registration type
             $registration_type = get_option( 'b3_registration_type' );
             if ( 'request_access' == $registration_type ) {
-                // change user role
                 $user_object = new WP_User( $user_id );
                 $user_object->set_role( 'b3_approval' );
             } elseif ( 'email_activation' == $registration_type ) {
@@ -92,7 +91,7 @@
      * @param $user_id
      */
     function b3_add_login_form_fields() {
-        $show_recaptcha   = get_option( 'b3_recaptcha_login' );
+        $show_recaptcha = get_option( 'b3_recaptcha_login' );
         if ( $show_recaptcha ) {
             do_action( 'b3_add_recaptcha_fields' );
         }
@@ -110,7 +109,6 @@
     function b3_add_toolbar( $wp_admin_bar ) {
         if ( current_user_can( 'promote_users' ) ) {
             if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-
                 $approval_users = [];
                 if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
                     $approval_args  = array( 'role' => 'b3_approval' );
@@ -204,7 +202,6 @@
         $message         = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user->user_email, $subject, $message, [] );
-
     }
     add_action( 'wpmu_activate_user', 'b3_after_activate_user', 10, 3 );
 
@@ -249,7 +246,6 @@
      * @param $meta
      */
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
-
         $user_data = get_userdata( $user_id );
         $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
         $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
@@ -258,7 +254,6 @@
         $message   = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_data->user_email, $subject, $message, [] );
-
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
 

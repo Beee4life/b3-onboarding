@@ -11,9 +11,7 @@
      * @return string|void
      */
     function b3_get_wpmu_activate_user_subject() {
-        $subject = b3_default_wpmu_activate_user_subject();
-
-        return $subject;
+        return b3_default_wpmu_activate_user_subject();
     }
 
 
@@ -25,9 +23,7 @@
      * @return string|void
      */
     function b3_get_wpmu_activate_user_message() {
-        $message = b3_default_wpmu_activate_user_message();
-
-        return $message;
+        return b3_default_wpmu_activate_user_message();
     }
 
 
@@ -39,9 +35,7 @@
      * @return string|void
      */
     function b3_get_wpmu_user_activated_subject() {
-        $subject = b3_default_wpmu_user_activated_subject();
-
-        return $subject;
+        return b3_default_wpmu_user_activated_subject();
     }
 
 
@@ -53,9 +47,7 @@
      * @return string|void
      */
     function b3_get_wpmu_user_activated_message() {
-        $message = b3_default_wpmu_user_activated_message();
-
-        return $message;
+        return b3_default_wpmu_user_activated_message();
     }
 
 
@@ -140,9 +132,7 @@
      * @return string
      */
     function b3_get_new_wpmu_user_subject_admin() {
-        $message = b3_default_subject_new_wpmu_user_admin();
-
-        return $message;
+        return b3_default_subject_new_wpmu_user_admin();
     }
 
 
@@ -154,7 +144,5 @@
      * @return string
      */
     function b3_get_new_wpmu_user_message_admin() {
-        $message = b3_default_message_new_wpmu_user_admin();
-
-        return $message;
+        return b3_default_message_new_wpmu_user_admin();
     }

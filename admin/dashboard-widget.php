@@ -14,7 +14,6 @@
         $all_users        = [];
         $approval_users   = get_users( [ 'role' => 'b3_approval' ] );
 
-        // get all sites in network
         if ( is_multisite() ) {
             $sites = get_sites( [ 'fields' => 'ids' ] );
         } else {
@@ -35,61 +34,62 @@
                 $all_users = array_merge_recursive( $all_users, get_users( $all_args ) );
             }
         }
-        ?>
-        <div class="b3_widget--dashboard">
-            <?php if ( count( $approval_users ) > 0  || count( $activation_users ) > 0 ) { ?>
-                <p>
-                    <?php
-                        if ( count( $approval_users ) > 0 ) {
-                            if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                                echo sprintf( esc_html__( 'There %s %d %s awaiting approval. %s to manage %s.', 'b3-onboarding' ),
-                                    _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
-                                    count( $approval_users ),
-                                    _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
-                                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
-                                    _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
-                            } else {
-                                echo sprintf( esc_html__( "There %s %d %s awaiting approval but you changed the registration type. That's why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %s.", 'b3-onboarding' ),
-                                    _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
-                                    count( $approval_users ),
-                                    _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
-                                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                            }
-                        } elseif ( count( $activation_users ) > 0 ) {
-                            echo sprintf( esc_html__( 'There %s %d %s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
-                        }
-                    ?>
-                </p>
-            <?php } ?>
 
-            <?php if ( ! empty( $all_users ) ) { ?>
-                <table class="b3_table">
-                    <thead>
-                    <tr>
-                        <?php echo sprintf( '<th>%s</th>', esc_html__( 'Login', 'b3-onboarding' ) ); ?>
-                        <?php echo sprintf( '<th>%s</th>', esc_html__( 'ID', 'b3-onboarding' ) ); ?>
-                        <?php echo sprintf( '<th>%s</th>', esc_html__( 'Reg. date', 'b3-onboarding' ) ); ?>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach( $all_users as $user ) { ?>
-                            <tr>
-                                <?php echo sprintf( '<td><a href="%s">%s</a></td>', admin_url( 'user-edit.php?user_id=' . $user->ID ), $user->user_login ); ?>
-                                <?php echo sprintf( '<td>[%s]</td>', $user->ID ); ?>
-                                <?php echo sprintf( '<td>(%s)</td>', b3_get_local_date_time( $user->user_registered ) ); ?>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            <?php } else { ?>
-                <?php if ( 'none' == get_option( 'b3_registration_type' ) ) { ?>
-                    <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "You're the only user right now, but that can be because user registration is not allowed. Change it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SETTINGS . '&tab=registration', esc_html__( 'here', 'b3-onboarding' ) ) ) ); ?>
-                <?php } else { ?>
-                    <?php echo sprintf( '<p>%s</p>', esc_html__( "You're the only (activated) user right now.", 'b3-onboarding' ) ); ?>
-                <?php } ?>
-            <?php } ?>
-        </div>
-        <?php
+        echo '<div class="b3_widget--dashboard">';
+
+        if ( count( $approval_users ) > 0 ) {
+            if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                $notice = sprintf( esc_html__( 'There %s %d %s awaiting approval. %s to manage %s.', 'b3-onboarding' ),
+                    _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
+                    count( $approval_users ),
+                    _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
+                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
+                    _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
+            } else {
+                $notice = sprintf( esc_html__( "There %s %d %s awaiting approval but you changed the registration type. That's why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %s.", 'b3-onboarding' ),
+                    _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
+                    count( $approval_users ),
+                    _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
+                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+            }
+        } elseif ( count( $activation_users ) > 0 ) {
+            $notice = sprintf( esc_html__( 'There %s %d %s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
+        }
+        if ( isset( $notice ) ) {
+            echo sprintf( '<p>%s</p>', $notice );
+        }
+        if ( ! empty( $all_users ) ) {
+            ob_start();
+            echo '<thead><tr>';
+            echo sprintf( '<th>%s</th>', esc_html__( 'Login', 'b3-onboarding' ) );
+            echo sprintf( '<th>%s</th>', esc_html__( 'ID', 'b3-onboarding' ) );
+            echo sprintf( '<th>%s</th>', esc_html__( 'Reg. date', 'b3-onboarding' ) );
+            echo '</tr></thead>';
+            $table_headers = ob_get_clean();
+
+            ob_start();
+            echo '<tbody>';
+            foreach( $all_users as $user ) {
+                echo '<tr>';
+                echo sprintf( '<td><a href="%s">%s</a></td>', admin_url( 'user-edit.php?user_id=' . $user->ID ), $user->user_login );
+                echo sprintf( '<td>%s</td>', $user->ID );
+                echo sprintf( '<td>%s</td>', b3_get_local_date_time( $user->user_registered ) );
+                echo '</tr>';
+            }
+            echo '</tbody>';
+            $table_rows    = ob_get_clean();
+            $table_content = $table_headers . $table_rows;
+
+            echo sprintf( '<table class="b3_table">%s</table>', $table_content );
+        } else {
+            if ( 'none' == get_option( 'b3_registration_type' ) ) {
+                echo sprintf( '<p>%s</p>', sprintf( esc_html__( "You're the only user right now, but that can be because user registration is not allowed. Change it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SETTINGS . '&tab=registration', esc_html__( 'here', 'b3-onboarding' ) ) ) );
+            } else {
+                echo sprintf( '<p>%s</p>', esc_html__( "You're the only (activated) user right now.", 'b3-onboarding' ) );
+            }
+        }
+
+        echo '</div>';
     }
     if ( current_user_can( 'promote_users' ) ) {
         wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding - Last registered users', 'b3_dashboard_widget_function' );

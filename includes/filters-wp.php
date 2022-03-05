@@ -19,7 +19,7 @@
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_replace_email_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
-        $subject = esc_attr__( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
+        $subject = __( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
 
         $wp_password_change_notification_email[ 'subject' ] = $subject;
         $wp_password_change_notification_email[ 'message' ] = $message;
@@ -85,11 +85,9 @@
      */
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
         if ( isset( $_POST[ '_wp_http_referer' ] ) && ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false || strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) ) {
-            // manually added, so no email
             $wp_new_user_notification_email_admin[ 'to' ] = '';
 
         } else {
-
             $admin_email       = false;
             $registration_type = get_option( 'b3_registration_type' );
 
@@ -144,12 +142,8 @@
         $registration_type = get_option( 'b3_registration_type' );
 
         if ( isset( $_POST[ '_wp_http_referer' ] ) ) {
+            // user is manually added
             if ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false ) {
-                // user is manually added
-                if ( is_multisite() ) {
-                } else {
-                }
-
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                     // user must get AN email, from WP or custom
                     $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
@@ -158,7 +152,6 @@
                     $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
                 }
             } elseif ( strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) {
-                // user is manually added
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
             }
@@ -186,7 +179,6 @@
             } elseif ( 'none' == $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
-
             }
         }
 
@@ -265,14 +257,12 @@
      * @return mixed
      */
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
-
         $b3_lost_password_subject = apply_filters( 'b3_lost_password_subject', b3_get_lost_password_subject() );
         if ( false != $b3_lost_password_subject ) {
             $subject = $b3_lost_password_subject;
         }
 
         return $subject;
-
     }
     add_filter( 'retrieve_password_title', 'b3_replace_retrieve_password_subject', 10, 3 );
 
@@ -290,20 +280,17 @@
      * @return string   The mail message to send.
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
-
         $lost_password_message = apply_filters( 'b3_lost_password_message', b3_get_lost_password_message() );
         if ( false != $lost_password_message ) {
             $message = $lost_password_message;
         }
 
-        // get reset pass id
         $reset_pass_url      = b3_get_reset_password_url();
         $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
         $message             = b3_replace_template_styling( $message );
         $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
 
         return $message;
-
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
 
@@ -356,7 +343,6 @@
         }
 
         return $errors;
-
     }
     add_filter( 'registration_errors', 'b3_registration_errors', 10, 3 );
 
@@ -372,7 +358,6 @@
      * @return mixed
      */
     function b3_add_post_state( $post_states, $post ) {
-
         if ( $post->ID == get_option( 'b3_account_page_id' ) ) {
             $post_states[] = 'B3 : Account';
         } elseif ( $post->ID == get_option( 'b3_register_page_id' ) ) {
@@ -390,7 +375,6 @@
         }
 
         return $post_states;
-
     }
     add_filter( 'display_post_states', 'b3_add_post_state', 10, 2 );
 
@@ -411,7 +395,6 @@
         }
 
         return $logout_link;
-
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
@@ -426,7 +409,6 @@
      * @return string
      */
     function wp_login_message( $message ) {
-
         if ( isset( $_GET[ 'action' ] ) ) {
             $action = $_GET[ 'action' ];
             if ( 'register' == $action ) {
@@ -443,7 +425,6 @@
         }
 
         return $message;
-
     }
     add_filter( 'login_message', 'wp_login_message' );
 
@@ -468,7 +449,6 @@
         }
 
         return $user;
-
     }
     add_filter( 'wp_authenticate_user', 'b3_login_errors', 20, 2 );
 
@@ -540,10 +520,8 @@
      * @return array|bool
      */
     function b3_content_email_change_notification( $email_change_email, $user, $userdata ) {
-
         // if admin disabled notification option
         // option doesn't exist in admin (yet)
-
         $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
 
         $pass_change_text = sprintf( __(

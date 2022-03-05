@@ -75,16 +75,15 @@
             <?php foreach( $b3_pages as $page ) { ?>
                 <div class="b3_select-page">
                     <?php b3_get_label_field_open(); ?>
-                    <label for="b3_<?php echo $page[ 'id' ]; ?>"><?php echo esc_attr( $page[ 'label' ] ); ?></label>
+                    <label for="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>"><?php echo esc_attr( $page[ 'label' ] ); ?></label>
                     <?php b3_get_close(); ?>
 
                     <div class="b3_select-page__selector">
-                        <select name="b3_<?php echo $page[ 'id' ]; ?>_id" id="b3_<?php echo $page[ 'id' ]; ?>">
-                            <option value=""> <?php esc_attr_e( "Select a page", "b3-user-regiser" ); ?></option>
+                        <select name="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>_id" id="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>">
+                            <option value=""><?php esc_attr_e( "Select a page", "b3-user-regiser" ); ?></option>
                             <?php if ( class_exists( 'SitePress' ) ) { ?>
                                 <?php $default_lang = apply_filters( 'wpml_default_language', null ); ?>
                                 <?php foreach( $all_pages as $active_page ) { ?>
-
                                     <?php if ( function_exists( 'wpml_get_language_information' ) ) { ?>
                                         <?php $post_language_information = wpml_get_language_information( '', $active_page->ID ); ?>
                                         <?php if ( $post_language_information[ 'language_code' ] == $default_lang ) { ?>
@@ -108,19 +107,19 @@
 
                     <?php if ( false == $page[ 'page_id' ] ) { ?>
                         <div class="b3_select-page__create">
-                            <a href="<?php echo admin_url( '/post-new.php?post_type=page' ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Add new', 'b3-onboarding' ); ?>">
+                            <a href="<?php echo esc_url( admin_url( '/post-new.php?post_type=page' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Add new', 'b3-onboarding' ); ?>">
                                 <?php esc_html_e( 'Add new', 'b3-onboarding' ); ?>
                             </a>
                         </div>
                     <?php } ?>
                     <?php if ( false != get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
                         <div class="b3_select-page__edit">
-                            <a href="<?php echo get_edit_post_link( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
+                            <a href="<?php echo esc_url( get_edit_post_link( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
                                 <?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>
                             </a>
                         </div>
                         <div class="b3_select-page__link">
-                            <a href="<?php echo get_the_permalink( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Visit', 'b3-onboarding' ); ?>">
+                            <a href="<?php echo esc_url( get_the_permalink( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Visit', 'b3-onboarding' ); ?>">
                                 <?php esc_html_e( 'Visit', 'b3-onboarding' ); ?>
                             </a>
                         </div>

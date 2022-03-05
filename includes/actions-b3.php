@@ -383,24 +383,21 @@
      */
     function b3_add_recaptcha_fields( $form_type = 'register' ) {
         $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
-        $recaptcha_on       = get_option( 'b3_recaptcha_on', [] );
         $recaptcha_public   = get_option( 'b3_recaptcha_public' );
         $recaptcha_version  = get_option( 'b3_recaptcha_version', '2' );
 
         if ( false != $activate_recaptcha ) {
             if ( false != $recaptcha_public ) {
                 if ( '2' == $recaptcha_version ) {
-                    if ( in_array( $form_type, $recaptcha_on ) ) {
-                        do_action( 'b3_do_before_recaptcha_' . $form_type );
-                        ?>
-                        <div class="b3_form-element b3_form-element--recaptcha">
-                            <div class="recaptcha-container">
-                                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
-                            </div>
+                    do_action( 'b3_do_before_recaptcha_' . $form_type );
+                    ?>
+                    <div class="b3_form-element b3_form-element--recaptcha">
+                        <div class="recaptcha-container">
+                            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
                         </div>
-                        <?php
-                        do_action( 'b3_do_after_recaptcha_' . $form_type );
-                    }
+                    </div>
+                    <?php
+                    do_action( 'b3_do_after_recaptcha_' . $form_type );
                 }
             } else {
                 if ( current_user_can( 'manage_options') ) {
@@ -713,8 +710,8 @@
         }
     }
     add_action( 'b3_redirect', 'b3_redirect', 10, 2 );
-    
-    
+
+
     /**
      * Reset to default option
      */
@@ -722,7 +719,7 @@
         if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
             $meta_keys   = b3_get_all_custom_meta_keys();
             $meta_keys[] = 'widget_b3-widget';
-            
+
             // Remove old settings new settings
             foreach( $meta_keys as $key ) {
                 delete_site_option( $key );
@@ -732,7 +729,7 @@
         // init new settings
         $blog_id = is_multisite() ? get_current_blog_id() : false;
         b3_set_default_settings( $blog_id );
-        
+
         // @TODO: set pages
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );

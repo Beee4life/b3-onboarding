@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Return all custom meta keys
      *
@@ -11,7 +11,7 @@
      * @return array
      */
     function b3_get_all_custom_meta_keys() {
-        
+
         // Keep this list updated
         $meta_keys = array(
             'b3_account_activated_message',
@@ -72,7 +72,6 @@
             'b3_privacy',
             'b3_privacy_page_id',
             'b3_privacy_text',
-            'b3_recaptcha_on',
             'b3_recaptcha_public',
             'b3_recaptcha_secret',
             'b3_recaptcha_version',
@@ -98,6 +97,6 @@
             'b3_welcome_user_message_manual',
             'b3ob_version',
         );
-        
+
         return $meta_keys;
     }

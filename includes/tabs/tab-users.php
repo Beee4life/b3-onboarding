@@ -62,7 +62,7 @@
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <?php $hidden_roles = array( 'b3_approval', 'b3_activation' ); ?>
                     <?php foreach( $hidden_roles as $role ) { ?>
-                        <input type="hidden" id="b3_restrict_<?php echo $role; ?>" name="b3_restrict_admin[]" value="<?php echo $role; ?>" />
+                        <input type="hidden" id="b3_restrict_<?php echo esc_attr( $role ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $role ); ?>" />
                     <?php } ?>
                     <?php echo sprintf( '<p>%s</p>', esc_html__( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
 
@@ -73,8 +73,8 @@
                             if ( ! in_array( $name, $dont_show_roles ) ) {
                                 ?>
                                 <div>
-                                    <label for="b3_restrict_<?php echo $name; ?>" class="screen-reader-text"><?php echo $name; ?></label>
-                                    <input type="checkbox" id="b3_restrict_<?php echo $name; ?>" name="b3_restrict_admin[]" value="<?php echo $name; ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?> /> <?php echo $values[ 'name' ]; ?>
+                                    <label for="b3_restrict_<?php echo esc_attr( $name ); ?>" class="screen-reader-text"><?php echo esc_attr( $name ); ?></label>
+                                    <input type="checkbox" id="b3_restrict_<?php echo esc_attr( $name ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $name ); ?>" <?php if ( in_array( $name, $stored_roles ) ) { ?>checked="checked"<?php } ?> /> <?php echo $values[ 'name' ]; ?>
                                 </div>
                                 <?php
                             }

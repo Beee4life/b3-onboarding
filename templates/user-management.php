@@ -42,13 +42,7 @@
             <thead>
             <tr>
                 <th>
-                    <?php
-                        if ( is_multisite() ) {
-                            echo esc_html__( 'Signup ID', 'b3-onboarding' );
-                        } else {
-                            echo esc_html__( 'User ID', 'b3-onboarding' );
-                        }
-                    ?>
+                    <?php echo ( is_multisite() ) ? esc_html__( 'Signup ID', 'b3-onboarding' ) : esc_html__( 'User ID', 'b3-onboarding' ); ?>
                 </th>
                 <?php if ( false == $attributes[ 'register_email_only' ] ) { ?>
                     <th><?php echo esc_html__( 'User name', 'b3-onboarding' ); ?></th>
@@ -69,13 +63,7 @@
             <?php foreach( $attributes[ 'users' ] as $user ) { ?>
                 <tr>
                     <td>
-                        <?php
-                            if ( is_multisite() ) {
-                                echo $user->signup_id;
-                            } else {
-                                echo $user->ID;
-                            }
-                        ?>
+                        <?php echo ( is_multisite() ) ? $user->signup_id : $user->ID; ?>
                     </td>
 
                     <?php if ( false == $attributes[ 'register_email_only' ] ) { ?>
@@ -100,9 +88,9 @@
                             <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>" />
                             <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>" />
                             <?php if ( is_multisite() ) { ?>
-                                <input name="b3_signup_id" type="hidden" value="<?php echo $user->signup_id; ?>" />
+                                <input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>" />
                             <?php } else { ?>
-                                <input name="b3_user_id" type="hidden" value="<?php echo $user->ID; ?>" />
+                                <input name="b3_user_id" type="hidden" value="<?php echo esc_attr( $user->ID ); ?>" />
                             <?php } ?>
                         </form>
                     </td>
@@ -110,7 +98,8 @@
             <?php } ?>
             </tbody>
         </table>
-    <?php } else { ?>
-        <?php echo sprintf( '<p>%s</p>', esc_html__( 'No (more) users to approve.', 'b3-onboarding' ) ); ?>
-    <?php }
+    <?php
+        } else {
+            echo sprintf( '<p>%s</p>', esc_html__( 'No (more) users to approve.', 'b3-onboarding' ) );
+        }
     }

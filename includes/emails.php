@@ -13,7 +13,6 @@
      * @return false|mixed|string
      */
     function b3_render_email_settings_field( $box = false ) {
-
         if ( false != $box ) {
             $basic_output = b3_basic_email_settings_field( $box );
             $basic_output = str_replace( '##FOLDOUTCONTENT##', b3_foldout_content( $box ), $basic_output );
@@ -21,7 +20,7 @@
             return $basic_output;
         }
 
-        return '<h4>Oops, no content yet...</h4>';
+        return sprintf( '<h4>%s...</h4>', esc_html__( 'Oops, no content yet', 'b3-onboarding' ) );
     }
 
 
@@ -150,7 +149,6 @@
             $output = ob_get_clean();
 
             return $output;
-
         }
 
         return false;
