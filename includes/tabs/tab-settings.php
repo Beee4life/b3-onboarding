@@ -83,7 +83,18 @@
                         <label for="b3_preserve_settings"><?php esc_html_e( 'Preserve settings', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php if ( $debug_info ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( "When removing the plugin, all data is removed. To prevent this from happening, check this box.", 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php if ( $debug_info ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'When removing the plugin, all data is removed. To prevent this from happening, check this box.', 'b3-onboarding' ); ?>
+                    </div>
+                <?php b3_get_close(); ?>
+
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_reset_default"><?php esc_html_e( 'Reset to default', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_reset_default" name="b3_reset_default" value="1" />
+                        <?php esc_html_e( "This option resets everything back to 'factory settings'.", 'b3-onboarding' ); ?>
+                        <?php echo sprintf( '%s to see what it does exactly.', sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/how-do-i-reset-everything-back-to-its-default-settings/' ), esc_html__( 'Click here', 'b3-onboarding' ) ) ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 

@@ -533,6 +533,7 @@
             if ( ! wp_verify_nonce( $_POST[ 'b3ob_settings_nonce' ], 'b3ob-settings-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
+                $reset = false;
 
                 if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
                     update_option( 'b3_disable_action_links', 1 );
@@ -564,13 +565,23 @@
                     delete_option( 'b3_preserve_settings' );
                 }
 
+                if ( isset( $_POST[ 'b3_reset_default' ] ) && 1 == $_POST[ 'b3_reset_default' ] ) {
+                    $reset = true;
+                    do_action( 'b3_reset_to_default' );
+                }
+
                 if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
                     update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ) );
                 } else {
                     delete_option( 'b3_main_logo' );
                 }
+                
+                if ( true == $reset ) {
+                    B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings.', 'b3-onboarding' ) );
+                } else {
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
+                }
 
-                B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
             }
         }
     }

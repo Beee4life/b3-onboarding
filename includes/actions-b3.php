@@ -713,3 +713,24 @@
         }
     }
     add_action( 'b3_redirect', 'b3_redirect', 10, 2 );
+    
+    
+    /**
+     * Reset to default option
+     */
+    function b3_reset_to_default() {
+        if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
+            $meta_keys   = b3_get_all_custom_meta_keys();
+            $meta_keys[] = 'widget_b3-widget';
+            
+            // Remove old settings new settings
+            foreach( $meta_keys as $key ) {
+                delete_site_option( $key );
+                delete_option( $key );
+            }
+        }
+        // init new settings
+        $blog_id = is_multisite() ? get_current_blog_id() : false;
+        b3_set_default_settings( $blog_id );
+    }
+    add_action( 'b3_reset_to_default', 'b3_reset_to_default' );

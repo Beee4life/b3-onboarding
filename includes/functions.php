@@ -1008,3 +1008,65 @@
 
         return false;
     }
+    
+    
+    function b3_get_plugin_file( $plugin_name ) {
+        require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+        $plugins = get_plugins();
+        foreach( $plugins as $plugin_file => $plugin_info ) {
+            if ( $plugin_info[ 'Name' ] == $plugin_name ) {
+                return $plugin_file;
+            }
+        }
+        
+        return null;
+    }
+    
+    
+    /**
+     * Set default settings
+     *
+     * @since 2.0.0
+     */
+    function b3_set_default_settings( $blog_id = false ) {
+        
+        if ( false != $blog_id ) {
+            switch_to_blog( $blog_id );
+        }
+    
+        $plugin_data = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . b3_get_plugin_file( 'B3 OnBoarding' ) );
+    
+        update_option( 'b3_activate_custom_emails', 1 );
+        update_option( 'b3_disable_admin_notification_password_change', 1 );
+        update_option( 'b3_disable_user_notification_password_change', 1 );
+        update_option( 'b3_logo_in_email', 1 );
+        update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
+        update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
+        update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
+        
+        if ( class_exists( 'Disable_Comments' ) ) {
+            update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
+        }
+        
+        if ( ! is_multisite() ) {
+            update_option( 'b3_dashboard_widget', 1 );
+            update_option( 'b3_hide_admin_bar', 1 );
+            update_option( 'b3_registration_type', 'none' );
+            update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
+            update_option( 'users_can_register', 0 );
+        } else {
+            if ( is_main_site() && false == $blog_id ) {
+                update_option( 'b3_dashboard_widget', 1 );
+                update_option( 'b3_registration_type', get_site_option( 'registration' ) );
+                update_site_option( 'registrationnotification', 'no' );
+            }
+        }
+        
+        if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
+            update_option( 'b3_privacy_page_id', get_option( 'wp_page_for_privacy_policy' ) );
+        }
+        
+        if ( false != $blog_id ) {
+            restore_current_blog();
+        }
+    }
