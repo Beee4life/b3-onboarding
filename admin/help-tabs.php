@@ -25,15 +25,15 @@
                 'id'      => 'b3-registration',
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                 'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Registration', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', esc_html__( "Your general setting for if 'users can register' can register is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) )
+                             sprintf( '<p>%s</p>', esc_html__( "Your general setting for if 'users can register' is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) ) .
+                             sprintf( '<p>%s</p>', __( "This page has several options to change registration settings, such as:<br>- registering with email address only<br>- use first/last name<br>- make first/last name required<br>- activate recaptcha (shows on new tab)<br>- activate honeypot<br>- activate privacy checkbox", 'b3-onboarding' ) )
             ) );
 
             $screen->add_help_tab( array(
-                'id'      => 'b3-recaptcha',
-                'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
-                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'reCaptcha', 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', esc_html__( "The reCaptcha settings will show on a new tab after you the checked and saved the 'reCaptcha' setting on the registration tab.", 'b3-onboarding' ) ) .
-                    sprintf( '<p>%s</p>', sprintf( esc_html__( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), esc_html__( 'here', 'b3-onboarding' ) ) ) )
+                'id'      => 'b3-pages',
+                'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
+                'content' => sprintf( '<h3>%s</h3>', esc_html__( 'Pages', 'b3-onboarding' ) ) .
+                    sprintf( '<p>%s</p>', esc_html__( "This page shows which pages are used for which action. The plugin relies on this, so make sure every action has a page set for it.", 'b3-onboarding' ) )
             ) );
 
             $screen->add_help_tab( array(
@@ -49,7 +49,7 @@
                         <li>%home_url% <sup>&sup1;</sup></li>
                         <li>%registration_date% <sup>&sup1;</sup></li>
                         <li>%reset_url% <sup>&sup3;</sup></li>
-                        <li>%user_ip% <sup>&sup1;</sup></li>
+                        <li>%user_ip% <sup>&sup2;</sup></li>
                         <li>%user_login% <sup>&sup1;</sup></li>
                     </ul>
                     <sup>&sup1;</sup> ' . esc_html__( 'available in every email', 'b3-onboarding' ) . '
