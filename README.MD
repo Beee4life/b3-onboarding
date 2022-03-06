@@ -32,7 +32,7 @@ You can now get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-3.1.0 - released 0x.03.21
+3.2.0 - released 0x.03.21
 
 <a name="features"></a>
 ### Features
@@ -117,7 +117,7 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.1.0
+3.1.0 - 06.03.22
 * improved multisite functions
 * added honeypot option
 * added reset to default option
