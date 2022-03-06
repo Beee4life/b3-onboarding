@@ -221,8 +221,8 @@
                 wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ], true );
                 wp_localize_script( 'b3-media', 'b3_media',
                     array(
-                        'title'     => esc_html__( 'Upload or choose your custom logo', 'b3-onboarding' ),
-                        'button'    => esc_html__( 'Insert logo', 'b3-onboarding' ),
+                        'title'     => esc_attr__( 'Upload or choose your custom logo', 'b3-onboarding' ),
+                        'button'    => esc_attr__( 'Insert logo', 'b3-onboarding' ),
                     )
                 );
                 wp_enqueue_script( 'b3-media' );
@@ -738,7 +738,7 @@
                     case 'incorrect_password':
                         $error_message = esc_html__( "The username or password you entered wasn't quite right.", 'b3-onboarding' );
                         $error_message .= '<br>';
-                        $error_message .= sprintf( esc_attr__( 'Did you %s your password ?', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_lostpassword_url(), esc_attr__( 'forget', 'b3-onboarding' ) ) );
+                        $error_message .= sprintf( esc_html__( 'Did you %s your password ?', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_lostpassword_url(), esc_html__( 'forget', 'b3-onboarding' ) ) );
 
                         return $error_message;
 
@@ -813,10 +813,10 @@
                         return esc_html__( 'That password is too easy, please use a better one.', 'b3-onboarding' );
 
                     case 'registration_success':
-                        if ( false == get_option( 'b3_activate_custom_passwords' ) ) {
-                            return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
-                        } else {
+                        if ( get_option( 'b3_activate_custom_passwords' ) ) {
                             return esc_html__( 'You have successfully registered. You can now login.', 'b3-onboarding' );
+                        } else {
+                            return esc_html__( 'You have successfully registered. Please check your email for a link to set your password.', 'b3-onboarding' );
                         }
 
                     case 'registration_success_enter_password':
@@ -827,10 +827,10 @@
 
                     // Activation
                     case 'activate_success':
-                        if ( false == get_option( 'b3_activate_custom_passwords' ) ) {
-                            return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
-                        } else {
+                        if ( get_option( 'b3_activate_custom_passwords' ) ) {
                             return esc_html__( 'You have successfully activated your account. You can now login.', 'b3-onboarding' );
+                        } else {
+                            return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
                         }
 
                     case 'mu_activate_success':

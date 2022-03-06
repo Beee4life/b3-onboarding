@@ -336,7 +336,7 @@
                             $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
-                    $attributes[ 'errors' ] = $errors;
+                    $attributes[ 'errors' ]            = $errors;
                     $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
 
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {

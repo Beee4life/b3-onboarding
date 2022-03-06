@@ -150,7 +150,7 @@
         if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {
             ob_start();
             ?>
-            <div class="b3_form-element b3_form-element--<?php echo $input_type; ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo $container_class; ?> <?php echo $container_class; } ?>">
+            <div class="b3_form-element b3_form-element--<?php echo esc_attr( $input_type ); ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo esc_attr( $container_class ); ?> <?php echo esc_attr( $container_class ); } ?>">
                 <?php if ( $input_label && $input_id ) { ?>
                 <label class="b3_form-label" for="<?php echo esc_attr( $input_id ); ?>"><?php echo $input_label; ?><?php echo $input_required; ?></label>
                 <?php } ?>

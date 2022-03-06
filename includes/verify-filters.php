@@ -17,6 +17,7 @@
             'b3_attributes'                            => array( 'array' ),
             'b3_custom_register_inform'                => array( 'string' ),
             'b3_dashboard_url'                         => array( 'string' ),
+            'b3_default_greetings'                     => array( 'string' ),
             'b3_disable_action_links'                  => array( 'bool', 'string' ),
             'b3_disallowed_usernames'                  => array( 'array' ),
             'b3_email_activation_message_user'         => array( 'string' ),
@@ -156,7 +157,7 @@
                                                 }
                                                 $error_messages[] = sprintf( esc_html__( 'You didn\'t set any options for the field "%s".', 'b3-onboarding' ), $replace );
                                             } else {
-                                                $error_messages[] = esc_html__( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
+                                                $error_messages[] = esc_html__( "You didn't set a field type for one of your fields.", 'b3-onboarding' );
                                             }
                                         }
                                     }
