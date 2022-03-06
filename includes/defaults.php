@@ -485,7 +485,7 @@
      * @return string
      */
     function b3_default_message_new_site_created() {
-        // @TODO: B4L: add if for when added by admin
+        // @TODO: add if for when added by admin
         $message = esc_html__( 'New site created by: %user_login%', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'Site address: %home_url%', 'b3-onboarding' ) . "\n";

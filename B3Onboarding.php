@@ -494,7 +494,7 @@
                                                 $redirect_url = $reset_password_url;
                                                 $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
                                                 $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
-                                                // @TODO: B4L: also add to MU register
+                                                // @TODO: also add to MU register
                                             } else {
                                                 $login_url    = b3_get_login_url();
                                                 $redirect_url = $login_url;
@@ -1153,7 +1153,7 @@
                 }
 
                 // manual actions
-                // @TODO: B4L: look into this, when is it used
+                // @TODO: look into this, when is it used
                 if ( isset( $_GET[ 'update' ] ) ) {
                     if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
                         echo '<div id="message" class="updated"><p>';
