@@ -677,5 +677,5 @@
         $greetings .= '<br><br>' . "\n";
         $greetings .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
-        return $greetings;
+        return apply_filters( 'b3_default_greetings', $greetings );
     }
