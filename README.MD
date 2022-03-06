@@ -20,32 +20,33 @@
 
 This plugin was built to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
+You can customise every aspect of the onboarding process, such as control the look and feel of (almost) evvery email sent out by Wordpress.
 
-There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
+It even offers features which Wordpress doesn't even have, such as approving (or reject) a user before they're activated. And there are a ton of other things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
 
 **What 'problems' does this plugin solve ?**
 
 This plugin gives you all the freedom to change/use different parts, without being forced to use other features. You can extend this plugin in any way you want with filters/hooks or through a settings page.
 
-Also you can get rid of those default Wordpress forms and use your own.
+You can now get rid of those default Wordpress forms and use your own.
 
 <a name="version"></a>
 ### Version
-3.0 - released 13.06.21
+3.1.0 - released 0x.03.21
 
 <a name="features"></a>
 ### Features
 
-* custom forms/pages
+* override the following forms/pages
   * register
   * login
   * log out
   * lost password
   * reset password
   * account
-* (mostly) styled using [BEM](https://en.bem.info) methodology
+* easily add custom fields to registration form
 * change various settings on the fly with the use of hooks/filters
+* (mostly) styled using [BEM](https://en.bem.info) methodology
 
 <a name="installation"></a>
 ### Installation
@@ -59,19 +60,19 @@ Also you can get rid of those default Wordpress forms and use your own.
 ### Activation
 
 If you activate this plugin the following will be done:
-* the necessary pages are created
+* the necessary pages are created (if they're not there already)
 * default setting/limits are set
 * 2 new user roles are created: b3_approval, b3_activation
 * access to admin is restricted for subscribers
 
 <a name="shortcodes"></a>
 ### Shortcodes
-* [account-page] = renders account page
-* [lostpass-form] = renders lost password form
-* [login-form] = renders login form
-* [register-form] = renders regster form
-* [resetpass-form] = renders reset password form
-* [user-management] = renders user management page
+* [account-page] = renders the account page
+* [lostpass-form] = renders the lost password form
+* [login-form] = renders the login form
+* [register-form] = renders the regster form
+* [resetpass-form] = renders the reset password form
+* [user-management] = renders the user management page
 
 <a name="hooks"></a>
 ### Actions
@@ -81,7 +82,7 @@ There are a lot of actions which you can use, to hook your code to. There are to
 <a name="filters"></a>
 ### Filters
 
-There are a lot of filters which you can use. There are too many to list here, so find them on the [official website](https://b3onboarding.berryplasman.com/filters/).
+There are a lot of filters which you can use. There are too many to list here (50+), so find them on the [official website](https://b3onboarding.berryplasman.com/filters/).
 
 If you use hooks, you have more settings available than if you (just) use the admin.
 Some functions are not (yet) available through the admin pages and some will never be.
@@ -90,30 +91,25 @@ Some functions are not (yet) available through the admin pages and some will nev
 ### Uninstall
 
 1. All stored options are removed.
-1. The plugin is removed.
+2. The plugin is removed.
+
+Starting with v3.1.0 there's now a setting to prevent deletion of all data/settings.
 
 <a name="disclaimer"></a>
 ### Disclaimer
-1. Not entirely ready for multisite yet, we're working on it.
-1. Not tested with Gutenberg.
+1. Not 100% ready for multisite yet, but almost. Not all emails are 'caught' yet.
+1. Not tested with Gutenberg, not even once, but I have good hopes it will work.
 
 <a name="roadmap"></a>
 ### Roadmap
 These are the things we have planned to add.
-* [X] use custom passwords
-* [X] disallow certain user names
-* [X] validate extra fields added through a filter
-* [X] look more into responsiveness
-* [X] reCaptcha v3
-* [X] make it work with Multisite
-* [X] make it work with WPML
-* [ ] add more filters and inputs
 * [ ] add more security stuff
 * [ ] add code editor for styling/template inputs
 * [ ] remove `<br />` from email templates
-* [ ] create option to send preview email
+* [ ] create option to send a preview email
 * [ ] add front-end management to multisite as well
 * [ ] multi-page registration forms
+* [ ] integration with Woocommerce (emails)
 * [ ] integration with Salesforce
 * [ ] integration with Mailchimp
 * [ ] integration with AWeber
@@ -121,11 +117,22 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.1.0
+* improved multisite functions
+* added honeypot option
+* added reset to default option
+* added option to 'prevent delete settings on uninstall'
+* added status class to messages
+* added new filters
+* optimized existing filters
+* optimized user templates
+* reformatted debug info page
+
 3.0
 * added option to request access to create a site (multisite)
 * added reCaptcha v3
 * added user input for disallowed usernames
-* alot of MU stuff
+* a lot of MU stuff
 
 2.5.0
 * improve html/css for account page

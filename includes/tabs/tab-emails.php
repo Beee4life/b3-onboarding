@@ -6,17 +6,17 @@
      *
      * @return false|string
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
-    function b3_render_emails_tab() {
 
-        $activate_custom_emails = get_site_option( 'b3_activate_custom_emails' );
+    function b3_render_emails_tab() {
+        $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
-        $link_color             = get_site_option( 'b3_link_color' );
-        $logo_in_email          = get_site_option( 'b3_logo_in_email' );
+        $link_color             = get_option( 'b3_link_color' );
+        $logo_in_email          = get_option( 'b3_logo_in_email' );
+
         ob_start();
         ?>
         <h2>
@@ -57,7 +57,7 @@
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-                    <input name="b3_link_color" id="b3_link_color" type="text" value="<?php echo $link_color; ?>" placeholder="#FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (with hashtag)', 'b3-onboarding' ); ?>
+                    <input name="b3_link_color" id="b3_link_color" type="text" value="<?php echo esc_attr( $link_color ); ?>" placeholder="#FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (with hashtag)', 'b3-onboarding' ); ?>
                 <?php b3_get_close(); ?>
             <?php } ?>
 

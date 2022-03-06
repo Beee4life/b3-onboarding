@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Render email settings field with fold out
      *
@@ -13,7 +13,6 @@
      * @return false|mixed|string
      */
     function b3_render_email_settings_field( $box = false ) {
-
         if ( false != $box ) {
             $basic_output = b3_basic_email_settings_field( $box );
             $basic_output = str_replace( '##FOLDOUTCONTENT##', b3_foldout_content( $box ), $basic_output );
@@ -21,7 +20,7 @@
             return $basic_output;
         }
 
-        return '<h4>Oops, no content yet...</h4>';
+        return sprintf( '<h4>%s...</h4>', esc_html__( 'Oops, no content yet', 'b3-onboarding' ) );
     }
 
 
@@ -68,9 +67,9 @@
      *
      * @return bool|false|string
      */
-    function b3_foldout_content( $box = false ) {
+    function b3_foldout_content( $box = [] ) {
 
-        if ( false != $box ) {
+        if ( ! empty( $box ) ) {
 
             ob_start();
             switch( $box[ 'id' ] ) {
@@ -103,6 +102,12 @@
                     break;
                 case 'lost_password':
                     include 'emails/lost-password.php';
+                    break;
+                case 'welcome_user':
+                    include 'emails/welcome-user.php';
+                    break;
+                case 'welcome_user_manual':
+                    include 'emails/welcome-user-manual.php';
                     break;
                 // Multisite specific
                 case 'confirm_user_email':
@@ -144,7 +149,6 @@
             $output = ob_get_clean();
 
             return $output;
-
         }
 
         return false;

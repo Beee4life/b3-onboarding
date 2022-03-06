@@ -11,7 +11,7 @@
     }
 
     // If preserve settings is false (but there's no user input option yet, so is always false)
-    if ( false == get_site_option( 'b3_preserve_settings' ) ) {
+    if ( false == get_option( 'b3_preserve_settings' ) ) {
 
         if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
             $meta_keys   = b3_get_all_custom_meta_keys();
@@ -30,5 +30,4 @@
         foreach( $roles as $role ) {
             remove_role( $role );
         }
-
     }

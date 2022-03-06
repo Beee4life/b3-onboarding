@@ -1,226 +1,263 @@
+.b3-debug {
+  margin-top: 10px;
+}
+
+.b3-debug-left {
+  padding-right: 40px;
+}
+
+.b3-debug-right {
+  margin-top: 20px;
+}
+
+.b3-debug-header {
+  font-weight: bold;
+}
+
 /* TABS */
 .b3_tabs {
-    background: white;
-    margin-top: 2em;
+  background: white;
+  margin-top: 2em;
 }
 
 .b3_tab-header {
-    overflow:         hidden;
-    border:           1px solid #ccc;
-    background-color: #f1f1f1;
+  overflow:         hidden;
+  border:           1px solid #ccc;
+  background-color: #f1f1f1;
 }
 
 .b3_tab-header .b3_tab-button {
-    background-color: inherit;
-    float:            left;
-    border:           none;
-    outline:          none;
-    cursor:           pointer;
-    padding:          14px 16px;
-    transition:       0.3s;
+  background-color: inherit;
+  float:            left;
+  border:           none;
+  outline:          none;
+  cursor:           pointer;
+  padding:          14px 16px;
+  transition:       0.3s;
 }
 
 .b3_tab-header .dashicons {
-    font-size:    15px;
-    margin-right: 5px;
-    width:        10px;
-    height:       10px;
+  font-size:    15px;
+  margin-right: 5px;
+  width:        10px;
+  height:       10px;
 }
 
 .b3_tab-header button:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 .b3_tab-header button.active {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 
 .b3_tab-content {
-    display:    none;
-    padding:    1.5em;
-    border:     1px solid #ccc;
-    border-top: none;
+  display:    none;
+  padding:    1.5em;
+  border:     1px solid #ccc;
+  border-top: none;
 }
 
 .b3_tab-content h2,
 .b3_tab-content h3 {
-    color:       #444;
-    font-size:   1.35em;
-    margin:      0 0 1em 0;
-    font-weight: bold;
+  color:       #444;
+  font-size:   1.35em;
+  margin:      0 0 1em 0;
+  font-weight: bold;
 }
 
 .b3_tab-content input[name="b3_recaptcha_version"] {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .b3_tab-content input[name="b3_recaptcha_version"]:first-child {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .b3 hr + h2 {
-    margin-top: 1em;
+  margin-top: 1em;
 }
 
 .b3_foldout--header {
-    background:  #F8F8F8;
-    font-weight: bold;
+  background:  #F8F8F8;
+  font-weight: bold;
 }
 
 .b3_foldout--header::after {
-    clear: left;
+  clear: left;
 }
 
 .b3_foldout--header i.dashicons {
-    float: right;
+  float: right;
 }
 
 .b3__expand {
-    text-align: right;
-    width:      20px;
-    background: pink;
+  text-align: right;
+  width:      20px;
+  background: pink;
 }
 
 .b3_tab-content ul {
-    margin-block-start: 0;
-    margin-block-end:   0;
-    list-style:         disc;
-    padding-left:       1.5em;
+  margin-block-start: 0;
+  margin-block-end:   0;
+  list-style:         disc;
+  padding-left:       1.5em;
 }
 
 .b3_tab-content ul ul {
-    margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 
-.b3__admin ul.debug-list li.debug-list-part {
-    margin-bottom: 1.5em;
+.b3-debug-left {
 }
 
-.b3_tab-content ul.debug-list {
-    list-style:   none;
-    margin:       0;
-    padding-left: 0;
+.b3-debug-right {
 }
 
 .b3_table {
-    border-spacing: 0;
-    width: 100%;
+  border-spacing: 0;
+  width:          100%;
+}
+
+.b3_table--debug {
+  width: 650px;
+}
+
+.b3-debug-header + .b3_table--debug {
+  margin-top: 5px;
+}
+
+.b3_table--debug + .b3-debug-header {
+  margin-top: 20px;
 }
 
 .b3_table--user {
-    width: 50%;
+  width: 50%;
 }
 
 .b3_table th,
 .b3_table td {
-    text-align:     left;
-    vertical-align: middle;
-    padding-right:  0.5em;
+  text-align:     left;
+  vertical-align: middle;
+  padding-right:  10px;
+}
+
+.b3_table--debug td {
+  border-top: 1px solid #ccc;
+  padding:    3px 20px 3px 0;
+}
+
+.b3_table--debug tr td:first-child {
+  width: 250px;
+}
+
+.b3_table--debug-meta td:first-child {
+  padding: 3px 40px 3px 0;
 }
 
 .b3_message {
-    border:          1px dashed black;
-    box-sizing:      border-box;
-    display:         flex;
-    flex-flow:       row nowrap;
-    justify-content: space-between;
-    padding:         5px 10px;
+  border:          1px dashed black;
+  box-sizing:      border-box;
+  display:         flex;
+  flex-flow:       row nowrap;
+  justify-content: space-between;
+  padding:         5px 10px;
 }
 
 /* Dashboard widget */
 #dashboard-widgets .b3_widget--dashboard h3 {
-    font-weight:   bold;
-    margin-bottom: 0;
+  font-weight:   bold;
+  margin-bottom: 0;
 }
 
 .b3_widget--dashboard p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .b3_widget--dashboard ul {
-    list-style:    disc;
-    margin-top:    0.5em;
-    margin-bottom: 0;
-    padding-left:  17px;
+  list-style:    disc;
+  margin-top:    0.5em;
+  margin-bottom: 0;
+  padding-left:  17px;
 }
 
 /* Settings page */
 .b3_settings-field {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .b3_settings-label {
-    font-weight:   bold;
-    margin-bottom: 0.5em;
+  font-weight:   bold;
+  margin-bottom: 0.5em;
 }
 
 .b3_select-page .b3_settings-label {
-    min-width: 200px;
+  min-width: 200px;
 }
 
 .b3_select-page__selector {
-    min-width: 150px;
+  min-width: 150px;
 }
 
 .b3_below_input {
-    margin-top: 0.5em;
-    color:      #666;
+  margin-top: 0.5em;
+  color:      #666;
 }
 
 .b3_settings-input div {
-    margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .b3_settings-input--recaptcha input {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .b3_settings-input--recaptcha input:first-child {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .b3_settings-input-description {
-    color:      #AAA;
-    margin-top: 0.5em;
+  color:      #AAA;
+  margin-top: 0.5em;
 }
 
 /* Pages pages */
 .b3_select-page {
-    display:       flex;
-    flex-flow:     row nowrap;
-    margin-bottom: 1em;
-    width:         100%;
+  display:       flex;
+  flex-flow:     row nowrap;
+  margin-bottom: 1em;
+  width:         100%;
 }
 
 .b3_select-page__label {
-    font-weight:  bold;
-    margin-right: 1em;
-    min-width:    200px;
+  font-weight:  bold;
+  margin-right: 1em;
+  min-width:    200px;
 }
 
 .b3_select-page__create,
 .b3_select-page__edit,
 .b3_select-page__link {
-    align-self:     center;
-    margin-left:    1em;
-    vertical-align: middle;
+  align-self:     center;
+  margin-left:    1em;
+  vertical-align: middle;
 }
 
 .b3_select-page__create a,
 .b3_select-page__edit a,
 .b3_select-page__link a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 /* Registration */
 .b3 input#b3_privacy_page {
-    width:     100%;
-    max-width: 300px;
+  width:     100%;
+  max-width: 300px;
 }
 
 .b3 input#b3_privacy_text {
-    width:     100%;
-    max-width: 500px;
+  width:     100%;
+  max-width: 500px;
 }
 
 /* Login page */
@@ -229,143 +266,143 @@
 .b3 input#b3_loginpage_logo_height,
 .b3 input#b3_loginpage_bg_color,
 .b3 input#b3_link_color {
-    width: 80px;
+  width: 80px;
 }
 
 .b3 select#b3_recaptcha_version {
-    width: 100px;
+  width: 100px;
 }
 
 .b3 select#b3_loginpage_font_family {
-    width: 200px;
+  width: 200px;
 }
 
 .b3 input#b3_main_logo {
-    max-width: 500px;
-    width:     100%;
+  max-width: 500px;
+  width:     100%;
 }
 
 /* Emails page */
 .b3__postbox {
-    /* copy of .postbox with margin change bottom to top */
-    background:  #fff;
-    border:      1px solid #ccd0d4;
-    box-shadow:  0 1px 1px rgba(0, 0, 0, 0.04);
-    line-height: 2;
-    margin-top:  20px;
-    min-width:   255px;
-    padding:     0;
-    position:    relative;
+  /* copy of .postbox with margin change bottom to top */
+  background:  #fff;
+  border:      1px solid #ccd0d4;
+  box-shadow:  0 1px 1px rgba(0, 0, 0, 0.04);
+  line-height: 2;
+  margin-top:  20px;
+  min-width:   255px;
+  padding:     0;
+  position:    relative;
 }
 
 .b3__postbox:last-child {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .b3 table.b3_table--emails th {
-    padding-top: 0.5em;
-    width:       200px;
+  padding-top: 0.5em;
+  width:       200px;
 }
 
 .b3 table.b3_table--emails th,
 .b3 table.b3_table--emails td {
-    padding-top: 1em;
+  padding-top: 1em;
 }
 
 .b3__intro {
-    line-height: 1.5em;
+  line-height: 1.5em;
 }
 
 .b3 table.b3_table--emails th {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .b3 table.b3_table--emails th label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .b3 table.b3_table--emails tr:first-child th,
 .b3 table.b3_table--emails tr:first-child td {
-    padding-top: 0;
+  padding-top: 0;
 }
 
 .b3 table.b3_table--emails th.align-top {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 .b3 table.b3_table--emails tr.b3__description-row th,
 .b3 table.b3_table--emails tr.b3__description-row td {
-    padding-top: 0;
+  padding-top: 0;
 }
 
 .b3__input--description {
-    font-style: italic;
-    margin-top: 0.5em;
+  font-style: italic;
+  margin-top: 0.5em;
 }
 
 .b3__inside {
-    padding: 1em 12px 12px 12px;
+  padding: 1em 12px 12px 12px;
 }
 
 .b3_user-table {
-    width:     50%;
-    max-width: 100%;
+  width:     50%;
+  max-width: 100%;
 }
 
 .b3_user-table th {
-    text-align: left;
+  text-align: left;
 }
 
 .integrations {
-    border-top:  1px solid #CCC;
-    margin-top:  2em;
-    padding-top: 2em;
+  border-top:  1px solid #CCC;
+  margin-top:  2em;
+  padding-top: 2em;
 }
 
 input.b3_recaptcha_input {
-    width:     50%;
-    max-width: 500px;
+  width:     50%;
+  max-width: 500px;
 }
 
 ul.b3_integrations--list {
-    list-style:   none;
-    padding-left: 0;
-    position:     relative;
-    display:      flex;
-    flex-flow:    row nowrap;
+  list-style:   none;
+  padding-left: 0;
+  position:     relative;
+  display:      flex;
+  flex-flow:    row nowrap;
 }
 
 .b3_integrations--list-item {
-    box-sizing:         border-box;
-    -moz-box-sizing:    border-box;
-    -webkit-box-sizing: border-box;
-    border-radius:      10px;
-    border:             1px solid #444444;
-    margin-right:       1em;
-    overflow:           hidden;
-    padding:            1em;
-    text-align:         center;
-    vertical-align:     top;
-    width:              200px;
+  box-sizing:         border-box;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  border-radius:      10px;
+  border:             1px solid #444444;
+  margin-right:       1em;
+  overflow:           hidden;
+  padding:            1em;
+  text-align:         center;
+  vertical-align:     top;
+  width:              200px;
 }
 
 .b3_integration__image {
-    height:        90px;
-    margin-bottom: 0.5em;
+  height:        90px;
+  margin-bottom: 0.5em;
 }
 
 .b3_integration__image img {
-    height:     auto;
-    max-height: 90px;
-    max-width:  100%;
+  height:     auto;
+  max-height: 90px;
+  max-width:  100%;
 }
 
 .b3_integrations--list-item--aweber .b3_integration__image img {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .b3_integration__name {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 /* Form styling */
@@ -378,11 +415,11 @@ ul.b3_integrations--list {
 .b3 input[type="url"],
 .b3 select,
 .b3 textarea {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .b3 select {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .b3 input[type="text"],
@@ -393,8 +430,8 @@ ul.b3_integrations--list {
 .b3 input[type="url"],
 .b3 select,
 .b3 textarea {
-    padding: 4px;
-    width:   100%;
+  padding: 4px;
+  width:   100%;
 }
 
 /* Because load-styles.php is not loaded */
@@ -403,34 +440,49 @@ ul.b3_integrations--list {
 .metabox-handler .stuffbox > h3,
 .metabox-handler h2.handle,
 .metabox-handler h3.handle {
-    font-size:   14px;
-    padding:     8px 12px;
-    margin:      0;
-    line-height: 1.4;
+  font-size:   14px;
+  padding:     8px 12px;
+  margin:      0;
+  line-height: 1.4;
 }
 
 #wpadminbar .topbar_approve_user a.ab-item {
-    color: #ee6102;
+  color: #ee6102;
 }
 
 .wp-core-ui .button--submit {
-    margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 
 #adminmenu .toplevel_page_b3-onboarding .wp-menu-image img {
-    max-width: 23px;
-    padding:   5px 0 0 0;
+  max-width: 23px;
+  padding:   5px 0 0 0;
 }
 
 /*.no-approval-page #adminmenu .toplevel_page_b3-onboarding ul li:nth-child(3),*/
 .hidden {
-    display: none;
+  display: none;
 }
 
 /* Media queries */
 @media screen and ( min-width: 1280px ) {
-    .b3_tabs {
-        max-width: 1024px;
-    }
+  .b3-debug {
+    display: flex;
+  }
+
+  .b3-debug-right {
+    margin-top: 0;
+  }
+
+  .b3_table--debug {
+    width: 500px;
+  }
+
+  .b3_table--debug-meta {
+    width: 650px;
+  }
+  .b3_tabs {
+    max-width: 1024px;
+  }
 }
 

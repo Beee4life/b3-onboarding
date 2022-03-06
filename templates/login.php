@@ -4,25 +4,21 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
     $label = esc_attr__( 'Username or Email address', 'b3-onboarding' );
-
-    if ( 1 == get_site_option( 'b3_register_email_only' ) ) {
+    if ( 1 == get_option( 'b3_register_email_only' ) ) {
         $label = esc_attr__( 'Email address', 'b3-onboarding' );
     }
 
     do_action( 'b3_add_form_messages', $attributes );
 ?>
-
 <div id="b3-login" class="b3_page b3_page--login">
     <?php if ( $attributes[ 'title' ] ) { ?>
-        <h3>
-            <?php echo $attributes[ 'title' ]; ?>
-        </h3>
+        <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
     <?php } ?>
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
@@ -38,8 +34,6 @@
             <label class="b3_form-label" for="user_pass"><?php esc_attr_e( 'Password', 'b3-onboarding' ); ?></label>
             <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" autocomplete="current-password">
         </div>
-
-        <?php do_action( 'b3_add_recaptcha_fields', $attributes[ 'template' ] ); ?>
 
         <div class="b3_form-element">
             <p class="rememberme">

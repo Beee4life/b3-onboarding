@@ -4,14 +4,14 @@
      *
      * @since 1.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
-    $disable_admin_notification = get_site_option( 'b3_disable_delete_user_email' );
-    $reject_user_email_subject  = get_site_option( 'b3_account_rejected_subject' );
-    $reject_user_email_message  = get_site_option( 'b3_account_rejected_message' );
+
+    $disable_admin_notification = get_option( 'b3_disable_delete_user_email' );
+    $reject_user_email_subject  = get_option( 'b3_account_rejected_subject' );
+    $reject_user_email_message  = get_option( 'b3_account_rejected_message' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
@@ -31,8 +31,8 @@
     <tr>
         <th class="align-top">
             <label for="b3__input--account-rejected__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
-            <br />
-            <?php echo sprintf( __( '<a href="%s" target="_blank" rel="noopener">Preview</a>', 'b3-onboarding' ), esc_url( B3_PLUGIN_SETTINGS . '&preview=account-rejected' ) ); ?>
+            <br>
+            <?php echo b3_get_preview_link( 'account-rejected' ); ?>
         </th>
         <td>
             <textarea id="b3__input--account-rejected__message" name="b3_account_rejected_message" placeholder="<?php echo esc_attr( b3_default_account_rejected_message() ); ?>" rows="6"><?php echo stripslashes( $reject_user_email_message ); ?></textarea>
@@ -49,7 +49,7 @@
     <tr>
         <th>&nbsp;</th>
         <td>
-            <input class="button button-primary" type="submit" value="<?php esc_html_e( 'Save settings', 'b3-onboarding' ); ?>" />
+            <input class="button button-primary" type="submit" value="<?php esc_attr_e( 'Save settings', 'b3-onboarding' ); ?>" />
         </td>
     </tr>
     </tbody>

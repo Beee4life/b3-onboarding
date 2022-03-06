@@ -4,7 +4,7 @@
      *
      * @since 2.0.0
      */
-    
+
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
@@ -13,15 +13,16 @@
     <?php
         $message = false;
         $subject = false;
+
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo = ( '1' === get_site_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
             $preview   = $_GET[ 'preview' ];
             $user      = get_userdata( get_current_user_id() );
 
             $lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit <a href="">iaculis</a> enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.
-            <br /><br />
+            <br><br>
             Quisque <a href="">quis nibh</a> gravida, condimentum nibh sed, facilisis ligula. Phasellus placerat, metus a ultricies vulputate, arcu massa ullamcorper enim, id iaculis nisl augue eu dolor. Aliquam vel nisi at lacus ultrices fringilla. In cursus mattis lectus, non ultricies orci vulputate nec. Fusce non vestibulum nulla. Cras libero metus, fermentum sit amet venenatis sit amet, vestibulum vitae lectus. Donec interdum volutpat blandit.
-            <br /><br />
+            <br><br>
             Morbi vehicula metus vestibulum, eleifend arcu quis, rutrum massa. Sed porttitor pellentesque convallis. Suspendisse potenti. Nam dapibus vitae tortor a egestas. Ut at lobortis tortor. Sed tellus sem, pulvinar sit amet posuere non, vulputate vitae mi. Vestibulum ac massa suscipit, placerat risus ut, rutrum turpis. Integer in risus ac turpis dapibus viverra. Nulla facilisi. Nam ut cursus felis. Pellentesque <a href="">congue scelerisque</a> nisl, nec ultricies ex. Vivamus id ex ac dolor porttitor tempus. Maecenas pulvinar porta nunc, in mollis erat egestas et.';
 
             switch( $preview ) {
@@ -29,27 +30,23 @@
                     $message = $lorem_ipsum;
                     break;
                 case 'mu-confirm-user-email':
-                    // @TODO: add filter
+                    // @TODO: add existing filters
                     $message = b3_get_wpmu_activate_user_message();
                     $subject = b3_get_wpmu_activate_user_subject();
                     break;
                 case 'mu-user-activated':
-                    // @TODO: add filter
+                case 'mu-user-site-activated':
+                    // @TODO: add existing filters
                     $message = b3_get_wpmu_user_activated_message();
                     $subject = b3_get_wpmu_user_activated_subject();
                     break;
                 case 'mu-confirm-user-site-email':
-                    // @TODO: add filter
+                    // @TODO: create filters
                     $message = b3_get_wpmu_activate_user_blog_message();
                     $subject = b3_get_wpmu_activate_user_blog_subject();
                     break;
-                case 'mu-user-site-activated':
-                    // @TODO: add filter
-                    $message = b3_get_wpmu_user_activated_message();
-                    $subject = b3_get_wpmu_user_activated_subject();
-                    break;
                 case 'mu-new-user-admin':
-                    // @TODO: add filter
+                    // @TODO: create filters
                     $message = b3_get_new_wpmu_user_message_admin();
                     $subject = b3_get_new_wpmu_user_subject_admin();
                     break;
@@ -90,6 +87,10 @@
                     $message = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
                     $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                     break;
+                case 'welcome-user-manual':
+                    $message = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
+                    $subject = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
+                    break;
                 case 'styling':
                     $css = apply_filters( 'b3_email_styling', b3_get_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) );
                     break;
@@ -118,7 +119,7 @@
 
             <?php if ( false != $subject ) { ?>
                 <p>
-                    <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo $subject; ?>"
+                    <b><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?>:</b> "<?php echo esc_html($subject); ?>"
                 </p>
             <?php } ?>
 
