@@ -136,6 +136,8 @@
 
                     B3Onboarding::b3_show_admin_notices();
 
+                    $attributes = apply_filters( 'b3_attributes', $attributes );
+
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
                 }
             }
@@ -217,6 +219,8 @@
 
                 $attributes[ 'errors' ] = $errors;
 
+                $attributes = apply_filters( 'b3_attributes', $attributes );
+
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
 
@@ -257,6 +261,8 @@
                     }
                 }
 
+                $attributes = apply_filters( 'b3_attributes', $attributes );
+
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
 
@@ -293,6 +299,8 @@
                             }
                         }
                         $attributes[ 'errors' ] = $errors;
+
+                        $attributes = apply_filters( 'b3_attributes', $attributes );
 
                         return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
@@ -392,6 +400,8 @@
                     }
 
                     B3Onboarding::b3_show_admin_notices();
+
+                    $attributes = apply_filters( 'b3_attributes', $attributes );
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
                 }
