@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.2.0
+    Version:            3.2.0-dev
     Requires at least:  4.3
     Tested up to:       5.9.1
     Requires PHP:       5.6
@@ -59,7 +59,7 @@
 
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '3.2.0',
+                    'version' => '3.2.0-dev',
                 );
             }
 
@@ -1130,20 +1130,19 @@
                 ];
 
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
-                    if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
-                        $message = sprintf( esc_html__( "You're using a beta version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
-                        if ( is_localhost() ) {
-                            echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $message );
-                        } else {
-                            echo sprintf( '<div class="error"><p>%s</p></div>', $message );
-                        }
-                    } else {
-                        if ( 'none' != get_option( 'b3_registration_type' ) ) {
-                            if ( false == get_option( 'b3_register_page_id' ) ) {
-                                $message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                                echo sprintf( '<div class="error"><p>%s</p></div>', $message );
-                            }
-                        }
+                    if ( strpos( $this->settings[ 'version' ], 'dev' ) !== false || strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
+                        $show_warning = true;
+                    }
+                    if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) ) {
+                        $show_error = true;
+                    }
+                    if ( isset( $show_error ) && $show_error ) {
+                        $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                        echo sprintf( '<div class="error"><p>%s</p></div>', $error_message );
+                    }
+                    if ( isset( $show_warning ) && $show_warning ) {
+                        $warning_message = sprintf( esc_html__( "You're using a development version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
+                        echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
                     }
                 }
 
