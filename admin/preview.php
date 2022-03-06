@@ -30,13 +30,15 @@
                     $message = $lorem_ipsum;
                     break;
                 case 'mu-confirm-user-email':
-                    $message = apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() );
-                    $subject = apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() );
+                    // @TODO: add existing filters
+                    $message = b3_get_wpmu_activate_user_message();
+                    $subject = b3_get_wpmu_activate_user_subject();
                     break;
                 case 'mu-user-activated':
                 case 'mu-user-site-activated':
-                    $message = apply_filters( 'b3_wpmu_user_activated_message', b3_get_wpmu_user_activated_message() );
-                    $subject = apply_filters( 'b3_wpmu_user_activated_subject', b3_get_wpmu_user_activated_subject() );
+                    // @TODO: add existing filters
+                    $message = b3_get_wpmu_user_activated_message();
+                    $subject = b3_get_wpmu_user_activated_subject();
                     break;
                 case 'mu-confirm-user-site-email':
                     // @TODO: create filters
