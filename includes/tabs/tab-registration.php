@@ -240,8 +240,7 @@
                             <select name="b3_privacy_page_id" id="b3_privacy_page_id">
                                 <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
                                 <?php foreach( $all_pages as $page ) { ?>
-                                    <?php $selected = ( $privacy_page == $page->ID ) ? ' selected="selected"' : false; ?>
-                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo $selected; ?>><?php echo $page->post_title; ?></option>
+                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($privacy_page, $page->ID); ?>><?php echo $page->post_title; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
