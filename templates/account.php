@@ -30,21 +30,7 @@
             <?php echo sprintf( '<p class="b3_message">%s</p>', esc_html__( 'Profile saved', 'b3-onboarding' ) ); ?>
         <?php } ?>
 
-        <?php //do_action( 'b3_before_account', $current_user_object->ID, $attributes ); ?>
-        <?php if ( is_multisite() && in_array( $attributes[ 'registration_type' ], [ 'all', 'blog', 'request_access_subdomain' ] ) ) { ?>
-            <?php $user_sites = get_blogs_of_user( $current_user_object->ID ); ?>
-            <?php if ( ! empty( $user_sites ) ) { ?>
-                <?php $url_path  = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false; ?>
-                <?php $site_info = array_shift( $user_sites ); ?>
-                <?php $url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $url_path ), $site_info ); ?>
-                <div class="b3_form-element">
-                    <label class="b3_form-label" for="yoursites"><?php esc_attr_e( 'Your site(s)', 'b3-onboarding' ); ?></label>
-                    <a href="<?php echo esc_url( $url ); ?>">
-                        <?php echo $site_info->blogname; ?>
-                    </a>
-                </div>
-            <?php } ?>
-        <?php } ?>
+        <?php do_action( 'b3_before_account', $current_user_object, $attributes ); ?>
 
         <div class="b3_form-element">
             <?php if ( false == get_option( 'b3_register_email_only' ) ) { ?>
@@ -82,7 +68,9 @@
         <div class="b3_form-element">
             <label class="b3_form-label" for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php esc_attr_e( $current_user_object->first_name ); ?>"<?php echo $required; ?> />
-            <br><br>
+        </div>
+
+        <div class="b3_form-element">
             <label class="b3_form-label" for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php esc_attr_e( $current_user_object->last_name ); ?>"<?php echo $required; ?> />
         </div>
