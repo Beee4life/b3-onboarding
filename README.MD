@@ -148,6 +148,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.2.0 - 06.03.22
 * added development notice filter
+* extended more filters to preview
 * implemented checked/selected functions
 
 3.1.0 - 06.03.22
