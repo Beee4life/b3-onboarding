@@ -17,6 +17,7 @@
 
 <div id="b3-account" class="b3_page b3_page--account">
     <form id="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
+        <?php // Leave the hidden fields ! ?>
         <?php wp_nonce_field( 'update-user_' . $current_user_object->ID ); ?>
         <input type="hidden" name="admin_bar_front" id="admin_bar_front" value="<?php echo get_user_meta( $current_user_object->ID, 'show_admin_bar_front', true ); ?>" />
         <input type="hidden" name="from" value="profile" />
@@ -32,16 +33,18 @@
 
         <?php do_action( 'b3_before_account', $current_user_object, $attributes ); ?>
 
+        <?php // @TODO: create hook ?>
         <div class="b3_form-element">
             <?php if ( false == get_option( 'b3_register_email_only' ) ) { ?>
                 <label class="b3_form-label" for="user_login"><?php esc_attr_e( 'Username', 'b3-onboarding' ); ?></label>
+                <input type="text" name="user_login" id="user_login" value="<?php esc_attr_e( $current_user_object->user_login ); ?>" disabled="disabled" />
             <?php } else { ?>
                 <label class="b3_form-label" for="b3_user_login"><?php esc_attr_e( 'User ID', 'b3-onboarding' ); ?></label>
+                <div class="user-login"><?php esc_html_e( $current_user_object->user_login ); ?></div>
             <?php } ?>
-            <?php // @TODO: just echo it (as text), but not in a disabled input ?>
-            <input type="text" name="user_login" id="user_login" value="<?php esc_attr_e( $current_user_object->user_login ); ?>" disabled="disabled" />
         </div>
 
+        <?php // @TODO: create hook ?>
         <div class="b3_form-element">
             <label class="b3_form-label" for="email">
                 <?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?>
@@ -65,6 +68,7 @@
                 <?php endif; ?>
         </div>
 
+        <?php // @TODO: create hook (for first/last) ?>
         <div class="b3_form-element">
             <label class="b3_form-label" for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php esc_attr_e( $current_user_object->first_name ); ?>"<?php echo $required; ?> />
@@ -75,6 +79,7 @@
             <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php esc_attr_e( $current_user_object->last_name ); ?>"<?php echo $required; ?> />
         </div>
 
+        <?php // @TODO: create hook ?>
         <?php
             $show_password_fields = apply_filters( 'show_password_fields', true, $current_user_object );
             if ( $show_password_fields ) {
@@ -121,8 +126,8 @@
         </div>
         <?php } ?>
 
+        <?php // @TODO: create action or include ?>
         <?php if ( get_option( 'b3_user_may_delete', false ) ) { ?>
-            <?php // @TODO: create action or include ?>
             <div class="b3_form-element b3_form-element--delete">
                 <strong>
                     <?php esc_html_e( 'Delete account', 'b3-onboarding' ); ?>
@@ -137,9 +142,7 @@
             </div>
         <?php } ?>
 
-        <div class="b3_form-element">
-            <input type="submit" class="button button--small button--submit" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
-        </div>
+        <?php b3_get_submit_button( esc_attr__( 'Update profile', 'b3-onboarding' ) ); ?>
     
         <?php do_action( 'b3_after_account', $current_user_object, $attributes ); ?>
 
