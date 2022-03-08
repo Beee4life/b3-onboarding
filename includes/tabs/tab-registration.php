@@ -101,7 +101,7 @@
                             <?php if ( false != $filter_message ) { ?>
                                 <?php echo sprintf( '<div class="filter-override">%s</div>', esc_html__( 'You have set a filter to override this setting', 'b3-onboarding' ) ); ?>
                             <?php } ?>
-                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $default_closed_message ); ?>" value="<?php if ( $closed_message ) { echo stripslashes( $closed_message ); } ?>"/>
+                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $default_closed_message ); ?>" value="<?php if ( $closed_message ) { echo htmlspecialchars_decode(stripslashes( $closed_message )); } ?>"/>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
