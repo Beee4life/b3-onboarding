@@ -182,14 +182,14 @@
                                 <div class="b3_input-option b3_input-option--<?php echo esc_attr( $input_type ); ?>">
                                     <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
                                     <?php if ( in_array( $input_type, array( 'radio' ) ) ) { ?>
-                                        <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
+                                        <?php $checked = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                     <?php } elseif ( in_array( $input_type, array( 'checkbox' ) ) ) { ?>
                                         <?php
-                                            $selected = false;
+                                            $checked = false;
                                             if ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) {
-                                                $selected = ' checked="checked"';
+                                                $checked = ' checked="checked"';
                                             } elseif ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) {
-                                                $selected = ' checked="checked"';
+                                                $checked = ' checked="checked"';
                                             }
                                         ?>
                                     <?php } ?>
@@ -198,7 +198,7 @@
                                         <label for="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); ?>" class="screen-reader-text"><?php echo esc_html( $option[ 'label' ] ); ?></label>
                                     <?php } ?>
                                     <?php if ( isset( $option[ 'name' ] ) && isset( $option[ 'label' ] ) ) { ?>
-                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo $selected; ?>> <?php echo $option[ 'label' ]; ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo $checked; ?>> <?php echo $option[ 'label' ]; ?>
                                     <?php } ?>
                                 </div>
                                 <?php $counter++; ?>
