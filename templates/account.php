@@ -30,7 +30,7 @@
             <?php echo sprintf( '<p class="b3_message">%s</p>', esc_html__( 'Profile saved', 'b3-onboarding' ) ); ?>
         <?php } ?>
 
-        <?php // @TODO: create action for this ?>
+        <?php //do_action( 'b3_before_account', $current_user_object->ID, $attributes ); ?>
         <?php if ( is_multisite() && in_array( $attributes[ 'registration_type' ], [ 'all', 'blog', 'request_access_subdomain' ] ) ) { ?>
             <?php $user_sites = get_blogs_of_user( $current_user_object->ID ); ?>
             <?php if ( ! empty( $user_sites ) ) { ?>

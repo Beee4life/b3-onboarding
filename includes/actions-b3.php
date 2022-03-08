@@ -699,3 +699,19 @@
         // @TODO: set pages
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );
+
+    function b3_before_account( $user_id, $attributes = [] ) {
+        if ( is_multisite() && in_array( $attributes[ 'registration_type' ], [ 'all', 'blog', 'request_access_subdomain' ] ) ) {
+            $user_sites = get_blogs_of_user( $user_id );
+
+            if ( ! empty( $user_sites ) ) {
+                $url_path  = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false;
+                $site_info = array_shift( $user_sites );
+                $url       = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $url_path ), $site_info );
+                $label     = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
+                $link      = sprintf( '<a href="%s">%s</a>', esc_url( $url ), $site_info->blogname );
+                echo sprintf( '<div class="b3_form-element">%s%s</div>', $label, $link );
+            }
+        }
+    }
+    add_action( 'b3_before_account', 'b3_before_account' );
