@@ -52,6 +52,7 @@
     padding:       0.428571429rem;
 }
 
+.b3_page form .site-links,
 .b3_page form input[type="text"],
 .b3_page form input[type="email"],
 .b3_page form input[type="number"],
@@ -69,6 +70,11 @@
 
 .b3_page form .password-hint {
     margin-top: 2rem;
+}
+
+.b3_page form .site-links ul {
+    list-style:   none;
+    padding-left: 0;
 }
 
 .b3_page form input#rememberme {
@@ -89,9 +95,14 @@
 }
 
 .b3_form-element {
-    display:    flex;
-    flex-flow:  row nowrap;
-    margin-top: 2rem;
+    display:     flex;
+    flex-flow:   row nowrap;
+    align-items: center;
+    margin-top:  2rem;
+}
+
+.b3_form-element-my-sites {
+    align-items: flex-start;
 }
 
 .b3_form-element--delete div {
@@ -103,7 +114,7 @@
 }
 
 .b3_form-element--pooh {
-  display: none;
+    display: none;
 }
 
 /* Label on password reset input */
@@ -257,7 +268,7 @@ ul.b3_form-links li:last-child {
 }
 
 .modal .b3_form-element:first-of-type {
-  margin-top: 1rem;
+    margin-top: 1rem;
 }
 
 /* Misc */
