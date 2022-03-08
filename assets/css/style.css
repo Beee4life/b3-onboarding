@@ -89,8 +89,9 @@
 }
 
 .b3_form-element {
-    margin-top:     2rem;
-    vertical-align: top;
+    display:    flex;
+    flex-flow:  row nowrap;
+    margin-top: 2rem;
 }
 
 .b3_form-element--delete div {
@@ -276,6 +277,7 @@ ul.b3_form-links li:last-child {
         width:   200px;
     }
 
+    .b3_page form .site-links,
     .b3_page form input[type="text"],
     .b3_page form input[type="email"],
     .b3_page form input[type="number"],
