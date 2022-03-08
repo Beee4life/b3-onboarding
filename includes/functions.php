@@ -346,12 +346,10 @@
      */
     function b3_get_submit_button( $submit_value = false, $button_modifier = false ) {
         // validate user value
-        if ( false != $submit_value ) {
-            if ( ! is_string( $submit_value ) ) {
-                // @TODO: throw error
-            }
-        } else {
+        if ( is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
+        } else {
+            // @TODO: throw error
         }
         if ( false != $button_modifier ) {
             if ( is_string( $button_modifier ) ) {
@@ -1024,6 +1022,7 @@
         update_option( 'b3_disable_admin_notification_password_change', 1 );
         update_option( 'b3_disable_user_notification_password_change', 1 );
         update_option( 'b3_logo_in_email', 1 );
+        update_option( 'b3_link_color', '#e0144b' );
         update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
         update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
         update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
