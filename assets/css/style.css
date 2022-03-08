@@ -72,6 +72,10 @@
     margin-top: 2rem;
 }
 
+.b3_page form .site-links {
+    display: inline-block;
+}
+
 .b3_page form .site-links ul {
     list-style:   none;
     padding-left: 0;
