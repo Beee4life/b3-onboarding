@@ -150,6 +150,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * added development notice filter
 * extended more filters to preview
 * implemented checked/selected functions
+* added color picker for link color
 
 3.1.0 - 06.03.22
 * improved multisite functions
