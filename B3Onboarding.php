@@ -1141,7 +1141,7 @@
                         echo sprintf( '<div class="error"><p>%s</p></div>', $error_message );
                     }
                     if ( isset( $show_warning ) && $show_warning ) {
-                        $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
+                        $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
                         $notice = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
                         echo apply_filters( 'b3_hide_development_notice', $notice );
                     }
