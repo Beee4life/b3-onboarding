@@ -151,6 +151,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * extended more filters to preview
 * implemented checked/selected functions
 * added color picker for link color
+* added new hook before/after account page
 
 3.1.0 - 06.03.22
 * improved multisite functions
