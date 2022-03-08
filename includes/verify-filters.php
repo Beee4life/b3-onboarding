@@ -28,6 +28,7 @@
             'b3_extra_fields'                          => array( 'array', 'extra' ),
             'b3_extra_fields_validation'               => array( 'array' ),
             'b3_hidden_fields'                         => array( 'array', 'hidden' ),
+            'b3_hide_development_notice'               => array( 'string' ),
             'b3_link_color'                            => array( 'hex_color' ),
             'b3_localhost'                             => array( 'bool' ),
             'b3_localhost_email'                       => array( 'email' ),

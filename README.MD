@@ -146,6 +146,10 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.2.0 - 06.03.22
+* added development notice filter
+* implemented checked/selected functions
+
 3.1.0 - 06.03.22
 * improved multisite functions
 * added honeypot option

@@ -87,19 +87,16 @@
                                     <?php if ( function_exists( 'wpml_get_language_information' ) ) { ?>
                                         <?php $post_language_information = wpml_get_language_information( '', $active_page->ID ); ?>
                                         <?php if ( $post_language_information[ 'language_code' ] == $default_lang ) { ?>
-                                            <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
-                                            <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                                            <option value="<?php echo $active_page->ID; ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo $active_page->post_title; ?></option>
                                         <?php } ?>
                                     <?php } else { ?>
-                                        <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
-                                        <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                                        <option value="<?php echo $active_page->ID; ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo $active_page->post_title; ?></option>
                                     <?php } ?>
 
                                 <?php } ?>
                             <?php } else { ?>
                                 <?php foreach( $all_pages as $active_page ) { ?>
-                                    <?php $selected = ( $active_page->ID == $page[ 'page_id' ] ) ? ' selected' : false; ?>
-                                    <option value="<?php echo $active_page->ID; ?>"<?php echo $selected; ?>> <?php echo $active_page->post_title; ?></option>
+                                    <option value="<?php echo $active_page->ID; ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo $active_page->post_title; ?></option>
                                 <?php } ?>
                             <?php } ?>
                         </select>
