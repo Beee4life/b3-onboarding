@@ -16,9 +16,7 @@
     if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != $_REQUEST[ 'registered' ] ) {
 ?>
 <div id="b3-register" class="b3_page b3_page--register">
-    <?php if ( $attributes[ 'title' ] ) { ?>
-        <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
-    <?php } ?>
+    <?php echo ( isset( $attributes[ 'title' ] ) ) ? sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ) : false; ?>
 
     <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
         <?php

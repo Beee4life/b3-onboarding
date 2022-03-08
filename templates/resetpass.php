@@ -12,9 +12,7 @@
     do_action( 'b3_add_form_messages', $attributes );
 ?>
 <div id="b3-resetpass" class="b3 b3_page b3_page--resetpass">
-    <?php if ( $attributes[ 'title' ] ) { ?>
-        <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
-    <?php } ?>
+    <?php echo ( isset( $attributes[ 'title' ] ) ) ? sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ) : false; ?>
 
     <form name="resetpassform" id="resetpassform" action="<?php echo b3_get_reset_password_url(); ?>" method="post" autocomplete="off">
         <input name="b3_form" value="resetpass" type="hidden" />
