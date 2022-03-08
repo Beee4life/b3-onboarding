@@ -700,18 +700,46 @@
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );
 
-    function b3_before_account( $user_id, $attributes = [] ) {
-        if ( is_multisite() && in_array( $attributes[ 'registration_type' ], [ 'all', 'blog', 'request_access_subdomain' ] ) ) {
-            $user_sites = get_blogs_of_user( $user_id );
+
+    /**
+     * Add before account page output
+     *
+     * @since 3.2.0
+     *
+     * @param $current_user
+     * @param $attributes
+     *
+     * @return void
+     */
+    function b3_before_account( $current_user, $attributes ) {
+        if ( is_multisite() ) {
+            $user_sites = get_blogs_of_user( $current_user->ID );
 
             if ( ! empty( $user_sites ) ) {
-                $url_path  = ( count( $user_sites ) > 1 ) ? 'my-sites.php' : false;
-                $site_info = array_shift( $user_sites );
-                $url       = apply_filters( 'b3_dashboard_url', get_admin_url( $site_info->userblog_id, $url_path ), $site_info );
-                $label     = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
-                $link      = sprintf( '<a href="%s">%s</a>', esc_url( $url ), $site_info->blogname );
-                echo sprintf( '<div class="b3_form-element">%s%s</div>', $label, $link );
+                $links = false;
+                $count = 1;
+                foreach( $user_sites as $site_id => $site_info ) {
+                    $line_break       = ( 1 != $count ) ? '<br>' : false;
+                    $home_url         = get_home_url( $site_id );
+                    $admin_url        = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
+                    $link             = sprintf( '%s<a href="%s">%s</a>', $line_break, esc_url( $home_url ), $site_info->blogname );
+                    $disallowed_roles = ! array_diff( $current_user->roles, get_option( 'b3_restrict_admin', [
+                        'b3_activation',
+                        'b3_approval'
+                    ] ) );
+
+                    if ( false == $disallowed_roles ) {
+                        $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
+                    }
+                    $links .= $link;
+                    $count++;
+
+                }
+                if ( false != $links ) {
+                    $label = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
+                    echo sprintf( '<div class="b3_form-element">%s<div class="site-links">%s</div></div>', $label, $links );
+                }
             }
         }
     }
-    add_action( 'b3_before_account', 'b3_before_account' );
+    add_action( 'b3_before_account', 'b3_before_account', 10, 2 );
