@@ -140,6 +140,8 @@
         <div class="b3_form-element">
             <input type="submit" class="button button--small button--submit" value="<?php esc_attr_e( 'Update profile', 'b3-onboarding' ); ?>" id="submit" />
         </div>
+    
+        <?php do_action( 'b3_after_account', $current_user_object, $attributes ); ?>
 
     </form>
 </div>
