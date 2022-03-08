@@ -42,11 +42,11 @@
         <th>&nbsp;</th>
         <td>
             <label>
-                <input name="b3_disable_user_notification_password_change" type="checkbox" value="1" <?php if ( 1 == $disable_user_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable user notification on password change', 'b3-onboarding' ); ?>
+                <input name="b3_disable_user_notification_password_change" type="checkbox" value="1" <?php checked($disable_user_notification); ?>/> <?php esc_html_e( 'Disable user notification on password change', 'b3-onboarding' ); ?>
             </label>
             <br>
             <label>
-                <input name="b3_disable_admin_notification_password_change" type="checkbox" value="1" <?php if ( 1 == $disable_admin_notification ) { echo 'checked="checked" '; } ?>/> <?php esc_html_e( 'Disable admin notification on password change', 'b3-onboarding' ); ?>
+                <input name="b3_disable_admin_notification_password_change" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/> <?php esc_html_e( 'Disable admin notification on password change', 'b3-onboarding' ); ?>
             </label>
         </td>
     </tr>

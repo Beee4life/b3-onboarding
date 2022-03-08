@@ -53,7 +53,7 @@
                                 <div class="b3_settings-input b3_settings-input--radio">
                                     <div>
                                         <label for="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php checked($option[ 'value' ], $registration_type); ?>/> <?php echo $option[ 'label' ]; ?>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -78,7 +78,7 @@
                                 <div class="b3_settings-input b3_settings-input--radio">
                                     <div>
                                         <label for="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php if ( $option[ 'value' ] == $registration_type ) { ?>checked="checked"<?php } ?>/> <?php echo $option[ 'label' ]; ?>
+                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php checked($option[ 'value' ], $registration_type); ?>/> <?php echo $option[ 'label' ]; ?>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -114,7 +114,7 @@
                                 <label for="b3_register_email_only"><?php esc_html_e( 'Register with email address only', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php if ( $registration_with_email_only ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php checked($registration_with_email_only); ?>/> <?php esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
 
@@ -124,7 +124,7 @@
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php if ( $custom_passwords ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate custom passwords.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php checked($custom_passwords); ?>/> <?php esc_html_e( 'Check this box to activate custom passwords.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>
@@ -137,7 +137,7 @@
                                 <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php if ( $first_last ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php checked($first_last); ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
 
@@ -147,7 +147,7 @@
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php if ( $first_last_required ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php checked($first_last_required); ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
                     </div>
@@ -159,7 +159,7 @@
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php if ( $redirect_set_password ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php checked($redirect_set_password); ?>/> <?php esc_html_e( 'Check this box to redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>
@@ -169,7 +169,7 @@
                             <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php if ( $recaptcha ) { ?>checked="checked"<?php } ?>/>
+                            <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php checked($recaptcha); ?>/>
                             <?php
                                 if ( 1 == $recaptcha ) {
                                     esc_html_e( 'Uncheck this box to deactivate reCAPTCHA.', 'b3-onboarding' );
@@ -192,7 +192,7 @@
                             <label for="b3_honeypot"><?php esc_html_e( 'Honeypot', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_honeypot" name="b3_honeypot" value="1" <?php if ( $honeypot ) { ?>checked="checked"<?php } ?>/>
+                            <input type="checkbox" id="b3_honeypot" name="b3_honeypot" value="1" <?php checked($honeypot); ?>/>
                             <?php
                                 if ( 1 == $honeypot ) {
                                     esc_html_e( 'Uncheck this box to deactivate the honeypot option.', 'b3-onboarding' );
@@ -208,7 +208,7 @@
                             <label for="b3_privacy"><?php esc_html_e( 'Privacy checkbox', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php if ( $privacy ) { ?>checked="checked"<?php } ?>/>
+                            <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php checked($privacy); ?>/>
                             <?php
                                 if ( 1 == $privacy ) {
                                     esc_html_e( 'Uncheck this box to deactivate the privacy checkbox.', 'b3-onboarding' );

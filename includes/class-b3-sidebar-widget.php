@@ -158,31 +158,31 @@
             </p>
             <b><?php esc_html_e( 'Logged Out', 'b3-onboarding' ); ?></b>
             <p>
-                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_register' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_register' ) ); ?>" type="checkbox" value="1"<?php if ( 1 == $show_register ) { echo ' checked="checked"'; } ?>>
+                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_register' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_register' ) ); ?>" type="checkbox" value="1"<?php checked($show_register); ?>>
                 <label for="<?php echo esc_attr( $this->get_field_id( 'show_register' ) ); ?>"><?php esc_attr_e( 'Show register link', 'b3-onboarding' ); ?></label>
             </p>
             <p>
-                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_login' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_login' ) ); ?>" type="checkbox" value="1"<?php if ( 1 == $show_login ) { echo ' checked="checked"'; } ?>>
+                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_login' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_login' ) ); ?>" type="checkbox" value="1"<?php checked($show_login); ?>>
                 <label for="<?php echo esc_attr( $this->get_field_id( 'show_login' ) ); ?>"><?php esc_attr_e( 'Show login link', 'b3-onboarding' ); ?></label>
             </p>
             <b><?php esc_html_e( 'Logged In', 'b3-onboarding' ); ?></b>
             <p>
-                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_account' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_account' ) ); ?>" type="checkbox" value="1"<?php if ( 1 == $show_account ) { echo ' checked="checked"'; } ?>>
+                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_account' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_account' ) ); ?>" type="checkbox" value="1"<?php checked($show_account); ?>>
                 <label for="<?php echo esc_attr( $this->get_field_id( 'show_account' ) ); ?>"><?php esc_attr_e( 'Show account link', 'b3-onboarding' ); ?></label>
             </p>
             <p>
-                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_logout' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_logout' ) ); ?>" type="checkbox" value="1"<?php if ( 1 == $show_logout ) { echo ' checked="checked"'; } ?>>
+                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_logout' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_logout' ) ); ?>" type="checkbox" value="1"<?php checked($show_logout); ?>>
                 <label for="<?php echo esc_attr( $this->get_field_id( 'show_logout' ) ); ?>"><?php esc_attr_e( 'Show log out link', 'b3-onboarding' ); ?></label>
             </p>
             <b><?php esc_html_e( 'Admin only', 'b3-onboarding' ); ?></b>
             <?php if ( 'request_access' == $registration_type ) { ?>
                 <p>
-                    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_approval' ) ); ?>" type="checkbox" value="1"<?php if ( 1 == $show_user_approval ) { echo ' checked="checked"'; } ?>>
+                    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_approval' ) ); ?>" type="checkbox" value="1"<?php checked($show_user_approval); ?>>
                     <label for="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>"><?php esc_attr_e( 'Show user management link', 'b3-onboarding' ); ?></label>
                 </p>
             <?php } ?>
             <p>
-                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_settings' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_settings' ) ); ?>" type="checkbox" value="1"<?php if ( 1 == $show_settings ) { echo ' checked="checked"'; } ?>>
+                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_settings' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_settings' ) ); ?>" type="checkbox" value="1"<?php checked($show_settings); ?>>
                 <label for="<?php echo esc_attr( $this->get_field_id( 'show_settings' ) ); ?>"><?php esc_attr_e( 'Show settings link', 'b3-onboarding' ); ?></label>
             </p>
             <?php
