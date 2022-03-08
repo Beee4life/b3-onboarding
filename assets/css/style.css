@@ -293,6 +293,7 @@ ul.b3_form-links li:last-child {
         width:   200px;
     }
 
+    .b3_page form .login,
     .b3_page form .site-links,
     .b3_page form input[type="text"],
     .b3_page form input[type="email"],
