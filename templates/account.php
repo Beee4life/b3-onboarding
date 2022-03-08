@@ -34,7 +34,7 @@
         <?php do_action( 'b3_before_account', $current_user_object, $attributes ); ?>
 
         <?php // @TODO: create hook ?>
-        <div class="b3_form-element">
+        <div class="b3_form-element b3_form-element--login">
             <?php if ( false == get_option( 'b3_register_email_only' ) ) { ?>
                 <label class="b3_form-label" for="user_login"><?php esc_attr_e( 'Username', 'b3-onboarding' ); ?></label>
                 <input type="text" name="user_login" id="user_login" value="<?php esc_attr_e( $current_user_object->user_login ); ?>" disabled="disabled" />
@@ -45,7 +45,7 @@
         </div>
 
         <?php // @TODO: create hook ?>
-        <div class="b3_form-element">
+        <div class="b3_form-element b3_form-element--email">
             <label class="b3_form-label" for="email">
                 <?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?>
             </label>
@@ -69,12 +69,12 @@
         </div>
 
         <?php // @TODO: create hook (for first/last) ?>
-        <div class="b3_form-element">
+        <div class="b3_form-element b3_form-element--first-name">
             <label class="b3_form-label" for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="first_name" name="first_name" type="text" value="<?php esc_attr_e( $current_user_object->first_name ); ?>"<?php echo $required; ?> />
         </div>
 
-        <div class="b3_form-element">
+        <div class="b3_form-element b3_form-element--last-name">
             <label class="b3_form-label" for="last_name"><?php _e( 'Last name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>
             <input class="input regular-text" id="last_name" name="last_name" type="text" value="<?php esc_attr_e( $current_user_object->last_name ); ?>"<?php echo $required; ?> />
         </div>
@@ -142,8 +142,10 @@
             </div>
         <?php } ?>
 
-        <?php b3_get_submit_button( esc_attr__( 'Update profile', 'b3-onboarding' ) ); ?>
-    
+        <div class="b3_form-element b3_form-element--submit">
+            <?php b3_get_submit_button( esc_attr__( 'Update profile', 'b3-onboarding' ) ); ?>
+        </div>
+
         <?php do_action( 'b3_after_account', $current_user_object, $attributes ); ?>
 
     </form>
