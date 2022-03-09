@@ -34,6 +34,7 @@
         <?php do_action( 'b3_before_account', $current_user_object, $attributes ); ?>
 
         <?php // @TODO: create hook ?>
+        <?php do_action( 'b3_form_user_id', $current_user_object, $attributes ); ?>
         <div class="b3_form-element b3_form-element--login">
             <?php if ( false == get_option( 'b3_register_email_only' ) ) { ?>
                 <label class="b3_form-label" for="user_login"><?php esc_attr_e( 'Username', 'b3-onboarding' ); ?></label>
@@ -45,6 +46,7 @@
         </div>
 
         <?php // @TODO: create hook ?>
+        <?php do_action( 'b3_form_email', $current_user_object, $attributes ); ?>
         <div class="b3_form-element b3_form-element--email">
             <label class="b3_form-label" for="email">
                 <?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?>
