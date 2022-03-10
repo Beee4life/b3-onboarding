@@ -15,23 +15,19 @@
 ?>
 
 <div id="b3-account" class="b3_page b3_page--account">
+    <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
+        <?php echo sprintf( '<p class="b3_message">%s</p>', esc_html__( 'Profile saved', 'b3-onboarding' ) ); ?>
+    <?php } ?>
+
     <form id="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
-        <?php do_action( 'b3_account_element', 'hidden-fields', $current_user_object ); ?>
-
-        <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
-            <?php echo sprintf( '<p class="b3_message">%s</p>', esc_html__( 'Profile saved', 'b3-onboarding' ) ); ?>
-        <?php } ?>
-
         <?php do_action( 'b3_before_account', $current_user_object, $attributes ); ?>
-
+        <?php do_action( 'b3_account_element', 'hidden-fields', $current_user_object ); ?>
         <?php do_action( 'b3_account_element', 'user-id', $current_user_object ); ?>
         <?php do_action( 'b3_account_element', 'email', $current_user_object ); ?>
         <?php do_action( 'b3_account_element', 'first-last', $current_user_object ); ?>
         <?php do_action( 'b3_account_element', 'password', $current_user_object ); ?>
         <?php do_action( 'b3_account_element', 'user-delete', $current_user_object ); ?>
         <?php do_action( 'b3_account_element', 'save', $current_user_object ); ?>
-
         <?php do_action( 'b3_after_account', $current_user_object, $attributes ); ?>
-
     </form>
 </div>
