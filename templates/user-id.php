@@ -1,3 +1,9 @@
+<?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+?>
+
 <div class="b3_form-element b3_form-element--login">
     <?php if ( false == get_option( 'b3_register_email_only' ) ) { ?>
         <label class="b3_form-label" for="user_login"><?php esc_attr_e( 'Username', 'b3-onboarding' ); ?></label>

@@ -1052,6 +1052,12 @@
         }
     }
     
+    
+    /**
+     * Get all possible template locations
+     *
+     * @return string[]
+     */
     function b3_get_template_paths() {
         $template_paths = array(
             get_stylesheet_directory() . '/b3-onboarding/',
@@ -1064,18 +1070,32 @@
         return $template_paths;
     }
     
-    function b3_locate_template( $template_name ) {
     
-        foreach( b3_get_template_paths() as $possible_location ) {
-            if ( file_exists( $possible_location . $template_name . '.php' )) {
-                return $possible_location . $template_name . '.php';
+    /**
+     * Locate file in possible template locations
+     *
+     * @param $template_name
+     *
+     * @return false|string
+     */
+    function b3_locate_template( $template_name ) {
+        foreach( b3_get_template_paths() as $location ) {
+            if ( file_exists( $location . $template_name . '.php' )) {
+                return $location . $template_name . '.php';
             }
         }
     
         return false;
     }
     
-    function b3_get_template( $template_name, $current_user_object = false, $args = [] ) {
+    
+    /**
+     * Render template
+     *
+     * @param $template_name
+     * @param false $current_user_object
+     */
+    function b3_get_template( $template_name, $current_user_object = false ) {
         if ( $template_name ) {
             $template = b3_locate_template( $template_name );
     

@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     $show_password_fields = apply_filters( 'show_password_fields', true, $current_user_object );
     if ( $show_password_fields ) {
         ?>

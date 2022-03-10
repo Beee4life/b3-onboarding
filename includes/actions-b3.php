@@ -745,27 +745,7 @@
     }
     add_action( 'b3_before_account', 'b3_before_account', 10, 2 );
     
-    function b3_form_user_id( $current_user_object, $attributes ) {
-        b3_get_template('user-id', $current_user_object );
+    function b3_account_element( $element, $current_user_object ) {
+        b3_get_template($element, $current_user_object );
     }
-    add_action( 'b3_form_user_id', 'b3_form_user_id', 10, 2 );
-    
-    function b3_form_email( $current_user_object, $attributes ) {
-        b3_get_template('email', $current_user_object );
-    }
-    add_action( 'b3_form_email', 'b3_form_email', 10, 2 );
-    
-    function b3_form_first_last( $current_user_object, $attributes ) {
-        b3_get_template('first-last', $current_user_object );
-    }
-    add_action( 'b3_form_first_last', 'b3_form_first_last', 10, 2 );
-    
-    function b3_form_password( $current_user_object, $attributes ) {
-        b3_get_template('password', $current_user_object );
-    }
-    add_action( 'b3_form_password', 'b3_form_password', 10, 2 );
-    
-    function b3_form_save() {
-        b3_get_template('save' );
-    }
-    add_action( 'b3_form_save', 'b3_form_save' );
+    add_action( 'b3_account_element', 'b3_account_element', 10, 2 );

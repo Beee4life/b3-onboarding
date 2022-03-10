@@ -1,3 +1,8 @@
+<?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+?>
 <?php if ( get_option( 'b3_user_may_delete', false ) ) { ?>
     <div class="b3_form-element b3_form-element--delete">
         <strong>

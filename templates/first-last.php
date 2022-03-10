@@ -1,3 +1,8 @@
+<?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+?>
 <?php $required = ( true == get_option( 'b3_first_last_required' ) ) ? ' required="required"' : false; ?>
 <div class="b3_form-element b3_form-element--first-name">
     <label class="b3_form-label" for="first_name"><?php _e( 'First name', 'b3-onboarding' ); ?> <?php if ( $required ) { ?><span class="description"><?php esc_attr_e( '(required)', 'b3-onboarding' ); ?></span><?php } ?></label>

@@ -1,3 +1,8 @@
+<?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+?>
 <div class="b3_form-element b3_form-element--email">
     <label class="b3_form-label" for="email">
         <?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?>
