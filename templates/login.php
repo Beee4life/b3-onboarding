@@ -19,8 +19,8 @@
         <?php do_action( 'b3_render_form_element', 'login/hidden-fields', $attributes ); ?>
         <?php do_action( 'b3_render_form_element', 'login/user-login' ); ?>
         <?php do_action( 'b3_render_form_element', 'login/password' ); ?>
-        <?php do_action( 'b3_render_form_element', 'login/checkbox' ); ?>
-        <?php do_action( 'b3_render_form_element', 'login/button' ); ?>
+        <?php do_action( 'b3_render_form_element', 'login/rememberme' ); ?>
+        <?php do_action( 'b3_render_form_element', 'general/button' ); ?>
         <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
     </form>
 </div>

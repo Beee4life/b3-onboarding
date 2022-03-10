@@ -716,7 +716,6 @@
             $user_sites = get_blogs_of_user( $current_user->ID );
 
             if ( ! empty( $user_sites ) ) {
-                $links = false;
                 ob_start();
                 foreach( $user_sites as $site_id => $site_info ) {
                     $admin_url        = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
