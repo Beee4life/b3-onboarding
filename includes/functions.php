@@ -342,21 +342,32 @@
      *
      * @since 2.0.0
      *
-     * @param bool $submit_value
+     * @param false $submit_value
+     * @param false $button_modifier
      */
-    function b3_get_submit_button( $submit_value = false, $button_modifier = false ) {
-        // validate user value
+    function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
+        $button_class = false;
         if ( false == $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
+        
         if ( false != $button_modifier ) {
             if ( is_string( $button_modifier ) ) {
-                $button_modifier = ' button-submit--' . esc_attr( $button_modifier );
-            } else {
-                $button_modifier = false;
+                $button_class = ' button-submit--' . esc_attr( $button_modifier );
             }
         }
-        echo sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_modifier, $submit_value );
+        
+        $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
+        
+        if ( 'register' == $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
+            $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
+            $recaptcha_version  = get_option( 'b3_recaptcha_version' );
+            if ( $activate_recaptcha && 3 == $recaptcha_version ) {
+                $button = sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_value ) );
+            }
+        }
+        
+        echo $button;
     }
 
     /**

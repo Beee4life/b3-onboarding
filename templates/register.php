@@ -42,12 +42,7 @@
             <?php } else { ?>
                 <?php $submit_label = esc_attr__( 'Register', 'b3-onboarding' ); ?>
             <?php } ?>
-
-            <?php if ( $activate_recaptcha && 3 == $recaptcha_version ) { ?>
-                <?php echo sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_label ) ); ?>
-            <?php } else { ?>
-                <?php echo sprintf( '<input type="submit" class="button" value="%s" />', esc_attr( $submit_label ) ); ?>
-            <?php } ?>
+            <?php b3_get_submit_button( $submit_label, 'register', $attributes ); ?>
         </div>
 
         <?php do_action( 'b3_do_after_submit_registration_form' ); ?>
