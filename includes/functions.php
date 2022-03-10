@@ -359,7 +359,7 @@
         
         $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
         
-        if ( 'register' == $button_modifier && $attributes[ 'recaptcha' ][ 'public' ] ) {
+        if ( 'register' == $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
             $recaptcha_version  = get_option( 'b3_recaptcha_version' );
             if ( $activate_recaptcha && 3 == $recaptcha_version ) {
@@ -1067,6 +1067,8 @@
     /**
      * Get all possible template locations
      *
+     * @since 3.2.0
+     *
      * @return string[]
      */
     function b3_get_template_paths() {
@@ -1084,6 +1086,8 @@
     
     /**
      * Locate file in possible template locations
+     *
+     * @since 3.2.0
      *
      * @param $template_name
      *
@@ -1103,10 +1107,13 @@
     /**
      * Render template
      *
+     * @since 3.2.0
+     *
      * @param $template_name
+     * @param array $attributes
      * @param false $current_user_object
      */
-    function b3_get_template( $template_name, $current_user_object = false ) {
+    function b3_get_template( $template_name, $attributes = [], $current_user_object = false ) {
         if ( $template_name ) {
             $template = b3_locate_template( $template_name );
     

@@ -706,12 +706,12 @@
      *
      * @since 3.2.0
      *
-     * @param $current_user
      * @param $attributes
+     * @param $current_user
      *
      * @return void
      */
-    function b3_before_account( $current_user, $attributes ) {
+    function b3_before_account( $attributes, $current_user ) {
         if ( is_multisite() ) {
             $user_sites = get_blogs_of_user( $current_user->ID );
 
@@ -744,8 +744,18 @@
         }
     }
     add_action( 'b3_before_account', 'b3_before_account', 10, 2 );
+
     
-    function b3_account_element( $element, $current_user_object ) {
-        b3_get_template($element, $current_user_object );
+    /**
+     * Render a form element
+     *
+     * @since 3.2.0
+     *
+     * @param $element
+     * @param array $attributes
+     * @param false $current_user_object
+     */
+    function b3_render_form_element( $element, $attributes = [], $current_user_object = false ) {
+        b3_get_template( $element, $attributes, $current_user_object);
     }
-    add_action( 'b3_account_element', 'b3_account_element', 10, 2 );
+    add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );
