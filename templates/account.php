@@ -21,13 +21,13 @@
 
     <form id="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
         <?php do_action( 'b3_before_account', $current_user_object, $attributes ); ?>
-        <?php do_action( 'b3_account_element', 'hidden-fields', $current_user_object ); ?>
-        <?php do_action( 'b3_account_element', 'user-id', $current_user_object ); ?>
-        <?php do_action( 'b3_account_element', 'email', $current_user_object ); ?>
-        <?php do_action( 'b3_account_element', 'first-last', $current_user_object ); ?>
-        <?php do_action( 'b3_account_element', 'password', $current_user_object ); ?>
-        <?php do_action( 'b3_account_element', 'user-delete', $current_user_object ); ?>
-        <?php do_action( 'b3_account_element', 'save', $current_user_object ); ?>
+        <?php do_action( 'b3_account_element', 'account/hidden-fields', $current_user_object ); ?>
+        <?php do_action( 'b3_account_element', 'account/user-id', $current_user_object ); ?>
+        <?php do_action( 'b3_account_element', 'account/email', $current_user_object ); ?>
+        <?php do_action( 'b3_account_element', 'account/first-last', $current_user_object ); ?>
+        <?php do_action( 'b3_account_element', 'account/password', $current_user_object ); ?>
+        <?php do_action( 'b3_account_element', 'account/user-delete', $current_user_object ); ?>
+        <?php do_action( 'b3_account_element', 'account/save', $current_user_object ); ?>
         <?php do_action( 'b3_after_account', $current_user_object, $attributes ); ?>
     </form>
 </div>
