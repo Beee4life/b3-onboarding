@@ -355,11 +355,9 @@
     function b3_add_hidden_fields_registration() {
         $hidden_field_values = apply_filters( 'b3_hidden_fields', array() );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
-            $hidden_fields = '';
             foreach( $hidden_field_values as $key => $value ) {
-                $hidden_fields .= '<input type="hidden" name="' . $key . '" value="' . $value . '">' . "\n";
+                echo '<input type="hidden" name="' . $key . '" value="' . $value . '">' . "\n";
             }
-            echo $hidden_fields;
         }
         if ( is_multisite() && 'blog' == get_option( 'b3_registration_type' ) ) {
             echo '<input type="hidden" name="signup_for" value="blog" />';
@@ -374,13 +372,11 @@
      * @since 2.0.0
      */
     function b3_add_recaptcha_fields() {
-        $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
-        $recaptcha_public   = get_option( 'b3_recaptcha_public' );
-        $recaptcha_version  = get_option( 'b3_recaptcha_version', '2' );
 
-        if ( false != $activate_recaptcha ) {
+        if ( false != get_option( 'b3_activate_recaptcha' ) ) {
+            $recaptcha_public = get_option( 'b3_recaptcha_public' );
             if ( false != $recaptcha_public ) {
-                if ( '2' == $recaptcha_version ) {
+                if ( '2' == get_option( 'b3_recaptcha_version', '2' ) ) {
                     do_action( 'b3_do_before_recaptcha_register' );
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
@@ -744,7 +740,7 @@
     }
     add_action( 'b3_before_account', 'b3_before_account', 10, 2 );
 
-    
+
     /**
      * Render a form element
      *
