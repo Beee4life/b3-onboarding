@@ -1051,3 +1051,36 @@
             restore_current_blog();
         }
     }
+    
+    function b3_get_template_paths() {
+        $template_paths = array(
+            get_stylesheet_directory() . '/b3-onboarding/',
+            get_stylesheet_directory() . '/plugins/b3-onboarding/',
+            get_template_directory() . '/b3-onboarding/',
+            get_template_directory() . '/plugins/b3-onboarding/',
+            B3_PLUGIN_PATH . '/templates/',
+        );
+        
+        return $template_paths;
+    }
+    
+    function b3_locate_template( $template_name ) {
+    
+        foreach( b3_get_template_paths() as $possible_location ) {
+            if ( file_exists( $possible_location . $template_name . '.php' )) {
+                return $possible_location . $template_name . '.php';
+            }
+        }
+    
+        return false;
+    }
+    
+    function b3_get_template( $template_name, $current_user_object = false, $args = [] ) {
+        if ( $template_name ) {
+            $template = b3_locate_template( $template_name );
+    
+            do_action( 'b3_before_template' );
+            include $template;
+            do_action( 'b3_after_template' );
+        }
+    }
