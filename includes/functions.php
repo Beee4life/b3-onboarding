@@ -359,7 +359,7 @@
         
         $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
         
-        if ( 'register' == $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
+        if ( 'register' == $button_modifier && $attributes[ 'recaptcha' ][ 'public' ] ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
             $recaptcha_version  = get_option( 'b3_recaptcha_version' );
             if ( $activate_recaptcha && 3 == $recaptcha_version ) {
