@@ -1091,13 +1091,7 @@
                         B3_PLUGIN_PATH . '/templates/',
                     );
                 } else {
-                    $template_paths = array(
-                        get_stylesheet_directory() . '/b3-onboarding/',
-                        get_stylesheet_directory() . '/plugins/b3-onboarding/',
-                        get_template_directory() . '/b3-onboarding/',
-                        get_template_directory() . '/plugins/b3-onboarding/',
-                        B3_PLUGIN_PATH . '/templates/',
-                    );
+                    $template_paths = b3_get_template_paths();
                 }
                 foreach( $template_paths as $possible_location ) {
                     if ( file_exists( $possible_location . $template_name . '.php' )) {
@@ -1107,11 +1101,10 @@
                 }
 
                 ob_start();
-                do_action( 'b3_do_before_' . $template_name );
+                do_action( 'b3_do_before_template', $template_name );
                 include $location . $template_name . '.php';
-                do_action( 'b3_do_after_' . $template_name );
-                $html = ob_get_contents();
-                ob_end_clean();
+                do_action( 'b3_do_after_template', $template_name );
+                $html = ob_get_clean();
 
                 return $html;
             }

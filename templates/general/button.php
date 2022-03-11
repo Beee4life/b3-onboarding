@@ -2,8 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    // echo '<pre>'; var_dump($attributes); echo '</pre>'; exit;
-    
+
     switch( $attributes[ 'template' ] ) {
         case 'account':
             $button_modifier = false;
@@ -25,8 +24,8 @@
             $button_modifier = false;
             $button_value    = esc_attr__( 'Save', 'b3-onboarding' );
     }
-
 ?>
+
 <div class="b3_form-element b3_form-element--button">
     <?php b3_get_submit_button( $button_value, false, $attributes ); ?>
 </div>

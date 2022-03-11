@@ -350,15 +350,15 @@
         if ( false == $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
-        
+
         if ( false != $button_modifier ) {
             if ( is_string( $button_modifier ) ) {
                 $button_class = ' button-submit--' . esc_attr( $button_modifier );
             }
         }
-        
+
         $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
-        
+
         if ( 'register' == $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
             $recaptcha_version  = get_option( 'b3_recaptcha_version' );
@@ -366,7 +366,7 @@
                 $button = sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_value ) );
             }
         }
-        
+
         echo $button;
     }
 
@@ -1062,8 +1062,8 @@
             restore_current_blog();
         }
     }
-    
-    
+
+
     /**
      * Get all possible template locations
      *
@@ -1079,11 +1079,11 @@
             get_template_directory() . '/plugins/b3-onboarding/',
             B3_PLUGIN_PATH . '/templates/',
         );
-        
+
         return $template_paths;
     }
-    
-    
+
+
     /**
      * Locate file in possible template locations
      *
@@ -1099,11 +1099,11 @@
                 return $location . $template_name . '.php';
             }
         }
-    
+
         return false;
     }
-    
-    
+
+
     /**
      * Render template
      *
@@ -1116,9 +1116,9 @@
     function b3_get_template( $template_name, $attributes = [], $current_user_object = false ) {
         if ( $template_name ) {
             $template = b3_locate_template( $template_name );
-    
-            do_action( 'b3_before_template' );
+
+            do_action( 'b3_do_before_template', $template_name );
             include $template;
-            do_action( 'b3_after_template' );
+            do_action( 'b3_do_after_template', $template_name );
         }
     }

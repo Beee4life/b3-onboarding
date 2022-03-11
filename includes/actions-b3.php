@@ -364,13 +364,11 @@
      * @since 2.0.0
      */
     function b3_add_recaptcha_fields() {
-        $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
-        $recaptcha_public   = get_option( 'b3_recaptcha_public' );
-        $recaptcha_version  = get_option( 'b3_recaptcha_version', '2' );
 
-        if ( false != $activate_recaptcha ) {
+        if ( false != get_option( 'b3_activate_recaptcha' ) ) {
+            $recaptcha_public = get_option( 'b3_recaptcha_public' );
             if ( false != $recaptcha_public ) {
-                if ( '2' == $recaptcha_version ) {
+                if ( '2' == get_option( 'b3_recaptcha_version', '2' ) ) {
                     do_action( 'b3_do_before_recaptcha_register' );
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
@@ -734,7 +732,7 @@
     }
     add_action( 'b3_before_account', 'b3_before_account', 10, 2 );
 
-    
+
     /**
      * Render a form element
      *

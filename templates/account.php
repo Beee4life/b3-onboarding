@@ -21,6 +21,7 @@
 
     <form id="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
         <?php do_action( 'b3_before_account', $attributes, $current_user_object ); ?>
+        <?php do_action( 'b3_do_before_account', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'account/hidden-fields', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'account/user-id', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'general/email', $attributes, $current_user_object ); ?>
@@ -28,6 +29,6 @@
         <?php do_action( 'b3_render_form_element', 'account/password', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'account/user-delete', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'general/button', $attributes, $current_user_object ); ?>
-        <?php do_action( 'b3_after_account', $attributes, $current_user_object ); ?>
+        <?php do_action( 'b3_do_after_account', $attributes, $current_user_object ); ?>
     </form>
 </div>
