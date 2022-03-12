@@ -19,7 +19,7 @@
         <?php echo sprintf( '<p class="b3_message">%s</p>', esc_html__( 'Profile saved', 'b3-onboarding' ) ); ?>
     <?php } ?>
 
-    <form id="accountform" action="<?php echo get_the_permalink( get_the_ID() ); ?>" method="post">
+    <form id="accountform" action="<?php echo b3_get_account_url(); ?>" method="post">
         <?php do_action( 'b3_before_account', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_do_before_account', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'account/hidden-fields', $attributes, $current_user_object ); ?>
