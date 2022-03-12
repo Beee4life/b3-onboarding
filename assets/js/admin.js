@@ -24,72 +24,36 @@
             }
         });
 
-        var $validation_note = '.b3_settings-input-description--validation';
         $('#b3_activate_filter_validation').change(function() {
-            if (document.getElementById('b3_activate_filter_validation').checked) {
-                $($validation_note).removeClass('hidden');
-            } else {
-                $($validation_note).addClass('hidden');
-            }
+            $('.b3_settings-input-description--validation').toggle();
         });
 
-        var $register_email_only = '.b3-name-fields';
         $('#b3_register_email_only').change(function() {
-            if (document.getElementById('b3_register_email_only').checked) {
-                $($register_email_only).addClass('hidden');
-            } else {
-                $($register_email_only).removeClass('hidden');
-            }
+            $('.b3-name-fields').toggle();
         });
 
-        var $first_last = '.b3_settings-field--first-last-required';
         $('#b3_activate_first_last').change(function() {
-            if (document.getElementById('b3_activate_first_last').checked) {
-                $($first_last).removeClass('hidden');
-            } else {
-                $($first_last).addClass('hidden');
-            }
+            $('.b3_settings-field--first-last-required').toggle();
         });
 
-        var $privacy_fields = '.b3_settings-field--privacy';
         $('#b3_privacy').change(function() {
-            if (document.getElementById('b3_privacy').checked) {
-                $($privacy_fields).removeClass('hidden');
-            } else {
-                $($privacy_fields).addClass('hidden');
-            }
+            $('.b3_settings-field--privacy').toggle();
         });
 
-        var $recaptcha_info = '.b3_settings-input-description--recaptcha';
         $('#b3_activate_recaptcha').change(function() {
-            if (document.getElementById('b3_activate_recaptcha').checked) {
-                $($recaptcha_info).removeClass('hidden');
-            } else {
-                $($recaptcha_info).addClass('hidden');
-            }
+            $('.b3_settings-input-description--recaptcha').toggle();
         });
 
-        var $custom_email_styling  = '.metabox-handler--email_styling';
-        var $custom_email_template = '.metabox-handler--email_template';
         $('#b3_activate_custom_emails').change(function() {
-            if (document.getElementById('b3_activate_custom_emails').checked) {
-                $($custom_email_styling).removeClass('hidden');
-                $($custom_email_template).removeClass('hidden');
-            } else {
-                $($custom_email_styling).addClass('hidden');
-                $($custom_email_template).addClass('hidden');
-            }
+            $('.metabox-handler--email_styling').toggle();
+            $('.metabox-handler--email_template').toggle();
         });
 
-        var $front_end_approval = '.b3_settings-input-description--approval';
         $('#b3_activate_frontend_approval').change(function() {
-            if (document.getElementById('b3_activate_frontend_approval').checked) {
-                $($front_end_approval).removeClass('hidden');
-            } else {
-                $($front_end_approval).addClass('hidden');
-            }
+            $($front_end_approval).toggle();
         });
 
+        // @TODO: check if still used
         var $redirect_after_register = '.b3_settings-field--redirect';
         $('#b3_activate_custom_passwords').change(function() {
             if (document.getElementById('b3_activate_custom_passwords').checked) {
@@ -107,6 +71,11 @@
                 $($custom_passwords).removeClass('hidden');
             }
         });
+
+      $('#b3_domain_restrictions').change(function() {
+        $('.b3_settings-field--domain-restrictions').toggle();
+      });
+
     });
 })(jQuery);
 
