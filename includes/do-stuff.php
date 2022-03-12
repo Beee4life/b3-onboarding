@@ -440,3 +440,23 @@
 
         return $user_login;
     }
+
+
+    /**
+     * Verify domain in email
+     *
+     * @param $email
+     *
+     * @return bool
+     */
+    function b3_verify_email_domain( $email ) {
+        $disallowed_domains = get_option( 'b3_disallowed_domains' );
+        if ( get_option( 'b3_domain_restrictions' ) && $disallowed_domains ) {
+            $domain_name = substr( strrchr( $email, '@' ), 1 );
+            if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
+                return false;
+            }
+        }
+
+        return true;
+    }

@@ -727,3 +727,28 @@ All at ###SITENAME###
         return $user;
     }
     add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );
+
+
+    /**
+     * Filter for banned domains in email validation MU signup
+     *
+     * @param $result
+     *
+     * @return array
+     */
+    function b3_check_domain_user_email( $result ) {
+        if ( get_option( 'b3_domain_restrictions' ) ) {
+            $email         = $result[ 'user_email' ];
+            $verify_domain = b3_verify_email_domain( $email );
+
+            if ( false === $verify_domain ) {
+                $new_errors = new WP_Error();
+                $new_errors->add( 'error_banned_domain', esc_html__( "We're sorry, that domain is blocked from registering.", 'b3-onboarding' ) );
+
+                $result[ 'errors' ][] = $new_errors;
+            }
+        }
+
+        return $result;
+    }
+    add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );

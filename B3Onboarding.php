@@ -729,8 +729,11 @@
             public function b3_get_return_message( $error_code, $sprintf = false ) {
 
                 switch( $error_code ) {
+                    case 'banned_domain':
+                        return esc_html__( 'This domain is not allowed to register.', 'b3-onboarding' );
+
                     case 'empty_username':
-                        return esc_html__( 'Please enter a user name', 'b3-onboarding' );
+                        return esc_html__( 'Please enter a user name.', 'b3-onboarding' );
 
                     case 'empty_password':
                         return esc_html__( 'Please enter a password.', 'b3-onboarding' );
@@ -947,6 +950,14 @@
 
                 if ( ! is_email( $user_email ) ) {
                     $errors->add( 'invalid_email', $this->b3_get_return_message( 'invalid_email' ) );
+
+                    return $errors;
+                }
+
+                // check if domain restrictions are active
+                $verify_domain = b3_verify_email_domain( $user_email );
+                if ( false === $verify_domain ) {
+                    $errors->add( 'banned_domain', $this->b3_get_return_message( 'banned_domain' ) );
 
                     return $errors;
                 }
