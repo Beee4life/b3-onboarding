@@ -24,7 +24,7 @@
 
     <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
         <?php
-            do_action( 'b3_add_hidden_fields_registration' );
+            do_action( 'b3_add_hidden_fields_registration', $attributes );
 
             if ( 'blog' != $attributes[ 'registration_type' ] ) {
                 do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
