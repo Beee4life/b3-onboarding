@@ -72,9 +72,13 @@
             }
         });
 
-      $('#b3_domain_restrictions').change(function() {
-        $('.b3_settings-field--domain-restrictions').toggle();
-      });
+        $('#b3_domain_restrictions').change(function () {
+            $('.b3_settings-field--domain-restrictions').toggle();
+        });
+
+        $('#b3_activate_welcome_page').change(function () {
+            $('.b3_settings-input-description--welcome').toggle();
+        });
 
     });
 })(jQuery);

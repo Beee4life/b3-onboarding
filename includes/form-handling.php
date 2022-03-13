@@ -529,6 +529,12 @@
                     delete_option( 'b3_disable_action_links' );
                 }
 
+                if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == $_POST[ 'b3_activate_welcome_page' ] ) {
+                    update_option( 'b3_activate_welcome_page', 1 );
+                } else {
+                    delete_option( 'b3_activate_welcome_page' );
+                }
+
                 if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {
                     update_option( 'b3_use_popup', 1 );
                 } else {

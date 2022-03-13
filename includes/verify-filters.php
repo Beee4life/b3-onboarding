@@ -69,6 +69,9 @@
             'b3_wpmu_activate_user_subject'            => array( 'string' ),
             'b3_wpmu_user_activated_message'           => array( 'string' ),
             'b3_wpmu_user_activated_subject'           => array( 'string' ),
+            
+            // @TODO: add
+            'b3_welcome_page' => array( 'int', 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {
