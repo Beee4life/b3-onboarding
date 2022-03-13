@@ -402,8 +402,6 @@
     /**
      * Check if a remote file exists
      *
-     * @TODO: look into using wp_remote_get
-     *
      * @since 2.0.0
      *
      * @link: https://stackoverflow.com/a/7051633/8275339
@@ -413,14 +411,7 @@
      * @return bool
      */
     function b3_check_remote_file( $url ) {
-        $ch = curl_init();
-        curl_setopt( $ch, CURLOPT_URL, $url );
-        curl_setopt( $ch, CURLOPT_NOBODY, 1 );
-        curl_setopt( $ch, CURLOPT_FAILONERROR, 1 );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-        $result = curl_exec( $ch );
-        curl_close( $ch );
-        if ( $result !== false ) {
+        if ( 200 == wp_remote_retrieve_response_code( wp_remote_get( $url ) ) ) {
             return true;
         } else {
             return false;
