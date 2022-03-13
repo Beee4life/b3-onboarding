@@ -146,12 +146,13 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.2.0 - 06.03.22
+3.2.0 - xx.03.22
 * added development notice filter
 * extended more filters to preview
 * implemented checked/selected functions
 * added color picker for link color
 * added new hook before/after account page
+* rebuild template files with more hooks/separate files
 
 3.1.0 - 06.03.22
 * improved multisite functions
