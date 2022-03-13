@@ -9,7 +9,7 @@
         wp_safe_redirect( $redirect_url );
         exit;
     }
-    add_action( 'wp_logout', 'b3_redirect_after_logout' );
+    add_action( 'wp_logout', 'b3_redirect_after_logout', 1 );
 
 
     /**

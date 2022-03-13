@@ -28,7 +28,7 @@
             'b3_extra_fields'                          => array( 'array', 'extra' ),
             'b3_extra_fields_validation'               => array( 'array' ),
             'b3_hidden_fields'                         => array( 'array', 'hidden' ),
-            'b3_hide_development_notice'               => array( 'string' ),
+            'b3_hide_development_notice'               => array( 'bool' ),
             'b3_link_color'                            => array( 'hex_color' ),
             'b3_localhost'                             => array( 'bool' ),
             'b3_localhost_email'                       => array( 'email' ),
@@ -69,6 +69,9 @@
             'b3_wpmu_activate_user_subject'            => array( 'string' ),
             'b3_wpmu_user_activated_message'           => array( 'string' ),
             'b3_wpmu_user_activated_subject'           => array( 'string' ),
+            
+            // @TODO: add
+            'b3_welcome_page' => array( 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {
@@ -90,6 +93,10 @@
                         $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not a string or an array.', 'b3-onboarding' ), $filter );
                     }
 
+                } elseif ( in_array( 'int', $validation ) ) {
+                    if ( ! is_int( $filter_output ) ) {
+                        $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not an integer.', 'b3-onboarding' ), $filter );
+                    }
                 } elseif ( in_array( 'url', $validation ) ) {
                     if ( filter_var( $filter_output, FILTER_VALIDATE_URL ) === false ) {
                         $error_messages[] = sprintf( esc_html__( 'The url, which you set in the filter "%s", is not a valid url.', 'b3-onboarding' ), $filter );
@@ -111,54 +118,65 @@
                     }
 
                 } elseif ( in_array( 'array', $validation ) ) {
-                    if ( ! is_array( $filter_output ) ) {
-                        $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not an array.', 'b3-onboarding' ), $filter );
-                    } elseif ( empty( $filter_output ) ) {
-                        $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is an empty array.', 'b3-onboarding' ), $filter );
-                    } else {
-                        if ( in_array( 'hidden', $validation ) ) {
-                            foreach( $filter_output as $key => $value ) {
-                                if ( ! is_string( $key ) ) {
-                                    $error_messages[] = sprintf( esc_html__( 'The field ID "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
-                                }
-                                if ( ! is_string( $value ) ) {
-                                    $error_messages[] = sprintf( esc_html__( 'The field value "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
-                                }
+                    if ( 'b3_extra_fields_validation' == $filter ) {
+                        $extra_fields = apply_filters( 'b3_extra_fields', [] );
+                        if ( ! empty( $extra_fields ) && ! empty( $filter_output ) ) {
+                            if ( ! is_array( $filter_output ) ) {
+                                $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not an array.', 'b3-onboarding' ), $filter );
+                            } else {
+                                $error_messages[] = sprintf( esc_html__( 'There are 1 or more errors in the filter "%s".', 'b3-onboarding' ), $filter );
                             }
-                        } elseif ( in_array( 'extra', $validation ) ) {
-                            foreach( $filter_output as $field ) {
-                                if ( ! isset( $field[ 'type' ] ) ) {
-                                    if ( isset( $field[ 'label' ] ) || isset( $field[ 'id' ] ) ) {
-                                        if ( isset( $field[ 'label' ] ) ) {
-                                            $replace = $field[ 'label' ];
-                                        } elseif ( isset( $field[ 'id' ] ) ) {
-                                            $replace = $field[ 'id' ];
+                        }
+                    } else {
+                        if ( ! is_array( $filter_output ) ) {
+                            $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not an array.', 'b3-onboarding' ), $filter );
+                        } elseif ( empty( $filter_output ) ) {
+                            $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is an empty array.', 'b3-onboarding' ), $filter );
+                        } else {
+                            if ( in_array( 'hidden', $validation ) ) {
+                                foreach( $filter_output as $key => $value ) {
+                                    if ( ! is_string( $key ) ) {
+                                        $error_messages[] = sprintf( esc_html__( 'The field ID "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
+                                    }
+                                    if ( ! is_string( $value ) ) {
+                                        $error_messages[] = sprintf( esc_html__( 'The field value "%s", which you set in the filter "%s", is not a string.', 'b3-onboarding' ), $key, $filter );
+                                    }
+                                }
+                            } elseif ( in_array( 'extra', $validation ) ) {
+                                foreach( $filter_output as $field ) {
+                                    if ( ! isset( $field[ 'type' ] ) ) {
+                                        if ( isset( $field[ 'label' ] ) || isset( $field[ 'id' ] ) ) {
+                                            if ( isset( $field[ 'label' ] ) ) {
+                                                $replace = $field[ 'label' ];
+                                            } elseif ( isset( $field[ 'id' ] ) ) {
+                                                $replace = $field[ 'id' ];
+                                            }
+                                            $error_messages[] = sprintf( esc_html__( 'You didn\'t set a field type for "%s".', 'b3-onboarding' ), $replace );
+                                        } else {
+                                            $error_messages[] = esc_html__( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
                                         }
-                                        $error_messages[] = sprintf( esc_html__( 'You didn\'t set a field type for "%s".', 'b3-onboarding' ), $replace );
                                     } else {
-                                        $error_messages[] = esc_html__( 'You didn\'t set a field type for one of your fields.', 'b3-onboarding' );
-                                    }
-                                } else {
-                                    if ( ! isset( $field[ 'label' ] ) && isset( $field[ 'id' ] ) ) {
-                                        $error_messages[] = sprintf( esc_html__( 'A label for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'id' ], $filter );
-                                    }
-                                    if ( ! isset( $field[ 'id' ] ) && isset( $field[ 'label' ] ) ) {
-                                        $error_messages[] = sprintf( esc_html__( 'An ID for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'label' ], $filter );
-                                    }
-                                    if ( ! isset( $field[ 'id' ] ) && ! isset( $field[ 'label' ] ) ) {
-                                        $error_messages[] = sprintf( esc_html__( 'An ID and label for your option in the filter "%s" is required.', 'b3-onboarding' ), $filter );
-                                    }
-                                    if ( in_array( $field[ 'type' ], [ 'checkbox', 'radio', 'select' ] ) ) {
-                                        if ( ! isset( $field[ 'options' ] ) ) {
-                                            if ( isset( $field[ 'label' ] ) || isset( $field[ 'id' ] ) ) {
-                                                if ( isset( $field[ 'label' ] ) ) {
-                                                    $replace = $field[ 'label' ];
-                                                } elseif ( isset( $field[ 'id' ] ) ) {
-                                                    $replace = $field[ 'id' ];
+                                        if ( ! isset( $field[ 'label' ] ) && isset( $field[ 'id' ] ) ) {
+                                            $error_messages[] = sprintf( esc_html__( 'A label for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'id' ], $filter );
+                                        }
+                                        if ( ! isset( $field[ 'id' ] ) && isset( $field[ 'label' ] ) ) {
+                                            $error_messages[] = sprintf( esc_html__( 'An ID for the field "%s" in the filter "%s" is required.', 'b3-onboarding' ), $field[ 'label' ], $filter );
+                                        }
+                                        if ( ! isset( $field[ 'id' ] ) && ! isset( $field[ 'label' ] ) ) {
+                                            $error_messages[] = sprintf( esc_html__( 'An ID and label for your option in the filter "%s" is required.', 'b3-onboarding' ), $filter );
+                                        }
+                                        if ( in_array( $field[ 'type' ], [ 'checkbox', 'radio', 'select' ] ) ) {
+                                            if ( ! isset( $field[ 'options' ] ) ) {
+                                                if ( isset( $field[ 'label' ] ) || isset( $field[ 'id' ] ) ) {
+                                                    if ( isset( $field[ 'label' ] ) ) {
+                                                        $replace = $field[ 'label' ];
+                                                    } elseif ( isset( $field[ 'id' ] ) ) {
+                                                        $replace = $field[ 'id' ];
+                                                    }
+                                                    $error_messages[] = sprintf( esc_html__( 'You didn\'t set any options for the field "%s".', 'b3-onboarding' ), $replace );
+                                                } else {
+                                                    $error_messages[] = esc_html__( "You didn't set a field type for one of your fields.", 'b3-onboarding' );
                                                 }
-                                                $error_messages[] = sprintf( esc_html__( 'You didn\'t set any options for the field "%s".', 'b3-onboarding' ), $replace );
-                                            } else {
-                                                $error_messages[] = esc_html__( "You didn't set a field type for one of your fields.", 'b3-onboarding' );
                                             }
                                         }
                                     }

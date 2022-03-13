@@ -78,6 +78,7 @@
                 add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
+                add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
@@ -238,12 +239,79 @@
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                     include 'admin/user-approval-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
 
                 if ( true == get_option( 'b3_debug_info' ) || is_localhost() ) {
                     include 'admin/debug-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
+                }
+            }
+    
+    
+            /**
+             * Redirect user away from certain pages
+             */
+            public function b3_template_redirect() {
+                $account_page_id  = b3_get_account_url( true );
+                $account_url      = b3_get_account_url();
+                $approval_page_id = b3_get_user_approval_link( true );
+                $current_url      = b3_get_current_url();
+                $login_page_id    = b3_get_login_url( true );
+                $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
+                $logout_page_id   = b3_get_logout_url( true );
+        
+                if ( is_page() ) {
+                    $current_page = get_post( get_the_ID() );
+                    if ( false != $account_page_id ) {
+                        if ( ! is_user_logged_in() && ( $account_page_id == $current_page->ID || $account_page_id == $current_page->post_parent ) ) {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
+                            $redirect_url = $login_url;
+                        }
+                    }
+            
+                    if ( false != $approval_page_id && $current_page->ID == $approval_page_id ) {
+                        if ( is_user_logged_in() ) {
+                            if ( ! current_user_can( 'promote_users' ) ) {
+                                $redirect_url = $account_url;
+                            }
+                        } else {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
+                            $redirect_url = $login_url;
+                        }
+                    }
+            
+                    if ( false != $logout_page_id && $current_page->ID == $logout_page_id ) {
+                        check_admin_referer( 'logout' );
+                
+                        $user = wp_get_current_user();
+                        wp_logout();
+                
+                        if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
+                            $redirect_to           = $_REQUEST[ 'redirect_to' ];
+                            $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
+                        } else {
+                            $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
+                            $requested_redirect_to = '';
+                        }
+                
+                        $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
+                    }
+            
+                    if ( is_home() || is_front_page() ) {
+                        if ( isset( $_REQUEST[ 'logout' ] ) ) {
+                            check_admin_referer( 'logout' );
+                            $user = wp_get_current_user();
+                            wp_logout();
+                            $redirect_to  = home_url();
+                            $redirect_url = apply_filters( 'logout_redirect', $redirect_to, '', $user );
+                        }
+                    }
+                }
+        
+                if ( isset( $redirect_url ) ) {
+                    wp_safe_redirect( $redirect_url );
+                    exit;
                 }
             }
 

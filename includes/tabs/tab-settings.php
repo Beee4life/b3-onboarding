@@ -12,6 +12,7 @@
     }
 
     function b3_render_settings_tab() {
+        $activate_welcome_page      = get_option( 'b3_activate_welcome_page' );
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
         $disable_action_links       = get_option( 'b3_disable_action_links' );
         $debug_info                 = get_option( 'b3_debug_info' );
@@ -42,6 +43,19 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/> <?php esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' ); ?>
+                    </div>
+                <?php b3_get_close(); ?>
+
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_activate_welcome_page"><?php esc_html_e( 'Welcome page', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/> <?php esc_html_e( "Check this box to redirect the user to a 'welcome' page after his first login.", 'b3-onboarding' ); ?>
+                        <?php $hide_welcome_page_note = ( 1 == $activate_welcome_page ) ? false : ' hidden'; ?>
+                        <div class="b3_settings-input-description b3_settings-input-description--welcome<?php echo $hide_welcome_page_note; ?>">
+                            <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '#', esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
+                        </div>
                     </div>
                 <?php b3_get_close(); ?>
 
