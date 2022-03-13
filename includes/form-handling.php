@@ -434,18 +434,19 @@
                     }
                 }
 
-                if ( isset( $_POST[ 'b3_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_domain_restrictions' ] ) ) {
-                    update_option( 'b3_domain_restrictions', $_POST[ 'b3_domain_restrictions' ] );
-                } else {
-                    delete_option( 'b3_domain_restrictions' );
-                }
-
                 if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
                     $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_domains' ] );
                     $new_value       = explode( ' ', $sanitized_value );
                     update_option( 'b3_disallowed_domains', $new_value );
                 } else {
                     delete_option( 'b3_disallowed_domains' );
+                }
+
+                if ( isset( $_POST[ 'b3_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_domain_restrictions' ] ) ) {
+                    update_option( 'b3_domain_restrictions', $_POST[ 'b3_domain_restrictions' ] );
+                } else {
+                    delete_option( 'b3_disallowed_domains' );
+                    delete_option( 'b3_domain_restrictions' );
                 }
 
                 if ( isset( $_POST[ 'b3_restrict_admin' ] ) && ! empty( $_POST[ 'b3_restrict_admin' ] ) ) {
