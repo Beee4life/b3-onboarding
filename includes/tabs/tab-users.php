@@ -80,7 +80,6 @@
                                 ?>
                                 <div>
                                     <label for="b3_restrict_<?php echo esc_attr( $name ); ?>" class="screen-reader-text"><?php echo esc_attr( $name ); ?></label>
-<!--                                    <input type="checkbox" id="b3_restrict_--><?php //echo esc_attr( $name ); ?><!--" name="b3_restrict_admin[]" value="--><?php //echo esc_attr( $name ); ?><!--" --><?php //if ( in_array( $name, $stored_roles ) ) { ?><!--checked="checked"--><?php //} ?><!-- /> --><?php //echo $values[ 'name' ]; ?>
                                     <input type="checkbox" id="b3_restrict_<?php echo esc_attr( $name ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $name ); ?>" <?php checked(in_array( $name, $stored_roles )); ?> /> <?php echo $values[ 'name' ]; ?>
                                 </div>
                                 <?php
