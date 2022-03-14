@@ -119,7 +119,7 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'none' ] ) ) ? true : false; ?>
-                        <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
+                        <?php b3_get_settings_field_open( false, $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
@@ -142,7 +142,7 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_first_last_required = ( 1 == $first_last ) ? false : true; ?>
-                        <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
+                        <?php b3_get_settings_field_open( false, $hide_first_last_required, 'first-last-required' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
@@ -154,7 +154,7 @@
 
                     <?php if ( 'open' == $registration_type ) { ?>
                         <?php $hide_redirect_field = ( 1 == $custom_passwords ) ? true : false; ?>
-                        <?php b3_get_settings_field_open( $hide_redirect_field, 'redirect' ); ?>
+                        <?php b3_get_settings_field_open( false, $hide_redirect_field, 'redirect' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
@@ -220,7 +220,7 @@
                     <?php b3_get_close(); ?>
 
                     <?php $hide_privacy_settings = ( 1 == $privacy ) ? false : true; ?>
-                    <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
+                    <?php b3_get_settings_field_open( false, $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
@@ -230,7 +230,7 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
+                    <?php b3_get_settings_field_open( false, $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_page_id"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
