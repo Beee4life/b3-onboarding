@@ -10,7 +10,7 @@
             <div class="password-input user-pass1-wrap">
                 <!-- Workaround : https://core.trac.wordpress.org/ticket/24364 -->
                 <input class="hidden" value=" " />
-                <button type="button" class="button button-secondary button--small wp-generate-pw hide-if-no-js"><?php esc_attr_e( 'Change password', 'b3-onboarding' ); ?></button>
+                <button type="button" class="button button-secondary button--password wp-generate-pw hide-if-no-js"><?php esc_attr_e( 'Change password', 'b3-onboarding' ); ?></button>
                 <div class="wp-pwd hide-if-js">
                     <label class="b3_form-label" for="pass1">
                         <?php esc_attr_e( 'New password', 'b3-onboarding' ); ?>
