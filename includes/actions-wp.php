@@ -270,6 +270,8 @@
      * @param $requested_redirect_to
      * @param $user
      *
+     * @since 3.2.1
+     *
      * @return string
      */
     function b3_redirect_to_welcome( $redirect_to, $requested_redirect_to, $user ) {
