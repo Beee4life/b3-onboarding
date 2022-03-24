@@ -96,6 +96,9 @@
             'b3_welcome_user_subject',
             'b3_welcome_user_message_manual',
             'b3ob_version',
+            // check
+            'b3_domain_restrictions',
+            'b3_disallowed_domains',
         );
 
         return $meta_keys;

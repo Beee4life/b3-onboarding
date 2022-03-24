@@ -14,7 +14,8 @@
     function b3_render_emails_tab() {
         $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
-        $link_color             = get_option( 'b3_link_color' );
+        $filter_link_color      = apply_filters( 'b3_link_color', false );
+        $link_color             = apply_filters( 'b3_link_color', get_option( 'b3_link_color' ) );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
 
         ob_start();
@@ -40,7 +41,7 @@
                         <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php if ( $activate_custom_emails ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php checked($activate_custom_emails); ?>/> <?php esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -49,7 +50,7 @@
                         <label for="b3_logo_in_email"><?php esc_html_e( 'Add logo in email', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php if ( $logo_in_email ) { ?>checked="checked"<?php } ?>/> <?php esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/> <?php esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -57,7 +58,10 @@
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-                    <input name="b3_link_color" id="b3_link_color" type="text" value="<?php echo esc_attr( $link_color ); ?>" placeholder="#FF0000"> <?php esc_html_e( 'Must be a hex value of 3 or 6 characters (with hashtag)', 'b3-onboarding' ); ?>
+                    <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
+                <?php if ( $filter_link_color ) { ?>
+                    <?php esc_html_e( "You've set a filter to override the link color.", 'b3-onboarding' ); ?>
+                <?php } ?>
                 <?php b3_get_close(); ?>
             <?php } ?>
 

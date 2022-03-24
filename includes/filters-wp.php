@@ -296,55 +296,6 @@
 
 
     /**
-     * Check for errors on WordPress' own registration form
-     *
-     * @TODO: do still need this because they should be disabled ?
-     *
-     * @since 1.0.0
-     *
-     * @param $errors
-     * @param $sanitized_user_login
-     * @param $user_email
-     *
-     * @return mixed
-     */
-    function b3_registration_errors( $errors, $sanitized_user_login, $user_email ) {
-        error_log( 'wp registration errors' );
-        if ( 1 == get_option( 'b3_first_last_required' ) ) {
-            if ( empty( $_POST[ 'first_name' ] ) || ! empty( $_POST[ 'first_name' ] ) && trim( $_POST[ 'first_name' ] ) == '' ) {
-                $errors->add( 'first_name_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'You must include a first name.', 'b3-onboarding' ) ) );
-            }
-
-            if ( empty( $_POST[ 'last_name' ] ) || ! empty( $_POST[ 'last_name' ] ) && trim( $_POST[ 'last_name' ] ) == '' ) {
-                $errors->add( 'last_name_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'You must include a last name.', 'b3-onboarding' ) ) );
-            }
-        }
-
-        // @TODO: check on MS
-        if ( 1 == get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
-            $errors->add( 'recaptcha_error', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'Recaptcha failed.', 'b3-onboarding' ) ) );
-        }
-
-        $extra_field_errors = apply_filters( 'b3_extra_fields_validation', [] );
-        if ( ! empty( $extra_field_errors ) ) {
-            $errors->add( $extra_field_errors[ 'error_code' ], $extra_field_errors[ 'error_message' ] );
-            $errors->add( 'field_' . $extra_field_errors[ 'id' ], '' );
-
-            return $errors;
-        }
-
-        if ( ! b3_verify_privacy() ) {
-            $errors->add( 'no_privacy', sprintf( '<strong>%s</strong>: %s', esc_html__( 'ERROR', 'b3-onboarding' ), esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' ) ) );
-
-            return $errors;
-        }
-
-        return $errors;
-    }
-    add_filter( 'registration_errors', 'b3_registration_errors', 10, 3 );
-
-
-    /**
      * Add post states for B3 pages
      *
      * @since 1.0.6
@@ -776,3 +727,28 @@ All at ###SITENAME###
         return $user;
     }
     add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );
+
+
+    /**
+     * Filter for banned domains in email validation MU signup
+     *
+     * @param $result
+     *
+     * @return array
+     */
+    function b3_check_domain_user_email( $result ) {
+        if ( get_option( 'b3_domain_restrictions' ) ) {
+            $email         = $result[ 'user_email' ];
+            $verify_domain = b3_verify_email_domain( $email );
+
+            if ( false === $verify_domain ) {
+                $new_errors = new WP_Error();
+                $new_errors->add( 'error_banned_domain', esc_html__( "We're sorry, that domain is blocked from registering.", 'b3-onboarding' ) );
+
+                $result[ 'errors' ][] = $new_errors;
+            }
+        }
+
+        return $result;
+    }
+    add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );

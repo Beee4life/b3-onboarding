@@ -14,7 +14,6 @@
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields' );
     }
-    add_action( 'register_form', 'b3_add_registration_fields' );
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
 
 
@@ -255,3 +254,32 @@
         }
     }
     add_action( 'network_admin_notices', 'b3_network_admin_notices' );
+    
+    
+    /**
+     * Redirect to login page after welcome
+     *
+     * @param $redirect_to
+     * @param $requested_redirect_to
+     * @param $user
+     *
+     * @return string
+     */
+    function b3_redirect_to_welcome( $redirect_to, $requested_redirect_to, $user ) {
+    
+        $redirect_url = $redirect_to;
+        $welcome_page = apply_filters( 'b3_welcome_page', false );
+
+        if ( $welcome_page && false == get_user_meta( $user->ID, 'b3_welcome_page_seen', true ) ) {
+            update_user_meta( $user->ID, 'b3_welcome_page_seen', true );
+            $redirect_url = get_the_permalink( $welcome_page );
+        } else {
+            if ( $requested_redirect_to ) {
+                // redirect url is set
+                $redirect_url = $requested_redirect_to;
+            }
+        }
+        
+        return $redirect_url;
+    }
+    add_filter( 'login_redirect', 'b3_redirect_to_welcome' , 11, 3 );

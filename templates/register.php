@@ -10,19 +10,21 @@
     }
 
     do_action( 'b3_add_form_messages', $attributes );
+    
+    if ( ! is_multisite() && 'request_access' == $attributes[ 'registration_type' ] ) {
+        $submit_label = esc_attr__( 'Request access', 'b3-onboarding' );
+    } else {
+        $submit_label = esc_attr__( 'Register', 'b3-onboarding' );
+    }
 
-    $activate_recaptcha = ( isset( $attributes[ 'recaptcha' ] ) ) ? true : false;
-    $recaptcha_version  = ( false != $activate_recaptcha ) ? $attributes[ 'recaptcha' ][ 'version' ] : false;
     if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != $_REQUEST[ 'registered' ] ) {
 ?>
 <div id="b3-register" class="b3_page b3_page--register">
-    <?php if ( $attributes[ 'title' ] ) { ?>
-        <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
-    <?php } ?>
+    <?php echo ( isset( $attributes[ 'title' ] ) ) ? sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ) : false; ?>
 
     <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
         <?php
-            do_action( 'b3_add_hidden_fields_registration' );
+            do_action( 'b3_add_hidden_fields_registration', $attributes );
 
             if ( 'blog' != $attributes[ 'registration_type' ] ) {
                 do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
@@ -39,17 +41,7 @@
         ?>
 
         <div class="b3_form-element b3_form-element--submit">
-            <?php if ( ! is_multisite() && 'request_access' == $attributes[ 'registration_type' ] ) { ?>
-                <?php $submit_label = esc_attr__( 'Request access', 'b3-onboarding' ); ?>
-            <?php } else { ?>
-                <?php $submit_label = esc_attr__( 'Register', 'b3-onboarding' ); ?>
-            <?php } ?>
-
-            <?php if ( $activate_recaptcha && 3 == $recaptcha_version ) { ?>
-                <?php echo sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_label ) ); ?>
-            <?php } else { ?>
-                <?php echo sprintf( '<input type="submit" class="button" value="%s" />', esc_attr( $submit_label ) ); ?>
-            <?php } ?>
+            <?php b3_get_submit_button( $submit_label, 'register', $attributes ); ?>
         </div>
 
         <?php do_action( 'b3_do_after_submit_registration_form' ); ?>

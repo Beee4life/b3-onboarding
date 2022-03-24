@@ -16,6 +16,6 @@
         }
 
         echo '<div class="wrap b3 b3__admin">';
-        echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html__( 'User approval', 'b3-onboarding' ) );
+        echo sprintf( '<h1 id="b3__admin-title">%s</h1>', get_admin_page_title() );
         echo do_shortcode( '[user-management]' );
     }

@@ -3,9 +3,9 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.1.0
+    Version:            3.2.0
     Requires at least:  4.3
-    Tested up to:       5.9.1
+    Tested up to:       5.9.2
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -59,7 +59,7 @@
 
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '3.1.0',
+                    'version' => '3.2.0',
                 );
             }
 
@@ -78,6 +78,7 @@
                 add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
+                add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
                 add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
                 add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
@@ -238,12 +239,79 @@
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                     include 'admin/user-approval-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
 
                 if ( true == get_option( 'b3_debug_info' ) || is_localhost() ) {
                     include 'admin/debug-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
+                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
+                }
+            }
+    
+    
+            /**
+             * Redirect user away from certain pages
+             */
+            public function b3_template_redirect() {
+                $account_page_id  = b3_get_account_url( true );
+                $account_url      = b3_get_account_url();
+                $approval_page_id = b3_get_user_approval_link( true );
+                $current_url      = b3_get_current_url();
+                $login_page_id    = b3_get_login_url( true );
+                $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
+                $logout_page_id   = b3_get_logout_url( true );
+        
+                if ( is_page() ) {
+                    $current_page = get_post( get_the_ID() );
+                    if ( false != $account_page_id ) {
+                        if ( ! is_user_logged_in() && ( $account_page_id == $current_page->ID || $account_page_id == $current_page->post_parent ) ) {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
+                            $redirect_url = $login_url;
+                        }
+                    }
+            
+                    if ( false != $approval_page_id && $current_page->ID == $approval_page_id ) {
+                        if ( is_user_logged_in() ) {
+                            if ( ! current_user_can( 'promote_users' ) ) {
+                                $redirect_url = $account_url;
+                            }
+                        } else {
+                            $login_url    = add_query_arg( 'redirect_to', urlencode( $current_url ), $login_url );
+                            $redirect_url = $login_url;
+                        }
+                    }
+            
+                    if ( false != $logout_page_id && $current_page->ID == $logout_page_id ) {
+                        check_admin_referer( 'logout' );
+                
+                        $user = wp_get_current_user();
+                        wp_logout();
+                
+                        if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
+                            $redirect_to           = $_REQUEST[ 'redirect_to' ];
+                            $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
+                        } else {
+                            $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
+                            $requested_redirect_to = '';
+                        }
+                
+                        $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
+                    }
+            
+                    if ( is_home() || is_front_page() ) {
+                        if ( isset( $_REQUEST[ 'logout' ] ) ) {
+                            check_admin_referer( 'logout' );
+                            $user = wp_get_current_user();
+                            wp_logout();
+                            $redirect_to  = home_url();
+                            $redirect_url = apply_filters( 'logout_redirect', $redirect_to, '', $user );
+                        }
+                    }
+                }
+        
+                if ( isset( $redirect_url ) ) {
+                    wp_safe_redirect( $redirect_url );
+                    exit;
                 }
             }
 
@@ -729,8 +797,11 @@
             public function b3_get_return_message( $error_code, $sprintf = false ) {
 
                 switch( $error_code ) {
+                    case 'banned_domain':
+                        return esc_html__( 'This domain is not allowed to register.', 'b3-onboarding' );
+
                     case 'empty_username':
-                        return esc_html__( 'Please enter a user name', 'b3-onboarding' );
+                        return esc_html__( 'Please enter a user name.', 'b3-onboarding' );
 
                     case 'empty_password':
                         return esc_html__( 'Please enter a password.', 'b3-onboarding' );
@@ -951,6 +1022,14 @@
                     return $errors;
                 }
 
+                // check if domain restrictions are active
+                $verify_domain = b3_verify_email_domain( $user_email );
+                if ( false === $verify_domain ) {
+                    $errors->add( 'banned_domain', $this->b3_get_return_message( 'banned_domain' ) );
+
+                    return $errors;
+                }
+
                 if ( username_exists( $user_email ) || email_exists( $user_email ) ) {
                     $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
 
@@ -1091,13 +1170,7 @@
                         B3_PLUGIN_PATH . '/templates/',
                     );
                 } else {
-                    $template_paths = array(
-                        get_stylesheet_directory() . '/b3-onboarding/',
-                        get_stylesheet_directory() . '/plugins/b3-onboarding/',
-                        get_template_directory() . '/b3-onboarding/',
-                        get_template_directory() . '/plugins/b3-onboarding/',
-                        B3_PLUGIN_PATH . '/templates/',
-                    );
+                    $template_paths = b3_get_template_paths();
                 }
                 foreach( $template_paths as $possible_location ) {
                     if ( file_exists( $possible_location . $template_name . '.php' )) {
@@ -1107,11 +1180,10 @@
                 }
 
                 ob_start();
-                do_action( 'b3_do_before_' . $template_name );
+                do_action( 'b3_do_before_template', $template_name );
                 include $location . $template_name . '.php';
-                do_action( 'b3_do_after_' . $template_name );
-                $html = ob_get_contents();
-                ob_end_clean();
+                do_action( 'b3_do_after_template', $template_name );
+                $html = ob_get_clean();
 
                 return $html;
             }
@@ -1130,20 +1202,20 @@
                 ];
 
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
-                    if ( strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
-                        $message = sprintf( esc_html__( "You're using a beta version of %s, which is not released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnbOarding' );
-                        if ( is_localhost() ) {
-                            echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $message );
-                        } else {
-                            echo sprintf( '<div class="error"><p>%s</p></div>', $message );
-                        }
-                    } else {
-                        if ( 'none' != get_option( 'b3_registration_type' ) ) {
-                            if ( false == get_option( 'b3_register_page_id' ) ) {
-                                $message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                                echo sprintf( '<div class="error"><p>%s</p></div>', $message );
-                            }
-                        }
+                    if ( strpos( $this->settings[ 'version' ], 'dev' ) !== false || strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
+                        $show_warning = true;
+                    }
+                    if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) ) {
+                        $show_error = true;
+                    }
+                    if ( isset( $show_error ) && $show_error ) {
+                        $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                        echo sprintf( '<div class="error"><p>%s</p></div>', $error_message );
+                    }
+                    if ( isset( $show_warning ) && $show_warning ) {
+                        $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
+                        $notice = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
+                        echo apply_filters( 'b3_hide_development_notice', $notice );
                     }
                 }
 

@@ -175,24 +175,6 @@
 
                 if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
                     $color = $_POST[ 'b3_link_color' ];
-                    if ( '#' == substr( $_POST[ 'b3_link_color' ], 0, 1 ) ) {
-                        if ( empty( sanitize_hex_color( $color ) ) ) {
-                            $error_message = esc_html__( 'The length of your hex color is incorrect.', 'b3-onboarding' );
-                            $return_error  = true;
-                        }
-                    } else {
-                        // @TODO: add verification for rgba, hsl, rgb
-                        $error_message = esc_html__( "Your hex color is incorrect, it's missing a hashtag (#).", 'b3-onboarding' );
-                        if ( empty( sanitize_hex_color_no_hash( $color ) ) ) {
-                            $error_message = esc_html__( "Your hex color is incorrect, it's missing a hashtag (#) and the color value is incorrect.", 'b3-onboarding' );
-                        }
-                        $return_error  = true;
-                    }
-                    if ( isset( $return_error ) && true === $return_error ) {
-                        B3Onboarding::b3_errors()->add( 'error_wrong_hex_color', $error_message );
-
-                        return;
-                    }
                     update_option( 'b3_link_color', $color );
                 } else {
                     delete_option( 'b3_link_color' );
@@ -452,6 +434,21 @@
                     }
                 }
 
+                if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
+                    $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_domains' ] );
+                    $new_value       = explode( ' ', $sanitized_value );
+                    update_option( 'b3_disallowed_domains', $new_value );
+                } else {
+                    delete_option( 'b3_disallowed_domains' );
+                }
+
+                if ( isset( $_POST[ 'b3_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_domain_restrictions' ] ) ) {
+                    update_option( 'b3_domain_restrictions', $_POST[ 'b3_domain_restrictions' ] );
+                } else {
+                    delete_option( 'b3_disallowed_domains' );
+                    delete_option( 'b3_domain_restrictions' );
+                }
+
                 if ( isset( $_POST[ 'b3_restrict_admin' ] ) && ! empty( $_POST[ 'b3_restrict_admin' ] ) ) {
                     update_option( 'b3_restrict_admin', $_POST[ 'b3_restrict_admin' ] );
                 } else {
@@ -531,6 +528,12 @@
                     update_option( 'b3_disable_action_links', 1 );
                 } else {
                     delete_option( 'b3_disable_action_links' );
+                }
+
+                if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == $_POST[ 'b3_activate_welcome_page' ] ) {
+                    update_option( 'b3_activate_welcome_page', 1 );
+                } else {
+                    delete_option( 'b3_activate_welcome_page' );
                 }
 
                 if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {

@@ -159,7 +159,7 @@
             </div>
             <div class="b3_form-element b3_form-element--email">
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_email', 'dummy@email.com' ) : ''; ?>" required>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_email', false ) : ''; ?>" required>
             </div>
 
             <?php if ( 'all' == $registration_type ) { ?>
@@ -280,7 +280,7 @@
             ?>
                 <div class="b3_form-element b3_form-element--site-fields">
                     <?php
-                        if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
+                        if ( false === $register_for || 'blog' == $register_for ) {
                             $b3_message_above_new_blog = esc_html__( 'Here you can register your new site.', 'b3-onboarding' );
                             $notice = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
                             if ( false !== $notice ) {
@@ -352,18 +352,8 @@
      *
      * @since 2.0.0
      */
-    function b3_add_hidden_fields_registration() {
-        $hidden_field_values = apply_filters( 'b3_hidden_fields', array() );
-        if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
-            $hidden_fields = '';
-            foreach( $hidden_field_values as $key => $value ) {
-                $hidden_fields .= '<input type="hidden" name="' . $key . '" value="' . $value . '">' . "\n";
-            }
-            echo $hidden_fields;
-        }
-        if ( is_multisite() && 'blog' == get_option( 'b3_registration_type' ) ) {
-            echo '<input type="hidden" name="signup_for" value="blog" />';
-        }
+    function b3_add_hidden_fields_registration( $attributes ) {
+        do_action( 'b3_render_form_element', 'register/hidden-fields', $attributes );
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
 
@@ -374,13 +364,11 @@
      * @since 2.0.0
      */
     function b3_add_recaptcha_fields() {
-        $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
-        $recaptcha_public   = get_option( 'b3_recaptcha_public' );
-        $recaptcha_version  = get_option( 'b3_recaptcha_version', '2' );
 
-        if ( false != $activate_recaptcha ) {
+        if ( false != get_option( 'b3_activate_recaptcha' ) ) {
+            $recaptcha_public = get_option( 'b3_recaptcha_public' );
             if ( false != $recaptcha_public ) {
-                if ( '2' == $recaptcha_version ) {
+                if ( '2' == get_option( 'b3_recaptcha_version', '2' ) ) {
                     do_action( 'b3_do_before_recaptcha_register' );
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
@@ -699,3 +687,62 @@
         // @TODO: set pages
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );
+
+
+    /**
+     * Add before account page output
+     *
+     * @since 3.2.0
+     *
+     * @param $attributes
+     * @param $current_user
+     *
+     * @return void
+     */
+    function b3_before_account( $attributes, $current_user ) {
+        if ( is_multisite() ) {
+            $user_sites = get_blogs_of_user( $current_user->ID );
+
+            if ( ! empty( $user_sites ) ) {
+                ob_start();
+                foreach( $user_sites as $site_id => $site_info ) {
+                    $admin_url        = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
+                    $disallowed_roles = ! array_diff( $current_user->roles, get_option( 'b3_restrict_admin', [
+                        'b3_activation',
+                        'b3_approval'
+                    ] ) );
+                    $home_url         = get_home_url( $site_id );
+                    echo '<li>';
+                    $link             = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
+
+                    if ( false == $disallowed_roles ) {
+                        $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
+                    }
+                    echo $link;
+                    echo '</li>';
+                }
+                $links = ob_get_clean();
+                if ( false != $links ) {
+                    $list  = sprintf( '<ul>%s</ul>', $links );
+                    $label = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s<div class="site-links">%s</div></div>', $label, $list );
+                }
+            }
+        }
+    }
+    add_action( 'b3_before_account', 'b3_before_account', 10, 2 );
+
+
+    /**
+     * Render a form element
+     *
+     * @since 3.2.0
+     *
+     * @param $element
+     * @param array $attributes
+     * @param false $current_user_object
+     */
+    function b3_render_form_element( $element, $attributes = [], $current_user_object = false ) {
+        b3_get_template( $element, $attributes, $current_user_object);
+    }
+    add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );

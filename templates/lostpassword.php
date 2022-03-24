@@ -14,24 +14,12 @@
     do_action( 'b3_add_form_messages', $attributes );
 ?>
 <div class="b3_page b3_page--lostpass">
-    <?php if ( $attributes[ 'title' ] ) { ?>
-        <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
-    <?php } ?>
+    <?php echo ( isset( $attributes[ 'title' ] ) ) ? sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ) : false; ?>
 
-    <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
-        <input type="hidden" name="b3_form" value="lostpass" />
-        <input type="hidden" name="b3_lost_pass" value="<?php echo wp_create_nonce( 'b3-lost-pass' ); ?>" />
-        <input type="hidden" name="b3_site_id" value="<?php echo get_current_blog_id(); ?>" />
-
-        <div class="b3_form-element">
-            <label class="b3_form-label b3_form-label--email" for="b3_user_email"><?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?></label>
-            <input type="text" name="user_login" id="b3_user_email" value="<?php echo esc_attr( $localhost_email ); ?>" required>
-        </div>
-
-        <div class="b3_form-element b3_form-element--submit">
-            <input type="submit" class="button button-primary button--lostpass" value="<?php esc_attr_e( 'Reset Password', 'b3-onboarding' ); ?>"/>
-        </div>
-
+    <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--lostpass" action="<?php echo b3_get_current_url(); ?>" method="post">
+        <?php do_action( 'b3_render_form_element', 'lostpassword/hidden-fields', $attributes ); ?>
+        <?php do_action( 'b3_render_form_element', 'general/email', $attributes ); ?>
+        <?php do_action( 'b3_render_form_element', 'general/button', $attributes ); ?>
         <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
     </form>
 

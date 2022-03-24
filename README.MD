@@ -26,13 +26,13 @@ It even offers features which Wordpress doesn't even have, such as approving (or
 
 **What 'problems' does this plugin solve ?**
 
-This plugin gives you all the freedom to change/use different parts, without being forced to use other features. You can extend this plugin in any way you want with filters/hooks or through a settings page.
+No more default Wordpress forms/emails. You now have full control over them.
 
-You can now get rid of those default Wordpress forms and use your own.
+This plugin gives you all the freedom to change registration forms/emails. Also you can extend this plugin in A LOT of ways, in terms of styling, output and other things.
 
 <a name="version"></a>
 ### Version
-3.1.0 - released 0x.03.21
+3.2.0 - released 24.03.21
 
 <a name="features"></a>
 ### Features
@@ -55,6 +55,35 @@ You can now get rid of those default Wordpress forms and use your own.
 1. Copy the `b3-onboarding` folder into your `wp-content/plugins` folder.
 1. Activate the `B3 OnBoarding` plugin via the plugins admin page.
 1. (optional) Change any setting you want.
+
+If you use a composer file to add any plugins/libraries. Add the following repository to your composer.json:
+
+```
+"repositories": [
+  {
+    "type":    "package",
+    "package": {
+      "name":    "Beee4life/b3-onboarding",
+      "type":    "wordpress-plugin",
+      "version": "3.2.0",
+      "dist":    {
+        "type": "zip",
+        "url":  "https://github.com/Beee4life/b3-onboarding/archive/master.zip"
+      }
+    }
+  },
+]
+```
+
+Then run composer require "beee4life/b3-onboarding"
+
+or add this to the require section by hand:
+
+```
+"beee4life/b3-onboarding": "3.2.0",
+```
+
+and run `composer update`.
 
 <a name="activate"></a>
 ### Activation
@@ -117,7 +146,17 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.1.0
+3.2.0 - 24.03.22
+* added development notice filter
+* added option for a one-time welcome page
+* added option for banned domains
+* added color picker for link color
+* added new hook before/after account page
+* extended more filters to preview
+* implemented checked/selected functions
+* rebuild template files with more hooks/separate files
+
+3.1.0 - 06.03.22
 * improved multisite functions
 * added honeypot option
 * added reset to default option
@@ -128,13 +167,13 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * optimized user templates
 * reformatted debug info page
 
-3.0
+3.0 - 13.06.20
 * added option to request access to create a site (multisite)
 * added reCaptcha v3
 * added user input for disallowed usernames
 * a lot of MU stuff
 
-2.5.0
+2.5.0 - 03.11.20
 * improve html/css for account page
 * improve protection of pages
 * improve requested redirect url
@@ -148,40 +187,40 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * added option to disable password changed email (for user)
 * added option to register with email only
 
-2.4.0
+2.4.0 - 15.09.20
 * fix for preventing login when email/user is not confirmed yet
 * update css
 
-2.3.0
+2.3.0 - 03.09.20
 * custom passwords
 * filter to override email changed notification email
 
-2.2.0
+2.2.0 - 23.07.20
 * fix for undefined headers when manually adding a user with notification
 
-2.1.1
+2.1.1 - 10.07.20
 * forgot to change version
 
-2.1.0
+2.1.0 - 09.07.20
 * added validation for custom fields
 * added reserved usernames
 * added an option to use email only for registration
 * added 'protection' for sub-pages of account page
 * added better css for smaller screens
 
-2.0.3
+2.0.3 - 17.06.20
 * Removed beta notice stuff
 
-2.0.2
+2.0.2 - 17.06.20
 * Forgot to properly change version number
 
-2.0.1
+2.0.1 - 16.06.20
 * fixed incorrect redirect
 * change user approval cap to promote users
 * always return admin approval page in toolbar
 * add forgotten meta keys for plugin delete
 
-2.0.0
+2.0.0 - 16.07.20
 * replaced deprecated contextual_help
 * escape user input for storage
 * more emails to set
@@ -193,35 +232,35 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboarding/blob/master/CHANGELOG.MD).
 
-1.0.6 (03.12.19)
+1.0.6 - 03.12.19
 * fix incorrect fallback link for lost password
 
-1.0.5 (28.03.19)
+1.0.5 - 28.03.19
 * fix broken user ID on dashboard
 * update css
 * add redirect to login form
 
-1.0.4 (27.03.19)
+1.0.4 - 27.03.19
 * protect function in uninstall.php
 * always return html as content type
 * remove table from login form
 
-1.0.3 (19.03.19)
+1.0.3 - 19.03.19
 * update version
 
-1.0.2 (19.03.19)
+1.0.2 - 19.03.19
 * remove log errors
 
-1.0.1 (19.03.19)
+1.0.1 - 19.03.19
 * change password reset link in password reset email
 * create function to retrieve password reset url/page/link
 
-1.0.0 (17.03.19)
+1.0.0 - 17.03.19
 * version change to (hopefully) avoid composer issues
 * clean up of unused code
 * clean up of commented code
 
-0.9-beta (17.03.19)
+0.9-beta - 17.03.19
 * add more email settings
 * clean up actions/filters
 * refactor registration form
@@ -230,9 +269,9 @@ Plus A LOT more - Read the [release notes](https://github.com/Beee4life/b3-onboa
 * output b3_* option values on debug page
 * add dashboard widget
 
-0.8-beta (14.03.19)
+0.8-beta - 14.03.19
 * add first/last name to request access
 * option to make first/last name required
 
-0.7-beta (04.03.19)
+0.7-beta - 04.03.19
 * first decent release

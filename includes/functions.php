@@ -306,10 +306,12 @@
      *
      * @param bool $hide
      */
-    function b3_get_settings_field_open( $hide = false, $modifier = false ) {
-        $hide_class = ( $hide != false ) ? ' hidden' : false;
-        $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
-        echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
+    function b3_get_settings_field_open( $no_render = false, $hide = false, $modifier = false ) {
+        if ( false == $no_render ) {
+            $hide_class = ( $hide != false ) ? ' hidden' : false;
+            $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
+            echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
+        }
     }
 
 
@@ -342,25 +344,32 @@
      *
      * @since 2.0.0
      *
-     * @param bool $submit_value
+     * @param false $submit_value
+     * @param false $button_modifier
      */
-    function b3_get_submit_button( $submit_value = false, $button_modifier = false ) {
-        // validate user value
-        if ( false != $submit_value ) {
-            if ( ! is_string( $submit_value ) ) {
-                // @TODO: throw error
-            }
-        } else {
+    function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
+        $button_class = false;
+        if ( false == $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
+
         if ( false != $button_modifier ) {
             if ( is_string( $button_modifier ) ) {
-                $button_modifier = ' button-submit--' . esc_attr( $button_modifier );
-            } else {
-                $button_modifier = false;
+                $button_class = ' button-submit--' . esc_attr( $button_modifier );
             }
         }
-        echo sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_modifier, $submit_value );
+
+        $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
+
+        if ( 'register' == $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
+            $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
+            $recaptcha_version  = get_option( 'b3_recaptcha_version' );
+            if ( $activate_recaptcha && 3 == $recaptcha_version ) {
+                $button = sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_value ) );
+            }
+        }
+
+        echo $button;
     }
 
     /**
@@ -1024,6 +1033,7 @@
         update_option( 'b3_disable_admin_notification_password_change', 1 );
         update_option( 'b3_disable_user_notification_password_change', 1 );
         update_option( 'b3_logo_in_email', 1 );
+        update_option( 'b3_link_color', '#e0144b' );
         update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
         update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
         update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
@@ -1052,5 +1062,65 @@
 
         if ( false != $blog_id ) {
             restore_current_blog();
+        }
+    }
+
+
+    /**
+     * Get all possible template locations
+     *
+     * @since 3.2.0
+     *
+     * @return string[]
+     */
+    function b3_get_template_paths() {
+        $template_paths = array(
+            get_stylesheet_directory() . '/b3-onboarding/',
+            get_stylesheet_directory() . '/plugins/b3-onboarding/',
+            get_template_directory() . '/b3-onboarding/',
+            get_template_directory() . '/plugins/b3-onboarding/',
+            B3_PLUGIN_PATH . '/templates/',
+        );
+
+        return $template_paths;
+    }
+
+
+    /**
+     * Locate file in possible template locations
+     *
+     * @since 3.2.0
+     *
+     * @param $template_name
+     *
+     * @return false|string
+     */
+    function b3_locate_template( $template_name ) {
+        foreach( b3_get_template_paths() as $location ) {
+            if ( file_exists( $location . $template_name . '.php' )) {
+                return $location . $template_name . '.php';
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Render template
+     *
+     * @since 3.2.0
+     *
+     * @param $template_name
+     * @param array $attributes
+     * @param false $current_user_object
+     */
+    function b3_get_template( $template_name, $attributes = [], $current_user_object = false ) {
+        if ( $template_name ) {
+            $template = b3_locate_template( $template_name );
+
+            do_action( 'b3_do_before_template', $template_name );
+            include $template;
+            do_action( 'b3_do_after_template', $template_name );
         }
     }

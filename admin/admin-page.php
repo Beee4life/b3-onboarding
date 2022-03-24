@@ -33,8 +33,8 @@
                     $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'registration';
                     $tabs        = b3_get_admin_tabs();
 
-                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html__( 'B3 OnBoarding settings', 'b3-onboarding' ) );
-
+                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', get_admin_page_title() );
+                    
                     B3Onboarding::b3_show_admin_notices();
 
                     if ( is_array( $tabs ) ) {

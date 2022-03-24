@@ -182,14 +182,14 @@
                                 <div class="b3_input-option b3_input-option--<?php echo esc_attr( $input_type ); ?>">
                                     <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
                                     <?php if ( in_array( $input_type, array( 'radio' ) ) ) { ?>
-                                        <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
+                                        <?php $checked = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                     <?php } elseif ( in_array( $input_type, array( 'checkbox' ) ) ) { ?>
                                         <?php
-                                            $selected = false;
+                                            $checked = false;
                                             if ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) {
-                                                $selected = ' checked="checked"';
+                                                $checked = ' checked="checked"';
                                             } elseif ( isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) {
-                                                $selected = ' checked="checked"';
+                                                $checked = ' checked="checked"';
                                             }
                                         ?>
                                     <?php } ?>
@@ -198,7 +198,7 @@
                                         <label for="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); ?>" class="screen-reader-text"><?php echo esc_html( $option[ 'label' ] ); ?></label>
                                     <?php } ?>
                                     <?php if ( isset( $option[ 'name' ] ) && isset( $option[ 'label' ] ) ) { ?>
-                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo $selected; ?>> <?php echo $option[ 'label' ]; ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo $checked; ?>> <?php echo $option[ 'label' ]; ?>
                                     <?php } ?>
                                 </div>
                                 <?php $counter++; ?>
@@ -402,8 +402,6 @@
     /**
      * Check if a remote file exists
      *
-     * @TODO: look into using wp_remote_get
-     *
      * @since 2.0.0
      *
      * @link: https://stackoverflow.com/a/7051633/8275339
@@ -413,14 +411,7 @@
      * @return bool
      */
     function b3_check_remote_file( $url ) {
-        $ch = curl_init();
-        curl_setopt( $ch, CURLOPT_URL, $url );
-        curl_setopt( $ch, CURLOPT_NOBODY, 1 );
-        curl_setopt( $ch, CURLOPT_FAILONERROR, 1 );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-        $result = curl_exec( $ch );
-        curl_close( $ch );
-        if ( $result !== false ) {
+        if ( 200 == wp_remote_retrieve_response_code( wp_remote_get( $url ) ) ) {
             return true;
         } else {
             return false;
@@ -439,4 +430,24 @@
         $user_login = (string) $now_min_50;
 
         return $user_login;
+    }
+
+
+    /**
+     * Verify domain in email
+     *
+     * @param $email
+     *
+     * @return bool
+     */
+    function b3_verify_email_domain( $email ) {
+        $disallowed_domains = get_option( 'b3_disallowed_domains' );
+        if ( get_option( 'b3_domain_restrictions' ) && $disallowed_domains ) {
+            $domain_name = substr( strrchr( $email, '@' ), 1 );
+            if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
+                return false;
+            }
+        }
+
+        return true;
     }

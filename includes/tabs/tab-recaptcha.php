@@ -34,8 +34,8 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
-                        <input type="radio" name="b3_recaptcha_version" value="2" <?php if ( 2 == $recaptcha_version ) { echo ' checked="checked"'; } ?> /> 2
-                        <input type="radio" name="b3_recaptcha_version" value="3" <?php if ( 3 == $recaptcha_version ) { echo ' checked="checked"'; } ?> /> 3
+                        <input type="radio" name="b3_recaptcha_version" value="2" <?php checked($recaptcha_version, 2); ?> /> 2
+                        <input type="radio" name="b3_recaptcha_version" value="3" <?php checked($recaptcha_version, 3); ?> /> 3
                     </label>
                 </div>
             <?php b3_get_close(); ?>
