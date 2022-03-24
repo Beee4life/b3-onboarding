@@ -65,7 +65,7 @@ If you use a composer file to add any plugins/libraries. Add the following repos
     "package": {
       "name":    "Beee4life/b3-onboarding",
       "type":    "wordpress-plugin",
-      "version": "3.1.0",
+      "version": "3.2.0",
       "dist":    {
         "type": "zip",
         "url":  "https://github.com/Beee4life/b3-onboarding/archive/master.zip"
@@ -80,7 +80,7 @@ Then run composer require "beee4life/b3-onboarding"
 or add this to the require section by hand:
 
 ```
-"beee4life/b3-onboarding": "3.1.0",
+"beee4life/b3-onboarding": "3.2.0",
 ```
 
 and run `composer update`.
@@ -146,12 +146,14 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.2.0 - xx.03.22
+3.2.0 - 24.03.22
 * added development notice filter
-* extended more filters to preview
-* implemented checked/selected functions
+* added option for a one-time welcome page
+* added option for banned domains
 * added color picker for link color
 * added new hook before/after account page
+* extended more filters to preview
+* implemented checked/selected functions
 * rebuild template files with more hooks/separate files
 
 3.1.0 - 06.03.22
