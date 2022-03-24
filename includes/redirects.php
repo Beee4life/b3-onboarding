@@ -147,10 +147,9 @@
      */
     function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
         $exclude_from_admin = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
-        $redirect_url       = get_home_url();
 
         if ( ! $user ) {
-            return $redirect_url;
+            return get_home_url();
         } elseif ( is_wp_error( $user ) ) {
             // check if is
             if ( is_multisite() && ! is_main_site() ) {
@@ -170,9 +169,14 @@
                 die('NO USER');
             } else {
                 if ( ! user_can( $user, 'manage_options' ) ) {
-                    // Non-admin users always go to their account page after login, if it's defined
+                    // Non-admin users always go to their account page after login, if it's defined and if no welcome page is set
                     $account_page_url = b3_get_account_url();
-                    if ( false != $account_page_url ) {
+                    $welcome_page     = apply_filters( 'b3_welcome_page', false );
+                    
+                    if ( $welcome_page && false == get_user_meta( $user->ID, 'b3_welcome_page_seen', true ) ) {
+                        update_user_meta( $user->ID, 'b3_welcome_page_seen', true );
+                        $redirect_to = $welcome_page;
+                    } elseif ( false != $account_page_url ) {
                         if ( ! in_array( $exclude_from_admin, $user->roles ) ) {
                             $redirect_to = $account_page_url;
                         }
