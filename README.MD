@@ -167,17 +167,6 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * optimized user templates
 * reformatted debug info page
 
-3.1.0 - 06.03.22
-* improved multisite functions
-* added honeypot option
-* added reset to default option
-* added option to 'prevent delete settings on uninstall'
-* added status class to messages
-* added new filters
-* optimized existing filters
-* optimized user templates
-* reformatted debug info page
-
 3.0 - 13.06.20
 * added option to request access to create a site (multisite)
 * added reCaptcha v3
