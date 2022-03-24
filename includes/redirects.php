@@ -154,7 +154,7 @@
         } elseif ( is_wp_error( $user ) ) {
             // check if is
             if ( is_multisite() && ! is_main_site() ) {
-                // a suser has not been created since it needs to be confirmed
+                // a user has not been created since it needs to be confirmed
                 $no_user = true;
             }
         }
@@ -162,7 +162,6 @@
         if ( $requested_redirect_to ) {
             $redirect_to = $requested_redirect_to;
         } else {
-
             if ( is_wp_error( $user ) ) {
                 return b3_get_login_url();
             }
@@ -179,6 +178,8 @@
                 } elseif ( current_user_can( 'read' ) ) {
                     $redirect_to = get_edit_user_link( get_current_user_id() );
                 }
+            } else {
+                $redirect_to = admin_url();
             }
         }
 
