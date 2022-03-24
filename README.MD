@@ -146,6 +146,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.2.1 - 24.03.22
+* fixed redirect after login for admins
+
 3.2.0 - 24.03.22
 * added development notice filter
 * added option for a one-time welcome page
