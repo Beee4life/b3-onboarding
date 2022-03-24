@@ -146,15 +146,15 @@
      * @return string Redirect URL
      */
     function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-        $stored_roles  = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
-        $redirect_url  = get_home_url();
+        $exclude_from_admin = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
+        $redirect_url       = get_home_url();
 
         if ( ! $user ) {
             return $redirect_url;
         } elseif ( is_wp_error( $user ) ) {
             // check if is
             if ( is_multisite() && ! is_main_site() ) {
-                // a suser has not been created since it needs to be confirmed
+                // a user has not been created since it needs to be confirmed
                 $no_user = true;
             }
         }
@@ -162,22 +162,25 @@
         if ( $requested_redirect_to ) {
             $redirect_to = $requested_redirect_to;
         } else {
-
             if ( is_wp_error( $user ) ) {
                 return b3_get_login_url();
             }
 
             if ( isset( $no_user ) && true == $no_user ) {
                 die('NO USER');
-            } elseif ( ! user_can( $user, 'manage_options' ) ) {
-                // Non-admin users always go to their account page after login, if it's defined
-                $account_page_url = b3_get_account_url();
-                if ( false != $account_page_url ) {
-                    if ( ! in_array( $stored_roles, $user->roles ) ) {
-                        $redirect_to = $account_page_url;
+            } else {
+                if ( ! user_can( $user, 'manage_options' ) ) {
+                    // Non-admin users always go to their account page after login, if it's defined
+                    $account_page_url = b3_get_account_url();
+                    if ( false != $account_page_url ) {
+                        if ( ! in_array( $exclude_from_admin, $user->roles ) ) {
+                            $redirect_to = $account_page_url;
+                        }
+                    } elseif ( current_user_can( 'read' ) ) {
+                        $redirect_to = get_edit_user_link( get_current_user_id() );
                     }
-                } elseif ( current_user_can( 'read' ) ) {
-                    $redirect_to = get_edit_user_link( get_current_user_id() );
+                } else {
+                    $redirect_to = admin_url();
                 }
             }
         }
