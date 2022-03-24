@@ -146,8 +146,8 @@
      * @return string Redirect URL
      */
     function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-        $stored_roles  = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
-        $redirect_url  = get_home_url();
+        $exclude_from_admin = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
+        $redirect_url       = get_home_url();
 
         if ( ! $user ) {
             return $redirect_url;
@@ -168,18 +168,20 @@
 
             if ( isset( $no_user ) && true == $no_user ) {
                 die('NO USER');
-            } elseif ( ! user_can( $user, 'manage_options' ) ) {
-                // Non-admin users always go to their account page after login, if it's defined
-                $account_page_url = b3_get_account_url();
-                if ( false != $account_page_url ) {
-                    if ( ! in_array( $stored_roles, $user->roles ) ) {
-                        $redirect_to = $account_page_url;
-                    }
-                } elseif ( current_user_can( 'read' ) ) {
-                    $redirect_to = get_edit_user_link( get_current_user_id() );
-                }
             } else {
-                $redirect_to = admin_url();
+                if ( ! user_can( $user, 'manage_options' ) ) {
+                    // Non-admin users always go to their account page after login, if it's defined
+                    $account_page_url = b3_get_account_url();
+                    if ( false != $account_page_url ) {
+                        if ( ! in_array( $exclude_from_admin, $user->roles ) ) {
+                            $redirect_to = $account_page_url;
+                        }
+                    } elseif ( current_user_can( 'read' ) ) {
+                        $redirect_to = get_edit_user_link( get_current_user_id() );
+                    }
+                } else {
+                    $redirect_to = admin_url();
+                }
             }
         }
 
