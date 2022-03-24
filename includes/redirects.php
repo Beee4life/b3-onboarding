@@ -174,7 +174,7 @@
                     $welcome_page     = apply_filters( 'b3_welcome_page', false );
                     
                     if ( $welcome_page && false == get_user_meta( $user->ID, 'b3_welcome_page_seen', true ) ) {
-                        update_user_meta( $user->ID, 'b3_welcome_page_seen', true );
+                        update_user_meta( $user->ID, 'b3_welcome_page_seen', 'true' );
                         $redirect_to = $welcome_page;
                     } elseif ( false != $account_page_url ) {
                         if ( ! in_array( $exclude_from_admin, $user->roles ) ) {
