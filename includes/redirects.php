@@ -151,7 +151,6 @@
         if ( ! $user ) {
             return get_home_url();
         } elseif ( is_wp_error( $user ) ) {
-            // check if is
             if ( is_multisite() && ! is_main_site() ) {
                 // a user has not been created since it needs to be confirmed
                 $no_user = true;
