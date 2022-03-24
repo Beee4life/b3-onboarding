@@ -27,6 +27,16 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.2.0
+* added development notice filter
+* added option for a one-time welcome page
+* added option for banned domains
+* added color picker for link color
+* added new hook before/after account page
+* extended more filters to preview
+* implemented checked/selected functions
+* rebuild template files with more hooks/separate files
+
 3.1.0
 * improved multisite functions
 * added honeypot feature
