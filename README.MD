@@ -149,6 +149,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.3.0 - xx.03.22
 * improved welcome page redirect
+* get translated ID of privacy page if WPML is active
 
 3.2.1 - 24.03.22
 * fixed redirect after login for admins
