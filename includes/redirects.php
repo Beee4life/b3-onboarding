@@ -165,7 +165,7 @@
             }
 
             if ( isset( $no_user ) && true == $no_user ) {
-                die('NO USER');
+                return get_home_url();
             } else {
                 if ( ! user_can( $user, 'manage_options' ) ) {
                     // Non-admin users always go to their account page after login, if it's defined and if no welcome page is set
