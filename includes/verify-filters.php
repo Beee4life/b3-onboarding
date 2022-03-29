@@ -61,6 +61,7 @@
             'b3_signup_for_site'                       => array( 'string' ),
             'b3_signup_for_user'                       => array( 'string' ),
             'b3_user_cap'                              => array( 'string' ),
+            'b3_welcome_page'                          => array( 'string' ),
             'b3_welcome_user_message'                  => array( 'string' ),
             'b3_welcome_user_message_manual'           => array( 'string' ),
             'b3_welcome_user_subject'                  => array( 'string' ),
@@ -69,9 +70,6 @@
             'b3_wpmu_activate_user_subject'            => array( 'string' ),
             'b3_wpmu_user_activated_message'           => array( 'string' ),
             'b3_wpmu_user_activated_subject'           => array( 'string' ),
-            
-            // @TODO: add
-            'b3_welcome_page' => array( 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {
