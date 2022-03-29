@@ -655,6 +655,9 @@
         $privacy_page = get_option( 'b3_privacy_page_id' );
 
         if ( false != $privacy_page ) {
+            if ( class_exists( 'SitePress' ) ) {
+                $privacy_page = apply_filters( 'wpml_object_id', $privacy_page, 'page', true );
+            }
             $privacy_page_object = get_post( $privacy_page );
             if ( is_object( $privacy_page_object ) ) {
                 $link    = get_the_permalink( $privacy_page_object );
