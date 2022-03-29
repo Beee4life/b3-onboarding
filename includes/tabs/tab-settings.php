@@ -54,7 +54,7 @@
                         <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/> <?php esc_html_e( "Check this box to redirect the user to a 'welcome' page after his first login.", 'b3-onboarding' ); ?>
                         <?php $hide_welcome_page_note = ( 1 == $activate_welcome_page ) ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--welcome<?php echo $hide_welcome_page_note; ?>">
-                            <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '#', esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
+                            <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url('https://b3onboarding.berryplasman.com/filter/b3_welcome_page/'), esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
                         </div>
                     </div>
                 <?php b3_get_close(); ?>
