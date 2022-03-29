@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.3.0 - released xx.03.21
+3.3.0 - released 29.03.21
 
 <a name="features"></a>
 ### Features
@@ -148,7 +148,7 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.3.0 - xx.03.22
+3.3.0 - 29.03.22
 * improved welcome page redirect
 * get translated ID of privacy page if WPML is active
 
