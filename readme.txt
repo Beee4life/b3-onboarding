@@ -29,6 +29,7 @@ There are a ton of things, which you can set through the admin pages or with the
 == Changelog ==
 3.3.0
 * improved welcome page redirect
+* get translated ID of privacy page if WPML is active
 
 3.2.1
 * fixed redirect after login for admins
