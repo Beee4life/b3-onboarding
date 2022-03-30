@@ -877,7 +877,7 @@
                         return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );
 
                     case 'lost_password_sent':
-                        return esc_html__( 'Check your email for a link to reset your password.', 'b3-onboarding' );
+                        return esc_html__( 'If the email address you used is connected to an account, you will receive an email with a link to reset your password.', 'b3-onboarding' );
 
                     // Registration
                     case 'pw_too_easy':
