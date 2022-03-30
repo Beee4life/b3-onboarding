@@ -136,7 +136,7 @@ These are the things we have planned to add.
 * [ ] add code editor for styling/template inputs
 * [ ] add filters for template html + css
 * [ ] clean-up settings pages
-* [ ] remove `<br />` from email templates
+* [ ] remove `<br>` from email templates
 * [ ] create option to send a preview email
 * [ ] add front-end management to multisite as well
 * [ ] multi-page registration forms
