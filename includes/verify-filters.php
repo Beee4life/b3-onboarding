@@ -72,10 +72,11 @@
             'b3_wpmu_user_activated_subject'           => array( 'string' ),
             
             // add on site
-            'b3_wpmu_activate_user_blog_message'       => array( 'string' ),
-            'b3_wpmu_activate_user_blog_subject'       => array( 'string' ),
+            'b3_new_site_created_message'              => array( 'string' ),
             'b3_new_wpmu_user_message_admin'           => array( 'string' ),
             'b3_new_wpmu_user_subject_admin'           => array( 'string' ),
+            'b3_wpmu_activate_user_blog_message'       => array( 'string' ),
+            'b3_wpmu_activate_user_blog_subject'       => array( 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {
