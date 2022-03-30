@@ -148,8 +148,8 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.4.0 - 30.03.22
-* ?
+3.4.0 - 31.03.22
+* fix replace var %user_login%
 
 * 3.3.0 - 29.03.22
 * improved welcome page redirect
