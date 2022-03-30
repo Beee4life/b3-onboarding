@@ -39,14 +39,12 @@
                     $subject = apply_filters( 'b3_wpmu_user_activated_subject', b3_get_wpmu_user_activated_subject() );
                     break;
                 case 'mu-confirm-user-site-email':
-                    // @TODO: create filters
-                    $message = b3_get_wpmu_activate_user_blog_message();
-                    $subject = b3_get_wpmu_activate_user_blog_subject();
+                    $message = apply_filters( 'b3_wpmu_activate_user_blog_message', b3_get_wpmu_activate_user_blog_message() );
+                    $subject = apply_filters( 'b3_wpmu_activate_user_blog_subject', b3_get_wpmu_activate_user_blog_subject() );
                     break;
                 case 'mu-new-user-admin':
-                    // @TODO: create filters
-                    $message = b3_get_new_wpmu_user_message_admin();
-                    $subject = b3_get_new_wpmu_user_subject_admin();
+                    $message = apply_filters( 'b3_new_wpmu_user_message_admin', b3_get_new_wpmu_user_message_admin() );
+                    $subject = apply_filters( 'b3_new_wpmu_user_subject_admin', b3_get_new_wpmu_user_subject_admin() );
                     break;
                 case 'account-approved':
                     $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
