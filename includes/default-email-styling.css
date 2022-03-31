@@ -76,9 +76,9 @@ table td.b3_email_content {
 }
 
 /* Default color is added in case filter fails */
-a:link,
-a:visited,
-a:active {
+#b3_email_main a:link,
+#b3_email_main a:visited,
+#b3_email_main a:active {
     color: #e0144b;
     text-decoration: none;
 }

@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.3.0
+    Version:            3.4.0
     Requires at least:  4.3
     Tested up to:       5.9.2
     Requires PHP:       5.6
@@ -59,7 +59,7 @@
 
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '3.3.0',
+                    'version' => '3.4.0',
                 );
             }
 
@@ -877,7 +877,7 @@
                         return esc_html__( 'Your password has been changed. You can login now.', 'b3-onboarding' );
 
                     case 'lost_password_sent':
-                        return esc_html__( 'Check your email for a link to reset your password.', 'b3-onboarding' );
+                        return esc_html__( 'If the email address you used is connected to an account, you will receive an email with a link to reset your password.', 'b3-onboarding' );
 
                     // Registration
                     case 'pw_too_easy':

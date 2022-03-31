@@ -155,11 +155,11 @@
             ?>
             <div class="b3_form-element b3_form-element--login">
                 <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="text" name="user_name" id="b3_user_login" class="b3_form--input" autocapitalize="none" autocomplete="off" spellcheck="false" maxlength="60" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_username', 'dummy' ) : ''; ?>" required>
+                <input type="text" name="user_name" id="b3_user_login" class="b3_form--input" autocapitalize="none" autocomplete="off" spellcheck="false" maxlength="60" value="<?php echo apply_filters( 'b3_localhost_username', false ); ?>" required>
             </div>
             <div class="b3_form-element b3_form-element--email">
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_email', false ) : ''; ?>" required>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo apply_filters( 'b3_localhost_email', false ); ?>" required>
             </div>
 
             <?php if ( 'all' == $registration_type ) { ?>
@@ -180,14 +180,14 @@
                 ?>
                 <div class="b3_form-element b3_form-element--login">
                     <label class="b3_form-label" for="b3_user_login"><?php esc_html_e( 'User name', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                    <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_username', false ) : false; ?>" required>
+                    <input type="text" name="user_login" id="b3_user_login" class="b3_form--input" value="<?php echo apply_filters( 'b3_localhost_username', false ); ?>" required>
                 </div>
             <?php } else { ?>
                 <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
             <?php } ?>
             <div class="b3_form-element b3_form-element--email">
                 <label class="b3_form-label" for="b3_user_email"><?php esc_html_e( 'Email', 'b3-onboarding' ); ?> <strong>*</strong></label>
-                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo is_localhost() ? apply_filters( 'b3_localhost_email', false ) : false; ?>" required>
+                <input type="email" name="user_email" id="b3_user_email" class="b3_form--input" value="<?php echo apply_filters( 'b3_localhost_email', false ); ?>" required>
             </div>
             <?php
         }
@@ -366,7 +366,7 @@
     function b3_add_recaptcha_fields() {
 
         if ( false != get_option( 'b3_activate_recaptcha' ) ) {
-            $recaptcha_public = get_option( 'b3_recaptcha_public' );
+            $recaptcha_public = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );
             if ( false != $recaptcha_public ) {
                 if ( '2' == get_option( 'b3_recaptcha_version', '2' ) ) {
                     do_action( 'b3_do_before_recaptcha_register' );
@@ -377,7 +377,7 @@
                         </div>
                     </div>
                     <?php
-                    do_action( 'b3_do_after_recaptcha_register' );
+                        do_action( 'b3_do_after_recaptcha_register' );
                 }
             } else {
                 if ( current_user_can( 'manage_options') ) {
@@ -418,16 +418,16 @@
     function b3_render_form_messages( $attributes = [] ) {
         if ( ! empty( $attributes ) ) {
             $messages          = array();
-            $show_errors       = false;
             $registration_type = get_option( 'b3_registration_type' );
+            $show_messages     = false;
 
             if ( isset( $attributes[ 'errors' ] ) && 0 < count( $attributes[ 'errors' ] ) ) {
-                $show_errors = true;
+                $show_messages = true;
                 foreach( $attributes[ 'errors' ] as $error ) {
                     $messages[] = $error;
                 }
             } elseif ( isset( $attributes[ 'messages' ] ) && 0 < count( $attributes[ 'messages' ] ) ) {
-                $show_errors = true;
+                $show_messages = true;
                 foreach( $attributes[ 'messages' ] as $message ) {
                     $messages[] = $message;
                 }
@@ -436,46 +436,43 @@
                     if ( 'login' == $attributes[ 'template' ] ) {
                         $login_form_message = apply_filters( 'b3_message_above_login', false );
                         if ( false != $login_form_message ) {
-                            $show_errors = true;
-                            $messages[]  = $login_form_message;
+                            $messages[]    = $login_form_message;
+                            $show_messages = true;
                         }
                     } elseif ( 'register' == $attributes[ 'template' ] ) {
                         if ( strpos( $registration_type, 'request_access' ) !== false ) {
                             $request_access_message = apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() );
                             if ( false != $request_access_message ) {
-                                $show_errors = true;
-                                $messages[]  = $request_access_message;
+                                $messages[]    = $request_access_message;
+                                $show_messages = true;
                             }
                         } elseif ( 'email_activation' == $registration_type ) {
                             $registration_message = apply_filters( 'b3_message_above_registration', false );
                             if ( false != $registration_message ) {
-                                $show_errors = true;
-                                $messages[]  = $registration_message;
+                                $messages[]    = $registration_message;
+                                $show_messages = true;
                             }
                         } else {
                             if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
-                                $message = false;
-                                if ( 'closed' == $registration_type ) {
-                                    $message = b3_get_registration_closed_message();
-                                }
+                                $message              = ( 'closed' == $registration_type ) ? b3_get_registration_closed_message() : false;
                                 $registration_message = apply_filters( 'b3_message_above_registration', $message );
                                 if ( false != $registration_message ) {
-                                    $show_errors = true;
-                                    $messages[]  = $registration_message;
+                                    $messages[]    = $registration_message;
+                                    $show_messages = true;
                                 }
                             }
                         }
                     } elseif ( 'lostpassword' == $attributes[ 'template' ] ) {
-                        $show_errors = true;
-                        $messages[]  = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
+                        $messages[]    = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
+                        $show_messages = true;
                     } elseif ( 'resetpass' == $attributes[ 'template' ] ) {
-                        $show_errors = true;
-                        $messages[]  = esc_html__( 'Enter your new password.', 'b3-onboarding' );
+                        $messages[]    = esc_html__( 'Enter your new password.', 'b3-onboarding' );
+                        $show_messages = true;
                     }
                 }
             }
 
-            if ( true == $show_errors && ! empty( $messages ) ) {
+            if ( true == $show_messages && ! empty( $messages ) ) {
                 if ( isset( $attributes[ 'errors' ] ) ) {
                     echo '<div class="b3_message b3_message--error">';
                 } else {
@@ -536,7 +533,7 @@
                     break;
 
                 default:
-                    break;
+                    $links = [];
             }
 
             if ( count( $links ) > 0 ) {
@@ -625,6 +622,7 @@
                 $message  = b3_replace_template_styling( $message );
                 $message  = strtr( $message, b3_replace_email_vars() );
                 $message  = htmlspecialchars_decode( stripslashes( $message ) );
+                
                 wp_mail( $admin_to, $subject, $message, array() );
             }
         }
@@ -668,6 +666,8 @@
 
     /**
      * Reset to default option
+     *
+     * @since 3.2.0
      */
     function b3_reset_to_default() {
         if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
@@ -744,3 +744,30 @@
         b3_get_template( $element, $attributes, $current_user_object);
     }
     add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );
+    
+    
+    /**
+     * Remove welcome page meta
+     *
+     * @since 3.4.0
+     *
+     * @return void
+     */
+    function b3_remove_welcome_page_meta() {
+        $user_args = [
+            'fields' => 'ids',
+            'meta_query' => [
+                [
+                    'key'   => 'b3_welcome_page_seen',
+                    'value' => 'true',
+                ],
+            ],
+        ];
+        $users = get_users( $user_args );
+        if ( ! empty( $users ) ) {
+            foreach( $users as $user_id ) {
+                delete_user_meta( $user_id, 'b3_welcome_page_seen' );
+            }
+        }
+    }
+    add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );

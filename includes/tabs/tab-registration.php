@@ -41,52 +41,26 @@
         <form action="admin.php?page=b3-onboarding&tab=registration" method="post">
             <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
             <?php if ( is_main_site() ) { ?>
-                <?php if ( is_multisite() ) { ?>
-                    <?php $options = b3_get_registration_types(); ?>
-                    <?php if ( ! empty( $options ) ) { ?>
-                        <?php b3_get_settings_field_open(); ?>
-                            <?php b3_get_label_field_open(); ?>
-                                <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
-                            <?php b3_get_close(); ?>
-                            <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', network_admin_url( 'settings.php' ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
-                            <?php foreach( $options as $option ) { ?>
-                                <div class="b3_settings-input b3_settings-input--radio">
-                                    <div>
-                                        <label for="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php checked($option[ 'value' ], $registration_type); ?>/> <?php echo $option[ 'label' ]; ?>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        <?php b3_get_close(); ?>
-
-                    <?php } else { ?>
-                        <?php echo sprintf( '<div class="b3_settings-input b3_settings-input--radio">%s</div>', esc_html__( 'Registrations are disabled.','b3-onboarding' ) ); ?>
-                    <?php } ?>
-
-                <?php } else { ?>
-
-                    <?php b3_get_settings_field_open(); ?>
-                        <?php b3_get_label_field_open(); ?>
-                            <label for="b3_registration_types"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
-                        <?php b3_get_close(); ?>
-
-                        <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "These settings are now the global settings and 'control' the values on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php' ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
-
-                        <?php $options = b3_get_registration_types(); ?>
-                        <?php if ( ! empty( $options ) ) { ?>
-                            <?php foreach( $options as $option ) { ?>
-                                <div class="b3_settings-input b3_settings-input--radio">
-                                    <div>
-                                        <label for="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" class="screen-reader-text"><?php echo $option[ 'label' ]; ?></label>
-                                        <input type="radio" id="b3_registration_type_<?php echo esc_attr( $option[ 'value' ] ); ?>" name="b3_registration_type" value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php checked($option[ 'value' ], $registration_type); ?>/> <?php echo $option[ 'label' ]; ?>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        <?php } else { ?>
-                            <?php echo sprintf( '<div class="b3_settings-input b3_settings-input--radio">%s</div>', esc_html__( 'Registrations are disabled.','b3-onboarding' ) ); ?>
-                        <?php } ?>
+                <?php $options = b3_get_registration_types(); ?>
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_registration_type"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-                <?php } ?>
+        
+                    <?php if ( is_multisite() ) { ?>
+                        <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', network_admin_url( 'settings.php' ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
+                    <?php } else { ?>
+                        <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php' ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
+                    <?php } ?>
+    
+                    <div class="b3_settings-input b3_settings-input--select">
+                        <select name="b3_registration_type" id="b3_registration_type">
+                            <?php foreach( $options as $option ) { ?>
+                                <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php selected( $option[ 'value' ], $registration_type ); ?>> <?php echo $option[ 'label' ]; ?>
+                            <?php } ?>
+                        </select>
+                    </div>
+                <?php b3_get_close(); ?>
 
                 <?php if ( 'none' == $registration_type ) { ?>
                     <?php $filter_message = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) ); ?>

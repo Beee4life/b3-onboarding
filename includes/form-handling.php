@@ -511,7 +511,7 @@
 
 
     /**
-     * Form handling main admin page
+     * Form handling admin settings page
      *
      * @since 1.0.0
      */
@@ -534,6 +534,10 @@
                     update_option( 'b3_activate_welcome_page', 1 );
                 } else {
                     delete_option( 'b3_activate_welcome_page' );
+                }
+
+                if ( isset( $_POST[ 'b3_remove_user_meta_seen' ] ) && 1 == $_POST[ 'b3_remove_user_meta_seen' ] ) {
+                    do_action( 'b3_remove_welcome_page_meta' );
                 }
 
                 if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {
@@ -574,7 +578,7 @@
                 if ( true == $reset ) {
                     B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings.', 'b3-onboarding' ) );
                 } else {
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Settings saved', 'b3-onboarding' ) );
                 }
 
             }

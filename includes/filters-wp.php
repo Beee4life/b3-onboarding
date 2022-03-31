@@ -107,9 +107,8 @@
 
             } elseif ( in_array( $registration_type, array( 'blog' ) ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                // @TODO: add filter
-                $wp_new_user_notification_email_admin[ 'subject' ] = b3_default_subject_new_wpmu_user_admin();
-                $admin_email = b3_get_new_wpmu_user_message_admin();
+                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_wpmu_user_subject_admin', b3_get_new_wpmu_user_subject_admin() );
+                $admin_email = apply_filters( 'b3_new_wpmu_user_message_admin', b3_get_new_wpmu_user_message_admin() );
 
             }
             if ( false != $admin_email ) {
@@ -234,7 +233,7 @@
      */
     function b3_new_site_email( $new_site_email, $site, $user ) {
         // @TODO: add filter + (maybe) user input for message
-        $user_email                  = b3_get_new_site_created_message();
+        $user_email                  = apply_filters( 'b3_new_site_created_message', b3_get_new_site_created_message() );
         $user_email                  = b3_replace_template_styling( $user_email );
         $user_email                  = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user, 'site' => $site ) ) );
         $user_email                  = htmlspecialchars_decode( stripslashes( $user_email ) );
@@ -287,6 +286,7 @@
 
         $reset_pass_url      = b3_get_reset_password_url();
         $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
+        $vars[ 'user_data' ] = $user_data;
         $message             = b3_replace_template_styling( $message );
         $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
 

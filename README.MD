@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.3.0 - released 29.03.21
+3.4.0 - released 31.03.21
 
 <a name="features"></a>
 ### Features
@@ -136,7 +136,7 @@ These are the things we have planned to add.
 * [ ] add code editor for styling/template inputs
 * [ ] add filters for template html + css
 * [ ] clean-up settings pages
-* [ ] remove `<br />` from email templates
+* [ ] remove `<br>` from email templates
 * [ ] create option to send a preview email
 * [ ] add front-end management to multisite as well
 * [ ] multi-page registration forms
@@ -148,7 +148,17 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.3.0 - 29.03.22
+3.4.0 - 31.03.22
+* add new template: lostpassword/email
+* add new filters
+* improve localhost values in forms
+* change notice text lost password form
+* 'limit' link color to email content
+* fix replace var %user_login%
+* remove redundant new line in email template
+* remove %site_url% from explanation (not used anymore)
+
+* 3.3.0 - 29.03.22
 * improved welcome page redirect
 * get translated ID of privacy page if WPML is active
 
@@ -175,6 +185,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * optimized existing filters
 * optimized user templates
 * reformatted debug info page
+* is_localhost function
 
 3.0 - 13.06.20
 * added option to request access to create a site (multisite)
