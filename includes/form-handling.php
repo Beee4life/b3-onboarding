@@ -511,7 +511,7 @@
 
 
     /**
-     * Form handling main admin page
+     * Form handling admin settings page
      *
      * @since 1.0.0
      */
@@ -578,7 +578,7 @@
                 if ( true == $reset ) {
                     B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings.', 'b3-onboarding' ) );
                 } else {
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'General settings saved', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Settings saved', 'b3-onboarding' ) );
                 }
 
             }
