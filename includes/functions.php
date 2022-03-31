@@ -954,7 +954,7 @@
             return false;
         }
 
-        $recaptcha_secret = get_option( 'b3_recaptcha_secret' );
+        $recaptcha_secret = apply_filters( 'b3_recaptcha_secret', get_option( 'b3_recaptcha_secret' ) );
         $success          = false;
         if ( false != $recaptcha_secret ) {
             $response = wp_remote_post(
