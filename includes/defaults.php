@@ -14,14 +14,16 @@
         $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
 
         if ( false != $link_color ) {
-            $default_css .= "\n";
-            $default_css .= '/*';
-            $default_css .= "\n";
-            $default_css .= 'This is the color definition which can be filtered.';
-            $default_css .= "\n";
-            $default_css .= '#b3_email_main is added so it overrides the previous definition.';
-            $default_css .= "\n";
-            $default_css .= '*/';
+            if ( current_user_can( 'manage_options' ) ) {
+                $default_css .= "\n";
+                $default_css .= '/*';
+                $default_css .= "\n";
+                $default_css .= 'This is the color definition which can be filtered.';
+                $default_css .= "\n";
+                $default_css .= '#b3_email_main is added so it overrides the previous definition.';
+                $default_css .= "\n";
+                $default_css .= '*/';
+            }
             $default_css .= "\n";
             $default_css .= '#b3_email_main a:link,' . "\n";
             $default_css .= '#b3_email_main a:visited,' . "\n";
@@ -147,9 +149,9 @@
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
-            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now set your password through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%lostpass_url%', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
+            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now set your password through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%lostpass_url%', esc_html__( 'this link', 'b3-onboarding' ) ) );
         } else {
-            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'login here', 'b3-onboarding' ) ) ) . "\n";
+            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'login here', 'b3-onboarding' ) ) );
         }
         $message .= b3_default_greetings();
 

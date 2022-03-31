@@ -668,6 +668,8 @@
 
     /**
      * Reset to default option
+     *
+     * @since 3.2.0
      */
     function b3_reset_to_default() {
         if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
