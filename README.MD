@@ -150,8 +150,8 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.4.0 - 31.03.22
 * add new template: lostpassword/email
-* add back localhost values in forms
 * add new filters
+* improve localhost values in forms
 * change notice text lost password form
 * 'limit' link color to email content
 * fix replace var %user_login%
