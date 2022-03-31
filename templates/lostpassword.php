@@ -9,8 +9,6 @@
         exit;
     }
 
-    $localhost_email = apply_filters( 'b3_localhost_email', false );
-
     do_action( 'b3_add_form_messages', $attributes );
 ?>
 <div class="b3_page b3_page--lostpass">
