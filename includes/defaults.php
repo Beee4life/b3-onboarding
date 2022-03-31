@@ -14,14 +14,16 @@
         $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
 
         if ( false != $link_color ) {
-            $default_css .= "\n";
-            $default_css .= '/*';
-            $default_css .= "\n";
-            $default_css .= 'This is the color definition which can be filtered.';
-            $default_css .= "\n";
-            $default_css .= '#b3_email_main is added so it overrides the previous definition.';
-            $default_css .= "\n";
-            $default_css .= '*/';
+            if ( current_user_can( 'manage_options' ) ) {
+                $default_css .= "\n";
+                $default_css .= '/*';
+                $default_css .= "\n";
+                $default_css .= 'This is the color definition which can be filtered.';
+                $default_css .= "\n";
+                $default_css .= '#b3_email_main is added so it overrides the previous definition.';
+                $default_css .= "\n";
+                $default_css .= '*/';
+            }
             $default_css .= "\n";
             $default_css .= '#b3_email_main a:link,' . "\n";
             $default_css .= '#b3_email_main a:visited,' . "\n";
