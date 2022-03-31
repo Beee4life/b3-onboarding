@@ -4,7 +4,7 @@ Tags: user, management, registration, login, lost password, reset password, acco
 Requires at least: 4.3
 Tested up to: 5.9.2
 Requires PHP: 5.6
-Stable tag: 3.4.0-dev
+Stable tag: 3.4.0
 License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +27,16 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.4.0
+* add new template: lostpassword/email
+* add new filters
+* improve localhost values in forms
+* change notice text lost password form
+* 'limit' link color to email content
+* fix replace var %user_login%
+* remove redundant new line in email template
+* remove %site_url% from explanation (not used anymore)
+
 3.3.0
 * improved welcome page redirect
 * get translated ID of privacy page if WPML is active
