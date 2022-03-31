@@ -536,6 +536,10 @@
                     delete_option( 'b3_activate_welcome_page' );
                 }
 
+                if ( isset( $_POST[ 'b3_remove_user_meta_seen' ] ) && 1 == $_POST[ 'b3_remove_user_meta_seen' ] ) {
+                    do_action( 'b3_remove_welcome_page_meta' );
+                }
+
                 if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == $_POST[ 'b3_use_popup' ] ) {
                     update_option( 'b3_use_popup', 1 );
                 } else {

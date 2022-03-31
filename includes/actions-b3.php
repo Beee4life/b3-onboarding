@@ -744,3 +744,30 @@
         b3_get_template( $element, $attributes, $current_user_object);
     }
     add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );
+    
+    
+    /**
+     * Remove welcome page meta
+     *
+     * @since 3.4.0
+     *
+     * @return void
+     */
+    function b3_remove_welcome_page_meta() {
+        $user_args = [
+            'fields' => 'ids',
+            'meta_query' => [
+                [
+                    'key'   => 'b3_welcome_page_seen',
+                    'value' => 'true',
+                ],
+            ],
+        ];
+        $users = get_users( $user_args );
+        if ( ! empty( $users ) ) {
+            foreach( $users as $user_id ) {
+                delete_user_meta( $user_id, 'b3_welcome_page_seen' );
+            }
+        }
+    }
+    add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );
