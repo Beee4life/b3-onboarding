@@ -42,12 +42,17 @@
             'b3_message_above_new_blog'                => array( 'string' ),
             'b3_message_above_registration'            => array( 'string' ),
             'b3_message_above_request_access'          => array( 'string' ),
+            'b3_new_site_created_message'              => array( 'string' ),
             'b3_new_user_message'                      => array( 'string' ),
             'b3_new_user_notification_addresses'       => array( 'email' ),
             'b3_new_user_subject'                      => array( 'string' ),
+            'b3_new_wpmu_user_message_admin'           => array( 'string' ),
+            'b3_new_wpmu_user_subject_admin'           => array( 'string' ),
             'b3_notification_sender_email'             => array( 'email' ),
             'b3_notification_sender_name'              => array( 'string' ),
             'b3_privacy_text'                          => array( 'string' ),
+            'b3_recaptcha_public'                      => array( 'string' ),
+            'b3_recaptcha_secret'                      => array( 'string' ),
             'b3_redirect_after_register'               => array( 'url' ),
             'b3_register_for'                          => array( 'string' ),
             'b3_registration_access_requested_message' => array( 'string' ),
@@ -66,19 +71,16 @@
             'b3_welcome_user_message_manual'           => array( 'string' ),
             'b3_welcome_user_subject'                  => array( 'string' ),
             'b3_widget_links'                          => array( 'array' ),
+            'b3_wpmu_activate_user_blog_message'       => array( 'string' ),
+            'b3_wpmu_activate_user_blog_subject'       => array( 'string' ),
             'b3_wpmu_activate_user_message'            => array( 'string' ),
             'b3_wpmu_activate_user_subject'            => array( 'string' ),
             'b3_wpmu_user_activated_message'           => array( 'string' ),
             'b3_wpmu_user_activated_subject'           => array( 'string' ),
-            
+
             // add on site
-            'b3_new_site_created_message'              => array( 'string' ),
-            'b3_new_wpmu_user_message_admin'           => array( 'string' ),
-            'b3_new_wpmu_user_subject_admin'           => array( 'string' ),
-            'b3_recaptcha_public'                      => array( 'string' ),
-            'b3_recaptcha_secret'                      => array( 'string' ),
-            'b3_wpmu_activate_user_blog_message'       => array( 'string' ),
-            'b3_wpmu_activate_user_blog_subject'       => array( 'string' ),
+            'b3_localhost_blogname'                    => array( 'string' ),
+            'b3_localhost_blogtitle'                   => array( 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {
