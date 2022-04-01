@@ -278,7 +278,7 @@
                 ob_start();
                 if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
             ?>
-                <div class="b3_form-element b3_form-element--site-fields">
+                <div class="b3_site-fields">
                     <?php
                         if ( false === $register_for || 'blog' == $register_for ) {
                             $b3_message_above_new_blog = esc_html__( 'Here you can register your new site.', 'b3-onboarding' );
