@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.4.0 - released 31.03.21
+3.5.0 - released xx.04.21
 
 <a name="features"></a>
 ### Features
@@ -148,7 +148,10 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.4.0 - 31.03.22
+3.5.0 - xx.04.22
+* fix multisite registration forms
+
+* 3.4.0 - 31.03.22
 * add new template: lostpassword/email
 * add new filters
 * improve localhost values in forms
