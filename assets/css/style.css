@@ -82,6 +82,7 @@
 
 .b3_page form input[name="b3_privacy_accept"] {
     margin-left: 0;
+    margin-top:  0.5rem;
 }
 
 .b3_page form input#rememberme {
@@ -118,12 +119,21 @@
 }
 
 .b3_form-element--pooh {
-    display: none;
+    display: none !important;
 }
 
 /* Label on password reset input */
 .b3_page .b3_form-label--email {
     width: 150px;
+}
+
+.b3_site-fields {
+    margin-top: 2rem;
+}
+
+.b3_site-fields-header {
+    font-weight: bold;
+    font-size: 1.25rem;
 }
 
 .b3_input-options {
@@ -310,6 +320,10 @@ ul.b3_form-links li:last-child {
         display:   inline-block;
         width:     initial;
         min-width: 220px;
+    }
+
+    .b3_page form input[name="b3_privacy_accept"] {
+        margin-top: 0;
     }
 
     .b3_table--account tr td:first-child {
