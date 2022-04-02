@@ -45,7 +45,7 @@
                         <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php checked($activate_custom_emails); ?>/>
                         <?php
                             if ( 1 == $activate_custom_emails ) {
-                                esc_html_e( 'Uncheck this box to activate your own email styling and template.', 'b3-onboarding' );
+                                esc_html_e( 'Uncheck this box to deactivate your own email styling and template.', 'b3-onboarding' );
                             } else {
                                 esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' );
                             }
@@ -61,7 +61,7 @@
                         <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/>
                         <?php
                             if ( 1 == $logo_in_email ) {
-                                esc_html_e( 'Uncheck this box to activate a logo in the email header (of the default template).', 'b3-onboarding' );
+                                esc_html_e( 'Uncheck this box to disable the logo in the email header (of the default template).', 'b3-onboarding' );
                             } else {
                                 esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' );
                             }
