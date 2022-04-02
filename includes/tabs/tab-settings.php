@@ -42,7 +42,14 @@
                         <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/> <?php esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
+                        <?php
+                            if ( 1 == $disable_action_links ) {
+                                esc_html_e( 'Uncheck this box to show the action links on custom forms.', 'b3-onboarding' );
+                            } else {
+                                esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' );
+                            }
+                        ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -51,7 +58,8 @@
                         <label for="b3_activate_welcome_page"><?php esc_html_e( 'Welcome page', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/> <?php esc_html_e( "Check this box to redirect the user to a 'welcome' page after his first login.", 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/>
+                        <?php esc_html_e( "Check this box to redirect the user to a 'welcome' page after his first login.", 'b3-onboarding' ); ?>
                         <?php $hide_welcome_page_note = ( 1 == $activate_welcome_page ) ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--welcome<?php echo $hide_welcome_page_note; ?>">
                             <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url('https://b3onboarding.berryplasman.com/filter/b3_welcome_page/'), esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
@@ -65,7 +73,8 @@
                             <label for="b3_remove_user_meta_seen"><?php esc_html_e( "Remove 'welcome_page_seen' meta", 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_remove_user_meta_seen" name="b3_remove_user_meta_seen" value="1"/> <?php esc_html_e( "Check this box to clear the 'welcome_page_seen' meta for all users, so you can show a new page.", 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_remove_user_meta_seen" name="b3_remove_user_meta_seen" value="1"/>
+                            <?php esc_html_e( "Check this box to clear the 'welcome_page_seen' meta for all users, so you can show a new page.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -75,7 +84,14 @@
                         <label for="b3_use_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php checked($use_popup); ?>/> <?php esc_html_e( 'Check this box to show the login form in a popup (right now only available for the login link in the B3 widget).', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php checked($use_popup); ?>/>
+                        <?php
+                            if ( 1 == $use_popup ) {
+                                esc_html_e( 'Uncheck this box to disable the login form in a popup (in the sidebar widget).', 'b3-onboarding' );
+                            } else {
+                                esc_html_e( 'Check this box to show the login form in a popup (only available for the login link in the B3 widget).', 'b3-onboarding' );
+                            }
+                        ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -84,10 +100,19 @@
                         <label for="b3_activate_filter_validation"><?php esc_html_e( 'Activate filter validation', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/> <?php esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' ); ?> <?php esc_html_e( "Don't leave it on longer than needed, because it's fairly cpu intensive.", 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/>
+
+                        <?php
+                            if ( 1 == $activate_filter_validation ) {
+                                esc_html_e( 'Uncheck this box to deactivate filter validation.', 'b3-onboarding' );
+                            } else {
+                                esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' );
+                            }
+                        ?>
+
                         <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo $hide_validation_note; ?>">
-                            <?php esc_html_e( 'Don\'t forget to turn it of later on, the validation is a bit cpu intensive.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( 'Don\'t forget to turn it of later on, the validation can cause a higher load time.', 'b3-onboarding' ); ?>
                         </div>
                     </div>
                 <?php b3_get_close(); ?>
@@ -98,7 +123,8 @@
                             <label for="b3_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_debug_info" name="b3_debug_info" value="1" <?php checked($debug_info); ?>/> <?php esc_html_e( "Check this box to 'show' the debug page.", 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_debug_info" name="b3_debug_info" value="1" <?php checked($debug_info); ?>/>
+                            <?php esc_html_e( "Check this box to 'show' the debug page.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -108,7 +134,14 @@
                         <label for="b3_preserve_settings"><?php esc_html_e( 'Preserve settings', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php checked($debug_info); ?>/> <?php esc_html_e( 'When removing the plugin, all data is removed. To prevent this from happening, check this box.', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php checked($debug_info); ?>/>
+                        <?php
+                            if ( 1 == $preserve_settings ) {
+                                esc_html_e( 'To remove the data upon plugin removal, uncheck this box.', 'b3-onboarding' );
+                            } else {
+                                esc_html_e( 'When removing the plugin, all data is removed. To prevent this from happening, check this box.', 'b3-onboarding' );
+                            }
+                        ?>
                     </div>
                 <?php b3_get_close(); ?>
 
