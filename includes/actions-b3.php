@@ -452,7 +452,7 @@
                     break;
 
                 case 'lostpassword':
-                    $links[] = $values[ 'lostpassword' ];
+                    $links[] = $values[ 'login' ];
                     if ( 'none' != get_option( 'b3_registration_type' ) ) {
                         $links[] = $values[ 'register' ];
                     }
