@@ -79,7 +79,9 @@
                     </ul>
                     <sup>&sup1;</sup> ' . esc_html__( 'available in every email', 'b3-onboarding' ) . '
                     <br>
-                    <sup>&sup2;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' )
+                    <sup>&sup2;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' ) .
+                    sprintf( '<p>%s</p>', sprintf( 'You can also find all variables %s.', sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/email-variables/' ), esc_html__( 'on our website' ) ) ) )
+
             );
             $emails_message = ob_get_clean();
 
