@@ -152,6 +152,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * fix styling multisite registration forms
 * add new localhost filters for multisite
 * add recaptcha theme
+* optimize register form
 
 * 3.4.0 - 31.03.22
 * add new template: lostpassword/email
