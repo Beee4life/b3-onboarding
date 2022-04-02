@@ -418,7 +418,6 @@
      */
     function b3_users_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_users_nonce' ] ) ) {
-
             if ( ! wp_verify_nonce( $_POST[ 'b3_users_nonce' ], 'b3-users-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
@@ -431,25 +430,33 @@
                 }
 
                 if ( ! is_multisite() ) {
-                    if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
-                        $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
-                        $new_value       = explode( ' ', $sanitized_value );
-                        update_option( 'b3_disallowed_usernames', $new_value );
+                    if ( isset( $_POST[ 'b3_restrict_usernames' ] ) && 1 == $_POST[ 'b3_restrict_usernames' ] ) {
+                        update_option( 'b3_restrict_usernames', 1 );
+                        
+                        if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
+                            $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
+                            $new_value       = explode( ' ', $sanitized_value );
+                            update_option( 'b3_disallowed_usernames', $new_value );
+                        } else {
+                            delete_option( 'b3_disallowed_usernames' );
+                        }
                     } else {
+                        delete_option( 'b3_restrict_usernames' );
                         delete_option( 'b3_disallowed_usernames' );
                     }
                 }
 
-                if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
-                    $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_domains' ] );
-                    $new_value       = explode( ' ', $sanitized_value );
-                    update_option( 'b3_disallowed_domains', $new_value );
-                } else {
-                    delete_option( 'b3_disallowed_domains' );
-                }
-
+                // @TODO: check if should be kept out of MS
                 if ( isset( $_POST[ 'b3_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_domain_restrictions' ] ) ) {
                     update_option( 'b3_domain_restrictions', $_POST[ 'b3_domain_restrictions' ] );
+                    
+                    if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
+                        $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_domains' ] );
+                        $new_value       = explode( ' ', $sanitized_value );
+                        update_option( 'b3_disallowed_domains', $new_value );
+                    } else {
+                        delete_option( 'b3_disallowed_domains' );
+                    }
                 } else {
                     delete_option( 'b3_disallowed_domains' );
                     delete_option( 'b3_domain_restrictions' );
