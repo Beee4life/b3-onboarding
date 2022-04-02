@@ -1,6 +1,7 @@
 (function($) {
     $(document).ready(function() {
 
+        wp.codeEditor.initialize($('#b3__input--email-styling'), cm_settings);
         wp.codeEditor.initialize($('#b3__input--email-template'), cm_settings);
 
         // Fold-outs
