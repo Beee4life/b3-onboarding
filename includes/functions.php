@@ -684,6 +684,7 @@
      * @return array
      */
     function b3_get_disallowed_usernames() {
+        // @TODO: apply user input
         $filtered_names = apply_filters( 'b3_reserved_usernames', b3_get_default_reserved_user_names() );
 
         return $filtered_names;
@@ -701,6 +702,18 @@
         $passwords = apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
     
         return $passwords;
+    }
+
+
+    /**
+     * Get blocked domain names
+     *
+     * @since 3.5.0
+     *
+     * @return mixed|void
+     */
+    function b3_get_blocked_domain_names() {
+        $domain_names = apply_filters( '', get_option( 'b3_disallowed_domains' ) );
     }
 
 
