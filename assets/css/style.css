@@ -110,6 +110,11 @@
     align-items: flex-start;
 }
 
+.b3_form-element-my-sites .site-links ul,
+.b3_form-element-my-sites .site-links ul li {
+    margin: 0;
+}
+
 .b3_form-element--delete div {
     margin-top: 1rem;
 }

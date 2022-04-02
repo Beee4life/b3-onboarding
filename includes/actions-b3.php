@@ -719,10 +719,12 @@
                     echo '</li>';
                 }
                 $links = ob_get_clean();
+                
                 if ( false != $links ) {
-                    $list  = sprintf( '<ul>%s</ul>', $links );
                     $label = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s<div class="site-links">%s</div></div>', $label, $list );
+                    $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
+                    $links = sprintf( '<div class="site-links">%s</div>', $list );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, $links );
                 }
             }
         }
