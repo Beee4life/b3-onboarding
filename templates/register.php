@@ -10,15 +10,14 @@
     }
 
     do_action( 'b3_add_form_messages', $attributes );
-    
+
     if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != $_REQUEST[ 'registered' ] ) {
 ?>
-<div id="b3-register" class="b3_page b3_page--register">
-    <?php echo ( isset( $attributes[ 'title' ] ) ) ? sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ) : false; ?>
+    <div id="b3-register" class="b3_page b3_page--register">
+        <?php echo ( isset( $attributes[ 'title' ] ) ) ? sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ) : false; ?>
 
-    <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
-        <?php do_action( 'b3_register_form', $attributes ); ?>
-    </form>
-
-</div>
+        <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
+            <?php do_action( 'b3_register_form', $attributes ); ?>
+        </form>
+    </div>
 <?php } ?>
