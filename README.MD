@@ -154,17 +154,17 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * add recaptcha theme
 * optimize register form
 
-* 3.4.0 - 31.03.22
+3.4.0 - 31.03.22
 * add new template: lostpassword/email
 * add new filters
 * improve localhost values in forms
 * change notice text lost password form
-* 'limit' link color to email content
+* restrict link color to email content
 * fix replace var %user_login%
 * remove redundant new line in email template
 * remove %site_url% from explanation (not used anymore)
 
-* 3.3.0 - 29.03.22
+3.3.0 - 29.03.22
 * improved welcome page redirect
 * get translated ID of privacy page if WPML is active
 
