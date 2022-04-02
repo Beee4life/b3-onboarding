@@ -40,12 +40,6 @@
                     }
                 }
 
-                if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
-                    update_option( 'b3_register_email_only', 1 );
-                } else {
-                    delete_option( 'b3_register_email_only' );
-                }
-
                 if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) && 1 == $_POST[ 'b3_activate_custom_passwords' ] ) {
                     update_option( 'b3_activate_custom_passwords', 1 );
                 } else {
@@ -64,7 +58,15 @@
                     delete_option( 'b3_activate_first_last' );
                     delete_option( 'b3_first_last_required' );
                 }
-
+    
+                if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
+                    update_option( 'b3_register_email_only', 1 );
+                    delete_option( 'b3_activate_first_last' );
+                    delete_option( 'b3_first_last_required' );
+                } else {
+                    delete_option( 'b3_register_email_only' );
+                }
+    
                 if ( isset( $_POST[ 'b3_redirect_set_password' ] ) && 1 == $_POST[ 'b3_redirect_set_password' ] ) {
                     update_option( 'b3_redirect_set_password', 1 );
                 } else {
