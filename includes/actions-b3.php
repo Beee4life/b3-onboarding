@@ -663,7 +663,7 @@
      *
      * @return void
      */
-    function b3_before_account( $attributes, $current_user ) {
+    function b3_do_before_account( $attributes, $current_user ) {
         if ( is_multisite() ) {
             $user_sites = get_blogs_of_user( $current_user->ID );
 
@@ -696,7 +696,7 @@
             }
         }
     }
-    add_action( 'b3_before_account', 'b3_before_account', 10, 2 );
+    add_action( 'b3_do_before_account', 'b3_do_before_account', 10, 2 );
 
 
     /**

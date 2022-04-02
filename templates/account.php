@@ -20,7 +20,6 @@
     <?php } ?>
 
     <form id="accountform" action="<?php echo b3_get_account_url(); ?>" method="post">
-        <?php do_action( 'b3_before_account', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_do_before_account', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'account/hidden-fields', $attributes, $current_user_object ); ?>
         <?php do_action( 'b3_render_form_element', 'account/user-id', $attributes, $current_user_object ); ?>
