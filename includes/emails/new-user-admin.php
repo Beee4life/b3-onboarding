@@ -56,8 +56,6 @@
             <?php echo b3_get_preview_link( 'new-user-admin' ); ?>
         </th>
         <td>
-            <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %user_ip%, %user_login%
-            <br><br>
             <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_default_new_user_admin_message() ); ?>" rows="6"><?php echo stripslashes( $new_user_email_message ); ?></textarea>
         </td>
     </tr>
