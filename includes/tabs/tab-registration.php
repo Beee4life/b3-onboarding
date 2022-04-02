@@ -47,11 +47,8 @@
                         <label for="b3_registration_type"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
         
-                    <?php if ( is_multisite() ) { ?>
-                        <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', network_admin_url( 'settings.php' ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
-                    <?php } else { ?>
-                        <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php' ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
-                    <?php } ?>
+                    <?php $admin_url = is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'options-general.php' ); ?>
+                    <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $admin_url, esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
     
                     <div class="b3_settings-input b3_settings-input--select">
                         <select name="b3_registration_type" id="b3_registration_type">
@@ -88,7 +85,14 @@
                                 <label for="b3_register_email_only"><?php esc_html_e( 'Register with email address only', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php checked($registration_with_email_only); ?>/> <?php esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php checked($registration_with_email_only); ?>/>
+                                <?php
+                                    if ( 1 == $registration_with_email_only ) {
+                                        esc_html_e( 'Uncheck this box to register with only an email address.', 'b3-onboarding' );
+                                    } else {
+                                        esc_html_e( 'Check this box to register with only an email address.', 'b3-onboarding' );
+                                    }
+                                ?>
                             </div>
                         <?php b3_get_close(); ?>
 
@@ -98,7 +102,14 @@
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php checked($custom_passwords); ?>/> <?php esc_html_e( 'Check this box to activate custom passwords.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php checked($custom_passwords); ?>/>
+                                <?php
+                                    if ( 1 == $custom_passwords ) {
+                                        esc_html_e( 'Uncheck this box to activate custom passwords.', 'b3-onboarding' );
+                                    } else {
+                                        esc_html_e( 'Check this box to activate custom passwords.', 'b3-onboarding' );
+                                    }
+                                ?>
                             </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>
@@ -111,7 +122,14 @@
                                 <label for="b3_activate_first_last"><?php esc_html_e( 'Activate first and last name', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php checked($first_last); ?>/> <?php esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php checked($first_last); ?>/>
+                                <?php
+                                    if ( 1 == $first_last ) {
+                                        esc_html_e( 'Uncheck this box to activate first and last name during registration.', 'b3-onboarding' );
+                                    } else {
+                                        esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' );
+                                    }
+                                ?>
                             </div>
                         <?php b3_get_close(); ?>
 
@@ -121,7 +139,14 @@
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php checked($first_last_required); ?>/> <?php esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_first_last_required" name="b3_first_last_required" value="1" <?php checked($first_last_required); ?>/>
+                                <?php
+                                    if ( 1 == $first_last_required ) {
+                                        esc_html_e( 'Uncheck this box to make first and last name required.', 'b3-onboarding' );
+                                    } else {
+                                        esc_html_e( 'Check this box to make first and last name required.', 'b3-onboarding' );
+                                    }
+                                ?>
                             </div>
                         <?php b3_get_close(); ?>
                     </div>
@@ -133,7 +158,14 @@
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php checked($redirect_set_password); ?>/> <?php esc_html_e( 'Check this box to redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' ); ?>
+                                <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php checked($redirect_set_password); ?>/>
+                                <?php
+                                    if ( 1 == $recaptcha ) {
+                                        esc_html_e( 'Uncheck this box to redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' );
+                                    } else {
+                                        esc_html_e( 'Check this box to redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' );
+                                    }
+                                ?>
                             </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>

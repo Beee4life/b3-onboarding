@@ -23,6 +23,7 @@
         if ( is_array( $disallowed_usernames_array ) && ! empty( $disallowed_usernames_array ) ) {
             $disallowed_usernames = implode( ' ', $disallowed_usernames_array );
         }
+        $username_restrictions   = get_option( 'b3_restrict_usernames' );
         $domain_restrictions     = get_option( 'b3_domain_restrictions' );
         $front_end_approval      = get_option( 'b3_front_end_approval' );
         $front_end_approval_page = get_option( 'b3_approval_page_id' );
@@ -46,7 +47,6 @@
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
-            <?php $hide_for_multisite = ( is_multisite() ) ? true : false; ?>
             <?php $hide_front_end_approval = ( 'request_access' == $registration_type ) ? false : 'hidden'; ?>
             <?php b3_get_settings_field_open( false, $hide_front_end_approval ); ?>
                 <?php b3_get_label_field_open(); ?>
@@ -94,13 +94,23 @@
             <?php b3_get_close(); ?>
 
             <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
+                <?php $hide_username_settings = ( 1 == $username_restrictions ) ? false : true; ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
-                        <label for="b3_disallowed_usernames"><?php esc_html_e( 'Disallowed user names', 'b3-onboarding' ); ?></label>
+                        <label for="b3_restrict_usernames"><?php esc_html_e( 'Disallow user names', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--text">
+                        <input type="checkbox" id="b3_restrict_usernames" name="b3_restrict_usernames" value="1" <?php checked($username_restrictions); ?>/> <?php esc_html_e( 'Check this box to block certain user names from registering.', 'b3-onboarding' ); ?>
+                    </div>
+                <?php b3_get_close(); ?>
+    
+                <?php b3_get_settings_field_open( false, $hide_username_settings, 'username-restrictions' ); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_disallowed_usernames"><?php esc_html_e( 'User names', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--text">
                         <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
-                        <?php if ( $disallowed_usernames ) { ?>
+                        <?php if ( $username_restrictions ) { ?>
                             <?php echo sprintf( '<div><small>(%s)</small></div>', esc_html__( 'separate multiple user names with a space', 'b3-onboarding' ) ); ?>
                         <?php } ?>
                     </div>
@@ -109,7 +119,7 @@
                 <?php $hide_domain_settings = ( 1 == $domain_restrictions ) ? false : true; ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
-                        <label for="b3_domain_restrictions"><?php esc_html_e( 'Restrict domains', 'b3-onboarding' ); ?></label>
+                        <label for="b3_domain_restrictions"><?php esc_html_e( 'Disallow domains', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_domain_restrictions" name="b3_domain_restrictions" value="1" <?php checked($domain_restrictions); ?>/> <?php esc_html_e( 'Check this box to block certain domains from registering.', 'b3-onboarding' ); ?>
@@ -118,7 +128,7 @@
 
                 <?php b3_get_settings_field_open( false, $hide_domain_settings, 'domain-restrictions' ); ?>
                     <?php b3_get_label_field_open(); ?>
-                        <label for="b3_disallowed_domains"><?php esc_html_e( 'Restricted domains', 'b3-onboarding' ); ?></label>
+                        <label for="b3_disallowed_domains"><?php esc_html_e( 'Domain names', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--text">
                         <?php echo sprintf( '<div>%s</div>', esc_html__( 'Email addresses from these domains are not allowed to register.', 'b3-onboarding' )); ?>

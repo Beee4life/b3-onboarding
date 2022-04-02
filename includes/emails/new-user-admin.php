@@ -25,7 +25,12 @@
     <?php } ?>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( "Enter the email addresses (searated by comma) which should receive the notification email. If no email is entered, it will be sent to the administrator's email address.", "b3-onboarding" ); ?>
+            <?php esc_html_e( "Enter the email addresses (searated by comma) which should receive the notification email.", "b3-onboarding" ); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php esc_html_e( 'If a field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -34,11 +39,6 @@
         </th>
         <td>
             <input id="b3__input--new-user-notification-addresses" name="b3_new_user_notification_addresses" placeholder="<?php echo esc_attr( get_site_option( 'admin_email' ) ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_addresses ); ?>" />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <?php esc_html_e( 'If a field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -65,7 +65,14 @@
         <th>&nbsp;</th>
         <td>
             <label>
-                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/> <?php esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' ); ?>
+                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/>
+                <?php
+                    if ( 1 == $disable_admin_notification ) {
+                        esc_html_e( 'Enable admin notification on new user registration', 'b3-onboarding' );
+                    } else {
+                        esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' );
+                    }
+                ?>
             </label>
         </td>
     </tr>

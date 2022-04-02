@@ -44,7 +44,14 @@
         <th>&nbsp;</th>
         <td>
             <label>
-                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/> <?php esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' ); ?>
+                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/>
+                <?php
+                    if ( 1 == $disable_admin_notification ) {
+                        esc_html_e( 'Enable admin notification on new user registration', 'b3-onboarding' );
+                    } else {
+                        esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' );
+                    }
+                ?>
             </label>
         </td>
     </tr>
