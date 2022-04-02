@@ -440,6 +440,10 @@ ul.b3_integrations--list {
   width:   100%;
 }
 
+#tab-panel-b3-emails.help-tab-content ul li {
+  margin-bottom: 0;
+}
+
 /* Because load-styles.php is not loaded */
 .metabox-handler .b3_foldout--header,
 .metabox-handler > h3,
