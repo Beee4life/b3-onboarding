@@ -133,7 +133,7 @@
 
 .b3_site-fields-header {
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size:   1.25rem;
 }
 
 .b3_input-options {
@@ -303,6 +303,10 @@ ul.b3_form-links li:last-child {
         align-items: center;
     }
 
+    .b3_site-domain {
+        margin-top: 0.5rem;
+    }
+
     .b3_page .b3_form-label {
         display: inline-block;
         width:   200px;
@@ -342,6 +346,12 @@ ul.b3_form-links li:last-child {
 }
 
 @media screen and ( min-width: 1024px ) {
+
+    .b3_site-domain {
+        display:    inline-block;
+        margin-top: 0;
+    }
+
     .b3_table--account tr td:first-child {
         width: 200px;
     }
