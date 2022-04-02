@@ -62,8 +62,8 @@
                         $message = '<p class="b3_message b3_message--success">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
                         $message .= '<br>';
-                        $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
-                        $message .= '<a href="' . esc_url( $home_url ) . '">' . esc_url( $home_url ) . '</a>';
+                        $message .= esc_html__( 'Visit it on', 'b3-onboarding' ) . ': ';
+                        $message .= sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), esc_url( $home_url ) );
                         $message .= '<br>';
                         $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $message .= '</p>';
