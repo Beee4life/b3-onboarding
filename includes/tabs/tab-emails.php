@@ -51,6 +51,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/> <?php esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
+                        <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--logo hidden">%s</div>', esc_html__( 'Image can be set on the "Settings" tab.','b3-onboarding' ) ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 

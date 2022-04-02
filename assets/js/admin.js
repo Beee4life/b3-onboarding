@@ -44,6 +44,10 @@
             $('.b3_settings-input-description--recaptcha').toggle();
         });
 
+        $('#b3_logo_in_email').change(function() {
+            $('.b3_settings-input-description--logo').toggle();
+        });
+
         $('#b3_activate_frontend_approval').change(function() {
             $($front_end_approval).toggle();
         });
