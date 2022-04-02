@@ -21,11 +21,8 @@
         $use_popup                  = get_option( 'b3_use_popup', false );
 
         ob_start();
+        echo sprintf( '<h2>%s</h2>', esc_html__( 'Settings', 'b3-onboarding' ) );
         ?>
-        <h2>
-            <?php esc_html_e( 'Settings', 'b3-onboarding' ); ?>
-        </h2>
-
         <p>
             <?php if ( is_main_site() ) { ?>
                 <?php esc_html_e( "Here you can set some settings for the plugin (which didn't fit on other tabs).", 'b3-onboarding' ); ?>
@@ -36,7 +33,6 @@
 
         <form action="admin.php?page=b3-onboarding&tab=settings" method="post">
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
-
             <?php if ( is_main_site() ) { ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
@@ -161,15 +157,11 @@
             <?php } ?>
 
             <?php if ( false == apply_filters( 'b3_main_logo', false ) ) { ?>
-                <h2>
-                    <?php esc_html_e( 'Logo', 'b3-onboarding' ); ?>
-                </h2>
+                <?php echo sprintf( '<h2>%s</h2>', esc_html__( 'Logo', 'b3-onboarding' ) ); ?>
 
                 <?php b3_get_settings_field_open(); ?>
                     <div id="b3-main-logo-settings">
-                        <p>
-                            <?php esc_html_e( "This is the logo used in email headers.", 'b3-onboarding' ); ?>
-                        </p>
+                        <?php echo sprintf( '<p>%s</p>', esc_html__( "This is the logo used in email headers.", 'b3-onboarding' ) ); ?>
                         <p>
                             <label>
                                 <input type="url" name="b3_main_logo" id="b3_main_logo" value="<?php echo esc_url( $main_logo ); ?>" />

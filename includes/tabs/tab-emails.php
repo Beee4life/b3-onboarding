@@ -20,10 +20,8 @@
         $hide_logo_notice       = $logo_in_email ? false : ' hidden';
 
         ob_start();
+        echo sprintf( '<h2>%s</h2>', esc_html__( 'Emails', 'b3-onboarding' ) );
         ?>
-        <h2>
-            <?php esc_html_e( 'Emails', 'b3-onboarding' ); ?>
-        </h2>
 
         <p>
             <?php if ( is_main_site() ) { ?>
