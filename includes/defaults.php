@@ -684,3 +684,47 @@
 
         return apply_filters( 'b3_default_greetings', $greetings );
     }
+    
+    
+    /**
+     * Get default reserved names
+     *
+     * @since 3.5.0
+     */
+    function b3_get_default_reserved_user_names() {
+        $default_reserved_names = array(
+            'admin',
+            'administrator',
+            'www',
+            'web',
+            'root',
+            'main',
+            'invite',
+            'files',
+        );
+        
+        return $default_reserved_names;
+    }
+    
+    
+    /**
+     * Get 'easy' passwords
+     *
+     * @since 3.5.0
+     *
+     * @return mixed|void
+     */
+    function b3_get_default_easy_passwords() {
+        $default_passwords = array(
+            '1234',
+            '000000',
+            '111111',
+            '123456',
+            '12345678',
+            'abcdef',
+            'password',
+            'wachtwoord',
+        );
+        
+        return $default_passwords;
+    }
