@@ -199,7 +199,7 @@
 
                 wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
-    
+
                 wp_localize_script( 'b3ob', 'b3ob_vars',
                     array(
                         'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
@@ -214,7 +214,7 @@
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
-    
+
                 // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // Bail out early if we are not on a page add/edit screen.
                 if ( ! ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) ) {
@@ -1053,7 +1053,7 @@
                             $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
                             return $errors;
-                            
+
                         } elseif ( $_POST[ 'pass1' ] == $_POST[ 'pass2' ] ) {
                             // Passwords are OK
                             $hashed_password          = wp_hash_password( $_POST[ 'pass1' ] );
@@ -1175,13 +1175,16 @@
                     }
                 }
 
-                ob_start();
-                do_action( 'b3_do_before_template', $template_name );
-                include $location . $template_name . '.php';
-                do_action( 'b3_do_after_template', $template_name );
-                $html = ob_get_clean();
+                if ( file_exists( $location . $template_name . '.php' ) ) {
+                    ob_start();
+                    do_action( 'b3_do_before_template', $template_name );
+                    include $location . $template_name . '.php';
+                    do_action( 'b3_do_after_template', $template_name );
 
-                return $html;
+                    return ob_get_clean();
+                }
+
+                return '';
             }
 
 
