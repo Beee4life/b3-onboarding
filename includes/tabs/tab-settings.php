@@ -17,6 +17,7 @@
         $disable_action_links       = get_option( 'b3_disable_action_links' );
         $debug_info                 = get_option( 'b3_debug_info' );
         $main_logo                  = get_option( 'b3_main_logo' );
+        $preserve_settings          = get_option( 'b3_preserve_settings' );
         $use_popup                  = get_option( 'b3_use_popup', false );
 
         ob_start();
@@ -134,7 +135,7 @@
                         <label for="b3_preserve_settings"><?php esc_html_e( 'Preserve settings', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php checked($debug_info); ?>/>
+                        <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php checked($preserve_settings); ?>/>
                         <?php
                             if ( 1 == $preserve_settings ) {
                                 esc_html_e( 'To remove the data upon plugin removal, uncheck this box.', 'b3-onboarding' );
