@@ -199,6 +199,12 @@
 
                 wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+    
+                wp_localize_script( 'b3ob', 'b3ob_vars',
+                    array(
+                        'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
+                    )
+                );
             }
 
 
@@ -208,7 +214,7 @@
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
-
+    
                 // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // Bail out early if we are not on a page add/edit screen.
                 if ( ! ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) ) {

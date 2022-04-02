@@ -17,4 +17,10 @@ jQuery(function($){
     $('span.error__close').click(function(e){
         $('p.b3_message').fadeOut(750);
     });
+
+    $theme = 'light';
+    if (typeof(b3ob_vars) != "undefined" && b3ob_vars !== null) {
+        $theme = b3ob_vars.recaptcha_theme;
+    }
+    $( '.g-recaptcha' ).attr( 'data-theme', $theme );
 });

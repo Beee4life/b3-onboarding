@@ -65,7 +65,7 @@ If you use a composer file to add any plugins/libraries. Add the following repos
     "package": {
       "name":    "Beee4life/b3-onboarding",
       "type":    "wordpress-plugin",
-      "version": "3.2.1",
+      "version": "3.5.0",
       "dist":    {
         "type": "zip",
         "url":  "https://github.com/Beee4life/b3-onboarding/archive/master.zip"
@@ -80,7 +80,7 @@ Then run composer require "beee4life/b3-onboarding"
 or add this to the require section by hand:
 
 ```
-"beee4life/b3-onboarding": "3.2.1",
+"beee4life/b3-onboarding": "^3.0",
 ```
 
 and run `composer update`.
@@ -151,6 +151,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 3.5.0 - xx.04.22
 * fix styling multisite registration forms
 * add new localhost filters for multisite
+* add recaptcha theme
 
 * 3.4.0 - 31.03.22
 * add new template: lostpassword/email

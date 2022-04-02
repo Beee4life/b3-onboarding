@@ -37,6 +37,10 @@
                         update_option( 'b3_activate_recaptcha', 1 );
                     } else {
                         delete_option( 'b3_activate_recaptcha' );
+                        delete_option( 'b3_recaptcha_public' );
+                        delete_option( 'b3_recaptcha_secret' );
+                        delete_option( 'b3_recaptcha_theme' );
+                        delete_option( 'b3_recaptcha_version' );
                     }
                 }
 
@@ -503,6 +507,12 @@
                     update_option( 'b3_recaptcha_version', sanitize_text_field( $_POST[ 'b3_recaptcha_version' ] ) );
                 } else {
                     delete_option( 'b3_recaptcha_version' );
+                }
+
+                if ( isset( $_POST[ 'b3_recaptcha_theme' ] ) && ! empty( $_POST[ 'b3_recaptcha_theme' ] ) ) {
+                    update_option( 'b3_recaptcha_theme', sanitize_text_field( $_POST[ 'b3_recaptcha_theme' ] ) );
+                } else {
+                    delete_option( 'b3_recaptcha_theme' );
                 }
 
                 B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );
