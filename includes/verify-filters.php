@@ -31,6 +31,8 @@
             'b3_hide_development_notice'               => array( 'bool' ),
             'b3_link_color'                            => array( 'hex_color' ),
             'b3_localhost'                             => array( 'bool' ),
+            'b3_localhost_blogname'                    => array( 'string' ),
+            'b3_localhost_blogtitle'                   => array( 'string' ),
             'b3_localhost_email'                       => array( 'email' ),
             'b3_localhost_username'                    => array( 'string' ),
             'b3_logged_in_registration_only_message'   => array( 'string' ),
@@ -77,10 +79,6 @@
             'b3_wpmu_activate_user_subject'            => array( 'string' ),
             'b3_wpmu_user_activated_message'           => array( 'string' ),
             'b3_wpmu_user_activated_subject'           => array( 'string' ),
-
-            // add on site
-            'b3_localhost_blogname'                    => array( 'string' ),
-            'b3_localhost_blogtitle'                   => array( 'string' ),
         );
 
         foreach( $custom_filters as $filter => $validation ) {
