@@ -1,6 +1,9 @@
 (function($) {
     $(document).ready(function() {
 
+        wp.codeEditor.initialize($('#b3__input--email-template'), cm_settings);
+
+        // Fold-outs
         var content = ".foldout__content";
         $(content).hide();
 
@@ -24,6 +27,7 @@
             }
         });
 
+        // Toggle fields
         $('#b3_activate_filter_validation').change(function() {
             $('.b3_settings-input-description--validation').toggle();
         });
