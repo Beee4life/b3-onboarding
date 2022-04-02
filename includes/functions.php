@@ -1120,7 +1120,9 @@
             $template = b3_locate_template( $template_name );
 
             do_action( 'b3_do_before_template', $template_name );
-            include $template;
+            if ( file_exists( $template ) ) {
+                include $template;
+            }
             do_action( 'b3_do_after_template', $template_name );
         }
     }
