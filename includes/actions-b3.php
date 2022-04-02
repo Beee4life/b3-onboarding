@@ -184,8 +184,8 @@
      *
      * @since 0.8-beta
      */
-    function b3_first_last_name_fields() {
-        if ( get_option( 'b3_activate_first_last' ) && 1 != get_option( 'b3_register_email_only' ) ) {
+    function b3_first_last_name_fields( $registration_type ) {
+        if ( get_option( 'b3_activate_first_last' ) && 1 != get_option( 'b3_register_email_only' ) && 'blog' != $registration_type ) {
             do_action( 'b3_do_before_first_last_name' );
             ob_start();
             do_action( 'b3_render_form_element', 'register/first-name' );
@@ -709,7 +709,7 @@
     function b3_add_registration_fields( $attributes ) {
         do_action( 'b3_add_hidden_fields_registration', $attributes );
         do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
-        do_action( 'b3_add_first_last_name_fields' );
+        do_action( 'b3_add_first_last_name_fields', $attributes[ 'registration_type' ] );
         do_action( 'b3_add_password_fields' );
         do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
         do_action( 'b3_add_extra_fields_registration' );
