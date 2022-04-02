@@ -774,12 +774,8 @@
     add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );
     
     
-    /*
-     * This file contains functions hooked to the WordPress' hooks
-     */
-    
     /**
-     * Add custom fields to WordPress' default register form hook
+     * Add custom fields to register form hook
      *
      * @since 1.0.0
      */

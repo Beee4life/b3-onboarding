@@ -1,4 +1,8 @@
 <?php
+    /*
+     * This file contains functions hooked to the WordPress' hooks
+     */
+    
     /**
      * Update usermeta after user register
      *
