@@ -150,28 +150,31 @@
      * @return void
      */
     function b3_add_username_email_fields( $registration_type ) {
-        ob_start();
-        if ( is_multisite() ) {
-            do_action( 'b3_render_form_element', 'register/user-login' );
-            do_action( 'b3_render_form_element', 'register/user-email' );
-
-            if ( 'all' == $registration_type ) {
-                do_action( 'b3_render_form_element', 'register/register-for' );
-            } elseif ( in_array( $registration_type, [ 'blog', 'site' ] ) ) { ?>
-                <input type="hidden" name="signup_for" value="blog" />
-            <?php } elseif ( 'user' == $registration_type ) { ?>
-                <input type="hidden" name="signup_for" value="user" />
-            <?php } ?>
-        <?php } else {
-            if ( false == get_option( 'b3_register_email_only' ) ) {
+        if ( 'blog' != $registration_type ) {
+            ob_start();
+            if ( is_multisite() ) {
                 do_action( 'b3_render_form_element', 'register/user-login' );
-            } else { ?>
-                <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
-            <?php }
                 do_action( 'b3_render_form_element', 'register/user-email' );
+
+                if ( 'all' == $registration_type ) {
+                    do_action( 'b3_render_form_element', 'register/register-for' );
+                } elseif ( in_array( $registration_type, [ 'site' ] ) ) { ?>
+                    <input type="hidden" name="signup_for" value="blog" />
+                <?php } elseif ( 'user' == $registration_type ) { ?>
+                    <input type="hidden" name="signup_for" value="user" />
+                <?php
+                }
+            } else {
+                if ( false == get_option( 'b3_register_email_only' ) ) {
+                    do_action( 'b3_render_form_element', 'register/user-login' );
+                } else { ?>
+                    <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
+                <?php }
+                    do_action( 'b3_render_form_element', 'register/user-email' );
+            }
+            $output = ob_get_clean();
+            echo $output;
         }
-        $output = ob_get_clean();
-        echo $output;
     }
     add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
 
@@ -183,14 +186,10 @@
      */
     function b3_first_last_name_fields() {
         if ( get_option( 'b3_activate_first_last' ) && 1 != get_option( 'b3_register_email_only' ) ) {
-
             do_action( 'b3_do_before_first_last_name' );
             ob_start();
-
             do_action( 'b3_render_form_element', 'register/first-name' );
             do_action( 'b3_render_form_element', 'register/last-name' );
-        ?>
-        <?php
             $output = ob_get_clean();
             echo $output;
             do_action( 'b3_do_after_first_last_name' );
@@ -205,7 +204,8 @@
      * @since 0.8-beta
      */
     function b3_add_password_fields() {
-        if ( get_option( 'b3_activate_custom_passwords' ) && in_array( get_option( 'b3_registration_type' ), [ 'email_activation', 'open' ] ) ) {
+        if ( ! is_multisite() && get_option( 'b3_activate_custom_passwords' ) && in_array( get_option( 'b3_registration_type' ), [ 'email_activation', 'open' ] ) ) {
+            do_action( 'b3_do_before_passwords' );
             ob_start();
             ?>
             <div class="b3_form-element b3_form-element--password">
@@ -220,6 +220,7 @@
             <?php
             $results = ob_get_clean();
             echo $results;
+            do_action( 'b3_do_after_passwords' );
         }
     }
     add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
@@ -234,7 +235,7 @@
      * @return void
      */
     function b3_add_site_fields( $registration_type ) {
-        if ( is_multisite() ) {
+        if ( is_multisite() && is_main_site() ) {
             if ( in_array( $registration_type, array(
                     'request_access_subdomain',
                     'blog',
@@ -246,51 +247,10 @@
                 if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
             ?>
                 <div class="b3_site-fields">
-                    <?php
-                        if ( ( false === $register_for || 'blog' == $register_for ) ) {
-                            $b3_message_above_new_blog = esc_html__( 'Here you can register your new site.', 'b3-onboarding' );
-                            $notice                    = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
-                            if ( false !== $notice ) {
-                                echo '<div class="b3_site-fields-header">' . $notice . '</div>';
-                            }
-                        }
-                    ?>
-                    <?php // @TODO: create template ?>
-                    <div class="b3_form-element b3_form-element--subdomain">
-                        <?php $current_network = get_network(); ?>
-                        <?php if ( is_subdomain_install() ) { ?>
-                            <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site (sub) domain', 'b3-onboarding' ); ?></label>
-                            <div>
-                                <input name="blogname" id="blogname" value="<?php echo apply_filters( 'b3_localhost_blogname', false ); ?>" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>" />
-                                <div class="b3_site-domain">.<?php echo $_SERVER[ 'HTTP_HOST' ]; ?></div>
-                            </div>
-                        <?php } else { ?>
-                            <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site address', 'b3-onboarding' ); ?></label>
-                            <?php echo $current_network->domain . $current_network->path; ?><input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'address', 'b3-onboarding' ); ?>" />
-                        <?php } ?>
-                    </div>
-
-                    <?php // @TODO: create template ?>
-                    <div class="b3_form-element b3_form-element--site-title">
-                        <label class="b3_form-label" for="blog_title"><?php esc_html_e( 'Site title', 'b3-onboarding' ); ?></label>
-                        <input name="blog_title" id="blog_title" value="<?php echo apply_filters( 'b3_localhost_blogtitle', false ); ?>" type="text" class="b3_form--input" />
-                    </div>
-
-                    <?php // @TODO: create template ?>
-                    <?php // @TODO: add languages option ?>
-                    <div class="b3_form-element b3_form-element--visbility">
-                        <div class="privacy-intro">
-                            <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
-                            <label class="checkbox" for="blog_public_on">
-                                <input type="radio" id="blog_public_on" name="blog_public" value="1" checked />
-                                <?php _e( 'Yes' ); ?>
-                            </label>
-                            <label class="checkbox" for="blog_public_off">
-                                <input type="radio" id="blog_public_off" name="blog_public" value="0" />
-                                <?php _e( 'No' ); ?>
-                            </label>
-                        </div>
-                    </div>
+                    <?php do_action( 'b3_render_form_element', 'register/site-fields-header' ); ?>
+                    <?php do_action( 'b3_render_form_element', 'register/subdomain' ); ?>
+                    <?php do_action( 'b3_render_form_element', 'register/site-title' ); ?>
+                    <?php do_action( 'b3_render_form_element', 'register/visibility' ); ?>
                 </div>
             <?php
                 }
@@ -748,35 +708,16 @@
      */
     function b3_add_registration_fields( $attributes ) {
         do_action( 'b3_add_hidden_fields_registration', $attributes );
-
-        if ( 'blog' != $attributes[ 'registration_type' ] ) {
-            do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
-        }
+        do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
         do_action( 'b3_add_first_last_name_fields' );
-
-        if ( ! is_multisite() ) {
-            do_action( 'b3_add_password_fields' );
-        } elseif ( is_main_site() ) {
-            do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
-        }
-
+        do_action( 'b3_add_password_fields' );
+        do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
         do_action( 'b3_add_extra_fields_registration' );
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields' );
         do_action( 'b3_do_before_submit_registration_form' );
-
-        $submit_label = esc_attr__( 'Register', 'b3-onboarding' );
-        if ( ! is_multisite() && 'request_access' == $attributes[ 'registration_type' ] ) {
-            $submit_label = esc_attr__( 'Request access', 'b3-onboarding' );
-        }
-        ?>
-
-        <div class="b3_form-element b3_form-element--submit">
-            <?php b3_get_submit_button( $submit_label, 'register', $attributes ); ?>
-        </div>
-
-        <?php
-            do_action( 'b3_do_after_submit_registration_form' );
-            do_action( 'b3_add_action_links', $attributes[ 'template' ] );
+        do_action( 'b3_render_form_element', 'general/button', $attributes );
+        do_action( 'b3_do_after_submit_registration_form' );
+        do_action( 'b3_add_action_links', $attributes[ 'template' ] );
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
