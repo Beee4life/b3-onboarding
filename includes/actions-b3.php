@@ -798,10 +798,9 @@
         do_action( 'b3_add_recaptcha_fields' );
         do_action( 'b3_do_before_submit_registration_form' );
     
+        $submit_label = esc_attr__( 'Register', 'b3-onboarding' );
         if ( ! is_multisite() && 'request_access' == $attributes[ 'registration_type' ] ) {
             $submit_label = esc_attr__( 'Request access', 'b3-onboarding' );
-        } else {
-            $submit_label = esc_attr__( 'Register', 'b3-onboarding' );
         }
         ?>
         
