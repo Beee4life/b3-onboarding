@@ -37,24 +37,24 @@
              * Construct
              */
             function __construct() {
-                if ( ! defined( 'B3_PLUGIN_URL' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
                     $plugin_url = plugins_url( '/', __FILE__ );
-                    define( 'B3_PLUGIN_URL', $plugin_url );
+                    define( 'B3OB_PLUGIN_URL', $plugin_url );
                 }
 
-                if ( ! defined( 'B3_PLUGIN_PATH' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_PATH' ) ) {
                     $plugin_path = dirname( __FILE__ );
-                    define( 'B3_PLUGIN_PATH', $plugin_path );
+                    define( 'B3OB_PLUGIN_PATH', $plugin_path );
                 }
 
-                if ( ! defined( 'B3_PLUGIN_SETTINGS' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_SETTINGS' ) ) {
                     $settings_url = admin_url( 'admin.php?page=b3-onboarding' );
-                    define( 'B3_PLUGIN_SETTINGS', $settings_url );
+                    define( 'B3OB_PLUGIN_SETTINGS', $settings_url );
                 }
 
-                if ( ! defined( 'B3_PLUGIN_SITE' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_SITE' ) ) {
                     $plugin_site = 'https://b3onboarding.berryplasman.com';
-                    define( 'B3_PLUGIN_SITE', $plugin_site );
+                    define( 'B3OB_PLUGIN_SITE', $plugin_site );
                 }
 
                 $this->settings = array(
@@ -241,7 +241,7 @@
              */
             public function b3_add_admin_pages() {
                 include 'admin/admin-page.php';
-                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                     include 'admin/user-approval-page.php';
@@ -253,8 +253,8 @@
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
                 }
             }
-    
-    
+
+
             /**
              * Redirect user away from certain pages
              */
@@ -266,7 +266,7 @@
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
-        
+
                 if ( is_page() ) {
                     $current_page = get_post( get_the_ID() );
                     if ( false != $account_page_id ) {
@@ -275,7 +275,7 @@
                             $redirect_url = $login_url;
                         }
                     }
-            
+
                     if ( false != $approval_page_id && $current_page->ID == $approval_page_id ) {
                         if ( is_user_logged_in() ) {
                             if ( ! current_user_can( 'promote_users' ) ) {
@@ -286,13 +286,13 @@
                             $redirect_url = $login_url;
                         }
                     }
-            
+
                     if ( false != $logout_page_id && $current_page->ID == $logout_page_id ) {
                         check_admin_referer( 'logout' );
-                
+
                         $user = wp_get_current_user();
                         wp_logout();
-                
+
                         if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
                             $redirect_to           = $_REQUEST[ 'redirect_to' ];
                             $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
@@ -300,10 +300,10 @@
                             $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
                             $requested_redirect_to = '';
                         }
-                
+
                         $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
                     }
-            
+
                     if ( is_home() || is_front_page() ) {
                         if ( isset( $_REQUEST[ 'logout' ] ) ) {
                             check_admin_referer( 'logout' );
@@ -314,7 +314,7 @@
                         }
                     }
                 }
-        
+
                 if ( isset( $redirect_url ) ) {
                     wp_safe_redirect( $redirect_url );
                     exit;
@@ -1173,7 +1173,7 @@
 
                 if ( 'user-management' == $template_name ) {
                     $template_paths = array(
-                        B3_PLUGIN_PATH . '/templates/',
+                        B3OB_PLUGIN_PATH . '/templates/',
                     );
                 } else {
                     $template_paths = b3_get_template_paths();

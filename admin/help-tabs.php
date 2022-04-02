@@ -80,7 +80,7 @@
                     <sup>&sup1;</sup> ' . esc_html__( 'available in every email', 'b3-onboarding' ) . '
                     <br>
                     <sup>&sup2;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' ) .
-                    sprintf( '<p>%s</p>', sprintf( 'You can also find all variables %s.', sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/email-variables/' ), esc_html__( 'on our website' ) ) ) )
+                    sprintf( '<p>%s</p>', sprintf( 'You can also find all variables %s.', sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/email-variables/' ), esc_html__( 'on our website' ) ) ) )
 
             );
             $emails_message = ob_get_clean();
@@ -131,7 +131,7 @@
 
             ob_start();
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Developers', 'b3-onboarding' ) );
-            echo sprintf( '<p>%s</p>', sprintf( esc_html__( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/localhost-development/' ), esc_html__( 'this FAQ topic', 'b3-onboarding' ) ) ) );
+            echo sprintf( '<p>%s</p>', sprintf( esc_html__( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/localhost-development/' ), esc_html__( 'this FAQ topic', 'b3-onboarding' ) ) ) );
             echo sprintf( '<p>%s</p>', esc_html__( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) );
             $developers_message = ob_get_clean();
 
@@ -151,7 +151,7 @@
 
             ob_start();
             echo sprintf( '<p><b>%s</b></p>', esc_html__( 'More info', 'b3-onboarding' ) );
-            echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
+            echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3OB_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
             $sidebar_content = ob_get_clean();
             get_current_screen()->set_help_sidebar( $sidebar_content );
         }

@@ -22,9 +22,9 @@
         <th class="align-top">
             <label for="b3__input--email-styling"><?php esc_html_e( 'Email styling', 'b3-onboarding' ); ?></label>
             <br>
-            <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SETTINGS . '&preview=styling' ), esc_html__( 'Preview', 'b3-onboarding' ) ); ?>
+            <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SETTINGS . '&preview=styling' ), esc_html__( 'Preview', 'b3-onboarding' ) ); ?>
             <br>
-            <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_URL . 'includes/download.php?file=default-email-styling.css&sentby=b3' ), esc_html__( 'Download styling', 'b3-onboarding' ) ); ?>
+            <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=default-email-styling.css&sentby=b3' ), esc_html__( 'Download styling', 'b3-onboarding' ) ); ?>
         </th>
         <td>
             <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ); ?>" rows="6"><?php if ( $stored_email_styling ) { echo $stored_email_styling; } ?></textarea>

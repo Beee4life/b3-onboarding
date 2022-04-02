@@ -989,7 +989,7 @@
      */
     function b3_get_preview_link( $id ) {
         if ( $id ) {
-            return sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( B3_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
+            return sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( B3OB_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
         }
 
         return false;
@@ -1079,7 +1079,7 @@
             get_stylesheet_directory() . '/plugins/b3-onboarding/',
             get_template_directory() . '/b3-onboarding/',
             get_template_directory() . '/plugins/b3-onboarding/',
-            B3_PLUGIN_PATH . '/templates/',
+            B3OB_PLUGIN_PATH . '/templates/',
         );
 
         return $template_paths;

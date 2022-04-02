@@ -83,7 +83,7 @@
             echo sprintf( '<table class="b3_table">%s</table>', $table_content );
         } else {
             if ( 'none' == get_option( 'b3_registration_type' ) ) {
-                echo sprintf( '<p>%s</p>', sprintf( esc_html__( "You're the only user right now, but that can be because user registration is not allowed. Change it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SETTINGS . '&tab=registration', esc_html__( 'here', 'b3-onboarding' ) ) ) );
+                echo sprintf( '<p>%s</p>', sprintf( esc_html__( "You're the only user right now, but that can be because user registration is not allowed. Change it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', B3OB_PLUGIN_SETTINGS . '&tab=registration', esc_html__( 'here', 'b3-onboarding' ) ) ) );
             } else {
                 echo sprintf( '<p>%s</p>', esc_html__( "You're the only (activated) user right now.", 'b3-onboarding' ) );
             }

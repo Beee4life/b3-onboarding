@@ -88,7 +88,7 @@
      * @return false|string
      */
     function b3_default_main_logo() {
-        return B3_PLUGIN_URL . 'assets/images/logo-b3onboarding.png';
+        return B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding.png';
     }
 
 

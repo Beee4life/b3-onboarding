@@ -10,7 +10,7 @@
     // @TODO: optimize this file
 
     if ( current_user_can( 'promote_users' ) ) {
-        include_once B3_PLUGIN_PATH . '/includes/user-management-notices.php';
+        include_once B3OB_PLUGIN_PATH . '/includes/user-management-notices.php';
 
         if ( ! empty( $attributes[ 'users' ] ) ) { ?>
         <table class="b3_table b3_table--user">

@@ -238,8 +238,8 @@
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) ), esc_html__( 'here', 'b3-onboarding' ) )
             );
         }
-    
-        $plugin = get_plugin_data( B3_PLUGIN_PATH . '/B3Onboarding.php' );
+
+        $plugin = get_plugin_data( B3OB_PLUGIN_PATH . '/B3Onboarding.php' );
         if ( strpos( $plugin[ 'Version' ], 'dev' ) !== false || strpos( $plugin[ 'Version' ], 'beta' ) !== false ) {
             $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
             $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
