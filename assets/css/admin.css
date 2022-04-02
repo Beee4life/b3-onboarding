@@ -445,6 +445,10 @@ ul.b3_integrations--list {
   width:   100%;
 }
 
+.b3 .CodeMirror {
+  border: 1px solid #ddd;
+}
+
 #tab-panel-b3-emails.help-tab-content ul li {
   margin-bottom: 0;
 }
