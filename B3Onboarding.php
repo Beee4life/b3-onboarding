@@ -978,7 +978,6 @@
                         return esc_html__( 'You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again.', 'b3-onboarding' );
 
                     default:
-                        break;
                 }
 
                 return esc_html__( 'An unknown error occurred. Please try again later.', 'b3-onboarding' );
@@ -1028,9 +1027,7 @@
                     return $errors;
                 }
 
-                // check if domain restrictions are active
-                $verify_domain = b3_verify_email_domain( $user_email );
-                if ( false === $verify_domain ) {
+                if ( ! b3_verify_email_domain( $user_email ) ) {
                     $errors->add( 'banned_domain', $this->b3_get_return_message( 'banned_domain' ) );
 
                     return $errors;
@@ -1044,16 +1041,7 @@
 
                 if ( true == $use_custom_passwords ) {
                     if ( isset( $_POST[ 'pass1' ] ) && isset( $_POST[ 'pass2' ] ) ) {
-                        $easy_passwords = array(
-                            '1234',
-                            '000000',
-                            '111111',
-                            '123456',
-                            '12345678',
-                            'abcdef',
-                            'password',
-                            'wachtwoord',
-                        );
+                        $easy_passwords = b3_get_easy_passwords();
                         if ( in_array( $_POST[ 'pass1' ], $easy_passwords ) ) {
                             $errors->add( 'pw_too_easy', $this->b3_get_return_message( 'password_too_easy' ) );
 
@@ -1065,7 +1053,9 @@
                             $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
                             return $errors;
+                            
                         } elseif ( $_POST[ 'pass1' ] == $_POST[ 'pass2' ] ) {
+                            // Passwords are OK
                             $hashed_password          = wp_hash_password( $_POST[ 'pass1' ] );
                             $user_data[ 'user_pass' ] = $hashed_password;
                         }

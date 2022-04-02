@@ -684,25 +684,23 @@
      * @return array
      */
     function b3_get_disallowed_usernames() {
-        $default_reserved_names = array(
-            'admin',
-            'administrator',
-            'www',
-            'web',
-            'root',
-            'main',
-            'invite',
-            'files',
-        );
+        $filtered_names = apply_filters( 'b3_reserved_usernames', b3_get_default_reserved_user_names() );
 
-        $filtered_names = apply_filters( 'b3_reserved_usernames', [] );
-        if ( ! is_array( $filtered_names ) ) {
-            $filtered_names = [ $filtered_names ];
-        }
-
-        $reserved_user_names = array_unique( array_merge( $default_reserved_names, $filtered_names ) );
-
-        return $reserved_user_names;
+        return $filtered_names;
+    }
+    
+    
+    /**
+     * Get 'easy' passwords
+     *
+     * @since 3.5.0
+     *
+     * @return mixed|void
+     */
+    function b3_get_easy_passwords() {
+        $passwords = apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
+    
+        return $passwords;
     }
 
 
