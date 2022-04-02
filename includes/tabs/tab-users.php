@@ -73,7 +73,7 @@
                     <?php echo sprintf( '<p>%s</p>', __( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
 
                     <?php
-                        if ( is_array($roles ) && ! empty( $roles ) ) {
+                        if ( is_array( $roles ) && ! empty( $roles ) ) {
                             $dont_show_roles = array( 'administrator', 'b3_approval', 'b3_activation' );
                             $stored_roles    = ( is_array( $restrict_admin ) ) ? $restrict_admin : array( 'b3_activation', 'b3_approval' );
                             echo '<div class="b3_restrict-roles">';
