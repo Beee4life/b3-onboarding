@@ -14,8 +14,8 @@
     function b3_render_settings_tab() {
         $activate_welcome_page      = get_option( 'b3_activate_welcome_page' );
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
-        $disable_action_links       = get_option( 'b3_disable_action_links' );
         $debug_info                 = get_option( 'b3_debug_info' );
+        $disable_action_links       = get_option( 'b3_disable_action_links' );
         $main_logo                  = get_option( 'b3_main_logo' );
         $preserve_settings          = get_option( 'b3_preserve_settings' );
         $use_popup                  = get_option( 'b3_use_popup', false );
