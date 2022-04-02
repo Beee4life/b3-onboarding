@@ -45,7 +45,7 @@
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
 
                 $registration_type                 = get_option( 'b3_registration_type' );
-                $attributes[ 'registration_type' ] = $registration_type;;
+                $attributes[ 'registration_type' ] = $registration_type;
 
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
