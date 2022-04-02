@@ -49,26 +49,15 @@
         });
 
         $('#b3_activate_frontend_approval').change(function() {
-            $($front_end_approval).toggle();
+            $('.b3_settings-input-description--approval').toggle();
         });
 
-        // @TODO: check if still used
-        var $redirect_after_register = '.b3_settings-field--redirect';
         $('#b3_activate_custom_passwords').change(function() {
-            if (document.getElementById('b3_activate_custom_passwords').checked) {
-                $($redirect_after_register).addClass('hidden');
-            } else {
-                $($redirect_after_register).removeClass('hidden');
-            }
+            $('.b3_settings-field--redirect').toggle();
         });
 
-        var $custom_passwords = '.b3_settings-field--custom-passwords';
-        $('input[name="b3_registration_type"]').change(function() {
-            if (document.getElementById('b3_registration_type_request_access').checked) {
-                $($custom_passwords).addClass('hidden');
-            } else {
-                $($custom_passwords).removeClass('hidden');
-            }
+        $('#b3_restrict_usernames').change(function () {
+            $('.b3_settings-field--username-restrictions').toggle();
         });
 
         $('#b3_domain_restrictions').change(function () {
