@@ -434,7 +434,7 @@
 
 
     /**
-     * Verify domain in email
+     * Verify domain in email (single site)
      *
      * @param $email
      *
