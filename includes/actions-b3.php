@@ -204,12 +204,10 @@
      * @since 0.8-beta
      */
     function b3_first_last_name_fields() {
-        if ( get_option( 'b3_activate_first_last' ) ) {
+        if ( get_option( 'b3_activate_first_last' ) && 1 != get_option( 'b3_register_email_only' ) ) {
             $first_last_required = get_option( 'b3_first_last_required' );
             $first_name          = ( isset( $_POST[ 'first_name' ] ) ) ? $_POST[ 'first_name' ] : false;
-            $first_name          = is_localhost() ? 'First' : $first_name;
             $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : false;
-            $last_name           = is_localhost() ? 'Last' : $last_name;
             $required            = ( true == $first_last_required ) ? ' required="required"' : false;
 
             do_action( 'b3_do_before_first_last_name' );
