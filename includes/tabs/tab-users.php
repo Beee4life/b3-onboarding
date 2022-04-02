@@ -73,17 +73,21 @@
                     <?php echo sprintf( '<p>%s</p>', __( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
 
                     <?php
-                        $dont_show_roles  = array( 'administrator', 'b3_approval', 'b3_activation' );
-                        $stored_roles     = ( is_array( $restrict_admin ) ) ? $restrict_admin : array( 'b3_activation', 'b3_approval' );
-                        foreach( $roles as $name => $values ) {
-                            if ( ! in_array( $name, $dont_show_roles ) ) {
-                                ?>
-                                <div>
-                                    <label for="b3_restrict_<?php echo esc_attr( $name ); ?>" class="screen-reader-text"><?php echo esc_attr( $name ); ?></label>
-                                    <input type="checkbox" id="b3_restrict_<?php echo esc_attr( $name ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $name ); ?>" <?php checked(in_array( $name, $stored_roles )); ?> /> <?php echo $values[ 'name' ]; ?>
-                                </div>
-                                <?php
+                        if ( is_array($roles ) && ! empty( $roles ) ) {
+                            $dont_show_roles = array( 'administrator', 'b3_approval', 'b3_activation' );
+                            $stored_roles    = ( is_array( $restrict_admin ) ) ? $restrict_admin : array( 'b3_activation', 'b3_approval' );
+                            echo '<div class="b3_restrict-roles">';
+                            foreach( $roles as $name => $values ) {
+                                if ( ! in_array( $name, $dont_show_roles ) ) {
+                                    ?>
+                                    <div>
+                                        <label for="b3_restrict_<?php echo esc_attr( $name ); ?>" class="screen-reader-text"><?php echo esc_attr( $name ); ?></label>
+                                        <input type="checkbox" id="b3_restrict_<?php echo esc_attr( $name ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $name ); ?>" <?php checked(in_array( $name, $stored_roles )); ?> /><?php echo $values[ 'name' ]; ?>
+                                    </div>
+                                    <?php
+                                }
                             }
+                            echo '</div>';
                         }
                     ?>
                 </div>
