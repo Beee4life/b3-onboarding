@@ -299,7 +299,7 @@
             $recaptcha_public = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );
             if ( false != $recaptcha_public ) {
                 if ( '2' == get_option( 'b3_recaptcha_version', '2' ) ) {
-                    do_action( 'b3_do_before_recaptcha_register' );
+                    do_action( 'b3_do_before_recaptcha' );
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
                         <div class="recaptcha-container">
@@ -307,7 +307,7 @@
                         </div>
                     </div>
                     <?php
-                        do_action( 'b3_do_after_recaptcha_register' );
+                        do_action( 'b3_do_after_recaptcha' );
                 }
             } else {
                 if ( current_user_can( 'manage_options') ) {
@@ -328,7 +328,7 @@
      */
     function b3_add_privacy_checkbox() {
         if ( true == get_option( 'b3_privacy' ) ) {
-            do_action( 'b3_render_form_element', 'register/privacy-checkbox' );
+            do_action( 'b3_render_form_element', 'register/privacy' );
         }
     }
     add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
@@ -716,9 +716,7 @@
         do_action( 'b3_add_extra_fields_registration' );
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields' );
-        do_action( 'b3_do_before_submit_registration_form' );
         do_action( 'b3_render_form_element', 'general/button', $attributes );
-        do_action( 'b3_do_after_submit_registration_form' );
         do_action( 'b3_add_action_links', $attributes[ 'template' ] );
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
