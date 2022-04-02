@@ -32,6 +32,7 @@ There are a ton of things, which you can set through the admin pages or with the
 * add new localhost filters for multisite
 * add recaptcha theme
 * optimize register form
+* update contextual help
 
 3.4.0
 * add new template: lostpassword/email
