@@ -137,7 +137,9 @@
 }
 
 .b3_input-options {
-    display: inline-block;
+    display:   inline-block;
+    width:     initial;
+    min-width: 220px;
 }
 
 /* Links in form footer */
