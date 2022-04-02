@@ -278,11 +278,11 @@
             ?>
                 <div class="b3_site-fields">
                     <?php
-                        if ( false === $register_for || 'blog' == $register_for ) {
+                        if ( ( false === $register_for || 'blog' == $register_for ) ) {
                             $b3_message_above_new_blog = esc_html__( 'Here you can register your new site.', 'b3-onboarding' );
-                            $notice = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
+                            $notice                    = apply_filters( 'b3_message_above_new_blog', $b3_message_above_new_blog );
                             if ( false !== $notice ) {
-                                echo '<p>' . $notice . '</p>';
+                                echo '<div class="b3_site-fields-header">' . $notice . '</div>';
                             }
                         }
                     ?>
@@ -290,7 +290,8 @@
                         <?php $current_network = get_network(); ?>
                         <?php if ( is_subdomain_install() ) { ?>
                             <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site (sub) domain', 'b3-onboarding' ); ?></label>
-                            <input name="blogname" id="blogname" value="<?php echo apply_filters( 'b3_localhost_blogname', false ); ?>" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>" />.<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>
+                            <input name="blogname" id="blogname" value="<?php echo apply_filters( 'b3_localhost_blogname', false ); ?>" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'customdomain', 'b3-onboarding' ); ?>" />
+                            .<?php echo $_SERVER[ 'HTTP_HOST' ]; ?>
                         <?php } else { ?>
                             <label class="b3_form-label" for="blogname"><?php esc_html_e( 'Site address', 'b3-onboarding' ); ?></label>
                             <?php echo $current_network->domain . $current_network->path; ?><input name="blogname" id="blogname" value="" type="text" class="b3_form--input" placeholder="<?php esc_html_e( 'address', 'b3-onboarding' ); ?>" />
@@ -304,19 +305,17 @@
 
                     <?php // @TODO: add languages option ?>
                     <div class="b3_form-element b3_form-element--visbility">
-                        <p class="privacy-intro">
-                            <?php _e( 'Privacy:', 'b3-onboarding' ); ?>
+                        <div class="privacy-intro">
                             <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
-                            <br style="clear:both" />
                             <label class="checkbox" for="blog_public_on">
-                                <input type="radio" id="blog_public_on" name="blog_public" value="1" />
+                                <input type="radio" id="blog_public_on" name="blog_public" value="1" checked />
                                 <?php _e( 'Yes' ); ?>
                             </label>
                             <label class="checkbox" for="blog_public_off">
                                 <input type="radio" id="blog_public_off" name="blog_public" value="0" />
                                 <?php _e( 'No' ); ?>
                             </label>
-                        </p>
+                        </div>
                     </div>
                 </div>
             <?php
@@ -769,3 +768,49 @@
         }
     }
     add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );
+    
+    
+    /*
+     * This file contains functions hooked to the WordPress' hooks
+     */
+    
+    /**
+     * Add custom fields to WordPress' default register form hook
+     *
+     * @since 1.0.0
+     */
+    function b3_add_registration_fields( $attributes ) {
+        do_action( 'b3_add_hidden_fields_registration', $attributes );
+        
+        if ( 'blog' != $attributes[ 'registration_type' ] ) {
+            do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
+        }
+        do_action( 'b3_add_first_last_name_fields' );
+        
+        if ( ! is_multisite() ) {
+            do_action( 'b3_add_password_fields' );
+        } elseif ( is_main_site() ) {
+            do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
+        }
+        
+        do_action( 'b3_add_extra_fields_registration' );
+        do_action( 'b3_add_privacy_checkbox' );
+        do_action( 'b3_add_recaptcha_fields' );
+        do_action( 'b3_do_before_submit_registration_form' );
+    
+        if ( ! is_multisite() && 'request_access' == $attributes[ 'registration_type' ] ) {
+            $submit_label = esc_attr__( 'Request access', 'b3-onboarding' );
+        } else {
+            $submit_label = esc_attr__( 'Register', 'b3-onboarding' );
+        }
+        ?>
+        
+        <div class="b3_form-element b3_form-element--submit">
+            <?php b3_get_submit_button( $submit_label, 'register', $attributes ); ?>
+        </div>
+        
+        <?php
+            do_action( 'b3_do_after_submit_registration_form' );
+            do_action( 'b3_add_action_links', $attributes[ 'template' ] );
+    }
+    add_action( 'b3_register_form', 'b3_add_registration_fields' );

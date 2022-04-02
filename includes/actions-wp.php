@@ -1,22 +1,4 @@
 <?php
-    /*
-     * This file contains functions hooked to the WordPress' hooks
-     */
-
-    /**
-     * Add custom fields to WordPress' default register form hook
-     *
-     * @since 1.0.0
-     */
-    function b3_add_registration_fields() {
-        do_action( 'b3_add_first_last_name_fields' );
-        do_action( 'b3_add_extra_fields_registration' );
-        do_action( 'b3_add_privacy_checkbox' );
-        do_action( 'b3_add_recaptcha_fields' );
-    }
-    add_action( 'b3_register_form', 'b3_add_registration_fields' );
-
-
     /**
      * Update usermeta after user register
      *
