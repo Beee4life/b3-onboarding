@@ -28,7 +28,10 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.5.0
-* ?
+* fix styling multisite registration forms
+* add new localhost filters for multisite
+* add recaptcha theme
+* optimize register form
 
 3.4.0
 * add new template: lostpassword/email
