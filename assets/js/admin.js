@@ -44,11 +44,6 @@
             $('.b3_settings-input-description--recaptcha').toggle();
         });
 
-        $('#b3_activate_custom_emails').change(function() {
-            $('.metabox-handler--email_styling').toggle();
-            $('.metabox-handler--email_template').toggle();
-        });
-
         $('#b3_activate_frontend_approval').change(function() {
             $($front_end_approval).toggle();
         });
