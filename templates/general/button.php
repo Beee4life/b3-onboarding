@@ -17,8 +17,11 @@
             $button_value    = esc_attr__( 'Reset password', 'b3-onboarding' );
             break;
         case 'register':
-            $button_modifier = false;
+            $button_modifier = 'register';
             $button_value    = esc_attr__( 'Register', 'b3-onboarding' );
+            if ( in_array( $attributes[ 'registration_type' ], [ 'request_access', 'request_access_subdomain' ] ) ) {
+                $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
+            }
             break;
         case 'resetpass':
             $button_modifier = false;
