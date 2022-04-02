@@ -17,6 +17,7 @@
         $filter_link_color      = apply_filters( 'b3_link_color', false );
         $link_color             = apply_filters( 'b3_link_color', get_option( 'b3_link_color' ) );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
+        $hide_logo_notice       = $logo_in_email ? false : ' hidden';
 
         ob_start();
         ?>
@@ -51,7 +52,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/> <?php esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
-                        <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--logo hidden">%s</div>', esc_html__( 'Image can be set on the "Settings" tab.','b3-onboarding' ) ); ?>
+                        <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--logo%s">%s</div>', $hide_logo_notice, esc_html__( 'Image can be set on the "Settings" tab.','b3-onboarding' ) ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
