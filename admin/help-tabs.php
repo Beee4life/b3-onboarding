@@ -31,7 +31,7 @@
             echo '<br>- ' . esc_html__( 'registering with email address only', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'use first/last name', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'make first/last name required', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'activate recaptcha (shows on new tab)', 'b3-onboarding' );
+            echo '<br>- ' . esc_html__( 'activate recaptcha', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'activate honeypot', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'activate privacy checkbox', 'b3-onboarding' );
             echo '</p>';
@@ -114,11 +114,12 @@
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Settings', 'b3-onboarding' ) );
             echo '<p>';
             echo esc_html__( 'This page has various global settings, such as:', 'b3-onboarding' );
-            echo '<br>';
-            echo '<br>- ' . esc_html__( 'disable the links below the form button on login/registration forms', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'activate the debug page', 'b3-onboarding' );
             echo '</p>';
+            echo '<ul>';
+            echo sprintf( '<li>%s</li>', esc_html__( 'disable the links below the form button on login/registration forms', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'activate the debug page', 'b3-onboarding' ) );
+            echo '</ul>';
             echo sprintf( '<p>%s</p>', esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) );
             $settings_message = ob_get_clean();
 
