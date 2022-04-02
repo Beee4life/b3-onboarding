@@ -463,11 +463,12 @@
             }
 
             if ( count( $links ) > 0 ) {
-                echo '<ul class="b3_form-links">';
-                foreach( $links as $key => $values ) {
+                ob_start();
+                foreach( $links as $values ) {
                     echo sprintf( '<li><a href="%s" rel="nofollow">%s</a></li>', $values[ 'link' ], $values[ 'title' ] );
                 }
-                echo '</ul>';
+                $action_links = ob_get_clean();
+                echo sprintf( '<ul class="b3_form-links">%s</ul>', $action_links );
             }
         }
     }
