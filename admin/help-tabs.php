@@ -64,18 +64,22 @@
             echo sprintf( '<p>%s</p>', esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) . '
                     <ul>
                         <li>%activation_url% (' . esc_html__( 'only in user activation email', 'b3-onboarding' ) . ')</li>
+                        <li>%account_page% <sup>&sup1;</sup></li>
                         <li>%blog_name% <sup>&sup1;</sup></li>
+                        <li>%email_footer% <sup>&sup1;</sup></li>
                         <li>%home_url% <sup>&sup1;</sup></li>
+                        <li>%login_url% <sup>&sup1;</sup></li>
+                        <li>%logo% <sup>&sup1;</sup></li>
+                        <li>%lostpass_url% <sup>&sup1;</sup></li>
+                        <li>%network_name% <sup>&sup1;</sup></li>
                         <li>%registration_date% <sup>&sup1;</sup></li>
-                        <li>%reset_url% <sup>&sup3;</sup></li>
-                        <li>%user_ip% <sup>&sup2;</sup></li>
+                        <li>%reset_url% <sup>&sup2;</sup></li>
+                        <li>%user_ip% <sup>&sup1;</sup></li>
                         <li>%user_login% <sup>&sup1;</sup></li>
                     </ul>
                     <sup>&sup1;</sup> ' . esc_html__( 'available in every email', 'b3-onboarding' ) . '
                     <br>
-                    <sup>&sup2;</sup> ' . esc_html__( 'only available in admin notification', 'b3-onboarding' ) . '
-                    <br>
-                    <sup>&sup3;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' )
+                    <sup>&sup2;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' )
             );
             $emails_message = ob_get_clean();
 
