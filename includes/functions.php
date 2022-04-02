@@ -113,7 +113,7 @@
             'id'    => 'lost_password',
             'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
         );
-        if ( is_main_site() ) {
+        if ( get_option( 'b3_activate_custom_emails' ) ) {
             $email_boxes[] = array(
                 'id'    => 'email_styling',
                 'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
