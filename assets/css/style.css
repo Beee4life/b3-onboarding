@@ -66,6 +66,19 @@
     vertical-align: middle;
 }
 
+.b3_page form input[name="signup_for"] {
+    margin-left: 0;
+}
+
+.b3_page form input[name="b3_privacy_accept"] {
+    margin-left: 0;
+    margin-top:  0.5rem;
+}
+
+.b3_page form input#rememberme {
+    margin-left: 0;
+}
+
 .b3_page form .password-hint {
     margin-top: 2rem;
 }
@@ -78,15 +91,6 @@
 .b3_page form .site-links ul {
     list-style:   none;
     padding-left: 0;
-}
-
-.b3_page form input[name="b3_privacy_accept"] {
-    margin-left: 0;
-    margin-top:  0.5rem;
-}
-
-.b3_page form input#rememberme {
-    margin-left: 0;
 }
 
 .b3_page .b3_form-label {
