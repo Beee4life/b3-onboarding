@@ -6,11 +6,11 @@ jQuery(function($){
     var radio_button = $('.b3_form-element--signup-for input[type="radio"]');
 
     radio_button.change( function() {
-        $subdomain_field = '.b3_form-element--site-fields';
+        $site_fields = '.b3_site-fields';
         if ( 'user' === $(this).val() ) {
-            $($subdomain_field).addClass('hidden');
+            $($site_fields).addClass('hidden');
         } else {
-            $($subdomain_field).removeClass('hidden');
+            $($site_fields).removeClass('hidden');
         }
     });
 
