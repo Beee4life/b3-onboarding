@@ -613,7 +613,7 @@
      * @return string
      */
     function b3_default_logged_in_registration_only_message() {
-        return sprintf( esc_html__( 'You must first %s, and then you can create a new site.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_login_url(), esc_html__( 'log in', 'b3-onboarding' ) ) ) . "\n";
+        return sprintf( esc_html__( 'You must first %s, and then you can create a new site.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'log in', 'b3-onboarding' ) ) ) . "\n";
     }
 
 
