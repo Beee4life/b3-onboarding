@@ -42,7 +42,7 @@
                         <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
                         <?php
                             if ( 1 == $disable_action_links ) {
-                                esc_html_e( 'Uncheck this box to show the action links on custom forms.', 'b3-onboarding' );
+                                esc_html_e( 'Uncheck this box to show the action links on forms.', 'b3-onboarding' );
                             } else {
                                 esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' );
                             }
