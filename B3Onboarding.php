@@ -217,7 +217,7 @@
 
                 // https://wpreset.com/add-codemirror-editor-plugin-theme/
                 $cm_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
-                wp_localize_script('b3ob-admin', 'cm_settings', $cm_settings );
+                wp_localize_script('jquery', 'cm_settings', $cm_settings );
 
                 wp_enqueue_script( 'wp-theme-plugin-editor' );
                 wp_enqueue_style( 'wp-codemirror' );
