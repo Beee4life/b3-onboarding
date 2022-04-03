@@ -10,13 +10,13 @@
     }
 
     $account_approved_email_subject = get_option( 'b3_account_approved_subject' );
-    $account_approved_email_message = get_option( 'b3_account_approved_message' );;
+    $account_approved_email_message = get_option( 'b3_account_approved_message' );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( 'If any field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>

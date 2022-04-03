@@ -45,9 +45,9 @@
                 $attributes         = shortcode_atts( $default_attributes, $user_variables );
 
                 $registration_type                 = get_option( 'b3_registration_type' );
-                $attributes[ 'registration_type' ] = $registration_type;;
+                $attributes[ 'registration_type' ] = $registration_type;
 
-                if ( is_user_logged_in() && 'blog' != $registration_type && ! current_user_can( 'manage_network' ) ) {
+                if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
@@ -62,8 +62,8 @@
                         $message = '<p class="b3_message b3_message--success">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
                         $message .= '<br>';
-                        $message .= esc_html__( 'Visit it on:', 'b3-onboarding' ) . ' ';
-                        $message .= '<a href="' . esc_url( $home_url ) . '">' . esc_url( $home_url ) . '</a>';
+                        $message .= esc_html__( 'Visit it on', 'b3-onboarding' ) . ': ';
+                        $message .= sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), esc_url( $home_url ) );
                         $message .= '<br>';
                         $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $message .= '</p>';

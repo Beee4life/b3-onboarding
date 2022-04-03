@@ -17,12 +17,11 @@
         $filter_link_color      = apply_filters( 'b3_link_color', false );
         $link_color             = apply_filters( 'b3_link_color', get_option( 'b3_link_color' ) );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
+        $hide_logo_notice       = $logo_in_email ? false : ' hidden';
 
         ob_start();
+        echo sprintf( '<h2>%s</h2>', esc_html__( 'Emails', 'b3-onboarding' ) );
         ?>
-        <h2>
-            <?php esc_html_e( 'Emails', 'b3-onboarding' ); ?>
-        </h2>
 
         <p>
             <?php if ( is_main_site() ) { ?>
@@ -41,7 +40,14 @@
                         <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php checked($activate_custom_emails); ?>/> <?php esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php checked($activate_custom_emails); ?>/>
+                        <?php
+                            if ( 1 == $activate_custom_emails ) {
+                                esc_html_e( 'Uncheck this box to deactivate your own email styling and template.', 'b3-onboarding' );
+                            } else {
+                                esc_html_e( 'Check this box to activate your own email styling and template.', 'b3-onboarding' );
+                            }
+                        ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -50,7 +56,15 @@
                         <label for="b3_logo_in_email"><?php esc_html_e( 'Add logo in email', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/> <?php esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
+                        <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/>
+                        <?php
+                            if ( 1 == $logo_in_email ) {
+                                esc_html_e( 'Uncheck this box to disable the logo in the email header (of the default template).', 'b3-onboarding' );
+                            } else {
+                                esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' );
+                            }
+                        ?>
+                        <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--logo%s">%s</div>', $hide_logo_notice, sprintf( esc_html__( 'Image can be set on the "%s" tab.','b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=settings' ), 'Settings' ) ) ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 

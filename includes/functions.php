@@ -113,7 +113,7 @@
             'id'    => 'lost_password',
             'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
         );
-        if ( is_main_site() ) {
+        if ( get_option( 'b3_activate_custom_emails' ) ) {
             $email_boxes[] = array(
                 'id'    => 'email_styling',
                 'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
@@ -684,25 +684,36 @@
      * @return array
      */
     function b3_get_disallowed_usernames() {
-        $default_reserved_names = array(
-            'admin',
-            'administrator',
-            'www',
-            'web',
-            'root',
-            'main',
-            'invite',
-            'files',
-        );
+        // @TODO: apply user input
+        $filtered_names = apply_filters( 'b3_reserved_usernames', b3_get_default_reserved_user_names() );
 
-        $filtered_names = apply_filters( 'b3_reserved_usernames', [] );
-        if ( ! is_array( $filtered_names ) ) {
-            $filtered_names = [ $filtered_names ];
-        }
+        return $filtered_names;
+    }
+    
+    
+    /**
+     * Get 'easy' passwords
+     *
+     * @since 3.5.0
+     *
+     * @return mixed|void
+     */
+    function b3_get_easy_passwords() {
+        $passwords = apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
+    
+        return $passwords;
+    }
 
-        $reserved_user_names = array_unique( array_merge( $default_reserved_names, $filtered_names ) );
 
-        return $reserved_user_names;
+    /**
+     * Get blocked domain names
+     *
+     * @since 3.5.0
+     *
+     * @return mixed|void
+     */
+    function b3_get_blocked_domain_names() {
+        $domain_names = apply_filters( '', get_option( 'b3_disallowed_domains' ) );
     }
 
 
@@ -989,7 +1000,7 @@
      */
     function b3_get_preview_link( $id ) {
         if ( $id ) {
-            return sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( B3_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
+            return sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( B3OB_PLUGIN_SETTINGS . '&preview=' . $id ), esc_html__( 'Preview', 'b3-onboarding' ) );
         }
 
         return false;
@@ -1079,7 +1090,7 @@
             get_stylesheet_directory() . '/plugins/b3-onboarding/',
             get_template_directory() . '/b3-onboarding/',
             get_template_directory() . '/plugins/b3-onboarding/',
-            B3_PLUGIN_PATH . '/templates/',
+            B3OB_PLUGIN_PATH . '/templates/',
         );
 
         return $template_paths;
@@ -1120,7 +1131,9 @@
             $template = b3_locate_template( $template_name );
 
             do_action( 'b3_do_before_template', $template_name );
-            include $template;
+            if ( file_exists( $template ) ) {
+                include $template;
+            }
             do_action( 'b3_do_after_template', $template_name );
         }
     }

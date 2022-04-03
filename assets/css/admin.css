@@ -74,8 +74,13 @@
   margin-left: 0;
 }
 
+.b3 hr {
+  margin-block-start: 1rem;
+  margin-block-end:   0.5rem;
+}
+
 .b3 hr + h2 {
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
 .b3_foldout--header {
@@ -97,6 +102,18 @@
   background: pink;
 }
 
+.b3_restrict-roles {
+  display: flex;
+}
+
+.b3_restrict-roles div {
+  margin-right: 1rem;
+}
+
+.b3_restrict-roles input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
 .b3_tab-content ul {
   margin-block-start: 0;
   margin-block-end:   0;
@@ -106,12 +123,6 @@
 
 .b3_tab-content ul ul {
   margin-top: 0.5em;
-}
-
-.b3-debug-left {
-}
-
-.b3-debug-right {
 }
 
 .b3_table {
@@ -432,6 +443,10 @@ ul.b3_integrations--list {
 .b3 textarea {
   padding: 4px;
   width:   100%;
+}
+
+#tab-panel-b3-emails.help-tab-content ul li {
+  margin-bottom: 0;
 }
 
 /* Because load-styles.php is not loaded */

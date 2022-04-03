@@ -18,7 +18,12 @@
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( "Enter the email addresses (searated by comma) which should receive the notification email. If no email is entered, it will be sent to the administrator's email address.", "b3-onboarding" ); ?>
+            <?php esc_html_e( 'Enter the email addresses (searated by comma) which should receive the notification email.', "b3-onboarding" ); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -27,11 +32,6 @@
         </th>
         <td>
             <input id="b3__input--request-access-notification-addresses" name="b3_request_access_notification_addresses" placeholder="<?php echo get_site_option( 'admin_email' ); ?>" type="text" value="<?php echo esc_attr( $request_access_email_addresses ); ?>" />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <?php esc_html_e( 'If any field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -56,7 +56,14 @@
         <th>&nbsp;</th>
         <td>
             <label>
-                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/> <?php esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' ); ?>
+                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/>
+                <?php
+                    if ( 1 == $disable_admin_notification ) {
+                        esc_html_e( 'Uncheck this box to enable admin notification on new user registration', 'b3-onboarding' );
+                    } else {
+                        esc_html_e( 'Check this box to disable admin notification on new user registration', 'b3-onboarding' );
+                    }
+                ?>
             </label>
         </td>
     </tr>

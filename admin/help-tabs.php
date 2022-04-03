@@ -31,7 +31,7 @@
             echo '<br>- ' . esc_html__( 'registering with email address only', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'use first/last name', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'make first/last name required', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'activate recaptcha (shows on new tab)', 'b3-onboarding' );
+            echo '<br>- ' . esc_html__( 'activate recaptcha', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'activate honeypot', 'b3-onboarding' );
             echo '<br>- ' . esc_html__( 'activate privacy checkbox', 'b3-onboarding' );
             echo '</p>';
@@ -64,18 +64,24 @@
             echo sprintf( '<p>%s</p>', esc_html__( 'These are the available variables in emails.', 'b3-onboarding' ) . '
                     <ul>
                         <li>%activation_url% (' . esc_html__( 'only in user activation email', 'b3-onboarding' ) . ')</li>
+                        <li>%account_page% <sup>&sup1;</sup></li>
                         <li>%blog_name% <sup>&sup1;</sup></li>
+                        <li>%email_footer% <sup>&sup1;</sup></li>
                         <li>%home_url% <sup>&sup1;</sup></li>
+                        <li>%login_url% <sup>&sup1;</sup></li>
+                        <li>%logo% <sup>&sup1;</sup></li>
+                        <li>%lostpass_url% <sup>&sup1;</sup></li>
+                        <li>%network_name% <sup>&sup1;</sup></li>
                         <li>%registration_date% <sup>&sup1;</sup></li>
-                        <li>%reset_url% <sup>&sup3;</sup></li>
-                        <li>%user_ip% <sup>&sup2;</sup></li>
+                        <li>%reset_url% <sup>&sup2;</sup></li>
+                        <li>%user_ip% <sup>&sup1;</sup></li>
                         <li>%user_login% <sup>&sup1;</sup></li>
                     </ul>
                     <sup>&sup1;</sup> ' . esc_html__( 'available in every email', 'b3-onboarding' ) . '
                     <br>
-                    <sup>&sup2;</sup> ' . esc_html__( 'only available in admin notification', 'b3-onboarding' ) . '
-                    <br>
-                    <sup>&sup3;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' )
+                    <sup>&sup2;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' ) .
+                    sprintf( '<p>%s</p>', sprintf( 'You can also find all variables %s.', sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/email-variables/' ), esc_html__( 'on our website' ) ) ) )
+
             );
             $emails_message = ob_get_clean();
 
@@ -108,11 +114,12 @@
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Settings', 'b3-onboarding' ) );
             echo '<p>';
             echo esc_html__( 'This page has various global settings, such as:', 'b3-onboarding' );
-            echo '<br>';
-            echo '<br>- ' . esc_html__( 'disable the links below the form button on login/registration forms', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'activate the debug page', 'b3-onboarding' );
             echo '</p>';
+            echo '<ul>';
+            echo sprintf( '<li>%s</li>', esc_html__( 'disable the links below the form button on login/registration forms', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'activate the debug page', 'b3-onboarding' ) );
+            echo '</ul>';
             echo sprintf( '<p>%s</p>', esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) );
             $settings_message = ob_get_clean();
 
@@ -124,7 +131,7 @@
 
             ob_start();
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Developers', 'b3-onboarding' ) );
-            echo sprintf( '<p>%s</p>', sprintf( esc_html__( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3_PLUGIN_SITE . '/faq/localhost-development/' ), esc_html__( 'this FAQ topic', 'b3-onboarding' ) ) ) );
+            echo sprintf( '<p>%s</p>', sprintf( esc_html__( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/localhost-development/' ), esc_html__( 'this FAQ topic', 'b3-onboarding' ) ) ) );
             echo sprintf( '<p>%s</p>', esc_html__( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) );
             $developers_message = ob_get_clean();
 
@@ -144,7 +151,7 @@
 
             ob_start();
             echo sprintf( '<p><b>%s</b></p>', esc_html__( 'More info', 'b3-onboarding' ) );
-            echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
+            echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3OB_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
             $sidebar_content = ob_get_clean();
             get_current_screen()->set_help_sidebar( $sidebar_content );
         }

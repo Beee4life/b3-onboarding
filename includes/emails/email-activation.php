@@ -16,7 +16,7 @@
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( 'If any field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -34,8 +34,6 @@
             <?php echo b3_get_preview_link( 'email-activation' ); ?>
         </th>
         <td>
-            <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %activation_url%, %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %user_ip%, %user_login%
-            <br><br>
             <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_attr( b3_default_email_activation_message() ); ?>" rows="6"><?php echo stripslashes( $email_activation_message ); ?></textarea>
         </td>
     </tr>

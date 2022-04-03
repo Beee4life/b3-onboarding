@@ -25,7 +25,12 @@
     <?php } ?>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( "Enter the email addresses (searated by comma) which should receive the notification email. If no email is entered, it will be sent to the administrator's email address.", "b3-onboarding" ); ?>
+            <?php esc_html_e( 'Enter the email addresses (searated by comma) which should receive the notification email.', "b3-onboarding" ); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -34,11 +39,6 @@
         </th>
         <td>
             <input id="b3__input--new-user-notification-addresses" name="b3_new_user_notification_addresses" placeholder="<?php echo esc_attr( get_site_option( 'admin_email' ) ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_addresses ); ?>" />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <?php esc_html_e( 'If any field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -56,8 +56,6 @@
             <?php echo b3_get_preview_link( 'new-user-admin' ); ?>
         </th>
         <td>
-            <?php esc_html_e( "Available variables are:", "b3-onboarding" ); ?> %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %user_ip%, %user_login%
-            <br><br>
             <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_default_new_user_admin_message() ); ?>" rows="6"><?php echo stripslashes( $new_user_email_message ); ?></textarea>
         </td>
     </tr>
@@ -65,7 +63,14 @@
         <th>&nbsp;</th>
         <td>
             <label>
-                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/> <?php esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' ); ?>
+                <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/>
+                <?php
+                    if ( 1 == $disable_admin_notification ) {
+                        esc_html_e( 'Enable admin notification on new user registration', 'b3-onboarding' );
+                    } else {
+                        esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' );
+                    }
+                ?>
             </label>
         </td>
     </tr>

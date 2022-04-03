@@ -88,7 +88,7 @@
      * @return false|string
      */
     function b3_default_main_logo() {
-        return B3_PLUGIN_URL . 'assets/images/logo-b3onboarding.png';
+        return B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding.png';
     }
 
 
@@ -613,7 +613,7 @@
      * @return string
      */
     function b3_default_logged_in_registration_only_message() {
-        return sprintf( esc_html__( 'You must first %s, and then you can create a new site.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_login_url(), esc_html__( 'log in', 'b3-onboarding' ) ) ) . "\n";
+        return sprintf( esc_html__( 'You must first %s, and then you can create a new site.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'log in', 'b3-onboarding' ) ) ) . "\n";
     }
 
 
@@ -683,4 +683,48 @@
         $greetings .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
         return apply_filters( 'b3_default_greetings', $greetings );
+    }
+    
+    
+    /**
+     * Get default reserved names
+     *
+     * @since 3.5.0
+     */
+    function b3_get_default_reserved_user_names() {
+        $default_reserved_names = array(
+            'admin',
+            'administrator',
+            'www',
+            'web',
+            'root',
+            'main',
+            'invite',
+            'files',
+        );
+        
+        return $default_reserved_names;
+    }
+    
+    
+    /**
+     * Get 'easy' passwords
+     *
+     * @since 3.5.0
+     *
+     * @return mixed|void
+     */
+    function b3_get_default_easy_passwords() {
+        $default_passwords = array(
+            '1234',
+            '000000',
+            '111111',
+            '123456',
+            '12345678',
+            'abcdef',
+            'password',
+            'wachtwoord',
+        );
+        
+        return $default_passwords;
     }

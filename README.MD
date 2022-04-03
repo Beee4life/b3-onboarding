@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.4.0 - released 31.03.21
+3.5.0 - released 03.04.21
 
 <a name="features"></a>
 ### Features
@@ -65,7 +65,7 @@ If you use a composer file to add any plugins/libraries. Add the following repos
     "package": {
       "name":    "Beee4life/b3-onboarding",
       "type":    "wordpress-plugin",
-      "version": "3.2.1",
+      "version": "3.5.0",
       "dist":    {
         "type": "zip",
         "url":  "https://github.com/Beee4life/b3-onboarding/archive/master.zip"
@@ -80,7 +80,7 @@ Then run composer require "beee4life/b3-onboarding"
 or add this to the require section by hand:
 
 ```
-"beee4life/b3-onboarding": "3.2.1",
+"beee4life/b3-onboarding": "^3.0",
 ```
 
 and run `composer update`.
@@ -148,17 +148,24 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.5.0 - 03.04.22
+* fix styling multisite registration forms
+* add new localhost filters for multisite
+* add recaptcha theme
+* add/optimize templates
+* update contextual help
+
 3.4.0 - 31.03.22
 * add new template: lostpassword/email
 * add new filters
 * improve localhost values in forms
 * change notice text lost password form
-* 'limit' link color to email content
+* restrict link color to email content
 * fix replace var %user_login%
 * remove redundant new line in email template
 * remove %site_url% from explanation (not used anymore)
 
-* 3.3.0 - 29.03.22
+3.3.0 - 29.03.22
 * improved welcome page redirect
 * get translated ID of privacy page if WPML is active
 

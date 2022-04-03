@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.4.0
+    Version:            3.5.0
     Requires at least:  4.3
     Tested up to:       5.9.2
     Requires PHP:       5.6
@@ -37,29 +37,29 @@
              * Construct
              */
             function __construct() {
-                if ( ! defined( 'B3_PLUGIN_URL' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
                     $plugin_url = plugins_url( '/', __FILE__ );
-                    define( 'B3_PLUGIN_URL', $plugin_url );
+                    define( 'B3OB_PLUGIN_URL', $plugin_url );
                 }
 
-                if ( ! defined( 'B3_PLUGIN_PATH' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_PATH' ) ) {
                     $plugin_path = dirname( __FILE__ );
-                    define( 'B3_PLUGIN_PATH', $plugin_path );
+                    define( 'B3OB_PLUGIN_PATH', $plugin_path );
                 }
 
-                if ( ! defined( 'B3_PLUGIN_SETTINGS' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_SETTINGS' ) ) {
                     $settings_url = admin_url( 'admin.php?page=b3-onboarding' );
-                    define( 'B3_PLUGIN_SETTINGS', $settings_url );
+                    define( 'B3OB_PLUGIN_SETTINGS', $settings_url );
                 }
 
-                if ( ! defined( 'B3_PLUGIN_SITE' ) ) {
+                if ( ! defined( 'B3OB_PLUGIN_SITE' ) ) {
                     $plugin_site = 'https://b3onboarding.berryplasman.com';
-                    define( 'B3_PLUGIN_SITE', $plugin_site );
+                    define( 'B3OB_PLUGIN_SITE', $plugin_site );
                 }
 
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '3.4.0',
+                    'version' => '3.5.0',
                 );
             }
 
@@ -199,6 +199,12 @@
 
                 wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+
+                wp_localize_script( 'b3ob', 'b3ob_vars',
+                    array(
+                        'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
+                    )
+                );
             }
 
 
@@ -235,7 +241,7 @@
              */
             public function b3_add_admin_pages() {
                 include 'admin/admin-page.php';
-                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                     include 'admin/user-approval-page.php';
@@ -247,8 +253,8 @@
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
                 }
             }
-    
-    
+
+
             /**
              * Redirect user away from certain pages
              */
@@ -260,7 +266,7 @@
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
-        
+
                 if ( is_page() ) {
                     $current_page = get_post( get_the_ID() );
                     if ( false != $account_page_id ) {
@@ -269,7 +275,7 @@
                             $redirect_url = $login_url;
                         }
                     }
-            
+
                     if ( false != $approval_page_id && $current_page->ID == $approval_page_id ) {
                         if ( is_user_logged_in() ) {
                             if ( ! current_user_can( 'promote_users' ) ) {
@@ -280,13 +286,13 @@
                             $redirect_url = $login_url;
                         }
                     }
-            
+
                     if ( false != $logout_page_id && $current_page->ID == $logout_page_id ) {
                         check_admin_referer( 'logout' );
-                
+
                         $user = wp_get_current_user();
                         wp_logout();
-                
+
                         if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
                             $redirect_to           = $_REQUEST[ 'redirect_to' ];
                             $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
@@ -294,10 +300,10 @@
                             $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
                             $requested_redirect_to = '';
                         }
-                
+
                         $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
                     }
-            
+
                     if ( is_home() || is_front_page() ) {
                         if ( isset( $_REQUEST[ 'logout' ] ) ) {
                             check_admin_referer( 'logout' );
@@ -308,7 +314,7 @@
                         }
                     }
                 }
-        
+
                 if ( isset( $redirect_url ) ) {
                     wp_safe_redirect( $redirect_url );
                     exit;
@@ -972,7 +978,6 @@
                         return esc_html__( 'You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again.', 'b3-onboarding' );
 
                     default:
-                        break;
                 }
 
                 return esc_html__( 'An unknown error occurred. Please try again later.', 'b3-onboarding' );
@@ -1022,9 +1027,7 @@
                     return $errors;
                 }
 
-                // check if domain restrictions are active
-                $verify_domain = b3_verify_email_domain( $user_email );
-                if ( false === $verify_domain ) {
+                if ( ! b3_verify_email_domain( $user_email ) ) {
                     $errors->add( 'banned_domain', $this->b3_get_return_message( 'banned_domain' ) );
 
                     return $errors;
@@ -1038,16 +1041,7 @@
 
                 if ( true == $use_custom_passwords ) {
                     if ( isset( $_POST[ 'pass1' ] ) && isset( $_POST[ 'pass2' ] ) ) {
-                        $easy_passwords = array(
-                            '1234',
-                            '000000',
-                            '111111',
-                            '123456',
-                            '12345678',
-                            'abcdef',
-                            'password',
-                            'wachtwoord',
-                        );
+                        $easy_passwords = b3_get_easy_passwords();
                         if ( in_array( $_POST[ 'pass1' ], $easy_passwords ) ) {
                             $errors->add( 'pw_too_easy', $this->b3_get_return_message( 'password_too_easy' ) );
 
@@ -1059,7 +1053,9 @@
                             $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
                             return $errors;
+
                         } elseif ( $_POST[ 'pass1' ] == $_POST[ 'pass2' ] ) {
+                            // Passwords are OK
                             $hashed_password          = wp_hash_password( $_POST[ 'pass1' ] );
                             $user_data[ 'user_pass' ] = $hashed_password;
                         }
@@ -1167,7 +1163,7 @@
 
                 if ( 'user-management' == $template_name ) {
                     $template_paths = array(
-                        B3_PLUGIN_PATH . '/templates/',
+                        B3OB_PLUGIN_PATH . '/templates/',
                     );
                 } else {
                     $template_paths = b3_get_template_paths();
@@ -1179,13 +1175,16 @@
                     }
                 }
 
-                ob_start();
-                do_action( 'b3_do_before_template', $template_name );
-                include $location . $template_name . '.php';
-                do_action( 'b3_do_after_template', $template_name );
-                $html = ob_get_clean();
+                if ( file_exists( $location . $template_name . '.php' ) ) {
+                    ob_start();
+                    do_action( 'b3_do_before_template', $template_name );
+                    include $location . $template_name . '.php';
+                    do_action( 'b3_do_after_template', $template_name );
 
-                return $html;
+                    return ob_get_clean();
+                }
+
+                return '';
             }
 
 

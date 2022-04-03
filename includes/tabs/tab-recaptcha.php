@@ -13,6 +13,7 @@
 
     function b3_render_recaptcha_tab() {
         $public_key        = get_option( 'b3_recaptcha_public' );
+        $recaptcha_theme   = get_option( 'b3_recaptcha_theme', 'light' );
         $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
         $secret_key        = get_option( 'b3_recaptcha_secret' );
 
@@ -59,6 +60,18 @@
             <?php b3_get_close(); ?>
 
             <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), esc_html__( 'here', 'b3-onboarding' ) ) ) ); ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_recaptcha_theme"><?php esc_html_e( 'reCaptcha theme', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--radio">
+                    <label>
+                        <input type="radio" name="b3_recaptcha_theme" value="light" <?php checked($recaptcha_theme, 'light'); ?> /> light
+                        <input type="radio" name="b3_recaptcha_theme" value="dark" <?php checked($recaptcha_theme, 'dark'); ?> /> dark
+                    </label>
+                </div>
+            <?php b3_get_close(); ?>
 
             <?php b3_get_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
         </form>

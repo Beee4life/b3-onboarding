@@ -13,7 +13,7 @@
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( 'If any field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -33,8 +33,6 @@
         <td>
             <?php esc_html_e( "Be sure to include %reset_url% in your email, otherwise the user can't reset his/her password.", "b3-onboarding" ); ?>
             <br>
-            <?php esc_html_e( "Other available variables are:", "b3-onboarding" ); ?> %blog_name%, %email_footer%, %home_url%, %logo%, %registration_date%, %user_ip%, %user_login%
-            <br>
             <textarea id="b3__input--lost-password-message" name="b3_lost_password_message" placeholder="<?php echo esc_attr( b3_default_lost_password_message() ); ?>" rows="6"><?php echo stripslashes( $lost_password_message ); ?></textarea>
         </td>
     </tr>
@@ -42,11 +40,25 @@
         <th>&nbsp;</th>
         <td>
             <label>
-                <input name="b3_disable_user_notification_password_change" type="checkbox" value="1" <?php checked($disable_user_notification); ?>/> <?php esc_html_e( 'Disable user notification on password change', 'b3-onboarding' ); ?>
+                <input name="b3_disable_user_notification_password_change" type="checkbox" value="1" <?php checked($disable_user_notification); ?>/>
+                <?php
+                    if ( 1 == $disable_user_notification ) {
+                        esc_html_e( 'Uncheck this box to enable user notification on password change', 'b3-onboarding' );
+                    } else {
+                        esc_html_e( 'Check this box to disable user notification on password change', 'b3-onboarding' );
+                    }
+                ?>
             </label>
             <br>
             <label>
-                <input name="b3_disable_admin_notification_password_change" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/> <?php esc_html_e( 'Disable admin notification on password change', 'b3-onboarding' ); ?>
+                <input name="b3_disable_admin_notification_password_change" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/>
+                <?php
+                    if ( 1 == $disable_admin_notification ) {
+                        esc_html_e( 'Uncheck this box to enable admin notification on password change', 'b3-onboarding' );
+                    } else {
+                        esc_html_e( 'Check this box to disable admin notification on password change', 'b3-onboarding' );
+                    }
+                ?>
             </label>
         </td>
     </tr>

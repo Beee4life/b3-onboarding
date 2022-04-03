@@ -20,5 +20,4 @@
         <?php do_action( 'b3_render_form_element', 'general/button', $attributes ); ?>
         <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
     </form>
-
 </div>
