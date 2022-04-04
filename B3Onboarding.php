@@ -584,7 +584,7 @@
 
                             } else {
                                 // if is_multisite
-                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( $_POST[ 'user_name' ] ) : false;
+                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
                                 $register   = false;
 
                                 if ( is_main_site() ) {
@@ -599,7 +599,7 @@
                                     } elseif ( 'request_access_subdomain' == $registration_type ) {
                                         $register   = true;
                                         $user_email = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
-                                        $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
+                                        $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? $_POST[ 'user_login' ] : false;
                                     } elseif ( false != get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
                                         // Recaptcha check failed, display error
                                         $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
