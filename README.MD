@@ -149,7 +149,8 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.6.0 - xx.04.22
-* ?
+* fix difference between field ids for user login (between multisite/single site)
+* don't autoload options
 
 3.5.0 - 03.04.22
 * fix styling multisite registration forms
