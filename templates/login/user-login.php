@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    $field_name = is_multisite() ? 'user_name' : 'user_login';
+    $field_name = is_multisite() ? 'log' : 'user_login';
 
     $label = esc_html__( 'Username or Email address', 'b3-onboarding' );
     if ( 1 == get_option( 'b3_register_email_only' ) ) {
