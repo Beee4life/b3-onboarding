@@ -96,7 +96,7 @@
             <?php b3_get_close(); ?>
 
             <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
-                <?php $hide_username_settings = ( 1 == $username_restrictions ) ? false : true; ?>
+                <?php $hide_username_restrictions = ( 1 == $username_restrictions ) ? false : true; ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_restrict_usernames"><?php esc_html_e( 'Disallow user names', 'b3-onboarding' ); ?></label>
@@ -113,7 +113,7 @@
                     </div>
                 <?php b3_get_close(); ?>
     
-                <?php b3_get_settings_field_open( false, $hide_username_settings, 'username-restrictions' ); ?>
+                <?php b3_get_settings_field_open( false, $hide_username_restrictions, 'username-restrictions' ); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_disallowed_usernames"><?php esc_html_e( 'User names', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
