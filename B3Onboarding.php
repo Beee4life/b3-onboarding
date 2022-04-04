@@ -238,7 +238,7 @@
              */
             public function b3_add_admin_pages() {
                 include 'admin/admin-page.php';
-                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', '83' );
+                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', 100 );
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                     include 'admin/user-approval-page.php';
