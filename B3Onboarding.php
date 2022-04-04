@@ -122,10 +122,7 @@
              * @since 2.0.0
              */
             public function b3_plugin_activation() {
-
-                // create necessary pages
                 b3_setup_initial_pages();
-                // set default values
                 b3_set_default_settings();
 
                 // @TODO: check if this is needed on MS
