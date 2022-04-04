@@ -12,7 +12,7 @@
      */
     function b3_setup_initial_pages( $site_id = false ) {
         if ( false != $site_id && is_multisite() ) {
-            switch_to_blog($site_id);
+            switch_to_blog( $site_id );
         }
 
         $page_definitions = array(
