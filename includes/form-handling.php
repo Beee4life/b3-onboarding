@@ -647,7 +647,7 @@
 
                 } elseif ( isset( $user_object->ID ) ) {
                     if ( false != $approve ) {
-                        do_action( 'b3_approve_user', [ 'user_id' => $user_id ] );
+                        do_action( 'b3_approve_user', $user_id );
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
                     } elseif ( false != $reject ) {
                         do_action( 'b3_before_reject_user', [ 'user_id' => $user_id ] );
