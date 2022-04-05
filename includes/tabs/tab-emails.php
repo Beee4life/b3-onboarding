@@ -14,8 +14,6 @@
     function b3_render_emails_tab() {
         $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
-        $filter_link_color      = apply_filters( 'b3_link_color', false );
-        $link_color             = apply_filters( 'b3_link_color', get_option( 'b3_link_color' ) );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
         $hide_logo_notice       = $logo_in_email ? false : ' hidden';
 
@@ -54,16 +52,6 @@
                         <?php esc_html_e( 'Check this box to activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
                         <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--logo%s">%s</div>', $hide_logo_notice, sprintf( esc_html__( 'Image can be set on the "%s" tab.','b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=settings' ), 'Settings' ) ) ); ?>
                     </div>
-                <?php b3_get_close(); ?>
-
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
-                <?php if ( $filter_link_color ) { ?>
-                    <?php esc_html_e( "You've set a filter to override the link color.", 'b3-onboarding' ); ?>
-                <?php } ?>
                 <?php b3_get_close(); ?>
             <?php } ?>
 
