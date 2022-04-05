@@ -40,13 +40,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
-                        <?php
-                            if ( 1 == $disable_action_links ) {
-                                esc_html_e( 'Uncheck this box to show the action links on forms.', 'b3-onboarding' );
-                            } else {
-                                esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' );
-                            }
-                        ?>
+                        <?php esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -82,13 +76,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php checked($use_popup); ?>/>
-                        <?php
-                            if ( 1 == $use_popup ) {
-                                esc_html_e( 'Uncheck this box to disable the login form in a popup (in the sidebar widget).', 'b3-onboarding' );
-                            } else {
-                                esc_html_e( 'Check this box to show the login form in a popup (only available for the login link in the B3 widget).', 'b3-onboarding' );
-                            }
-                        ?>
+                        <?php esc_html_e( 'Check this box to show the login form in a popup (only available for the login link in the B3 widget).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -98,15 +86,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/>
-
-                        <?php
-                            if ( 1 == $activate_filter_validation ) {
-                                esc_html_e( 'Uncheck this box to deactivate filter validation.', 'b3-onboarding' );
-                            } else {
-                                esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' );
-                            }
-                        ?>
-
+                        <?php esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' ); ?>
                         <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo $hide_validation_note; ?>">
                             <?php esc_html_e( 'Don\'t forget to turn it of later on, the validation can cause a higher load time.', 'b3-onboarding' ); ?>
