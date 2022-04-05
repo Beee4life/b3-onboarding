@@ -95,7 +95,7 @@
                         <?php esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' ); ?>
                         <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo $hide_validation_note; ?>">
-                            <?php esc_html_e( 'Don\'t forget to turn it of later on, the validation can cause a higher load time.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( "Don't forget to turn it of later on, the validation can cause a higher load time.", 'b3-onboarding' ); ?>
                         </div>
                     </div>
                 <?php b3_get_close(); ?>
