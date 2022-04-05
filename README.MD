@@ -149,8 +149,10 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.6.0 - 05.04.22
-* fix difference between field ids for user login (between multisite/single site)
+* fix incorrect field name login
 * don't autoload options
+* output image in admin (if set by filter)
+* hide more fields which have no meaning for the current registration type
 
 3.5.0 - 03.04.22
 * fix styling multisite registration forms
