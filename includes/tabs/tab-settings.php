@@ -156,23 +156,28 @@
                 <hr />
             <?php } ?>
 
-            <?php if ( false == apply_filters( 'b3_main_logo', false ) ) { ?>
-                <?php echo sprintf( '<h2>%s</h2>', esc_html__( 'Logo', 'b3-onboarding' ) ); ?>
-
-                <?php b3_get_settings_field_open(); ?>
-                    <div id="b3-main-logo-settings">
-                        <?php echo sprintf( '<p>%s</p>', esc_html__( "This is the logo used in email headers.", 'b3-onboarding' ) ); ?>
-                        <p>
+            <?php echo sprintf( '<h2>%s</h2>', esc_html__( 'Logo', 'b3-onboarding' ) ); ?>
+            <?php b3_get_settings_field_open(); ?>
+                <div id="b3-main-logo-settings">
+                    <?php echo sprintf( '<p>%s</p>', esc_html__( "This is the logo used in email headers.", 'b3-onboarding' ) ); ?>
+                    <p>
+                        <?php if ( false == apply_filters( 'b3_main_logo', false ) ) { ?>
                             <label>
                                 <input type="url" name="b3_main_logo" id="b3_main_logo" value="<?php echo esc_url( $main_logo ); ?>" />
                             </label>
                             <a href="#" id="main-logo" class="b3-open-media button button-primary" title="<?php esc_attr_e( 'Choose a logo', 'b3-onboarding' ); ?>">
                                 <?php esc_html_e( 'Choose a logo', 'b3-onboarding' ); ?>
                             </a>
-                        </p>
-                    </div>
-                <?php b3_get_close(); ?>
-            <?php } ?>
+                        <?php } else { ?>
+                            <?php esc_html_e( "You've set this logo with a filter.", 'b3-onboarding' ); ?>
+                            <br>
+                            <a href="<?php echo apply_filters( 'b3_main_logo', false ); ?>">
+                                <img src="<?php echo apply_filters( 'b3_main_logo', false ); ?>" alt="" style="max-width: 300px;" />
+                            </a>
+                        <?php } ?>
+                    </p>
+                </div>
+            <?php b3_get_close(); ?>
 
             <?php b3_get_submit_button(); ?>
         </form>
