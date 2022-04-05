@@ -27,6 +27,9 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.7.0
+* add filters to style email content for "change admin email"
+
 3.6.0
 * fix incorrect field name login
 * don't autoload options

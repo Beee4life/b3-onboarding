@@ -149,7 +149,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.7.0 - xx.04.22
-* ?
+* add filters to style email content for "change admin email"
 
 3.6.0 - 05.04.22
 * fix incorrect field name login
