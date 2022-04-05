@@ -689,8 +689,8 @@
 
         return $filtered_names;
     }
-    
-    
+
+
     /**
      * Get 'easy' passwords
      *
@@ -700,7 +700,7 @@
      */
     function b3_get_easy_passwords() {
         $passwords = apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
-    
+
         return $passwords;
     }
 
@@ -1033,42 +1033,41 @@
      * @since 2.0.0
      */
     function b3_set_default_settings( $blog_id = false ) {
-
         if ( false != $blog_id ) {
             switch_to_blog( $blog_id );
         }
-
         $plugin_data = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . b3_get_plugin_file( 'B3 OnBoarding' ) );
 
-        update_option( 'b3_activate_custom_emails', 1 );
-        update_option( 'b3_disable_admin_notification_password_change', 1 );
-        update_option( 'b3_disable_user_notification_password_change', 1 );
-        update_option( 'b3_logo_in_email', 1 );
-        update_option( 'b3_link_color', '#e0144b' );
-        update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ) );
-        update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ) );
-        update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
+        update_option( 'b3_activate_custom_emails', 1, false );
+        update_option( 'b3_disable_admin_notification_password_change', 1, false );
+        update_option( 'b3_disable_user_notification_password_change', 1, false );
+        update_option( 'b3_logo_in_email', 1, false );
+        update_option( 'b3_link_color', '#e0144b', false );
+        update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ), false );
+        update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ), false );
+        update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
 
         if ( class_exists( 'Disable_Comments' ) ) {
             update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
         }
 
         if ( ! is_multisite() ) {
-            update_option( 'b3_dashboard_widget', 1 );
-            update_option( 'b3_hide_admin_bar', 1 );
-            update_option( 'b3_registration_type', 'none' );
-            update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ) );
+            update_option( 'b3_dashboard_widget', 1, false );
+            update_option( 'b3_hide_admin_bar', 1, false );
+            update_option( 'b3_registration_type', 'none', false );
+            update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ), false );
+            // @TODO: check current b3_registration_type, change accordingly
             update_option( 'users_can_register', 0 );
         } else {
             if ( is_main_site() && false == $blog_id ) {
-                update_option( 'b3_dashboard_widget', 1 );
-                update_option( 'b3_registration_type', get_site_option( 'registration' ) );
+                update_option( 'b3_dashboard_widget', 1, false );
+                update_option( 'b3_registration_type', get_site_option( 'registration' ), false );
                 update_site_option( 'registrationnotification', 'no' );
             }
         }
 
         if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
-            update_option( 'b3_privacy_page_id', get_option( 'wp_page_for_privacy_policy' ) );
+            update_option( 'b3_privacy_page_id', get_option( 'wp_page_for_privacy_policy' ), false );
         }
 
         if ( false != $blog_id ) {
