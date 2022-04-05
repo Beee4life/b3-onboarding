@@ -21,14 +21,6 @@
         echo sprintf( '<h2>%s</h2>', esc_html__( 'Emails', 'b3-onboarding' ) );
         ?>
 
-        <p>
-            <?php if ( is_main_site() ) { ?>
-                <?php esc_html_e( 'Here you can set default email settings.', 'b3-onboarding' ); ?>
-            <?php } else { ?>
-                <?php esc_html_e( 'Most email settings are done in the main site.', 'b3-onboarding' ); ?>
-            <?php } ?>
-        </p>
-
         <form action="admin.php?page=b3-onboarding&tab=emails" method="post">
             <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
 

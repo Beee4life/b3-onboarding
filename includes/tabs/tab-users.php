@@ -35,7 +35,6 @@
 
         ob_start();
         echo sprintf( '<h2>%s</h2>', esc_html__( 'Users', 'b3-onboarding' ) );
-        echo sprintf( '<p>%s</p>', esc_html__( 'This page contains settings for users.', 'b3-onboarding' ) );
         ?>
 
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
