@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.5.0 - released xx.04.21
+3.6.0 - released 05.04.21
 
 <a name="features"></a>
 ### Features
@@ -148,11 +148,17 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.5.0 - xx.04.22
+3.6.0 - 05.04.22
+* fix incorrect field name login
+* don't autoload options
+* output image in admin (if set by filter)
+* hide more fields which have no meaning for the current registration type
+
+3.5.0 - 03.04.22
 * fix styling multisite registration forms
 * add new localhost filters for multisite
 * add recaptcha theme
-* optimize templates
+* add/optimize templates
 * update contextual help
 
 3.4.0 - 31.03.22

@@ -2,12 +2,10 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-
     $label = esc_html__( 'Username or Email address', 'b3-onboarding' );
     if ( 1 == get_option( 'b3_register_email_only' ) ) {
         $label = esc_html__( 'Email address', 'b3-onboarding' );
     }
-
 ?>
 <div class="b3_form-element">
     <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php echo $label; ?></label>

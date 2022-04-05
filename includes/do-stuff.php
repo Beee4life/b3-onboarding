@@ -12,7 +12,7 @@
      */
     function b3_setup_initial_pages( $site_id = false ) {
         if ( false != $site_id && is_multisite() ) {
-            switch_to_blog($site_id);
+            switch_to_blog( $site_id );
         }
 
         $page_definitions = array(
@@ -88,7 +88,7 @@
 
                 if ( false != get_post_meta( $page_id, '_b3_page', true ) ) {
                     // page has _b3_page meta
-                    update_option( $page[ 'meta' ], $page_id );
+                    update_option( $page[ 'meta' ], $page_id, false );
                     if ( ! empty( $page_object->post_content ) ) {
                         if ( strpos( $page_object->post_content, $page[ 'content' ] ) === false ) {
                             $add_shortcode = true;
@@ -116,7 +116,7 @@
                 );
                 $result = wp_insert_post( $new_post_args, true );
                 if ( ! is_wp_error( $result ) ) {
-                    update_option( $page[ 'meta' ], $result );
+                    update_option( $page[ 'meta' ], $result, false );
                     update_post_meta( $result, '_b3_page', true );
                 }
             }

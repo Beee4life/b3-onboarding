@@ -16,7 +16,7 @@
     <tbody>
     <tr>
         <td colspan="2">
-            <?php esc_html_e( 'If a field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>

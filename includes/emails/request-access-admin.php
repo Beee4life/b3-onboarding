@@ -18,12 +18,12 @@
     <tbody>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( "Enter the email addresses (searated by comma) which should receive the notification email.", "b3-onboarding" ); ?>
+            <?php esc_html_e( 'Enter the email addresses (searated by comma) which should receive the notification email.', "b3-onboarding" ); ?>
         </td>
     </tr>
     <tr>
         <td colspan="2">
-            <?php esc_html_e( 'If a field is left empty the placeholder will be used.', 'b3-onboarding' ); ?>
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>

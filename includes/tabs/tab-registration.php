@@ -46,10 +46,10 @@
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_registration_type"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-        
+
                     <?php $admin_url = is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'options-general.php' ); ?>
                     <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $admin_url, esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
-    
+
                     <div class="b3_settings-input b3_settings-input--select">
                         <select name="b3_registration_type" id="b3_registration_type">
                             <?php foreach( $options as $option ) { ?>
@@ -105,7 +105,7 @@
                                 <input type="checkbox" id="b3_activate_custom_passwords" name="b3_activate_custom_passwords" value="1" <?php checked($custom_passwords); ?>/>
                                 <?php
                                     if ( 1 == $custom_passwords ) {
-                                        esc_html_e( 'Uncheck this box to activate custom passwords.', 'b3-onboarding' );
+                                        esc_html_e( 'Uncheck this box to deactivate custom passwords.', 'b3-onboarding' );
                                     } else {
                                         esc_html_e( 'Check this box to activate custom passwords.', 'b3-onboarding' );
                                     }
@@ -125,7 +125,7 @@
                                 <input type="checkbox" id="b3_activate_first_last" name="b3_activate_first_last" value="1" <?php checked($first_last); ?>/>
                                 <?php
                                     if ( 1 == $first_last ) {
-                                        esc_html_e( 'Uncheck this box to activate first and last name during registration.', 'b3-onboarding' );
+                                        esc_html_e( 'Uncheck this box to deactivate first and last name during registration.', 'b3-onboarding' );
                                     } else {
                                         esc_html_e( 'Check this box to activate first and last name during registration.', 'b3-onboarding' );
                                     }
