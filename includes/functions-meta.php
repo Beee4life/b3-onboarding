@@ -44,7 +44,9 @@
             'b3_disable_admin_notification_password_change',
             'b3_disable_delete_user_email',
             'b3_disable_user_notification_password_change',
+            'b3_disallowed_domains',
             'b3_disallowed_usernames',
+            'b3_domain_restrictions',
             'b3_email_activation_message',
             'b3_email_activation_subject',
             'b3_email_styling',
@@ -87,6 +89,7 @@
             'b3_request_access_subject_user',
             'b3_reset_password_page_id',
             'b3_restrict_admin',
+            'b3_restrict_usernames',
             'b3_sidebar_widget',
             'b3_use_popup',
             'b3_users_may_delete',
@@ -96,9 +99,6 @@
             'b3_welcome_user_subject',
             'b3_welcome_user_message_manual',
             'b3ob_version',
-            // check
-            'b3_domain_restrictions',
-            'b3_disallowed_domains',
         );
 
         return $meta_keys;
