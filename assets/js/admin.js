@@ -27,19 +27,13 @@
 
         // click admin tab
         $('#b3_tab-button--template').click(function() {
-            invokeCM();
-            if (! window.cm_invoked) {
-                window.cm_invoked = true;
-            }
+            invokeCM(window.cm_invoked);
         });
 
         // direct page
         var get_var = get_query();
         if ( 'template' === get_var.tab ) {
-            invokeCM();
-            if (! window.cm_invoked) {
-                window.cm_invoked = true;
-            }
+            invokeCM(window.cm_invoked);
         }
 
         // Toggle fields
@@ -92,9 +86,11 @@
 
 /**
  * Invoke CodeMirror (if not invoked already)
+ *
+ * @param invoked
  */
-function invokeCM() {
-    if (! window.cm_invoked) {
+function invokeCM(invoked) {
+    if (! invoked) {
         var styling_id = '#b3__input--email_styling';
         var template_id = '#b3__input--email_template';
 
@@ -104,10 +100,18 @@ function invokeCM() {
         if (jQuery(template_id).length ) {
             wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
         }
+        window.cm_invoked = true;
     }
 }
 
-// https://www.w3schools.com/howto/howto_js_tabs.asp
+/**
+ * Open tabs
+ *
+ * @src: https://www.w3schools.com/howto/howto_js_tabs.asp
+ *
+ * @param evt
+ * @param tabName
+ */
 function openTab(evt, tabName) {
     // Declare variables
     var i, tabcontent, tabbutton;
@@ -129,6 +133,11 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
+/**
+ * Get $_GET query/vars
+ *
+ * @returns {{}}
+ */
 function get_query(){
     var url = document.location.href;
     var query_string = url.substring(url.indexOf('?') + 1).split('&');
