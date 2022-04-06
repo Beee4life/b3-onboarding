@@ -34,13 +34,19 @@
      * @return false|string
      */
     function b3_basic_email_settings_field( $box = [] ) {
+        
+        $add_id_fields = [
+            'email_styling',
+            'email_template',
+        ];
 
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
+            $id_field = in_array( $box[ 'id' ], $add_id_fields ) ? ' id="' . $box[ 'id' ] . '"' : false;
         ?>
         <div class="metabox-handler metabox-handler--<?php echo $box['id']; ?>">
             <div class="b3__postbox">
-                <div class="b3_foldout--header foldout__toggle">
+                <div class="b3_foldout--header foldout__toggle"<?php echo $id_field; ?>>
                     <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
                     <i class="dashicons dashicons-plus"></i>
                 </div>
