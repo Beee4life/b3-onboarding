@@ -25,13 +25,15 @@
             }
         });
 
-        $('#email_styling').click(function() {
-            invokeCM( 'styling');
-        });
+        var styling_id = '#b3__input--email_styling';
+        var template_id = '#b3__input--email_template';
 
-        $('#email_template').click(function() {
-            invokeCM( 'template');
-        });
+        if (jQuery(styling_id).length ) {
+            wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
+        }
+        if (jQuery(template_id).length ) {
+            wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
+        }
 
         // Toggle fields
         $('#b3_activate_filter_validation').change(function() {
@@ -81,18 +83,6 @@
     });
 })(jQuery);
 
-function invokeCM( type ) {
-    var styling_id = '#b3__input--email-styling';
-    var template_id = '#b3__input--email-template';
-
-    if (jQuery(styling_id).length && 'styling' === type ) {
-        wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
-    }
-    if (jQuery(template_id).length && 'template' === type ) {
-        wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
-    }
-}
-
 // https://www.w3schools.com/howto/howto_js_tabs.asp
 function openTab(evt, tabName) {
     // Declare all variables
@@ -104,6 +94,9 @@ function openTab(evt, tabName) {
         tabcontent[i].style.display = "none";
     }
 
+    if ( 'template' === tabName ) {
+        invokeCM();
+    }
     // Get all elements with class="tabbutton" and remove the class "active"
     tabbutton = document.getElementsByClassName("b3_tab-button");
     for (i = 0; i < tabbutton.length; i++) {
@@ -115,3 +108,14 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
+function invokeCM() {
+    var styling_id = '#b3__input--email_styling';
+    var template_id = '#b3__input--email_template';
+
+    if (jQuery(styling_id).length ) {
+        wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
+    }
+    if (jQuery(template_id).length ) {
+        wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
+    }
+}
