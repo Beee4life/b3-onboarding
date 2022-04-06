@@ -113,16 +113,6 @@
             'id'    => 'lost_password',
             'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
         );
-        if ( get_option( 'b3_activate_custom_emails' ) ) {
-            $email_boxes[] = array(
-                'id'    => 'email_styling',
-                'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'email_template',
-                'title' => esc_html__( 'Email template', 'b3-onboarding' ),
-            );
-        }
 
         return $email_boxes;
     }
@@ -920,6 +910,14 @@
             'content' => b3_render_tab_content( 'emails' ),
             'icon'    => 'email',
         );
+        if ( get_option( 'b3_activate_custom_emails' ) ) {
+            $tabs[] = array(
+                'id'      => 'template',
+                'title'   => esc_html__( 'Template', 'b3-onboarding' ),
+                'content' => b3_render_tab_content( 'template' ),
+                'icon'    => 'admin-customizer',
+            );
+        }
 
         if ( is_main_site() ) {
             if ( ! is_multisite() ) {
