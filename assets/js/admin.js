@@ -1,16 +1,6 @@
 (function($) {
     $(document).ready(function() {
 
-        var styling_id = '#b3__input--email-styling';
-        var template_id = '#b3__input--email-template';
-
-        if ($(styling_id).length ) {
-            wp.codeEditor.initialize($(styling_id), b3cm_settings);
-        }
-        if ($(template_id).length )  {
-            wp.codeEditor.initialize($(template_id), b3cm_settings);
-        }
-
         // Fold-outs
         var content = ".foldout__content";
         $(content).hide();
@@ -33,6 +23,14 @@
                 $(this).find('i.dashicons').removeClass('dashicons-no');
                 $(this).find('i.dashicons').addClass('dashicons-plus');
             }
+        });
+
+        $('#email_styling').click(function() {
+            invokeCM( 'styling');
+        });
+
+        $('#email_template').click(function() {
+            invokeCM( 'template');
         });
 
         // Toggle fields
@@ -82,6 +80,18 @@
 
     });
 })(jQuery);
+
+function invokeCM( type ) {
+    var styling_id = '#b3__input--email-styling';
+    var template_id = '#b3__input--email-template';
+
+    if (jQuery(styling_id).length && 'styling' === type ) {
+        wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
+    }
+    if (jQuery(template_id).length && 'template' === type ) {
+        wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
+    }
+}
 
 // https://www.w3schools.com/howto/howto_js_tabs.asp
 function openTab(evt, tabName) {
