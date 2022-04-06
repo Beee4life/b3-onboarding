@@ -41,24 +41,12 @@
         <td>
             <label>
                 <input name="b3_disable_user_notification_password_change" type="checkbox" value="1" <?php checked($disable_user_notification); ?>/>
-                <?php
-                    if ( 1 == $disable_user_notification ) {
-                        esc_html_e( 'Uncheck this box to enable user notification on password change', 'b3-onboarding' );
-                    } else {
-                        esc_html_e( 'Check this box to disable user notification on password change', 'b3-onboarding' );
-                    }
-                ?>
+                <?php esc_html_e( 'Check this box to disable user notification on password change', 'b3-onboarding' ); ?>
             </label>
             <br>
             <label>
                 <input name="b3_disable_admin_notification_password_change" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/>
-                <?php
-                    if ( 1 == $disable_admin_notification ) {
-                        esc_html_e( 'Uncheck this box to enable admin notification on password change', 'b3-onboarding' );
-                    } else {
-                        esc_html_e( 'Check this box to disable admin notification on password change', 'b3-onboarding' );
-                    }
-                ?>
+                <?php esc_html_e( 'Check this box to disable admin notification on password change', 'b3-onboarding' ); ?>
             </label>
         </td>
     </tr>

@@ -16,6 +16,8 @@
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
         $debug_info                 = get_option( 'b3_debug_info' );
         $disable_action_links       = get_option( 'b3_disable_action_links' );
+        $filter_link_color          = apply_filters( 'b3_link_color', false );
+        $link_color                 = apply_filters( 'b3_link_color', get_option( 'b3_link_color' ) );
         $main_logo                  = get_option( 'b3_main_logo' );
         $preserve_settings          = get_option( 'b3_preserve_settings' );
         $use_popup                  = get_option( 'b3_use_popup', false );
@@ -23,30 +25,28 @@
         ob_start();
         echo sprintf( '<h2>%s</h2>', esc_html__( 'Settings', 'b3-onboarding' ) );
         ?>
-        <p>
-            <?php if ( is_main_site() ) { ?>
-                <?php esc_html_e( "Here you can set some settings for the plugin (which didn't fit on other tabs).", 'b3-onboarding' ); ?>
-            <?php } else { ?>
-                <?php esc_html_e( 'Most settings are set in the main site.', 'b3-onboarding' ); ?>
-            <?php } ?>
-        </p>
 
         <form action="admin.php?page=b3-onboarding&tab=settings" method="post">
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
             <?php if ( is_main_site() ) { ?>
+    
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
+                    <?php if ( $filter_link_color ) { ?>
+                        <?php esc_html_e( "You've set a filter to override the link color.", 'b3-onboarding' ); ?>
+                    <?php } ?>
+                <?php b3_get_close(); ?>
+
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
-                        <?php
-                            if ( 1 == $disable_action_links ) {
-                                esc_html_e( 'Uncheck this box to show the action links on forms.', 'b3-onboarding' );
-                            } else {
-                                esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' );
-                            }
-                        ?>
+                        <?php esc_html_e( 'Check this box to hide the action links on custom forms.', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -82,13 +82,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php checked($use_popup); ?>/>
-                        <?php
-                            if ( 1 == $use_popup ) {
-                                esc_html_e( 'Uncheck this box to disable the login form in a popup (in the sidebar widget).', 'b3-onboarding' );
-                            } else {
-                                esc_html_e( 'Check this box to show the login form in a popup (only available for the login link in the B3 widget).', 'b3-onboarding' );
-                            }
-                        ?>
+                        <?php esc_html_e( 'Check this box to show the login form in a popup (only available for the login link in the B3 widget).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -98,18 +92,10 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/>
-
-                        <?php
-                            if ( 1 == $activate_filter_validation ) {
-                                esc_html_e( 'Uncheck this box to deactivate filter validation.', 'b3-onboarding' );
-                            } else {
-                                esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' );
-                            }
-                        ?>
-
+                        <?php esc_html_e( 'Check this box to activate filter validation.', 'b3-onboarding' ); ?>
                         <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo $hide_validation_note; ?>">
-                            <?php esc_html_e( 'Don\'t forget to turn it of later on, the validation can cause a higher load time.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( "Don't forget to turn it of later on, the validation can cause a higher load time.", 'b3-onboarding' ); ?>
                         </div>
                     </div>
                 <?php b3_get_close(); ?>

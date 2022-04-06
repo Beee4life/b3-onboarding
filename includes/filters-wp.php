@@ -752,3 +752,53 @@ All at ###SITENAME###
         return $result;
     }
     add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
+    
+    
+    /**
+     * Filter to style "New admin email address" email content
+     *
+     * @since 3.7.0
+     *
+     * @param $email_content
+     * @param $new_email
+     *
+     * @return string
+     */
+    function admin_email_confirm( $email_content, $new_email ) {
+        $email_content = str_replace( '###ADMIN_URL###', '<a href="###ADMIN_URL###">###ADMIN_URL###</a>', $email_content );
+        $email_content = str_replace( '###EMAIL###', '###EMAIL###.', $email_content );
+        $email_content = str_replace( "\n###SITEURL###", '', $email_content );
+        $email_content = str_replace( "\n", '<br>', $email_content );
+        $email_content = b3_replace_template_styling( $email_content );
+        $email_content = strtr( $email_content, b3_replace_email_vars() );
+        $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
+    
+        return $email_content;
+    }
+    add_filter( 'new_admin_email_content', 'admin_email_confirm', 10, 2 );
+    
+    
+    /**
+     * Filter to style "Admin email address changed" email
+     *
+     * @since 3.7.0
+     *
+     * @param $email_message
+     * @param $old_email
+     * @param $new_email
+     *
+     * @return mixed
+     */
+    function admin_email_changed( $email_array, $old_email, $new_email ) {
+        $message                  = $email_array[ 'message' ];
+        $message                  = str_replace( '###OLD_EMAIL###', '###OLD_EMAIL###.', $message );
+        $message                  = str_replace( "\n###SITEURL###", '', $message );
+        $message                  = str_replace( "\n", '<br>', $message );
+        $message                  = b3_replace_template_styling( $message );
+        $message                  = strtr( $message, b3_replace_email_vars() );
+        $message                  = htmlspecialchars_decode( stripslashes( $message ) );
+        $email_array[ 'message' ] = $message;
+
+        return $email_array;
+    }
+    add_filter( 'site_admin_email_change_email', 'admin_email_changed', 10, 3 );

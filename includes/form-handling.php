@@ -179,13 +179,6 @@
                     delete_option( 'b3_notification_sender_email' );
                 }
 
-                if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
-                    $color = $_POST[ 'b3_link_color' ];
-                    update_option( 'b3_link_color', $color, false );
-                } else {
-                    delete_option( 'b3_link_color' );
-                }
-
                 if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == $_POST[ 'b3_activate_custom_emails' ] ) {
                     update_option( 'b3_activate_custom_emails', 1, false );
                 } else {
@@ -535,14 +528,18 @@
      * @since 1.0.0
      */
     function b3_setings_form_handling() {
-
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
-
             if ( ! wp_verify_nonce( $_POST[ 'b3ob_settings_nonce' ], 'b3ob-settings-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
                 $reset = false;
-
+    
+                if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
+                    update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
+                } else {
+                    delete_option( 'b3_link_color' );
+                }
+        
                 if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
                     update_option( 'b3_disable_action_links', 1, false );
                 } else {
