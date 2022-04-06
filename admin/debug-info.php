@@ -138,11 +138,15 @@
                         'b3_privacy_text',
                         'message',
                     ];
+                    $long_fields = [
+                        'b3_email_styling',
+                        'b3_email_template',
+                    ];
 
                     if ( is_array( $value ) ) {
                         $meta_value = 'array( ' . implode( ', ', $value ) . ' )';
                     } else {
-                        $value = ( 'b3_email_template' == $meta_key ) ? 'Set' : $value;
+                        $value = ( in_array( $meta_key, $long_fields ) ) ? 'Set' : $value;
                         $meta_value = (! $value) ? esc_html__( 'not set', 'b3-onboarding') : $value;
                     }
 
