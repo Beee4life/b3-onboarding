@@ -1,8 +1,15 @@
 (function($) {
     $(document).ready(function() {
 
-        wp.codeEditor.initialize($('#b3__input--email-styling'), cm_settings);
-        wp.codeEditor.initialize($('#b3__input--email-template'), cm_settings);
+        var styling_id = '#b3__input--email-styling';
+        var template_id = '#b3__input--email-template';
+
+        if ($(styling_id).length ) {
+            wp.codeEditor.initialize($(styling_id), b3cm_settings);
+        }
+        if ($(template_id).length )  {
+            wp.codeEditor.initialize($(template_id), b3cm_settings);
+        }
 
         // Fold-outs
         var content = ".foldout__content";
