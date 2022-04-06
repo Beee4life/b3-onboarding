@@ -149,8 +149,9 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.7.0 - xx.04.22
+* added codemirror for email template and styling
+* added new admin tab for email template and styling
 * add filters to style email content for "change admin email"
-* add codemirror for email template and styling
 * move link color field to settings tab
 
 3.6.0 - 05.04.22
