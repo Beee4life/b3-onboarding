@@ -213,11 +213,13 @@
                 wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
 
                 // https://wpreset.com/add-codemirror-editor-plugin-theme/
-                $cm_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
-                wp_localize_script('jquery', 'cm_settings', $cm_settings );
-
-                wp_enqueue_script( 'wp-theme-plugin-editor' );
-                wp_enqueue_style( 'wp-codemirror' );
+                $b3cm_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+                wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
+    
+                if ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) {
+                    wp_enqueue_script( 'wp-theme-plugin-editor' );
+                    wp_enqueue_style( 'wp-codemirror' );
+                }
 
                 // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // Bail out early if we are not on a page add/edit screen.
