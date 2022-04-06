@@ -1039,14 +1039,17 @@
         update_option( 'b3_activate_custom_emails', 1, false );
         update_option( 'b3_disable_admin_notification_password_change', 1, false );
         update_option( 'b3_disable_user_notification_password_change', 1, false );
-        update_option( 'b3_email_styling', stripslashes( b3_default_email_styling()), false );
-        update_option( 'b3_email_template', stripslashes( b3_default_email_template() ), false );
         update_option( 'b3_logo_in_email', 1, false );
         update_option( 'b3_link_color', '#e0144b', false );
         update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ), false );
         update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ), false );
         update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
 
+        $email_styling = stripslashes( b3_default_email_styling() );
+        $email_template = stripslashes( b3_default_email_template() );
+        update_option( 'b3_email_styling', $email_styling, false );
+        update_option( 'b3_email_template', $email_template, false );
+        
         if ( class_exists( 'Disable_Comments' ) ) {
             update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
         }
