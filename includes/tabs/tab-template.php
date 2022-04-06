@@ -15,7 +15,7 @@
         $email_boxes = [];
         $stored_email_template = get_option( 'b3_email_template' );
         $stored_email_styling = get_option( 'b3_email_styling' );
-    
+
         if ( get_option( 'b3_activate_custom_emails' ) ) {
             $email_boxes[] = array(
                 'id'          => esc_attr( 'email_styling' ),
@@ -49,8 +49,8 @@
                     </p>
                 </div>
             <?php } ?>
-        
-            <?php b3_get_submit_button( esc_attr__( 'Save templates', 'b3-onboarding' ) ); ?>
+
+            <?php b3_get_submit_button(); ?>
         </form>
 
         <?php
