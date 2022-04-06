@@ -447,7 +447,8 @@ ul.b3_integrations--list {
 
 .b3 #template .CodeMirror {
   border:     1px solid #ddd;
-  min-height: 25vh;
+  min-height: initial;
+  height:     25vh;
 }
 
 #tab-panel-b3-emails.help-tab-content ul li {
