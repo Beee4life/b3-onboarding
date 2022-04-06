@@ -1049,7 +1049,7 @@
         $email_template = stripslashes( b3_default_email_template() );
         update_option( 'b3_email_styling', $email_styling, false );
         update_option( 'b3_email_template', $email_template, false );
-        
+
         if ( class_exists( 'Disable_Comments' ) ) {
             update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
         }
@@ -1138,4 +1138,104 @@
             }
             do_action( 'b3_do_after_template', $template_name );
         }
+    }
+
+    function b3_get_replacement_vars( $type = 'message', $vars = array(), $activation = false ) {
+        $replacements = [];
+        $user_data    = false;
+
+        if ( isset( $vars[ 'user_data' ] ) ) {
+            $user_data = $vars[ 'user_data' ];
+        } elseif ( is_user_logged_in() ) {
+            $user_data = get_userdata( get_current_user_id() );
+            if ( false != $user_data ) {
+                $vars[ 'user_data' ] = $user_data;
+            }
+        }
+        $blog_id = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
+        $user_login = ( true != get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
+
+        if ( isset( $vars[ 'registration_date' ] ) ) {
+            $registration_date_gmt = $vars[ 'registration_date' ];
+        } elseif ( isset( $vars[ 'user_data' ]->user_registered ) ) {
+            $registration_date_gmt = $vars[ 'user_data' ]->user_registered;
+        } else {
+            $registration_date_gmt = false;
+        }
+        $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
+
+        // More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
+        if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
+            // check ip from share internet
+            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+        } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
+            // to check ip is pass from proxy
+            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+        } else {
+            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+        }
+
+        if ( isset( $vars[ 'blog_id' ] ) ) {
+            switch_to_blog( $vars[ 'blog_id' ] );
+            $replacements[ '%site_name%' ] = get_option( 'blogname' );
+            restore_current_blog();
+        }
+
+        switch($type) {
+            case 'message':
+                $replacements = array(
+                    '%account_page%'      => esc_url( b3_get_account_url() ),
+                    '%blog_name%'         => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
+                    '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
+                    '%home_url%'          => get_home_url( $blog_id, '/' ),
+                    '%login_url%'         => esc_url( b3_get_login_url() ),
+                    '%logo%'              => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
+                    '%lostpass_url%'      => b3_get_lostpassword_url(),
+                    '%network_name%'      => get_site_option( 'site_name' ),
+                    '%registration_date%' => $local_registration_date,
+                    '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
+                    '%user_ip%'           => $user_ip,
+                    '%user_login%'        => $user_login,
+                );
+                break;
+            case 'subject':
+                $replacements = array(
+                    '%blog_name%'    => get_option( 'blogname' ),
+                    '%network_name%' => get_site_option( 'site_name' ),
+                    '%user_login%'   => $user_login,
+                    '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
+                );
+                break;
+            default:
+                $replacements = [];
+        }
+
+        if ( is_multisite() ) {
+            $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
+            $replacements[ '%settings_url%' ] = $options_site_url;
+
+            if ( isset( $vars[ 'blog_id' ] )  ) {
+                $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
+            }
+            if ( isset( $vars[ 'domain' ] ) && isset( $vars[ 'path' ] )  ) {
+                $replacements[ '%home_url%' ] = b3_get_protocol() . '://' . $vars[ 'domain' ] . $vars[ 'path' ];
+            }
+            if ( isset( $vars[ 'user_password' ] ) ) {
+                $replacements[ '%user_password%' ] = $vars[ 'user_password' ];
+            }
+            $replacements[ 'network_name' ] = get_option( 'name' );
+        }
+
+        if ( false != $activation ) {
+            if ( is_multisite() ) {
+                if ( isset( $vars[ 'key' ] ) ) {
+                    $activate_url                       = b3_get_login_url() . "?activate=user&key={$vars[ 'key' ]}";
+                    $replacements[ '%activation_url%' ] = esc_url( $activate_url );
+                }
+            } else {
+                $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
+            }
+        }
+
+        return $replacements;
     }
