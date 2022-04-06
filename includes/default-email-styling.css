@@ -1,84 +1,84 @@
 body {
-    font-family: Arial, Verdana, sans-serif;
-    margin:      0;
-    padding:     0;
+  font-family: Arial, Verdana, sans-serif;
+  margin:      0;
+  padding:     0;
 }
 
 table {
-    border-spacing:  0;
-    border-collapse: collapse;
-    width:           100%;
+  border-spacing:  0;
+  border-collapse: collapse;
+  width:           100%;
 }
 
 table td {
-    padding: 0;
+  padding: 0;
 }
 
 table#b3_email_main {
-    background: #eeeeee;
-    font-size:  14px;
-    height:     100%;
+  background: #eeeeee;
+  font-size:  14px;
+  height:     100%;
 }
 
 .wp-admin table#b3_email_main {
-    border: 1px solid #444;
+  border: 1px solid #444;
 }
 
 table.b3_email_content_table:first-child {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 table.b3_email_content_table {
-    width:      600px;
-    margin:     0 auto;
-    background: #ffffff;
+  width:      600px;
+  margin:     0 auto;
+  background: #ffffff;
 }
 
 table.b3_email_content_table:last-child {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 table.b3_email_content_table td {
-    padding: 10px;
+  padding: 10px;
 }
 
 table.b3_email_header td {
-    padding-top:    10px;
-    padding-bottom: 10px;
-    text-align:     center;
+  padding-top:    10px;
+  padding-bottom: 10px;
+  text-align:     center;
 }
 
 table td.b3_email_footer {
-    font-size: small;
+  font-size: small;
 }
 
 table td.b3_email_content {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 .b3_email_header img {
-    max-width: 150px;
-    height:    auto;
+  max-width: 150px;
+  height:    auto;
 }
 
 .underline {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .hr {
-    border-bottom: 1px solid #444444;
-    margin:        0;
-    width:         100%;
+  border-bottom: 1px solid #444444;
+  margin:        0;
+  width:         100%;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 /* Default color is added in case filter fails */
 #b3_email_main a:link,
 #b3_email_main a:visited,
 #b3_email_main a:active {
-    color: #e0144b;
-    text-decoration: none;
+  color:           #e0144b;
+  text-decoration: none;
 }
