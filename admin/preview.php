@@ -31,7 +31,7 @@
                     break;
                 case 'mu-confirm-user-email':
                     $message = apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() );
-                    $subject = apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() );
+                    $subject = apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() );
                     break;
                 case 'mu-user-activated':
                 case 'mu-user-site-activated':
