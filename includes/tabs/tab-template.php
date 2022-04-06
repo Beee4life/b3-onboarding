@@ -45,7 +45,7 @@
                     <p>
                         <?php echo b3_get_preview_link( $box['preview'] ); ?> <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?></small>
                         |
-                        <?php echo sprintf(  '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=default-email-template.html&sentby=b3' ), esc_html__( 'Download template', 'b3-onboarding' ) ); ?>
+                        <?php echo sprintf(  '<a href="%s">%s</a> %s', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=default-email-template.html&sentby=b3' ), esc_html__( 'Click here', 'b3-onboarding' ), esc_html__( 'to download', 'b3-onboarding' ) ); ?>
                     </p>
                 </div>
             <?php } ?>
