@@ -25,14 +25,21 @@
             }
         });
 
-        var styling_id = '#b3__input--email_styling';
-        var template_id = '#b3__input--email_template';
+        // click admin tab
+        $('#b3_tab-button--template').click(function() {
+            invokeCM();
+            if (! window.cm_invoked) {
+                window.cm_invoked = true;
+            }
+        });
 
-        if (jQuery(styling_id).length ) {
-            wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
-        }
-        if (jQuery(template_id).length ) {
-            wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
+        // direct page
+        var get_var = get_query();
+        if ( 'template' === get_var.tab ) {
+            invokeCM();
+            if (! window.cm_invoked) {
+                window.cm_invoked = true;
+            }
         }
 
         // Toggle fields
@@ -83,9 +90,26 @@
     });
 })(jQuery);
 
+/**
+ * Invoke CodeMirror (if not invoked already)
+ */
+function invokeCM() {
+    if (! window.cm_invoked) {
+        var styling_id = '#b3__input--email_styling';
+        var template_id = '#b3__input--email_template';
+
+        if (jQuery(styling_id).length ) {
+            wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
+        }
+        if (jQuery(template_id).length ) {
+            wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
+        }
+    }
+}
+
 // https://www.w3schools.com/howto/howto_js_tabs.asp
 function openTab(evt, tabName) {
-    // Declare all variables
+    // Declare variables
     var i, tabcontent, tabbutton;
 
     // Get all elements with class="tabcontent" and hide them
@@ -94,9 +118,6 @@ function openTab(evt, tabName) {
         tabcontent[i].style.display = "none";
     }
 
-    if ( 'template' === tabName ) {
-        invokeCM();
-    }
     // Get all elements with class="tabbutton" and remove the class "active"
     tabbutton = document.getElementsByClassName("b3_tab-button");
     for (i = 0; i < tabbutton.length; i++) {
@@ -108,14 +129,13 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-function invokeCM() {
-    var styling_id = '#b3__input--email_styling';
-    var template_id = '#b3__input--email_template';
+function get_query(){
+    var url = document.location.href;
+    var query_string = url.substring(url.indexOf('?') + 1).split('&');
+    for(var i = 0, result = {}; i < query_string.length; i++){
+        query_string[i] = query_string[i].split('=');
+        result[query_string[i][0]] = decodeURIComponent(query_string[i][1]);
+    }
 
-    if (jQuery(styling_id).length ) {
-        wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
-    }
-    if (jQuery(template_id).length ) {
-        wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
-    }
+    return result;
 }
