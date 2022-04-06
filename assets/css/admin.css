@@ -445,8 +445,11 @@ ul.b3_integrations--list {
   width:   100%;
 }
 
-.b3 .CodeMirror {
+.b3 #template .CodeMirror {
   border: 1px solid #ddd;
+  min-height: initial;
+  /*height: 25rem;*/
+  height: 25vh;
 }
 
 #tab-panel-b3-emails.help-tab-content ul li {
@@ -463,6 +466,19 @@ ul.b3_integrations--list {
   padding:     8px 12px;
   margin:      0;
   line-height: 1.4;
+}
+
+.template_box label {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.template_box .CodeMirror {
+  margin-top: 1rem;
+}
+
+.template_box + .template_box {
+  margin-top: 2rem;
 }
 
 #wpadminbar .topbar_approve_user a.ab-item {
