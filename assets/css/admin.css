@@ -446,10 +446,8 @@ ul.b3_integrations--list {
 }
 
 .b3 #template .CodeMirror {
-  border: 1px solid #ddd;
-  min-height: initial;
-  /*height: 25rem;*/
-  height: 25vh;
+  border:     1px solid #ddd;
+  min-height: 25vh;
 }
 
 #tab-panel-b3-emails.help-tab-content ul li {
@@ -470,7 +468,7 @@ ul.b3_integrations--list {
 
 .template_box label {
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size:   1.25rem;
 }
 
 .template_box .CodeMirror {
@@ -516,6 +514,7 @@ ul.b3_integrations--list {
   .b3_table--debug-meta {
     width: 650px;
   }
+
   .b3_tabs {
     max-width: 1024px;
   }
