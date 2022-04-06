@@ -215,8 +215,11 @@
     
                 if ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) {
                     // https://wpreset.com/add-codemirror-editor-plugin-theme/
+                    $advanced_code = get_option( 'b3_advanced_code' );
+                    $type          = !$advanced_code ? 'text/html' : 'text/css';
+                    
                     $b3cm_settings['codeEditor'] = wp_enqueue_code_editor( array(
-                        'type' => 'text/css',
+                        'type' => $type,
                     ) );
                     wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
 
