@@ -123,6 +123,6 @@
         <?php } else { ?>
             <p><?php esc_html_e( "These are the email's styling definitions.", 'b3-onboarding' ); ?></p>
             <pre><?php echo $css; ?></pre>
-        <?php } ?>
-    <?php } ?>
+        <?php } // styling !== preview ?>
+    <?php } //end $_GET preview ?>
 </div>
