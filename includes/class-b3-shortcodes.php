@@ -78,7 +78,7 @@
                         return $message;
                     }
                 }
-
+                error_log($registration_type);
                 if ( 'none' == $registration_type && ! current_user_can( 'manage_network' ) ) {
                     // registration closed
                     return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) );
