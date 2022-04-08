@@ -721,22 +721,32 @@
      *
      * @return string
      */
-    function admin_email_confirm( $email_content, $new_email ) {
-        $email_content = str_replace( '###ADMIN_URL###', '<a href="###ADMIN_URL###">###ADMIN_URL###</a>', $email_content );
+    function b3_confirm_change_email( $email_content, $new_email ) {
+        $search  = 'If this is correct, please click on the following link to change it:';
+        $replace = 'If this is correct, please click ###HERE### to change it.';
+        $email_content = str_replace( $search, $replace, $email_content );
         $email_content = str_replace( '###EMAIL###', '###EMAIL###.', $email_content );
+        $email_content = str_replace( '###HERE###', '<a href="###ADMIN_URL###">here</a>', $email_content );
+        $email_content = str_replace( "Regards,\n", '', $email_content );
+        $email_content = str_replace( "All at ###SITENAME###\n", '', $email_content );
+        $email_content = str_replace( "###ADMIN_URL###\n", '', $email_content );
         $email_content = str_replace( "\n###SITEURL###", '', $email_content );
         $email_content = str_replace( "\n", '<br>', $email_content );
+        $email_content .= b3_default_greetings();
         $email_content = b3_replace_template_styling( $email_content );
         $email_content = strtr( $email_content, b3_replace_email_vars() );
         $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
 
         return $email_content;
     }
-    add_filter( 'new_admin_email_content', 'admin_email_confirm', 10, 2 );
+    add_filter( 'new_admin_email_content', 'b3_confirm_change_email', 10, 2 );
+    add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 );
+    // @TODO: test this
+    add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 );
 
 
     /**
-     * Filter to style "Admin email address changed" email
+     * Filter to style "Admin email address changed" email (non-MS)
      *
      * @since 3.7.0
      *
@@ -746,11 +756,14 @@
      *
      * @return mixed
      */
-    function admin_email_changed( $email_array, $old_email, $new_email ) {
+    function b3_admin_email_changed( $email_array, $old_email, $new_email ) {
         $message                  = $email_array[ 'message' ];
         $message                  = str_replace( '###OLD_EMAIL###', '###OLD_EMAIL###.', $message );
         $message                  = str_replace( "\n###SITEURL###", '', $message );
+        $message                  = str_replace( "Regards,\n", '', $message );
+        $message                  = str_replace( "\nAll at ###SITENAME###", '', $message );
         $message                  = str_replace( "\n", '<br>', $message );
+        $message                  .= b3_default_greetings();
         $message                  = b3_replace_template_styling( $message );
         $message                  = strtr( $message, b3_replace_email_vars() );
         $message                  = htmlspecialchars_decode( stripslashes( $message ) );
@@ -758,34 +771,4 @@
 
         return $email_array;
     }
-    add_filter( 'site_admin_email_change_email', 'admin_email_changed', 10, 3 );
-
-
-    /**
-     * Filter email content to confirm email change
-     *
-     * @param $email_text
-     * @param $new_user_email
-     *
-     * @return string
-     */
-    function b3_user_email_change_confirm( $email_text, $new_user_email ) {
-        $message = $email_text;
-        $search  = 'If this is correct, please click on the following link to change it:';
-        $replace = 'If this is correct, please click ###HERE### to change it:';
-        $message = str_replace( $search, $replace, $message );
-        $message = str_replace( '###EMAIL###', '###EMAIL###.', $message );
-        $message = str_replace( '###HERE###', '<a href="###ADMIN_URL###">here</a>', $message );
-        $message = str_replace( "Regards,\n", '', $message );
-        $message = str_replace( "All at ###SITENAME###\n", '', $message );
-        $message = str_replace( "###ADMIN_URL###\n", '', $message );
-        $message = str_replace( "\n###SITEURL###", '', $message );
-        $message = str_replace( "\n", '<br>', $message );
-        $message .= b3_default_greetings();
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars() );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
-
-        return $message;
-    }
-    add_filter( 'new_user_email_content', 'b3_user_email_change_confirm', 10, 2 );
+    add_filter( 'site_admin_email_change_email', 'b3_admin_email_changed', 10, 3 );
