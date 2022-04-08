@@ -812,7 +812,7 @@ All at ###SITENAME###
      *
      * @return string
      */
-    function b3_user_email_change_attempt( $email_text, $new_user_email ) {
+    function b3_user_email_change_confirm( $email_text, $new_user_email ) {
         $message = $email_text;
         $search  = 'If this is correct, please click on the following link to change it:';
         $replace = 'If this is correct, please click ###HERE### to change it:';
@@ -831,4 +831,4 @@ All at ###SITENAME###
 
         return $message;
     }
-    add_filter( 'new_user_email_content', 'b3_user_email_change_attempt', 10, 2 );
+    add_filter( 'new_user_email_content', 'b3_user_email_change_confirm', 10, 2 );
