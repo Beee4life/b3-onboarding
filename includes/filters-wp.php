@@ -752,8 +752,8 @@ All at ###SITENAME###
         return $result;
     }
     add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
-    
-    
+
+
     /**
      * Filter to style "New admin email address" email content
      *
@@ -772,12 +772,12 @@ All at ###SITENAME###
         $email_content = b3_replace_template_styling( $email_content );
         $email_content = strtr( $email_content, b3_replace_email_vars() );
         $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
-    
+
         return $email_content;
     }
     add_filter( 'new_admin_email_content', 'admin_email_confirm', 10, 2 );
-    
-    
+
+
     /**
      * Filter to style "Admin email address changed" email
      *
@@ -802,3 +802,33 @@ All at ###SITENAME###
         return $email_array;
     }
     add_filter( 'site_admin_email_change_email', 'admin_email_changed', 10, 3 );
+
+
+    /**
+     * Filter email content to confirm email change
+     *
+     * @param $email_text
+     * @param $new_user_email
+     *
+     * @return string
+     */
+    function b3_user_email_change_attempt( $email_text, $new_user_email ) {
+        $message = $email_text;
+        $search  = 'If this is correct, please click on the following link to change it:';
+        $replace = 'If this is correct, please click ###HERE### to change it:';
+        $message = str_replace( $search, $replace, $message );
+        $message = str_replace( '###EMAIL###', '###EMAIL###.', $message );
+        $message = str_replace( '###HERE###', '<a href="###ADMIN_URL###">here</a>', $message );
+        $message = str_replace( "Regards,\n", '', $message );
+        $message = str_replace( "All at ###SITENAME###\n", '', $message );
+        $message = str_replace( "###ADMIN_URL###\n", '', $message );
+        $message = str_replace( "\n###SITEURL###", '', $message );
+        $message = str_replace( "\n", '<br>', $message );
+        $message .= b3_default_greetings();
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_replace_email_vars() );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+        return $message;
+    }
+    add_filter( 'new_user_email_content', 'b3_user_email_change_attempt', 10, 2 );
