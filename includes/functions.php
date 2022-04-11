@@ -1048,7 +1048,7 @@
         update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
 
         if ( class_exists( 'Disable_Comments' ) ) {
-            update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
+            update_option( 'wpins_block_notice', [ 'disable-comments' => 'disable-comments' ] );
         }
 
         if ( ! is_multisite() ) {
