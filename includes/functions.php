@@ -1047,10 +1047,6 @@
         update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ), false );
         update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
 
-        if ( class_exists( 'Disable_Comments' ) ) {
-            update_option( 'wpins_block_notice', [ 'disable-comments' => 'disable-comments' ] );
-        }
-
         if ( ! is_multisite() ) {
             update_option( 'b3_dashboard_widget', 1, false );
             update_option( 'b3_hide_admin_bar', 1, false );
