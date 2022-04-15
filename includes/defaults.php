@@ -55,7 +55,7 @@
 
 
     /**
-     * Return default email footer
+     * Return default email footer text
      *
      * @since 2.0.0
      *
@@ -684,8 +684,8 @@
 
         return apply_filters( 'b3_default_greetings', $greetings );
     }
-    
-    
+
+
     /**
      * Get default reserved names
      *
@@ -702,11 +702,11 @@
             'invite',
             'files',
         );
-        
+
         return $default_reserved_names;
     }
-    
-    
+
+
     /**
      * Get 'easy' passwords
      *
@@ -725,6 +725,6 @@
             'password',
             'wachtwoord',
         );
-        
+
         return $default_passwords;
     }
