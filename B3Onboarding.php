@@ -624,15 +624,17 @@
                                             $error_message_user_email = $errors->get_error_message( 'user_email' );
 
                                             if ( ! empty( $error_message_user_name ) ) {
-                                                if ( 'Sorry, that username already exists!' == $error_message_user_name ) {
+                                                if ( __( 'Sorry, that username already exists!' ) == $error_message_user_name ) {
                                                     $error_codes[] = 'username_exists';
-                                                } elseif ( 'That username is currently reserved but may be available in a couple of days.' == $error_message_user_name ) {
+                                                } elseif ( __( 'Usernames can only contain lowercase letters (a-z) and numbers.' ) == $error_message_user_name ) {
+                                                    $error_codes[] = 'username_no_uppercase';
+                                                } elseif ( __( 'That username is currently reserved but may be available in a couple of days.' ) == $error_message_user_name ) {
                                                     $error_codes[] = 'wpmu_user_reserved';
                                                 }
                                             } elseif ( ! empty( $error_message_user_email ) ) {
-                                                if ( 'Sorry, that email address is already used!' == $error_message_user_email ) {
+                                                if ( __( 'Sorry, that email address is already used!' ) == $error_message_user_email ) {
                                                     $error_codes[] = 'email_exists';
-                                                } elseif ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' == $error_message_user_email ) {
+                                                } elseif ( __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' ) == $error_message_user_email ) {
                                                     $error_codes[] = 'wpmu_email_in_use';
                                                 }
                                             } else {
@@ -830,6 +832,9 @@
                     // Registration errors
                     case 'username_exists':
                         return esc_html__( 'This username is already in use.', 'b3-onboarding' );
+
+                    case 'username_no_uppercase':
+                        return esc_html__( 'Usernames can only contain lowercase letters (a-z) and numbers.', 'b3-onboarding' );
 
                     case 'disallowed_username':
                         return esc_html__( 'That user name is not allowed, please choose another.', 'b3-onboarding' );
