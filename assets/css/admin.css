@@ -149,7 +149,7 @@
 }
 
 .b3_table--user {
-  width: 50%;
+  max-width: 70%;
 }
 
 .b3_table th,
