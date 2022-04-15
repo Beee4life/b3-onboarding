@@ -58,8 +58,8 @@
         $new_message               .= '<br><br>';
         $new_message               .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL### from ###EMAIL###.';
         $new_message               .= '<br><br>';
-        $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###';
-        $new_message               .= '<br><br>';
+        $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###.';
+        $new_message               .= '<br>';
         $new_message               .= b3_default_greetings();
         $new_message               = b3_replace_template_styling( $new_message );
         $new_message               = strtr( $new_message, b3_replace_email_vars() );
@@ -458,49 +458,6 @@
 
 
     /**
-     * Change content of email address changed email
-     * Not in use yet, prepare for coming setting/filter
-     *
-     * @param $email_change_email
-     * @param $user
-     * @param $userdata
-     *
-     * @return array|bool
-     */
-    function b3_content_email_change_notification( $email_change_email, $user, $userdata ) {
-        // if admin disabled notification option
-        // option doesn't exist in admin (yet)
-        $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
-
-        $pass_change_text = sprintf( __(
-            'Hi %s,
-
-This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL###.
-
-If you did not change your email, please contact the Site Administrator at
-###ADMIN_EMAIL###
-
-This email has been sent to ###EMAIL###.
-
-Regards,
-All at ###SITENAME###
-###SITEURL###', 'b3-onboarding'
-        ), $salutation );
-
-        $email_change_email = array(
-            'to'      => $user[ 'user_email' ],
-            /* translators: Password change notification email subject. %s: Site title. */
-            'subject' => __( '[%s] Password Changed' ),
-            'message' => $pass_change_text,
-            'headers' => '',
-        );
-
-        return $email_change_email;
-    }
-    add_filter( 'email_change_email', 'b3_content_email_change_notification', 10, 3 );
-
-
-    /**
      * Check setting to update B3
      *
      * @param $new_value
@@ -752,10 +709,10 @@ All at ###SITENAME###
         return $result;
     }
     add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
-    
-    
+
+
     /**
-     * Filter to style "New admin email address" email content
+     * Filter to change styling for multiple emails
      *
      * @since 3.7.0
      *
@@ -764,22 +721,32 @@ All at ###SITENAME###
      *
      * @return string
      */
-    function admin_email_confirm( $email_content, $new_email ) {
-        $email_content = str_replace( '###ADMIN_URL###', '<a href="###ADMIN_URL###">###ADMIN_URL###</a>', $email_content );
+    function b3_confirm_change_email( $email_content, $new_email ) {
+        $search  = 'If this is correct, please click on the following link to change it:';
+        $replace = 'If this is correct, please click ###HERE### to change it.';
+        $email_content = str_replace( $search, $replace, $email_content );
         $email_content = str_replace( '###EMAIL###', '###EMAIL###.', $email_content );
+        $email_content = str_replace( '###HERE###', '<a href="###ADMIN_URL###">here</a>', $email_content );
+        $email_content = str_replace( "Regards,\n", '', $email_content );
+        $email_content = str_replace( "All at ###SITENAME###\n", '', $email_content );
+        $email_content = str_replace( "###ADMIN_URL###\n", '', $email_content );
         $email_content = str_replace( "\n###SITEURL###", '', $email_content );
         $email_content = str_replace( "\n", '<br>', $email_content );
+        $email_content .= b3_default_greetings();
         $email_content = b3_replace_template_styling( $email_content );
         $email_content = strtr( $email_content, b3_replace_email_vars() );
         $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
-    
+
         return $email_content;
     }
-    add_filter( 'new_admin_email_content', 'admin_email_confirm', 10, 2 );
-    
-    
+    add_filter( 'new_admin_email_content', 'b3_confirm_change_email', 10, 2 );
+    add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 );
+    // @TODO: test this
+    add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 );
+
+
     /**
-     * Filter to style "Admin email address changed" email
+     * Filter to style "Admin email address changed" email (non-MS)
      *
      * @since 3.7.0
      *
@@ -789,11 +756,14 @@ All at ###SITENAME###
      *
      * @return mixed
      */
-    function admin_email_changed( $email_array, $old_email, $new_email ) {
+    function b3_admin_email_changed( $email_array, $old_email, $new_email ) {
         $message                  = $email_array[ 'message' ];
         $message                  = str_replace( '###OLD_EMAIL###', '###OLD_EMAIL###.', $message );
         $message                  = str_replace( "\n###SITEURL###", '', $message );
+        $message                  = str_replace( "Regards,\n", '', $message );
+        $message                  = str_replace( "\nAll at ###SITENAME###", '', $message );
         $message                  = str_replace( "\n", '<br>', $message );
+        $message                  .= b3_default_greetings();
         $message                  = b3_replace_template_styling( $message );
         $message                  = strtr( $message, b3_replace_email_vars() );
         $message                  = htmlspecialchars_decode( stripslashes( $message ) );
@@ -801,4 +771,4 @@ All at ###SITENAME###
 
         return $email_array;
     }
-    add_filter( 'site_admin_email_change_email', 'admin_email_changed', 10, 3 );
+    add_filter( 'site_admin_email_change_email', 'b3_admin_email_changed', 10, 3 );

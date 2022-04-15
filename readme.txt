@@ -28,7 +28,10 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.7.0
+* added codemirror for email template and styling
+* added new admin tab for email template and styling
 * add filters to style email content for "change admin email"
+* move link color field to settings tab
 
 3.6.0
 * fix incorrect field name login
