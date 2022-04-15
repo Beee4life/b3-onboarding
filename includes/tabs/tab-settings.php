@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     /**
      * Render settings tab
      *
@@ -6,11 +10,6 @@
      *
      * @return false|string
      */
-
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
-
     function b3_render_settings_tab() {
         $activate_welcome_page      = get_option( 'b3_activate_welcome_page' );
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
@@ -29,7 +28,7 @@
         <form action="admin.php?page=b3-onboarding&tab=settings" method="post">
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
             <?php if ( is_main_site() ) { ?>
-    
+
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>

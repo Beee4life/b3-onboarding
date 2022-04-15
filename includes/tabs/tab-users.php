@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     /**
      * Render emails tab
      *
@@ -6,13 +10,7 @@
      *
      * @return false|string
      */
-
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
-
     function b3_render_users_tab() {
-
         $disallowed_domains           = false;
         $disallowed_domains_array     = get_option( 'b3_disallowed_domains' );
         if ( is_array( $disallowed_domains_array ) && ! empty( $disallowed_domains_array ) ) {
@@ -103,7 +101,7 @@
                             <?php esc_html_e( 'Check this box to block certain user names from registering.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
-        
+
                     <?php b3_get_settings_field_open( false, $hide_username_restrictions, 'username-restrictions' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_disallowed_usernames"><?php esc_html_e( 'User names', 'b3-onboarding' ); ?></label>

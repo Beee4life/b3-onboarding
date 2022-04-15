@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     /**
      * Render registration tab
      *
@@ -6,11 +10,6 @@
      *
      * @return false|string
      */
-
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
-
     function b3_render_registration_tab() {
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
