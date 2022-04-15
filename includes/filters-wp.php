@@ -712,7 +712,7 @@
 
 
     /**
-     * Filter to style "New admin email address" email content
+     * Filter to change styling for multiple emails
      *
      * @since 3.7.0
      *

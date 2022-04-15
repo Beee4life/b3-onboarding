@@ -1137,6 +1137,17 @@
         }
     }
 
+
+    /**
+     * New function to do all replacements in 1 function
+     *
+     * @param $type
+     * @param $vars
+     * @param $activation
+     *
+     * @return array
+     * @throws Exception
+     */
     function b3_get_replacement_vars( $type = 'message', $vars = array(), $activation = false ) {
         $replacements = [];
         $user_data    = false;
