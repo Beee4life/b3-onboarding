@@ -12,9 +12,9 @@
     }
 
     function b3_render_template_tab() {
-        $email_boxes = [];
+        $email_boxes           = [];
+        $stored_email_styling  = get_option( 'b3_email_styling' );
         $stored_email_template = get_option( 'b3_email_template' );
-        $stored_email_styling = get_option( 'b3_email_styling' );
 
         if ( get_option( 'b3_activate_custom_emails' ) ) {
             $email_boxes[] = array(
