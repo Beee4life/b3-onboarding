@@ -13,6 +13,8 @@
     function b3_render_emails_tab() {
         $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
+        $link_color             = apply_filters( 'b3_link_color', get_option( 'b3_link_color' ) );
+        $filter_link_color      = apply_filters( 'b3_link_color', false );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
         $hide_logo_notice       = $logo_in_email ? false : ' hidden';
 
@@ -24,6 +26,16 @@
             <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
 
             <?php if ( is_main_site() ) { ?>
+                <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
+                    <?php if ( $filter_link_color ) { ?>
+                        <?php esc_html_e( "You've set a filter to override the link color.", 'b3-onboarding' ); ?>
+                    <?php } ?>
+                <?php b3_get_close(); ?>
+
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>

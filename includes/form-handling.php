@@ -157,6 +157,12 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
+                if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
+                    update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
+                } else {
+                    delete_option( 'b3_link_color' );
+                }
+
                 if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
                     if ( ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
                         B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
@@ -546,12 +552,6 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
                 $reset = false;
-
-                if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
-                    update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
-                } else {
-                    delete_option( 'b3_link_color' );
-                }
 
                 if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
                     update_option( 'b3_disable_action_links', 1, false );
