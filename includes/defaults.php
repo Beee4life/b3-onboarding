@@ -722,7 +722,11 @@
             '123456',
             '12345678',
             'abcdef',
+            'god',
+            'love',
+            '1password',
             'password',
+            '1wachtwoord',
             'wachtwoord',
         );
 
