@@ -45,7 +45,7 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php checked($front_end_approval); ?>/>
-                    <?php esc_html_e( 'Check this box to activate front-end user approval.', 'b3-onboarding' ); ?>
+                    <?php esc_html_e( 'Activate front-end user approval.', 'b3-onboarding' ); ?>
                     <?php if ( false == $front_end_approval_page ) { ?>
                         <?php $hide_user_approval_note = ( 1 == $front_end_approval ) ? false : ' hidden'; ?>
                         <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--approval%s">%s</div>', $hide_user_approval_note, esc_html__( "You still need to set an approval page (after you save the settings).", 'b3-onboarding' ) ); ?>
@@ -98,7 +98,7 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <input type="checkbox" id="b3_restrict_usernames" name="b3_restrict_usernames" value="1" <?php checked($username_restrictions); ?>/>
-                            <?php esc_html_e( 'Check this box to block certain user names from registering.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( 'Block certain user names from registering.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -122,7 +122,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_domain_restrictions" name="b3_domain_restrictions" value="1" <?php checked($domain_restrictions); ?>/>
-                        <?php esc_html_e( 'Check this box to block certain domains from registering.', 'b3-onboarding' ); ?>
+                        <?php esc_html_e( 'Block certain domains from registering.', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -147,7 +147,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php checked($hide_admin_bar); ?>/>
-                        <?php esc_html_e( "Check this box to hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
+                        <?php esc_html_e( "Hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -157,7 +157,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_user_may_delete" name="b3_user_may_delete" value="1" <?php checked($user_may_delete); ?>/>
-                        <?php esc_html_e( 'Check this box to allow the user to delete his/her account (through custom profile page).', 'b3-onboarding' ); ?>
+                        <?php esc_html_e( 'Allow the user to delete his/her account (through custom profile page).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
