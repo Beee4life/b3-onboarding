@@ -152,7 +152,7 @@
 
 
     /**
-     * Do stuff after activate user (only)
+     * Do stuff after activate wpmu user only
      *
      * @since 3.0
      *
