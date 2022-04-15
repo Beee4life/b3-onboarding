@@ -88,7 +88,9 @@
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
-                add_action( 'wp_initialize_site',                   array( $this, 'b3_after_create_site' ) );
+                if ( is_multisite() ) {
+                    add_action( 'wp_initialize_site', array( $this, 'b3_after_create_site' ) );
+                }
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -1229,7 +1231,7 @@
                 }
 
                 // manual actions
-                // @TODO: look into this, when is it used
+                // @TODO: look into this, when is it used (after change from user list in admin ?)
                 if ( isset( $_GET[ 'update' ] ) ) {
                     if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
                         echo '<div id="message" class="updated"><p>';
