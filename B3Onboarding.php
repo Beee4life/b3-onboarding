@@ -98,9 +98,6 @@
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
                 include 'includes/do-stuff.php';
-                if ( is_localhost() ) {
-                    include 'includes/examples.php';
-                }
                 include 'includes/filters-b3.php';
                 include 'includes/filters-wp.php';
                 include 'includes/functions.php';
