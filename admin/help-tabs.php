@@ -120,7 +120,7 @@
             echo sprintf( '<li>%s</li>', esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'activate the debug page', 'b3-onboarding' ) );
             echo '</ul>';
-            echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo. Or you can use the filter %s to use a perfectly sized image', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', 'https://b3onboarding.berryplasman.com/filter/b3_main_logo/', 'b3_main_logo' ) ) );
+            echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo. Or you can use the filter %s to use a perfectly cropped image.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', 'https://b3onboarding.berryplasman.com/filter/b3_main_logo/', 'b3_main_logo' ) ) );
             $settings_message = ob_get_clean();
 
             $tabs[] = [
