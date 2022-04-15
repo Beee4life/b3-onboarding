@@ -1290,8 +1290,16 @@
 			echo sprintf( '<td>%s</td>', $user->user_login );
 		}
 		if ( false != $attributes[ 'show_first_last_name' ] ) {
-			echo sprintf( '<td>%s</td>', $user->first_name );
-			echo sprintf( '<td>%s</td>', $user->last_name );
+            if ( is_multisite() ) {
+                $meta = unserialize($user->meta);
+                $first_name = ( isset( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : '';
+                $last_name = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
+                echo sprintf( '<td>%s</td>', $first_name );
+                echo sprintf( '<td>%s</td>', $last_name );
+            } else {
+                echo sprintf( '<td>%s</td>', $user->first_name );
+                echo sprintf( '<td>%s</td>', $user->last_name );
+            }
 		}
 		echo sprintf( '<td>%s</td>', $user->user_email );
 		if ( is_multisite() ) {
