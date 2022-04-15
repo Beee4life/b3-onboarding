@@ -1052,7 +1052,6 @@
             update_option( 'b3_hide_admin_bar', 1, false );
             update_option( 'b3_registration_type', 'none', false );
             update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ), false );
-            // @TODO: check current b3_registration_type, change accordingly
             update_option( 'users_can_register', 0 );
         } else {
             if ( is_main_site() && false == $blog_id ) {
@@ -1243,3 +1242,78 @@
 
         return $replacements;
     }
+
+
+	/**
+     * Get approvement table headers
+     *
+	 * @param $attributes
+	 *
+	 * @return array
+	 */
+	function b3_get_approvement_table_headers( $attributes ) {
+		$headers[] = ( is_multisite() ) ? esc_html__( 'Signup ID', 'b3-onboarding' ) : esc_html__( 'User ID', 'b3-onboarding' );
+		if ( $attributes ) {
+			if ( false == $attributes[ 'register_email_only' ] ) {
+				$headers[] = esc_html__( 'User name', 'b3-onboarding' );
+			}
+			if ( false != $attributes[ 'show_first_last_name' ] ) {
+				$headers[] = esc_html__( 'First name', 'b3-onboarding' );
+				$headers[] = esc_html__( 'Last name', 'b3-onboarding' );
+			}
+		}
+		$headers[] = esc_html__( 'Email', 'b3-onboarding' );
+
+		if ( is_multisite() ) {
+			$headers[] = esc_html__( 'Domain', 'b3-onboarding' );
+			$headers[] = esc_html__( 'Site name', 'b3-onboarding' );
+		}
+		$headers[] = esc_html__( 'Actions', 'b3-onboarding' );
+
+		return $headers;
+	}
+
+
+	/**
+     * Render approvement table row
+     *
+	 * @param $user
+	 * @param $attributes
+	 *
+	 * @return false|string
+	 */
+	function b3_render_approvement_table_row( $user, $attributes ) {
+		ob_start();
+		echo '<tr>';
+		echo sprintf( '<td>%s</td>', ( is_multisite() ) ? $user->signup_id : $user->ID );
+		if ( false == $attributes[ 'register_email_only' ] ) {
+			echo sprintf( '<td>%s</td>', $user->user_login );
+		}
+		if ( false != $attributes[ 'show_first_last_name' ] ) {
+			echo sprintf( '<td>%s</td>', $user->first_name );
+			echo sprintf( '<td>%s</td>', $user->last_name );
+		}
+		echo sprintf( '<td>%s</td>', $user->user_email );
+		if ( is_multisite() ) {
+			echo sprintf( '<td>%s</td>', $user->domain );
+			echo sprintf( '<td>%s</td>', $user->title );
+		}
+		echo '<td>';
+		?>
+		<form name="b3_user_management" method="post">
+			<input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
+			<input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>" />
+			<input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>" />
+			<?php if ( is_multisite() ) { ?>
+				<input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>" />
+			<?php } else { ?>
+				<input name="b3_user_id" type="hidden" value="<?php echo esc_attr( $user->ID ); ?>" />
+			<?php } ?>
+		</form>
+		<?php
+		echo '</td>';
+		echo '</tr>';
+		$output = ob_get_clean();
+
+		return $output;
+	}
