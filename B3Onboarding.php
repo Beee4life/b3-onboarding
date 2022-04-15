@@ -210,25 +210,23 @@
              */
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
-                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
 
-    
-                if ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) {
-                    // https://wpreset.com/add-codemirror-editor-plugin-theme/
-                    $b3cm_settings['codeEditor'] = wp_enqueue_code_editor( array(
-                        'type' => 'text/css',
-                    ) );
-                    wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
-
-                    wp_enqueue_script( 'wp-theme-plugin-editor' );
-                    wp_enqueue_style( 'wp-codemirror' );
-                }
-
-                // @src https://github.com/thomasgriffin/New-Media-Image-Uploader
                 if ( ! ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) ) {
                     return;
                 }
 
+                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+
+                // https://wpreset.com/add-codemirror-editor-plugin-theme/
+				$b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( array(
+                    'type' => 'text/css',
+                ) );
+                wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
+
+                wp_enqueue_script( 'wp-theme-plugin-editor' );
+                wp_enqueue_style( 'wp-codemirror' );
+
+                // @src https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // This function loads in the required media files for the media manager.
                 wp_enqueue_media();
 
