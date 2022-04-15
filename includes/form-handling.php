@@ -62,7 +62,7 @@
                     delete_option( 'b3_activate_first_last' );
                     delete_option( 'b3_first_last_required' );
                 }
-    
+
                 if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == $_POST[ 'b3_register_email_only' ] ) {
                     update_option( 'b3_register_email_only', 1, false );
                     delete_option( 'b3_activate_first_last' );
@@ -70,7 +70,7 @@
                 } else {
                     delete_option( 'b3_register_email_only' );
                 }
-    
+
                 if ( isset( $_POST[ 'b3_redirect_set_password' ] ) && 1 == $_POST[ 'b3_redirect_set_password' ] ) {
                     update_option( 'b3_redirect_set_password', 1, false );
                 } else {
@@ -105,7 +105,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_registration_handling', 1 );
+    add_action( 'admin_init', 'b3_registration_handling', 1 );
 
 
     /**
@@ -143,7 +143,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_pages_form_handling', 1 );
+    add_action( 'admin_init', 'b3_pages_form_handling', 1 );
 
 
     /**
@@ -401,7 +401,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_email_form_handling', 1 );
+    add_action( 'admin_init', 'b3_email_form_handling', 1 );
 
 
     /**
@@ -425,7 +425,7 @@
                 if ( ! is_multisite() ) {
                     if ( isset( $_POST[ 'b3_restrict_usernames' ] ) && 1 == $_POST[ 'b3_restrict_usernames' ] ) {
                         update_option( 'b3_restrict_usernames', 1, false );
-                        
+
                         if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
                             $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
                             $new_value       = explode( ' ', $sanitized_value );
@@ -442,7 +442,7 @@
                 // @TODO: check if should be kept out of MS
                 if ( isset( $_POST[ 'b3_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_domain_restrictions' ] ) ) {
                     update_option( 'b3_domain_restrictions', $_POST[ 'b3_domain_restrictions' ], false );
-                    
+
                     if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
                         $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_domains' ] );
                         $new_value       = explode( ' ', $sanitized_value );
@@ -477,7 +477,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_users_form_handling', 1 );
+    add_action( 'admin_init', 'b3_users_form_handling', 1 );
 
 
     /**
@@ -519,7 +519,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_recaptcha_form_handling', 1 );
+    add_action( 'admin_init', 'b3_recaptcha_form_handling', 1 );
 
 
     /**
@@ -533,13 +533,13 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
                 $reset = false;
-    
+
                 if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
                     update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
                 } else {
                     delete_option( 'b3_link_color' );
                 }
-        
+
                 if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == $_POST[ 'b3_disable_action_links' ] ) {
                     update_option( 'b3_disable_action_links', 1, false );
                 } else {
@@ -600,7 +600,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_setings_form_handling', 1 );
+    add_action( 'admin_init', 'b3_setings_form_handling', 1 );
 
 
     /**
