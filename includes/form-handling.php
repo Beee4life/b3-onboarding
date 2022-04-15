@@ -105,7 +105,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_registration_handling', 1 );
+    add_action( 'admin_init', 'b3_registration_handling', 1 );
 
 
     /**
@@ -143,7 +143,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_pages_form_handling', 1 );
+    add_action( 'admin_init', 'b3_pages_form_handling', 1 );
 
 
     /**
@@ -389,7 +389,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_email_form_handling', 1 );
+    add_action( 'admin_init', 'b3_email_form_handling', 1 );
 
 
     function b3_template_form_handling() {
@@ -414,7 +414,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_template_form_handling', 1 );
+    add_action( 'admin_init', 'b3_template_form_handling', 1 );
 
 
     /**
@@ -490,7 +490,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_users_form_handling', 1 );
+    add_action( 'admin_init', 'b3_users_form_handling', 1 );
 
 
     /**
@@ -532,7 +532,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_recaptcha_form_handling', 1 );
+    add_action( 'admin_init', 'b3_recaptcha_form_handling', 1 );
 
 
     /**
@@ -613,7 +613,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_setings_form_handling', 1 );
+    add_action( 'admin_init', 'b3_setings_form_handling', 1 );
 
 
     /**
