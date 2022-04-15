@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-04-16 00:16+0200\n"
-"PO-Revision-Date: 2022-04-16 00:16+0200\n"
+"POT-Creation-Date: 2022-04-16 00:27+0200\n"
+"PO-Revision-Date: 2022-04-16 00:28+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -47,7 +47,7 @@ msgstr "Debug informatie"
 
 #: B3Onboarding.php:364 admin/help-tabs.php:114 admin/help-tabs.php:128
 #: includes/class-b3-sidebar-widget.php:115 includes/functions.php:944
-#: includes/tabs/tab-settings.php:25
+#: includes/tabs/tab-settings.php:23
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -346,7 +346,7 @@ msgstr "Je hebt nog geen pagina ingesteld voor registratie. Stel dit %s in."
 #: includes/defaults.php:241 includes/defaults.php:335
 #: includes/defaults.php:353 includes/defaults.php:445
 #: includes/defaults.php:477 includes/defaults.php:531
-#: includes/tabs/tab-recaptcha.php:61 includes/tabs/tab-settings.php:61
+#: includes/tabs/tab-recaptcha.php:61 includes/tabs/tab-settings.php:49
 msgid "here"
 msgstr "hier"
 
@@ -474,7 +474,7 @@ msgstr[0] "gebruiker"
 msgstr[1] "gebruikers"
 
 #: admin/dashboard-widget.php:46 includes/tabs/tab-registration.php:20
-#: includes/tabs/tab-settings.php:137 includes/tabs/tab-template.php:48
+#: includes/tabs/tab-settings.php:125 includes/tabs/tab-template.php:48
 msgid "Click here"
 msgstr "Klik hier"
 
@@ -606,7 +606,7 @@ msgid "Choose a page in your default language."
 msgstr "Kies een pagina in je default taal."
 
 #: admin/help-tabs.php:61 admin/help-tabs.php:90 includes/functions.php:909
-#: includes/tabs/tab-emails.php:20
+#: includes/tabs/tab-emails.php:22
 msgid "Emails"
 msgstr "Emails"
 
@@ -1587,9 +1587,9 @@ msgid "We're sorry, that domain is blocked from registering."
 msgstr "Sorry, dit domein is geblokkeerd van registratie."
 
 #: includes/form-handling.php:10 includes/form-handling.php:119
-#: includes/form-handling.php:157 includes/form-handling.php:398
-#: includes/form-handling.php:428 includes/form-handling.php:504
-#: includes/form-handling.php:546 includes/form-handling.php:635
+#: includes/form-handling.php:157 includes/form-handling.php:404
+#: includes/form-handling.php:434 includes/form-handling.php:510
+#: includes/form-handling.php:552 includes/form-handling.php:635
 msgid "Something went wrong, please try again."
 msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
 
@@ -1601,28 +1601,28 @@ msgstr "Registratie instellingen opgeslagen"
 msgid "Pages settings saved"
 msgstr "Pagina instellingen opgeslagen"
 
-#: includes/form-handling.php:162
+#: includes/form-handling.php:168
 msgid "That is not a valid email address."
 msgstr "Dit is geen geldig email adres."
 
-#: includes/form-handling.php:280
+#: includes/form-handling.php:286
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr "\"%s\" is geen geldig email adres."
 
-#: includes/form-handling.php:388
+#: includes/form-handling.php:394
 msgid "Email settings saved"
 msgstr "Email instellingen opgeslagen"
 
-#: includes/form-handling.php:413
+#: includes/form-handling.php:419
 msgid "Template settings saved"
 msgstr "Template instellingen opgeslagen"
 
-#: includes/form-handling.php:489
+#: includes/form-handling.php:495
 msgid "User settings saved"
 msgstr "Gebruikersinstellingen opgeslagen"
 
-#: includes/form-handling.php:531
+#: includes/form-handling.php:537
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha instellingen opgeslagen"
 
@@ -1850,23 +1850,31 @@ msgstr "Ongeldige code"
 msgid "Invalid user"
 msgstr "Ongeldige gebruiker"
 
-#: includes/tabs/tab-emails.php:29
+#: includes/tabs/tab-emails.php:31
+msgid "Link color"
+msgstr "Link kleur"
+
+#: includes/tabs/tab-emails.php:35
+msgid "You've set a filter to override the link color."
+msgstr "Je hebt een filter ingesteld om deze instelling te overschrijven."
+
+#: includes/tabs/tab-emails.php:41
 msgid "Custom email styling/template"
 msgstr "Eigen email stijl/template"
 
-#: includes/tabs/tab-emails.php:33
+#: includes/tabs/tab-emails.php:45
 msgid "Activate your own email styling and template."
 msgstr "Activeer je eigen emails/styling."
 
-#: includes/tabs/tab-emails.php:40
+#: includes/tabs/tab-emails.php:52
 msgid "Add logo in email"
 msgstr "Voeg logo toe in email"
 
-#: includes/tabs/tab-emails.php:44
+#: includes/tabs/tab-emails.php:56
 msgid "Activate a logo in the email header (of the default template)."
 msgstr "Activeer een logo in de email header (van het default template)."
 
-#: includes/tabs/tab-emails.php:45
+#: includes/tabs/tab-emails.php:57
 #, php-format
 msgid "Image can be set on the \"%s\" tab."
 msgstr "Logo kan worden ingesteld op de \"%s\" tab."
@@ -2049,67 +2057,59 @@ msgstr "Privacy tekst"
 msgid "Privacy page"
 msgstr "Privacy pagina"
 
-#: includes/tabs/tab-settings.php:34
-msgid "Link color"
-msgstr "Link kleur"
-
-#: includes/tabs/tab-settings.php:38
-msgid "You've set a filter to override the link color."
-msgstr "Je hebt een filter ingesteld om deze instelling te overschrijven."
-
-#: includes/tabs/tab-settings.php:44
+#: includes/tabs/tab-settings.php:32
 msgid "Disable action links"
 msgstr "Schakel actie links uit"
 
-#: includes/tabs/tab-settings.php:48
+#: includes/tabs/tab-settings.php:36
 msgid "Hide the action links on custom forms."
 msgstr "Verberg de actie links op custom formulieren."
 
-#: includes/tabs/tab-settings.php:54
+#: includes/tabs/tab-settings.php:42
 msgid "Welcome page"
 msgstr "Welkomstpagina"
 
-#: includes/tabs/tab-settings.php:58
+#: includes/tabs/tab-settings.php:46
 msgid "Redirect the user to a 'welcome' page after his first login."
 msgstr "Redirect de gebruiker naar een 'welkomst' pagina, na de eerste login."
 
-#: includes/tabs/tab-settings.php:61
+#: includes/tabs/tab-settings.php:49
 #, php-format
 msgid "This page can only be set with a filter (for now). See %s."
 msgstr ""
 "Deze pagina kan alleen (nu) alleen met een filter worden ingesteld. Zie %s."
 
-#: includes/tabs/tab-settings.php:69
+#: includes/tabs/tab-settings.php:57
 msgid "Remove 'welcome_page_seen' meta"
 msgstr "Verwijder 'welcome_page_seen' meta"
 
-#: includes/tabs/tab-settings.php:73
+#: includes/tabs/tab-settings.php:61
 msgid ""
 "Clear the 'welcome_page_seen' meta for all users, so you can show a new page."
 msgstr ""
 "Verwijder de 'welcome_page_seen' meta voor alle gebruikers, zodat je een "
 "nieuwe pagina kan tonen."
 
-#: includes/tabs/tab-settings.php:80
+#: includes/tabs/tab-settings.php:68
 msgid "Use popup"
 msgstr "Gebruik popup"
 
-#: includes/tabs/tab-settings.php:84
+#: includes/tabs/tab-settings.php:72
 msgid ""
 "Show the login form in a popup (only available for the login link in the B3 "
 "widget)."
 msgstr ""
 "Activeer een popup voor de login link (alleen beschikbaar in de B3 widget)."
 
-#: includes/tabs/tab-settings.php:90
+#: includes/tabs/tab-settings.php:78
 msgid "Activate filter validation"
 msgstr "Activeer filter validatie"
 
-#: includes/tabs/tab-settings.php:94
+#: includes/tabs/tab-settings.php:82
 msgid "Activate the validation of all custom filters."
 msgstr "Activeer filter validatie voor alle custom filters."
 
-#: includes/tabs/tab-settings.php:97
+#: includes/tabs/tab-settings.php:85
 msgid ""
 "Don't forget to turn it of later on, the validation can cause a higher load "
 "time."
@@ -2117,24 +2117,24 @@ msgstr ""
 "Vergeet niet om dit later uit te schakelen, want validatie kan een hogere "
 "laadtijd veroorzaken."
 
-#: includes/tabs/tab-settings.php:105
+#: includes/tabs/tab-settings.php:93
 msgid "Activate debug info page"
 msgstr "Activeer debug info pagina"
 
-#: includes/tabs/tab-settings.php:109
+#: includes/tabs/tab-settings.php:97
 msgid "Activate the debug page."
 msgstr "Activeer de debug pagina."
 
-#: includes/tabs/tab-settings.php:116
+#: includes/tabs/tab-settings.php:104
 msgid "Preserve settings"
 msgstr "Bewaar instellingen"
 
-#: includes/tabs/tab-settings.php:122
+#: includes/tabs/tab-settings.php:110
 msgid "To remove the data upon plugin removal, uncheck this box."
 msgstr ""
 "Om de data te verwijderen bij plugin verwijdering, deselecteer deze checkbox."
 
-#: includes/tabs/tab-settings.php:124
+#: includes/tabs/tab-settings.php:112
 msgid ""
 "When removing the plugin, all data is removed. To prevent this from "
 "happening, check this box."
@@ -2142,27 +2142,27 @@ msgstr ""
 "Wanneer je de plugin verwijderd, wordt alle data ook verwijderd. Deze "
 "instelling voorkomt dat."
 
-#: includes/tabs/tab-settings.php:132
+#: includes/tabs/tab-settings.php:120
 msgid "Reset to default"
 msgstr "Reset to standaard instellingen"
 
-#: includes/tabs/tab-settings.php:136
+#: includes/tabs/tab-settings.php:124
 msgid "This option resets everything back to 'factory settings'."
 msgstr "Deze optie reset alles terug naar de standaard instellingen."
 
-#: includes/tabs/tab-settings.php:144
+#: includes/tabs/tab-settings.php:132
 msgid "Logo"
 msgstr "Logo"
 
-#: includes/tabs/tab-settings.php:147
+#: includes/tabs/tab-settings.php:135
 msgid "This is the logo used in email headers."
 msgstr "Dit is het logo dat gebruikt wordt in emails."
 
-#: includes/tabs/tab-settings.php:153 includes/tabs/tab-settings.php:154
+#: includes/tabs/tab-settings.php:141 includes/tabs/tab-settings.php:142
 msgid "Choose a logo"
 msgstr "Kies een logo"
 
-#: includes/tabs/tab-settings.php:157
+#: includes/tabs/tab-settings.php:145
 msgid "You've set this logo with a filter."
 msgstr "Je hebt dit logo met een filter ingesteld."
 
@@ -2532,6 +2532,10 @@ msgstr "Site adres"
 #: templates/register/subdomain.php:16
 msgid "address"
 msgstr "adres"
+
+#: templates/register/user-login.php:11
+msgid "must be lowercase"
+msgstr "alleen kleine letters"
 
 #: templates/register/visibility.php:9
 msgid "Allow search engines to index this site."

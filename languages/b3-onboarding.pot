@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-04-16 00:16+0200\n"
+"POT-Creation-Date: 2022-04-16 00:27+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -48,7 +48,7 @@ msgstr ""
 
 #: B3Onboarding.php:364 admin/help-tabs.php:114 admin/help-tabs.php:128
 #: includes/class-b3-sidebar-widget.php:115 includes/functions.php:944
-#: includes/tabs/tab-settings.php:25
+#: includes/tabs/tab-settings.php:23
 msgid "Settings"
 msgstr ""
 
@@ -326,7 +326,7 @@ msgstr ""
 #: includes/defaults.php:241 includes/defaults.php:335
 #: includes/defaults.php:353 includes/defaults.php:445
 #: includes/defaults.php:477 includes/defaults.php:531
-#: includes/tabs/tab-recaptcha.php:61 includes/tabs/tab-settings.php:61
+#: includes/tabs/tab-recaptcha.php:61 includes/tabs/tab-settings.php:49
 msgid "here"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: admin/dashboard-widget.php:46 includes/tabs/tab-registration.php:20
-#: includes/tabs/tab-settings.php:137 includes/tabs/tab-template.php:48
+#: includes/tabs/tab-settings.php:125 includes/tabs/tab-template.php:48
 msgid "Click here"
 msgstr ""
 
@@ -569,7 +569,7 @@ msgid "Choose a page in your default language."
 msgstr ""
 
 #: admin/help-tabs.php:61 admin/help-tabs.php:90 includes/functions.php:909
-#: includes/tabs/tab-emails.php:20
+#: includes/tabs/tab-emails.php:22
 msgid "Emails"
 msgstr ""
 
@@ -1484,9 +1484,9 @@ msgid "We're sorry, that domain is blocked from registering."
 msgstr ""
 
 #: includes/form-handling.php:10 includes/form-handling.php:119
-#: includes/form-handling.php:157 includes/form-handling.php:398
-#: includes/form-handling.php:428 includes/form-handling.php:504
-#: includes/form-handling.php:546 includes/form-handling.php:635
+#: includes/form-handling.php:157 includes/form-handling.php:404
+#: includes/form-handling.php:434 includes/form-handling.php:510
+#: includes/form-handling.php:552 includes/form-handling.php:635
 msgid "Something went wrong, please try again."
 msgstr ""
 
@@ -1498,28 +1498,28 @@ msgstr ""
 msgid "Pages settings saved"
 msgstr ""
 
-#: includes/form-handling.php:162
+#: includes/form-handling.php:168
 msgid "That is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:280
+#: includes/form-handling.php:286
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:388
+#: includes/form-handling.php:394
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:413
+#: includes/form-handling.php:419
 msgid "Template settings saved"
 msgstr ""
 
-#: includes/form-handling.php:489
+#: includes/form-handling.php:495
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:531
+#: includes/form-handling.php:537
 msgid "reCaptcha settings saved"
 msgstr ""
 
@@ -1736,23 +1736,31 @@ msgstr ""
 msgid "Invalid user"
 msgstr ""
 
-#: includes/tabs/tab-emails.php:29
+#: includes/tabs/tab-emails.php:31
+msgid "Link color"
+msgstr ""
+
+#: includes/tabs/tab-emails.php:35
+msgid "You've set a filter to override the link color."
+msgstr ""
+
+#: includes/tabs/tab-emails.php:41
 msgid "Custom email styling/template"
 msgstr ""
 
-#: includes/tabs/tab-emails.php:33
+#: includes/tabs/tab-emails.php:45
 msgid "Activate your own email styling and template."
 msgstr ""
 
-#: includes/tabs/tab-emails.php:40
+#: includes/tabs/tab-emails.php:52
 msgid "Add logo in email"
 msgstr ""
 
-#: includes/tabs/tab-emails.php:44
+#: includes/tabs/tab-emails.php:56
 msgid "Activate a logo in the email header (of the default template)."
 msgstr ""
 
-#: includes/tabs/tab-emails.php:45
+#: includes/tabs/tab-emails.php:57
 #, php-format
 msgid "Image can be set on the \"%s\" tab."
 msgstr ""
@@ -1932,111 +1940,103 @@ msgstr ""
 msgid "Privacy page"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:34
-msgid "Link color"
-msgstr ""
-
-#: includes/tabs/tab-settings.php:38
-msgid "You've set a filter to override the link color."
-msgstr ""
-
-#: includes/tabs/tab-settings.php:44
+#: includes/tabs/tab-settings.php:32
 msgid "Disable action links"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:48
+#: includes/tabs/tab-settings.php:36
 msgid "Hide the action links on custom forms."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:54
+#: includes/tabs/tab-settings.php:42
 msgid "Welcome page"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:58
+#: includes/tabs/tab-settings.php:46
 msgid "Redirect the user to a 'welcome' page after his first login."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:61
+#: includes/tabs/tab-settings.php:49
 #, php-format
 msgid "This page can only be set with a filter (for now). See %s."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:69
+#: includes/tabs/tab-settings.php:57
 msgid "Remove 'welcome_page_seen' meta"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:73
+#: includes/tabs/tab-settings.php:61
 msgid ""
 "Clear the 'welcome_page_seen' meta for all users, so you can show a new page."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:80
+#: includes/tabs/tab-settings.php:68
 msgid "Use popup"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:84
+#: includes/tabs/tab-settings.php:72
 msgid ""
 "Show the login form in a popup (only available for the login link in the B3 "
 "widget)."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:90
+#: includes/tabs/tab-settings.php:78
 msgid "Activate filter validation"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:94
+#: includes/tabs/tab-settings.php:82
 msgid "Activate the validation of all custom filters."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:97
+#: includes/tabs/tab-settings.php:85
 msgid ""
 "Don't forget to turn it of later on, the validation can cause a higher load "
 "time."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:105
+#: includes/tabs/tab-settings.php:93
 msgid "Activate debug info page"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:109
+#: includes/tabs/tab-settings.php:97
 msgid "Activate the debug page."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:116
+#: includes/tabs/tab-settings.php:104
 msgid "Preserve settings"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:122
+#: includes/tabs/tab-settings.php:110
 msgid "To remove the data upon plugin removal, uncheck this box."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:124
+#: includes/tabs/tab-settings.php:112
 msgid ""
 "When removing the plugin, all data is removed. To prevent this from "
 "happening, check this box."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:132
+#: includes/tabs/tab-settings.php:120
 msgid "Reset to default"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:136
+#: includes/tabs/tab-settings.php:124
 msgid "This option resets everything back to 'factory settings'."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:144
+#: includes/tabs/tab-settings.php:132
 msgid "Logo"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:147
+#: includes/tabs/tab-settings.php:135
 msgid "This is the logo used in email headers."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:153 includes/tabs/tab-settings.php:154
+#: includes/tabs/tab-settings.php:141 includes/tabs/tab-settings.php:142
 msgid "Choose a logo"
 msgstr ""
 
-#: includes/tabs/tab-settings.php:157
+#: includes/tabs/tab-settings.php:145
 msgid "You've set this logo with a filter."
 msgstr ""
 
@@ -2386,6 +2386,10 @@ msgstr ""
 
 #: templates/register/subdomain.php:16
 msgid "address"
+msgstr ""
+
+#: templates/register/user-login.php:11
+msgid "must be lowercase"
 msgstr ""
 
 #: templates/register/visibility.php:9
