@@ -80,8 +80,11 @@
                 }
 
                 if ( 'none' == $registration_type && ! current_user_can( 'manage_network' ) ) {
-                    // registration closed
-                    return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) );
+                    ob_start();
+                    echo sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) );
+                    do_action( 'b3_add_action_links', $attributes[ 'template' ] );
+                    $rego_closed = ob_get_clean();
+                    return $rego_closed;
 
                 } elseif ( 'blog' == $registration_type && ! is_user_logged_in() ) {
                     // logged in registration only

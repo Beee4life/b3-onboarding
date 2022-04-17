@@ -1,12 +1,7 @@
 <?php
-
     #####################
     ## General filters ##
     #####################
-
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
 
     /**
      * Filter main logo
@@ -22,7 +17,7 @@
     function b3_main_logo_example( $logo ) {
         return 'https://your-url.com/your-logo.png';
     }
-    // add_filter( 'b3_main_logo', 'b3_main_logo_example' );
+    add_filter( 'b3_main_logo', 'b3_main_logo_example' );
 
 
     /**
@@ -37,7 +32,7 @@
     function b3_link_color_example( $link_color ) {
         return '#6d32a8'; // purple
     }
-    // add_filter( 'b3_link_color', 'b3_link_color_example' );
+    add_filter( 'b3_link_color', 'b3_link_color_example' );
 
 
     /**
@@ -64,4 +59,4 @@
         return $links;
 
     }
-    // add_filter( 'b3_widget_links', 'b3_widget_links_example' );
+    add_filter( 'b3_widget_links', 'b3_widget_links_example' );

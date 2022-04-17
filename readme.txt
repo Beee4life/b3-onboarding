@@ -2,9 +2,9 @@
 Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
-Tested up to: 5.9.2
+Tested up to: 5.9.3
 Requires PHP: 5.6
-Stable tag: 3.6.0
+Stable tag: 3.7.0
 License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +27,13 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.7.0
+* added [codemirror](https://codemirror.net/) for email template and styling
+* added new admin tab for email template and styling
+* add filters to style email content for "change admin email"
+* move link color field to settings tab
+* conditionally load admin.js
+
 3.6.0
 * fix incorrect field name login
 * don't autoload options

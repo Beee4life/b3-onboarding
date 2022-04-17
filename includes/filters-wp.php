@@ -58,8 +58,8 @@
         $new_message               .= '<br><br>';
         $new_message               .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL### from ###EMAIL###.';
         $new_message               .= '<br><br>';
-        $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###';
-        $new_message               .= '<br><br>';
+        $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###.';
+        $new_message               .= '<br>';
         $new_message               .= b3_default_greetings();
         $new_message               = b3_replace_template_styling( $new_message );
         $new_message               = strtr( $new_message, b3_replace_email_vars() );
@@ -458,49 +458,6 @@
 
 
     /**
-     * Change content of email address changed email
-     * Not in use yet, prepare for coming setting/filter
-     *
-     * @param $email_change_email
-     * @param $user
-     * @param $userdata
-     *
-     * @return array|bool
-     */
-    function b3_content_email_change_notification( $email_change_email, $user, $userdata ) {
-        // if admin disabled notification option
-        // option doesn't exist in admin (yet)
-        $salutation = ( true == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
-
-        $pass_change_text = sprintf( __(
-            'Hi %s,
-
-This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL###.
-
-If you did not change your email, please contact the Site Administrator at
-###ADMIN_EMAIL###
-
-This email has been sent to ###EMAIL###.
-
-Regards,
-All at ###SITENAME###
-###SITEURL###', 'b3-onboarding'
-        ), $salutation );
-
-        $email_change_email = array(
-            'to'      => $user[ 'user_email' ],
-            /* translators: Password change notification email subject. %s: Site title. */
-            'subject' => __( '[%s] Password Changed' ),
-            'message' => $pass_change_text,
-            'headers' => '',
-        );
-
-        return $email_change_email;
-    }
-    add_filter( 'email_change_email', 'b3_content_email_change_notification', 10, 3 );
-
-
-    /**
      * Check setting to update B3
      *
      * @param $new_value
@@ -752,3 +709,38 @@ All at ###SITENAME###
         return $result;
     }
     add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
+
+
+    /**
+     * Filter to change styling for multiple emails
+     *
+     * @since 3.7.0
+     *
+     * @param $email_content
+     * @param $new_email
+     *
+     * @return string
+     */
+    function b3_confirm_change_email( $email_content, $new_email ) {
+        $search  = 'If this is correct, please click on the following link to change it:';
+        $replace = 'If this is correct, please click ###HERE### to change it.';
+        $email_content = str_replace( $search, $replace, $email_content );
+        $email_content = str_replace( '###EMAIL###', '###EMAIL###.', $email_content );
+        $email_content = str_replace( '###HERE###', '<a href="###ADMIN_URL###">here</a>', $email_content );
+        $email_content = str_replace( "Regards,\n", '', $email_content );
+        $email_content = str_replace( "All at ###SITENAME###\n", '', $email_content );
+        $email_content = str_replace( "###ADMIN_URL###\n", '', $email_content );
+        $email_content = str_replace( "\n###SITEURL###", '', $email_content );
+        $email_content = str_replace( "\n", '<br>', $email_content );
+        $email_content .= b3_default_greetings();
+        $email_content = b3_replace_template_styling( $email_content );
+        $email_content = strtr( $email_content, b3_replace_email_vars() );
+        $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
+
+        return $email_content;
+    }
+    add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change email
+    add_filter( 'new_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change site admin email
+    add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
+    add_filter( 'site_admin_email_change_email', 'b3_confirm_change_email', 10, 3 ); // after site admin email change
+    add_filter( 'network_admin_email_change_email', 'b3_confirm_change_email', 10, 2 ); // after network admin email change

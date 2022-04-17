@@ -25,16 +25,16 @@
 
             ob_start();
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Registration', 'b3-onboarding' ) );
-            echo sprintf( '<p>%s</p>', esc_html__( "Your general setting for if 'users can register' is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) );
-            echo '<p>';
-            echo esc_html__( 'This page has several options to change registration settings, such as:', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'registering with email address only', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'use first/last name', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'make first/last name required', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'activate recaptcha', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'activate honeypot', 'b3-onboarding' );
-            echo '<br>- ' . esc_html__( 'activate privacy checkbox', 'b3-onboarding' );
-            echo '</p>';
+            echo sprintf( '<p>%s</p>', esc_html__( "The general setting for if 'users can register' is now disabled and is controlled by the setting on this page.", 'b3-onboarding' ) );
+            echo sprintf( '<p>%s</p>', esc_html__( 'The "Registration" tab has several options to change registration settings, such as:', 'b3-onboarding' ) );
+            echo '<ul>';
+            echo sprintf( '<li>%s</li>', esc_html__( 'registering with email address only', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'use first/last name', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'make first/last name required', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'activate recaptcha', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'activate honeypot', 'b3-onboarding' ) );
+            echo sprintf( '<li>%s</li>', esc_html__( 'activate privacy checkbox', 'b3-onboarding' ) );
+            echo '</ul>';
             $registration_message = ob_get_clean();
 
             $tabs[] = [
@@ -45,7 +45,7 @@
 
             ob_start();
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Pages', 'b3-onboarding' ) );
-            echo sprintf( '<p>%s</p>', esc_html__( 'This page shows which pages are used for which action. The plugin relies on this, so make sure every action has a page set for it.', 'b3-onboarding' ) );
+            echo sprintf( '<p>%s</p>', esc_html__( 'The "Pages" tab shows which pages are used for which action. The plugin relies on this, so make sure every action has a page set for it.', 'b3-onboarding' ) );
             if ( class_exists( 'Sitepress' ) ) {
                 echo sprintf( '<p>%s</p>', esc_html__( 'Choose a page in your default language.', 'b3-onboarding' ) );
             }
@@ -120,7 +120,7 @@
             echo sprintf( '<li>%s</li>', esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'activate the debug page', 'b3-onboarding' ) );
             echo '</ul>';
-            echo sprintf( '<p>%s</p>', esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo.', 'b3-onboarding' ) );
+            echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo. Or you can use the filter %s to use a perfectly cropped image.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', 'https://b3onboarding.berryplasman.com/filter/b3_main_logo/', 'b3_main_logo' ) ) );
             $settings_message = ob_get_clean();
 
             $tabs[] = [

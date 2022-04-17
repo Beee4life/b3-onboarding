@@ -1,13 +1,8 @@
 <?php
-
     ######################
     ## Redirect filters ##
     ######################
-    
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
-    
+
     /**
      * Redirect after user register
      *
@@ -18,7 +13,6 @@
      * @return string
      */
     function b3_redirect_after_register_example( $url ) {
-
         $login_url = b3_get_login_url();
         if ( false != $login_url ) {
             $url = add_query_arg( 'registered', 'success', $login_url );
@@ -26,4 +20,4 @@
 
         return $url;
     }
-    // add_filter( 'b3_redirect_after_register', 'b3_redirect_after_register_example' );
+    add_filter( 'b3_redirect_after_register', 'b3_redirect_after_register_example' );

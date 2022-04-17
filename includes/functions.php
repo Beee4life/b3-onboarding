@@ -113,16 +113,6 @@
             'id'    => 'lost_password',
             'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
         );
-        if ( get_option( 'b3_activate_custom_emails' ) ) {
-            $email_boxes[] = array(
-                'id'    => 'email_styling',
-                'title' => esc_html__( 'Email styling', 'b3-onboarding' ),
-            );
-            $email_boxes[] = array(
-                'id'    => 'email_template',
-                'title' => esc_html__( 'Email template', 'b3-onboarding' ),
-            );
-        }
 
         return $email_boxes;
     }
@@ -920,6 +910,14 @@
             'content' => b3_render_tab_content( 'emails' ),
             'icon'    => 'email',
         );
+        if ( get_option( 'b3_activate_custom_emails' ) ) {
+            $tabs[] = array(
+                'id'      => 'template',
+                'title'   => esc_html__( 'Template', 'b3-onboarding' ),
+                'content' => b3_render_tab_content( 'template' ),
+                'icon'    => 'admin-customizer',
+            );
+        }
 
         if ( is_main_site() ) {
             if ( ! is_multisite() ) {
@@ -1041,22 +1039,19 @@
         update_option( 'b3_activate_custom_emails', 1, false );
         update_option( 'b3_disable_admin_notification_password_change', 1, false );
         update_option( 'b3_disable_user_notification_password_change', 1, false );
-        update_option( 'b3_logo_in_email', 1, false );
         update_option( 'b3_link_color', '#e0144b', false );
-        update_option( 'b3_notification_sender_email', get_bloginfo( 'admin_email' ), false );
-        update_option( 'b3_notification_sender_name', get_bloginfo( 'name' ), false );
         update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
 
-        if ( class_exists( 'Disable_Comments' ) ) {
-            update_option( 'wpins_block_notice', [ 'disable-comments', 'disable-comments' ] );
-        }
+        $email_styling = stripslashes( b3_default_email_styling() );
+        $email_template = stripslashes( b3_default_email_template() );
+        update_option( 'b3_email_styling', $email_styling, false );
+        update_option( 'b3_email_template', $email_template, false );
 
         if ( ! is_multisite() ) {
             update_option( 'b3_dashboard_widget', 1, false );
             update_option( 'b3_hide_admin_bar', 1, false );
             update_option( 'b3_registration_type', 'none', false );
             update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ), false );
-            // @TODO: check current b3_registration_type, change accordingly
             update_option( 'users_can_register', 0 );
         } else {
             if ( is_main_site() && false == $blog_id ) {
@@ -1136,3 +1131,197 @@
             do_action( 'b3_do_after_template', $template_name );
         }
     }
+
+
+    /**
+     * New function to do all replacements in 1 function
+     *
+     * @param $type
+     * @param $vars
+     * @param $activation
+     *
+     * @return array
+     * @throws Exception
+     */
+    function b3_get_replacement_vars( $type = 'message', $vars = array(), $activation = false ) {
+        $replacements = [];
+        $user_data    = false;
+
+        if ( isset( $vars[ 'user_data' ] ) ) {
+            $user_data = $vars[ 'user_data' ];
+        } elseif ( is_user_logged_in() ) {
+            $user_data = get_userdata( get_current_user_id() );
+            if ( false != $user_data ) {
+                $vars[ 'user_data' ] = $user_data;
+            }
+        }
+        $blog_id = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
+        $user_login = ( true != get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
+
+        if ( isset( $vars[ 'registration_date' ] ) ) {
+            $registration_date_gmt = $vars[ 'registration_date' ];
+        } elseif ( isset( $vars[ 'user_data' ]->user_registered ) ) {
+            $registration_date_gmt = $vars[ 'user_data' ]->user_registered;
+        } else {
+            $registration_date_gmt = false;
+        }
+        $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
+
+        // More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
+        if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
+            // check ip from share internet
+            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+        } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
+            // to check ip is pass from proxy
+            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+        } else {
+            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+        }
+
+        if ( isset( $vars[ 'blog_id' ] ) ) {
+            switch_to_blog( $vars[ 'blog_id' ] );
+            $replacements[ '%site_name%' ] = get_option( 'blogname' );
+            restore_current_blog();
+        }
+
+        switch($type) {
+            case 'message':
+                $replacements = array(
+                    '%account_page%'      => esc_url( b3_get_account_url() ),
+                    '%blog_name%'         => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
+                    '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
+                    '%home_url%'          => get_home_url( $blog_id, '/' ),
+                    '%login_url%'         => esc_url( b3_get_login_url() ),
+                    '%logo%'              => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
+                    '%lostpass_url%'      => b3_get_lostpassword_url(),
+                    '%network_name%'      => get_site_option( 'site_name' ),
+                    '%registration_date%' => $local_registration_date,
+                    '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
+                    '%user_ip%'           => $user_ip,
+                    '%user_login%'        => $user_login,
+                );
+                break;
+            case 'subject':
+                $replacements = array(
+                    '%blog_name%'    => get_option( 'blogname' ),
+                    '%network_name%' => get_site_option( 'site_name' ),
+                    '%user_login%'   => $user_login,
+                    '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
+                );
+                break;
+            default:
+                $replacements = [];
+        }
+
+        if ( is_multisite() ) {
+            $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
+            $replacements[ '%settings_url%' ] = $options_site_url;
+
+            if ( isset( $vars[ 'blog_id' ] )  ) {
+                $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
+            }
+            if ( isset( $vars[ 'domain' ] ) && isset( $vars[ 'path' ] )  ) {
+                $replacements[ '%home_url%' ] = b3_get_protocol() . '://' . $vars[ 'domain' ] . $vars[ 'path' ];
+            }
+            if ( isset( $vars[ 'user_password' ] ) ) {
+                $replacements[ '%user_password%' ] = $vars[ 'user_password' ];
+            }
+            $replacements[ 'network_name' ] = get_option( 'name' );
+        }
+
+        if ( false != $activation ) {
+            if ( is_multisite() ) {
+                if ( isset( $vars[ 'key' ] ) ) {
+                    $activate_url                       = b3_get_login_url() . "?activate=user&key={$vars[ 'key' ]}";
+                    $replacements[ '%activation_url%' ] = esc_url( $activate_url );
+                }
+            } else {
+                $replacements[ '%activation_url%' ] = b3_get_activation_url( $user_data );
+            }
+        }
+
+        return $replacements;
+    }
+
+
+	/**
+     * Get approvement table headers
+     *
+	 * @param $attributes
+	 *
+	 * @return array
+	 */
+	function b3_get_approvement_table_headers( $attributes ) {
+		$headers[] = ( is_multisite() ) ? esc_html__( 'Signup ID', 'b3-onboarding' ) : esc_html__( 'User ID', 'b3-onboarding' );
+		if ( $attributes ) {
+			if ( false == $attributes[ 'register_email_only' ] ) {
+				$headers[] = esc_html__( 'User name', 'b3-onboarding' );
+			}
+			if ( false != $attributes[ 'show_first_last_name' ] ) {
+				$headers[] = esc_html__( 'First name', 'b3-onboarding' );
+				$headers[] = esc_html__( 'Last name', 'b3-onboarding' );
+			}
+		}
+		$headers[] = esc_html__( 'Email', 'b3-onboarding' );
+
+		if ( is_multisite() ) {
+			$headers[] = esc_html__( 'Domain', 'b3-onboarding' );
+			$headers[] = esc_html__( 'Site name', 'b3-onboarding' );
+		}
+		$headers[] = esc_html__( 'Actions', 'b3-onboarding' );
+
+		return $headers;
+	}
+
+
+	/**
+     * Render approvement table row
+     *
+	 * @param $user
+	 * @param $attributes
+	 *
+	 * @return false|string
+	 */
+	function b3_render_approvement_table_row( $user, $attributes ) {
+		ob_start();
+		echo '<tr>';
+		echo sprintf( '<td>%s</td>', ( is_multisite() ) ? $user->signup_id : $user->ID );
+		if ( false == $attributes[ 'register_email_only' ] ) {
+			echo sprintf( '<td>%s</td>', $user->user_login );
+		}
+		if ( false != $attributes[ 'show_first_last_name' ] ) {
+            if ( is_multisite() ) {
+                $meta = unserialize($user->meta);
+                $first_name = ( isset( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : '';
+                $last_name = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
+                echo sprintf( '<td>%s</td>', $first_name );
+                echo sprintf( '<td>%s</td>', $last_name );
+            } else {
+                echo sprintf( '<td>%s</td>', $user->first_name );
+                echo sprintf( '<td>%s</td>', $user->last_name );
+            }
+		}
+		echo sprintf( '<td>%s</td>', $user->user_email );
+		if ( is_multisite() ) {
+			echo sprintf( '<td>%s</td>', $user->domain );
+			echo sprintf( '<td>%s</td>', $user->title );
+		}
+		echo '<td>';
+		?>
+		<form name="b3_user_management" method="post">
+			<input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
+			<input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>" />
+			<input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>" />
+			<?php if ( is_multisite() ) { ?>
+				<input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>" />
+			<?php } else { ?>
+				<input name="b3_user_id" type="hidden" value="<?php echo esc_attr( $user->ID ); ?>" />
+			<?php } ?>
+		</form>
+		<?php
+		echo '</td>';
+		echo '</tr>';
+		$output = ob_get_clean();
+
+		return $output;
+	}

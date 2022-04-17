@@ -1,6 +1,7 @@
 (function($) {
     $(document).ready(function() {
 
+        // Fold-outs
         var content = ".foldout__content";
         $(content).hide();
 
@@ -24,6 +25,18 @@
             }
         });
 
+        // click admin tab
+        $('#b3_tab-button--template').click(function() {
+            invokeCM(window.cm_invoked);
+        });
+
+        // direct page
+        var get_var = get_query();
+        if ( 'template' === get_var.tab ) {
+            invokeCM(window.cm_invoked);
+        }
+
+        // Toggle fields
         $('#b3_activate_filter_validation').change(function() {
             $('.b3_settings-input-description--validation').toggle();
         });
@@ -71,9 +84,36 @@
     });
 })(jQuery);
 
-// https://www.w3schools.com/howto/howto_js_tabs.asp
+/**
+ * Invoke CodeMirror (if not invoked already)
+ *
+ * @param invoked
+ */
+function invokeCM(invoked) {
+    if (! invoked) {
+        var styling_id = '#b3__input--email_styling';
+        var template_id = '#b3__input--email_template';
+
+        if (jQuery(styling_id).length ) {
+            wp.codeEditor.initialize(jQuery(styling_id), b3cm_settings);
+        }
+        if (jQuery(template_id).length ) {
+            wp.codeEditor.initialize(jQuery(template_id), b3cm_settings);
+        }
+        window.cm_invoked = true;
+    }
+}
+
+/**
+ * Open tabs
+ *
+ * @src: https://www.w3schools.com/howto/howto_js_tabs.asp
+ *
+ * @param evt
+ * @param tabName
+ */
 function openTab(evt, tabName) {
-    // Declare all variables
+    // Declare variables
     var i, tabcontent, tabbutton;
 
     // Get all elements with class="tabcontent" and hide them
@@ -93,3 +133,18 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
+/**
+ * Get $_GET query/vars
+ *
+ * @returns {{}}
+ */
+function get_query(){
+    var url = document.location.href;
+    var query_string = url.substring(url.indexOf('?') + 1).split('&');
+    for(var i = 0, result = {}; i < query_string.length; i++){
+        query_string[i] = query_string[i].split('=');
+        result[query_string[i][0]] = decodeURIComponent(query_string[i][1]);
+    }
+
+    return result;
+}

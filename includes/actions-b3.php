@@ -480,7 +480,7 @@
      *
      * @since 2.5.0
      *
-     * @TODO: add if to determine if user's registration type (still) matches current, otherwise incorrect email will be sent
+     * @TODO: add if to determine if user's registration type (still) matches current, otherwise incorrect email could be sent
      *
      * @param $user_id
      */

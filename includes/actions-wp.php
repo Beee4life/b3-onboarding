@@ -2,7 +2,7 @@
     /*
      * This file contains functions hooked to the WordPress' hooks
      */
-    
+
     /**
      * Update usermeta after user register
      *
@@ -152,7 +152,7 @@
 
 
     /**
-     * Do stuff after activate user (only)
+     * Do stuff after activate wpmu user only
      *
      * @since 3.0
      *
@@ -243,7 +243,9 @@
         if ( strpos( $plugin[ 'Version' ], 'dev' ) !== false || strpos( $plugin[ 'Version' ], 'beta' ) !== false ) {
             $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
             $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
-            echo apply_filters( 'b3_hide_development_notice', $notice );
+            if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
+                echo $notice;
+            }
         }
     }
     add_action( 'network_admin_notices', 'b3_network_admin_notices' );

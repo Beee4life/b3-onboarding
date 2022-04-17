@@ -128,6 +128,7 @@
 
     <div class="b3-debug-right">
         <div class="b3-debug-header">B3 META VALUES</div>
+        <?php echo sprintf( '<div>%s</div>', esc_html__( "A value only shows when it's set.", 'b3-onboarding' ) ); ?>
         <table class="b3_table b3_table--debug b3_table--debug-meta">
             <?php
                 $b3_values = b3_get_all_custom_meta_keys();
@@ -139,17 +140,24 @@
                         'message',
                     ];
 
+                    $hide_meta = [
+                        'b3_email_styling',
+                        'b3_email_template',
+                    ];
+
                     if ( is_array( $value ) ) {
                         $meta_value = 'array( ' . implode( ', ', $value ) . ' )';
                     } else {
-                        $value = ( 'b3_email_template' == $meta_key ) ? 'Set' : $value;
-                        $meta_value = (! $value) ? esc_html__( 'not set', 'b3-onboarding') : $value;
+                        $value      = ( in_array( $meta_key, $hide_meta ) ) ? 'Set' : $value;
+                        $meta_value = ( ! $value ) ? esc_html__( 'not set', 'b3-onboarding' ) : $value;
                     }
 
-                    echo '<tr>';
-                    echo sprintf( '<td>%s</td>', $meta_key );
-                    echo sprintf( '<td>%s</td>', esc_html( $meta_value ) );
-                    echo '</tr>';
+                    if ( 'not set' != $meta_value ) {
+                        echo '<tr>';
+                        echo sprintf( '<td>%s</td>', $meta_key );
+                        echo sprintf( '<td>%s</td>', esc_html( $meta_value ) );
+                        echo '</tr>';
+                    }
                 }
             ?>
         </table>

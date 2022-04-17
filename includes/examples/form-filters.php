@@ -1,12 +1,7 @@
 <?php
-
     ##################
     ## Form filters ##
     ##################
-    
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
 
     /**
      * Add hidden fields to form (filter only)
@@ -25,7 +20,7 @@
 
         return $fields;
     }
-    // add_filter( 'b3_hidden_fields', 'b3_hidden_fields_example' );
+    add_filter( 'b3_hidden_fields', 'b3_hidden_fields_example' );
 
 
     /**
@@ -150,7 +145,7 @@
 
         return $fields;
     }
-    // add_filter( 'b3_extra_fields', 'b3_extra_fields_example' );
+    add_filter( 'b3_extra_fields', 'b3_extra_fields_example' );
 
 
     /**
@@ -165,7 +160,7 @@
     function b3_message_above_request_access_example( $message ) {
         return 'Click here';
     }
-    // add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access_example' );
+    add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access_example' );
 
 
     /**
@@ -179,7 +174,7 @@
     function b3_message_above_lost_password_example( $message ) {
         return 'Your message';
     }
-    // add_filter( 'b3_message_above_lost_password', 'b3_message_above_lost_password_example' );
+    add_filter( 'b3_message_above_lost_password', 'b3_message_above_lost_password_example' );
 
 
     /**
@@ -192,7 +187,7 @@
     function b3_message_above_registration_example( $registration_message ) {
         return  'Filter registration text';
     }
-    // add_filter( 'b3_message_above_registration', 'b3_message_above_registration_example' );
+    add_filter( 'b3_message_above_registration', 'b3_message_above_registration_example' );
 
 
     /**
@@ -205,7 +200,7 @@
     function b3_message_above_login_example( $login_message ) {
         return 'Filter login text';
     }
-    // add_filter( 'b3_message_above_login', 'b3_message_above_login_example' );
+    add_filter( 'b3_message_above_login', 'b3_message_above_login_example' );
 
 
     /**
@@ -220,7 +215,7 @@
     function b3_registration_closed_message_example( $registration_closed_message ) {
         return '<a href="#">Click</a> here';
     }
-    // add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message_example' );
+    add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message_example' );
 
 
     /**
@@ -235,7 +230,7 @@
     function b3_privacy_text_example( $privacy_text ) {
         return '<a href="#">Click here</a> for more info';
     }
-    // add_filter( 'b3_privacy_text', 'b3_privacy_text_example' );
+    add_filter( 'b3_privacy_text', 'b3_privacy_text_example' );
 
 
     /**
@@ -250,7 +245,7 @@
     function b3_email_styling_example( $email_styling ) {
         return '.body {}';
     }
-    // add_filter( 'b3_email_styling', 'b3_email_styling_example' );
+    add_filter( 'b3_email_styling', 'b3_email_styling_example' );
 
 
     /**
@@ -265,7 +260,7 @@
     function b3_email_template_example( $email_template ) {
         return '<a href="#">Click</a> here';
     }
-    // add_filter( 'b3_email_template', 'b3_email_template_example' );
+    add_filter( 'b3_email_template', 'b3_email_template_example' );
 
 
     /**
@@ -280,7 +275,7 @@
     function b3_localhost_username_example( $username ) {
         return 'dummy';
     }
-    // add_filter( 'b3_localhost_username', 'b3_localhost_username_example' );
+    add_filter( 'b3_localhost_username', 'b3_localhost_username_example' );
 
 
     /**
@@ -295,7 +290,8 @@
     function b3_localhost_email_example( $email ) {
         return 'filter@email.com';
     }
-    // add_filter( 'b3_localhost_email', 'b3_localhost_email_example' );
+    add_filter( 'b3_localhost_email', 'b3_localhost_email_example' );
+
 
     /**
      * Disable the admin links
@@ -307,7 +303,7 @@
     function b3_disable_action_links_example( $setting ) {
         return true;
     }
-    // add_filter( 'b3_disable_action_links', 'b3_disable_action_links_example' );
+    add_filter( 'b3_disable_action_links', 'b3_disable_action_links_example' );
 
 
     /**
@@ -329,7 +325,7 @@
         return $disallowed_user_names;
 
     }
-    // add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
+    add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
 
 
     /**
@@ -344,7 +340,7 @@
     function b3_signup_for_site( $label ) {
         return $label;
     }
-    // add_filter( 'b3_signup_for_site', 'b3_signup_for_site' );
+    add_filter( 'b3_signup_for_site', 'b3_signup_for_site' );
 
 
     /**
@@ -359,6 +355,6 @@
     function b3_signup_for_user( $label ) {
         return $label;
     }
-    // add_filter( 'b3_signup_for_user', 'b3_signup_for_user' );
+    add_filter( 'b3_signup_for_user', 'b3_signup_for_user' );
 
 

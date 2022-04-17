@@ -3,9 +3,9 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.6.0
+    Version:            3.7.0
     Requires at least:  4.3
-    Tested up to:       5.9.2
+    Tested up to:       5.9.3
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -59,7 +59,7 @@
 
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '3.6.0',
+                    'version' => '3.7.0',
                 );
             }
 
@@ -88,7 +88,9 @@
                 add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
 
                 // Multisite specific
-                add_action( 'wp_initialize_site',                   array( $this, 'b3_after_create_site' ) );
+                if ( is_multisite() ) {
+                    add_action( 'wp_initialize_site', array( $this, 'b3_after_create_site' ) );
+                }
 
                 // Filters
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
@@ -98,9 +100,6 @@
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
                 include 'includes/do-stuff.php';
-                if ( is_localhost() ) {
-                    include 'includes/examples.php';
-                }
                 include 'includes/filters-b3.php';
                 include 'includes/filters-wp.php';
                 include 'includes/functions.php';
@@ -210,14 +209,23 @@
              */
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
-                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
 
-                // Src: https://github.com/thomasgriffin/New-Media-Image-Uploader
-                // Bail out early if we are not on a page add/edit screen.
                 if ( ! ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) ) {
                     return;
                 }
 
+                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+
+                // https://wpreset.com/add-codemirror-editor-plugin-theme/
+				$b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( array(
+                    'type' => 'text/css',
+                ) );
+                wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
+
+                wp_enqueue_script( 'wp-theme-plugin-editor' );
+                wp_enqueue_style( 'wp-codemirror' );
+
+                // @src https://github.com/thomasgriffin/New-Media-Image-Uploader
                 // This function loads in the required media files for the media manager.
                 wp_enqueue_media();
 
@@ -616,15 +624,17 @@
                                             $error_message_user_email = $errors->get_error_message( 'user_email' );
 
                                             if ( ! empty( $error_message_user_name ) ) {
-                                                if ( 'Sorry, that username already exists!' == $error_message_user_name ) {
+                                                if ( __( 'Sorry, that username already exists!' ) == $error_message_user_name ) {
                                                     $error_codes[] = 'username_exists';
-                                                } elseif ( 'That username is currently reserved but may be available in a couple of days.' == $error_message_user_name ) {
+                                                } elseif ( __( 'Usernames can only contain lowercase letters (a-z) and numbers.' ) == $error_message_user_name ) {
+                                                    $error_codes[] = 'username_no_uppercase';
+                                                } elseif ( __( 'That username is currently reserved but may be available in a couple of days.' ) == $error_message_user_name ) {
                                                     $error_codes[] = 'wpmu_user_reserved';
                                                 }
                                             } elseif ( ! empty( $error_message_user_email ) ) {
-                                                if ( 'Sorry, that email address is already used!' == $error_message_user_email ) {
+                                                if ( __( 'Sorry, that email address is already used!' ) == $error_message_user_email ) {
                                                     $error_codes[] = 'email_exists';
-                                                } elseif ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' == $error_message_user_email ) {
+                                                } elseif ( __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' ) == $error_message_user_email ) {
                                                     $error_codes[] = 'wpmu_email_in_use';
                                                 }
                                             } else {
@@ -822,6 +832,9 @@
                     // Registration errors
                     case 'username_exists':
                         return esc_html__( 'This username is already in use.', 'b3-onboarding' );
+
+                    case 'username_no_uppercase':
+                        return esc_html__( 'Usernames can only contain lowercase letters (a-z) and numbers.', 'b3-onboarding' );
 
                     case 'disallowed_username':
                         return esc_html__( 'That user name is not allowed, please choose another.', 'b3-onboarding' );
@@ -1210,8 +1223,10 @@
                     }
                     if ( isset( $show_warning ) && $show_warning ) {
                         $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
-                        $notice = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
-                        echo apply_filters( 'b3_hide_development_notice', $notice );
+                        $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
+                        if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
+                            echo $notice;
+                        }
                     }
                 }
 
@@ -1221,7 +1236,7 @@
                 }
 
                 // manual actions
-                // @TODO: look into this, when is it used
+                // @TODO: look into this, when is it used (after change from user list in admin ?)
                 if ( isset( $_GET[ 'update' ] ) ) {
                     if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
                         echo '<div id="message" class="updated"><p>';

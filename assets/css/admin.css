@@ -102,6 +102,12 @@
   background: pink;
 }
 
+.b3_preview pre {
+  background: white;
+  border: 1px solid #444;
+  padding: 0.5rem;
+}
+
 .b3_restrict-roles {
   display: flex;
 }
@@ -143,7 +149,7 @@
 }
 
 .b3_table--user {
-  width: 50%;
+  max-width: 70%;
 }
 
 .b3_table th,
@@ -445,6 +451,12 @@ ul.b3_integrations--list {
   width:   100%;
 }
 
+.b3 #template .CodeMirror {
+  border:     1px solid #ddd;
+  min-height: initial;
+  height:     25vh;
+}
+
 #tab-panel-b3-emails.help-tab-content ul li {
   margin-bottom: 0;
 }
@@ -459,6 +471,19 @@ ul.b3_integrations--list {
   padding:     8px 12px;
   margin:      0;
   line-height: 1.4;
+}
+
+.template_box label {
+  font-weight: bold;
+  font-size:   1.25rem;
+}
+
+.template_box .CodeMirror {
+  margin-top: 1rem;
+}
+
+.template_box + .template_box {
+  margin-top: 2rem;
 }
 
 #wpadminbar .topbar_approve_user a.ab-item {
@@ -496,6 +521,7 @@ ul.b3_integrations--list {
   .b3_table--debug-meta {
     width: 650px;
   }
+
   .b3_tabs {
     max-width: 1024px;
   }

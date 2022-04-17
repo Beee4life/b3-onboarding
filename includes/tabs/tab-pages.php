@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     /**
      * Render pages tab
      *
@@ -6,11 +10,6 @@
      *
      * @return false|string
      */
-
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
-
     function b3_render_pages_tab() {
         // get stored pages
         $b3_pages = array(
