@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.7.0 - released xx.04.21
+3.7.0 - released 16.04.21
 
 <a name="features"></a>
 ### Features
@@ -148,7 +148,7 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.7.0 - xx.04.22
+3.7.0 - 16.04.22
 * added [codemirror](https://codemirror.net/) for email template and styling
 * added new admin tab for email template and styling
 * add filters to style email content for "change admin email"

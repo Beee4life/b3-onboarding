@@ -15,8 +15,6 @@
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
         $debug_info                 = get_option( 'b3_debug_info' );
         $disable_action_links       = get_option( 'b3_disable_action_links' );
-        $filter_link_color          = apply_filters( 'b3_link_color', false );
-        $link_color                 = apply_filters( 'b3_link_color', get_option( 'b3_link_color' ) );
         $main_logo                  = get_option( 'b3_main_logo' );
         $preserve_settings          = get_option( 'b3_preserve_settings' );
         $use_popup                  = get_option( 'b3_use_popup', false );
@@ -28,16 +26,6 @@
         <form action="admin.php?page=b3-onboarding&tab=settings" method="post">
             <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
             <?php if ( is_main_site() ) { ?>
-
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
-                    <?php if ( $filter_link_color ) { ?>
-                        <?php esc_html_e( "You've set a filter to override the link color.", 'b3-onboarding' ); ?>
-                    <?php } ?>
-                <?php b3_get_close(); ?>
 
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
