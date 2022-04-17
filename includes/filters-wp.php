@@ -739,10 +739,11 @@
 
         return $email_content;
     }
-    add_filter( 'new_admin_email_content', 'b3_confirm_change_email', 10, 2 );
-    add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 );
-    // @TODO: test this
-    add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 );
+    add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change email
+    add_filter( 'new_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change site admin email
+    add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
+    add_filter( 'site_admin_email_change_email', 'b3_confirm_change_email', 10, 3 ); // after site admin email change
+    add_filter( 'network_admin_email_change_email', 'b3_confirm_change_email', 10, 2 ); // after network admin email change
 
 
     /**
@@ -771,4 +772,4 @@
 
         return $email_array;
     }
-    add_filter( 'site_admin_email_change_email', 'b3_admin_email_changed', 10, 3 );
+    // add_filter( 'site_admin_email_change_email', 'b3_admin_email_changed', 10, 3 );
