@@ -744,32 +744,3 @@
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
     add_filter( 'site_admin_email_change_email', 'b3_confirm_change_email', 10, 3 ); // after site admin email change
     add_filter( 'network_admin_email_change_email', 'b3_confirm_change_email', 10, 2 ); // after network admin email change
-
-
-    /**
-     * Filter to style "Admin email address changed" email (non-MS)
-     *
-     * @since 3.7.0
-     *
-     * @param $email_message
-     * @param $old_email
-     * @param $new_email
-     *
-     * @return mixed
-     */
-    function b3_admin_email_changed( $email_array, $old_email, $new_email ) {
-        $message                  = $email_array[ 'message' ];
-        $message                  = str_replace( '###OLD_EMAIL###', '###OLD_EMAIL###.', $message );
-        $message                  = str_replace( "\n###SITEURL###", '', $message );
-        $message                  = str_replace( "Regards,\n", '', $message );
-        $message                  = str_replace( "\nAll at ###SITENAME###", '', $message );
-        $message                  = str_replace( "\n", '<br>', $message );
-        $message                  .= b3_default_greetings();
-        $message                  = b3_replace_template_styling( $message );
-        $message                  = strtr( $message, b3_replace_email_vars() );
-        $message                  = htmlspecialchars_decode( stripslashes( $message ) );
-        $email_array[ 'message' ] = $message;
-
-        return $email_array;
-    }
-    // add_filter( 'site_admin_email_change_email', 'b3_admin_email_changed', 10, 3 );
