@@ -77,6 +77,7 @@
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_recaptcha_js_to_footer' ) );
                 add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
+                add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend_footer' ), 99 );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
                 add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
                 add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
@@ -222,7 +223,6 @@
                 ) );
                 wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
 
-                wp_enqueue_script( 'wp-theme-plugin-editor' );
                 wp_enqueue_style( 'wp-codemirror' );
 
                 // @src https://github.com/thomasgriffin/New-Media-Image-Uploader
@@ -240,6 +240,9 @@
                 wp_enqueue_script( 'b3-media' );
             }
 
+            public function b3_enqueue_scripts_backend_footer() {
+                wp_enqueue_script( 'wp-theme-plugin-editor', '', '', '', true );
+            }
 
             /*
              * Adds a page to admin sidebar menu
