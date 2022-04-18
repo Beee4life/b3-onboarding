@@ -11,7 +11,7 @@
 
     <?php
         if ( isset( $attributes[ 'template' ] ) && 'account' == $attributes[ 'template' ] ) {
-			$new_email = get_user_meta( $current_user->ID, '_new_email', true );
+			$new_email = get_user_meta( $current_user->ID, 'x_new_email', true );
             if ( $new_email && $new_email[ 'newemail' ] != $current_user->user_email ) { ?>
                 <div class="updated inline">
                     <p>
@@ -21,6 +21,7 @@
 								__( 'There is a pending change of your email to %s.' ),
 								'<code>' . esc_html( $new_email['newemail'] ) . '</code>'
 							);
+                            // @TODO: change to front-end url
 							printf(
 								' <a href="%1$s">%2$s</a>',
 								esc_url( wp_nonce_url( self_admin_url( 'profile.php?dismiss=' . $current_user->ID . '_new_email' ), 'dismiss-' . $current_user->ID . '_new_email' ) ),
