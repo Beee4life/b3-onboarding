@@ -97,6 +97,14 @@
   display: block;
 }
 
+.b3_form-element {
+  margin-top: 2rem;
+}
+
+.b3_form-element-my-sites {
+  align-items: flex-start;
+}
+
 .b3_page .b3_form-element--checkbox .b3_form-label,
 .b3_page .b3_form-element--radio .b3_form-label {
   vertical-align: top;
@@ -104,14 +112,6 @@
 
 .b3_page p.rememberme {
   margin-top: 1rem;
-}
-
-.b3_form-element {
-  margin-top: 2rem;
-}
-
-.b3_form-element-my-sites {
-  align-items: flex-start;
 }
 
 .b3_form-element-my-sites .site-links ul,
