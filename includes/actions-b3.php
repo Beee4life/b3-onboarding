@@ -667,10 +667,10 @@
      *
      * @param $element
      * @param array $attributes
-     * @param false $current_user_object
+     * @param false $current_user
      */
-    function b3_render_form_element( $element, $attributes = [], $current_user_object = false ) {
-        b3_get_template( $element, $attributes, $current_user_object);
+    function b3_render_form_element( $element, $attributes = [], $current_user = false ) {
+        b3_get_template( $element, $attributes, $current_user);
     }
     add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );
 

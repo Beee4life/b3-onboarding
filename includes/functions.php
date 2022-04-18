@@ -1118,9 +1118,9 @@
      *
      * @param $template_name
      * @param array $attributes
-     * @param false $current_user_object
+     * @param false $current_user
      */
-    function b3_get_template( $template_name, $attributes = [], $current_user_object = false ) {
+    function b3_get_template( $template_name, $attributes = [], $current_user = false ) {
         if ( $template_name ) {
             $template = b3_locate_template( $template_name );
 

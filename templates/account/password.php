@@ -3,7 +3,7 @@
         exit;
     }
 
-    $show_password_fields = apply_filters( 'show_password_fields', true, $current_user_object );
+    $show_password_fields = apply_filters( 'show_password_fields', true, $current_user );
     if ( $show_password_fields ) {
         ?>
         <div class="b3_form-element b3_form-element--password">
