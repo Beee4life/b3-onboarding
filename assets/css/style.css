@@ -359,7 +359,7 @@ ul.b3_form-links li:last-child {
   .b3_page form textarea {
     display:   inline-block;
     width:     initial;
-    max-width: 300px;
+    max-width: 200px;
   }
 
   .b3_page form input[name="b3_privacy_accept"] {
