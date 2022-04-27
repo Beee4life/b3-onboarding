@@ -104,12 +104,13 @@
 
 .b3_preview pre {
   background: white;
-  border: 1px solid #444;
-  padding: 0.5rem;
+  border:     1px solid #444;
+  padding:    0.5rem;
 }
 
 .b3_restrict-roles {
-  display: flex;
+  display:   flex;
+  flex-flow: row wrap;
 }
 
 .b3_restrict-roles div {
