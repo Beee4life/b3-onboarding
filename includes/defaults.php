@@ -329,7 +329,7 @@
     function b3_default_welcome_user_message() {
         $message = b3_get_email_intro();
         $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) );
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
             $message .= '<br><br>' . "\n";
             $message .= sprintf( esc_html__( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
@@ -381,7 +381,7 @@
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'You only need to confirm your email address through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
+        $message .= sprintf( esc_html__( 'You only need to confirm your email address through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'this link', 'b3-onboarding' ) ) );
         $message .= b3_default_greetings();
 
         return $message;
