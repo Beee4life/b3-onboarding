@@ -84,7 +84,7 @@
 }
 
 .b3_foldout--header {
-  background:  #F8F8F8;
+  background:  #f8f8f8;
   font-weight: bold;
 }
 
@@ -249,7 +249,7 @@
 }
 
 .b3_settings-input-description {
-  color:      #AAA;
+  color:      #aaa;
   margin-top: 0.5rem;
 }
 
@@ -338,7 +338,7 @@
 
 .b3 table.b3_table--emails th,
 .b3 table.b3_table--emails td {
-  padding-top: 1em;
+  padding-top: 1rem;
 }
 
 .b3__intro {
@@ -369,7 +369,7 @@
 
 .b3__input--description {
   font-style: italic;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
 }
 
 .b3__inside {
@@ -386,7 +386,7 @@
 }
 
 .integrations {
-  border-top:  1px solid #CCC;
+  border-top:  1px solid #ccc;
   margin-top:  2rem;
   padding-top: 2rem;
 }
