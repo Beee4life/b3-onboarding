@@ -17,7 +17,7 @@
 /* TABS */
 .b3_tabs {
   background: white;
-  margin-top: 2em;
+  margin-top: 2rem;
 }
 
 .b3_tab-header {
@@ -61,8 +61,8 @@
 .b3_tab-content h2,
 .b3_tab-content h3 {
   color:       #444;
-  font-size:   1.35em;
-  margin:      0 0 1em 0;
+  font-size:   1.35rem;
+  margin:      0 0 1rem 0;
   font-weight: bold;
 }
 
@@ -109,8 +109,8 @@
 }
 
 .b3_restrict-roles {
-  display:   flex;
-  flex-flow: row wrap;
+  display:     flex;
+  flex-flow:   row wrap;
 }
 
 .b3_restrict-roles div {
@@ -126,11 +126,11 @@
   margin-block-start: 0;
   margin-block-end:   0;
   list-style:         disc;
-  padding-left:       1.5em;
+  padding-left:       1.5rem;
 }
 
 .b3_tab-content ul ul {
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
 }
 
 .b3_table {
@@ -195,19 +195,19 @@
 
 .b3_widget--dashboard ul {
   list-style:    disc;
-  margin-top:    0.5em;
+  margin-top:    0.5rem;
   margin-bottom: 0;
   padding-left:  17px;
 }
 
 /* Settings page */
 .b3_settings-field {
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 }
 
 .b3_settings-label {
   font-weight:   bold;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 
 .b3_select-page .b3_settings-label {
@@ -232,6 +232,10 @@
   margin-bottom: 0.5rem;
 }
 
+.b3_settings-input label {
+  vertical-align: baseline;
+}
+
 .b3_settings-input--restrict-users > div {
   margin-bottom: 0;
 }
@@ -246,20 +250,20 @@
 
 .b3_settings-input-description {
   color:      #AAA;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
 }
 
 /* Pages pages */
 .b3_select-page {
   display:       flex;
   flex-flow:     row nowrap;
-  margin-bottom: 1em;
+  align-items:   center;
+  margin-bottom: 1rem;
   width:         100%;
 }
 
-.b3_select-page__label {
+.b3_select-page label {
   font-weight:  bold;
-  margin-right: 1em;
   min-width:    200px;
 }
 
@@ -267,7 +271,7 @@
 .b3_select-page__edit,
 .b3_select-page__link {
   align-self:     center;
-  margin-left:    1em;
+  margin-left:    1rem;
   vertical-align: middle;
 }
 
@@ -328,7 +332,7 @@
 }
 
 .b3 table.b3_table--emails th {
-  padding-top: 0.5em;
+  padding-top: 0.5rem;
   width:       200px;
 }
 
@@ -338,7 +342,7 @@
 }
 
 .b3__intro {
-  line-height: 1.5em;
+  line-height: 1.5rem;
 }
 
 .b3 table.b3_table--emails th {
@@ -383,8 +387,8 @@
 
 .integrations {
   border-top:  1px solid #CCC;
-  margin-top:  2em;
-  padding-top: 2em;
+  margin-top:  2rem;
+  padding-top: 2rem;
 }
 
 input.b3_recaptcha_input {
@@ -406,9 +410,9 @@ ul.b3_integrations--list {
   -webkit-box-sizing: border-box;
   border-radius:      10px;
   border:             1px solid #444444;
-  margin-right:       1em;
+  margin-right:       1rem;
   overflow:           hidden;
-  padding:            1em;
+  padding:            1rem;
   text-align:         center;
   vertical-align:     top;
   width:              200px;
@@ -416,7 +420,7 @@ ul.b3_integrations--list {
 
 .b3_integration__image {
   height:        90px;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 
 .b3_integration__image img {
@@ -502,7 +506,7 @@ ul.b3_integrations--list {
 }
 
 .wp-core-ui .button--submit {
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
 }
 
 #adminmenu .toplevel_page_b3-onboarding .wp-menu-image img {
