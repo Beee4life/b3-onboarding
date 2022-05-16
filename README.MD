@@ -149,6 +149,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.8.0 - xx.04.22
 * fix non-working contextual help tabs
+* load admin scripts later so they don't conflict with `wp-themeplugin-editor`
 
 3.7.0 - 17.04.22
 * added [codemirror](https://codemirror.net/) for email template and styling
