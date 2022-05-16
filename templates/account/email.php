@@ -6,7 +6,9 @@
     $value = ( is_user_logged_in() ) ? esc_attr__( $current_user->user_email ) : false;
 ?>
 <div class="b3_form-element b3_form-element--email">
-    <?php echo sprintf( '<label class="b3_form-label" for="email">%s</label>', esc_attr__( 'Email address', 'b3-onboarding' ) ); ?>
+    <label class="b3_form-label" for="email">
+        <?php esc_attr__( 'Email address', 'b3-onboarding' ); ?>
+    </label>
     <input type="text" name="email" id="email" value="<?php echo $value; ?>" class="input regular-text" />
 
     <?php
@@ -18,7 +20,7 @@
                         <?php
 							printf(
 							/* translators: %s: New email. */
-								__( 'There is a pending change of your email to %s.' ),
+								esc_html__( 'There is a pending change of your email, which is sent to %s.', 'b3-onboarding' ),
 								'<code>' . esc_html( $new_email['newemail'] ) . '</code>'
 							);
                             // @TODO: change to front-end url
