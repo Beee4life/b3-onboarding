@@ -160,6 +160,7 @@
                         update_option( 'users_can_register', '1' );
                     }
                 }
+                delete_option( 'b3ob_version' );
             }
 
 
