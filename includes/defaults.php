@@ -492,7 +492,7 @@
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'Site address: %home_url%', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'Site name: %blog_name%', 'b3-onboarding' ) . "\n";
+        $message .= esc_html__( 'Site name: %blog_name%', 'b3-onboarding' );
         $message .= b3_default_greetings();
 
         return $message;
