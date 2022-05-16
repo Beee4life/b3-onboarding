@@ -114,7 +114,8 @@
 }
 
 .b3_restrict-roles div {
-  margin-right: 1rem;
+  margin-right:  1rem;
+  margin-bottom: 0.5rem;
 }
 
 .b3_restrict-roles input[type="checkbox"] {
@@ -229,6 +230,10 @@
 
 .b3_settings-input > div {
   margin-bottom: 0.5rem;
+}
+
+.b3_settings-input--restrict-users > div {
+  margin-bottom: 0;
 }
 
 .b3_settings-input--recaptcha input {

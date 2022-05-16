@@ -57,7 +57,7 @@
                 <?php b3_get_label_field_open(); ?>
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox b3_settings-input--restrict-users">
                     <?php $hidden_roles = array( 'b3_approval', 'b3_activation' ); ?>
                     <?php foreach( $hidden_roles as $role ) { ?>
                         <input type="hidden" id="b3_restrict_<?php echo esc_attr( $role ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $role ); ?>" />
