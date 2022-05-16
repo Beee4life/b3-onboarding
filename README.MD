@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.8.0 - released xx.04.21
+3.8.0 - released 1x.05.22
 
 <a name="features"></a>
 ### Features
@@ -80,7 +80,7 @@ Then run composer require "beee4life/b3-onboarding"
 or add this to the require section by hand:
 
 ```
-"beee4life/b3-onboarding": "^3.0",
+"beee4life/b3-onboarding": "3.8.0",
 ```
 
 and run `composer update`.
@@ -133,7 +133,6 @@ Starting with v3.1.0 there's now a setting to prevent deletion of all data/setti
 ### Roadmap
 These are the things we have planned to add.
 * [ ] add more security stuff
-* [ ] add filters for template html + css
 * [ ] clean-up settings pages
 * [ ] remove `<br>` from email templates
 * [ ] create option to send a preview email
