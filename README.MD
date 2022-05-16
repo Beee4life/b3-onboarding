@@ -147,9 +147,10 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.8.0 - xx.04.22
+3.8.0 - 1x.05.22
 * fix non-working contextual help tabs
 * load admin scripts later so they don't conflict with `wp-themeplugin-editor`
+* remove new lines in default messages
 
 3.7.0 - 17.04.22
 * added [codemirror](https://codemirror.net/) for email template and styling
