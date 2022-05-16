@@ -73,9 +73,7 @@
 
             <?php foreach( $b3_pages as $page ) { ?>
                 <div class="b3_select-page">
-                    <?php b3_get_label_field_open(); ?>
                     <label for="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>"><?php echo esc_attr( $page[ 'label' ] ); ?></label>
-                    <?php b3_get_close(); ?>
 
                     <div class="b3_select-page__selector">
                         <select name="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>_id" id="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>">
