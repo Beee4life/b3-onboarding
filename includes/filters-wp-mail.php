@@ -489,3 +489,37 @@
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
     add_filter( 'site_admin_email_change_email', 'b3_confirm_change_email', 10, 3 ); // after site admin email change
     add_filter( 'network_admin_email_change_email', 'b3_confirm_change_email', 10, 2 ); // after network admin email change
+
+
+    /**
+     * Override 'invited user' email
+     *
+     * @param $new_user_email
+     * @param $user_id
+     * @param $role
+     * @param $newuser_key
+     *
+     * @return bool|string
+     */
+    function b3_override_email( $new_user_email, $user_id, $role, $newuser_key ) {
+        $new_user_email = b3_replace_template_styling( $new_user_email[ 'message' ] );
+
+        return $new_user_email;
+    }
+    add_filter( 'invited_user_email', 'b3_override_email', 10, 4 );
+
+
+    /**
+     * Just override email content/styling
+     *
+     * @param $content
+     *
+     * @return mixed
+     */
+    function b3_override_styling( $content ) {
+        $content = b3_replace_template_styling( $content );
+        $content = htmlspecialchars_decode( stripslashes( $content ) );
+
+        return $content;
+    }
+    add_filter( 'delete_site_email_content', 'b3_override_styling' );
