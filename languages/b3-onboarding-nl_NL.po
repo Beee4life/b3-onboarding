@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-05-17 08:24+0200\n"
-"PO-Revision-Date: 2022-05-17 08:24+0200\n"
+"POT-Creation-Date: 2022-05-17 08:26+0200\n"
+"PO-Revision-Date: 2022-05-17 08:27+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -342,11 +342,12 @@ msgstr "Je hebt nog geen pagina ingesteld voor registratie. Stel dit %s in."
 #: admin/dashboard-widget.php:53 admin/dashboard-widget.php:86
 #: admin/help-tabs.php:104 includes/actions-b3.php:317
 #: includes/actions-wp.php:237 includes/actions-wp.php:238
-#: includes/class-b3-shortcodes.php:68 includes/defaults.php:239
-#: includes/defaults.php:241 includes/defaults.php:335
-#: includes/defaults.php:353 includes/defaults.php:445
-#: includes/defaults.php:477 includes/defaults.php:531
-#: includes/tabs/tab-recaptcha.php:61 includes/tabs/tab-settings.php:49
+#: includes/class-b3-shortcodes.php:68 includes/defaults.php:154
+#: includes/defaults.php:239 includes/defaults.php:241
+#: includes/defaults.php:335 includes/defaults.php:353
+#: includes/defaults.php:445 includes/defaults.php:477
+#: includes/defaults.php:531 includes/tabs/tab-recaptcha.php:61
+#: includes/tabs/tab-settings.php:49
 msgid "here"
 msgstr "hier"
 
@@ -986,11 +987,7 @@ msgstr "deze link"
 #: includes/defaults.php:154
 #, php-format
 msgid "you have confirmed your email address and can now %s."
-msgstr "je hebt je email adres bevestigd en je kan nu login %s."
-
-#: includes/defaults.php:154
-msgid "login here"
-msgstr "hier inloggen"
+msgstr "je hebt je email adres bevestigd en je kan nu %s inloggen."
 
 #: includes/defaults.php:170
 msgid "A new user requests access"
@@ -1632,7 +1629,7 @@ msgid ""
 "again, before you log out !"
 msgstr ""
 "Je hebt je succesvol alle instellingen gereset. Vergeet niet je pagina's "
-"opnieuw in te stellen voordat je uitlogt."
+"opnieuw in te stellen voordat je uitlogt !"
 
 #: includes/form-handling.php:701
 msgid "You do not have permission to edit this user."
@@ -2573,6 +2570,9 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "login here"
+#~ msgstr "hier inloggen"
 
 #~ msgid "Uncheck this box to enable user notification on password change"
 #~ msgstr ""
