@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-05-17 08:24+0200\n"
+"POT-Creation-Date: 2022-05-17 08:29+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -322,11 +322,12 @@ msgstr ""
 #: admin/dashboard-widget.php:53 admin/dashboard-widget.php:86
 #: admin/help-tabs.php:104 includes/actions-b3.php:317
 #: includes/actions-wp.php:237 includes/actions-wp.php:238
-#: includes/class-b3-shortcodes.php:68 includes/defaults.php:239
-#: includes/defaults.php:241 includes/defaults.php:335
-#: includes/defaults.php:353 includes/defaults.php:445
-#: includes/defaults.php:477 includes/defaults.php:531
-#: includes/tabs/tab-recaptcha.php:61 includes/tabs/tab-settings.php:49
+#: includes/class-b3-shortcodes.php:68 includes/defaults.php:154
+#: includes/defaults.php:239 includes/defaults.php:241
+#: includes/defaults.php:335 includes/defaults.php:353
+#: includes/defaults.php:445 includes/defaults.php:477
+#: includes/defaults.php:531 includes/tabs/tab-recaptcha.php:61
+#: includes/tabs/tab-settings.php:49
 msgid "here"
 msgstr ""
 
@@ -925,11 +926,7 @@ msgstr ""
 
 #: includes/defaults.php:154
 #, php-format
-msgid "you have confirmed your email address and can now %s."
-msgstr ""
-
-#: includes/defaults.php:154
-msgid "login here"
+msgid "you have confirmed your email address and can now login %s."
 msgstr ""
 
 #: includes/defaults.php:170
