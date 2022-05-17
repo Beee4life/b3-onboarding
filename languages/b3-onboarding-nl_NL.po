@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-05-16 22:09+0200\n"
-"PO-Revision-Date: 2022-05-16 22:11+0200\n"
+"POT-Creation-Date: 2022-05-17 08:24+0200\n"
+"PO-Revision-Date: 2022-05-17 08:24+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -986,7 +986,7 @@ msgstr "deze link"
 #: includes/defaults.php:154
 #, php-format
 msgid "you have confirmed your email address and can now %s."
-msgstr "je hebt je email adres bevestigd en je kan nu %s inloggen."
+msgstr "je hebt je email adres bevestigd en je kan nu login %s."
 
 #: includes/defaults.php:154
 msgid "login here"
