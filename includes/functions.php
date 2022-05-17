@@ -1035,12 +1035,18 @@
             switch_to_blog( $blog_id );
         }
         $plugin_data = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . b3_get_plugin_file( 'B3 OnBoarding' ) );
-
-        update_option( 'b3_activate_custom_emails', 1, false );
-        update_option( 'b3_disable_admin_notification_password_change', 1, false );
-        update_option( 'b3_disable_user_notification_password_change', 1, false );
-        update_option( 'b3_link_color', '#e0144b', false );
         update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
+
+        if ( ! in_array( get_option( 'b3_activate_custom_emails' ), [ '0', '1' ] ) ) {
+            update_option( 'b3_activate_custom_emails', 1, false );
+        }
+        if ( ! in_array( get_option( 'b3_disable_admin_notification_password_change' ), [ '0', '1' ] ) ) {
+            update_option( 'b3_disable_admin_notification_password_change', 1, false );
+        }
+        if ( ! in_array( get_option( 'b3_disable_user_notification_password_change' ), [ '0', '1' ] ) ) {
+            update_option( 'b3_disable_user_notification_password_change', 1, false );
+        }
+        // update_option( 'b3_link_color', '#e0144b', false );
 
         $email_styling = stripslashes( b3_default_email_styling() );
         $email_template = stripslashes( b3_default_email_template() );
