@@ -150,6 +150,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * fix non-working contextual help tabs
 * load admin scripts later so they don't conflict with `wp-themeplugin-editor`
 * remove new lines in default messages
+* added more filters for multisite
 
 3.7.0 - 17.04.22
 * added [codemirror](https://codemirror.net/) for email template and styling
