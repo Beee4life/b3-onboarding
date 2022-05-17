@@ -17,7 +17,7 @@
     function b3_password_changed_email_admin( $wp_password_change_notification_email, $user, $blogname ) {
         $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login ); // default: Password changed for user: {username}
         $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_replace_email_vars() );
+        $message = strtr( $message, b3_get_replacement_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
         $subject = __( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
 
@@ -61,7 +61,7 @@
         $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###.';
         $new_message               .= b3_default_greetings();
         $new_message               = b3_replace_template_styling( $new_message );
-        $new_message               = strtr( $new_message, b3_replace_email_vars() );
+        $new_message               = strtr( $new_message, b3_get_replacement_vars() );
         $change_email[ 'message' ] = $new_message;
 
         return $change_email;
@@ -112,7 +112,7 @@
             }
             if ( false != $admin_email ) {
                 $admin_email = b3_replace_template_styling( $admin_email );
-                $admin_email = strtr( $admin_email, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+                $admin_email = strtr( $admin_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
                 $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
                 $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
             }
@@ -183,9 +183,9 @@
         if ( isset( $user_email ) ) {
             $user_email = b3_replace_template_styling( $user_email );
             if ( 'email_activation' == $registration_type ) {
-                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ), true ) );
+                $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', array( 'user_data' => $user ), true ) );
             } else {
-                $user_email = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user ) ) );
+                $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', array( 'user_data' => $user ) ) );
             }
 
             $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
@@ -234,7 +234,7 @@
         // @TODO: add filter + (maybe) user input for message
         $user_email                  = apply_filters( 'b3_new_site_created_message', b3_get_new_site_created_message() );
         $user_email                  = b3_replace_template_styling( $user_email );
-        $user_email                  = strtr( $user_email, b3_replace_email_vars( array( 'user_data' => $user, 'site' => $site ) ) );
+        $user_email                  = strtr( $user_email, b3_get_replacement_vars( 'message', array( 'user_data' => $user, 'site' => $site ) ) );
         $user_email                  = htmlspecialchars_decode( stripslashes( $user_email ) );
         $new_site_email[ 'message' ] = $user_email;
 
@@ -287,7 +287,7 @@
         $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_data->user_login ) . "\r\n\r\n";
         $vars[ 'user_data' ] = $user_data;
         $message             = b3_replace_template_styling( $message );
-        $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_replace_email_vars( $vars ) ) ) );
+        $message             = htmlspecialchars_decode( stripslashes( strtr( $message, b3_get_replacement_vars( 'message', $vars ) ) ) );
 
         return $message;
     }
@@ -334,7 +334,7 @@
         ), $salutation );
 
         $message = b3_replace_template_styling( $pass_change_text );
-        $message = strtr( $message, b3_replace_email_vars() );
+        $message = strtr( $message, b3_get_replacement_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
 
         $pass_change_email = array(
@@ -479,7 +479,7 @@
         $email_content = str_replace( "\n", '<br>', $email_content );
         $email_content .= b3_default_greetings();
         $email_content = b3_replace_template_styling( $email_content );
-        $email_content = strtr( $email_content, b3_replace_email_vars() );
+        $email_content = strtr( $email_content, b3_get_replacement_vars() );
         $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
 
         return $email_content;

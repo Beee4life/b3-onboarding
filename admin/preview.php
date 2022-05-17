@@ -95,9 +95,9 @@
             }
 
             if ( 'styling' !== $_GET[ 'preview' ] ) {
-                $subject = strtr( $subject, b3_replace_subject_vars() );
+                $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                 $message = b3_replace_template_styling( $message );
-                $message = strtr( $message, b3_replace_email_vars() );
+                $message = strtr( $message, b3_get_replacement_vars() );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
             ?>
 

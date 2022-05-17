@@ -32,10 +32,10 @@
 
             $to      = $user_object->user_email;
             $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
-            $subject = strtr( $subject, b3_replace_subject_vars() );
+            $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
             $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
             $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_replace_email_vars( $vars ) );
+            $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
 
             wp_mail( $to, $subject, $message, array() );
@@ -91,7 +91,7 @@
 
             if ( $multisite || in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
                 $message = b3_replace_template_styling( $message );
-                $message = strtr( $message, b3_replace_email_vars() );
+                $message = strtr( $message, b3_get_replacement_vars() );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
                 wp_mail( $to, $subject, $message, array() );
             }
@@ -118,7 +118,7 @@
             $admin_subject = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
             $admin_email   = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
             $admin_email   = b3_replace_template_styling( $admin_email );
-            $admin_email   = strtr( $admin_email, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $admin_email   = strtr( $admin_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $admin_email   = htmlspecialchars_decode( stripslashes( $admin_email ) );
             $admin_message = $admin_email;
 
@@ -132,7 +132,7 @@
             $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
             $message = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
             $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
 
             wp_mail( $to, $subject, $message, array() );
@@ -513,10 +513,10 @@
             $user->set_role( get_option( 'default_role' ) );
             $to      = $user->user_email;
             $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
-            $subject = strtr( $subject, b3_replace_subject_vars() );
+            $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
             $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
             $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_replace_email_vars( [ 'user_data' => $user ] ) );
+            $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
 
             wp_mail( $to, $subject, $message, array() );
@@ -547,7 +547,7 @@
             if ( ! empty( $subject ) && ! empty( $message ) ) {
                 $admin_to = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( get_option( 'b3_registration-type' ) ) );
                 $message  = b3_replace_template_styling( $message );
-                $message  = strtr( $message, b3_replace_email_vars() );
+                $message  = strtr( $message, b3_get_replacement_vars() );
                 $message  = htmlspecialchars_decode( stripslashes( $message ) );
 
                 wp_mail( $admin_to, $subject, $message, array() );
