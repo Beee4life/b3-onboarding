@@ -26,7 +26,11 @@
                     }
                 }
 
-                if ( 'none' == get_option( 'b3_registration_type' ) ) {
+                if ( in_array( $_POST[ 'b3_registration_type' ], [ 'request_access', 'none' ] ) ) {
+                    delete_option( 'b3_activate_custom_passwords' );
+                }
+
+                if ( 'none' == $_POST[ 'b3_registration_type' ] ) {
                     if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
                         update_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ), false );
                     } else {
