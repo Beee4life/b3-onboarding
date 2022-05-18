@@ -27,6 +27,12 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.8.0
+* fix non-working contextual help tabs
+* load admin scripts later so they don't conflict with `wp-themeplugin-editor`
+* remove new lines in default messages
+* added more filters for multisite
+
 3.7.0
 * added [codemirror](https://codemirror.net/) for email template and styling
 * added new admin tab for email template and styling
