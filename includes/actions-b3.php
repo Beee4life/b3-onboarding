@@ -399,7 +399,7 @@
             }
 
             if ( true == $show_messages && ! empty( $messages ) ) {
-                if ( isset( $attributes[ 'errors' ] ) ) {
+                if ( isset( $attributes[ 'errors' ] ) && ! empty( $attributes[ 'errors' ] ) ) {
                     echo '<div class="b3_message b3_message--error">';
                 } else {
                     echo '<div class="b3_message">';
