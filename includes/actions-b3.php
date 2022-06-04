@@ -440,9 +440,9 @@
 
             switch( $form_type ) {
                 case 'login':
-                    $links[] = $values['lostpassword'];
+                    $links[] = $values[ 'lostpassword' ];
                     if ( 'none' != get_option( 'b3_registration_type' ) ) {
-                        $links[] = $values['register'];
+                        $links[] = $values[ 'register' ];
                     }
                     break;
 
