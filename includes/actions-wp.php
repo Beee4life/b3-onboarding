@@ -1,6 +1,6 @@
 <?php
     /*
-     * This file contains functions hooked to the WordPress' hooks
+     * This file contains functions hooked to WordPress' hooks
      */
 
     /**
@@ -11,10 +11,10 @@
      * @param $user_id
      */
     function b3_update_user_meta_after_register( $user_id ) {
-        if ( ! empty( $_POST[ 'first_name' ] ) ) {
+        if ( isset( $_POST[ 'first_name' ] ) && ! empty( $_POST[ 'first_name' ] ) ) {
             update_user_meta( $user_id, 'first_name', sanitize_text_field( $_POST[ 'first_name' ] ) );
         }
-        if ( ! empty( $_POST[ 'last_name' ] ) ) {
+        if ( isset( $_POST[ 'last_name' ] ) && ! empty( $_POST[ 'last_name' ] ) ) {
             update_user_meta( $user_id, 'last_name', sanitize_text_field( $_POST[ 'last_name' ] ) );
         }
 
