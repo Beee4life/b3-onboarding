@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.8.0 - released 1x.05.22
+3.8.0 - released xx.06.22
 
 <a name="features"></a>
 ### Features
@@ -65,7 +65,7 @@ If you use a composer file to add any plugins/libraries. Add the following repos
     "package": {
       "name":    "Beee4life/b3-onboarding",
       "type":    "wordpress-plugin",
-      "version": "3.5.0",
+      "version": "3.8.0",
       "dist":    {
         "type": "zip",
         "url":  "https://github.com/Beee4life/b3-onboarding/archive/master.zip"
@@ -146,7 +146,7 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.8.0 - 1x.05.22
+3.8.0 - xx.06.22
 * fix non-working contextual help tabs
 * load admin scripts later so they don't conflict with `wp-themeplugin-editor`
 * remove new lines in default messages
