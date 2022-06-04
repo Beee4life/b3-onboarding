@@ -1155,6 +1155,8 @@
     /**
      * New function to do all replacements in 1 function
      *
+     * @since 3.8.0
+     *
      * @param $type
      * @param $vars
      * @param $activation
