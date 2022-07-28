@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-05-17 08:29+0200\n"
+"POT-Creation-Date: 2022-07-28 19:11+0200\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -295,7 +295,7 @@ msgstr ""
 msgid "Your account has been deleted."
 msgstr ""
 
-#: B3Onboarding.php:984 includes/form-handling.php:610
+#: B3Onboarding.php:984 includes/form-handling.php:614
 msgid "Settings saved"
 msgstr ""
 
@@ -450,7 +450,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: admin/dashboard-widget.php:46 includes/tabs/tab-registration.php:20
-#: includes/tabs/tab-settings.php:125 includes/tabs/tab-template.php:48
+#: includes/tabs/tab-settings.php:125 includes/tabs/tab-template.php:50
 msgid "Click here"
 msgstr ""
 
@@ -771,7 +771,7 @@ msgstr ""
 msgid "Your site(s)"
 msgstr ""
 
-#: includes/actions-wp.php:95 includes/functions.php:1313
+#: includes/actions-wp.php:95 includes/functions.php:1334
 msgid "Approve"
 msgstr ""
 
@@ -1357,7 +1357,7 @@ msgstr ""
 msgid "If left empty the default template will be used."
 msgstr ""
 
-#: includes/emails/email-template.php:23 includes/tabs/tab-template.php:29
+#: includes/emails/email-template.php:23 includes/tabs/tab-template.php:30
 msgid "Email template"
 msgstr ""
 
@@ -1480,53 +1480,53 @@ msgstr ""
 msgid "We're sorry, that domain is blocked from registering."
 msgstr ""
 
-#: includes/form-handling.php:10 includes/form-handling.php:119
-#: includes/form-handling.php:157 includes/form-handling.php:404
-#: includes/form-handling.php:434 includes/form-handling.php:510
-#: includes/form-handling.php:552 includes/form-handling.php:635
+#: includes/form-handling.php:10 includes/form-handling.php:123
+#: includes/form-handling.php:161 includes/form-handling.php:408
+#: includes/form-handling.php:438 includes/form-handling.php:514
+#: includes/form-handling.php:556 includes/form-handling.php:639
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: includes/form-handling.php:104
+#: includes/form-handling.php:108
 msgid "Registration settings saved"
 msgstr ""
 
-#: includes/form-handling.php:142
+#: includes/form-handling.php:146
 msgid "Pages settings saved"
 msgstr ""
 
-#: includes/form-handling.php:168
+#: includes/form-handling.php:172
 msgid "That is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:286
+#: includes/form-handling.php:290
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:394
+#: includes/form-handling.php:398
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:419
+#: includes/form-handling.php:423
 msgid "Template settings saved"
 msgstr ""
 
-#: includes/form-handling.php:495
+#: includes/form-handling.php:499
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:537
+#: includes/form-handling.php:541
 msgid "reCaptcha settings saved"
 msgstr ""
 
-#: includes/form-handling.php:608
+#: includes/form-handling.php:612
 msgid ""
 "You have successfully resetted all settings. Remember to set your pages "
 "again, before you log out !"
 msgstr ""
 
-#: includes/form-handling.php:701
+#: includes/form-handling.php:705
 msgid "You do not have permission to edit this user."
 msgstr ""
 
@@ -1675,45 +1675,45 @@ msgstr ""
 msgid "reCaptcha"
 msgstr ""
 
-#: includes/functions.php:1255
+#: includes/functions.php:1276
 msgid "Signup ID"
 msgstr ""
 
-#: includes/functions.php:1255 templates/account/user-id.php:12
+#: includes/functions.php:1276 templates/account/user-id.php:12
 msgid "User ID"
 msgstr ""
 
-#: includes/functions.php:1258 templates/register/user-login.php:8
+#: includes/functions.php:1279 templates/register/user-login.php:8
 msgid "User name"
 msgstr ""
 
-#: includes/functions.php:1261 templates/account/first-last.php:8
+#: includes/functions.php:1282 templates/account/first-last.php:8
 #: templates/register/first-name.php:10
 msgid "First name"
 msgstr ""
 
-#: includes/functions.php:1262 templates/account/first-last.php:13
+#: includes/functions.php:1283 templates/account/first-last.php:13
 #: templates/register/last-name.php:10
 msgid "Last name"
 msgstr ""
 
-#: includes/functions.php:1265 templates/register/user-email.php:7
+#: includes/functions.php:1286 templates/register/user-email.php:7
 msgid "Email"
 msgstr ""
 
-#: includes/functions.php:1268
+#: includes/functions.php:1289
 msgid "Domain"
 msgstr ""
 
-#: includes/functions.php:1269
+#: includes/functions.php:1290
 msgid "Site name"
 msgstr ""
 
-#: includes/functions.php:1271
+#: includes/functions.php:1292
 msgid "Actions"
 msgstr ""
 
-#: includes/functions.php:1314
+#: includes/functions.php:1335
 msgid "Reject"
 msgstr ""
 
@@ -2039,12 +2039,12 @@ msgstr ""
 msgid "You've set this logo with a filter."
 msgstr ""
 
-#: includes/tabs/tab-template.php:46
+#: includes/tabs/tab-template.php:48
 msgid "opens in new window"
 msgstr ""
 
-#: includes/tabs/tab-template.php:48
-msgid "to download"
+#: includes/tabs/tab-template.php:50
+msgid "to download the default."
 msgstr ""
 
 #: includes/tabs/tab-users.php:44
