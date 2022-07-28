@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.8.0 - released xx.06.22
+3.8.0 - released 28.07.22
 
 <a name="features"></a>
 ### Features
@@ -146,11 +146,12 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.8.0 - xx.06.22
+3.8.0 - 28.07.22
 * fix non-working contextual help tabs
 * load admin scripts later so they don't conflict with `wp-themeplugin-editor`
 * remove new lines in default messages
 * added more filters for multisite
+* safer downloading of example files
 
 3.7.0 - 17.04.22
 * added [codemirror](https://codemirror.net/) for email template and styling
