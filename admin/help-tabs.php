@@ -152,6 +152,7 @@
             ob_start();
             echo sprintf( '<p><b>%s</b></p>', esc_html__( 'More info', 'b3-onboarding' ) );
             echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3OB_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
+            echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', 'https://github.com/Beee4life/b3-onboarding/', 'Github' ) );
             $sidebar_content = ob_get_clean();
             get_current_screen()->set_help_sidebar( $sidebar_content );
         }

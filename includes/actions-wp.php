@@ -1,6 +1,6 @@
 <?php
     /*
-     * This file contains functions hooked to the WordPress' hooks
+     * This file contains functions hooked to WordPress' hooks
      */
 
     /**
@@ -11,10 +11,10 @@
      * @param $user_id
      */
     function b3_update_user_meta_after_register( $user_id ) {
-        if ( ! empty( $_POST[ 'first_name' ] ) ) {
+        if ( isset( $_POST[ 'first_name' ] ) && ! empty( $_POST[ 'first_name' ] ) ) {
             update_user_meta( $user_id, 'first_name', sanitize_text_field( $_POST[ 'first_name' ] ) );
         }
-        if ( ! empty( $_POST[ 'last_name' ] ) ) {
+        if ( isset( $_POST[ 'last_name' ] ) && ! empty( $_POST[ 'last_name' ] ) ) {
             update_user_meta( $user_id, 'last_name', sanitize_text_field( $_POST[ 'last_name' ] ) );
         }
 
@@ -142,7 +142,7 @@
             $subject         = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), $current_network->site_name );
             $message         = sprintf( apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() ), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
             $message         = b3_replace_template_styling( $message );
-            $message         = strtr( $message, b3_replace_email_vars() );
+            $message         = strtr( $message, b3_get_replacement_vars() );
             $message         = htmlspecialchars_decode( stripslashes( $message ) );
 
             wp_mail( $user_email, $subject, $message, [] );
@@ -167,7 +167,7 @@
         $subject         = sprintf( apply_filters( 'b3_wpmu_user_activated_subject', b3_get_wpmu_user_activated_subject() ), $current_network->site_name, $user->user_login );
         $message         = sprintf( apply_filters( 'b3_wpmu_user_activated_message', b3_get_wpmu_user_activated_message() ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
         $message         = b3_replace_template_styling( $message );
-        $message         = strtr( $message, b3_replace_email_vars() );
+        $message         = strtr( $message, b3_get_replacement_vars() );
         $message         = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user->user_email, $subject, $message, [] );
@@ -193,11 +193,11 @@
 
         } else {
             $blog_id = b3_get_signup_id( $domain );
-            $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
+            $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_get_replacement_vars( 'message', array( 'blog_id' => $blog_id ) ) );
             $message = b3_get_wpmu_activate_user_blog_message();
         }
         $message      = b3_replace_template_styling( $message );
-        $message      = strtr( $message, b3_replace_email_vars( array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
+        $message      = strtr( $message, b3_get_replacement_vars( 'message', array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
         $message      = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
@@ -216,10 +216,10 @@
      */
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
         $user_data = get_userdata( $user_id );
-        $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_replace_subject_vars( array( 'blog_id' => $blog_id ) ) );
+        $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', array( 'blog_id' => $blog_id ) ) );
         $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
         $message   = b3_replace_template_styling( $message );
-        $message   = strtr( $message, b3_replace_email_vars( array( 'blog_id' => $blog_id, 'user_data' => $user_data, 'user_password' => $password ) ) );
+        $message   = strtr( $message, b3_get_replacement_vars( 'message', array( 'blog_id' => $blog_id, 'user_data' => $user_data, 'user_password' => $password ) ) );
         $message   = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_data->user_email, $subject, $message, [] );

@@ -26,7 +26,11 @@
                     }
                 }
 
-                if ( 'none' == get_option( 'b3_registration_type' ) ) {
+                if ( in_array( $_POST[ 'b3_registration_type' ], [ 'request_access', 'none' ] ) ) {
+                    delete_option( 'b3_activate_custom_passwords' );
+                }
+
+                if ( 'none' == $_POST[ 'b3_registration_type' ] ) {
                     if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
                         update_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ), false );
                     } else {
@@ -605,9 +609,9 @@
                 }
 
                 if ( true == $reset ) {
-                    B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings.', 'b3-onboarding' ) );
+					B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings. Remember to set your pages again, before you log out !', 'b3-onboarding' ) );
                 } else {
-                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Settings saved', 'b3-onboarding' ) );
+					B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Settings saved', 'b3-onboarding' ) );
                 }
 
             }

@@ -57,7 +57,7 @@
                 <?php b3_get_label_field_open(); ?>
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
-                <div class="b3_settings-input b3_settings-input--checkbox">
+                <div class="b3_settings-input b3_settings-input--checkbox b3_settings-input--restrict-users">
                     <?php $hidden_roles = array( 'b3_approval', 'b3_activation' ); ?>
                     <?php foreach( $hidden_roles as $role ) { ?>
                         <input type="hidden" id="b3_restrict_<?php echo esc_attr( $role ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $role ); ?>" />
@@ -73,8 +73,8 @@
                                 if ( ! in_array( $name, $dont_show_roles ) ) {
                                     ?>
                                     <div>
-                                        <label for="b3_restrict_<?php echo esc_attr( $name ); ?>" class="screen-reader-text"><?php echo esc_attr( $name ); ?></label>
-                                        <input type="checkbox" id="b3_restrict_<?php echo esc_attr( $name ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $name ); ?>" <?php checked(in_array( $name, $stored_roles )); ?> /><?php echo $values[ 'name' ]; ?>
+                                        <input type="checkbox" id="b3_restrict_<?php echo esc_attr( $name ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $name ); ?>" <?php checked(in_array( $name, $stored_roles )); ?> />
+                                        <label for="b3_restrict_<?php echo esc_attr( $name ); ?>"><?php echo esc_attr( $values[ 'name' ] ); ?></label>
                                     </div>
                                     <?php
                                 }
@@ -84,6 +84,18 @@
                     ?>
                 </div>
             <?php b3_get_close(); ?>
+
+            <?php if ( ! is_multisite() ) { ?>
+				<?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                        <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php checked($hide_admin_bar); ?>/>
+                        <?php esc_html_e( "Hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
+                    </div>
+				<?php b3_get_close(); ?>
+            <?php } ?>
 
             <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
                 <?php
@@ -141,16 +153,6 @@
             <?php } ?>
 
             <?php if ( ! is_multisite() ) { ?>
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php checked($hide_admin_bar); ?>/>
-                        <?php esc_html_e( "Hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
-                    </div>
-                <?php b3_get_close(); ?>
-
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_user_may_delete"><?php esc_html_e( 'User may delete account', 'b3-onboarding' ); ?></label>

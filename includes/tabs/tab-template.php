@@ -23,6 +23,7 @@
                 'placeholder' => b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ),
                 'preview'     => esc_attr( 'styling' ),
                 'value'       => $stored_email_styling,
+                'file_name'   => 'default-email-styling.css',
             );
             $email_boxes[] = array(
                 'id'          => esc_attr( 'email_template' ),
@@ -30,6 +31,7 @@
                 'placeholder' => esc_attr( b3_default_email_template() ),
                 'preview'     => esc_attr( 'template' ),
                 'value'       => $stored_email_template,
+                'file_name'   => 'default-email-template.html',
             );
         }
 
@@ -41,11 +43,11 @@
             <?php foreach( $email_boxes as $box ) { ?>
                 <div class="template_box">
                     <label for="b3__input--<?php echo $box['id']; ?>"><?php echo $box['title']; ?></label>
-                    <textarea id="b3__input--<?php echo $box['id']; ?>" name="b3_<?php echo $box['id']; ?>" placeholder="<?php echo esc_attr( b3_default_email_template() ); ?>" rows="6"><?php echo $box[ 'value' ]; ?></textarea>
+                    <textarea id="b3__input--<?php echo $box['id']; ?>" name="b3_<?php echo $box['id']; ?>" rows="6"><?php echo $box[ 'value' ]; ?></textarea>
                     <p>
                         <?php echo b3_get_preview_link( $box['preview'] ); ?> <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
                         |
-                        <?php echo sprintf(  '<a href="%s">%s</a> %s', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=default-email-template.html&sentby=b3' ), esc_html__( 'Click here', 'b3-onboarding' ), esc_html__( 'to download', 'b3-onboarding' ) ); ?>
+						<?php echo sprintf( '<a href="%s">%s</a> %s', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=' . $box[ 'file_name' ] . '&sentby=b3' ), esc_html__( 'Click here', 'b3-onboarding' ), esc_html__( 'to download the default.', 'b3-onboarding' ) ); ?>
                     </p>
                 </div>
             <?php } ?>

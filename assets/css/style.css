@@ -97,6 +97,19 @@
   display: block;
 }
 
+.b3_form-element {
+  margin-top: 2rem;
+}
+
+.b3_form-element-my-sites {
+  align-items: flex-start;
+}
+
+.b3_form-element--email .inline p {
+  margin-top:    0.5rem;
+  margin-bottom: 0;
+}
+
 .b3_page .b3_form-element--checkbox .b3_form-label,
 .b3_page .b3_form-element--radio .b3_form-label {
   vertical-align: top;
@@ -104,14 +117,6 @@
 
 .b3_page p.rememberme {
   margin-top: 1rem;
-}
-
-.b3_form-element {
-  margin-top: 2rem;
-}
-
-.b3_form-element-my-sites {
-  align-items: flex-start;
 }
 
 .b3_form-element-my-sites .site-links ul,
@@ -253,11 +258,6 @@ ul.b3_form-links li:last-child {
   padding-top: 8px;
 }
 
-#pass1,
-#pass1-text {
-  max-width: 100%;
-}
-
 #pass1-text,
 .show-password #pass1 {
   display: none;
@@ -309,18 +309,43 @@ ul.b3_form-links li:last-child {
 /* Media queries */
 @media screen and ( min-width: 480px ) {
   .b3_form-element {
-    display:     flex;
-    flex-flow:   row nowrap;
-    align-items: center;
+    display:               grid;
+    grid-template-columns: 200px 1fr;
+    align-self:            center;
+  }
+
+  .b3_form-element label,
+  .b3_form-element input {
+    align-self: center;
+  }
+
+  .b3_form-element--lostpw {
+    grid-template-columns: 250px 1fr
+  }
+
+  .b3_form-element--email {
+    grid-template-areas: "label input" ". inline";
+  }
+
+  .b3_form-element--email .b3_form-label {
+    grid-area: label;
+  }
+
+  .b3_form-element--email input {
+    grid-area: input;
+  }
+
+  .b3_form-element--email .inline {
+    grid-area: inline;
+  }
+
+  .b3_form-element--email .inline p {
+    margin-top:    0.5rem;
+    margin-bottom: 0;
   }
 
   .b3_site-domain {
     margin-top: 0.5rem;
-  }
-
-  .b3_page .b3_form-label {
-    display: inline-block;
-    width:   200px;
   }
 
   .b3_page form .login,
@@ -334,7 +359,7 @@ ul.b3_form-links li:last-child {
   .b3_page form textarea {
     display:   inline-block;
     width:     initial;
-    min-width: 220px;
+    max-width: 200px;
   }
 
   .b3_page form input[name="b3_privacy_accept"] {

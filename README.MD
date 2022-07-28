@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.7.0 - released 17.04.21
+3.8.0 - released xx.06.22
 
 <a name="features"></a>
 ### Features
@@ -65,7 +65,7 @@ If you use a composer file to add any plugins/libraries. Add the following repos
     "package": {
       "name":    "Beee4life/b3-onboarding",
       "type":    "wordpress-plugin",
-      "version": "3.5.0",
+      "version": "3.8.0",
       "dist":    {
         "type": "zip",
         "url":  "https://github.com/Beee4life/b3-onboarding/archive/master.zip"
@@ -80,7 +80,7 @@ Then run composer require "beee4life/b3-onboarding"
 or add this to the require section by hand:
 
 ```
-"beee4life/b3-onboarding": "^3.0",
+"beee4life/b3-onboarding": "3.8.0",
 ```
 
 and run `composer update`.
@@ -133,8 +133,6 @@ Starting with v3.1.0 there's now a setting to prevent deletion of all data/setti
 ### Roadmap
 These are the things we have planned to add.
 * [ ] add more security stuff
-* [ ] add code editor for styling/template inputs
-* [ ] add filters for template html + css
 * [ ] clean-up settings pages
 * [ ] remove `<br>` from email templates
 * [ ] create option to send a preview email
@@ -148,6 +146,12 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.8.0 - xx.06.22
+* fix non-working contextual help tabs
+* load admin scripts later so they don't conflict with `wp-themeplugin-editor`
+* remove new lines in default messages
+* added more filters for multisite
+
 3.7.0 - 17.04.22
 * added [codemirror](https://codemirror.net/) for email template and styling
 * added new admin tab for email template and styling
