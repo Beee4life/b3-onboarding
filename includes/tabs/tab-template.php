@@ -45,7 +45,7 @@
                     <label for="b3__input--<?php echo $box['id']; ?>"><?php echo $box['title']; ?></label>
                     <textarea id="b3__input--<?php echo $box['id']; ?>" name="b3_<?php echo $box['id']; ?>" rows="6"><?php echo $box[ 'value' ]; ?></textarea>
                     <p>
-                        <?php echo b3_get_preview_link( $box['preview'] ); ?> <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
+						<?php echo b3_get_preview_link( $box['preview'] ); ?> <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
                         |
 						<?php echo sprintf( '<a href="%s">%s</a> %s', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=' . $box[ 'file_name' ] . '&sentby=b3' ), esc_html__( 'Click here', 'b3-onboarding' ), esc_html__( 'to download the default.', 'b3-onboarding' ) ); ?>
                     </p>
