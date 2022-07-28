@@ -59,7 +59,7 @@
 
                 $this->settings = array(
                     'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => '3.9.0',
+                    'version' => get_option( 'b3ob_version' ),
                 );
             }
 
@@ -76,6 +76,7 @@
                 add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_recaptcha_js_to_footer' ) );
                 add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_recaptcha_js_to_footer' ) );
                 add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
+                add_action( 'admin_init',                			array( $this, 'b3_set_version' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
                 add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend_footer' ), 99 );
                 add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
@@ -161,6 +162,19 @@
                     }
                 }
                 delete_option( 'b3ob_version' );
+            }
+
+
+            /**
+             * Set version
+             */
+            public function b3_set_version() {
+				$stored      = get_option( 'b3ob_version' );
+				$plugin_data = get_plugin_data( trailingslashit( dirname( __FILE__ ) ) . basename( __FILE__ ) );
+
+				if ( $stored !== $plugin_data[ 'Version' ] ) {
+					update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
+				}
             }
 
 
@@ -500,7 +514,7 @@
              * Handle registration form
              */
             public function b3_registration_form_handling() {
-                if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+				if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user' ] ) ) {
                         $redirect_url = b3_get_register_url();
                         if ( ! wp_verify_nonce( $_POST[ 'b3_register_user' ], 'b3-register-user' ) ) {
