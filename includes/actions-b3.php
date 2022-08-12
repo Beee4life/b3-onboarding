@@ -20,7 +20,7 @@
             $user_login        = $user_object->user_login;
             $user_object->set_role( get_option( 'default_role' ) );
 
-            if ( false == $custom_passwords ) {
+            if ( false === $custom_passwords ) {
                 // user needs a password
                 $key                 = get_password_reset_key( $user_object );
                 $reset_pass_url      = b3_get_reset_password_url();
@@ -126,7 +126,7 @@
         }
 
         // send 'account activated' email to user
-        if ( 'email_activation' == get_option( 'b3_registration_type' ) ) {
+        if ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
             $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
@@ -156,11 +156,11 @@
                 do_action( 'b3_render_form_element', 'register/user-login' );
                 do_action( 'b3_render_form_element', 'register/user-email' );
 
-                if ( 'all' == $registration_type ) {
+                if ( 'all' === $registration_type ) {
                     do_action( 'b3_render_form_element', 'register/register-for' );
                 } elseif ( in_array( $registration_type, [ 'site' ] ) ) { ?>
                     <input type="hidden" name="signup_for" value="blog" />
-                <?php } elseif ( 'user' == $registration_type ) { ?>
+                <?php } elseif ( 'user' === $registration_type ) { ?>
                     <input type="hidden" name="signup_for" value="user" />
                 <?php
                 }
@@ -244,7 +244,7 @@
                 ) ) ) {
                 $register_for = apply_filters( 'b3_register_for', false );
                 ob_start();
-                if ( false === $register_for || false != $register_for && 'blog' == $register_for ) {
+                if ( false === $register_for || false !== $register_for && 'blog' === $register_for ) {
             ?>
                 <div class="b3_site-fields">
                     <?php do_action( 'b3_render_form_element', 'register/site-fields-header' ); ?>
@@ -359,20 +359,20 @@
                 }
             } else {
                 if ( isset( $attributes[ 'template' ] ) ) {
-                    if ( 'login' == $attributes[ 'template' ] ) {
+                    if ( 'login' === $attributes[ 'template' ] ) {
                         $login_form_message = apply_filters( 'b3_message_above_login', false );
                         if ( false != $login_form_message ) {
                             $messages[]    = $login_form_message;
                             $show_messages = true;
                         }
-                    } elseif ( 'register' == $attributes[ 'template' ] ) {
+                    } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( strpos( $registration_type, 'request_access' ) !== false ) {
                             $request_access_message = apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() );
                             if ( false != $request_access_message ) {
                                 $messages[]    = $request_access_message;
                                 $show_messages = true;
                             }
-                        } elseif ( 'email_activation' == $registration_type ) {
+                        } elseif ( 'email_activation' === $registration_type ) {
                             $registration_message = apply_filters( 'b3_message_above_registration', false );
                             if ( false != $registration_message ) {
                                 $messages[]    = $registration_message;
@@ -380,7 +380,7 @@
                             }
                         } else {
                             if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
-                                $message              = ( 'closed' == $registration_type ) ? b3_get_registration_closed_message() : false;
+                                $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
                                 $registration_message = apply_filters( 'b3_message_above_registration', $message );
                                 if ( false != $registration_message ) {
                                     $messages[]    = $registration_message;
@@ -388,17 +388,17 @@
                                 }
                             }
                         }
-                    } elseif ( 'lostpassword' == $attributes[ 'template' ] ) {
+                    } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
                         $messages[]    = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
                         $show_messages = true;
-                    } elseif ( 'resetpass' == $attributes[ 'template' ] ) {
+                    } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[]    = esc_html__( 'Enter your new password.', 'b3-onboarding' );
                         $show_messages = true;
                     }
                 }
             }
 
-            if ( true == $show_messages && ! empty( $messages ) ) {
+            if ( true === $show_messages && ! empty( $messages ) ) {
                 if ( isset( $attributes[ 'errors' ] ) && ! empty( $attributes[ 'errors' ] ) ) {
                     echo '<div class="b3_message b3_message--error">';
                 } else {
@@ -566,7 +566,7 @@
      * @return void
      */
     function b3_redirect( $redirect_type, $redirect_to = null ) {
-        if ( 'logged_in' == $redirect_type ) {
+        if ( 'logged_in' === $redirect_type ) {
             $current_user = wp_get_current_user();
             $user_role    = reset( $current_user->roles );
             if ( in_array( $user_role, get_option( 'b3_restrict_admin', [] ) ) ) {
@@ -640,7 +640,7 @@
                     echo '<li>';
                     $link             = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
 
-                    if ( false == $disallowed_roles ) {
+                    if ( false === $disallowed_roles ) {
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
                     echo $link;

@@ -51,15 +51,15 @@
      * @param $user_id
      */
     function b3_do_stuff_after_wp_register( $user_id ) {
-        if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
+        if ( isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
             // user is manually added
         } else {
             // get registration type
             $registration_type = get_option( 'b3_registration_type' );
-            if ( 'request_access' == $registration_type ) {
+            if ( 'request_access' === $registration_type ) {
                 $user_object = new WP_User( $user_id );
                 $user_object->set_role( 'b3_approval' );
-            } elseif ( 'email_activation' == $registration_type ) {
+            } elseif ( 'email_activation' === $registration_type ) {
                 $user_object = new WP_User( $user_id );
                 $user_object->set_role( 'b3_activation' );
             }
@@ -79,10 +79,10 @@
         if ( current_user_can( 'promote_users' ) ) {
             if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                 $approval_users = [];
-                if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                if ( 'request_access' === get_option( 'b3_registration_type' ) ) {
                     $approval_args  = array( 'role' => 'b3_approval' );
                     $approval_users = get_users( $approval_args );
-                } elseif ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
+                } elseif ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
                     global $wpdb;
                     $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
                     $approval_users = $wpdb->get_results( $query );
@@ -186,7 +186,7 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
+        if ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
             $subject = b3_default_request_access_subject_user();
             $message = b3_default_request_access_message_user();
             do_action( 'b3_inform_admin', 'request_access' );
@@ -231,7 +231,7 @@
      * Network admin notices
      */
     function b3_network_admin_notices() {
-        if ( 'settings-network' == get_current_screen()->id ) {
+        if ( 'settings-network' === get_current_screen()->id ) {
             echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( "%s overrides the 'Registration' option and the 'Registration notification'. You can change the registration type %s and the registration notification %s.", 'b3-onboarding' ) . '</p></div>',
                 'B3 OnBoarding',
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ),
@@ -243,7 +243,7 @@
         if ( strpos( $plugin[ 'Version' ], 'dev' ) !== false || strpos( $plugin[ 'Version' ], 'beta' ) !== false ) {
             $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
             $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
-            if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
+            if ( false === apply_filters( 'b3_hide_development_notice', false ) ) {
                 echo $notice;
             }
         }
