@@ -58,11 +58,11 @@
             }
 
             if ( $show_register ) {
-                $register_url      = b3_get_register_url( true );
+                $register_url      = b3_get_register_url();
                 $registration_type = get_option( 'b3_registration_type' );
 
-                if ( 'none' != $registration_type && false != $register_url ) {
-                    if ( 'blog' == $registration_type && $is_user_logged_in ) {
+				if ( 'none' !== $registration_type && false !== $register_url ) {
+                    if ( 'blog' === $registration_type && $is_user_logged_in ) {
                         $show_register_link = true;
                     } elseif ( ! $is_user_logged_in ) {
                         $show_register_link = true;
@@ -84,7 +84,7 @@
             if ( true === $show_widget ) {
 				$widget_links = [];
                 if ( ! $is_user_logged_in && $show_login ) {
-                    if ( true == $use_popup ) {
+                    if ( true === $use_popup ) {
                         $logo = ( false != $main_logo ) ? sprintf( '<div class="modal__logo"><img src="%s" alt="" /></div>', $main_logo ) : false;
                         $link = sprintf('<a href="#login-form" rel="modal:open">%s</a>', esc_html__( 'Login', 'b3-onboarding' ) );
                         $link .= sprintf( '<div id="login-form" class="modal">%s%s</div>', $logo, do_shortcode('[login-form title="Login"]') );
@@ -94,15 +94,15 @@
 					$widget_links[] = $link;
                 }
 
-                if ( isset( $register_url ) && true == $show_register_link ) {
+				if ( isset( $register_url ) && true === $show_register_link ) {
 					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $register_url ), esc_html__( 'Register', 'b3-onboarding' ) );
                 }
 
-                if ( $is_user_logged_in && isset( $account_url ) && false != $account_url ) {
+                if ( $is_user_logged_in && isset( $account_url ) && false !== $account_url ) {
 					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $account_url ), esc_html__( 'Account', 'b3-onboarding' ) );
                 }
 
-                if ( true == $show_settings && current_user_can( 'manage_options' ) ) {
+                if ( true === $show_settings && current_user_can( 'manage_options' ) ) {
 					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), 'B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) );
                 }
 
@@ -113,7 +113,7 @@
                 }
 
                 if ( $is_user_logged_in ) {
-                    if ( isset( $logout_url ) && false != $logout_url ) {
+                    if ( isset( $logout_url ) && false !== $logout_url ) {
 						$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $logout_url ), esc_html__( 'Log Out', 'b3-onboarding' ) );
                     }
                 }
