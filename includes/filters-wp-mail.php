@@ -24,7 +24,7 @@
         $wp_password_change_notification_email[ 'subject' ] = $subject;
         $wp_password_change_notification_email[ 'message' ] = $message;
 
-        if ( 1 == get_option( 'b3_disable_admin_notification_password_change' ) ) {
+        if ( true == get_option( 'b3_disable_admin_notification_password_change' ) ) {
             $wp_password_change_notification_email = [
                 'to'      => false,
                 'subject' => false,
@@ -94,7 +94,7 @@
                 // we don't want the email when a user registers, but only when he/she activates
                 $wp_new_user_notification_email_admin[ 'to' ] = '';
 
-            } elseif ( 'request_access' == $registration_type ) {
+            } elseif ( 'request_access' === $registration_type ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
                 $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
                 $admin_email = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
@@ -158,23 +158,23 @@
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = array();
 
-            if ( 'request_access' == $registration_type ) {
+            if ( 'request_access' === $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
                 $user_email = apply_filters( 'b3_request_access_message_user', b3_get_request_access_message_user() );
 
-            } elseif ( 'email_activation' == $registration_type ) {
+            } elseif ( 'email_activation' === $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_email_activation_subject_user', b3_get_email_activation_subject_user() );
                 $user_email = apply_filters( 'b3_email_activation_message_user', b3_get_email_activation_message_user() );
 
-            } elseif ( 'open' == $registration_type ) {
+            } elseif ( 'open' === $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
 
-            } elseif ( 'blog' == $registration_type ) {
+            } elseif ( 'blog' === $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
 
-            } elseif ( 'none' == $registration_type ) {
+            } elseif ( 'none' === $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
                 $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
             }
@@ -182,7 +182,7 @@
 
         if ( isset( $user_email ) ) {
             $user_email = b3_replace_template_styling( $user_email );
-            if ( 'email_activation' == $registration_type ) {
+            if ( 'email_activation' === $registration_type ) {
                 $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', array( 'user_data' => $user ), true ) );
             } else {
                 $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', array( 'user_data' => $user ) ) );
@@ -210,7 +210,7 @@
      * @return false|mixed
      */
     function b3_disable_admin_email( $status, $site, $user ) {
-        if ( 'none' == get_option( 'b3_registration_type' ) ) {
+        if ( 'none' === get_option( 'b3_registration_type' ) ) {
             return false;
         }
 

@@ -148,14 +148,14 @@
                 $registration_type = get_option( 'b3_registration_type' );
                 if ( is_multisite() ) {
                     if ( is_main_site() ) {
-                        if ( 'none' == $registration_type ) {
+                        if ( 'none' === $registration_type ) {
                             update_site_option( 'registration', 'none' );
                         } else {
                             update_site_option( 'registration', 'all' );
                         }
                     }
                 } else {
-                    if ( 'none' == $registration_type ) {
+                    if ( 'none' === $registration_type ) {
                         update_option( 'users_can_register', '0' );
                     } else {
                         update_option( 'users_can_register', '1' );
@@ -172,7 +172,7 @@
 				$stored      = get_option( 'b3ob_version' );
 				$plugin_data = get_plugin_data( trailingslashit( dirname( __FILE__ ) ) . basename( __FILE__ ) );
 
-				if ( $stored !== $plugin_data[ 'Version' ] ) {
+				if ( $stored != $plugin_data[ 'Version' ] ) {
 					update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
 				}
             }
@@ -227,7 +227,7 @@
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
 
-                if ( ! ( 'toplevel_page_b3-onboarding' == get_current_screen()->base ) ) {
+                if ( ! ( 'toplevel_page_b3-onboarding' === get_current_screen()->base ) ) {
                     return;
                 }
 
@@ -420,7 +420,7 @@
 
                         case 'resendactivation' :
                             check_admin_referer( 'resend-activation' );
-                            if ( 'email_activation' == $registration_type ) {
+                            if ( 'email_activation' === $registration_type ) {
                                 do_action( 'b3_resend_user_activation', $user_id );
                                 $redirect_to = add_query_arg( 'update', 'sendactivation', $redirect_to );
                             }
@@ -489,7 +489,7 @@
              * at the end of the page.
              */
             public function b3_add_recaptcha_js_to_footer() {
-                if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
+                if ( true == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
                     wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array() );
                 }
             }
@@ -499,7 +499,7 @@
              * Enqueue js for recaptcha
              */
             public function b3_add_rc3() {
-                if ( 1 == get_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
+                if ( true == get_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
                     ?>
                     <script>
                         function onSubmit(token) {
@@ -515,7 +515,7 @@
              * Handle registration form
              */
             public function b3_registration_form_handling() {
-				if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+				if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user' ] ) ) {
                         $redirect_url = b3_get_register_url();
                         if ( ! wp_verify_nonce( $_POST[ 'b3_register_user' ], 'b3-register-user' ) ) {
@@ -554,7 +554,7 @@
                                 $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
                                 $register = true;
                                 $role     = get_option( 'default_role', 'subscriber' );
-                                if ( 'none' == $registration_type ) {
+                                if ( 'none' === $registration_type ) {
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
                                     $register     = false;
@@ -565,12 +565,12 @@
                                     $register     = false;
                                 }
 
-                                if ( true == $register && 'none' != $registration_type ) {
+                                if ( true == $register && 'none' !== $registration_type ) {
                                     // Registration is not closed
-                                    if ( 'request_access' == $registration_type ) {
+                                    if ( 'request_access' === $registration_type ) {
                                         $role      = 'b3_approval';
                                         $query_arg = 'access_requested';
-                                    } elseif ( 'email_activation' == $registration_type ) {
+                                    } elseif ( 'email_activation' === $registration_type ) {
                                         $role      = 'b3_activation';
                                         $query_arg = 'confirm_email';
                                     } else {
@@ -612,15 +612,15 @@
                                 $register   = false;
 
                                 if ( is_main_site() ) {
-                                    if ( 'none' == $registration_type ) {
+                                    if ( 'none' === $registration_type ) {
                                         // Registration closed, display error
                                         $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
-                                    } elseif ( 'blog' == $registration_type ) {
+                                    } elseif ( 'blog' === $registration_type ) {
                                         $user       = get_userdata( get_current_user_id() );
                                         $user_login = $user->user_login;
                                         $user_email = $user->user_email;
                                         $register   = true;
-                                    } elseif ( 'request_access_subdomain' == $registration_type ) {
+                                    } elseif ( 'request_access_subdomain' === $registration_type ) {
                                         $register   = true;
                                         $user_email = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
                                         $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
@@ -643,17 +643,17 @@
                                             $error_message_user_email = $errors->get_error_message( 'user_email' );
 
                                             if ( ! empty( $error_message_user_name ) ) {
-                                                if ( __( 'Sorry, that username already exists!' ) == $error_message_user_name ) {
+                                                if ( __( 'Sorry, that username already exists!' ) === $error_message_user_name ) {
                                                     $error_codes[] = 'username_exists';
-                                                } elseif ( __( 'Usernames can only contain lowercase letters (a-z) and numbers.' ) == $error_message_user_name ) {
+                                                } elseif ( __( 'Usernames can only contain lowercase letters (a-z) and numbers.' ) === $error_message_user_name ) {
                                                     $error_codes[] = 'username_no_uppercase';
-                                                } elseif ( __( 'That username is currently reserved but may be available in a couple of days.' ) == $error_message_user_name ) {
+                                                } elseif ( __( 'That username is currently reserved but may be available in a couple of days.' ) === $error_message_user_name ) {
                                                     $error_codes[] = 'wpmu_user_reserved';
                                                 }
                                             } elseif ( ! empty( $error_message_user_email ) ) {
-                                                if ( __( 'Sorry, that email address is already used!' ) == $error_message_user_email ) {
+                                                if ( __( 'Sorry, that email address is already used!' ) === $error_message_user_email ) {
                                                     $error_codes[] = 'email_exists';
-                                                } elseif ( __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' ) == $error_message_user_email ) {
+                                                } elseif ( __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' ) === $error_message_user_email ) {
                                                     $error_codes[] = 'wpmu_email_in_use';
                                                 }
                                             } else {
@@ -671,7 +671,7 @@
                                         exit;
                                     } else {
 
-                                        if ( 'user' == $signup_for ) {
+                                        if ( 'user' === $signup_for ) {
                                             $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, false, false, $meta_data );
                                             if ( true == $result ) {
                                                 // Success, redirect to login page.
@@ -685,12 +685,12 @@
                                         }
                                     }
 
-                                    if ( ( 'blog' == $signup_for || 'request_access_subdomain' == $registration_type ) && empty( $error_codes ) ) {
+                                    if ( ( 'blog' === $signup_for || 'request_access_subdomain' === $registration_type ) && empty( $error_codes ) ) {
                                         $meta_data[ 'lang_id' ] = ( isset( $_POST[ 'lang_id' ] ) ) ? $_POST[ 'lang_id' ] : 1;
                                         $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? $_POST[ 'blog_public' ] : 1;
                                         $user                   = '';
 
-                                        if ( 'request_access_subdomain' == $registration_type ) {
+                                        if ( 'request_access_subdomain' === $registration_type ) {
                                             $meta_data[ 'deleted' ] = 1;
                                             $meta_data[ 'public' ]  = 0;
                                         }
@@ -715,17 +715,17 @@
                                             $error_message_title = $errors->get_error_message( 'blog_title' );
 
                                             if ( ! empty( $error_message_name ) ) {
-                                                if ( 'Please enter a site name.' == $error_message_name ) {
+                                                if ( 'Please enter a site name.' === $error_message_name ) {
                                                     $error_codes[] = 'no_address';
-                                                } elseif ( 'Site name must be at least 4 characters.' == $error_message_name ) {
+                                                } elseif ( 'Site name must be at least 4 characters.' === $error_message_name ) {
                                                     $error_codes[] = 'site_min4';
-                                                } elseif ( 'Sorry, site names must have letters too!' == $error_message_name ) {
+                                                } elseif ( 'Sorry, site names must have letters too!' === $error_message_name ) {
                                                     $error_codes[] = 'site_letters';
-                                                } elseif ( 'Sorry, that site already exists!' == $error_message_name ) {
+                                                } elseif ( 'Sorry, that site already exists!' === $error_message_name ) {
                                                     $error_codes[] = 'domain_exists';
                                                 }
                                             } elseif ( ! empty( $error_message_title ) ) {
-                                                if ( 'Please enter a site title.' == $error_message_title ) {
+                                                if ( 'Please enter a site title.' === $error_message_title ) {
                                                     $error_codes[] = 'no_title';
                                                 }
                                             }
@@ -741,11 +741,11 @@
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                             } else {
-                                                if ( 'blog' == $registration_type ) {
+                                                if ( 'blog' === $registration_type ) {
                                                     // Success, redirect to message.
                                                     $redirect_url = add_query_arg( 'registered', 'new_blog', $redirect_url );
                                                     $redirect_url = add_query_arg( 'site_id', $result, $redirect_url );
-                                                } elseif ( 'request_access_subdomain' == $registration_type ) {
+                                                } elseif ( 'request_access_subdomain' === $registration_type ) {
                                                     $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
                                                 } elseif ( true == $result ) {
                                                     // Success, redirect to login page.
@@ -771,7 +771,7 @@
              * @since 1.0.6
              */
             public function b3_reset_user_password() {
-                if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
                     $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
 
@@ -862,7 +862,7 @@
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
 
                     case 'invalid_username':
-                        if ( 1 == get_option( 'b3_register_email_only' ) ) {
+                        if ( true == get_option( 'b3_register_email_only' ) ) {
                             return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
                         } else {
                             return esc_html__( 'The user login you entered is not valid.', 'b3-onboarding' );
@@ -1083,7 +1083,7 @@
 
                             return $errors;
 
-                        } elseif ( $_POST[ 'pass1' ] == $_POST[ 'pass2' ] ) {
+                        } elseif ( $_POST[ 'pass1' ] === $_POST[ 'pass2' ] ) {
                             // Passwords are OK
                             $hashed_password          = wp_hash_password( $_POST[ 'pass1' ] );
                             $user_data[ 'user_pass' ] = $hashed_password;
@@ -1114,7 +1114,7 @@
                     }
 
                     $inform = 'both';
-                    if ( 'email_activation' == $registration_type ) {
+                    if ( 'email_activation' === $registration_type ) {
                         // never notify an admin if a user hasn't confirmed email yet
                         $inform = 'user';
                     }
@@ -1153,7 +1153,7 @@
 
                             return true;
                         }
-                    } elseif ( 'blog' == $b3_register_type ) {
+                    } elseif ( 'blog' === $b3_register_type ) {
                         if ( false != $user_name ) {
                             $user = get_user_by( 'login', $user_name );
                         } else {
@@ -1190,7 +1190,7 @@
                     $attributes = array();
                 }
 
-                if ( 'user-management' == $template_name ) {
+                if ( 'user-management' === $template_name ) {
                     $template_paths = array(
                         B3OB_PLUGIN_PATH . '/templates/',
                     );
@@ -1259,9 +1259,9 @@
                 if ( isset( $_GET[ 'update' ] ) ) {
                     if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
                         echo '<div id="message" class="updated"><p>';
-                        if ( 'activated' == $_GET[ 'update' ] ) {
+                        if ( 'activated' === $_GET[ 'update' ] ) {
                             _e( 'User activated.', 'b3-onboarding' );
-                        } elseif ( 'sendactivation' == $_GET[ 'update' ] ) {
+                        } elseif ( 'sendactivation' === $_GET[ 'update' ] ) {
                             _e( 'Activation mail resent.', 'b3-onboarding' );
                         }
                         echo '</p></div>';

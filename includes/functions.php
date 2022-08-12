@@ -297,7 +297,7 @@
      * @param bool $hide
      */
     function b3_get_settings_field_open( $no_render = false, $hide = false, $modifier = false ) {
-        if ( false == $no_render ) {
+        if ( false === $no_render ) {
             $hide_class = ( $hide != false ) ? ' hidden' : false;
             $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
             echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
@@ -339,7 +339,7 @@
      */
     function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
         $button_class = false;
-        if ( false == $submit_value || ! is_string( $submit_value ) ) {
+        if ( false === $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
 
@@ -351,7 +351,7 @@
 
         $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
 
-        if ( 'register' == $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
+        if ( 'register' === $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
             $recaptcha_version  = get_option( 'b3_recaptcha_version' );
             if ( $activate_recaptcha && 3 == $recaptcha_version ) {
@@ -514,7 +514,7 @@
             $reset_pass_page_id = apply_filters( 'wpml_object_id', $reset_pass_page_id, 'page', true );
         }
         if ( false != $reset_pass_page_id ) {
-            if ( true == $return_id ) {
+            if ( true === $return_id ) {
                 return $reset_pass_page_id;
             }
             $reset_post = get_post( $reset_pass_page_id );
@@ -546,7 +546,7 @@
                 $user_approval_page_id = apply_filters( 'wpml_object_id', $user_approval_page_id, 'page', true );
             }
             if ( false != $user_approval_page_id ) {
-                if ( true == $return_id ) {
+                if ( true === $return_id ) {
                     return $user_approval_page_id;
                 }
                 if ( get_post( $user_approval_page_id ) ) {
@@ -1016,7 +1016,7 @@
         require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
         $plugins = get_plugins();
         foreach( $plugins as $plugin_file => $plugin_info ) {
-            if ( $plugin_info[ 'Name' ] == $plugin_name ) {
+            if ( $plugin_info[ 'Name' ] === $plugin_name ) {
                 return $plugin_file;
             }
         }

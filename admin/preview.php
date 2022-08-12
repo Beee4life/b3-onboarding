@@ -15,7 +15,7 @@
         $subject = false;
 
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo = ( true == get_option( 'b3_logo_in_email' ) ) ? false : true;
             $preview   = $_GET[ 'preview' ];
             $user      = get_userdata( get_current_user_id() );
 
@@ -103,9 +103,9 @@
 
             <p>
                 <?php
-                    if ( 'styling' == $_GET[ 'preview' ] ) {
+                    if ( 'styling' === $_GET[ 'preview' ] ) {
                         esc_html_e( 'These are css definitions which are used.', 'b3-onboarding' );
-                    } elseif ( 'template' == $_GET[ 'preview' ] ) {
+                    } elseif ( 'template' === $_GET[ 'preview' ] ) {
                         esc_html_e( 'This is what the default email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
                     } else {
                         esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );

@@ -20,7 +20,7 @@
             return false;
         }
 
-        if ( 'toplevel_page_b3-onboarding' == $screen->id ) {
+        if ( 'toplevel_page_b3-onboarding' === $screen->id ) {
             $tabs = [];
 
             ob_start();
