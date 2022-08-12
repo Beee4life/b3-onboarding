@@ -309,14 +309,12 @@ ul.b3_form-links li:last-child {
 /* Media queries */
 @media screen and ( min-width: 480px ) {
   .b3_form-element {
-    display:               grid;
-    grid-template-columns: 200px 1fr;
-    align-self:            center;
+		display:   flex;
+		flex-flow: row nowrap;
   }
 
-  .b3_form-element label,
-  .b3_form-element input {
-    align-self: center;
+  .b3_form-element label {
+		min-width: 200px;
   }
 
   .b3_form-element--lostpw {
