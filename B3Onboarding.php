@@ -193,6 +193,12 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
+                if ( ! is_admin() ) {
+					if ( ! wp_script_is( 'jquery' )) {
+						wp_enqueue_script( 'jquery' );
+					}
+                }
+
                 if ( false != get_option( 'b3_use_popup', false ) ) {
                     wp_enqueue_script(
                         'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js',
