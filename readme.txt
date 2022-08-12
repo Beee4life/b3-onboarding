@@ -27,6 +27,9 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.9.0
+* remove jquery enqueue
+
 3.8.2
 * change to correct version numbers
 
