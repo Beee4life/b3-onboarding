@@ -20,7 +20,7 @@
 
 This plugin was built to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can customise every aspect of the onboarding process, such as control the look and feel of (almost) evvery email sent out by Wordpress.
+You can customise every aspect of the onboarding process, such as control the look and feel of (almost) every email sent out by Wordpress.
 
 It even offers features which Wordpress doesn't even have, such as approving (or reject) a user before they're activated. And there are a ton of other things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
 
