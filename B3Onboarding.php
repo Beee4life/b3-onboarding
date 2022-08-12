@@ -193,11 +193,6 @@
              * Enqueue scripts front-end
              */
             public function b3_enqueue_scripts_frontend() {
-                if ( ! is_admin() ) {
-                    wp_deregister_script( 'jquery' ); // Deregister the included library
-                    wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js', array(), '2.1.4', true );
-                }
-
                 if ( false != get_option( 'b3_use_popup', false ) ) {
                     wp_enqueue_script(
                         'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js',
