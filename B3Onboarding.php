@@ -227,7 +227,7 @@
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
 
-                if ( ! ( 'toplevel_page_b3-onboarding' === get_current_screen()->base ) ) {
+				if ( ! ( 'toplevel_page_b3-onboarding' === get_current_screen()->id ) ) {
                     return;
                 }
 
