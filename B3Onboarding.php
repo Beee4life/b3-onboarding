@@ -172,7 +172,7 @@
 				$stored      = get_option( 'b3ob_version' );
 				$plugin_data = get_plugin_data( trailingslashit( dirname( __FILE__ ) ) . basename( __FILE__ ) );
 
-				if ( $stored != $plugin_data[ 'Version' ] ) {
+				if ( $stored !== $plugin_data[ 'Version' ] ) {
 					update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
 				}
             }
