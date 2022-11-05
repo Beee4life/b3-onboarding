@@ -499,7 +499,7 @@
              * Enqueue js for recaptcha
              */
             public function b3_add_rc3() {
-                if ( true == get_option( 'b3_activate_recaptcha') && is_page( b3_get_register_url(true ) ) ) {
+                if ( true == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url(true ) ) ) {
                     ?>
                     <script>
                         function onSubmit(token) {
