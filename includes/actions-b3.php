@@ -20,7 +20,7 @@
             $user_login        = $user_object->user_login;
             $user_object->set_role( get_option( 'default_role' ) );
 
-            if ( false === $custom_passwords ) {
+            if ( false == $custom_passwords ) {
                 // user needs a password
                 $key                 = get_password_reset_key( $user_object );
                 $reset_pass_url      = b3_get_reset_password_url();
@@ -244,7 +244,7 @@
                 ) ) ) {
                 $register_for = apply_filters( 'b3_register_for', false );
                 ob_start();
-                if ( false === $register_for || false !== $register_for && 'blog' === $register_for ) {
+                if ( false === $register_for || 'blog' === $register_for ) {
             ?>
                 <div class="b3_site-fields">
                     <?php do_action( 'b3_render_form_element', 'register/site-fields-header' ); ?>

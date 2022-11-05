@@ -84,7 +84,7 @@
             if ( true === $show_widget ) {
 				$widget_links = [];
                 if ( ! $is_user_logged_in && $show_login ) {
-                    if ( true === $use_popup ) {
+                    if ( true == $use_popup ) {
                         $logo = ( false != $main_logo ) ? sprintf( '<div class="modal__logo"><img src="%s" alt="" /></div>', $main_logo ) : false;
                         $link = sprintf('<a href="#login-form" rel="modal:open">%s</a>', esc_html__( 'Login', 'b3-onboarding' ) );
                         $link .= sprintf( '<div id="login-form" class="modal">%s%s</div>', $logo, do_shortcode('[login-form title="Login"]') );
