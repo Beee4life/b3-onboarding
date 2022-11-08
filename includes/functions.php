@@ -1210,7 +1210,6 @@
                 $replacements = array(
                     '%account_page%'      => esc_url( b3_get_account_url() ),
                     '%blog_name%'         => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
-                    '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
                     '%home_url%'          => get_home_url( $blog_id, '/' ),
                     '%login_url%'         => esc_url( b3_get_login_url() ),
                     '%logo%'              => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
