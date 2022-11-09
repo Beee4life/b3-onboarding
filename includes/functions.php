@@ -1176,8 +1176,8 @@
                 $vars[ 'user_data' ] = $user_data;
             }
         }
-        $blog_id = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
-        $user_login = ( true != get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
+		$blog_id    = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
+		$user_login = ( true != get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
 
         if ( isset( $vars[ 'registration_date' ] ) ) {
             $registration_date_gmt = $vars[ 'registration_date' ];
@@ -1186,17 +1186,8 @@
         } else {
             $registration_date_gmt = false;
         }
-        $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
-
-        // More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
-        if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
-            // check ip from share internet
-            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
-        } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
-            // to check ip is pass from proxy
-            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } else {
-            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+		if ( $registration_date_gmt ) {
+        	$local_registration_date = b3_get_local_date_time( $registration_date_gmt );
         }
 
         if ( isset( $vars[ 'blog_id' ] ) ) {
@@ -1205,21 +1196,22 @@
             restore_current_blog();
         }
 
-        switch($type) {
+		switch( $type ) {
             case 'message':
                 $replacements = array(
-                    '%account_page%'      => esc_url( b3_get_account_url() ),
-                    '%blog_name%'         => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
-                    '%home_url%'          => get_home_url( $blog_id, '/' ),
-                    '%login_url%'         => esc_url( b3_get_login_url() ),
-                    '%logo%'              => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
-                    '%lostpass_url%'      => b3_get_lostpassword_url(),
-                    '%network_name%'      => get_site_option( 'site_name' ),
-                    '%registration_date%' => $local_registration_date,
-                    '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
-                    '%user_ip%'           => $user_ip,
-                    '%user_login%'        => $user_login,
+					'%account_page%' => esc_url( b3_get_account_url() ),
+					'%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
+					'%home_url%'     => get_home_url( $blog_id, '/' ),
+					'%login_url%'    => esc_url( b3_get_login_url() ),
+					'%logo%'         => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
+					'%lostpass_url%' => b3_get_lostpassword_url(),
+					'%reset_url%'    => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
+					'%user_ip%'      => b3_get_user_ip(),
+					'%user_login%'   => $user_login,
                 );
+				if ( isset( $local_registration_date ) ) {
+					$replacements[ '%registration_date%' ] = $local_registration_date;
+				}
                 break;
             case 'subject':
                 $replacements = array(
@@ -1234,8 +1226,9 @@
         }
 
         if ( is_multisite() ) {
-            $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
-            $replacements[ '%settings_url%' ] = $options_site_url;
+			$options_site_url                 = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
+			$replacements[ '%network_name%' ] = get_site_option( 'site_name' );
+			$replacements[ '%settings_url%' ] = $options_site_url;
 
             if ( isset( $vars[ 'blog_id' ] )  ) {
                 $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
@@ -1344,4 +1337,27 @@
 		$output = ob_get_clean();
 
 		return $output;
+	}
+
+
+	/**
+	 * Get user IP
+	 *
+	 * @since 3.9.0
+	 *
+	 * @return mixed
+	 */
+	function b3_get_user_ip() {
+		// More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
+		if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
+			// check ip from share internet
+			$user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+		} elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
+			// to check ip is pass from proxy
+			$user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+		} else {
+			$user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+		}
+
+		return $user_ip;
 	}
