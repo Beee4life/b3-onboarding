@@ -69,35 +69,35 @@
              */
             public function init() {
                 // actions
-                register_activation_hook( __FILE__,            array( $this, 'b3_plugin_activation' ) );
-                register_deactivation_hook( __FILE__,          array( $this, 'b3_plugin_deactivation' ) );
+				register_activation_hook( __FILE__, 	[ $this, 'b3_plugin_activation' ] );
+				register_deactivation_hook( __FILE__, 	[ $this, 'b3_plugin_deactivation' ] );
 
-                add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_enqueue_scripts_frontend' ), 40 );
-                add_action( 'wp_enqueue_scripts',                   array( $this, 'b3_add_recaptcha_js_to_footer' ) );
-                add_action( 'login_enqueue_scripts',                array( $this, 'b3_add_recaptcha_js_to_footer' ) );
-                add_action( 'wp_head',                              array( $this, 'b3_add_rc3' ) );
-                add_action( 'admin_init',                			array( $this, 'b3_set_version' ) );
-                add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend' ) );
-                add_action( 'admin_enqueue_scripts',                array( $this, 'b3_enqueue_scripts_backend_footer' ), 99 );
-                add_action( 'admin_menu',                           array( $this, 'b3_add_admin_pages' ) );
-                add_action( 'template_redirect',                    array( $this, 'b3_template_redirect' ) );
-                add_action( 'widgets_init',                         array( $this, 'b3_register_widgets' ) );
-                add_action( 'wp_dashboard_setup',                   array( $this, 'b3_add_dashboard_widget' ) );
-                add_action( 'init',                                 array( $this, 'b3_load_plugin_text_domain' ) );
-                add_action( 'init',                                 array( $this, 'b3_registration_form_handling' ) );
-                add_action( 'init',                                 array( $this, 'b3_reset_user_password' ) );
-                add_action( 'admin_notices',                        array( $this, 'b3_admin_notices' ) );
-                add_action( 'load-users.php',                       array( $this, 'b3_load_users_page' ) );
+				add_action( 'wp_enqueue_scripts', 			[ $this, 'b3_enqueue_scripts_frontend' ], 40 );
+				add_action( 'wp_enqueue_scripts', 			[ $this, 'b3_add_recaptcha_js_to_footer' ] );
+				add_action( 'login_enqueue_scripts', 		[ $this, 'b3_add_recaptcha_js_to_footer' ] );
+				add_action( 'wp_head', 						[ $this, 'b3_add_rc3' ] );
+				add_action( 'admin_init', 					[ $this, 'b3_set_version' ] );
+				add_action( 'admin_enqueue_scripts', 		[ $this, 'b3_enqueue_scripts_backend' ] );
+				add_action( 'admin_enqueue_scripts', 		[ $this, 'b3_enqueue_scripts_backend_footer' ], 99 );
+				add_action( 'admin_menu', 					[ $this, 'b3_add_admin_pages' ] );
+				add_action( 'template_redirect', 			[ $this, 'b3_template_redirect' ] );
+				add_action( 'widgets_init', 				[ $this, 'b3_register_widgets' ] );
+				add_action( 'wp_dashboard_setup', 			[ $this, 'b3_add_dashboard_widget' ] );
+				add_action( 'init', 						[ $this, 'b3_load_plugin_text_domain' ] );
+				add_action( 'init', 						[ $this, 'b3_registration_form_handling' ] );
+				add_action( 'init', 						[ $this, 'b3_reset_user_password' ] );
+				add_action( 'admin_notices', 				[ $this, 'b3_admin_notices' ] );
+				add_action( 'load-users.php', 				[ $this, 'b3_load_users_page' ] );
 
-                // Multisite specific
-                if ( is_multisite() ) {
-                    add_action( 'wp_initialize_site', array( $this, 'b3_after_create_site' ) );
-                }
+				// Multisite specific
+				if ( is_multisite() ) {
+					add_action( 'wp_initialize_site', [ $this, 'b3_after_create_site' ] );
+				}
 
                 // Filters
-                add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ),  array( $this, 'b3_settings_link' ) );
+				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
-                include 'includes/true-false.php';
+				include 'includes/true-false.php';
                 include 'includes/actions-b3.php';
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
