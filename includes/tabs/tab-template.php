@@ -17,23 +17,23 @@
         $stored_email_template = get_option( 'b3_email_template' );
 
         if ( get_option( 'b3_activate_custom_emails' ) ) {
-            $fields[] = array(
-                'id'          => esc_attr( 'email_template' ),
-                'title'       => esc_html__( 'Email template', 'b3-onboarding' ),
-                'placeholder' => esc_attr( b3_default_email_template() ),
-                'preview'     => esc_attr( 'template' ),
-                'value'       => $stored_email_template,
-                'file_name'   => 'default-email-template.html',
-            );
-            $fields[] = array(
-                'id'          => esc_attr( 'email_styling' ),
-                'title'       => esc_html__( 'Email styling', 'b3-onboarding' ),
-                'placeholder' => b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ),
-                'preview'     => esc_attr( 'styling' ),
-                'value'       => $stored_email_styling,
-                'file_name'   => 'default-email-styling.css',
-            );
-        }
+			$fields[] = [
+				'id'          => esc_attr( 'email_template' ),
+				'title'       => esc_html__( 'Email template', 'b3-onboarding' ),
+				'placeholder' => esc_attr( b3_default_email_template() ),
+				'preview'     => esc_attr( 'template' ),
+				'value'       => $stored_email_template,
+				'file_name'   => 'default-email-template.html',
+			];
+			$fields[] = [
+				'id'          => esc_attr( 'email_styling' ),
+				'title'       => esc_html__( 'Email styling', 'b3-onboarding' ),
+				'placeholder' => b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ),
+				'preview'     => esc_attr( 'styling' ),
+				'value'       => $stored_email_styling,
+				'file_name'   => 'default-email-styling.css',
+			];
+		}
 
         ob_start();
         ?>
