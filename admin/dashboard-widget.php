@@ -61,7 +61,7 @@
         if ( ! empty( $all_users ) ) {
             ob_start();
             echo '<thead><tr>';
-            echo sprintf( '<th>%s</th>', esc_html__( 'Login', 'b3-onboarding' ) );
+            echo sprintf( '<th>%s</th>', esc_html__( 'User name', 'b3-onboarding' ) );
             echo sprintf( '<th>%s</th>', esc_html__( 'ID', 'b3-onboarding' ) );
             echo sprintf( '<th>%s</th>', esc_html__( 'Reg. date', 'b3-onboarding' ) );
             echo '</tr></thead>';
