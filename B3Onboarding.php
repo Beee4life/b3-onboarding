@@ -489,7 +489,7 @@
              * at the end of the page.
              */
             public function b3_add_recaptcha_js_to_footer() {
-                if ( true == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
+                if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
                     wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array() );
                 }
             }
@@ -499,7 +499,7 @@
              * Enqueue js for recaptcha
              */
             public function b3_add_rc3() {
-                if ( true == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url(true ) ) ) {
+                if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url(true ) ) ) {
                     ?>
                     <script>
                         function onSubmit(token) {
@@ -862,7 +862,7 @@
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
 
                     case 'invalid_username':
-                        if ( true == get_option( 'b3_register_email_only' ) ) {
+                        if ( 1 == get_option( 'b3_register_email_only' ) ) {
                             return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
                         } else {
                             return esc_html__( 'The user login you entered is not valid.', 'b3-onboarding' );
