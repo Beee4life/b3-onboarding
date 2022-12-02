@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2022-12-02 17:34+0100\n"
+"POT-Creation-Date: 2022-12-02 17:37+0100\n"
 "PO-Revision-Date: 2019-02-07 20:22+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
@@ -2022,6 +2022,11 @@ msgstr ""
 
 #: includes/tabs/tab-settings.php:124
 msgid "This option resets everything back to 'factory settings'."
+msgstr ""
+
+#: includes/tabs/tab-settings.php:125
+#, php-format
+msgid "%s to see what it does exactly."
 msgstr ""
 
 #: includes/tabs/tab-settings.php:132
