@@ -380,7 +380,7 @@
              * @return mixed
              */
             public function b3_settings_link( $links ) {
-                $settings_link = sprintf( '<a href="admin.php?page=b3-onboarding">%s</a>', esc_html__( 'Settings', 'b3-onboarding' ) );
+                $settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding' ), esc_html__( 'Settings', 'b3-onboarding' ) );
                 array_unshift( $links, $settings_link );
 
                 return $links;
