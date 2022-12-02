@@ -14,11 +14,10 @@
             parent::__construct(
                 'b3-widget',
                 'B3 User menu',
-                array(
-                    'classname'   => 'b3__widget--user',
-                    'description' => esc_html__( 'Custom user widget', 'b3-onboarding' ),
-                )
-            );
+				[
+					'classname'   => 'b3__widget--user',
+					'description' => esc_html__( 'Custom user widget', 'b3-onboarding' ),
+				] );
         }
 
 
@@ -207,8 +206,8 @@
          * @return array Updated safe values to be saved.
          */
         public function update( $new_instance, $old_instance ) {
-            $instance                    = array();
-            $instance[ 'show_account' ]  = ( ! empty( $new_instance[ 'show_account' ] ) ) ? $new_instance[ 'show_account' ] : '';
+            $instance                    = [];
+			$instance[ 'show_account' ]  = ( ! empty( $new_instance[ 'show_account' ] ) ) ? $new_instance[ 'show_account' ] : '';
             $instance[ 'show_approval' ] = ( ! empty( $new_instance[ 'show_approval' ] ) ) ? $new_instance[ 'show_approval' ] : '';
             $instance[ 'show_login' ]    = ( ! empty( $new_instance[ 'show_login' ] ) ) ? $new_instance[ 'show_login' ] : '';
             $instance[ 'show_logout' ]   = ( ! empty( $new_instance[ 'show_logout' ] ) ) ? $new_instance[ 'show_logout' ] : '';

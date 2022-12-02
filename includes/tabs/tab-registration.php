@@ -93,7 +93,7 @@
                         <?php b3_get_close(); ?>
                     <?php } ?>
 
-                    <?php $hide_extended_fields = ( true == $registration_with_email_only ) ? ' hidden' : false; ?>
+                    <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
                     <div class="b3-name-fields<?php echo $hide_extended_fields; ?>">
 
                         <?php b3_get_settings_field_open(); ?>
@@ -106,7 +106,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_first_last_required = ( true == $first_last ) ? false : true; ?>
+                        <?php $hide_first_last_required = ( 1 == $first_last ) ? false : true; ?>
                         <?php b3_get_settings_field_open( false, $hide_first_last_required, 'first-last-required' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
@@ -119,7 +119,7 @@
                     </div>
 
                     <?php if ( 'open' === $registration_type ) { ?>
-                        <?php $hide_redirect_field = ( true == $custom_passwords ) ? true : false; ?>
+                        <?php $hide_redirect_field = ( 1 == $custom_passwords ) ? true : false; ?>
                         <?php b3_get_settings_field_open( false, $hide_redirect_field, 'redirect' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
@@ -138,8 +138,8 @@
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php checked($recaptcha); ?>/>
                             <?php esc_html_e( 'Activate reCAPTCHA.', 'b3-onboarding' ); ?>
-                            <?php $show_note = ( true == $recaptcha ) ? false : true; ?>
-                            <?php $hide_recaptcha_note = ( true == $recaptcha ) ? false : ' hidden'; ?>
+                            <?php $show_note = ( 1 == $recaptcha ) ? false : true; ?>
+                            <?php $hide_recaptcha_note = ( 1 == $recaptcha ) ? false : ' hidden'; ?>
                             <?php if ( $show_note ) { ?>
                                 <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
                                     <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
@@ -168,7 +168,7 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_privacy_settings = ( true == $privacy ) ? false : true; ?>
+                    <?php $hide_privacy_settings = ( 1 == $privacy ) ? false : true; ?>
                     <?php b3_get_settings_field_open( false, $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>

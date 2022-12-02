@@ -15,7 +15,7 @@
         $subject = false;
 
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo = ( true == get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
             $preview   = $_GET[ 'preview' ];
             $user      = get_userdata( get_current_user_id() );
 

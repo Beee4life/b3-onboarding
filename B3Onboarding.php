@@ -57,11 +57,11 @@
                     define( 'B3OB_PLUGIN_SITE', $plugin_site );
                 }
 
-                $this->settings = array(
-                    'path'    => trailingslashit( dirname( __FILE__ ) ),
-                    'version' => get_option( 'b3ob_version' ),
-                );
-            }
+				$this->settings = [
+					'path'    => trailingslashit( dirname( __FILE__ ) ),
+					'version' => get_option( 'b3ob_version' ),
+				];
+			}
 
 
             /**
@@ -130,12 +130,12 @@
                 if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
-                        add_role( 'b3_activation', esc_html__( 'Awaiting activation', 'b3-onboarding' ), array() );
-                    }
+                        add_role( 'b3_activation', esc_html__( 'Awaiting activation', 'b3-onboarding' ), [] );
+					}
                     $b3_approval = get_role( 'b3_approval' );
                     if ( ! $b3_approval ) {
-                        add_role( 'b3_approval', esc_html__( 'Awaiting approval', 'b3-onboarding' ), array() );
-                    }
+                        add_role( 'b3_approval', esc_html__( 'Awaiting approval', 'b3-onboarding' ), [] );
+					}
                 }
             }
 
@@ -200,44 +200,36 @@
                 }
 
                 if ( false != get_option( 'b3_use_popup', false ) ) {
-                    wp_enqueue_script(
-                        'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js',
-                        array( 'jquery' ), '0.9.1'
-                    );
-                    wp_enqueue_style(
-                        'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css',
-                        false, '0.9.1'
-                    );
+					wp_enqueue_script( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js', [ 'jquery' ], '0.9.1' );
+					wp_enqueue_style( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css', false, '0.9.1' );
                 }
 
-                wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), array(), $this->settings[ 'version' ] );
-                wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+				wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), [], $this->settings[ 'version' ] );
+				wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
 
-                wp_localize_script( 'b3ob', 'b3ob_vars',
-                    array(
-                        'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
-                    )
-                );
-            }
+				wp_localize_script( 'b3ob', 'b3ob_vars', [
+						'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
+					] );
+			}
 
 
             /*
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
-                wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), $this->settings[ 'version' ] );
+				wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->settings[ 'version' ] );
 
 				if ( ! ( 'toplevel_page_b3-onboarding' === get_current_screen()->id ) ) {
                     return;
                 }
 
-                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ] );
+				wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
 
-                // https://wpreset.com/add-codemirror-editor-plugin-theme/
-				$b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( array(
-                    'type' => 'text/css',
-                ) );
-                wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
+				// https://wpreset.com/add-codemirror-editor-plugin-theme/
+				$b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( [
+					'type' => 'text/css',
+				] );
+				wp_localize_script('jquery', 'b3cm_settings', $b3cm_settings );
 
                 wp_enqueue_style( 'wp-codemirror' );
 
@@ -246,14 +238,12 @@
                 wp_enqueue_media();
 
                 // Register, localize and enqueue our custom JS.
-                wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), array( 'jquery' ), $this->settings[ 'version' ], true );
-                wp_localize_script( 'b3-media', 'b3_media',
-                    array(
-                        'title'     => esc_attr__( 'Upload or choose your custom logo', 'b3-onboarding' ),
-                        'button'    => esc_attr__( 'Insert logo', 'b3-onboarding' ),
-                    )
-                );
-                wp_enqueue_script( 'b3-media' );
+				wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], true );
+				wp_localize_script( 'b3-media', 'b3_media', [
+						'title'  => esc_attr__( 'Upload or choose your custom logo', 'b3-onboarding' ),
+						'button' => esc_attr__( 'Insert logo', 'b3-onboarding' ),
+					] );
+				wp_enqueue_script( 'b3-media' );
             }
 
             public function b3_enqueue_scripts_backend_footer() {
@@ -391,9 +381,9 @@
              * Check if user actions need to be taken
              */
             public function b3_load_users_page() {
-                add_action( 'admin_notices', array( $this, 'b3_admin_notices' ) );
+                add_action( 'admin_notices', [ $this, 'b3_admin_notices' ] );
 
-                if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], array( 'activate', 'resendactivation' ) ) ) {
+				if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], [ 'activate', 'resendactivation' ] ) ) {
                     $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
                     if ( ! $user_id ) {
                         wp_die( esc_html__( "There's no user with that ID.", 'b3-onboarding' ) );
@@ -409,7 +399,10 @@
                         $registration_type = 'request_access';
                     }
 
-                    $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( array( 'wp_http_referer', 'updated' ), stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
+                    $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( [
+						'wp_http_referer',
+						'updated'
+					], stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
 
                     switch( $_GET[ 'action' ] ) {
                         case 'activate' :
@@ -490,8 +483,8 @@
              */
             public function b3_add_recaptcha_js_to_footer() {
                 if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
-                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', array() );
-                }
+                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [] );
+				}
             }
 
 
@@ -524,8 +517,8 @@
                             exit;
                         } else {
 
-                            $meta_data         = array();
-                            $registration_type = get_option( 'b3_registration_type' );
+                            $meta_data         = [];
+							$registration_type = get_option( 'b3_registration_type' );
                             $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( $_POST[ 'user_email' ] ) : false;
 
                             if ( get_option( 'b3_honeypot' ) ) {
@@ -708,9 +701,9 @@
                                         $path        = $blog_info[ 'path' ];
                                         $blog_title  = $blog_info[ 'blog_title' ];
                                         $errors      = $blog_info[ 'errors' ];
-                                        $error_codes = array();
+                                        $error_codes = [];
 
-                                        if ( $errors->has_errors() ) {
+										if ( $errors->has_errors() ) {
                                             $error_message_name  = $errors->get_error_message( 'blogname' );
                                             $error_message_title = $errors->get_error_message( 'blog_title' );
 
@@ -1026,17 +1019,17 @@
              * @return int|void|WP_Error
              */
             private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
-                $errors                       = new WP_Error();
-                $registration_with_email_only = get_option( 'b3_register_email_only' );
-                $user_data                    = array(
-                    'user_login' => $user_login,
-                    'user_email' => $user_email,
-                    'user_pass'  => '', // for possible/future custom passwords
-                    'role'       => $role,
-                );
-                $use_custom_passwords = true;
+				$errors                       = new WP_Error();
+				$registration_with_email_only = get_option( 'b3_register_email_only' );
+				$user_data                    = [
+					'user_login' => $user_login,
+					'user_email' => $user_email,
+					'user_pass'  => '', // for possible/future custom passwords
+					'role'       => $role,
+				];
+				$use_custom_passwords         = true;
 
-                if ( false == $registration_with_email_only ) {
+				if ( false == $registration_with_email_only ) {
                     if ( username_exists( $user_login ) ) {
                         $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
 
@@ -1139,8 +1132,8 @@
              *
              * @return bool|WP_Error
              */
-            private function b3_register_wpmu_user( $user_name, $user_email, $domain, $blog_title, $path, $meta = array() ) {
-                $b3_register_type = get_option( 'b3_registration_type' );
+            private function b3_register_wpmu_user( $user_name, $user_email, $domain, $blog_title, $path, $meta = [] ) {
+				$b3_register_type = get_option( 'b3_registration_type' );
 
                 if ( is_main_site() ) {
                     if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all', 'site' ] )) {
@@ -1187,14 +1180,12 @@
              */
             public function b3_get_template_html( $template_name, $attributes = null ) {
                 if ( ! $attributes ) {
-                    $attributes = array();
-                }
+                    $attributes = [];
+				}
 
                 if ( 'user-management' === $template_name ) {
-                    $template_paths = array(
-                        B3OB_PLUGIN_PATH . '/templates/',
-                    );
-                } else {
+					$template_paths = [ B3OB_PLUGIN_PATH . '/templates/' ];
+				} else {
                     $template_paths = b3_get_template_paths();
                 }
                 foreach( $template_paths as $possible_location ) {
@@ -1257,7 +1248,7 @@
                 // manual actions
                 // @TODO: look into this, when is it used (after change from user list in admin ?)
                 if ( isset( $_GET[ 'update' ] ) ) {
-                    if ( in_array( $_GET[ 'update' ], array( 'activated', 'sendactivation' ) ) ) {
+                    if ( in_array( $_GET[ 'update' ], [ 'activated', 'sendactivation' ] ) ) {
                         echo '<div id="message" class="updated"><p>';
                         if ( 'activated' === $_GET[ 'update' ] ) {
                             _e( 'User activated.', 'b3-onboarding' );

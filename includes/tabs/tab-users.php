@@ -47,7 +47,7 @@
                     <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php checked($front_end_approval); ?>/>
                     <?php esc_html_e( 'Activate front-end user approval.', 'b3-onboarding' ); ?>
                     <?php if ( false == $front_end_approval_page ) { ?>
-                        <?php $hide_user_approval_note = ( true == $front_end_approval ) ? false : ' hidden'; ?>
+                        <?php $hide_user_approval_note = ( 1 == $front_end_approval ) ? false : ' hidden'; ?>
                         <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--approval%s">%s</div>', $hide_user_approval_note, esc_html__( "You still need to set an approval page (after you save the settings).", 'b3-onboarding' ) ); ?>
                     <?php } ?>
                 </div>
@@ -101,7 +101,7 @@
                 <?php
                     $email_only                 = get_option( 'b3_register_email_only' );
                     $username_restrictions      = get_option( 'b3_restrict_usernames' );
-                    $hide_username_restrictions = ( true == $username_restrictions ) ? false : true;
+                    $hide_username_restrictions = ( 1 == $username_restrictions ) ? false : true;
                 ?>
                 <?php if ( ! $email_only ) { ?>
                     <?php b3_get_settings_field_open(); ?>
