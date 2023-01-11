@@ -74,19 +74,19 @@
 
 				add_action( 'wp_enqueue_scripts', 			[ $this, 'b3_enqueue_scripts_frontend' ], 40 );
 				add_action( 'wp_enqueue_scripts', 			[ $this, 'b3_add_recaptcha_js_to_footer' ] );
-				add_action( 'login_enqueue_scripts', 		[ $this, 'b3_add_recaptcha_js_to_footer' ] );
+				add_action( 'login_enqueue_scripts', 			[ $this, 'b3_add_recaptcha_js_to_footer' ] );
 				add_action( 'wp_head', 						[ $this, 'b3_add_rc3' ] );
 				add_action( 'admin_init', 					[ $this, 'b3_set_version' ] );
-				add_action( 'admin_enqueue_scripts', 		[ $this, 'b3_enqueue_scripts_backend' ] );
-				add_action( 'admin_enqueue_scripts', 		[ $this, 'b3_enqueue_scripts_backend_footer' ], 99 );
+				add_action( 'admin_enqueue_scripts', 			[ $this, 'b3_enqueue_scripts_backend' ] );
+				add_action( 'admin_enqueue_scripts', 			[ $this, 'b3_enqueue_scripts_backend_footer' ], 99 );
 				add_action( 'admin_menu', 					[ $this, 'b3_add_admin_pages' ] );
-				add_action( 'template_redirect', 			[ $this, 'b3_template_redirect' ] );
-				add_action( 'widgets_init', 				[ $this, 'b3_register_widgets' ] );
+				add_action( 'template_redirect', 				[ $this, 'b3_template_redirect' ] );
+				add_action( 'widgets_init', 					[ $this, 'b3_register_widgets' ] );
 				add_action( 'wp_dashboard_setup', 			[ $this, 'b3_add_dashboard_widget' ] );
-				add_action( 'init', 						[ $this, 'b3_load_plugin_text_domain' ] );
-				add_action( 'init', 						[ $this, 'b3_registration_form_handling' ] );
-				add_action( 'init', 						[ $this, 'b3_reset_user_password' ] );
-				add_action( 'admin_notices', 				[ $this, 'b3_admin_notices' ] );
+				add_action( 'init', 							[ $this, 'b3_load_plugin_text_domain' ] );
+				add_action( 'init', 							[ $this, 'b3_registration_form_handling' ] );
+				add_action( 'init', 							[ $this, 'b3_reset_user_password' ] );
+				add_action( 'admin_notices', 					[ $this, 'b3_admin_notices' ] );
 				add_action( 'load-users.php', 				[ $this, 'b3_load_users_page' ] );
 
 				// Multisite specific
