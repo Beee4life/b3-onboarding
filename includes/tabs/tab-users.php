@@ -38,7 +38,7 @@
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
-            <?php $hide_front_end_approval = ( 'request_access' == $registration_type ) ? false : 'hidden'; ?>
+            <?php $hide_front_end_approval = ( 'request_access' === $registration_type ) ? false : 'hidden'; ?>
             <?php b3_get_settings_field_open( false, $hide_front_end_approval ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
@@ -58,17 +58,17 @@
                     <label><?php esc_html_e( 'Restrict admin access', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox b3_settings-input--restrict-users">
-                    <?php $hidden_roles = array( 'b3_approval', 'b3_activation' ); ?>
-                    <?php foreach( $hidden_roles as $role ) { ?>
+					<?php $hidden_roles = [ 'b3_approval', 'b3_activation' ]; ?>
+					<?php foreach( $hidden_roles as $role ) { ?>
                         <input type="hidden" id="b3_restrict_<?php echo esc_attr( $role ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $role ); ?>" />
                     <?php } ?>
                     <?php echo sprintf( '<p>%s</p>', __( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
 
                     <?php
                         if ( is_array( $roles ) && ! empty( $roles ) ) {
-                            $dont_show_roles = array( 'administrator', 'b3_approval', 'b3_activation' );
-                            $stored_roles    = ( is_array( $restrict_admin ) ) ? $restrict_admin : array( 'b3_activation', 'b3_approval' );
-                            echo '<div class="b3_restrict-roles">';
+							$dont_show_roles = [ 'administrator', 'b3_approval', 'b3_activation' ];
+							$stored_roles    = ( is_array( $restrict_admin ) ) ? $restrict_admin : [ 'b3_activation', 'b3_approval' ];
+							echo '<div class="b3_restrict-roles">';
                             foreach( $roles as $name => $values ) {
                                 if ( ! in_array( $name, $dont_show_roles ) ) {
                                     ?>
@@ -127,7 +127,7 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php $hide_domain_settings = ( 1 == $domain_restrictions ) ? false : true; ?>
+                <?php $hide_domain_settings = ( true == $domain_restrictions ) ? false : true; ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_domain_restrictions"><?php esc_html_e( 'Disallow domains', 'b3-onboarding' ); ?></label>

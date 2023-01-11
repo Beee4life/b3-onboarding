@@ -69,9 +69,9 @@
     function wp_login_message( $message ) {
         if ( isset( $_GET[ 'action' ] ) ) {
             $action = $_GET[ 'action' ];
-            if ( 'register' == $action ) {
+            if ( 'register' === $action ) {
                 $message = apply_filters( 'b3_message_above_registration', b3_get_message_above_registration() );
-            } elseif ( 'lostpassword' == $action ) {
+            } elseif ( 'lostpassword' === $action ) {
                 $message = apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() );
             }
         } else {
@@ -183,13 +183,13 @@
         $registration_type = get_option( 'b3_registration_type' );
 
         if ( $current_user->ID != $user_object->ID ) {
-            if ( 'email_activation' == $registration_type ) {
+            if ( 'email_activation' === $registration_type ) {
                 if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
                     unset( $actions[ 'resetpassword' ] );
                     $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), esc_attr__( 'Resend activation', 'b3-onboarding' ) );
                     $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), esc_attr__( 'Activate', 'b3-onboarding' ) );
                 }
-            } elseif ( 'request_access' == $registration_type ) {
+            } elseif ( 'request_access' === $registration_type ) {
                 if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
                     unset( $actions[ 'resetpassword' ] );
                     $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
@@ -218,7 +218,7 @@
      */
     function b3_maybe_redirect_at_authenticate( $user, $username, $password ) {
         // Check if the earlier authenticate filter (most likely, the default WordPress authentication) functions have found errors
-        if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
+        if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             if ( is_wp_error( $user ) ) {
                 $error_codes = join( ',', $user->get_error_codes() );
                 $login_url   = b3_get_login_url();

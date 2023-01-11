@@ -14,11 +14,10 @@
             parent::__construct(
                 'b3-widget',
                 'B3 User menu',
-                array(
-                    'classname'   => 'b3__widget--user',
-                    'description' => esc_html__( 'Custom user widget', 'b3-onboarding' ),
-                )
-            );
+				[
+					'classname'   => 'b3__widget--user',
+					'description' => esc_html__( 'Custom user widget', 'b3-onboarding' ),
+				] );
         }
 
 
@@ -58,11 +57,11 @@
             }
 
             if ( $show_register ) {
-                $register_url      = b3_get_register_url( true );
+                $register_url      = b3_get_register_url();
                 $registration_type = get_option( 'b3_registration_type' );
 
-                if ( 'none' != $registration_type && false != $register_url ) {
-                    if ( 'blog' == $registration_type && $is_user_logged_in ) {
+				if ( 'none' !== $registration_type && false !== $register_url ) {
+                    if ( 'blog' === $registration_type && $is_user_logged_in ) {
                         $show_register_link = true;
                     } elseif ( ! $is_user_logged_in ) {
                         $show_register_link = true;
@@ -82,53 +81,58 @@
             }
 
             if ( true === $show_widget ) {
-                echo $args[ 'before_widget' ];
-
-                if ( ! empty( $instance[ 'title' ] ) ) {
-                    echo $args[ 'before_title' ];
-                    echo apply_filters( 'widget_title', $instance[ 'title' ] );
-                    echo $args[ 'after_title' ];
-                }
-
-                echo '<ul>';
+				$widget_links = [];
                 if ( ! $is_user_logged_in && $show_login ) {
-                    echo '<li>';
                     if ( true == $use_popup ) {
                         $logo = ( false != $main_logo ) ? sprintf( '<div class="modal__logo"><img src="%s" alt="" /></div>', $main_logo ) : false;
-                        echo sprintf('<a href="#login-form" rel="modal:open">%s</a>', esc_html__( 'Login', 'b3-onboarding' ) );
-                        echo sprintf( '<div id="login-form" class="modal">%s%s</div>', $logo, do_shortcode('[login-form title="Login"]') );
+                        $link = sprintf('<a href="#login-form" rel="modal:open">%s</a>', esc_html__( 'Login', 'b3-onboarding' ) );
+                        $link .= sprintf( '<div id="login-form" class="modal">%s%s</div>', $logo, do_shortcode('[login-form title="Login"]') );
                     } else {
-                        echo sprintf( '<a href="%s">%s</a>', esc_url( $login_url ), esc_html__( 'Login', 'b3-onboarding' ) );
+                        $link = sprintf( '<a href="%s">%s</a>', esc_url( $login_url ), esc_html__( 'Login', 'b3-onboarding' ) );
                     }
-                    echo '</li>';
+					$widget_links[] = $link;
                 }
 
-                if ( isset( $register_url ) && true == $show_register_link ) {
-                    echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $register_url ), esc_html__( 'Register', 'b3-onboarding' ) );
+				if ( isset( $register_url ) && true === $show_register_link ) {
+					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $register_url ), esc_html__( 'Register', 'b3-onboarding' ) );
                 }
 
-                if ( $is_user_logged_in && isset( $account_url ) && false != $account_url ) {
-                    echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $account_url ), esc_html__( 'Account', 'b3-onboarding' ) );
+                if ( $is_user_logged_in && isset( $account_url ) && false !== $account_url ) {
+					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $account_url ), esc_html__( 'Account', 'b3-onboarding' ) );
                 }
 
-                if ( true == $show_settings && current_user_can( 'manage_options' ) ) {
-                    echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), 'B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) );
+                if ( true === $show_settings && current_user_can( 'manage_options' ) ) {
+					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), 'B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) );
                 }
 
                 if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
                     foreach( $custom_links as $link ) {
-                        echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $link[ 'link' ] ), $link[ 'label' ] );
+						$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $link[ 'link' ] ), $link[ 'label' ] );
                     }
                 }
 
                 if ( $is_user_logged_in ) {
-                    if ( isset( $logout_url ) && false != $logout_url ) {
-                        echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $logout_url ), esc_html__( 'Log Out', 'b3-onboarding' ) );
+                    if ( isset( $logout_url ) && false !== $logout_url ) {
+						$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $logout_url ), esc_html__( 'Log Out', 'b3-onboarding' ) );
                     }
                 }
-                echo '</ul>';
 
-                echo $args[ 'after_widget' ];
+				if ( ! empty( $widget_links ) ) {
+	                echo $args[ 'before_widget' ];
+
+					if ( ! empty( $instance[ 'title' ] ) ) {
+						echo $args[ 'before_title' ];
+						echo apply_filters( 'widget_title', $instance[ 'title' ] );
+						echo $args[ 'after_title' ];
+					}
+
+					foreach( $widget_links as $link ) {
+						echo sprintf( '<li>%s</li>', $link );
+					}
+
+					echo $args[ 'after_widget' ];
+				}
+
             }
         }
 
@@ -202,8 +206,8 @@
          * @return array Updated safe values to be saved.
          */
         public function update( $new_instance, $old_instance ) {
-            $instance                    = array();
-            $instance[ 'show_account' ]  = ( ! empty( $new_instance[ 'show_account' ] ) ) ? $new_instance[ 'show_account' ] : '';
+            $instance                    = [];
+			$instance[ 'show_account' ]  = ( ! empty( $new_instance[ 'show_account' ] ) ) ? $new_instance[ 'show_account' ] : '';
             $instance[ 'show_approval' ] = ( ! empty( $new_instance[ 'show_approval' ] ) ) ? $new_instance[ 'show_approval' ] : '';
             $instance[ 'show_login' ]    = ( ! empty( $new_instance[ 'show_login' ] ) ) ? $new_instance[ 'show_login' ] : '';
             $instance[ 'show_logout' ]   = ( ! empty( $new_instance[ 'show_logout' ] ) ) ? $new_instance[ 'show_logout' ] : '';

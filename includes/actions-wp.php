@@ -18,7 +18,7 @@
             update_user_meta( $user_id, 'last_name', sanitize_text_field( $_POST[ 'last_name' ] ) );
         }
 
-        $extra_field_values = apply_filters( 'b3_extra_fields', array() );
+        $extra_field_values = apply_filters( 'b3_extra_fields', [] );
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( isset( $field[ 'id' ] ) ) {
@@ -29,7 +29,7 @@
             }
         }
 
-        $hidden_field_values = apply_filters( 'b3_hidden_fields', array() );
+        $hidden_field_values = apply_filters( 'b3_hidden_fields', [] );
         if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
             foreach( $hidden_field_values as $meta_key => $meta_value ) {
                 update_user_meta( $user_id, $meta_key, $meta_value );
@@ -51,15 +51,15 @@
      * @param $user_id
      */
     function b3_do_stuff_after_wp_register( $user_id ) {
-        if ( isset( $_POST[ 'action' ] ) && 'createuser' == $_POST[ 'action' ] ) {
+        if ( isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
             // user is manually added
         } else {
             // get registration type
             $registration_type = get_option( 'b3_registration_type' );
-            if ( 'request_access' == $registration_type ) {
+            if ( 'request_access' === $registration_type ) {
                 $user_object = new WP_User( $user_id );
                 $user_object->set_role( 'b3_approval' );
-            } elseif ( 'email_activation' == $registration_type ) {
+            } elseif ( 'email_activation' === $registration_type ) {
                 $user_object = new WP_User( $user_id );
                 $user_object->set_role( 'b3_activation' );
             }
@@ -79,24 +79,24 @@
         if ( current_user_can( 'promote_users' ) ) {
             if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
                 $approval_users = [];
-                if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
-                    $approval_args  = array( 'role' => 'b3_approval' );
-                    $approval_users = get_users( $approval_args );
-                } elseif ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
+                if ( 'request_access' === get_option( 'b3_registration_type' ) ) {
+                    $approval_args  = [ 'role' => 'b3_approval' ];
+					$approval_users = get_users( $approval_args );
+                } elseif ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
                     global $wpdb;
                     $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
                     $approval_users = $wpdb->get_results( $query );
                 }
 
                 if ( 0 < count( $approval_users ) ) {
-                    $page_link = admin_url( 'admin.php?page=b3-user-approval' );
-                    $approval_args = array(
-                        'id'    => 'approval',
-                        'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
-                        'href'  => $page_link,
-                        'meta'  => array( 'class' => 'topbar_approve_user' ),
-                    );
-                    $wp_admin_bar->add_node( $approval_args );
+					$page_link     = admin_url( 'admin.php?page=b3-user-approval' );
+					$approval_args = [
+						'id'    => 'approval',
+						'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
+						'href'  => $page_link,
+						'meta'  => [ 'class' => 'topbar_approve_user' ],
+					];
+					$wp_admin_bar->add_node( $approval_args );
                 }
             }
         }
@@ -136,7 +136,7 @@
      * @param       $key
      * @param array $meta
      */
-    function b3_after_signup_user( $user_login, $user_email, $key, $meta = array() ) {
+    function b3_after_signup_user( $user_login, $user_email, $key, $meta = [] ) {
         if ( ! is_admin() ) {
             $current_network = get_network();
             $subject         = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), $current_network->site_name );
@@ -160,7 +160,7 @@
      * @param       $password
      * @param array $meta
      */
-    function b3_after_activate_user( $user_id, $password, $meta = array() ) {
+    function b3_after_activate_user( $user_id, $password, $meta = [] ) {
         // @TODO: check if can be replaced by filter
         $current_network = get_network();
         $user            = get_userdata( $user_id );
@@ -186,19 +186,23 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        if ( 'request_access_subdomain' == get_option( 'b3_registration_type' ) ) {
+        if ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
             $subject = b3_default_request_access_subject_user();
             $message = b3_default_request_access_message_user();
             do_action( 'b3_inform_admin', 'request_access' );
 
         } else {
             $blog_id = b3_get_signup_id( $domain );
-            $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_get_replacement_vars( 'message', array( 'blog_id' => $blog_id ) ) );
+            $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
             $message = b3_get_wpmu_activate_user_blog_message();
         }
-        $message      = b3_replace_template_styling( $message );
-        $message      = strtr( $message, b3_get_replacement_vars( 'message', array( 'domain' => $domain, 'key' => $key, 'path' => $path ), true ) );
-        $message      = htmlspecialchars_decode( stripslashes( $message ) );
+		$message = b3_replace_template_styling( $message );
+		$message = strtr( $message, b3_get_replacement_vars( 'message', [
+			'domain' => $domain,
+			'key'    => $key,
+			'path'   => $path,
+		], true ) );
+		$message = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
     }
@@ -215,14 +219,18 @@
      * @param $meta
      */
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
-        $user_data = get_userdata( $user_id );
-        $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', array( 'blog_id' => $blog_id ) ) );
-        $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
-        $message   = b3_replace_template_styling( $message );
-        $message   = strtr( $message, b3_get_replacement_vars( 'message', array( 'blog_id' => $blog_id, 'user_data' => $user_data, 'user_password' => $password ) ) );
-        $message   = htmlspecialchars_decode( stripslashes( $message ) );
+		$user_data = get_userdata( $user_id );
+		$subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
+		$message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
+		$message   = b3_replace_template_styling( $message );
+		$message   = strtr( $message, b3_get_replacement_vars( 'message', [
+			'blog_id'       => $blog_id,
+			'user_data'     => $user_data,
+			'user_password' => $password,
+		] ) );
+		$message   = htmlspecialchars_decode( stripslashes( $message ) );
 
-        wp_mail( $user_data->user_email, $subject, $message, [] );
+		wp_mail( $user_data->user_email, $subject, $message, [] );
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
 
@@ -231,7 +239,7 @@
      * Network admin notices
      */
     function b3_network_admin_notices() {
-        if ( 'settings-network' == get_current_screen()->id ) {
+        if ( 'settings-network' === get_current_screen()->id ) {
             echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( "%s overrides the 'Registration' option and the 'Registration notification'. You can change the registration type %s and the registration notification %s.", 'b3-onboarding' ) . '</p></div>',
                 'B3 OnBoarding',
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ),
@@ -243,7 +251,7 @@
         if ( strpos( $plugin[ 'Version' ], 'dev' ) !== false || strpos( $plugin[ 'Version' ], 'beta' ) !== false ) {
             $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
             $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
-            if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
+            if ( false === apply_filters( 'b3_hide_development_notice', false ) ) {
                 echo $notice;
             }
         }

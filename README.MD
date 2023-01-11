@@ -20,7 +20,7 @@
 
 This plugin was built to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can customise every aspect of the onboarding process, such as control the look and feel of (almost) evvery email sent out by Wordpress.
+You can customise every aspect of the onboarding process, such as control the look and feel of (almost) every email sent out by Wordpress.
 
 It even offers features which Wordpress doesn't even have, such as approving (or reject) a user before they're activated. And there are a ton of other things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks).
 
@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.8.2 - released 28.07.22
+3.9.0 - released xx.12.22
 
 <a name="features"></a>
 ### Features
@@ -146,6 +146,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.9.0 - 1x.08.22
+* remove jquery override
+
 3.8.2 - 28.07.22
 * change to correct versions
 

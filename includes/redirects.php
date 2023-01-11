@@ -61,7 +61,7 @@
      * Force user to custom login page instead of wp-login.php.
      */
     function b3_redirect_to_custom_login() {
-        if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+        if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
             $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
 
             if ( is_user_logged_in() ) {
@@ -84,7 +84,7 @@
      * wp-login.php?action=lostpassword.
      */
     function b3_redirect_to_custom_lostpassword() {
-        if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+        if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( is_user_logged_in() ) {
                 do_action( 'b3_redirect', 'logged_in' );
             }
@@ -103,7 +103,7 @@
      * or the login page if there are errors.
      */
     function b3_redirect_to_custom_reset_password() {
-        if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
+        if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
             // Verify key / login combo
             $redirect_url = b3_get_reset_password_url();
 
@@ -171,7 +171,7 @@
                     // Non-admin users always go to their account page after login, if it's defined and if no welcome page is set
                     $account_page_url = b3_get_account_url();
                     $welcome_page     = apply_filters( 'b3_welcome_page', false );
-                    
+
                     if ( $welcome_page && false == get_user_meta( $user->ID, 'b3_welcome_page_seen', true ) ) {
                         update_user_meta( $user->ID, 'b3_welcome_page_seen', 'true' );
                         $redirect_to = $welcome_page;
@@ -225,8 +225,8 @@
      */
     function b3_do_user_activate() {
         if ( is_multisite() ) {
-            if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                if ( isset( $_GET[ 'activate' ] ) && 'user' == $_GET[ 'activate' ] ) {
+            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
                     $redirect_url = b3_get_login_url();
                     $valid_error_codes = array( 'already_active', 'blog_taken' );
                     list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
@@ -279,8 +279,8 @@
             }
 
         } else {
-            if ( 'GET' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-                if ( ! empty( $_GET[ 'action' ] ) && 'activate' == $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
 
                     global $wpdb;
 
@@ -339,8 +339,8 @@
      * @since 1.0.6
      */
     function b3_do_password_lost() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] ) {
-            if ( isset( $_POST[ 'b3_form' ] ) && 'lostpass' == $_POST[ 'b3_form' ] ) {
+        if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+            if ( isset( $_POST[ 'b3_form' ] ) && 'lostpass' === $_POST[ 'b3_form' ] ) {
                 $errors = b3_retrieve_password();
 
                 if ( is_wp_error( $errors ) ) {

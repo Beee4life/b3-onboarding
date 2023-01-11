@@ -122,7 +122,7 @@
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_reset_default" name="b3_reset_default" value="1" />
                         <?php esc_html_e( "This option resets everything back to 'factory settings'.", 'b3-onboarding' ); ?>
-                        <?php echo sprintf( '%s to see what it does exactly.', sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/reset-default-settings/' ), esc_html__( 'Click here', 'b3-onboarding' ) ) ); ?>
+                        <?php echo sprintf( esc_html__( '%s to see what it does exactly.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/reset-default-settings/' ), esc_html__( 'Click here', 'b3-onboarding' ) ) ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 

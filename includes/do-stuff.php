@@ -15,39 +15,39 @@
             switch_to_blog( $site_id );
         }
 
-        $page_definitions = array(
-            _x( 'account', 'slug', 'b3-onboarding' ) => array(
-                'title'   => esc_html__( 'Account', 'b3-onboarding' ),
-                'content' => '[account-page]',
-                'meta'    => 'b3_account_page_id'
-            ),
-            _x( 'lostpassword', 'slug', 'b3-onboarding' ) => array(
-                'title'   => esc_html__( 'Lost password', 'b3-onboarding' ),
-                'content' => '[lostpass-form]',
-                'meta'    => 'b3_lost_password_page_id'
-            ),
-            _x( 'login', 'slug', 'b3-onboarding' )           => array(
-                'title'   => esc_html__( 'Login', 'b3-onboarding' ),
-                'content' => '[login-form]',
-                'meta'    => 'b3_login_page_id'
-            ),
-            _x( 'logout', 'slug', 'b3-onboarding' ) => array(
-                'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-                'content' => '',
-                'meta'    => 'b3_logout_page_id'
-            ),
-            _x( 'register', 'slug', 'b3-onboarding' ) => array(
-                'title'   => esc_html__( 'Register', 'b3-onboarding' ),
-                'content' => '[register-form]',
-                'meta'    => 'b3_register_page_id'
-            ),
-            _x( 'reset-password', 'slug', 'b3-onboarding' ) => array(
-                'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-                'content' => '[resetpass-form]',
-                'meta'    => 'b3_reset_password_page_id'
-            ),
-        );
-        b3_create_pages( $page_definitions );
+		$page_definitions = [
+			_x( 'account', 'slug', 'b3-onboarding' )        => [
+				'title'   => esc_html__( 'Account', 'b3-onboarding' ),
+				'content' => '[account-page]',
+				'meta'    => 'b3_account_page_id',
+			],
+			_x( 'lostpassword', 'slug', 'b3-onboarding' )   => [
+				'title'   => esc_html__( 'Lost password', 'b3-onboarding' ),
+				'content' => '[lostpass-form]',
+				'meta'    => 'b3_lost_password_page_id',
+			],
+			_x( 'login', 'slug', 'b3-onboarding' )          => [
+				'title'   => esc_html__( 'Login', 'b3-onboarding' ),
+				'content' => '[login-form]',
+				'meta'    => 'b3_login_page_id',
+			],
+			_x( 'logout', 'slug', 'b3-onboarding' )         => [
+				'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
+				'content' => '',
+				'meta'    => 'b3_logout_page_id',
+			],
+			_x( 'register', 'slug', 'b3-onboarding' )       => [
+				'title'   => esc_html__( 'Register', 'b3-onboarding' ),
+				'content' => '[register-form]',
+				'meta'    => 'b3_register_page_id',
+			],
+			_x( 'reset-password', 'slug', 'b3-onboarding' ) => [
+				'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
+				'content' => '[resetpass-form]',
+				'meta'    => 'b3_reset_password_page_id',
+			],
+		];
+		b3_create_pages( $page_definitions );
 
         if ( false != $site_id && is_multisite() ) {
             restore_current_blog();
@@ -61,8 +61,8 @@
      *
      * @param array $page_definitions
      */
-    function b3_create_pages( $page_definitions = array() ) {
-        foreach ( $page_definitions as $slug => $page ) {
+    function b3_create_pages( $page_definitions = [] ) {
+		foreach ( $page_definitions as $slug => $page ) {
             // Check if there's a page assigned already
             $stored_id = get_option( $slug );
             if ( $stored_id ) {
@@ -74,12 +74,12 @@
                 // no stored id, so continue
             }
 
-            $existing_page_args = array(
-                'post_type'      => 'page',
-                'posts_per_page' => 1,
-                'pagename'       => $slug,
-            );
-            $existing_page = get_posts( $existing_page_args );
+			$existing_page_args = [
+				'post_type'      => 'page',
+				'posts_per_page' => 1,
+				'pagename'       => $slug,
+			];
+			$existing_page = get_posts( $existing_page_args );
 
             if ( ! empty( $existing_page ) ) {
                 $add_shortcode = false;
@@ -98,23 +98,23 @@
                     }
                 }
                 if ( true === $add_shortcode ) {
-                    $new_args = array(
-                        'ID'           => $page_id,
-                        'post_content' => $page[ 'content' ],
-                    );
-                    wp_update_post( $new_args );
+					$new_args = [
+						'ID'           => $page_id,
+						'post_content' => $page[ 'content' ],
+					];
+					wp_update_post( $new_args );
                 }
             } else {
-                $new_post_args = array(
-                    'post_title'     => $page[ 'title' ],
-                    'post_name'      => $slug,
-                    'post_content'   => $page[ 'content' ],
-                    'post_status'    => 'publish',
-                    'post_type'      => 'page',
-                    'ping_status'    => 'closed',
-                    'comment_status' => 'closed',
-                );
-                $result = wp_insert_post( $new_post_args, true );
+				$new_post_args = [
+					'post_title'     => $page[ 'title' ],
+					'post_name'      => $slug,
+					'post_content'   => $page[ 'content' ],
+					'post_status'    => 'publish',
+					'post_type'      => 'page',
+					'ping_status'    => 'closed',
+					'comment_status' => 'closed',
+				];
+				$result = wp_insert_post( $new_post_args, true );
                 if ( ! is_wp_error( $result ) ) {
                     update_option( $page[ 'meta' ], $result, false );
                     update_post_meta( $result, '_b3_page', true );
@@ -154,12 +154,12 @@
                 <?php if ( $input_label && $input_id ) { ?>
                 <label class="b3_form-label" for="<?php echo esc_attr( $input_id ); ?>"><?php echo $input_label; ?><?php echo $input_required; ?></label>
                 <?php } ?>
-                <?php if ( in_array( $input_type, array( 'text' , 'number', 'url' ) ) ) { ?>
+                <?php if ( in_array( $input_type, [ 'text', 'number', 'url' ] ) ) { ?>
                     <?php $field_value =  ( false != $value && is_string( $value ) ) ? $value : false; ?>
-                    <?php if ( in_array( $input_type, array( 'number' ) ) ) { ?>
+                    <?php if ( in_array( $input_type, [ 'number' ] ) ) { ?>
                         <?php $negatives_allowed = ( isset( $extra_field[ 'negatives' ] ) && true == $extra_field[ 'negatives' ] ) ? true : false; ?>
                         <?php $validation = true; ?>
-                        <?php if ( false == $negatives_allowed ) { ?>
+                        <?php if ( false === $negatives_allowed ) { ?>
                             <?php $validation = " min=0 oninput=\"validity.valid||(value='');\""; ?>
                         <?php } ?>
                         <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php echo $validation; ?> value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
@@ -167,23 +167,23 @@
                         <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?>value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php }  ?>
 
-                <?php } elseif ( 'textarea' == $input_type ) { ?>
+                <?php } elseif ( 'textarea' === $input_type ) { ?>
                     <textarea name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo esc_textarea( $field_value ); ?></textarea>
 
-                <?php } elseif ( in_array( $input_type, array( 'true_false' ) ) ) { ?>
+                <?php } elseif ( in_array( $input_type, [ 'true_false' ] ) ) { ?>
                     <label for="<?php echo esc_attr( $input_id ); ?>" class="screen-reader-text"><?php echo esc_attr( $input_label ); ?></label>
                     <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo $input_class; ?>" /> <?php echo $input_description; ?>
 
-                <?php } elseif ( in_array( $input_type, array( 'radio', 'checkbox' ) ) ) { ?>
+                <?php } elseif ( in_array( $input_type, [ 'radio', 'checkbox' ] ) ) { ?>
                     <?php if ( $input_options ) { ?>
                         <?php $counter = 1; ?>
                         <div class="b3_input-options">
                             <?php foreach( $input_options as $option ) { ?>
                                 <div class="b3_input-option b3_input-option--<?php echo esc_attr( $input_type ); ?>">
                                     <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
-                                    <?php if ( in_array( $input_type, array( 'radio' ) ) ) { ?>
+                                    <?php if ( in_array( $input_type, [ 'radio' ] ) ) { ?>
                                         <?php $checked = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
-                                    <?php } elseif ( in_array( $input_type, array( 'checkbox' ) ) ) { ?>
+                                    <?php } elseif ( in_array( $input_type, [ 'checkbox' ] ) ) { ?>
                                         <?php
                                             $checked = false;
                                             if ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) {
@@ -198,7 +198,7 @@
                                         <label for="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); ?>" class="screen-reader-text"><?php echo esc_html( $option[ 'label' ] ); ?></label>
                                     <?php } ?>
                                     <?php if ( isset( $option[ 'name' ] ) && isset( $option[ 'label' ] ) ) { ?>
-                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' == $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo $checked; ?>> <?php echo $option[ 'label' ]; ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' === $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo $checked; ?>> <?php echo $option[ 'label' ]; ?>
                                     <?php } ?>
                                 </div>
                                 <?php $counter++; ?>
@@ -206,7 +206,7 @@
                         </div>
                     <?php } ?>
 
-                <?php } elseif ( 'select' == $input_type ) { ?>
+                <?php } elseif ( 'select' === $input_type ) { ?>
                     <select name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="<?php echo esc_attr( $input_class ); ?>">
                         <?php if ( $input_options ) { ?>
                             <?php $input_placeholder_select = ( $input_placeholder ) ? $input_placeholder : esc_attr__( 'Select an option', 'b3-onboarding' ); ?>
@@ -241,18 +241,18 @@
     function b3_replace_template_styling( $message = false ) {
         if ( false != $message ) {
             $email_footer = apply_filters( 'b3_email_footer_text', b3_get_email_footer() );
-            $hide_logo    = ( '1' === get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo    = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
             $link_color   = apply_filters( 'b3_link_color', b3_get_link_color() );
             $styling      = apply_filters( 'b3_email_styling', b3_get_email_styling( $link_color ) );
             $template     = apply_filters( 'b3_email_template', b3_get_email_template( $hide_logo ) );
 
             if ( false != $styling && false != $template ) {
-                $replace_vars = array(
-                    '%email_footer%'  => $email_footer,
-                    '%email_message%' => $message,
-                    '%email_styling%' => $styling,
-                );
-                $message = strtr( $template, $replace_vars );
+				$replace_vars = [
+					'%email_footer%'  => $email_footer,
+					'%email_message%' => $message,
+					'%email_styling%' => $styling,
+				];
+				$message = strtr( $template, $replace_vars );
             }
         }
 
@@ -268,7 +268,7 @@
      * @return bool
      */
     function b3_verify_privacy() {
-        if ( 1 == get_option( 'b3_privacy' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
+        if ( '1' === get_option( 'b3_privacy' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
             return false;
         }
 

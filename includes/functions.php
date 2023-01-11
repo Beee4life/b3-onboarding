@@ -297,7 +297,7 @@
      * @param bool $hide
      */
     function b3_get_settings_field_open( $no_render = false, $hide = false, $modifier = false ) {
-        if ( false == $no_render ) {
+        if ( false === $no_render ) {
             $hide_class = ( $hide != false ) ? ' hidden' : false;
             $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
             echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
@@ -339,7 +339,7 @@
      */
     function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
         $button_class = false;
-        if ( false == $submit_value || ! is_string( $submit_value ) ) {
+        if ( false === $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
 
@@ -351,7 +351,7 @@
 
         $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
 
-        if ( 'register' == $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
+        if ( 'register' === $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
             $recaptcha_version  = get_option( 'b3_recaptcha_version' );
             if ( $activate_recaptcha && 3 == $recaptcha_version ) {
@@ -514,7 +514,7 @@
             $reset_pass_page_id = apply_filters( 'wpml_object_id', $reset_pass_page_id, 'page', true );
         }
         if ( false != $reset_pass_page_id ) {
-            if ( true == $return_id ) {
+            if ( true === $return_id ) {
                 return $reset_pass_page_id;
             }
             $reset_post = get_post( $reset_pass_page_id );
@@ -546,7 +546,7 @@
                 $user_approval_page_id = apply_filters( 'wpml_object_id', $user_approval_page_id, 'page', true );
             }
             if ( false != $user_approval_page_id ) {
-                if ( true == $return_id ) {
+                if ( true === $return_id ) {
                     return $user_approval_page_id;
                 }
                 if ( get_post( $user_approval_page_id ) ) {
@@ -1016,7 +1016,7 @@
         require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
         $plugins = get_plugins();
         foreach( $plugins as $plugin_file => $plugin_info ) {
-            if ( $plugin_info[ 'Name' ] == $plugin_name ) {
+            if ( $plugin_info[ 'Name' ] === $plugin_name ) {
                 return $plugin_file;
             }
         }
@@ -1176,8 +1176,8 @@
                 $vars[ 'user_data' ] = $user_data;
             }
         }
-        $blog_id = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
-        $user_login = ( true != get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
+		$blog_id    = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
+		$user_login = ( true != get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) ? $user_data->user_login : false;
 
         if ( isset( $vars[ 'registration_date' ] ) ) {
             $registration_date_gmt = $vars[ 'registration_date' ];
@@ -1186,17 +1186,8 @@
         } else {
             $registration_date_gmt = false;
         }
-        $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
-
-        // More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
-        if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
-            // check ip from share internet
-            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
-        } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
-            // to check ip is pass from proxy
-            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } else {
-            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+		if ( $registration_date_gmt ) {
+        	$local_registration_date = b3_get_local_date_time( $registration_date_gmt );
         }
 
         if ( isset( $vars[ 'blog_id' ] ) ) {
@@ -1205,22 +1196,22 @@
             restore_current_blog();
         }
 
-        switch($type) {
+		switch( $type ) {
             case 'message':
                 $replacements = array(
-                    '%account_page%'      => esc_url( b3_get_account_url() ),
-                    '%blog_name%'         => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
-                    '%email_footer%'      => apply_filters( 'b3_email_footer_text', b3_get_email_footer() ),
-                    '%home_url%'          => get_home_url( $blog_id, '/' ),
-                    '%login_url%'         => esc_url( b3_get_login_url() ),
-                    '%logo%'              => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
-                    '%lostpass_url%'      => b3_get_lostpassword_url(),
-                    '%network_name%'      => get_site_option( 'site_name' ),
-                    '%registration_date%' => $local_registration_date,
-                    '%reset_url%'         => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
-                    '%user_ip%'           => $user_ip,
-                    '%user_login%'        => $user_login,
+					'%account_page%' => esc_url( b3_get_account_url() ),
+					'%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
+					'%home_url%'     => get_home_url( $blog_id, '/' ),
+					'%login_url%'    => esc_url( b3_get_login_url() ),
+					'%logo%'         => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
+					'%lostpass_url%' => b3_get_lostpassword_url(),
+					'%reset_url%'    => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
+					'%user_ip%'      => b3_get_user_ip(),
+					'%user_login%'   => $user_login,
                 );
+				if ( isset( $local_registration_date ) ) {
+					$replacements[ '%registration_date%' ] = $local_registration_date;
+				}
                 break;
             case 'subject':
                 $replacements = array(
@@ -1235,8 +1226,9 @@
         }
 
         if ( is_multisite() ) {
-            $options_site_url = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
-            $replacements[ '%settings_url%' ] = $options_site_url;
+			$options_site_url                 = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
+			$replacements[ '%network_name%' ] = get_site_option( 'site_name' );
+			$replacements[ '%settings_url%' ] = $options_site_url;
 
             if ( isset( $vars[ 'blog_id' ] )  ) {
                 $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
@@ -1345,4 +1337,27 @@
 		$output = ob_get_clean();
 
 		return $output;
+	}
+
+
+	/**
+	 * Get user IP
+	 *
+	 * @since 3.9.0
+	 *
+	 * @return mixed
+	 */
+	function b3_get_user_ip() {
+		// More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
+		if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
+			// check ip from share internet
+			$user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+		} elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
+			// to check ip is pass from proxy
+			$user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+		} else {
+			$user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+		}
+
+		return $user_ip;
 	}

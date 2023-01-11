@@ -7,7 +7,7 @@
 ?>
 <div class="b3_form-element b3_form-element--email">
     <label class="b3_form-label" for="email">
-        <?php esc_attr__( 'Email address', 'b3-onboarding' ); ?>
+        <?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?>
     </label>
     <input type="text" name="email" id="email" value="<?php echo $value; ?>" class="input regular-text" />
 

@@ -5,7 +5,7 @@
      * @since 3.0
      */
     function b3_registration_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_registration_nonce' ] ) ) {
+        if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_registration_nonce' ] ) ) {
             if ( ! wp_verify_nonce( $_POST[ 'b3_registration_nonce' ], 'b3-registration-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
@@ -17,7 +17,7 @@
                             update_option( 'b3_registration_type', $ms_registration_type, false );
                         }
                     } else {
-                        if ( 'none' == $_POST[ 'b3_registration_type' ] ) {
+                        if ( 'none' === $_POST[ 'b3_registration_type' ] ) {
                             update_option( 'users_can_register', 0 );
                         } else {
                             update_option( 'users_can_register', 1 );
@@ -30,7 +30,7 @@
                     delete_option( 'b3_activate_custom_passwords' );
                 }
 
-                if ( 'none' == $_POST[ 'b3_registration_type' ] ) {
+                if ( 'none' === $_POST[ 'b3_registration_type' ] ) {
                     if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
                         update_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ), false );
                     } else {
@@ -608,7 +608,7 @@
                     delete_option( 'b3_main_logo' );
                 }
 
-                if ( true == $reset ) {
+                if ( true === $reset ) {
 					B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings. Remember to set your pages again, before you log out !', 'b3-onboarding' ) );
                 } else {
 					B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Settings saved', 'b3-onboarding' ) );

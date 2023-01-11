@@ -50,7 +50,7 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php if ( 'none' == $registration_type ) { ?>
+                <?php if ( 'none' === $registration_type ) { ?>
                     <?php $filter_message = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) ); ?>
                     <?php $closed_message = htmlspecialchars( get_option( 'b3_registration_closed_message' ) ); ?>
                     <?php $default_closed_message = b3_get_registration_closed_message(); ?>
@@ -118,7 +118,7 @@
                         <?php b3_get_close(); ?>
                     </div>
 
-                    <?php if ( 'open' == $registration_type ) { ?>
+                    <?php if ( 'open' === $registration_type ) { ?>
                         <?php $hide_redirect_field = ( 1 == $custom_passwords ) ? true : false; ?>
                         <?php b3_get_settings_field_open( false, $hide_redirect_field, 'redirect' ); ?>
                             <?php b3_get_label_field_open(); ?>
@@ -184,8 +184,16 @@
                             <label for="b3_privacy_page_id"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <?php $page_args = array( 'post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC', 'suppress_filters' => false ); ?>
-                            <?php $all_pages = get_posts( $page_args ); ?>
+                            <?php
+								$page_args = [
+									'post_type'        => 'page',
+									'posts_per_page'   => -1,
+									'orderby'          => 'title',
+									'order'            => 'ASC',
+									'suppress_filters' => false,
+								];
+								$all_pages = get_posts( $page_args );
+							?>
                             <select name="b3_privacy_page_id" id="b3_privacy_page_id">
                                 <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
                                 <?php foreach( $all_pages as $page ) { ?>

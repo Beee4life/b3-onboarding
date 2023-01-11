@@ -94,11 +94,11 @@
      */
     function b3_get_notification_addresses( $registration_type ) {
         $email_addresses = get_site_option( 'admin_email' );
-        if ( 'request_access' == $registration_type ) {
+        if ( 'request_access' === $registration_type ) {
             if ( false != get_option( 'b3_request_access_notification_addresses' ) ) {
                 $email_addresses = get_option( 'b3_request_access_notification_addresses' );
             }
-        } elseif ( 'open' == $registration_type ) {
+        } elseif ( 'open' === $registration_type ) {
             if ( false != get_option( 'b3_new_user_notification_addresses' ) ) {
                 $email_addresses = get_option( 'b3_new_user_notification_addresses' );
             }
@@ -523,7 +523,7 @@
      * @return string
      */
     function b3_get_email_intro( $welcome = false ) {
-        $welcome = ( false == $welcome ) ? esc_html__( 'Welcome', 'b3-onboarding' ) : $welcome;
+        $welcome = ( false === $welcome ) ? esc_html__( 'Welcome', 'b3-onboarding' ) : $welcome;
         if ( true == get_option( 'b3_register_email_only' ) ) {
             $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
         } else {
