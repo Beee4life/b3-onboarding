@@ -146,8 +146,8 @@
      * @return string Redirect URL
      */
     function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-        $exclude_from_admin = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : array( 'subscriber' );
-
+        $exclude_from_admin = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
+        
         if ( ! $user ) {
             return get_home_url();
         } elseif ( is_wp_error( $user ) ) {
@@ -228,7 +228,7 @@
             if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                 if ( isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
                     $redirect_url = b3_get_login_url();
-                    $valid_error_codes = array( 'already_active', 'blog_taken' );
+                    $valid_error_codes = [ 'already_active', 'blog_taken' ];
                     list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
                     $activate_cookie = 'wp-activate-' . COOKIEHASH;
                     $key             = '';
@@ -271,7 +271,7 @@
                     }
 
                     if ( ! is_wp_error( $result ) ) {
-                        $redirect_url = add_query_arg( array( 'mu-activate' => 'success' ), $redirect_url );
+                        $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
                         wp_safe_redirect( $redirect_url );
                         exit;
                     }
@@ -308,8 +308,8 @@
                     } else {
 
                         // remove user_activation_key
-                        $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => sanitize_user( $_GET[ 'user_login' ] ) ) );
-
+                        $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( $_GET[ 'user_login' ] ) ] );
+                        
                         // activate user, change user role
                         $user_object = new WP_User( $user->ID );
                         $user_object->set_role( get_option( 'default_role' ) );
@@ -319,8 +319,8 @@
                         } else {
                             $redirect_url = b3_get_login_url();
                         }
-                        $redirect_url = add_query_arg( array( 'activate' => 'success' ), $redirect_url );
-
+                        $redirect_url = add_query_arg( [ 'activate' => 'success' ], $redirect_url );
+                        
                         do_action( 'b3_after_user_activated', $user->ID );
                     }
 

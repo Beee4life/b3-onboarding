@@ -2,18 +2,18 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-
+    
     /**
      * Return all custom meta keys
      *
+     * @return array
      * @since 1.0.0
      *
-     * @return array
      */
     function b3_get_all_custom_meta_keys() {
-
+        
         // Keep this list updated
-        $meta_keys = array(
+        $meta_keys = [
             'b3_account_activated_message',
             'b3_account_activated_subject',
             'b3_account_approved_message',
@@ -99,7 +99,7 @@
             'b3_welcome_user_subject',
             'b3_welcome_user_message_manual',
             'b3ob_version',
-        );
-
+        ];
+        
         return $meta_keys;
     }

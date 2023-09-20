@@ -17,57 +17,57 @@
      */
     function b3_get_email_boxes() {
         $registration_type = get_option( 'b3_registration_type' );
-        $email_boxes       = array();
-
-        $email_boxes[] = array(
+        $email_boxes       = [];
+        
+        $email_boxes[] = [
             'id'    => 'email_settings',
             'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
-        );
+        ];
         if ( is_main_site() ) {
-            if ( in_array( $registration_type, array( 'request_access', 'request_access_subdomain' ) ) ) {
-                $email_boxes[] = array(
+            if ( in_array( $registration_type, [ 'request_access', 'request_access_subdomain' ] ) ) {
+                $email_boxes[] = [
                     'id'    => 'request_access_user',
                     'title' => esc_html__( 'Request access email (user)', 'b3-onboarding' ),
-                );
-                $email_boxes[] = array(
+                ];
+                $email_boxes[] = [
                     'id'    => 'request_access_admin',
                     'title' => esc_html__( 'Request access email (admin)', 'b3-onboarding' ),
-                );
-                $email_boxes[] = array(
+                ];
+                $email_boxes[] = [
                     'id'    => 'account_approved',
                     'title' => esc_html__( 'Account approved email (user)', 'b3-onboarding' ),
-                );
-                $email_boxes[] = array(
+                ];
+                $email_boxes[] = [
                     'id'    => 'account_rejected',
                     'title' => esc_html__( 'Account rejected email (user)', 'b3-onboarding' ),
-                );
+                ];
             }
-            if ( in_array( $registration_type, array( 'email_activation' ) ) ) {
-                $email_boxes[] = array(
+            if ( in_array( $registration_type, [ 'email_activation' ] ) ) {
+                $email_boxes[] = [
                     'id'    => 'email_activation',
                     'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
-                );
-                $email_boxes[] = array(
+                ];
+                $email_boxes[] = [
                     'id'    => 'account_activated',
                     'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
-                );
+                ];
             }
         }
-        if ( in_array( $registration_type, array( 'open', 'blog', 'all', 'site' ) ) ) {
-            $email_boxes[] = array(
+        if ( in_array( $registration_type, [ 'open', 'blog', 'all', 'site' ] ) ) {
+            $email_boxes[] = [
                 'id'    => 'welcome_user',
                 'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
-            );
+            ];
         }
-        if ( in_array( $registration_type, array( 'open', 'blog', 'all', 'site', 'none' ) ) ) {
-            $email_boxes[] = array(
+        if ( in_array( $registration_type, [ 'open', 'blog', 'all', 'site', 'none' ] ) ) {
+            $email_boxes[] = [
                 'id'    => 'welcome_user_manual',
                 'title' => esc_html__( 'Welcome email (user) - added by admin', 'b3-onboarding' ),
-            );
+            ];
         }
         if ( is_main_site() ) {
             if ( is_multisite() ) {
-                if ( in_array( $registration_type, array( 'user' ) ) ) {
+                if ( in_array( $registration_type, [ 'user' ] ) ) {
                     // @TODO: test this
                     // $email_boxes[] = array(
                     //     'id'    => 'email_activation',
@@ -77,47 +77,47 @@
                     //     'id'    => 'account_activated',
                     //     'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
                     // );
-                    $email_boxes[] = array(
+                    $email_boxes[] = [
                         'id'    => 'confirm_user_email',
                         'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
-                    );
-                    $email_boxes[] = array(
+                    ];
+                    $email_boxes[] = [
                         'id'    => 'activated_user_email',
                         'title' => esc_html__( 'User activated (user only)', 'b3-onboarding' ),
-                    );
-                } elseif ( in_array( $registration_type, array( 'site' ) ) ) {
-                    $email_boxes[] = array(
+                    ];
+                } elseif ( in_array( $registration_type, [ 'site' ] ) ) {
+                    $email_boxes[] = [
                         'id'    => 'confirm_user_site_email',
                         'title' => esc_html__( 'Confirm email (user + site)', 'b3-onboarding' ),
-                    );
-                    $email_boxes[] = array(
+                    ];
+                    $email_boxes[] = [
                         'id'    => 'activated_user_site_email',
                         'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
-                    );
+                    ];
                 }
-                if ( ! in_array( $registration_type, array( 'none' ) ) ) {
-                    $email_boxes[] = array(
+                if ( ! in_array( $registration_type, [ 'none' ] ) ) {
+                    $email_boxes[] = [
                         'id'    => 'new_wpmu_user_admin',
                         'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
-                    );
+                    ];
                 }
             }
-            if ( in_array( $registration_type, array( 'open', 'email_activation' ) ) ) {
-                $email_boxes[] = array(
+            if ( in_array( $registration_type, [ 'open', 'email_activation' ] ) ) {
+                $email_boxes[] = [
                     'id'    => 'new_user_admin',
                     'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
-                );
+                ];
             }
         }
-        $email_boxes[] = array(
+        $email_boxes[] = [
             'id'    => 'lost_password',
             'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
-        );
-
+        ];
+        
         return $email_boxes;
     }
-
-
+    
+    
     /**
      * Return registration options
      *
@@ -126,68 +126,68 @@
      * @return array
      */
     function b3_get_registration_types() {
-        $registration_options = array();
-        $closed_option        = array(
-            array(
+        $registration_options = [];
+        $closed_option        = [
+            [
                 'value' => 'none',
                 'label' => esc_html__( 'Closed (for everyone)', 'b3-onboarding' ),
-            ),
-        );
-
+            ],
+        ];
+        
         if ( ! is_multisite() ) {
-            $normal_options = array(
-                array(
+            $normal_options = [
+                [
                     'value' => 'request_access',
                     'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
-                ),
-                array(
+                ],
+                [
                     'value' => 'email_activation',
                     'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
-                ),
-                array(
+                ],
+                [
                     'value' => 'open',
                     'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
-                ),
-            );
+                ],
+            ];
         }
-
+        
         if ( is_multisite() ) {
-            $multisite_options = array(
-                array(
+            $multisite_options = [
+                [
                     'value' => 'user',
                     'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
-                ),
-                array(
+                ],
+                [
                     'value' => 'blog',
                     'label' => esc_html__( 'Logged in user may register a site (no public new user registration)', 'b3-onboarding' ),
-                ),
-                array(
+                ],
+                [
                     'value' => 'all',
                     'label' => esc_html__( 'Visitor may register user and/or site', 'b3-onboarding' ),
-                ),
-                array(
+                ],
+                [
                     'value' => 'site',
                     'label' => esc_html__( "Visitor may register user + site (must register site)", 'b3-onboarding' ),
-                ),
-                array(
+                ],
+                [
                     'value' => 'request_access_subdomain',
                     'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
-                ),
-            );
+                ],
+            ];
         }
-
+        
         if ( ! is_multisite() ) {
             $registration_options = array_merge( $closed_option, $registration_options, $normal_options );
         } else {
             if ( is_main_site() ) {
                 $registration_options = array_merge( $closed_option, $multisite_options );
             }
-
+            
         }
-
+        
         return $registration_options;
     }
-
+    
     /**
      * Return user email logo and default logo if false
      *
@@ -280,11 +280,14 @@
 
         global $wpdb;
         // Set the activation key for the user
-        $wpdb->update( $wpdb->users, array( 'user_activation_key' => $key ), array( 'user_login' => $user_data->user_login ) );
-
+        $wpdb->update( $wpdb->users, [ 'user_activation_key' => $key ], [ 'user_login' => $user_data->user_login ] );
+        
         $login_url      = b3_get_login_url();
-        $activation_url = add_query_arg( array( 'action' => 'activate', 'key' => $key, 'user_login' => rawurlencode( $user_data->user_login ) ), $login_url );
-
+        $activation_url = add_query_arg( [ 'action'     => 'activate',
+                                           'key'        => $key,
+                                           'user_login' => rawurlencode( $user_data->user_login ),
+        ], $login_url );
+        
         return $activation_url;
     }
 
@@ -888,68 +891,68 @@
      * @return array[]
      */
     function b3_get_admin_tabs() {
-        $tabs = array(
-            array(
+        $tabs = [
+            [
                 'id'      => 'registration',
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                 'content' => b3_render_tab_content( 'registration' ),
                 'icon'    => 'shield',
-            ),
-        );
-
-        $tabs[] = array(
+            ],
+        ];
+        
+        $tabs[] = [
             'id'      => 'pages',
             'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
             'content' => b3_render_tab_content( 'pages' ),
             'icon'    => 'admin-page',
-        );
-
-        $tabs[] = array(
+        ];
+        
+        $tabs[] = [
             'id'      => 'emails',
             'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
             'content' => b3_render_tab_content( 'emails' ),
             'icon'    => 'email',
-        );
+        ];
         if ( get_option( 'b3_activate_custom_emails' ) ) {
-            $tabs[] = array(
+            $tabs[] = [
                 'id'      => 'template',
                 'title'   => esc_html__( 'Template', 'b3-onboarding' ),
                 'content' => b3_render_tab_content( 'template' ),
                 'icon'    => 'admin-customizer',
-            );
+            ];
         }
-
+        
         if ( is_main_site() ) {
             if ( ! is_multisite() ) {
-                $tabs[] = array(
+                $tabs[] = [
                     'id'      => 'users',
                     'title'   => esc_html__( 'Users', 'b3-onboarding' ),
                     'content' => b3_render_tab_content( 'users' ),
                     'icon'    => 'admin-users',
-                );
+                ];
             }
-
+            
             if ( true == get_option( 'b3_activate_recaptcha' ) ) {
-                $tabs[] = array(
+                $tabs[] = [
                     'id'      => 'recaptcha',
                     'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
                     'content' => b3_render_tab_content( 'recaptcha' ),
                     'icon'    => 'plus-alt',
-                );
+                ];
             }
         }
-
-        $tabs[] = array(
+        
+        $tabs[] = [
             'id'      => 'settings',
             'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
             'content' => b3_render_tab_content( 'settings' ),
             'icon'    => 'admin-generic',
-        );
-
+        ];
+        
         return $tabs;
     }
-
-
+    
+    
     /**
      * Checks that the reCAPTCHA parameter (both versions) sent with the registration
      * request is valid.
@@ -967,14 +970,12 @@
         $success          = false;
         if ( false != $recaptcha_secret ) {
             $response = wp_remote_post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                array(
-                    'body' => array(
-                        'secret' => $recaptcha_secret,
-                        'response' => $recaptcha_response
-                    )
-                )
-            );
+                'https://www.google.com/recaptcha/api/siteverify', [
+                    'body' => [
+                        'secret'   => $recaptcha_secret,
+                        'response' => $recaptcha_response,
+                    ],
+                ] );
 
             $response_body = wp_remote_retrieve_body( $response );
             $response_code = wp_remote_retrieve_response_code( $response );
@@ -1060,7 +1061,7 @@
 
             $restrict_admin = get_option( 'b3_restrict_admin' );
             if ( false == $restrict_admin || is_array( $restrict_admin ) && empty( $restrict_admin ) ) {
-                update_option( 'b3_restrict_admin', array( 'subscriber', 'b3_activation', 'b3_approval' ), false );
+                update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ], false );
             }
 
         } else {
@@ -1098,14 +1099,14 @@
      * @return string[]
      */
     function b3_get_template_paths() {
-        $template_paths = array(
+        $template_paths = [
             get_stylesheet_directory() . '/b3-onboarding/',
             get_stylesheet_directory() . '/plugins/b3-onboarding/',
             get_template_directory() . '/b3-onboarding/',
             get_template_directory() . '/plugins/b3-onboarding/',
             B3OB_PLUGIN_PATH . '/templates/',
-        );
-
+        ];
+        
         return $template_paths;
     }
 
@@ -1164,7 +1165,7 @@
      * @return array
      * @throws Exception
      */
-    function b3_get_replacement_vars( $type = 'message', $vars = array(), $activation = false ) {
+    function b3_get_replacement_vars( $type = 'message', $vars = [], $activation = false ) {
         $replacements = [];
         $user_data    = false;
 
@@ -1198,28 +1199,28 @@
 
 		switch( $type ) {
             case 'message':
-                $replacements = array(
-					'%account_page%' => esc_url( b3_get_account_url() ),
-					'%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // check in single site
-					'%home_url%'     => get_home_url( $blog_id, '/' ),
-					'%login_url%'    => esc_url( b3_get_login_url() ),
-					'%logo%'         => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
-					'%lostpass_url%' => b3_get_lostpassword_url(),
-					'%reset_url%'    => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
-					'%user_ip%'      => b3_get_user_ip(),
-					'%user_login%'   => $user_login,
-                );
-				if ( isset( $local_registration_date ) ) {
+                $replacements = [
+                    '%account_page%' => esc_url( b3_get_account_url() ),
+                    '%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // @TODO: check in single site
+                    '%home_url%'     => get_home_url( $blog_id, '/' ),
+                    '%login_url%'    => esc_url( b3_get_login_url() ),
+                    '%logo%'         => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
+                    '%lostpass_url%' => b3_get_lostpassword_url(),
+                    '%reset_url%'    => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
+                    '%user_ip%'      => b3_get_user_ip(),
+                    '%user_login%'   => $user_login,
+                ];
+                if ( isset( $local_registration_date ) ) {
 					$replacements[ '%registration_date%' ] = $local_registration_date;
 				}
                 break;
             case 'subject':
-                $replacements = array(
+                $replacements = [
                     '%blog_name%'    => get_option( 'blogname' ),
                     '%network_name%' => get_site_option( 'site_name' ),
                     '%user_login%'   => $user_login,
                     '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
-                );
+                ];
                 break;
             default:
                 $replacements = [];
