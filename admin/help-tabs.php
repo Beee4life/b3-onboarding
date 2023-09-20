@@ -13,9 +13,9 @@
      * @return false|void
      */
     function b3_help_tabs( $screen ) {
-        $screen_array = array(
+        $screen_array = [
             'toplevel_page_b3-onboarding',
-        );
+        ];
         if ( ! in_array( $screen->id, $screen_array ) ) {
             return false;
         }
@@ -142,11 +142,11 @@
             ];
 
             foreach( $tabs as $tab ) {
-                $screen->add_help_tab( array(
+                $screen->add_help_tab( [
                     'id'      => $tab[ 'id' ],
                     'title'   => $tab[ 'title' ],
                     'content' => $tab[ 'content' ],
-                ) );
+                ] );
             }
 
             ob_start();

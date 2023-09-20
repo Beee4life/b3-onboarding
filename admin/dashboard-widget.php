@@ -23,14 +23,14 @@
         if ( ! empty( $sites ) ) {
             // @TODO: also get users not connected to a network
             foreach( $sites as $site_id ) {
-                $all_args = array(
-                    'exclude'      => array( get_current_user_id() ),
+                $all_args = [
+                    'exclude'      => [ get_current_user_id() ],
                     'blog_id'      => $site_id,
                     'number'       => '5',
                     'orderby'      => 'registered',
                     'order'        => 'DESC',
-                    'role__not_in' => array( 'b3_activation', 'b3_approval' ),
-                );
+                    'role__not_in' => [ 'b3_activation', 'b3_approval' ],
+                ];
                 $all_users = array_merge_recursive( $all_users, get_users( $all_args ) );
             }
         }
