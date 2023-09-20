@@ -2,7 +2,7 @@
 Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
-Tested up to: 6.1.1
+Tested up to: 6.3.1
 Requires PHP: 5.6
 Stable tag: 3.10.0
 License: GNU v3
@@ -28,7 +28,8 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.10.0
-* ??
+* filter out nav menu items
+* sprintf admin tabs
 
 3.9.0
 * remove jquery enqueue
