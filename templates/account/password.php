@@ -12,16 +12,20 @@
                 <input class="hidden" value=" " />
                 <button type="button" class="button button-secondary button--password wp-generate-pw hide-if-no-js"><?php esc_attr_e( 'Change password', 'b3-onboarding' ); ?></button>
                 <div class="wp-pwd hide-if-js">
-                    <label class="b3_form-label" for="pass1">
-                        <?php esc_attr_e( 'New password', 'b3-onboarding' ); ?>
-                    </label>
-                    <span class="password-input-wrapper">
-                        <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php esc_attr_e( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
-                        <br/>
-                        <span class="password-input-description">
-                            <small><?php esc_html_e( 'You can also enter your own password', 'sexdates' ); ?></small>
-                        </span>
-                    </span>
+                    <div class="password-input">
+                        <label class="b3_form-label" for="pass1">
+                            <?php esc_attr_e( 'New password', 'b3-onboarding' ); ?>
+                        </label>
+                        <div class="input">
+                            <span class="password-input-wrapper">
+                                <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php esc_attr_e( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
+                                <br/>
+                                <span class="password-input-description">
+                                    <small><?php esc_html_e( 'You can also enter your own password', 'sexdates' ); ?></small>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
                     <div style="display:none" id="pass-strength-result"></div>
                     <button type="button" class="button button-secondary button--small wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="<?php esc_attr_e( 'Hide password', 'b3-onboarding' ); ?>">
                         <span class="dashicons dashicons-hidden"></span>

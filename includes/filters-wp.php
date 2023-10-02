@@ -257,3 +257,47 @@
         return $result;
     }
     add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
+    
+    
+    /**
+     * Filters out any menu items for registered users/visitors
+     *
+     * @since 3.10.0
+     *
+     * @param $items
+     * @param $menu
+     * @param $args
+     *
+     * @return mixed
+     */
+    function b3_filter_nav_menus( $items, $menu, $args ) {
+        if ( ! is_admin() ) {
+            if ( ! empty( $items ) ) {
+                $account_page        = get_option( 'b3_account_page_id' );
+                $login_page          = get_option( 'b3_login_page_id' );
+                $logout_page         = get_option( 'b3_logout_page_id' );
+                $lost_password_page  = get_option( 'b3_lost_password_page_id' );
+                $register_page       = get_option( 'b3_register_page_id' );
+                $reset_password_page = get_option( 'b3_reset_password_page_id' );
+    
+                foreach( $items as $key => $menu_values ) {
+                    if ( ! is_user_logged_in() && in_array( $menu_values->object_id, [
+                            $logout_page,
+                            $account_page,
+                        ] ) ) {
+                        unset( $items[ $key ] );
+                    } elseif ( is_user_logged_in() && in_array( $menu_values->object_id, [
+                            $login_page,
+                            $register_page,
+                            $lost_password_page,
+                            $reset_password_page,
+                        ] ) ) {
+                        unset( $items[ $key ] );
+                    }
+                }
+            }
+        }
+        
+        return $items;
+    }
+    add_filter( 'wp_get_nav_menu_items', 'b3_filter_nav_menus', 5, 3 );

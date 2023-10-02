@@ -692,7 +692,7 @@
      * @since 3.5.0
      */
     function b3_get_default_reserved_user_names() {
-        $default_reserved_names = array(
+        $default_reserved_names = [
             'admin',
             'administrator',
             'www',
@@ -701,8 +701,8 @@
             'main',
             'invite',
             'files',
-        );
-
+        ];
+        
         return $default_reserved_names;
     }
 
@@ -715,7 +715,7 @@
      * @return mixed|void
      */
     function b3_get_default_easy_passwords() {
-        $default_passwords = array(
+        $default_passwords = [
             '1234',
             '000000',
             '111111',
@@ -728,7 +728,7 @@
             'password',
             '1wachtwoord',
             'wachtwoord',
-        );
-
+        ];
+        
         return $default_passwords;
     }

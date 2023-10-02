@@ -123,14 +123,14 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
-                $page_ids = array(
+                $page_ids = [
                     'b3_account_page_id',
                     'b3_lost_password_page_id',
                     'b3_login_page_id',
                     'b3_logout_page_id',
                     'b3_register_page_id',
                     'b3_reset_password_page_id',
-                );
+                ];
                 if ( isset( $_POST[ 'b3_approval_page_id' ] ) ) {
                     $page_ids[] = 'b3_approval_page_id';
                 }
@@ -264,7 +264,7 @@
                     delete_option( 'b3_welcome_user_message_manual' );
                 }
 
-                if ( in_array( get_option( 'b3_registration_type' ), array( 'open', 'email_activation' ) ) ) {
+                if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
                     if ( isset( $_POST[ 'b3_account_activated_subject' ] ) && ! empty( $_POST[ 'b3_account_activated_subject' ] ) ) {
                         update_option( 'b3_account_activated_subject', stripslashes( $_POST[ 'b3_account_activated_subject' ] ), false );
                     } else {
@@ -309,7 +309,7 @@
                         delete_option( 'b3_new_user_subject' );
                     }
 
-                    if ( in_array( get_option( 'b3_registration_type' ), array( 'email_activation' ) ) ) {
+                    if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
                         if ( isset( $_POST[ 'b3_email_activation_subject' ] ) && ! empty( $_POST[ 'b3_email_activation_subject' ] ) ) {
                             update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ), false );
                         } else {
@@ -655,7 +655,7 @@
                         $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
                     } elseif ( false != $reject ) {
                         do_action( 'b3_before_reject_user', [ 'user_email' => $signup_info->user_email ] );
-                        $wpdb->delete( $wpdb->signups, array( 'signup_id' => $signup_info->signup_id ) );
+                        $wpdb->delete( $wpdb->signups, [ 'signup_id' => $signup_info->signup_id ] );
                         $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
                     }
 

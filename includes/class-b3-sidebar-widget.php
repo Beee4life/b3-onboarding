@@ -32,7 +32,7 @@
          * @param array $instance Saved values from database.
          */
         public function widget( $args, $instance ) {
-            $custom_links       = apply_filters( 'b3_widget_links', array() );
+            $custom_links       = apply_filters( 'b3_widget_links', [] );
             $main_logo          = get_option( 'b3_main_logo' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             $show_login         = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : false;

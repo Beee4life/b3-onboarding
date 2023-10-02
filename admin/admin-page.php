@@ -41,24 +41,25 @@
                 ?>
                     <div class="b3_tabs">
                         <div class="b3_tab-header">
-                            <?php foreach ( $tabs as $tab ) { ?>
-                                <button id="b3_tab-button--<?php echo $tab[ 'id' ]; ?>" class="b3_tab-button b3_tab-button--<?php echo $tab[ 'id' ]; ?><?php echo ( $tab[ 'id' ] === $default_tab ) ? ' active' : false; ?>" onclick="openTab(event, '<?php echo $tab[ 'id' ]; ?>')">
-                                    <?php if ( isset( $tab[ 'icon' ] ) ) { ?>
-                                        <i class="dashicons dashicons-<?php echo $tab[ 'icon' ]; ?>"></i>
-                                    <?php } ?>
-                                    <?php echo $tab[ 'title' ]; ?>
-                                </button>
-                            <?php } ?>
+                            <?php foreach ( $tabs as $tab ) {
+                                $tab_id   = $tab[ 'id' ];
+                                $active   = ( $tab[ 'id' ] === $default_tab ) ? ' active' : false;
+                                $add_icon = ( isset( $tab[ 'icon' ] ) ) ? true : false;
+                                $icon     = $add_icon ? sprintf( '<i class="dashicons dashicons-%s"></i>', $tab[ 'icon' ] ) : false;
+                                $title    = $tab[ 'title' ];
+                                echo sprintf( '<button id="b3_tab-button--%s" class="b3_tab-button b3_tab-button--%s%s" onclick="openTab(event, \'%s\')">%s%s</button>', $tab_id, $tab_id, $active, $tab_id, $icon, $title );
+                            }
+                            ?>
                         </div>
 
                         <div class="tab-contents">
-                            <?php foreach ( $tabs as $tab ) { ?>
-                                <div id="<?php echo $tab[ 'id' ]; ?>" class="b3_tab-content b3_tab-content--<?php echo $tab[ 'id' ]; ?>"<?php echo ( $tab[ 'id' ] === $default_tab ) ? ' style="display: block;"' : false; ?>>
-                                    <?php if ( $tab[ 'content' ] ) { ?>
-                                        <?php echo $tab[ 'content' ]; ?>
-                                    <?php } ?>
-                                </div>
-                            <?php } ?>
+                            <?php foreach ( $tabs as $tab ) {
+                                $active  = ( $tab[ 'id' ] === $default_tab ) ? ' style="display: block;"' : false;
+                                $content = $tab[ 'content' ];
+                                $tab_id  = $tab[ 'id' ];
+                                echo sprintf( '<div id="%s" class="b3_tab-content b3_tab-content--%s"%s>%s</div>', $tab_id, $tab_id, $active, $content );
+                            }
+                            ?>
                         </div>
                     </div>
                 <?php } ?>

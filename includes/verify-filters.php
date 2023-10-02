@@ -5,83 +5,83 @@
      * @since 2.0.0
      */
     function b3_verify_filter_input() {
-
-        $error_messages = array();
-        $custom_filters = array(
-            'b3_account_activated_message_user'        => array( 'string' ),
-            'b3_account_activated_subject_user'        => array( 'string' ),
-            'b3_account_approved_message'              => array( 'string' ),
-            'b3_account_approved_subject'              => array( 'string' ),
-            'b3_account_rejected_message'              => array( 'string' ),
-            'b3_account_rejected_subject'              => array( 'string' ),
-            'b3_attributes'                            => array( 'array' ),
-            'b3_custom_register_inform'                => array( 'string' ),
-            'b3_dashboard_url'                         => array( 'string' ),
-            'b3_default_greetings'                     => array( 'string' ),
-            'b3_disable_action_links'                  => array( 'bool', 'string' ),
-            'b3_disallowed_usernames'                  => array( 'array' ),
-            'b3_easy_passwords'                        => array( 'array' ),
-            'b3_email_activation_message_user'         => array( 'string' ),
-            'b3_email_activation_subject_user'         => array( 'string' ),
-            'b3_email_footer_text'                     => array( 'string' ),
-            'b3_email_styling'                         => array( 'string' ),
-            'b3_email_template'                        => array( 'string' ),
-            'b3_extra_fields'                          => array( 'array', 'extra' ),
-            'b3_extra_fields_validation'               => array( 'array' ),
-            'b3_hidden_fields'                         => array( 'array', 'hidden' ),
-            'b3_hide_development_notice'               => array( 'bool' ),
-            'b3_link_color'                            => array( 'hex_color' ),
-            'b3_localhost'                             => array( 'bool' ),
-            'b3_localhost_blogname'                    => array( 'string' ),
-            'b3_localhost_blogtitle'                   => array( 'string' ),
-            'b3_localhost_email'                       => array( 'email' ),
-            'b3_localhost_username'                    => array( 'string' ),
-            'b3_logged_in_registration_only_message'   => array( 'string' ),
-            'b3_lost_password_message'                 => array( 'string' ),
-            'b3_lost_password_subject'                 => array( 'string' ),
-            'b3_main_logo'                             => array( 'url', 'file' ),
-            'b3_message_above_login'                   => array( 'string' ),
-            'b3_message_above_lost_password'           => array( 'string' ),
-            'b3_message_above_new_blog'                => array( 'string' ),
-            'b3_message_above_registration'            => array( 'string' ),
-            'b3_message_above_request_access'          => array( 'string' ),
-            'b3_new_site_created_message'              => array( 'string' ),
-            'b3_new_user_message'                      => array( 'string' ),
-            'b3_new_user_notification_addresses'       => array( 'email' ),
-            'b3_new_user_subject'                      => array( 'string' ),
-            'b3_new_wpmu_user_message_admin'           => array( 'string' ),
-            'b3_new_wpmu_user_subject_admin'           => array( 'string' ),
-            'b3_notification_sender_email'             => array( 'email' ),
-            'b3_notification_sender_name'              => array( 'string' ),
-            'b3_privacy_text'                          => array( 'string' ),
-            'b3_recaptcha_public'                      => array( 'string' ),
-            'b3_recaptcha_secret'                      => array( 'string' ),
-            'b3_redirect_after_register'               => array( 'url' ),
-            'b3_register_for'                          => array( 'string' ),
-            'b3_registration_access_requested_message' => array( 'string' ),
-            'b3_registration_closed_message'           => array( 'string' ),
-            'b3_registration_confirm_email_message'    => array( 'string' ),
-            'b3_request_access_message_admin'          => array( 'string' ),
-            'b3_request_access_message_user'           => array( 'string' ),
-            'b3_request_access_subject_admin'          => array( 'string' ),
-            'b3_request_access_subject_user'           => array( 'string' ),
-            'b3_reserved_usernames'                    => array( 'array' ),
-            'b3_signup_for_site'                       => array( 'string' ),
-            'b3_signup_for_user'                       => array( 'string' ),
-            'b3_user_cap'                              => array( 'string' ),
-            'b3_welcome_page'                          => array( 'string' ),
-            'b3_welcome_user_message'                  => array( 'string' ),
-            'b3_welcome_user_message_manual'           => array( 'string' ),
-            'b3_welcome_user_subject'                  => array( 'string' ),
-            'b3_widget_links'                          => array( 'array' ),
-            'b3_wpmu_activate_user_blog_message'       => array( 'string' ),
-            'b3_wpmu_activate_user_blog_subject'       => array( 'string' ),
-            'b3_wpmu_activate_user_message'            => array( 'string' ),
-            'b3_wpmu_activate_user_subject'            => array( 'string' ),
-            'b3_wpmu_user_activated_message'           => array( 'string' ),
-            'b3_wpmu_user_activated_subject'           => array( 'string' ),
-        );
-
+        
+        $error_messages = [];
+        $custom_filters = [
+            'b3_account_activated_message_user'        => [ 'string' ],
+            'b3_account_activated_subject_user'        => [ 'string' ],
+            'b3_account_approved_message'              => [ 'string' ],
+            'b3_account_approved_subject'              => [ 'string' ],
+            'b3_account_rejected_message'              => [ 'string' ],
+            'b3_account_rejected_subject'              => [ 'string' ],
+            'b3_attributes'                            => [ 'array' ],
+            'b3_custom_register_inform'                => [ 'string' ],
+            'b3_dashboard_url'                         => [ 'string' ],
+            'b3_default_greetings'                     => [ 'string' ],
+            'b3_disable_action_links'                  => [ 'bool', 'string' ],
+            'b3_disallowed_usernames'                  => [ 'array' ],
+            'b3_easy_passwords'                        => [ 'array' ],
+            'b3_email_activation_message_user'         => [ 'string' ],
+            'b3_email_activation_subject_user'         => [ 'string' ],
+            'b3_email_footer_text'                     => [ 'string' ],
+            'b3_email_styling'                         => [ 'string' ],
+            'b3_email_template'                        => [ 'string' ],
+            'b3_extra_fields'                          => [ 'array', 'extra' ],
+            'b3_extra_fields_validation'               => [ 'array' ],
+            'b3_hidden_fields'                         => [ 'array', 'hidden' ],
+            'b3_hide_development_notice'               => [ 'bool' ],
+            'b3_link_color'                            => [ 'hex_color' ],
+            'b3_localhost'                             => [ 'bool' ],
+            'b3_localhost_blogname'                    => [ 'string' ],
+            'b3_localhost_blogtitle'                   => [ 'string' ],
+            'b3_localhost_email'                       => [ 'email' ],
+            'b3_localhost_username'                    => [ 'string' ],
+            'b3_logged_in_registration_only_message'   => [ 'string' ],
+            'b3_lost_password_message'                 => [ 'string' ],
+            'b3_lost_password_subject'                 => [ 'string' ],
+            'b3_main_logo'                             => [ 'url', 'file' ],
+            'b3_message_above_login'                   => [ 'string' ],
+            'b3_message_above_lost_password'           => [ 'string' ],
+            'b3_message_above_new_blog'                => [ 'string' ],
+            'b3_message_above_registration'            => [ 'string' ],
+            'b3_message_above_request_access'          => [ 'string' ],
+            'b3_new_site_created_message'              => [ 'string' ],
+            'b3_new_user_message'                      => [ 'string' ],
+            'b3_new_user_notification_addresses'       => [ 'email' ],
+            'b3_new_user_subject'                      => [ 'string' ],
+            'b3_new_wpmu_user_message_admin'           => [ 'string' ],
+            'b3_new_wpmu_user_subject_admin'           => [ 'string' ],
+            'b3_notification_sender_email'             => [ 'email' ],
+            'b3_notification_sender_name'              => [ 'string' ],
+            'b3_privacy_text'                          => [ 'string' ],
+            'b3_recaptcha_public'                      => [ 'string' ],
+            'b3_recaptcha_secret'                      => [ 'string' ],
+            'b3_redirect_after_register'               => [ 'url' ],
+            'b3_register_for'                          => [ 'string' ],
+            'b3_registration_access_requested_message' => [ 'string' ],
+            'b3_registration_closed_message'           => [ 'string' ],
+            'b3_registration_confirm_email_message'    => [ 'string' ],
+            'b3_request_access_message_admin'          => [ 'string' ],
+            'b3_request_access_message_user'           => [ 'string' ],
+            'b3_request_access_subject_admin'          => [ 'string' ],
+            'b3_request_access_subject_user'           => [ 'string' ],
+            'b3_reserved_usernames'                    => [ 'array' ],
+            'b3_signup_for_site'                       => [ 'string' ],
+            'b3_signup_for_user'                       => [ 'string' ],
+            'b3_user_cap'                              => [ 'string' ],
+            'b3_welcome_page'                          => [ 'string' ],
+            'b3_welcome_user_message'                  => [ 'string' ],
+            'b3_welcome_user_message_manual'           => [ 'string' ],
+            'b3_welcome_user_subject'                  => [ 'string' ],
+            'b3_widget_links'                          => [ 'array' ],
+            'b3_wpmu_activate_user_blog_message'       => [ 'string' ],
+            'b3_wpmu_activate_user_blog_subject'       => [ 'string' ],
+            'b3_wpmu_activate_user_message'            => [ 'string' ],
+            'b3_wpmu_activate_user_subject'            => [ 'string' ],
+            'b3_wpmu_user_activated_message'           => [ 'string' ],
+            'b3_wpmu_user_activated_subject'           => [ 'string' ],
+        ];
+        
         foreach( $custom_filters as $filter => $validation ) {
             $default       = ( in_array( $validation, [ 'array' ] ) ) ? [] : 'no_filter_defined';
             $filter_output = apply_filters( $filter, $default );
@@ -100,7 +100,7 @@
                     } else {
                         $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not a string or an array.', 'b3-onboarding' ), $filter );
                     }
-
+                    
                 } elseif ( in_array( 'int', $validation ) ) {
                     if ( ! is_int( $filter_output ) ) {
                         $error_messages[] = sprintf( esc_html__( 'The value, which you set in the filter "%s", is not an integer.', 'b3-onboarding' ), $filter );
@@ -115,7 +115,7 @@
                             }
                         }
                     }
-
+                    
                 } elseif ( in_array( 'hex_color', $validation ) ) {
                     if ( false == $filter_output ) {
                         $error_messages[] = sprintf( esc_html__( 'The color, which you set in the filter "%s", is not invalid.', 'b3-onboarding' ), $filter );
@@ -124,7 +124,7 @@
                     } elseif ( false == sanitize_hex_color( $filter_output ) ) {
                         $error_messages[] = sprintf( esc_html__( 'The color (%s), which you set in the filter "%s", is invalid.', 'b3-onboarding' ), $filter_output, $filter );
                     }
-
+                    
                 } elseif ( in_array( 'array', $validation ) ) {
                     if ( 'b3_extra_fields_validation' == $filter ) {
                         $extra_fields = apply_filters( 'b3_extra_fields', [] );
@@ -199,7 +199,7 @@
                 }
             }
         }
-
+        
         if ( ! empty( $error_messages ) ) {
             foreach( $error_messages as $message ) {
                 echo sprintf( '<div class="error"><p>%s</p></div>', $message );

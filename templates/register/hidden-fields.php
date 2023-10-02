@@ -3,7 +3,7 @@
         exit;
     }
     
-    $hidden_field_values = apply_filters( 'b3_hidden_fields', array() );
+    $hidden_field_values = apply_filters( 'b3_hidden_fields', [] );
     if ( is_array( $hidden_field_values ) && ! empty( $hidden_field_values ) ) {
         $hidden_fields = '';
         foreach( $hidden_field_values as $key => $value ) {

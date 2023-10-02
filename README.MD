@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.9.0 - released xx.12.22
+3.10.0 - released 02.10.23
 
 <a name="features"></a>
 ### Features
@@ -146,7 +146,13 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.9.0 - 1x.08.22
+3.10.0 - 02.10.23
+* filter out nav menu items
+* sprintf admin tabs
+* honour redirect_to on logout
+* array refactoring `array()` to `[]`
+
+3.9.0 - 11.01.23
 * remove jquery override
 
 3.8.2 - 28.07.22

@@ -8,7 +8,7 @@
      */
     function b3_add_hidden_fields( $fields ) {
         if ( ! is_array( $fields ) ) {
-            $fields = array();
+            $fields = [];
         }
         $fields[ 'b3_form' ]          = 'register';
         $fields[ 'b3_register_user' ] = wp_create_nonce( 'b3-register-user' );
@@ -58,8 +58,8 @@
      */
     function b3_extra_fields_validation() {
         $b3_onboarding      = new B3Onboarding();
-        $extra_field_values = apply_filters( 'b3_extra_fields', array() );
-        $error_array        = array();
+        $extra_field_values = apply_filters( 'b3_extra_fields', [] );
+        $error_array        = [];
         
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
@@ -67,24 +67,24 @@
                     $field_id   = $field[ 'id' ];
                     $field_type = $field[ 'type' ];
                     if ( true == $field[ 'required' ] ) {
-                        if ( in_array( $field_type, array( 'radio', 'checkbox', 'select' ) ) ) {
+                        if ( in_array( $field_type, [ 'radio', 'checkbox', 'select' ] ) ) {
                             if ( ! isset( $_POST[ $field_id ] ) || ( isset( $_POST[ $field_id ] ) && empty( $_POST[ $field_id ] ) ) ) {
                                 $error_code = 'empty_field';
                             }
                         }
                         if ( isset( $error_code ) ) {
-                            $error_array[] = array(
+                            $error_array[] = [
                                 'error_code'    => $error_code,
                                 'error_message' => $b3_onboarding->b3_get_return_message( $error_code ),
                                 'id'            => $field_id,
                                 'label'         => $field[ 'label' ],
-                            );
+                            ];
                         }
                     }
                 }
             }
         }
-
+        
         return $error_array;
     }
     add_filter( 'b3_extra_fields_validation', 'b3_extra_fields_validation' );

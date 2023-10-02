@@ -10,7 +10,6 @@
     }
 
     $current_user = get_userdata( get_current_user_id() );
-    // echo '<pre>'; var_dump($current_user); echo '</pre>'; exit;
 
     do_action( 'b3_add_form_messages', $attributes );
 ?>
