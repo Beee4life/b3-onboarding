@@ -5,7 +5,12 @@
      * @since 1.0.6
      */
     function b3_redirect_after_logout() {
-        $redirect_url = add_query_arg( 'logout', 'true', b3_get_login_url() );
+        $login_url = b3_get_login_url();
+        if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
+            $redirect_url = $_REQUEST[ 'redirect_to' ];
+        } else {
+            $redirect_url = add_query_arg( 'logout', 'true', $login_url );
+        }
         wp_safe_redirect( $redirect_url );
         exit;
     }
