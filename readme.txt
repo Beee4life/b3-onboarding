@@ -30,6 +30,8 @@ There are a ton of things, which you can set through the admin pages or with the
 3.10.0
 * filter out nav menu items
 * sprintf admin tabs
+* honour redirect_to on logout
+* array refactoring `array()` to `[]`
 
 3.9.0
 * remove jquery enqueue
