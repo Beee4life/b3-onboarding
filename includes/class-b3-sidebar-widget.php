@@ -70,13 +70,13 @@
             }
 
             if ( current_user_can( apply_filters( 'b3_user_cap', 'manage_options' ) ) ) {
-                $show_settings = ( false != $instance[ 'show_settings' ] ) ? $instance[ 'show_settings' ] : false;
+                $show_settings = ( '1' == $instance[ 'show_settings' ] ) ? true : false;
             }
 
             if ( isset( $login_url ) || isset( $register_url ) || isset( $logout_url ) || empty( $custom_links ) ) {
                 $show_widget = true;
             }
-            if ( false != $show_settings && current_user_can( apply_filters( 'b3_user_cap', 'manage_options' ) ) ) {
+            if ( false !== $show_settings ) {
                 $show_widget = true;
             }
 
@@ -101,7 +101,7 @@
 					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $account_url ), esc_html__( 'Account', 'b3-onboarding' ) );
                 }
 
-                if ( true === $show_settings && current_user_can( 'manage_options' ) ) {
+                if ( true === $show_settings ) {
 					$widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), 'B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) );
                 }
 
