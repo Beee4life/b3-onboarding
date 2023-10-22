@@ -119,6 +119,10 @@
     margin-top: 2rem;
 }
 
+.b3_form-element--button input[type="submit"] {
+    border-width: 0;
+}
+
 .b3_form-element-my-sites {
     align-items: flex-start;
 }
