@@ -293,6 +293,10 @@
                             $reset_password_page,
                         ] ) ) {
                         unset( $items[ $key ] );
+                    } elseif ( in_array( $menu_values->object_id, [
+                            $reset_password_page,
+                        ] ) ) {
+                        unset( $items[ $key ] );
                     }
                 }
             }
