@@ -91,6 +91,17 @@
                                 <?php esc_html_e( 'Activate custom passwords on the registration form.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
+
+                        <?php $hide_one_time_password = false; ?>
+                        <?php b3_get_settings_field_open( false, $hide_one_time_password, 'one-time-password' ); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_use_one_time_password"><?php esc_html_e( 'One-time password', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_use_one_time_password" name="b3_use_one_time_password" value="1" <?php checked($custom_passwords); ?>/>
+                                <?php esc_html_e( 'Use one-time password.', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
                     <?php } ?>
 
                     <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
