@@ -45,6 +45,15 @@
             $('.b3-name-fields').toggle();
         });
 
+        $('#b3_activate_custom_passwords').change(function() {
+            $('.b3_settings-field--one-time-password').toggle();
+            $('.b3_settings-field--redirect').toggle();
+        });
+
+        $('#b3_use_one_time_password').change(function() {
+            $('.b3_settings-field--custom-passwords').toggle();
+        });
+
         $('#b3_activate_first_last').change(function() {
             $('.b3_settings-field--first-last-required').toggle();
         });
@@ -63,10 +72,6 @@
 
         $('#b3_activate_frontend_approval').change(function() {
             $('.b3_settings-input-description--approval').toggle();
-        });
-
-        $('#b3_activate_custom_passwords').change(function() {
-            $('.b3_settings-field--redirect').toggle();
         });
 
         $('#b3_restrict_usernames').change(function () {
