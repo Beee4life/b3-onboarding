@@ -23,6 +23,7 @@
 				add_shortcode( 'login-form', 		[ $this, 'b3_render_login_form' ] );
 				add_shortcode( 'register-form', 	[ $this, 'b3_render_register_form' ] );
 				add_shortcode( 'resetpass-form', 	[ $this, 'b3_render_reset_password_form' ] );
+				add_shortcode( 'get-pass-form', 	[ $this, 'b3_render_get_password_form' ] );
 				add_shortcode( 'user-management', 	[ $this, 'b3_render_user_approval_page' ] );
 			}
 
@@ -171,6 +172,7 @@
                 // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
                 $attributes[ 'redirect' ]          = false;
+                $attributes[ 'one_time_password' ] = get_option( 'b3_use_one_time_password' );
 
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
@@ -314,6 +316,46 @@
                         $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
                         $message .= '<br>';
                         $message .= sprintf( esc_html__( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'click here', 'b3-onboarding' ) ) );
+
+                        return $message;
+                    }
+                }
+            }
+
+
+            public function b3_render_get_password_form( $user_variables, $content = null ) {
+				$default_attributes = [
+					'title'    => false,
+					'template' => 'getpass',
+				];
+				$attributes         = shortcode_atts( $default_attributes, $user_variables );
+
+                if ( is_user_logged_in() ) {
+                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                } else {
+                    if ( isset( $_REQUEST[ 'one_time_login' ] ) ) {
+                        $attributes[ 'email' ] = $_REQUEST[ 'one_time_login' ];
+                        $errors                = [];
+
+						if ( isset( $_REQUEST[ 'error' ] ) ) {
+                            $error_codes = explode( ',', $_REQUEST[ 'error' ] );
+                            foreach ( $error_codes as $code ) {
+                                $errors[] = $this->b3_get_return_message( $code );
+                            }
+                        }
+                        $attributes[ 'errors' ] = $errors;
+
+                        $attributes = apply_filters( 'b3_attributes', $attributes );
+
+                        return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+
+                    } else {
+                        // error message for password reset
+                        $message = esc_html__( 'This is not a valid get password link.', 'b3-onboarding' );
+                        // $message .= '<br>';
+                        // $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
+                        // $message .= '<br>';
+                        // $message .= sprintf( esc_html__( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'click here', 'b3-onboarding' ) ) );
 
                         return $message;
                     }
