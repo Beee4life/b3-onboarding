@@ -330,8 +330,9 @@
 
             public function b3_render_get_password_form( $user_variables, $content = null ) {
 				$default_attributes = [
-					'title'    => false,
-					'template' => 'getpass',
+                    'one_time_password' => true,
+                    'template'          => 'getpass',
+                    'title'             => false,
 				];
 				$attributes         = shortcode_atts( $default_attributes, $user_variables );
 
