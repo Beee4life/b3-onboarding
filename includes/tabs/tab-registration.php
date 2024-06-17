@@ -83,6 +83,7 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'none' ] ) ) ? true : false; ?>
+                        <?php $hide_custom_passwords = ( 1 == $use_one_time_password ) ? true : $hide_custom_passwords; ?>
                         <?php b3_get_settings_field_open( false, $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -93,7 +94,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_one_time_password = false; ?>
+                        <?php $hide_one_time_password = ( 1 == $custom_passwords ) ? ' hidden' : false; ?>
                         <?php b3_get_settings_field_open( false, $hide_one_time_password, 'one-time-password' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_use_one_time_password"><?php esc_html_e( 'One-time password', 'b3-onboarding' ); ?></label>
