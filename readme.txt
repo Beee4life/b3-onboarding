@@ -2,7 +2,7 @@
 Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
-Tested up to: 6.3.1
+Tested up to: 6.5.4
 Requires PHP: 5.6
 Stable tag: 3.11.0
 License: GNU v3
@@ -30,6 +30,7 @@ There are a ton of things, which you can set through the admin pages or with the
 3.11.0
 * locate template from function
 * remove border width on submit button
+* add one time password option
 
 3.10.0
 * filter out nav menu items

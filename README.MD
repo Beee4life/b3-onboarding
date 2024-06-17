@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.10.0 - released 02.10.23
+3.11.0 - released 02.10.23
 
 <a name="features"></a>
 ### Features
@@ -65,7 +65,7 @@ If you use a composer file to add any plugins/libraries. Add the following repos
     "package": {
       "name":    "Beee4life/b3-onboarding",
       "type":    "wordpress-plugin",
-      "version": "3.8.0",
+      "version": "3.11.0",
       "dist":    {
         "type": "zip",
         "url":  "https://github.com/Beee4life/b3-onboarding/archive/master.zip"
@@ -75,12 +75,12 @@ If you use a composer file to add any plugins/libraries. Add the following repos
 ]
 ```
 
-Then run composer require "beee4life/b3-onboarding"
+Then run `composer require beee4life/b3-onboarding`
 
 or add this to the require section by hand:
 
 ```
-"beee4life/b3-onboarding": "3.8.0",
+"beee4life/b3-onboarding": "3.11.0",
 ```
 
 and run `composer update`.
@@ -146,6 +146,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.11.0 - xx.xx.24
+* add one time password option
+
 3.10.0 - 02.10.23
 * filter out nav menu items
 * sprintf admin tabs
