@@ -40,8 +40,9 @@
              */
             public function b3_render_register_form( $user_variables, $content = null ) {
 				$default_attributes = [
-					'title'    => false,
-					'template' => 'register',
+                    'one_time_password' => false,
+                    'template'          => 'register',
+                    'title'             => false,
 				];
 				$attributes         = shortcode_atts( $default_attributes, $user_variables );
 
@@ -126,6 +127,10 @@
                             // dummy is for demonstration setup
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         }
+                    }
+
+                    if ( 1 == get_option( 'b3_use_one_time_password' ) && 'register' === $attributes[ 'template' ] ) {
+                        $attributes[ 'one_time_password' ] = true;
                     }
 
                     if ( 1 == get_option( 'b3_activate_recaptcha' ) && 'register' === $attributes[ 'template' ] ) {
