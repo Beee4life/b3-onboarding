@@ -22,6 +22,7 @@
         $recaptcha                    = get_option( 'b3_activate_recaptcha' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
+        $use_one_time_password        = get_option( 'b3_use_one_time_password' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
 
         ob_start();
@@ -98,7 +99,7 @@
                                 <label for="b3_use_one_time_password"><?php esc_html_e( 'One-time password', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_use_one_time_password" name="b3_use_one_time_password" value="1" <?php checked($custom_passwords); ?>/>
+                                <input type="checkbox" id="b3_use_one_time_password" name="b3_use_one_time_password" value="1" <?php checked($use_one_time_password); ?>/>
                                 <?php esc_html_e( 'Use one-time password.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
