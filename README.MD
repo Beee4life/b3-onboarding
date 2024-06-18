@@ -146,8 +146,13 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.11.0 - xx.xx.24
+3.11.0 - xx.06.24
 * add one time password option
+* added new filters
+* * b3_otp_time_out()
+* * b3_password_length()
+* * b3_password_special_chars()
+* * b3_password_extra_special_chars()
 
 3.10.0 - 02.10.23
 * filter out nav menu items
