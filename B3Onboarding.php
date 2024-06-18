@@ -834,7 +834,7 @@
                             } else {
                                 $temp_password   = wp_generate_password( 8, true );
                                 $hashed_password = password_hash( $temp_password, PASSWORD_BCRYPT );
-                                $hashed_slug     = md5( sprintf( '%s:%s', $user_email, $temp_password ) ); // @TODO
+                                $hashed_slug     = md5( sprintf( '%s:%s', $user_email, $hashed_password ) ); // @TODO
                                 set_transient( sprintf('1tpw_%s', $user_email ), $temp_password, 60 * MINUTE_IN_SECONDS );
 
                                 $vars    = [];
