@@ -719,3 +719,29 @@
         do_action( 'b3_add_action_links', $attributes[ 'template' ] );
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
+    
+    
+    /**
+     * Log a user in after OTP verification
+     *
+     * @param $user
+     * @param $redirect
+     *
+     * @return void
+     *
+     * @since 3.11.0
+     */
+    function b3_log_user_in( $user, $redirect = '' ) {
+        $redirect = ! empty( $redirect ) ? $redirect : b3_get_account_url();
+        if ( $user instanceof WP_User ) {
+            wp_set_current_user( $user->ID, $user->user_login );
+            wp_set_auth_cookie( $user->ID );
+            do_action( 'wp_login', $user->user_login, $user );
+            
+            if ( $redirect ) {
+                wp_redirect( b3_get_account_url() );
+                exit;
+            }
+        }
+    }
+    add_action( 'b3_log_user_in', 'b3_log_user_in' );
