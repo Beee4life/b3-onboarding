@@ -830,10 +830,9 @@
                                 exit;
                             } else {
                                 $amount_minutes         = apply_filters( 'b3_otp_time_out', 5 );
-                                $password_length        = apply_filters( 'b3_password_length', 8 );
                                 $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
                                 $pw_extra_special_chars = apply_filters( 'b3_password_extra_special_chars', false );
-                                $otp_password           = wp_generate_password( $password_length, $pw_special_chars, $pw_extra_special_chars );
+                                $otp_password           = wp_generate_password( 8, $pw_special_chars, $pw_extra_special_chars );
                                 $hashed_password        = password_hash( $otp_password, PASSWORD_BCRYPT );
                                 $slug                   = sprintf( '%s:%s', $user_email, $hashed_password );
                                 $hashed_slug            = base64_encode( $slug );
@@ -845,17 +844,24 @@
                                     $subject = __( 'One-time password for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                     $message = b3_get_one_time_password_email( $otp_password, $hashed_slug );
-                                    $message = b3_replace_template_styling( $message );
-                                    $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
-                                    $message = htmlspecialchars_decode( stripslashes( $message ) );
                                     
-                                    wp_mail( $to, $subject, $message, [] );
+                                    if ( ! empty( $message ) ) {
+                                        $message = b3_replace_template_styling( $message );
+                                        $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
+                                        $message = htmlspecialchars_decode( stripslashes( $message ) );
+                                        
+                                        wp_mail( $to, $subject, $message, [] );
+                                        
+                                    } else {
+                                        error_log( 'Email message not set for OTP.' );
+                                    }
                                 } else {
                                     error_log( sprintf( 'Transient is not set when "%s" requested an OTP password and thus email is not sent.', $user_email ) );
                                 }
                             }
 
                         } else {
+                            error_log('FALLBACK');
                         }
                     
                     } elseif ( isset( $_GET[ 'login' ] ) && isset( $_GET[ 'code' ] ) ) {
