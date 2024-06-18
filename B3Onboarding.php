@@ -86,6 +86,7 @@
 				add_action( 'init', 							[ $this, 'b3_load_plugin_text_domain' ] );
 				add_action( 'init', 							[ $this, 'b3_registration_form_handling' ] );
 				add_action( 'init', 							[ $this, 'b3_reset_user_password' ] );
+				add_action( 'init', 							[ $this, 'b3_one_time_password_form_handling' ] );
 				add_action( 'admin_notices', 				[ $this, 'b3_admin_notices' ] );
 				add_action( 'load-users.php', 				[ $this, 'b3_load_users_page' ] );
 
@@ -114,6 +115,11 @@
                 if ( get_option( 'b3_activate_filter_validation' ) ) {
                     include 'includes/verify-filters.php';
                 }
+                // add_action( 'admin_init', [ $this, 'b3_test' ] );
+            }
+
+
+            public function b3_test() {
             }
 
 
@@ -521,13 +527,11 @@
 							$registration_type = get_option( 'b3_registration_type' );
                             $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( $_POST[ 'user_email' ] ) : false;
 
-                            if ( get_option( 'b3_honeypot' ) ) {
-                                if ( isset( $_POST[ 'b3_pooh' ] ) ) {
-                                    $errors = new WP_Error();
-                                    $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
+                            if ( get_option( 'b3_honeypot' ) && isset( $_POST[ 'b3_pooh' ] ) ) {
+                                $errors = new WP_Error();
+                                $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
 
-                                    return $errors;
-                                }
+                                return $errors;
                             }
 
                             if ( 'blog' != $registration_type && ! is_email( $user_email ) ) {
@@ -810,6 +814,62 @@
             }
 
 
+            public function b3_one_time_password_form_handling() {
+                if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+                    // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
+                    if ( isset( $_POST[ 'b3_set_1tpw_nonce' ] ) ) {
+                        $redirect_url = b3_get_login_url();
+                        if ( ! wp_verify_nonce( $_POST[ 'b3_set_1tpw_nonce' ], 'b3-set-1tpw-nonce' ) ) {
+                            $redirect_url = add_query_arg( 'login-error', 'unknown', $redirect_url );
+                            wp_safe_redirect( $redirect_url );
+                            exit;
+                        } else {
+                            $user_email       = $_POST[ 'email' ];
+                            $existing_user_id = get_user_by( 'email', $user_email );
+
+                            if ( 0 === $existing_user_id ) {
+                                $redirect_url = add_query_arg( 'login-error', 'unknown_user', $redirect_url );
+                                wp_safe_redirect( $redirect_url );
+                                exit;
+                            } else {
+                                $temp_password   = wp_generate_password( 8, true );
+                                $hashed_password = password_hash( $temp_password, PASSWORD_BCRYPT );
+                                $hashed_slug     = md5( sprintf( '%s:%s', $user_email, $temp_password ) ); // @TODO
+                                error_log($hashed_slug);
+                                set_transient( sprintf('1tpw_%s', $user_email ), $temp_password, 60 * MINUTE_IN_SECONDS );
+
+                                $vars    = [];
+                                $to      = $user_email;
+                                $subject = __( 'One-time password for %blog_name%', 'b3-onboarding' );
+                                $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
+                                $message = b3_get_one_time_password_email( $temp_password, $hashed_slug );
+                                $message = b3_replace_template_styling( $message );
+                                $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
+                                $message = htmlspecialchars_decode( stripslashes( $message ) );
+                                
+                                wp_mail( $to, $subject, $message, [] );
+
+                                $redirect_url = add_query_arg( 'login', 'enter_code', $redirect_url );
+                                wp_safe_redirect( $redirect_url );
+                                exit;
+                                
+                            }
+                            
+                        }
+                    
+                    } elseif ( isset( $_POST[ 'b3_check_1tpw_nonce' ] ) ) {
+                        if ( ! isset( $_POST[ 'b3_one_time_password' ] ) || empty( $_POST[ 'b3_one_time_password' ] ) ) {
+                            // empty code
+                        } else {
+                            // check code
+                            $user_email = $_POST[ 'email' ];
+                            get_transient( sprintf('1tpw_%s', $user_email) );
+                        }
+                    }
+                }
+            }
+
+
             /**
              * Finds and returns a matching error message for the given error code.
              *
@@ -839,7 +899,20 @@
                         return $error_message;
 
                     case 'logged_out':
-                        return esc_html__( "You are logged out.", 'b3-onboarding' );
+                        return esc_html__( 'You are logged out.', 'b3-onboarding' );
+
+                    case 'unknown':
+                        return esc_html__( 'An unkown error has occured. Please try again.', 'b3-onboarding' );
+
+                    // Login errors
+                    case 'enter_code':
+                        $message = esc_html__( 'Please enter the code you have received in your email.', 'b3-onboarding' );
+                        $message .= '<br>';
+                        $message .= esc_html__( sprintf( 'The code is valid for %d minutes.', 5 ), 'b3-onboarding' );
+                        return $message;
+
+                    case 'unknown_user':
+                        return esc_html__( 'There is no user with this email address.', 'b3-onboarding' );
 
                     // Registration errors
                     case 'username_exists':
