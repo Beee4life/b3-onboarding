@@ -103,7 +103,6 @@
                 include 'includes/actions-b3.php';
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
-                include 'includes/class-b3-test.php';
                 include 'includes/do-stuff.php';
                 include 'includes/filters-b3.php';
                 include 'includes/filters-wp.php';
@@ -117,7 +116,6 @@
                 if ( get_option( 'b3_activate_filter_validation' ) ) {
                     include 'includes/verify-filters.php';
                 }
-                // add_action( 'init', [ $this, 'b3_test' ] );
             }
 
 
@@ -898,10 +896,6 @@
                         do_action( 'b3_log_user_in', $verify_otp );
                     }
                 }
-            }
-            
-            
-            public function b3_test() {
             }
             
             
