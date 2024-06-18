@@ -65,16 +65,14 @@ table td.b3_email_content {
   background-color: #ee6102;
   padding: 10px;
 }
-.one-time-code .your-code {
-  font-size:   150%;
-  text-align:  center;
-}
 
+a.magic-link {
+  color: black;
+}
 
 .one-time-code .code {
   font-size:   200%;
   font-weight: bold;
-  margin-top:  10px;
   text-align:  center;
 }
 
