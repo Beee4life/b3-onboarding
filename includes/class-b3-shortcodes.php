@@ -239,12 +239,16 @@
                     
                     if ( isset( $_REQUEST[ 'code' ] ) ) {
                         $code = $_REQUEST[ 'code' ];
-                        echo '<pre>'; var_dump($_REQUEST[ 'code' ]); echo '</pre>'; exit;
                     }
 
+                    $form_action = b3_get_login_url();
+                    $form_action = add_query_arg( 'login', 'enter_code', $form_action );
+                    $attributes[ 'form_action' ] = $form_action;
+                    
                     if ( isset( $_REQUEST[ 'login' ] ) && 'enter_code' == $_REQUEST[ 'login' ] ) {
-                        $attributes[ 'email' ]      = isset( $_REQUEST[ 'email' ] ) ? $_REQUEST[ 'email' ] : '';
+                        $attributes[ 'email' ]      = isset( $_POST[ 'email' ] ) ? $_POST[ 'email' ] : '';
                         $attributes[ 'enter_code' ] = true;
+                        $attributes[ 'form_action' ] = $form_action;
                         $attributes[ 'nonce_id' ]   = 'b3_check_1tpw_nonce';
                         $attributes[ 'nonce' ]      = wp_create_nonce( 'b3-check-1tpw-nonce' );
                     } else {
