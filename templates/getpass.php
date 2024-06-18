@@ -1,6 +1,6 @@
 <?php
     /**
-     * Ouptuts fields for get pass form
+     * Ouptuts fields for get pass form (shortcode not used yet))
      *
      * @since 3.11.0
      */
