@@ -847,13 +847,7 @@
                                 $message = htmlspecialchars_decode( stripslashes( $message ) );
                                 
                                 wp_mail( $to, $subject, $message, [] );
-
-                                $redirect_url = add_query_arg( 'login', 'enter_code', $redirect_url );
-                                wp_safe_redirect( $redirect_url );
-                                exit;
-                                
                             }
-                            
                         }
                     
                     } elseif ( isset( $_POST[ 'b3_check_1tpw_nonce' ] ) ) {
@@ -861,8 +855,16 @@
                             // empty code
                         } else {
                             // check code
-                            $user_email = $_POST[ 'email' ];
-                            get_transient( sprintf('1tpw_%s', $user_email) );
+                            $user_email      = $_POST[ 'email' ];
+                            $user_input      = $_POST[ 'b3_one_time_password' ];
+                            $transient       = get_transient( sprintf( '1tpw_%s', $user_email ) );
+                            $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
+                            
+                            if (hash_equals($hashed_password, crypt($user_input, $hashed_password))) {
+                                die( 'OK' );
+                            } else {
+                                die('FAIL');
+                            }
                         }
                     }
                 }
