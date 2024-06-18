@@ -11,9 +11,9 @@
          *
          * @since 2.0.0
          */
-        class B3_Shortcodes extends B3Onboarding {
+        class B3Shortcodes extends B3Onboarding {
             /**
-             * B3_Shortcodes constructor
+             * B3Shortcodes constructor
              */
             public function __construct() {
                 parent::__construct();
@@ -39,7 +39,16 @@
              * @return mixed|string|void
              */
             public function b3_render_register_form( $user_variables, $content = null ) {
+                $button_value = esc_attr__( 'Register', 'b3-onboarding' );
+                if ( in_array( $attributes[ 'registration_type' ], [
+                    'request_access',
+                    'request_access_subdomain',
+                ] ) ) {
+                    $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
+                }
 				$default_attributes = [
+                    'button_modifier'   => 'register',
+                    'button_value'      => $button_value,
                     'one_time_password' => false,
                     'template'          => 'register',
                     'title'             => false,
@@ -48,7 +57,8 @@
 
                 $registration_type                 = get_option( 'b3_registration_type' );
                 $attributes[ 'registration_type' ] = $registration_type;
-
+                
+                
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
@@ -164,6 +174,7 @@
              */
             public function b3_render_login_form( $user_variables, $content = null ) {
 				$default_attributes = [
+                    'button_value'      => esc_attr__( 'Log in', 'b3-onboarding' ),
                     'one_time_password' => false,
                     'template'          => 'login',
                     'title'             => false,
@@ -189,6 +200,16 @@
                     $error_codes = [];
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
+                            if ( isset( $_REQUEST[ 'code' ] ) ) {
+                                // enter code
+                            } else {
+                                if ( isset( $_POST[ 'email' ] ) ) {
+                                    // access after form
+                                } else {
+                                    // direct access
+                                }
+                                $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                            }
                         
                         } else {
                             $error_codes = explode( ',', $_REQUEST[ 'login' ] );
@@ -234,23 +255,27 @@
                 }
                 
                 if ( 1 == get_option( 'b3_use_one_time_password' ) && 'login' === $attributes[ 'template' ] ) {
-                    $attributes[ 'enter_code' ] = false;
-                    $attributes[ 'template' ]   = 'getpass';
+                    $button_value                 = get_option( 'b3_use_one_time_password' ) ? esc_attr__( 'Get password', 'b3-onboarding' ) : esc_attr__( 'Log in', 'b3-onboarding' );
+                    $button_value                 = isset( $_GET[ 'login' ] ) && 'enter_code' === $_GET[ 'login' ] ? esc_attr__( 'Log in', 'b3-onboarding' ) : $button_value;
+                    $attributes[ 'button_value' ] = $button_value;
+                    $attributes[ 'enter_code' ]   = false;
+                    $attributes[ 'template' ]     = 'getpass';
                     
                     if ( isset( $_REQUEST[ 'code' ] ) ) {
                         $code = $_REQUEST[ 'code' ];
                     }
-
-                    $form_action = b3_get_login_url();
-                    $form_action = add_query_arg( 'login', 'enter_code', $form_action );
+                    
+                    $form_action                 = b3_get_login_url();
+                    $form_action                 = add_query_arg( 'login', 'enter_code', $form_action );
                     $attributes[ 'form_action' ] = $form_action;
                     
                     if ( isset( $_REQUEST[ 'login' ] ) && 'enter_code' == $_REQUEST[ 'login' ] ) {
-                        $attributes[ 'email' ]      = isset( $_POST[ 'email' ] ) ? $_POST[ 'email' ] : '';
-                        $attributes[ 'enter_code' ] = true;
+                        // @TODO: maybe hash email ?
+                        $attributes[ 'email' ]       = isset( $_POST[ 'email' ] ) ? $_POST[ 'email' ] : '';
+                        $attributes[ 'enter_code' ]  = true;
                         $attributes[ 'form_action' ] = $form_action;
-                        $attributes[ 'nonce_id' ]   = 'b3_check_1tpw_nonce';
-                        $attributes[ 'nonce' ]      = wp_create_nonce( 'b3-check-1tpw-nonce' );
+                        $attributes[ 'nonce_id' ]    = 'b3_check_1tpw_nonce';
+                        $attributes[ 'nonce' ]       = wp_create_nonce( 'b3-check-1tpw-nonce' );
                     } else {
                         $attributes[ 'nonce_id' ] = 'b3_set_1tpw_nonce';
                         $attributes[ 'nonce' ]    = wp_create_nonce( 'b3-set-1tpw-nonce' );
@@ -277,8 +302,9 @@
              */
             public function b3_render_lost_password_form( $user_variables, $content = null ) {
 				$default_attributes = [
-					'title'    => false,
-					'template' => 'lostpassword',
+                    'button_value' => esc_attr__( 'Reset password', 'b3-onboarding' ),
+                    'template'     => 'lostpassword',
+                    'title'        => false,
 				];
 				$attributes         = shortcode_atts( $default_attributes, $user_variables );
 
@@ -319,8 +345,9 @@
              */
             public function b3_render_reset_password_form( $user_variables, $content = null ) {
 				$default_attributes = [
-					'title'    => false,
-					'template' => 'resetpass',
+                    'button_value' => esc_attr__( 'Set password', 'b3-onboarding' ),
+                    'template'     => 'resetpass',
+                    'title'        => false,
 				];
 				$attributes         = shortcode_atts( $default_attributes, $user_variables );
 
@@ -414,8 +441,9 @@
                     wp_enqueue_script( 'user-profile' );
 					$errors             = [];
 					$default_attributes = [
-						'title'    => false,
-						'template' => 'account',
+                        'button_value' => esc_attr__( 'Update profile', 'b3-onboarding' ),
+                        'template'     => 'account',
+                        'title'        => false,
 					];
 					$attributes         = shortcode_atts( $default_attributes, $user_variables );
 
@@ -491,5 +519,5 @@
             }
         }
 
-        new B3_Shortcodes();
+        new B3Shortcodes();
     }
