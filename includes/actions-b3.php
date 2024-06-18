@@ -704,6 +704,10 @@
     /**
      * Add custom fields to register form hook
      *
+     * @param $attributes
+     *
+     * @return void
+     *
      * @since 1.0.0
      */
     function b3_add_registration_fields( $attributes ) {
