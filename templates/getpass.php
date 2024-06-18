@@ -14,7 +14,7 @@
 <div id="b3-resetpass" class="b3 b3_page b3_page--getpass">
     <?php echo ( isset( $attributes[ 'title' ] ) ) ? sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ) : false; ?>
 
-    <form name="getpassform" id="getpassform" action="" method="post" autocomplete="off">
+    <form name="getpassform" id="getpassform" action="<?php echo $attributes['form_action']; ?>" method="post" autocomplete="off">
         <?php do_action( 'b3_render_form_element', 'getpass/hidden-fields', $attributes ); ?>
         <?php if ( $attributes[ 'enter_code' ] ) { ?>
             <?php do_action( 'b3_render_form_element', 'getpass/enter-code', $attributes ); ?>
