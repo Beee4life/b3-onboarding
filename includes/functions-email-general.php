@@ -524,11 +524,47 @@
      */
     function b3_get_email_intro( $welcome = false ) {
         $welcome = ( false === $welcome ) ? esc_html__( 'Welcome', 'b3-onboarding' ) : $welcome;
-        if ( true == get_option( 'b3_register_email_only' ) ) {
+        if ( true == get_option( 'b3_register_email_only' ) || true == get_option( 'b3_use_one_time_password' ) ) {
             $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = $welcome . ' %user_login%' . ',' . "\n";
         }
 
         return $message;
+    }
+
+    /**
+     * Get one time password email
+     *
+     * @since 3.11.0
+     *
+     * @param false $code
+     *
+     * @return string
+     */
+    function b3_get_one_time_password_email( $password = false, $slug = false ) {
+        if ( $password && $slug ) {
+            $login_link = b3_get_login_url();
+            $login_link = add_query_arg( 'login', 'enter_code', $login_link );
+            $login_link = add_query_arg( 'code', $slug, $login_link );
+            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), __( 'here', 'b3-onboarding' ) );
+            $your_code  = sprintf( '<div class="your-code">%s</div>', esc_html__( 'Your code is', 'b3-onboarding' ) ) . "\n";
+            $your_code  .= sprintf( '<div class="code">%s</div>', $password ) . "\n";
+            $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
+            $message    .= '<br><br>' . "\n";
+            $message    .= esc_html__( 'Someone requested a one-time password for the account using this email address.', 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= esc_html__( 'If this request was made by you, you can use the following code.', 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= sprintf( '<div class="one-time-code">%s</div>', $your_code ) . "\n";
+            $message    .= '<br>' . "\n";
+            $message    .= __( sprintf( 'Or you can click %s to pre-fill the form immediately.', $enter_url ), 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= esc_html__( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+            $message    .= b3_default_greetings();
+            
+            return $message;
+        }
+        
+        return '';
     }
