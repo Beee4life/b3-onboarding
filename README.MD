@@ -150,7 +150,6 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * add one time password option
 * added new filters
 * * b3_otp_time_out()
-* * b3_password_length()
 * * b3_password_special_chars()
 * * b3_password_extra_special_chars()
 
