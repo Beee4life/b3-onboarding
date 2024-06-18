@@ -872,24 +872,18 @@
             public function b3_check_email_link() {
                 if ( isset( $_GET[ 'login' ] ) && isset( $_GET[ 'code' ] ) ) {
                     $url_code        = isset( $_GET[ 'code' ] ) ? $_GET[ 'code' ] : '';
-                    // echo '<pre>'; var_dump($url_code); echo '</pre>'; exit;
                     $decoded_code    = base64_decode( $url_code );
-                    // echo '<pre>'; var_dump($decoded_code); echo '</pre>'; exit;
                     $args            = explode( ':', $decoded_code );
                     $user_email      = $args[ 0 ];
                     $user_input      = $args[ 1 ];
-                    // echo '<pre>'; var_dump($args); echo '</pre>'; exit;
                     $transient       = get_transient( sprintf( '1tpw_%s', $user_email ) );
-                    // echo '<pre>'; var_dump($transient); echo '</pre>'; exit;
                     $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
-                    // echo '<pre>'; var_dump(crypt($user_input, $hashed_password)); echo '</pre>'; exit;
                     
                     if (hash_equals($hashed_password, crypt($user_input, $hashed_password))) {
                         die( 'OK' );
                     } else {
                         die('FAIL');
                     }
-                    
                 }
             }
             
