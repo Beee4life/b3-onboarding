@@ -558,7 +558,7 @@
             $message    .= '<br><br>' . "\n";
             $message    .= sprintf( '<div class="one-time-code">%s</div>', $your_code ) . "\n";
             $message    .= '<br>' . "\n";
-            $message    .= __( sprintf( 'Or you can click %s to pre-fill the form immediately.', $enter_url ), 'b3-onboarding' ) . "\n";
+            $message    .= __( sprintf( 'Or you can click %s to login immediately.', $enter_url ), 'b3-onboarding' ) . "\n";
             $message    .= '<br><br>' . "\n";
             $message    .= esc_html__( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
             $message    .= b3_default_greetings();
