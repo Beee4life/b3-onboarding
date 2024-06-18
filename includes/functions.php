@@ -1368,13 +1368,28 @@
     
     function b3_verify_otp( $code ) {
         if ( $code ) {
-            $decoded_code    = base64_decode( $code );
-            $args            = explode( ':', $decoded_code );
+            if ( 8 == strlen( $code ) ) {
+                // raw code
+                $user_input = $code;
+                if ( isset( $_POST[ 'email' ] ) ) {
+                    $user_email = $_POST[ 'email' ];
+                } else {
+                    // maybe get user by code ?
+                }
+                
+            } else {
+                // hashed code
+                $decoded_code = base64_decode( $code );
+                $args         = explode( ':', $decoded_code );
+                
+                if ( isset( $args[ 0 ] ) && isset( $args[ 1 ] ) ) {
+                    $user_email = $args[ 0 ];
+                    $user_input = $args[ 1 ];
+                }
+            }
             
-            if ( isset( $args[ 0 ] ) && isset( $args[ 1 ] ) ) {
-                $user_email = $args[ 0 ];
-                $user_input = $args[ 1 ];
-                $user       = get_user_by( 'email', $user_email );
+            if ( isset( $user_email ) ) {
+                $user = get_user_by( 'email', $user_email );
 
                 if ( $user instanceof WP_User ) {
                     $transient       = get_transient( sprintf( 'otp_%s', $user_email ) );
