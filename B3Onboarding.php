@@ -87,6 +87,7 @@
 				add_action( 'init', 							[ $this, 'b3_registration_form_handling' ] );
 				add_action( 'init', 							[ $this, 'b3_reset_user_password' ] );
 				add_action( 'init', 							[ $this, 'b3_one_time_password_form_handling' ] );
+				add_action( 'init', 							[ $this, 'b3_check_email_link' ] );
 				add_action( 'admin_notices', 				[ $this, 'b3_admin_notices' ] );
 				add_action( 'load-users.php', 				[ $this, 'b3_load_users_page' ] );
 
@@ -115,11 +116,7 @@
                 if ( get_option( 'b3_activate_filter_validation' ) ) {
                     include 'includes/verify-filters.php';
                 }
-                // add_action( 'admin_init', [ $this, 'b3_test' ] );
-            }
-
-
-            public function b3_test() {
+                // add_action( 'init', [ $this, 'b3_test' ] );
             }
 
 
@@ -816,7 +813,6 @@
 
             public function b3_one_time_password_form_handling() {
                 if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    // echo '<pre>'; var_dump($_POST); echo '</pre>'; exit;
                     if ( isset( $_POST[ 'b3_set_1tpw_nonce' ] ) ) {
                         $redirect_url = b3_get_login_url();
                         if ( ! wp_verify_nonce( $_POST[ 'b3_set_1tpw_nonce' ], 'b3-set-1tpw-nonce' ) ) {
@@ -834,43 +830,106 @@
                             } else {
                                 $temp_password   = wp_generate_password( 8, true );
                                 $hashed_password = password_hash( $temp_password, PASSWORD_BCRYPT );
-                                $hashed_slug     = md5( sprintf( '%s:%s', $user_email, $hashed_password ) ); // @TODO
-                                set_transient( sprintf('1tpw_%s', $user_email ), $temp_password, 60 * MINUTE_IN_SECONDS );
+                                $slug            = sprintf( '%s:%s', $user_email, $hashed_password );
+                                $hashed_slug     = base64_encode( $slug );
+                                $transient_set   = set_transient( sprintf( '1tpw_%s', $user_email ), $hashed_password, 60 * MINUTE_IN_SECONDS );
 
-                                $vars    = [];
-                                $to      = $user_email;
-                                $subject = __( 'One-time password for %blog_name%', 'b3-onboarding' );
-                                $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                $message = b3_get_one_time_password_email( $temp_password, $hashed_slug );
-                                $message = b3_replace_template_styling( $message );
-                                $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
-                                $message = htmlspecialchars_decode( stripslashes( $message ) );
-                                
-                                wp_mail( $to, $subject, $message, [] );
+                                if ( $transient_set ) {
+                                    $vars    = [];
+                                    $to      = $user_email;
+                                    $subject = __( 'One-time password for %blog_name%', 'b3-onboarding' );
+                                    $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
+                                    $message = b3_get_one_time_password_email( $temp_password, $hashed_slug );
+                                    $message = b3_replace_template_styling( $message );
+                                    $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
+                                    $message = htmlspecialchars_decode( stripslashes( $message ) );
+                                    
+                                    wp_mail( $to, $subject, $message, [] );
+                                } else {
+                                    //error
+                                }
+
                             }
                         }
+                    
+                    } elseif ( isset( $_GET[ 'login' ] ) && isset( $_GET[ 'code' ] ) ) {
+                        //@TODO
+                        die('TODO');
                     
                     } elseif ( isset( $_POST[ 'b3_check_1tpw_nonce' ] ) ) {
                         if ( ! isset( $_POST[ 'b3_one_time_password' ] ) || empty( $_POST[ 'b3_one_time_password' ] ) ) {
                             // empty code
                         } else {
+                            //@TODO
                             // check code
-                            $user_email      = $_POST[ 'email' ];
-                            $user_input      = $_POST[ 'b3_one_time_password' ];
-                            $transient       = get_transient( sprintf( '1tpw_%s', $user_email ) );
-                            $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
-                            
-                            if (hash_equals($hashed_password, crypt($user_input, $hashed_password))) {
-                                die( 'OK' );
-                            } else {
-                                die('FAIL');
-                            }
+                            error_log(sprintf( 'CHECK CODE: %s', $_POST[ 'b3_one_time_password' ] ));
                         }
                     }
                 }
             }
-
-
+            
+            
+            public function b3_check_email_link() {
+                if ( isset( $_GET[ 'login' ] ) && isset( $_GET[ 'code' ] ) ) {
+                    $url_code        = isset( $_GET[ 'code' ] ) ? $_GET[ 'code' ] : '';
+                    // echo '<pre>'; var_dump($url_code); echo '</pre>'; exit;
+                    $decoded_code    = base64_decode( $url_code );
+                    // echo '<pre>'; var_dump($decoded_code); echo '</pre>'; exit;
+                    $args            = explode( ':', $decoded_code );
+                    $user_email      = $args[ 0 ];
+                    $user_input      = $args[ 1 ];
+                    // echo '<pre>'; var_dump($args); echo '</pre>'; exit;
+                    $transient       = get_transient( sprintf( '1tpw_%s', $user_email ) );
+                    // echo '<pre>'; var_dump($transient); echo '</pre>'; exit;
+                    $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
+                    // echo '<pre>'; var_dump(crypt($user_input, $hashed_password)); echo '</pre>'; exit;
+                    
+                    if (hash_equals($hashed_password, crypt($user_input, $hashed_password))) {
+                        die( 'OK' );
+                    } else {
+                        die('FAIL');
+                    }
+                    
+                }
+            }
+            
+            
+            public function b3_test() {
+                $password = 'GE4t7WiL';
+                $hashed_password = password_hash( $password, PASSWORD_BCRYPT );
+                // echo '<pre>'; var_dump($hashed_password); echo '</pre>'; exit;
+                $string = sprintf( '%s:%s', 'info@berryplasman.com', $hashed_password );
+                // echo '<pre>'; var_dump($string); echo '</pre>'; exit;
+                $encoded = base64_encode( $string );
+                // echo '<pre>'; var_dump($encoded); echo '</pre>'; exit;
+                $decoded = base64_decode( $encoded );
+                echo '<pre>'; var_dump($decoded); echo '</pre>'; exit;
+                set_transient( sprintf('1tpw_%s', $user_email ), $temp_password, 60 * MINUTE_IN_SECONDS );
+                
+                $args = explode( ':', $decoded );
+                $user_email = $args[0];
+                $user_input = $args[1];
+                
+                $transient       = get_transient( sprintf( '1tpw_%s', $user_email ) );
+                $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
+                
+                if (hash_equals($hashed_password, crypt($user_input, $hashed_password))) {
+                    die( 'OK' );
+                } else {
+                    die('FAIL');
+                }
+                
+                echo '<pre>'; var_dump($args); echo '</pre>'; exit;
+                $hex = bin2hex($string);
+                echo '<pre>'; var_dump($hex); echo '</pre>'; exit;
+                $bin = hex2bin($hex);
+                echo '<pre>'; var_dump($bin); echo '</pre>'; exit;
+                $temp_password   = wp_generate_password( 6, false );
+                // echo '<pre>'; var_dump($temp_password); echo '</pre>'; exit;
+                // echo '<pre>'; var_dump(hex2bin($temp_password)); echo '</pre>'; exit;
+            }
+            
+            
             /**
              * Finds and returns a matching error message for the given error code.
              *
