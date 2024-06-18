@@ -164,8 +164,9 @@
              */
             public function b3_render_login_form( $user_variables, $content = null ) {
 				$default_attributes = [
-					'title'    => false,
-					'template' => 'login',
+                    'one_time_password' => false,
+                    'template'          => 'login',
+                    'title'             => false,
 				];
 				$attributes         = shortcode_atts( $default_attributes, $user_variables );
 
@@ -185,8 +186,13 @@
 
 				$errors = [];
 				if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
+                    $error_codes = [];
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
-                        $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                        if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
+                        
+                        } else {
+                            $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                        }
                     } elseif ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                     }
@@ -194,7 +200,7 @@
                     foreach ( $error_codes as $code ) {
                         $errors[] = $this->b3_get_return_message( $code );
                     }
-
+                    
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( is_multisite() ) {
                         $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
@@ -226,7 +232,27 @@
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' === $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
+                
+                if ( 1 == get_option( 'b3_use_one_time_password' ) && 'login' === $attributes[ 'template' ] ) {
+                    $attributes[ 'enter_code' ] = false;
+                    $attributes[ 'template' ]   = 'getpass';
+                    
+                    if ( isset( $_REQUEST[ 'code' ] ) ) {
+                        $code = $_REQUEST[ 'code' ];
+                        echo '<pre>'; var_dump($_REQUEST[ 'code' ]); echo '</pre>'; exit;
+                    }
 
+                    if ( isset( $_REQUEST[ 'login' ] ) && 'enter_code' == $_REQUEST[ 'login' ] ) {
+                        $attributes[ 'email' ]      = isset( $_REQUEST[ 'email' ] ) ? $_REQUEST[ 'email' ] : '';
+                        $attributes[ 'enter_code' ] = true;
+                        $attributes[ 'nonce_id' ]   = 'b3_check_1tpw_nonce';
+                        $attributes[ 'nonce' ]      = wp_create_nonce( 'b3-check-1tpw-nonce' );
+                    } else {
+                        $attributes[ 'nonce_id' ] = 'b3_set_1tpw_nonce';
+                        $attributes[ 'nonce' ]    = wp_create_nonce( 'b3-set-1tpw-nonce' );
+                    }
+                }
+                
                 $attributes[ 'errors' ] = $errors;
 
                 $attributes = apply_filters( 'b3_attributes', $attributes );
