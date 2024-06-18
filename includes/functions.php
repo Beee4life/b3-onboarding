@@ -339,6 +339,7 @@
      *
      * @param false $submit_value
      * @param false $button_modifier
+     * @param array $attributes
      */
     function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
         $button_class = false;
