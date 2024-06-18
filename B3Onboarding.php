@@ -814,9 +814,9 @@
 
             public function b3_one_time_password_form_handling() {
                 if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    if ( isset( $_POST[ 'b3_set_1tpw_nonce' ] ) ) {
+                    if ( isset( $_POST[ 'b3_set_otp_nonce' ] ) ) {
                         $redirect_url = b3_get_login_url();
-                        if ( ! wp_verify_nonce( $_POST[ 'b3_set_1tpw_nonce' ], 'b3-set-1tpw-nonce' ) ) {
+                        if ( ! wp_verify_nonce( $_POST[ 'b3_set_otp_nonce' ], 'b3-set-otp-nonce' ) ) {
                             $redirect_url = add_query_arg( 'login-error', 'unknown', $redirect_url );
                             wp_safe_redirect( $redirect_url );
                             exit;
@@ -839,7 +839,7 @@
                                 $hashed_password        = password_hash( $otp_password, PASSWORD_BCRYPT );
                                 $slug                   = sprintf( '%s:%s', $user_email, $hashed_password );
                                 $hashed_slug            = base64_encode( $slug );
-                                $transient_set          = set_transient( sprintf( '1tpw_%s', $user_email ), $hashed_password, $amount_minutes * MINUTE_IN_SECONDS );
+                                $transient_set          = set_transient( sprintf( 'otp_%s', $user_email ), $hashed_password, $amount_minutes * MINUTE_IN_SECONDS );
 
                                 if ( $transient_set ) {
                                     $vars    = []; // empty right now, but might be filled later on...
@@ -868,7 +868,7 @@
                             do_action( 'b3_log_user_in', $verify_otp );
                         }
                     
-                    } elseif ( isset( $_POST[ 'b3_check_1tpw_nonce' ] ) ) {
+                    } elseif ( isset( $_POST[ 'b3_check_otp_nonce' ] ) ) {
                         if ( ! isset( $_POST[ 'b3_one_time_password' ] ) || empty( $_POST[ 'b3_one_time_password' ] ) ) {
                             // @TODO: add error because, empty code
                             

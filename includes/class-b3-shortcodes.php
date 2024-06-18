@@ -33,12 +33,12 @@
              *
              * @since 1.0.0
              *
-             * @param      $user_variables
+             * @param      $shortcode_args
              * @param null $content
              *
              * @return mixed|string|void
              */
-            public function b3_render_register_form( $user_variables, $content = null ) {
+            public function b3_render_register_form( $shortcode_args, $content = null ) {
                 $button_value = esc_attr__( 'Register', 'b3-onboarding' );
                 if ( in_array( $attributes[ 'registration_type' ], [
                     'request_access',
@@ -53,11 +53,10 @@
                     'template'          => 'register',
                     'title'             => false,
 				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
-
+                
+                $attributes                        = shortcode_atts( $default_attributes, $shortcode_args );
                 $registration_type                 = get_option( 'b3_registration_type' );
                 $attributes[ 'registration_type' ] = $registration_type;
-                
                 
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
@@ -82,7 +81,6 @@
 
                         return $message;
                     } else {
-                        // fallback
                         $message = '<p class="b3_message b3_message--success">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
                         $message .= '</p>';
@@ -167,19 +165,19 @@
              *
              * @since 1.0.0
              *
-             * @param array $attributes Shortcode attributes.
-             * @param string $content The text content for shortcode. Not used.
+             * @param array  $shortcode_args Shortcode attributes.
+             * @param string $content        The text content for shortcode. Not used.
              *
              * @return string  The shortcode output
              */
-            public function b3_render_login_form( $user_variables, $content = null ) {
+            public function b3_render_login_form( $shortcode_args, $content = null ) {
 				$default_attributes = [
                     'button_value'      => esc_attr__( 'Log in', 'b3-onboarding' ),
                     'one_time_password' => false,
                     'template'          => 'login',
                     'title'             => false,
 				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
+				$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
                     return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
@@ -274,11 +272,11 @@
                         $attributes[ 'email' ]       = isset( $_POST[ 'email' ] ) ? $_POST[ 'email' ] : '';
                         $attributes[ 'enter_code' ]  = true;
                         $attributes[ 'form_action' ] = $form_action;
-                        $attributes[ 'nonce_id' ]    = 'b3_check_1tpw_nonce';
-                        $attributes[ 'nonce' ]       = wp_create_nonce( 'b3-check-1tpw-nonce' );
+                        $attributes[ 'nonce_id' ]    = 'b3_check_otp_nonce';
+                        $attributes[ 'nonce' ]       = wp_create_nonce( 'b3-check-otp-nonce' );
                     } else {
-                        $attributes[ 'nonce_id' ] = 'b3_set_1tpw_nonce';
-                        $attributes[ 'nonce' ]    = wp_create_nonce( 'b3-set-1tpw-nonce' );
+                        $attributes[ 'nonce_id' ] = 'b3_set_otp_nonce';
+                        $attributes[ 'nonce' ]    = wp_create_nonce( 'b3-set-otp-nonce' );
                     }
                 }
                 
@@ -295,18 +293,18 @@
              *
              * @since 1.0.0
              *
-             * @param array $attributes Shortcode attributes.
-             * @param string $content The text content for shortcode. Not used.
+             * @param array  $shortcode_args Shortcode attributes.
+             * @param string $content        The text content for shortcode. Not used.
              *
              * @return string  The shortcode output
              */
-            public function b3_render_lost_password_form( $user_variables, $content = null ) {
+            public function b3_render_lost_password_form( $shortcode_args, $content = null ) {
 				$default_attributes = [
                     'button_value' => esc_attr__( 'Reset password', 'b3-onboarding' ),
                     'template'     => 'lostpassword',
                     'title'        => false,
 				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
+				$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
@@ -338,18 +336,18 @@
              *
              * @since 1.0.0
              *
-             * @param array $attributes Shortcode attributes.
-             * @param string $content The text content for shortcode. Not used.
+             * @param array  $shortcode_args Shortcode attributes.
+             * @param string $content        The text content for shortcode. Not used.
              *
              * @return string  The shortcode output
              */
-            public function b3_render_reset_password_form( $user_variables, $content = null ) {
+            public function b3_render_reset_password_form( $shortcode_args, $content = null ) {
 				$default_attributes = [
                     'button_value' => esc_attr__( 'Set password', 'b3-onboarding' ),
                     'template'     => 'resetpass',
                     'title'        => false,
 				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
+				$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
                     return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
@@ -383,15 +381,23 @@
                     }
                 }
             }
-
-
-            public function b3_render_get_password_form( $user_variables, $content = null ) {
+            
+            
+            /**
+             * Render get password form (not in use yet)
+             *
+             * @param $shortcode_args
+             * @param $content
+             *
+             * @return string
+             */
+            public function b3_render_get_password_form( $shortcode_args, $content = null ) {
 				$default_attributes = [
                     'one_time_password' => true,
                     'template'          => 'getpass',
                     'title'             => false,
 				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
+				$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
                     return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
@@ -413,12 +419,7 @@
                         return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
 
                     } else {
-                        // error message for password reset
-                        $message = esc_html__( 'This is not a valid get password link.', 'b3-onboarding' );
-                        // $message .= '<br>';
-                        // $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
-                        // $message .= '<br>';
-                        // $message .= sprintf( esc_html__( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'click here', 'b3-onboarding' ) ) );
+                        $message = esc_html__( 'Todo.', 'b3-onboarding' );
 
                         return $message;
                     }
@@ -431,12 +432,12 @@
              *
              * @since 1.0.0
              *
-             * @param      $user_variables
+             * @param      $shortcode_args
              * @param null $content
              *
              * @return bool|string
              */
-            public function b3_render_account_page( $user_variables, $content = null ) {
+            public function b3_render_account_page( $shortcode_args, $content = null ) {
                 if ( is_user_logged_in() ) {
                     wp_enqueue_script( 'user-profile' );
 					$errors             = [];
@@ -445,7 +446,7 @@
                         'template'     => 'account',
                         'title'        => false,
 					];
-					$attributes         = shortcode_atts( $default_attributes, $user_variables );
+					$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
@@ -474,18 +475,18 @@
              *
              * @since 1.0.0
              *
-             * @param      $user_variables
+             * @param      $shortcode_args
              * @param null $content
              *
              * @return bool|string
              */
-            public function b3_render_user_approval_page( $user_variables, $content = null ) {
+            public function b3_render_user_approval_page( $shortcode_args, $content = null ) {
                 if ( current_user_can( 'promote_users' ) ) {
 					$default_attributes = [
 						'title'    => false,
 						'template' => 'user-management',
 					];
-					$attributes         = shortcode_atts( $default_attributes, $user_variables );
+					$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
 					$errors = [];
 					if ( isset( $_REQUEST[ 'error' ] ) ) {
