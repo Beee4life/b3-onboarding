@@ -365,6 +365,7 @@
         echo $button;
     }
 
+    
     /**
      * Get register page id/link
      *
@@ -1362,3 +1363,28 @@
 
 		return $user_ip;
 	}
+
+    
+    function b3_verify_otp( $code ) {
+        if ( $code ) {
+            $decoded_code    = base64_decode( $code );
+            $args            = explode( ':', $decoded_code );
+            
+            if ( isset( $args[ 0 ] ) && isset( $args[ 1 ] ) ) {
+                $user_email = $args[ 0 ];
+                $user_input = $args[ 1 ];
+                $user       = get_user_by( 'email', $user_email );
+
+                if ( $user instanceof WP_User ) {
+                    $transient       = get_transient( sprintf( '1tpw_%s', $user_email ) );
+                    $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
+                    
+                    if ( hash_equals( $hashed_password, crypt( $user_input, $hashed_password ) ) ) {
+                        return $user;
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
