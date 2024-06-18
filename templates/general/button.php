@@ -8,9 +8,13 @@
             $button_modifier = false;
             $button_value    = esc_attr__( 'Update profile', 'b3-onboarding' );
             break;
-        case 'login':
+        case 'getpass':
             $button_modifier = false;
             $button_value    = get_option( 'b3_use_one_time_password' ) ? esc_attr__( 'Get password', 'b3-onboarding' ) : esc_attr__( 'Log in', 'b3-onboarding' );
+            break;
+        case 'login':
+            $button_modifier = false;
+            $button_value    = esc_attr__( 'Log in', 'b3-onboarding' );
             break;
         case 'lostpassword':
             $button_modifier = false;
