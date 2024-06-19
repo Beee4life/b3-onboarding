@@ -60,6 +60,7 @@
 				$this->settings = [
 					'path'    => trailingslashit( dirname( __FILE__ ) ),
 					'version' => get_option( 'b3ob_version' ),
+                    // mabye add registration type ?
 				];
 			}
 
