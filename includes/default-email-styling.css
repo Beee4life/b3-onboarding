@@ -66,14 +66,14 @@ table td.b3_email_content {
   padding: 10px;
 }
 
-#b3_email_main a.magic-link:link {
-  color: white;
-}
-
 .one-time-code .code {
   font-size:   200%;
   font-weight: bold;
   text-align:  center;
+}
+
+#b3_email_main a.magic-link:link {
+  color: white;
 }
 
 .underline {
