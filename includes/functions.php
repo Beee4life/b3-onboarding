@@ -1048,12 +1048,12 @@
         $stored_styling = get_option( 'b3_email_styling' );
         if ( ! $stored_styling ) {
             $email_styling = stripslashes( b3_default_email_styling() );
-            update_option( 'b3_email_styling', $email_styling, false );
+            // update_option( 'b3_email_styling', $email_styling, false );
         }
         $stored_template = get_option( 'b3_email_template' );
         if ( ! $stored_template ) {
             $email_template = stripslashes( b3_default_email_template() );
-            update_option( 'b3_email_template', $email_template, false );
+            // update_option( 'b3_email_template', $email_template, false );
         }
 
         if ( ! is_multisite() ) {
