@@ -1041,21 +1041,6 @@
         update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
         update_option( 'b3_disable_admin_notification_password_change', 1, false );
 
-        if ( ! in_array( get_option( 'b3_activate_custom_emails' ), [ '0', '1' ] ) ) {
-            update_option( 'b3_activate_custom_emails', 1, false );
-        }
-
-        $stored_styling = get_option( 'b3_email_styling' );
-        if ( ! $stored_styling ) {
-            $email_styling = stripslashes( b3_default_email_styling() );
-            // update_option( 'b3_email_styling', $email_styling, false );
-        }
-        $stored_template = get_option( 'b3_email_template' );
-        if ( ! $stored_template ) {
-            $email_template = stripslashes( b3_default_email_template() );
-            // update_option( 'b3_email_template', $email_template, false );
-        }
-
         if ( ! is_multisite() ) {
             update_option( 'b3_dashboard_widget', 1, false );
             update_option( 'b3_hide_admin_bar', 1, false );
@@ -1066,11 +1051,9 @@
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ], false );
             }
 
-        } else {
-            if ( is_main_site() && false == $blog_id ) {
-                update_option( 'b3_dashboard_widget', 1, false );
-                update_site_option( 'registrationnotification', 'no' );
-            }
+        } elseif ( is_main_site() && false == $blog_id ) {
+            update_option( 'b3_dashboard_widget', 1, false );
+            update_site_option( 'registrationnotification', 'no' );
         }
 
 		if ( false == get_option( 'b3_registration_type' ) ) {
@@ -1101,12 +1084,15 @@
      * @return string[]
      */
     function b3_get_template_paths() {
+        $stylesheet_directory = trailingslashit( get_stylesheet_directory() );
+        $template_directory   = trailingslashit( get_template_directory() );
+        
         $template_paths = [
-            get_stylesheet_directory() . '/b3-onboarding/',
-            get_stylesheet_directory() . '/plugins/b3-onboarding/',
-            get_template_directory() . '/b3-onboarding/',
-            get_template_directory() . '/plugins/b3-onboarding/',
-            B3OB_PLUGIN_PATH . '/templates/',
+            $stylesheet_directory . 'b3-onboarding/',
+            $stylesheet_directory . 'plugins/b3-onboarding/',
+            $template_directory . 'b3-onboarding/',
+            $template_directory . 'plugins/b3-onboarding/',
+            trailingslashit( B3OB_PLUGIN_PATH ) . 'templates/',
         ];
         
         return $template_paths;
@@ -1198,7 +1184,8 @@
             $replacements[ '%site_name%' ] = get_option( 'blogname' );
             restore_current_blog();
         }
-
+        
+        // @TODO: merge $replacements
 		switch( $type ) {
             case 'message':
                 $replacements = [
