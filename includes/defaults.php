@@ -758,7 +758,7 @@
             $message    .= esc_html__( 'If this request was made by you, you can click the following link to login.', 'b3-onboarding' ) . "\n";
             $message    .= '<br><br>' . "\n";
             $message    .= sprintf( '<div class="one-time-code">%s</div>', $your_code ) . "\n";
-            $message    .= '<br><br>' . "\n";
+            $message    .= '<br>' . "\n";
             $message    .= esc_html__( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
             $message    .= b3_default_greetings();
             
