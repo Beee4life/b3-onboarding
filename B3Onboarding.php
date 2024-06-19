@@ -113,6 +113,7 @@
                 include 'includes/form-handling.php';
                 include 'includes/tabs/tabs.php';
                 include 'admin/help-tabs.php';
+                
                 if ( get_option( 'b3_activate_filter_validation' ) ) {
                     include 'includes/verify-filters.php';
                 }
