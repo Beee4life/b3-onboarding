@@ -736,16 +736,18 @@
      * @since 3.11.0
      */
     function b3_log_user_in( $user, $redirect = '' ) {
-        $redirect = ! empty( $redirect ) ? $redirect : b3_get_account_url();
+        $account_url = b3_get_account_url();
+        $account_url = add_query_arg( 'message', 'logged_in', $account_url );
+        $redirect    = ! empty( $redirect ) ? $redirect : $account_url;
+        
         if ( $user instanceof WP_User ) {
             wp_set_current_user( $user->ID, $user->user_login );
             wp_set_auth_cookie( $user->ID );
+            delete_transient( sprintf( 'otp_', $user->user_email ) );
             do_action( 'wp_login', $user->user_login, $user );
             
-            if ( $redirect ) {
-                wp_redirect( b3_get_account_url() );
-                exit;
-            }
+            wp_redirect( $redirect );
+            exit;
         }
     }
     add_action( 'b3_log_user_in', 'b3_log_user_in' );
