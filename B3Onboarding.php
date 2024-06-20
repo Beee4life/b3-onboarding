@@ -821,6 +821,11 @@
                             wp_safe_redirect( $redirect_url );
                             exit;
 
+                        } elseif ( ! isset( $_POST[ 'email' ] ) || empty( $_POST[ 'email' ] ) ) {
+                            $redirect_url = add_query_arg( 'login-error', 'empty_email', $redirect_url );
+                            wp_safe_redirect( $redirect_url );
+                            exit;
+
                         } elseif ( isset( $_POST[ 'email' ] ) ) {
                             $user_email       = $_POST[ 'email' ];
                             $existing_user_id = get_user_by( 'email', $user_email );
@@ -911,6 +916,9 @@
 
                     case 'empty_password':
                         return esc_html__( 'Please enter a password.', 'b3-onboarding' );
+
+                    case 'empty_email':
+                        return esc_html__( 'Please enter an email address.', 'b3-onboarding' );
 
                     case 'incorrect_password':
                         $error_message = esc_html__( "The username or password you entered wasn't quite right.", 'b3-onboarding' );
