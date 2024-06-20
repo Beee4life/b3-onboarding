@@ -13,7 +13,7 @@
     function b3_render_emails_tab() {
         $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
-        $link_color             = b3_get_link_color();
+        $link_color             = apply_filters( 'b3_link_color', b3_get_link_color() );
         $filter_link_color      = apply_filters( 'b3_link_color', false );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
         $hide_logo_notice       = $logo_in_email ? false : ' hidden';
@@ -32,7 +32,7 @@
                     <?php b3_get_close(); ?>
                     <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
                     <?php if ( $filter_link_color ) { ?>
-                        <?php esc_html_e( "You've set a filter to override the link color.", 'b3-onboarding' ); ?>
+                        <?php esc_html_e( "The 'b3_link_color' filter is active which sets the link color.", 'b3-onboarding' ); ?>
                     <?php } ?>
                 <?php b3_get_close(); ?>
 
