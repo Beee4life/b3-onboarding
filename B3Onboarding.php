@@ -104,6 +104,7 @@
                 include 'includes/actions-b3.php';
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
+                // include 'includes/class-b3-test.php';
                 include 'includes/do-stuff.php';
                 include 'includes/filters-b3.php';
                 include 'includes/filters-wp.php';
@@ -865,27 +866,6 @@
                         } else {
                             error_log('FALLBACK');
                         }
-                    
-                    } elseif ( isset( $_GET[ 'login' ] ) && isset( $_GET[ 'code' ] ) ) {
-                        // check direct link with hashed code
-                        $verify_otp = b3_verify_otp( $_GET[ 'code' ] );
-
-                        if ( $verify_otp instanceof WP_User ) {
-                            do_action( 'b3_log_user_in', $verify_otp );
-                        }
-                    
-                    } elseif ( isset( $_POST[ 'b3_check_otp_nonce' ] ) ) {
-                        if ( ! isset( $_POST[ 'b3_one_time_password' ] ) || empty( $_POST[ 'b3_one_time_password' ] ) ) {
-                            // @TODO: add error because, empty code
-                            
-                        } else {
-                            // check form directly after submit
-                            $verify_otp = b3_verify_otp( $_POST[ 'b3_one_time_password' ] );
-                            
-                            if ( $verify_otp instanceof WP_User ) {
-                                do_action( 'b3_log_user_in', $verify_otp );
-                            }
-                        }
                     }
                 }
             }
@@ -902,6 +882,11 @@
                     
                     if ( $verify_otp instanceof WP_User ) {
                         do_action( 'b3_log_user_in', $verify_otp );
+                    } else {
+                        $redirect_url = b3_get_login_url();
+                        $redirect_url = add_query_arg( 'error', 'verification_fail', $redirect_url);
+                        wp_safe_redirect( $redirect_url );
+                        exit;
                     }
                 }
             }
@@ -935,8 +920,14 @@
 
                         return $error_message;
 
+                    case 'logged_in':
+                        return esc_html__( 'You are now logged in.', 'b3-onboarding' );
+
                     case 'logged_out':
                         return esc_html__( 'You are logged out.', 'b3-onboarding' );
+
+                    case 'verification_fail':
+                        return esc_html__( 'Your code seems to be invalid.', 'b3-onboarding' );
 
                     case 'unknown':
                         return esc_html__( 'An unkown error has occured. Please try again.', 'b3-onboarding' );
@@ -1036,7 +1027,9 @@
 
                     // Activation
                     case 'activate_success':
-                        if ( get_option( 'b3_activate_custom_passwords' ) ) {
+                        if ( get_option( 'b3_use_one_time_password' ) ) {
+                            return esc_html__( 'You have successfully activated your account. You can now login through the use of a magic link. Please enter your email address below.', 'b3-onboarding' );
+                        } elseif ( get_option( 'b3_activate_custom_passwords' ) ) {
                             return esc_html__( 'You have successfully activated your account. You can now login.', 'b3-onboarding' );
                         } else {
                             return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
