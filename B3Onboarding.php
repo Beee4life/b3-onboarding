@@ -927,16 +927,16 @@
                         return esc_html__( 'You are logged out.', 'b3-onboarding' );
 
                     case 'verification_fail':
-                        return esc_html__( 'Your code seems to be invalid.', 'b3-onboarding' );
+                        return esc_html__( 'Your code seems to be invalid. Please try again.', 'b3-onboarding' );
 
                     case 'unknown':
                         return esc_html__( 'An unkown error has occured. Please try again.', 'b3-onboarding' );
 
                     // Login errors
                     case 'enter_code':
-                        $message = esc_html__( 'Please enter the code you have received in your email.', 'b3-onboarding' );
-                        $message .= '<br>';
-                        $message .= esc_html__( sprintf( 'The code is valid for %d minutes.', 5 ), 'b3-onboarding' );
+                        $message = esc_html__( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
+                        $message .= '&nbsp;';
+                        $message .= esc_html__( sprintf( 'The link is valid for %d minutes.', 5 ), 'b3-onboarding' );
                         return $message;
 
                     case 'unknown_user':
