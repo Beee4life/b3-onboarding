@@ -23,7 +23,6 @@
 				add_shortcode( 'login-form', 		[ $this, 'b3_render_login_form' ] );
 				add_shortcode( 'register-form', 	[ $this, 'b3_render_register_form' ] );
 				add_shortcode( 'resetpass-form', 	[ $this, 'b3_render_reset_password_form' ] );
-				add_shortcode( 'get-pass-form', 	[ $this, 'b3_render_get_password_form' ] );
 				add_shortcode( 'user-management', 	[ $this, 'b3_render_user_approval_page' ] );
 			}
 
@@ -378,31 +377,6 @@
             }
             
             
-            /**
-             * Render get password form (not in use yet)
-             *
-             * @param $shortcode_args
-             *
-             * @return string
-             */
-            public function b3_render_get_password_form( $shortcode_args ) {
-				$default_attributes = [
-                    'one_time_password' => true,
-                    'template'          => 'getpass',
-                    'title'             => false,
-				];
-				$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
-
-                if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
-                } else {
-                    $message = esc_html__( 'Todo.', 'b3-onboarding' );
-
-                    return $message;
-                }
-            }
-
-
             /**
              * Render user/account page
              *
