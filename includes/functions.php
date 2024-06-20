@@ -1167,7 +1167,13 @@
         }
         
         $blog_id    = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
-        $user_login = $vars[ 'user_data' ]->data->user_login;
+        $user_login = false;
+
+        if ( '1' == get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) {
+            $user_login = $user_data->user_login;
+        } elseif ( isset( $user_data->data->user_login ) ) {
+            $user_login = $user_data->data->user_login;
+        }
 
         if ( isset( $vars[ 'registration_date' ] ) ) {
             $registration_date_gmt = $vars[ 'registration_date' ];
@@ -1191,7 +1197,7 @@
             case 'message':
                 $replacements = [
                     '%account_page%' => esc_url( b3_get_account_url() ),
-                    '%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ), // @TODO: check in single site
+                    '%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ),
                     '%home_url%'     => get_home_url( $blog_id, '/' ),
                     '%login_url%'    => esc_url( b3_get_login_url() ),
                     '%logo%'         => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
@@ -1206,7 +1212,7 @@
                 break;
             case 'subject':
                 $replacements = [
-                    '%blog_name%'    => get_option( 'blogname' ),
+                    '%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ),
                     '%network_name%' => get_site_option( 'site_name' ),
                     '%user_login%'   => $user_login,
                     '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
