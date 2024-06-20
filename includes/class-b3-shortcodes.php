@@ -38,8 +38,10 @@
              * @return mixed|string|void
              */
             public function b3_render_register_form( $shortcode_args ) {
-                $button_value = esc_attr__( 'Register', 'b3-onboarding' );
-                if ( in_array( $attributes[ 'registration_type' ], [
+                $button_value      = esc_attr__( 'Register', 'b3-onboarding' );
+                $registration_type = get_option( 'b3_registration_type' );
+
+                if ( in_array( $registration_type, [
                     'request_access',
                     'request_access_subdomain',
                 ] ) ) {
@@ -426,7 +428,11 @@
 
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
-                        foreach ( $error_codes as $code ) {
+                    } elseif ( isset( $_REQUEST[ 'message' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'message' ] );
+                    }
+                    if ( isset( $error_codes ) ) {
+                        foreach( $error_codes as $code ) {
                             $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
@@ -436,7 +442,7 @@
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {
                         $attributes[ 'updated' ] = $this->b3_get_return_message( $_REQUEST[ 'updated' ] );
                     }
-
+                    
                     $attributes = apply_filters( 'b3_attributes', $attributes );
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
