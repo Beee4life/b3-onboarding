@@ -104,7 +104,6 @@
                 include 'includes/actions-b3.php';
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
-                // include 'includes/class-b3-test.php';
                 include 'includes/do-stuff.php';
                 include 'includes/filters-b3.php';
                 include 'includes/filters-wp.php';
