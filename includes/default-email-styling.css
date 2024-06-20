@@ -72,7 +72,9 @@ table td.b3_email_content {
   text-align:  center;
 }
 
-#b3_email_main a.magic-link:link {
+#b3_email_main a.magic-link:link,
+#b3_email_main a.magic-link:visited,
+#b3_email_main a.magic-link:active {
   color: white;
 }
 
