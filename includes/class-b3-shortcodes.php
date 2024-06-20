@@ -171,18 +171,20 @@
              * @return string  The shortcode output
              */
             public function b3_render_login_form( $shortcode_args ) {
-				$default_attributes = [
+                if ( is_user_logged_in() ) {
+                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                }
+                
+                $errors             = [];
+                $error_codes        = [];
+                $default_attributes = [
                     'button_value'      => esc_attr__( 'Log in', 'b3-onboarding' ),
                     'one_time_password' => false,
                     'template'          => 'login',
                     'title'             => false,
-				];
-				$attributes         = shortcode_atts( $default_attributes, $shortcode_args );
-
-                if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
-                }
-
+                ];
+                $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
+                
                 // Pass the redirect parameter to the WordPress login functionality: but
                 // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
@@ -193,9 +195,7 @@
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
 
-				$errors = [];
 				if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
-                    $error_codes = [];
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
                             if ( isset( $_REQUEST[ 'code' ] ) ) {
@@ -208,7 +208,6 @@
                                 }
                                 $error_codes = explode( ',', $_REQUEST[ 'login' ] );
                             }
-                        
                         } else {
                             $error_codes = explode( ',', $_REQUEST[ 'login' ] );
                         }
@@ -253,7 +252,7 @@
                 }
                 
                 if ( 1 == get_option( 'b3_use_one_time_password' ) && 'login' === $attributes[ 'template' ] ) {
-                    $button_value                 = get_option( 'b3_use_one_time_password' ) ? esc_attr__( 'Get password', 'b3-onboarding' ) : esc_attr__( 'Log in', 'b3-onboarding' );
+                    $button_value                 = get_option( 'b3_use_one_time_password' ) ? esc_attr__( 'Get magic link', 'b3-onboarding' ) : esc_attr__( 'Log in', 'b3-onboarding' );
                     $button_value                 = isset( $_GET[ 'login' ] ) && 'enter_code' === $_GET[ 'login' ] ? esc_attr__( 'Log in', 'b3-onboarding' ) : $button_value;
                     $attributes[ 'button_value' ] = $button_value;
                     $attributes[ 'enter_code' ]   = false;
@@ -268,8 +267,6 @@
                     $attributes[ 'form_action' ] = $form_action;
                     
                     if ( isset( $_REQUEST[ 'login' ] ) && 'enter_code' == $_REQUEST[ 'login' ] ) {
-                        // @TODO: maybe hash email ?
-                        $attributes[ 'email' ]       = isset( $_POST[ 'email' ] ) ? $_POST[ 'email' ] : '';
                         $attributes[ 'enter_code' ]  = true;
                         $attributes[ 'form_action' ] = $form_action;
                         $attributes[ 'nonce_id' ]    = 'b3_check_otp_nonce';
