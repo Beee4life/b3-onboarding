@@ -148,7 +148,9 @@
     function b3_default_account_activated_message() {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
-        if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
+        if ( get_option( 'b3_use_one_time_password' ) ) {
+            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now set your password through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'this link', 'b3-onboarding' ) ) );
+        } elseif ( true != get_option( 'b3_activate_custom_passwords' ) ) {
             $message .= sprintf( esc_html__( 'you have confirmed your email address and can now set your password through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%lostpass_url%', esc_html__( 'this link', 'b3-onboarding' ) ) );
         } else {
             $message .= sprintf( esc_html__( 'you have confirmed your email address and can now login %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'here', 'b3-onboarding' ) ) );
