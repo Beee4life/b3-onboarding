@@ -458,8 +458,8 @@ msgstr "Template"
 
 #: admin/dashboard-widget.php:42
 #, php-format
-msgid "There %s %d %s awaiting approval. %s to manage %s."
-msgstr "Er zijn %s %d %s in afwachting van goedkeuring. %s om %s te beheren."
+msgid "There %1$s %2$d %3$s awaiting approval. %4$s to manage %5$s."
+msgstr "Er %1$s %2$d %3$s in afwachting van goedkeuring. %4$s om %5$s te beheren."
 
 #: admin/dashboard-widget.php:43 admin/dashboard-widget.php:50
 #: admin/dashboard-widget.php:56
