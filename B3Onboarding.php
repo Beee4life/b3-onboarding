@@ -850,7 +850,7 @@
                                     $to      = $user_email;
                                     $subject = __( 'One-time password for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                    $message = b3_get_one_time_password_email( $otp_password, $hashed_slug );
+                                    $message = apply_filters( 'b3_otp_email', b3_get_one_time_password_email( $otp_password, $hashed_slug ) );
                                     
                                     if ( ! empty( $message ) ) {
                                         $message = b3_replace_template_styling( $message );
