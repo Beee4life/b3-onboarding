@@ -14,40 +14,40 @@
         if ( false != $site_id && is_multisite() ) {
             switch_to_blog( $site_id );
         }
-
-		$page_definitions = [
-			_x( 'account', 'slug', 'b3-onboarding' )        => [
-				'title'   => esc_html__( 'Account', 'b3-onboarding' ),
-				'content' => '[account-page]',
-				'meta'    => 'b3_account_page_id',
-			],
-			_x( 'lostpassword', 'slug', 'b3-onboarding' )   => [
-				'title'   => esc_html__( 'Lost password', 'b3-onboarding' ),
-				'content' => '[lostpass-form]',
-				'meta'    => 'b3_lost_password_page_id',
-			],
-			_x( 'login', 'slug', 'b3-onboarding' )          => [
-				'title'   => esc_html__( 'Login', 'b3-onboarding' ),
-				'content' => '[login-form]',
-				'meta'    => 'b3_login_page_id',
-			],
-			_x( 'logout', 'slug', 'b3-onboarding' )         => [
-				'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-				'content' => '',
-				'meta'    => 'b3_logout_page_id',
-			],
-			_x( 'register', 'slug', 'b3-onboarding' )       => [
-				'title'   => esc_html__( 'Register', 'b3-onboarding' ),
-				'content' => '[register-form]',
-				'meta'    => 'b3_register_page_id',
-			],
-			_x( 'reset-password', 'slug', 'b3-onboarding' ) => [
-				'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-				'content' => '[resetpass-form]',
-				'meta'    => 'b3_reset_password_page_id',
-			],
-		];
-		b3_create_pages( $page_definitions );
+        
+        $page_definitions = [
+            _x( 'account', 'slug', 'b3-onboarding' )        => [
+                'title'   => esc_html__( 'Account', 'b3-onboarding' ),
+                'content' => '[account-page]',
+                'meta'    => 'b3_account_page_id',
+            ],
+            _x( 'lostpassword', 'slug', 'b3-onboarding' )   => [
+                'title'   => esc_html__( 'Lost password', 'b3-onboarding' ),
+                'content' => '[lostpass-form]',
+                'meta'    => 'b3_lost_password_page_id',
+            ],
+            _x( 'login', 'slug', 'b3-onboarding' )          => [
+                'title'   => esc_html__( 'Login', 'b3-onboarding' ),
+                'content' => '[login-form]',
+                'meta'    => 'b3_login_page_id',
+            ],
+            _x( 'logout', 'slug', 'b3-onboarding' )         => [
+                'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
+                'content' => '',
+                'meta'    => 'b3_logout_page_id',
+            ],
+            _x( 'register', 'slug', 'b3-onboarding' )       => [
+                'title'   => esc_html__( 'Register', 'b3-onboarding' ),
+                'content' => '[register-form]',
+                'meta'    => 'b3_register_page_id',
+            ],
+            _x( 'reset-password', 'slug', 'b3-onboarding' ) => [
+                'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
+                'content' => '[resetpass-form]',
+                'meta'    => 'b3_reset_password_page_id',
+            ],
+        ];
+        b3_create_pages( $page_definitions );
 
         if ( false != $site_id && is_multisite() ) {
             restore_current_blog();
@@ -62,7 +62,7 @@
      * @param array $page_definitions
      */
     function b3_create_pages( $page_definitions = [] ) {
-		foreach ( $page_definitions as $slug => $page ) {
+        foreach( $page_definitions as $slug => $page ) {
             // Check if there's a page assigned already
             $stored_id = get_option( $slug );
             if ( $stored_id ) {
@@ -73,13 +73,13 @@
             } else {
                 // no stored id, so continue
             }
-
-			$existing_page_args = [
-				'post_type'      => 'page',
-				'posts_per_page' => 1,
-				'pagename'       => $slug,
-			];
-			$existing_page = get_posts( $existing_page_args );
+            
+            $existing_page_args = [
+                'post_type'      => 'page',
+                'posts_per_page' => 1,
+                'pagename'       => $slug,
+            ];
+            $existing_page      = get_posts( $existing_page_args );
 
             if ( ! empty( $existing_page ) ) {
                 $add_shortcode = false;
@@ -98,23 +98,23 @@
                     }
                 }
                 if ( true === $add_shortcode ) {
-					$new_args = [
-						'ID'           => $page_id,
-						'post_content' => $page[ 'content' ],
-					];
-					wp_update_post( $new_args );
+                    $new_args = [
+                        'ID'           => $page_id,
+                        'post_content' => $page[ 'content' ],
+                    ];
+                    wp_update_post( $new_args );
                 }
             } else {
-				$new_post_args = [
-					'post_title'     => $page[ 'title' ],
-					'post_name'      => $slug,
-					'post_content'   => $page[ 'content' ],
-					'post_status'    => 'publish',
-					'post_type'      => 'page',
-					'ping_status'    => 'closed',
-					'comment_status' => 'closed',
-				];
-				$result = wp_insert_post( $new_post_args, true );
+                $new_post_args = [
+                    'post_title'     => $page[ 'title' ],
+                    'post_name'      => $slug,
+                    'post_content'   => $page[ 'content' ],
+                    'post_status'    => 'publish',
+                    'post_type'      => 'page',
+                    'ping_status'    => 'closed',
+                    'comment_status' => 'closed',
+                ];
+                $result        = wp_insert_post( $new_post_args, true );
                 if ( ! is_wp_error( $result ) ) {
                     update_option( $page[ 'meta' ], $result, false );
                     update_post_meta( $result, '_b3_page', true );
@@ -245,14 +245,14 @@
             $link_color   = b3_get_link_color();
             $styling      = b3_get_email_styling( $link_color );
             $template     = b3_get_email_template( $hide_logo );
-
+            
             if ( false != $styling && false != $template ) {
-				$replace_vars = [
-					'%email_footer%'  => $email_footer,
-					'%email_message%' => $message,
-					'%email_styling%' => $styling,
-				];
-				$message = strtr( $template, $replace_vars );
+                $replace_vars = [
+                    '%email_footer%'  => $email_footer,
+                    '%email_message%' => $message,
+                    '%email_styling%' => $styling,
+                ];
+                $message      = strtr( $template, $replace_vars );
             }
         }
 

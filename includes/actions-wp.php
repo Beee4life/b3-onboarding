@@ -81,22 +81,22 @@
                 $approval_users = [];
                 if ( 'request_access' === get_option( 'b3_registration_type' ) ) {
                     $approval_args  = [ 'role' => 'b3_approval' ];
-					$approval_users = get_users( $approval_args );
+                    $approval_users = get_users( $approval_args );
                 } elseif ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
                     global $wpdb;
-                    $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
+                    $query          = "SELECT * FROM $wpdb->signups WHERE active = '0'";
                     $approval_users = $wpdb->get_results( $query );
                 }
-
+                
                 if ( 0 < count( $approval_users ) ) {
-					$page_link     = admin_url( 'admin.php?page=b3-user-approval' );
-					$approval_args = [
-						'id'    => 'approval',
-						'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
-						'href'  => $page_link,
-						'meta'  => [ 'class' => 'topbar_approve_user' ],
-					];
-					$wp_admin_bar->add_node( $approval_args );
+                    $page_link     = admin_url( 'admin.php?page=b3-user-approval' );
+                    $approval_args = [
+                        'id'    => 'approval',
+                        'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
+                        'href'  => $page_link,
+                        'meta'  => [ 'class' => 'topbar_approve_user' ],
+                    ];
+                    $wp_admin_bar->add_node( $approval_args );
                 }
             }
         }
@@ -196,13 +196,13 @@
             $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
             $message = b3_get_wpmu_activate_user_blog_message();
         }
-		$message = b3_replace_template_styling( $message );
-		$message = strtr( $message, b3_get_replacement_vars( 'message', [
-			'domain' => $domain,
-			'key'    => $key,
-			'path'   => $path,
-		], true ) );
-		$message = htmlspecialchars_decode( stripslashes( $message ) );
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_get_replacement_vars( 'message', [
+            'domain' => $domain,
+            'key'    => $key,
+            'path'   => $path,
+        ], true ) );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
     }
@@ -219,18 +219,18 @@
      * @param $meta
      */
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
-		$user_data = get_userdata( $user_id );
-		$subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
-		$message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
-		$message   = b3_replace_template_styling( $message );
-		$message   = strtr( $message, b3_get_replacement_vars( 'message', [
-			'blog_id'       => $blog_id,
-			'user_data'     => $user_data,
-			'user_password' => $password,
-		] ) );
-		$message   = htmlspecialchars_decode( stripslashes( $message ) );
-
-		wp_mail( $user_data->user_email, $subject, $message, [] );
+        $user_data = get_userdata( $user_id );
+        $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
+        $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
+        $message   = b3_replace_template_styling( $message );
+        $message   = strtr( $message, b3_get_replacement_vars( 'message', [
+            'blog_id'       => $blog_id,
+            'user_data'     => $user_data,
+            'user_password' => $password,
+        ] ) );
+        $message   = htmlspecialchars_decode( stripslashes( $message ) );
+        
+        wp_mail( $user_data->user_email, $subject, $message, [] );
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
 

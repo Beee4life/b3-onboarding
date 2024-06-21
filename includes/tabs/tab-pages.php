@@ -12,59 +12,59 @@
      */
     function b3_render_pages_tab() {
         // get stored pages
-		$b3_pages = [
-			[
-				'id'      => 'register_page',
-				'label'   => esc_html__( 'Register', 'b3-onboarding' ),
-				'page_id' => get_option( 'b3_register_page_id' ),
-			],
-			[
-				'id'      => 'login_page',
-				'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
-				'page_id' => get_option( 'b3_login_page_id' ),
-			],
-			[
-				'id'      => 'logout_page',
-				'label'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-				'page_id' => get_option( 'b3_logout_page_id' ),
-			],
-			[
-				'id'      => 'lost_password_page',
-				'label'   => esc_html__( 'Lost Password', 'b3-onboarding' ),
-				'page_id' => get_option( 'b3_lost_password_page_id' ),
-			],
-			[
-				'id'      => 'reset_password_page',
-				'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-				'page_id' => get_option( 'b3_reset_password_page_id' ),
-			],
-			[
-				'id'      => 'account_page',
-				'label'   => esc_html__( 'Account', 'b3-onboarding' ),
-				'page_id' => get_option( 'b3_account_page_id' ),
-			],
-		];
-
-		$front_end_approval = [
-			'id'      => 'approval_page',
-			'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
-			'page_id' => get_option( 'b3_approval_page_id' ),
-		];
-
-		if ( true == get_option( 'b3_front_end_approval' ) ) {
+        $b3_pages = [
+            [
+                'id'      => 'register_page',
+                'label'   => esc_html__( 'Register', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_register_page_id' ),
+            ],
+            [
+                'id'      => 'login_page',
+                'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_login_page_id' ),
+            ],
+            [
+                'id'      => 'logout_page',
+                'label'   => esc_html__( 'Log Out', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_logout_page_id' ),
+            ],
+            [
+                'id'      => 'lost_password_page',
+                'label'   => esc_html__( 'Lost Password', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_lost_password_page_id' ),
+            ],
+            [
+                'id'      => 'reset_password_page',
+                'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_reset_password_page_id' ),
+            ],
+            [
+                'id'      => 'account_page',
+                'label'   => esc_html__( 'Account', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_account_page_id' ),
+            ],
+        ];
+        
+        $front_end_approval = [
+            'id'      => 'approval_page',
+            'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
+            'page_id' => get_option( 'b3_approval_page_id' ),
+        ];
+        
+        if ( true == get_option( 'b3_front_end_approval' ) ) {
             $b3_pages[] = $front_end_approval;
         }
 
         // get all pages
-		$all_pages = get_posts( [
-			'post_type'      => 'page',
-			'post_status'    => [ 'publish', 'pending', 'draft' ],
-			'posts_per_page' => -1,
-			'orderby'        => 'title',
-			'order'          => 'ASC',
-		] );
-
-		ob_start();
+        $all_pages = get_posts( [
+            'post_type'      => 'page',
+            'post_status'    => [ 'publish', 'pending', 'draft' ],
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+        ] );
+        
+        ob_start();
         ?>
         <form action="admin.php?page=b3-onboarding&tab=pages" method="post">
             <input name="b3_pages_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>" />

@@ -146,8 +146,8 @@
                     // user must get AN email, from WP or custom
                     $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
                     $wp_new_user_notification_email[ 'headers' ] = [];
-					$wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                    $user_email = b3_get_manual_welcome_user_message();
+                    $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                    $user_email                                  = b3_get_manual_welcome_user_message();
                 }
             } elseif ( strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
@@ -157,8 +157,8 @@
         } else {
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = [];
-
-			if ( 'request_access' === $registration_type ) {
+            
+            if ( 'request_access' === $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
                 $user_email = b3_get_request_access_message_user();
 
@@ -232,13 +232,13 @@
      */
     function b3_new_site_email( $new_site_email, $site, $user ) {
         // @TODO: add filter + (maybe) user input for message
-        $user_email                  = b3_get_new_site_created_message();
-        $user_email                  = b3_replace_template_styling( $user_email );
-        $user_email                  = strtr( $user_email, b3_get_replacement_vars( 'message', [
-			'user_data' => $user,
-			'site'      => $site,
-		] ) );
-        $user_email                  = htmlspecialchars_decode( stripslashes( $user_email ) );
+        $user_email = b3_get_new_site_created_message();
+        $user_email = b3_replace_template_styling( $user_email );
+        $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [
+            'user_data' => $user,
+            'site'      => $site,
+        ] ) );
+        $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
         $new_site_email[ 'message' ] = $user_email;
 
         return $new_site_email;
@@ -311,14 +311,14 @@
     function b3_content_password_change_notification( $pass_change_email, $user, $userdata ) {
         // if admin disabled user notification option
         if ( 1 == get_option( 'b3_disable_user_notification_password_change' ) ) {
-			$pass_change_email = [
-				'to'      => false,
-				'subject' => false,
-				'message' => false,
-				'headers' => false,
-			];
-
-			return $pass_change_email;
+            $pass_change_email = [
+                'to'      => false,
+                'subject' => false,
+                'message' => false,
+                'headers' => false,
+            ];
+            
+            return $pass_change_email;
         }
 
         $salutation = ( 1 == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
@@ -342,16 +342,16 @@
         $message = b3_replace_template_styling( $pass_change_text );
         $message = strtr( $message, b3_get_replacement_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
-
-		$pass_change_email = [
-			'to'      => $user[ 'user_email' ],
-			/* translators: Password change notification email subject. %s: Site title. */
-			'subject' => __( '[%s] Password Changed' ),
-			'message' => $message,
-			'headers' => '',
-		];
-
-		return $pass_change_email;
+        
+        $pass_change_email = [
+            'to'      => $user[ 'user_email' ],
+            /* translators: Password change notification email subject. %s: Site title. */
+            'subject' => __( '[%s] Password Changed' ),
+            'message' => $message,
+            'headers' => '',
+        ];
+        
+        return $pass_change_email;
     }
     add_filter( 'password_change_email', 'b3_content_password_change_notification', 10, 3 );
 
@@ -367,7 +367,7 @@
      * @return false
      */
     function b3_disable_wpmu_user_signup_notification( $user_login, $user_email, $key, $meta = [] ) {
-		return false;
+        return false;
     }
     add_filter( 'wpmu_signup_user_notification', 'b3_disable_wpmu_user_signup_notification', 10, 5 );
 
