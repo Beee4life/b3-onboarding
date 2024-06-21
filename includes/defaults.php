@@ -755,15 +755,15 @@
             $login_link = b3_get_login_url();
             $login_link = add_query_arg( 'login', 'enter_code', $login_link );
             $login_link = add_query_arg( 'code', $slug, $login_link );
-            $enter_url  = sprintf( '<a href="%s" class="magic-link">%s</a>', esc_url( $login_link ), strtoupper( __( 'Login', 'b3-onboarding' ) ) );
-            $your_code  = sprintf( '<div class="code">%s</div>', $enter_url ) . "\n";
+            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+            $your_code  = sprintf( '<div class="big-link">%s</div>', $enter_url ) . "\n";
             $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
             $message    .= '<br><br>' . "\n";
             $message    .= esc_html__( 'Someone requested a "magic login link" for the account using this email address.', 'b3-onboarding' ) . "\n";
             $message    .= '<br><br>' . "\n";
             $message    .= esc_html__( 'If this request was made by you, you can click the following link to login.', 'b3-onboarding' ) . "\n";
             $message    .= '<br><br>' . "\n";
-            $message    .= sprintf( '<div class="one-time-code">%s</div>', $your_code ) . "\n";
+            $message    .= sprintf( '<div class="big-link-container">%s</div>', $your_code ) . "\n";
             $message    .= '<br>' . "\n";
             $message    .= esc_html__( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
             $message    .= b3_default_greetings();

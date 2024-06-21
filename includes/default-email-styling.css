@@ -61,20 +61,20 @@ table td.b3_email_content {
   height:    auto;
 }
 
-.one-time-code {
+.big-link-container {
   background-color: #e0144b;
   padding: 10px;
 }
 
-.one-time-code .code {
+.big-link-container .big-link {
   font-size:   200%;
   font-weight: bold;
   text-align:  center;
 }
 
-#b3_email_main a.magic-link:link,
-#b3_email_main a.magic-link:visited,
-#b3_email_main a.magic-link:active {
+#b3_email_main .big-link a:link,
+#b3_email_main .big-link a:visited,
+#b3_email_main .big-link a:active {
   color: white;
 }
 
