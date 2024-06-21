@@ -167,10 +167,12 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
-                if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
-                    update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
-                } else {
-                    delete_option( 'b3_link_color' );
+                if ( ! apply_filters( 'b3_link_color', false ) ) {
+                    if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
+                        update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
+                    } else {
+                        delete_option( 'b3_link_color' );
+                    }
                 }
 
                 if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
