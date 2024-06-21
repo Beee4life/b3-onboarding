@@ -196,10 +196,10 @@
      * @return bool|false|mixed|string|void
      */
     function b3_get_main_logo() {
-        $custom_logo = get_option( 'b3_main_logo' );
+        $option_value = get_option( 'b3_main_logo' );
 
-        if ( false != $custom_logo ) {
-            $main_logo = $custom_logo;
+        if ( false != $option_value ) {
+            $main_logo = $option_value;
         } else {
             $main_logo = b3_default_main_logo();
         }
