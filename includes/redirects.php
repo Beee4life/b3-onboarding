@@ -29,11 +29,10 @@
             }
         } else {
             $register_url = b3_get_register_url();
-            if ( false != $register_url ) {
-                wp_safe_redirect( $register_url );
-            } else {
-                wp_safe_redirect( wp_registration_url() );
+            if ( ! $register_url ) {
+                $register_url = wp_registration_url();
             }
+            wp_safe_redirect( $register_url );
             exit;
         }
     }
@@ -44,19 +43,16 @@
      * of wp-login.php?action=register.
      */
     function b3_redirect_to_custom_register() {
-        if ( ! is_multisite() ) {
-            if ( isset( $_GET[ 'action' ] ) && 'register' == $_GET[ 'action' ] ) {
-                if ( is_user_logged_in() ) {
-                    do_action( 'b3_redirect', 'logged_in' );
-                } else {
-                    $register_url = b3_get_register_url();
-                    if ( false != $register_url ) {
-                        wp_safe_redirect( $register_url );
-                    } else {
-                        wp_safe_redirect( wp_registration_url() );
-                    }
-                    exit;
+        if ( ! is_multisite() && isset( $_GET[ 'action' ] ) && 'register' == $_GET[ 'action' ] ) {
+            if ( is_user_logged_in() ) {
+                do_action( 'b3_redirect', 'logged_in' );
+            } else {
+                $registration_url = b3_get_register_url();
+                if ( ! $registration_url ) {
+                    $registration_url = wp_registration_url();
                 }
+                wp_safe_redirect( $registration_url );
+                exit;
             }
         }
     }
@@ -230,111 +226,103 @@
      */
     function b3_do_user_activate() {
         if ( is_multisite() ) {
-            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-                if ( isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
-                    $redirect_url = b3_get_login_url();
-                    $valid_error_codes = [ 'already_active', 'blog_taken' ];
-                    list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
-                    $activate_cookie = 'wp-activate-' . COOKIEHASH;
-                    $key             = '';
-                    $result          = null;
+            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
+                $redirect_url = b3_get_login_url();
+                $valid_error_codes = [ 'already_active', 'blog_taken' ];
+                list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
+                $activate_cookie = 'wp-activate-' . COOKIEHASH;
+                $key             = '';
+                $result          = null;
 
-                    if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
-                        wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), esc_html__( 'An error occurred during the activation' ), 400 );
-                    } elseif ( ! empty( $_GET[ 'key' ] ) ) {
-                        $key = sanitize_key( $_GET[ 'key' ] );
-                    } elseif ( ! empty( $_POST[ 'key' ] ) ) {
-                        $key = sanitize_key( $_POST[ 'key' ] );
-                    }
+                if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
+                    wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), esc_html__( 'An error occurred during the activation' ), 400 );
+                } elseif ( ! empty( $_GET[ 'key' ] ) ) {
+                    $key = sanitize_key( $_GET[ 'key' ] );
+                } elseif ( ! empty( $_POST[ 'key' ] ) ) {
+                    $key = sanitize_key( $_POST[ 'key' ] );
+                }
 
-                    if ( $key ) {
-                        $redirect_url = remove_query_arg( 'key' );
+                if ( $key ) {
+                    $redirect_url = remove_query_arg( 'key' );
 
-                        if ( remove_query_arg( false ) !== $redirect_url ) {
-                            setcookie( $activate_cookie, $key, 0, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
-                            wp_safe_redirect( $redirect_url );
-                            exit;
-                        } else {
-                            $result = wpmu_activate_signup( $key );
-                        }
-                    }
-
-                    if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
-                        $key    = $_COOKIE[ $activate_cookie ];
-                        $result = wpmu_activate_signup( $key );
-                        setcookie( $activate_cookie, ' ', time() - YEAR_IN_SECONDS, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
-                    }
-
-                    if ( null === $result || ( is_wp_error( $result ) && 'invalid_key' === $result->get_error_code() ) ) {
-                        status_header( 404 );
-                    } elseif ( is_wp_error( $result ) ) {
-                        $error_code = $result->get_error_code();
-
-                        if ( ! in_array( $error_code, $valid_error_codes, true ) ) {
-                            status_header( 400 );
-                        }
-                    }
-
-                    if ( ! is_wp_error( $result ) ) {
-                        $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
+                    if ( remove_query_arg( false ) !== $redirect_url ) {
+                        setcookie( $activate_cookie, $key, 0, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
                         wp_safe_redirect( $redirect_url );
                         exit;
+                    } else {
+                        $result = wpmu_activate_signup( $key );
                     }
                 }
-            }
 
-        } else {
-            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-                if ( ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+                if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
+                    $key    = $_COOKIE[ $activate_cookie ];
+                    $result = wpmu_activate_signup( $key );
+                    setcookie( $activate_cookie, ' ', time() - YEAR_IN_SECONDS, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
+                }
 
-                    global $wpdb;
+                if ( null === $result || ( is_wp_error( $result ) && 'invalid_key' === $result->get_error_code() ) ) {
+                    status_header( 404 );
+                } elseif ( is_wp_error( $result ) ) {
+                    $error_code = $result->get_error_code();
 
-                    $errors = false;
-                    $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
-
-                    if ( empty( $key ) || ! is_string( $key ) ) {
-                        $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
+                    if ( ! in_array( $error_code, $valid_error_codes, true ) ) {
+                        status_header( 400 );
                     }
+                }
 
-                    if ( empty( $_GET[ 'user_login' ] ) || ! is_string( $_GET[ 'user_login' ] ) ) {
-                        $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
-                    }
-
-                    // Validate activation key
-                    $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, sanitize_user( $_GET[ 'user_login' ] ) ) );
-
-                    if ( empty( $user ) ) {
-                        $errors = new WP_Error( 'invalid_user', esc_attr__( 'Invalid user', 'b3-onboarding' ) );
-                    }
-
-                    if ( is_wp_error( $errors ) ) {
-                        // errors found
-                        $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
-                    } else {
-
-                        // remove user_activation_key
-                        $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( $_GET[ 'user_login' ] ) ] );
-                        
-                        // activate user, change user role
-                        $user_object = new WP_User( $user->ID );
-                        $user_object->set_role( get_option( 'default_role' ) );
-
-                        if ( get_option( 'b3_use_one_time_password' ) ) {
-                            $redirect_url = b3_get_login_url();
-                        } elseif ( false == get_option( 'b3_activate_custom_passwords' ) ) {
-                            $redirect_url = b3_get_lostpassword_url();
-                        } else {
-                            $redirect_url = b3_get_login_url();
-                        }
-                        $redirect_url = add_query_arg( [ 'activate' => 'success' ], $redirect_url );
-                        
-                        do_action( 'b3_after_user_activated', $user->ID );
-                    }
-
+                if ( ! is_wp_error( $result ) ) {
+                    $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
                     wp_safe_redirect( $redirect_url );
                     exit;
                 }
             }
+
+        } elseif ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+            global $wpdb;
+            $errors = false;
+            $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
+
+            if ( empty( $key ) || ! is_string( $key ) ) {
+                $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
+            }
+
+            if ( empty( $_GET[ 'user_login' ] ) || ! is_string( $_GET[ 'user_login' ] ) ) {
+                $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
+            }
+
+            // Validate activation key
+            $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, sanitize_user( $_GET[ 'user_login' ] ) ) );
+
+            if ( empty( $user ) ) {
+                $errors = new WP_Error( 'invalid_user', esc_attr__( 'Invalid user', 'b3-onboarding' ) );
+            }
+
+            if ( is_wp_error( $errors ) ) {
+                // errors found
+                $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), b3_get_login_url() );
+            } else {
+
+                // remove user_activation_key
+                $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( $_GET[ 'user_login' ] ) ] );
+                
+                // activate user, change user role
+                $user_object = new WP_User( $user->ID );
+                $user_object->set_role( get_option( 'default_role' ) );
+
+                if ( get_option( 'b3_use_one_time_password' ) ) {
+                    $redirect_url = b3_get_login_url();
+                } elseif ( false == get_option( 'b3_activate_custom_passwords' ) ) {
+                    $redirect_url = b3_get_lostpassword_url();
+                } else {
+                    $redirect_url = b3_get_login_url();
+                }
+                $redirect_url = add_query_arg( [ 'activate' => 'success' ], $redirect_url );
+                
+                do_action( 'b3_after_user_activated', $user->ID );
+            }
+
+            wp_safe_redirect( $redirect_url );
+            exit;
         }
     }
     add_action( 'init', 'b3_do_user_activate' );
@@ -346,27 +334,25 @@
      * @since 1.0.6
      */
     function b3_do_password_lost() {
-        if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-            if ( isset( $_POST[ 'b3_form' ] ) && 'lostpass' === $_POST[ 'b3_form' ] ) {
-                $errors = b3_retrieve_password();
+        if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_form' ] ) && 'lostpass' === $_POST[ 'b3_form' ] ) {
+            $errors = b3_retrieve_password();
 
-                if ( is_wp_error( $errors ) ) {
-                    // errors found
-                    $redirect_url = b3_get_lostpassword_url();
-                    $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
-                } else {
-                    // Email sent
-                    $site_id = get_current_blog_id();
-                    if ( isset( $_POST[ 'b3_site_id' ] ) ) {
-                        $site_id = $_POST[ 'b3_site_id' ];
-                    }
-                    $redirect_url = b3_get_login_url( false, $site_id );
-                    $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
+            if ( is_wp_error( $errors ) ) {
+                // errors found
+                $redirect_url = b3_get_lostpassword_url();
+                $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
+            } else {
+                // Email sent
+                $site_id = get_current_blog_id();
+                if ( isset( $_POST[ 'b3_site_id' ] ) ) {
+                    $site_id = $_POST[ 'b3_site_id' ];
                 }
-
-                wp_safe_redirect( $redirect_url );
-                exit;
+                $redirect_url = b3_get_login_url( false, $site_id );
+                $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
             }
+
+            wp_safe_redirect( $redirect_url );
+            exit;
         }
     }
     add_action( 'init', 'b3_do_password_lost' );

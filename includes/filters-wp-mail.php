@@ -259,7 +259,8 @@
      */
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
         $b3_lost_password_subject = b3_get_lost_password_subject();
-        if ( false != $b3_lost_password_subject ) {
+        
+        if ( $b3_lost_password_subject ) {
             $subject = $b3_lost_password_subject;
         }
 
@@ -282,7 +283,8 @@
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
         $lost_password_message = b3_get_lost_password_message();
-        if ( false != $lost_password_message ) {
+        
+        if ( $lost_password_message ) {
             $message = $lost_password_message;
         }
 
@@ -422,6 +424,7 @@
     function b3_email_from( $original_email_address ) {
         // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
         $from_email = b3_get_notification_sender_email();
+        
         if ( $from_email ) {
             return $from_email;
         }
@@ -439,7 +442,8 @@
      */
     function b3_email_from_name( $original_from_name ) {
         $sender_name = b3_get_notification_sender_name();
-        if ( false != $sender_name ) {
+        
+        if ( $sender_name ) {
             return $sender_name;
         }
 

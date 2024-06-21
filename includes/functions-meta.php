@@ -91,6 +91,7 @@
             'b3_restrict_admin',
             'b3_restrict_usernames',
             'b3_sidebar_widget',
+            'b3_use_one_time_password',
             'b3_use_popup',
             'b3_users_may_delete',
             'b3_welcome_new_user_content',

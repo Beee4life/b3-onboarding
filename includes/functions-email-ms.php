@@ -132,6 +132,7 @@
      * @return string
      */
     function b3_get_new_wpmu_user_subject_admin() {
+        // @TOOD: add filter
         return b3_default_subject_new_wpmu_user_admin();
     }
 

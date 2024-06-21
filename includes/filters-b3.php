@@ -25,7 +25,7 @@
      *
      * @return mixed
      */
-    function b3_add_extra_fields( $fields ) {
+    function b3_add_honeypot( $fields ) {
         if ( get_option( 'b3_honeypot' ) ) {
             $id          = 'b3_pooh';
             $input_class = '';
@@ -48,7 +48,7 @@
         }
         return $fields;
     }
-    add_filter( 'b3_extra_fields', 'b3_add_extra_fields' );
+    add_filter( 'b3_extra_fields', 'b3_add_honeypot' );
 
 
     /**

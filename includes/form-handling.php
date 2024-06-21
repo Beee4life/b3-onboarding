@@ -654,8 +654,8 @@
 
             if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_nonce_mismatch', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
-            } else {
 
+            } else {
                 $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? true : false;
                 $reject      = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? true : false;
                 $signup_id   = ( isset( $_POST[ 'b3_signup_id' ] ) ) ? (int) $_POST[ 'b3_signup_id' ] : false;
