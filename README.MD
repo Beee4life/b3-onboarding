@@ -147,7 +147,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.11.0 - xx.06.24
-* add one time password option
+* add one time password option (single site only, for now)
 * added new filters
 * * b3_otp_email()
 * * b3_otp_time_out()
