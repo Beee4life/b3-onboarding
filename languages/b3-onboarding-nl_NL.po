@@ -1,5 +1,6 @@
 msgid ""
 msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: B3 - Onboarding\n"
 "POT-Creation-Date: 2023-01-11 21:58+0100\n"
 "PO-Revision-Date: 2023-01-11 21:59+0100\n"
