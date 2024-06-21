@@ -101,8 +101,7 @@
 				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
 				include 'includes/true-false.php';
-                include 'includes/actions-b3.php';
-                include 'includes/actions-wp.php';
+                include 'includes/actions.php';
                 include 'includes/class-b3-shortcodes.php';
                 include 'includes/do-stuff.php';
                 include 'includes/filters.php';
