@@ -105,8 +105,7 @@
                 include 'includes/actions-wp.php';
                 include 'includes/class-b3-shortcodes.php';
                 include 'includes/do-stuff.php';
-                include 'includes/filters-b3.php';
-                include 'includes/filters-wp.php';
+                include 'includes/filters.php';
                 include 'includes/functions.php';
                 include 'includes/defaults.php';
                 include 'includes/emails.php';
@@ -114,10 +113,6 @@
                 include 'includes/form-handling.php';
                 include 'includes/tabs/tabs.php';
                 include 'admin/help-tabs.php';
-                
-                if ( get_option( 'b3_activate_filter_validation' ) ) {
-                    include 'includes/verify-filters.php';
-                }
             }
 
 
