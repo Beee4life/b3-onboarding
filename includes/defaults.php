@@ -383,12 +383,16 @@
      * @return string
      */
     function b3_default_email_activation_message() {
-        $message = b3_get_email_intro();
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'You only need to confirm your email address through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'this link', 'b3-onboarding' ) ) );
-        $message .= b3_default_greetings();
+        $activation_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( __( 'Activate', 'b3-onboarding' ) ) );
+        $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
+        $message         = b3_get_email_intro();
+        $message         .= '<br><br>' . "\n";
+        $message         .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message         .= '<br><br>' . "\n";
+        $message         .= esc_html__( 'You only need to confirm your email address through the link below.', 'b3-onboarding' );
+        $message         .= '<br><br>' . "\n";
+        $message         .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message         .= b3_default_greetings();
 
         return $message;
     }
