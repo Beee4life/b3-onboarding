@@ -683,7 +683,7 @@
      */
     function b3_remove_welcome_page_meta() {
         $user_args = [
-            'fields' => 'ids',
+            'fields'     => 'ids',
             'meta_query' => [
                 [
                     'key'   => 'b3_welcome_page_seen',
