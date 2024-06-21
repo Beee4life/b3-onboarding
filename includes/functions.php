@@ -1050,18 +1050,18 @@
             update_option( 'b3_dashboard_widget', 1, false );
             update_site_option( 'registrationnotification', 'no' );
         }
-
-		if ( false == get_option( 'b3_registration_type' ) ) {
-			if ( ! is_multisite() ) {
-	    		update_option( 'b3_registration_type', 'none', false );
-    		} else {
-				if ( is_main_site() && false == $blog_id ) {
+        
+        if ( false == get_option( 'b3_registration_type' ) ) {
+            if ( ! is_multisite() ) {
+                update_option( 'b3_registration_type', 'none', false );
+            } else {
+                if ( is_main_site() && false == $blog_id ) {
                     update_option( 'b3_registration_type', get_site_option( 'registration' ), false );
-        		}
-    		}
-		}
-
-		if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
+                }
+            }
+        }
+        
+        if ( false != get_option( 'wp_page_for_privacy_policy' ) ) {
             update_option( 'b3_privacy_page_id', get_option( 'wp_page_for_privacy_policy' ), false );
         }
 
@@ -1177,8 +1177,8 @@
         } else {
             $registration_date_gmt = false;
         }
-		if ( $registration_date_gmt ) {
-        	$local_registration_date = b3_get_local_date_time( $registration_date_gmt );
+        if ( $registration_date_gmt ) {
+            $local_registration_date = b3_get_local_date_time( $registration_date_gmt );
         }
 
         if ( isset( $vars[ 'blog_id' ] ) ) {
@@ -1188,7 +1188,7 @@
         }
         
         // @TODO: merge $replacements
-		switch( $type ) {
+        switch( $type ) {
             case 'message':
                 $replacements = [
                     '%account_page%' => esc_url( b3_get_account_url() ),
@@ -1202,8 +1202,8 @@
                     '%user_login%'   => $user_login,
                 ];
                 if ( isset( $local_registration_date ) ) {
-					$replacements[ '%registration_date%' ] = $local_registration_date;
-				}
+                    $replacements[ '%registration_date%' ] = $local_registration_date;
+                }
                 break;
             case 'subject':
                 $replacements = [
@@ -1218,9 +1218,9 @@
         }
 
         if ( is_multisite() ) {
-			$options_site_url                 = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
-			$replacements[ '%network_name%' ] = get_site_option( 'site_name' );
-			$replacements[ '%settings_url%' ] = $options_site_url;
+            $options_site_url                 = esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) );
+            $replacements[ '%network_name%' ] = get_site_option( 'site_name' );
+            $replacements[ '%settings_url%' ] = $options_site_url;
 
             if ( isset( $vars[ 'blog_id' ] )  ) {
                 $replacements[ '%home_url%' ]  = get_home_url( $vars[ 'blog_id' ] );
@@ -1247,109 +1247,112 @@
 
         return $replacements;
     }
-
-
-	/**
+    
+    
+    /**
      * Get approvement table headers
      *
-	 * @param $attributes
-	 *
-	 * @return array
-	 */
-	function b3_get_approvement_table_headers( $attributes ) {
-		$headers[] = ( is_multisite() ) ? esc_html__( 'Signup ID', 'b3-onboarding' ) : esc_html__( 'User ID', 'b3-onboarding' );
-		if ( $attributes ) {
-			if ( false == $attributes[ 'register_email_only' ] ) {
-				$headers[] = esc_html__( 'User name', 'b3-onboarding' );
-			}
-			if ( false != $attributes[ 'show_first_last_name' ] ) {
-				$headers[] = esc_html__( 'First name', 'b3-onboarding' );
-				$headers[] = esc_html__( 'Last name', 'b3-onboarding' );
-			}
-		}
-		$headers[] = esc_html__( 'Email', 'b3-onboarding' );
-
-		if ( is_multisite() ) {
-			$headers[] = esc_html__( 'Domain', 'b3-onboarding' );
-			$headers[] = esc_html__( 'Site name', 'b3-onboarding' );
-		}
-		$headers[] = esc_html__( 'Actions', 'b3-onboarding' );
-
-		return $headers;
-	}
-
-
-	/**
+     * @param $attributes
+     *
+     * @return array
+     */
+    function b3_get_approvement_table_headers( $attributes ) {
+        $headers[] = ( is_multisite() ) ? esc_html__( 'Signup ID', 'b3-onboarding' ) : esc_html__( 'User ID', 'b3-onboarding' );
+        if ( $attributes ) {
+            if ( false == $attributes[ 'register_email_only' ] ) {
+                $headers[] = esc_html__( 'User name', 'b3-onboarding' );
+            }
+            if ( false != $attributes[ 'show_first_last_name' ] ) {
+                $headers[] = esc_html__( 'First name', 'b3-onboarding' );
+                $headers[] = esc_html__( 'Last name', 'b3-onboarding' );
+            }
+        }
+        $headers[] = esc_html__( 'Email', 'b3-onboarding' );
+        
+        if ( is_multisite() ) {
+            $headers[] = esc_html__( 'Domain', 'b3-onboarding' );
+            $headers[] = esc_html__( 'Site name', 'b3-onboarding' );
+        }
+        $headers[] = esc_html__( 'Actions', 'b3-onboarding' );
+        
+        return $headers;
+    }
+    
+    
+    /**
      * Render approvement table row
      *
-	 * @param $user
-	 * @param $attributes
-	 *
-	 * @return false|string
-	 */
-	function b3_render_approvement_table_row( $user, $attributes ) {
-		ob_start();
-		echo '<tr>';
-		echo sprintf( '<td>%s</td>', ( is_multisite() ) ? $user->signup_id : $user->ID );
-		if ( false == $attributes[ 'register_email_only' ] ) {
-			echo sprintf( '<td>%s</td>', $user->user_login );
-		}
-		if ( false != $attributes[ 'show_first_last_name' ] ) {
+     * @param $user
+     * @param $attributes
+     *
+     * @return false|string
+     */
+    function b3_render_approvement_table_row( $user, $attributes ) {
+        ob_start();
+        echo '<tr>';
+        echo sprintf( '<td>%s</td>', ( is_multisite() ) ? $user->signup_id : $user->ID );
+        if ( false == $attributes[ 'register_email_only' ] ) {
+            echo sprintf( '<td>%s</td>', $user->user_login );
+        }
+        if ( false != $attributes[ 'show_first_last_name' ] ) {
             if ( is_multisite() ) {
-                $meta = unserialize($user->meta);
+                $meta       = unserialize( $user->meta );
                 $first_name = ( isset( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : '';
-                $last_name = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
+                $last_name  = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
                 echo sprintf( '<td>%s</td>', $first_name );
                 echo sprintf( '<td>%s</td>', $last_name );
             } else {
                 echo sprintf( '<td>%s</td>', $user->first_name );
                 echo sprintf( '<td>%s</td>', $user->last_name );
             }
-		}
-		echo sprintf( '<td>%s</td>', $user->user_email );
-		if ( is_multisite() ) {
-			echo sprintf( '<td>%s</td>', $user->domain );
-			echo sprintf( '<td>%s</td>', $user->title );
-		}
-		echo '<td>';
-		?>
-		<form name="b3_user_management" method="post">
-			<input name="b3_manage_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>" />
-			<input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>" />
-			<input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>" />
-			<?php if ( is_multisite() ) { ?>
-				<input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>" />
-			<?php } else { ?>
-				<input name="b3_user_id" type="hidden" value="<?php echo esc_attr( $user->ID ); ?>" />
-			<?php } ?>
-		</form>
-		<?php
-		echo '</td>';
-		echo '</tr>';
-		$output = ob_get_clean();
-
-		return $output;
-	}
-
-
-	/**
-	 * Get user IP
-	 *
-	 * @since 3.9.0
-	 *
-	 * @return mixed
-	 */
-	function b3_get_user_ip() {
-		// More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
-		if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
-			// check ip from share internet
-			$user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
-		} elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
-			// to check ip is pass from proxy
-			$user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-		} else {
-			$user_ip = $_SERVER[ 'REMOTE_ADDR' ];
-		}
-
-		return $user_ip;
-	}
+        }
+        echo sprintf( '<td>%s</td>', $user->user_email );
+        if ( is_multisite() ) {
+            echo sprintf( '<td>%s</td>', $user->domain );
+            echo sprintf( '<td>%s</td>', $user->title );
+        }
+        echo '<td>';
+        ?>
+        <form name="b3_user_management" method="post">
+            <input name="b3_manage_users_nonce" type="hidden"
+                   value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>"/>
+            <input name="b3_approve_user" class="button" type="submit"
+                   value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>"/>
+            <input name="b3_reject_user" class="button" type="submit"
+                   value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
+            <?php if ( is_multisite() ) { ?>
+                <input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>"/>
+            <?php } else { ?>
+                <input name="b3_user_id" type="hidden" value="<?php echo esc_attr( $user->ID ); ?>"/>
+            <?php } ?>
+        </form>
+        <?php
+        echo '</td>';
+        echo '</tr>';
+        $output = ob_get_clean();
+        
+        return $output;
+    }
+    
+    
+    /**
+     * Get user IP
+     *
+     * @return mixed
+     * @since 3.9.0
+     *
+     */
+    function b3_get_user_ip() {
+        // More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
+        if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
+            // check ip from share internet
+            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+        } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
+            // to check ip is pass from proxy
+            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+        } else {
+            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+        }
+        
+        return $user_ip;
+    }
