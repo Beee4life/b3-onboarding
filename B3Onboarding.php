@@ -827,15 +827,10 @@
                             exit;
 
                         } elseif ( isset( $_POST[ 'email' ] ) ) {
-                            $user_email       = $_POST[ 'email' ];
-                            $existing_user_id = get_user_by( 'email', $user_email );
+                            $user_email    = $_POST[ 'email' ];
+                            $existing_user = get_user_by( 'email', $user_email );
                             
-                            // @TODO: send everyone the same notice, so user doesn't know if email exists.
-                            if ( 0 === $existing_user_id ) {
-                                $redirect_url = add_query_arg( 'login-error', 'unknown_user', $redirect_url );
-                                wp_safe_redirect( $redirect_url );
-                                exit;
-                            } else {
+                            if ( $existing_user instanceof WP_User ) {
                                 $amount_minutes         = apply_filters( 'b3_otp_time_out', 5 );
                                 $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
                                 $pw_extra_special_chars = apply_filters( 'b3_password_extra_special_chars', false );
@@ -850,7 +845,7 @@
                                     $to      = $user_email;
                                     $subject = __( 'One-time password for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                    $message = apply_filters( 'b3_otp_email', b3_get_one_time_password_email( $otp_password, $hashed_slug ) );
+                                    $message = b3_get_one_time_password_email( $otp_password, $hashed_slug );
                                     
                                     if ( ! empty( $message ) ) {
                                         $message = b3_replace_template_styling( $message );
