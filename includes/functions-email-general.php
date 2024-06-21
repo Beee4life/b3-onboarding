@@ -33,15 +33,15 @@
      * @return bool|mixed|string|void
      */
     function b3_get_link_color() {
-        $color = get_option( 'b3_link_color' );
+        $option_value = get_option( 'b3_link_color' );
 
-        if ( false != $color ) {
-            $email_style = $color;
+        if ( false != $option_value ) {
+            $color = $option_value;
         } else {
-            $email_style = b3_default_link_color();
+            $color = b3_default_link_color();
         }
 
-        return $email_style;
+        return $color;
     }
 
 
