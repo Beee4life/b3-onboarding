@@ -204,7 +204,7 @@
             $main_logo = b3_default_main_logo();
         }
 
-        return $main_logo;
+        return apply_filters( 'b3_main_logo', $main_logo );;
     }
 
 
@@ -219,13 +219,14 @@
      */
     function b3_get_registration_closed_message() {
         $user_input = get_option( 'b3_registration_closed_message' );
+        
         if ( false != $user_input ) {
             $registration_closed_message = htmlspecialchars_decode( $user_input );
         } else {
             $registration_closed_message = b3_default_registration_closed_message();
         }
 
-        return $registration_closed_message;
+        return apply_filters( 'b3_registration_closed_message', $registration_closed_message );
     }
 
 
@@ -236,13 +237,14 @@
      */
     function b3_get_logged_in_registration_only_message() {
         $user_input = get_option( 'b3_logged_in_registration_only' );
+        
         if ( false != $user_input ) {
             $logged_in_registration_only_message = htmlspecialchars_decode( $user_input );
         } else {
             $logged_in_registration_only_message = b3_default_logged_in_registration_only_message();
         }
 
-        return $logged_in_registration_only_message;
+        return apply_filters( 'b3_logged_in_registration_only_message', $logged_in_registration_only_message );
     }
 
 
@@ -599,14 +601,13 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_registration() {
-        $register_message = get_option( 'b3_register_message' );
-        if ( false != $register_message ) {
-            $message = $register_message;
-        } else {
+        $message = get_option( 'b3_register_message' );
+        
+        if ( ! $message ) {
             $message = b3_default_message_above_registration();
         }
 
-        return $message;
+        return apply_filters( 'b3_message_above_registration', $message );
     }
 
 
@@ -620,12 +621,7 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_login() {
-        $login_message = get_option( 'b3_message_above_login' );
-        if ( false != $login_message ) {
-            return $login_message;
-        }
-
-        return false;
+        return apply_filters( 'b3_message_above_login', get_option( 'b3_message_above_login' ) );
     }
 
 
@@ -639,14 +635,13 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_lost_password() {
-        $password_message = get_option( 'b3_message_above_lost_password' );
-        if ( false != $password_message ) {
-            $message = $password_message;
-        } else {
+        $message = get_option( 'b3_message_above_lost_password' );
+        
+        if ( ! $message ) {
             $message = b3_default_message_above_lost_password();
         }
 
-        return $message;
+        return apply_filters( 'b3_message_above_lost_password', $message );
     }
 
 
@@ -661,13 +656,12 @@
      */
     function b3_get_message_above_request_access() {
         $password_message = get_option( 'b3_message_above_request_access' );
-        if ( false != $password_message ) {
-            $message = $password_message;
-        } else {
+        
+        if ( ! $password_message ) {
             $message = b3_default_message_above_request_access();
         }
 
-        return $message;
+        return apply_filters( 'b3_message_above_request_access', $message );
     }
 
 
@@ -680,9 +674,9 @@
      */
     function b3_get_disallowed_usernames() {
         // @TODO: apply user input
-        $filtered_names = apply_filters( 'b3_reserved_usernames', b3_get_default_reserved_user_names() );
-
-        return $filtered_names;
+        $default_user_names = b3_get_default_reserved_user_names();
+        
+        return apply_filters( 'b3_reserved_usernames', $default_user_names );
     }
 
 
@@ -694,9 +688,9 @@
      * @return mixed|void
      */
     function b3_get_easy_passwords() {
-        $passwords = apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
+        $easy_passwords = b3_get_default_easy_passwords();
 
-        return $passwords;
+        return apply_filters( 'b3_easy_passwords', $easy_passwords );
     }
 
 
@@ -1201,7 +1195,7 @@
                     '%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ),
                     '%home_url%'     => get_home_url( $blog_id, '/' ),
                     '%login_url%'    => esc_url( b3_get_login_url() ),
-                    '%logo%'         => apply_filters( 'b3_main_logo', esc_url( b3_get_main_logo() ) ),
+                    '%logo%'         => esc_url( b3_get_main_logo() ),
                     '%lostpass_url%' => b3_get_lostpassword_url(),
                     '%reset_url%'    => ( isset( $vars[ 'reset_url' ] ) ) ? $vars[ 'reset_url' ] : false,
                     '%user_ip%'      => b3_get_user_ip(),

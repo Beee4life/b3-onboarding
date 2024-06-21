@@ -95,19 +95,19 @@
                 $wp_new_user_notification_email_admin[ 'to' ] = '';
 
             } elseif ( 'request_access' === $registration_type ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
-                $admin_email = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
+                $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
+                $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_request_access_subject_admin();
+                $admin_email = b3_get_request_access_message_admin();
 
             } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
-                $admin_email = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
+                $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
+                $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_new_user_subject();
+                $admin_email = b3_get_new_user_message();
 
             } elseif ( in_array( $registration_type, [ 'blog' ] ) ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( $registration_type ) );
-                $wp_new_user_notification_email_admin[ 'subject' ] = apply_filters( 'b3_new_wpmu_user_subject_admin', b3_get_new_wpmu_user_subject_admin() );
-                $admin_email = apply_filters( 'b3_new_wpmu_user_message_admin', b3_get_new_wpmu_user_message_admin() );
+                $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
+                $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_new_wpmu_user_subject_admin();
+                $admin_email = b3_get_new_wpmu_user_message_admin();
 
             }
             if ( false != $admin_email ) {
@@ -146,12 +146,12 @@
                     // user must get AN email, from WP or custom
                     $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
                     $wp_new_user_notification_email[ 'headers' ] = [];
-					$wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-                    $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
+					$wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                    $user_email = b3_get_manual_welcome_user_message();
                 }
             } elseif ( strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) {
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-                $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
+                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email = b3_get_manual_welcome_user_message();
             }
 
         } else {
@@ -159,24 +159,24 @@
             $wp_new_user_notification_email[ 'headers' ] = [];
 
 			if ( 'request_access' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_request_access_subject_user', b3_get_request_access_subject_user() );
-                $user_email = apply_filters( 'b3_request_access_message_user', b3_get_request_access_message_user() );
+                $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
+                $user_email = b3_get_request_access_message_user();
 
             } elseif ( 'email_activation' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_email_activation_subject_user', b3_get_email_activation_subject_user() );
-                $user_email = apply_filters( 'b3_email_activation_message_user', b3_get_email_activation_message_user() );
+                $wp_new_user_notification_email[ 'subject' ] = b3_get_email_activation_subject_user();
+                $user_email = b3_get_email_activation_message_user();
 
             } elseif ( 'open' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-                $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email = b3_get_welcome_user_message();
 
             } elseif ( 'blog' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-                $user_email = apply_filters( 'b3_welcome_user_message', b3_get_welcome_user_message() );
+                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email = b3_get_welcome_user_message();
 
             } elseif ( 'none' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = apply_filters( 'b3_welcome_user_subject', b3_get_welcome_user_subject() );
-                $user_email = apply_filters( 'b3_welcome_user_message_manual', b3_get_manual_welcome_user_message() );
+                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email = b3_get_manual_welcome_user_message();
             }
         }
 
@@ -232,7 +232,7 @@
      */
     function b3_new_site_email( $new_site_email, $site, $user ) {
         // @TODO: add filter + (maybe) user input for message
-        $user_email                  = apply_filters( 'b3_new_site_created_message', b3_get_new_site_created_message() );
+        $user_email                  = b3_get_new_site_created_message();
         $user_email                  = b3_replace_template_styling( $user_email );
         $user_email                  = strtr( $user_email, b3_get_replacement_vars( 'message', [
 			'user_data' => $user,
@@ -258,7 +258,7 @@
      * @return mixed
      */
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
-        $b3_lost_password_subject = apply_filters( 'b3_lost_password_subject', b3_get_lost_password_subject() );
+        $b3_lost_password_subject = b3_get_lost_password_subject();
         if ( false != $b3_lost_password_subject ) {
             $subject = $b3_lost_password_subject;
         }
@@ -281,7 +281,7 @@
      * @return string   The mail message to send.
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
-        $lost_password_message = apply_filters( 'b3_lost_password_message', b3_get_lost_password_message() );
+        $lost_password_message = b3_get_lost_password_message();
         if ( false != $lost_password_message ) {
             $message = $lost_password_message;
         }
@@ -421,8 +421,8 @@
      */
     function b3_email_from( $original_email_address ) {
         // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
-        $from_email = apply_filters( 'b3_notification_sender_email', b3_get_notification_sender_email() );
-        if ( false != $from_email ) {
+        $from_email = b3_get_notification_sender_email();
+        if ( $from_email ) {
             return $from_email;
         }
 
@@ -438,7 +438,7 @@
      * @return  string
      */
     function b3_email_from_name( $original_from_name ) {
-        $sender_name = apply_filters( 'b3_notification_sender_name', b3_get_notification_sender_name() );
+        $sender_name = b3_get_notification_sender_name();
         if ( false != $sender_name ) {
             return $sender_name;
         }

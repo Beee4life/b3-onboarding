@@ -139,8 +139,8 @@
     function b3_after_signup_user( $user_login, $user_email, $key, $meta = [] ) {
         if ( ! is_admin() ) {
             $current_network = get_network();
-            $subject         = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), $current_network->site_name );
-            $message         = sprintf( apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() ), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
+            $subject         = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
+            $message         = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
             $message         = b3_replace_template_styling( $message );
             $message         = strtr( $message, b3_get_replacement_vars() );
             $message         = htmlspecialchars_decode( stripslashes( $message ) );
@@ -164,8 +164,8 @@
         // @TODO: check if can be replaced by filter
         $current_network = get_network();
         $user            = get_userdata( $user_id );
-        $subject         = sprintf( apply_filters( 'b3_wpmu_user_activated_subject', b3_get_wpmu_user_activated_subject() ), $current_network->site_name, $user->user_login );
-        $message         = sprintf( apply_filters( 'b3_wpmu_user_activated_message', b3_get_wpmu_user_activated_message() ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        $subject         = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
+        $message         = sprintf( b3_get_wpmu_user_activated_message(), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
         $message         = b3_replace_template_styling( $message );
         $message         = strtr( $message, b3_get_replacement_vars() );
         $message         = htmlspecialchars_decode( stripslashes( $message ) );

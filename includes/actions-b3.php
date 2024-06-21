@@ -31,9 +31,9 @@
 			}
 
             $to      = $user_object->user_email;
-            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = b3_get_account_approved_subject();
             $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_get_account_approved_message();
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -77,8 +77,8 @@
     function b3_do_stuff_before_reject_user_by_admin( $user_info ) {
         if ( ! get_option( 'b3_disable_delete_user_email' ) ) {
             $multisite = false;
-            $message   = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
-            $subject   = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
+            $message   = b3_get_account_rejected_message();
+            $subject   = b3_get_account_rejected_subject();
 
             if ( isset( $user_info[ 'user_id' ] ) ) {
                 $user_object = get_userdata( $user_info[ 'user_id' ] );
@@ -113,9 +113,9 @@
         if ( 1 != get_option( 'b3_disable_admin_notification_new_user' ) ) {
             // send 'new user' email to admin
             $user          = get_userdata( $user_id );
-            $admin_to      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( 'email_activation' ) );
-            $admin_subject = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
-            $admin_email   = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
+            $admin_to      = b3_get_notification_addresses( 'email_activation' );
+            $admin_subject = b3_get_new_user_subject();
+            $admin_email   = b3_get_new_user_message();
             $admin_email   = b3_replace_template_styling( $admin_email );
             $admin_email   = strtr( $admin_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $admin_email   = htmlspecialchars_decode( stripslashes( $admin_email ) );
@@ -128,8 +128,8 @@
         if ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
-            $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
-            $message = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
+            $subject = b3_get_account_activated_subject_user();
+            $message = b3_get_account_activated_message_user();
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -366,7 +366,7 @@
                         }
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( strpos( $registration_type, 'request_access' ) !== false ) {
-                            $request_access_message = apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() );
+                            $request_access_message = b3_get_message_above_request_access();
                             if ( false != $request_access_message ) {
                                 $messages[]    = $request_access_message;
                                 $show_messages = true;
@@ -388,7 +388,7 @@
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        $messages[]    = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
+                        $messages[]    = esc_html__( b3_get_message_above_lost_password() );
                         $show_messages = true;
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[]    = esc_html__( 'Enter your new password.', 'b3-onboarding' );
@@ -511,9 +511,9 @@
             $user    = get_userdata( $user_id );
             $user->set_role( get_option( 'default_role' ) );
             $to      = $user->user_email;
-            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = b3_get_account_approved_subject();
             $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_get_account_approved_message();
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -535,8 +535,8 @@
         if ( $type ) {
             switch( $type ) {
                 case 'request_access':
-                    $subject = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
-                    $message = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
+                    $subject = b3_get_request_access_subject_admin();
+                    $message = b3_get_request_access_message_admin();
                     break;
                 default:
                     $subject = '';
@@ -544,7 +544,7 @@
             }
 
             if ( ! empty( $subject ) && ! empty( $message ) ) {
-                $admin_to = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( get_option( 'b3_registration-type' ) ) );
+                $admin_to = b3_get_notification_addresses( $type );
                 $message  = b3_replace_template_styling( $message );
                 $message  = strtr( $message, b3_get_replacement_vars() );
                 $message  = htmlspecialchars_decode( stripslashes( $message ) );

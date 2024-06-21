@@ -13,15 +13,13 @@
      * @return bool|false|mixed|string|void
      */
     function b3_get_email_styling( $link_color = false ) {
-        $custom_css = get_option( 'b3_email_styling' );
+        $email_styling = get_option( 'b3_email_styling' );
 
-        if ( false != $custom_css ) {
-            $email_style = $custom_css;
-        } else {
-            $email_style = b3_default_email_styling( $link_color );
+        if ( ! $email_styling ) {
+            $email_styling = b3_default_email_styling( $link_color );
         }
 
-        return $email_style;
+        return apply_filters( 'b3_email_styling', $email_styling );
     }
 
 
@@ -33,15 +31,13 @@
      * @return bool|mixed|string|void
      */
     function b3_get_link_color() {
-        $option_value = get_option( 'b3_link_color' );
+        $link_color = get_option( 'b3_link_color' );
 
-        if ( false != $option_value ) {
-            $color = $option_value;
-        } else {
-            $color = b3_default_link_color();
+        if ( ! $link_color ) {
+            $link_color = b3_default_link_color();
         }
 
-        return $color;
+        return apply_filters( 'b3_link_color', $link_color );
     }
 
 
@@ -55,15 +51,13 @@
      * @return bool|false|mixed|string|void
      */
     function b3_get_email_template( $hide_logo = false ) {
-        $custom_template = get_option( 'b3_email_template' );
+        $email_template = get_option( 'b3_email_template' );
 
-        if ( false != $custom_template ) {
-            $email_template = $custom_template;
-        } else {
+        if ( ! $email_template ) {
             $email_template = b3_default_email_template( $hide_logo );
         }
 
-        return $email_template;
+        return apply_filters( 'b3_email_template', $email_template );
     }
 
 
@@ -79,7 +73,7 @@
     function b3_get_email_footer() {
         $email_footer = b3_default_email_footer();
 
-        return $email_footer;
+        return apply_filters( 'b3_email_footer_text', $email_footer );
     }
 
 
@@ -94,6 +88,7 @@
      */
     function b3_get_notification_addresses( $registration_type ) {
         $email_addresses = get_site_option( 'admin_email' );
+        
         if ( 'request_access' === $registration_type ) {
             if ( false != get_option( 'b3_request_access_notification_addresses' ) ) {
                 $email_addresses = get_option( 'b3_request_access_notification_addresses' );
@@ -104,7 +99,7 @@
             }
         }
 
-        return $email_addresses;
+        return apply_filters( 'b3_new_user_notification_addresses', $email_addresses );
     }
 
 
@@ -118,14 +113,13 @@
      * @return mixed|string
      */
     function b3_get_email_activation_subject_user() {
-        $b3_email_activation_subject = get_option( 'b3_email_activation_subject' );
-        if ( $b3_email_activation_subject ) {
-            $subject = $b3_email_activation_subject;
-        } else {
+        $subject = get_option( 'b3_email_activation_subject' );
+        
+        if ( ! $subject ) {
             $subject = b3_default_email_activation_subject();
         }
 
-        return $subject;
+        return apply_filters( 'b3_email_activation_subject_user', $subject );
     }
 
 
@@ -140,14 +134,13 @@
      * @return mixed|string
      */
     function b3_get_email_activation_message_user() {
-        $b3_email_activation_message = get_option( 'b3_email_activation_message' );
-        if ( $b3_email_activation_message ) {
-            $message = $b3_email_activation_message;
-        } else {
+        $message = get_option( 'b3_email_activation_message' );
+        
+        if ( ! $message ) {
             $message = b3_default_email_activation_message();
         }
 
-        return $message;
+        return apply_filters( 'b3_email_activation_message_user', $message );
     }
 
 
@@ -161,14 +154,13 @@
      * @return mixed|string
      */
     function b3_get_welcome_user_subject() {
-        $b3_welcome_user_subject = get_option( 'b3_welcome_user_subject' );
-        if ( $b3_welcome_user_subject ) {
-            $message = $b3_welcome_user_subject;
-        } else {
-            $message = b3_default_welcome_user_subject();
+        $subject = get_option( 'b3_welcome_user_subject' );
+        
+        if ( ! $subject ) {
+            $subject = b3_default_welcome_user_subject();
         }
 
-        return $message;
+        return apply_filters( 'b3_welcome_user_subject', $subject );
     }
 
 
@@ -183,14 +175,13 @@
      * @return mixed|string
      */
     function b3_get_welcome_user_message() {
-        $b3_welcome_user_message = get_option( 'b3_welcome_user_message' );
-        if ( $b3_welcome_user_message ) {
-            $message = $b3_welcome_user_message;
-        } else {
+        $message = get_option( 'b3_welcome_user_message' );
+        
+        if ( ! $message ) {
             $message = b3_default_welcome_user_message();
         }
 
-        return $message;
+        return apply_filters( 'b3_welcome_user_message', $message );
     }
 
 
@@ -203,7 +194,7 @@
         // @TODO: add user input option
         $message = b3_default_message_new_site_created();
 
-        return $message;
+        return apply_filters( 'b3_new_site_created_message', $message );
     }
 
 
@@ -216,11 +207,12 @@
      */
     function b3_get_request_access_subject_admin() {
         $subject = get_option( 'b3_request_access_subject_admin' );
+        
         if ( ! $subject ) {
             $subject = b3_default_request_access_subject_admin();
         }
 
-        return $subject;
+        return apply_filters( 'b3_request_access_subject_admin', $subject );
     }
 
 
@@ -233,11 +225,12 @@
      */
     function b3_get_request_access_message_admin() {
         $message = get_option( 'b3_request_access_message_admin' );
+        
         if ( ! $message ) {
             $message = b3_default_request_access_message_admin();
         }
 
-        return $message;
+        return apply_filters( 'b3_request_access_message_admin', $message );
     }
 
 
@@ -250,11 +243,12 @@
      */
     function b3_get_request_access_subject_user() {
         $subject = get_option( 'b3_request_access_subject_user' );
+        
         if ( ! $subject ) {
             $subject = b3_default_request_access_subject_user();
         }
 
-        return $subject;
+        return apply_filters( 'b3_request_access_subject_user', $subject );
     }
 
 
@@ -267,11 +261,12 @@
      */
     function b3_get_request_access_message_user() {
         $message = get_option( 'b3_request_access_message_user' );
+        
         if ( ! $message ) {
             $message = b3_default_request_access_message_user();
         }
 
-        return $message;
+        return apply_filters( 'b3_request_access_message_user', $message );
     }
 
 
@@ -284,11 +279,12 @@
      */
     function b3_get_account_approved_subject() {
         $subject = get_option( 'b3_account_approved_subject' );
+        
         if ( ! $subject ) {
             $subject = b3_default_account_approved_subject();
         }
 
-        return $subject;
+        return apply_filters( 'b3_account_approved_subject', $subject );
     }
 
 
@@ -301,11 +297,12 @@
      */
     function b3_get_account_approved_message() {
         $message = get_option( 'b3_account_approved_message' );
+        
         if ( ! $message ) {
             $message = b3_default_account_approved_message();
         }
 
-        return $message;
+        return apply_filters( 'b3_account_approved_message', $message );
     }
 
 
@@ -318,11 +315,12 @@
      */
     function b3_get_account_activated_subject_user() {
         $subject = get_option( 'b3_account_activated_subject' );
+        
         if ( ! $subject ) {
             $subject = b3_default_account_activated_subject();
         }
 
-        return $subject;
+        return apply_filters( 'b3_account_activated_subject_user', $subject );
     }
 
 
@@ -337,11 +335,12 @@
      */
     function b3_get_account_activated_message_user() {
         $message = get_option( 'b3_account_activated_message' );
+        
         if ( ! $message ) {
             $message = b3_default_account_activated_message();
         }
 
-        return $message;
+        return apply_filters( 'b3_account_activated_message_user', $message );
     }
 
 
@@ -354,11 +353,12 @@
      */
     function b3_get_account_rejected_subject() {
         $subject = get_option( 'b3_account_rejected_subject' );
+        
         if ( ! $subject ) {
             $subject = b3_default_account_rejected_subject() . "\n";
         }
 
-        return $subject;
+        return apply_filters( 'b3_account_rejected_subject', $subject );
     }
 
 
@@ -371,11 +371,12 @@
      */
     function b3_get_account_rejected_message() {
         $message = get_option( 'b3_account_rejected_message' );
+        
         if ( ! $message ) {
             $message = b3_default_account_rejected_message() . "\n";
         }
 
-        return $message;
+        return apply_filters( 'b3_account_rejected_message', $message );
     }
 
 
@@ -388,11 +389,12 @@
      */
     function b3_get_lost_password_message() {
         $message = get_option( 'b3_lost_password_message' );
+        
         if ( ! $message ) {
             $message = b3_default_lost_password_message() . "\n";
         }
 
-        return $message;
+        return apply_filters( 'b3_lost_password_message', $message );
     }
 
 
@@ -406,14 +408,13 @@
      * @return mixed|string
      */
     function b3_get_new_user_subject() {
-        $b3_new_user_subject = get_option( 'b3_new_user_subject' );
-        if ( $b3_new_user_subject ) {
-            $message = $b3_new_user_subject;
-        } else {
-            $message = b3_default_new_user_admin_subject() . "\n";
+        $subject = get_option( 'b3_new_user_subject' );
+        
+        if ( ! $subject ) {
+            $subject = b3_default_new_user_admin_subject() . "\n";
         }
 
-        return $message;
+        return apply_filters( 'b3_new_user_subject', $subject );
     }
 
 
@@ -428,14 +429,13 @@
      * @return mixed|string
      */
     function b3_get_new_user_message() {
-        $new_user_message = get_option( 'b3_new_user_message' );
-        if ( false != $new_user_message ) {
-            $message = $new_user_message;
-        } else {
+        $message = get_option( 'b3_new_user_message' );
+        
+        if ( ! $message ) {
             $message = b3_default_new_user_admin_message();
         }
 
-        return $message;
+        return apply_filters( 'b3_new_user_message', $message );
     }
 
 
@@ -448,11 +448,12 @@
      */
     function b3_get_lost_password_subject() {
         $subject = get_option( 'b3_lost_password_subject' );
+        
         if ( ! $subject ) {
             $subject = b3_default_lost_password_subject();
         }
 
-        return $subject;
+        return apply_filters( 'b3_lost_password_subject', $subject );
     }
 
 
@@ -464,15 +465,13 @@
      * @return bool|mixed|void
      */
     function b3_get_notification_sender_email() {
-        $sender_email = get_option( 'b3_notification_sender_email' );
-        if ( false == $sender_email ) {
-            $admin_email = get_site_option( 'admin_email' );
-            if ( false != $admin_email ) {
-                $sender_email = $admin_email;
-            }
+        $notification_sender_email = get_option( 'b3_notification_sender_email' );
+        
+        if ( ! $notification_sender_email ) {
+            $notification_sender_email = get_site_option( 'admin_email' );
         }
 
-        return $sender_email;
+        return apply_filters( 'b3_notification_sender_email', $notification_sender_email );
     }
 
     /**
@@ -483,15 +482,13 @@
      * @return bool|mixed|void
      */
     function b3_get_notification_sender_name() {
-        $sender_name = get_option( 'b3_notification_sender_name' );
-        if ( false == $sender_name ) {
-            $blog_name = get_option( 'blogname' );
-            if ( false != $blog_name ) {
-                $sender_name = $blog_name;
-            }
+        $notification_sender_name = get_option( 'b3_notification_sender_name' );
+        
+        if ( ! $notification_sender_name ) {
+            $notification_sender_name = get_option( 'blogname' );
         }
 
-        return $sender_name;
+        return apply_filters( 'b3_notification_sender_name', $notification_sender_name );
     }
 
 
@@ -504,13 +501,12 @@
      */
     function b3_get_manual_welcome_user_message() {
         $manual_welcome_message = get_option( 'b3_welcome_user_message_manual' );
-        if ( false != $manual_welcome_message ) {
-            $message = $manual_welcome_message;
-        } else {
-            $message = b3_default_manual_welcome_user_message();
+        
+        if ( ! $manual_welcome_message ) {
+            $manual_welcome_message = b3_default_manual_welcome_user_message();
         }
 
-        return $message;
+        return apply_filters( 'b3_welcome_user_message_manual', $manual_welcome_message );
     }
 
     /**
@@ -524,12 +520,14 @@
      */
     function b3_get_email_intro( $welcome = false ) {
         $welcome = ( false === $welcome ) ? esc_html__( 'Welcome', 'b3-onboarding' ) : $welcome;
+        
         if ( true == get_option( 'b3_register_email_only' ) || true == get_option( 'b3_use_one_time_password' ) ) {
             $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = $welcome . ' %user_login%' . ',' . "\n";
         }
-
+        
+        // @TODO: add filter
         return $message;
     }
 
@@ -543,12 +541,13 @@
      * @return string
      */
     function b3_get_one_time_password_email( $password = false, $slug = false ) {
+        $message = '';
+        
         if ( $password && $slug ) {
             // maybe add user input for this email
             $message = b3_get_default_otp_email( $password, $slug );
             
-            return $message;
         }
         
-        return '';
+        return apply_filters( 'b3_otp_email', $message );
     }

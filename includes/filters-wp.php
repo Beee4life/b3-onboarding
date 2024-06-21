@@ -70,12 +70,12 @@
         if ( isset( $_GET[ 'action' ] ) ) {
             $action = $_GET[ 'action' ];
             if ( 'register' === $action ) {
-                $message = apply_filters( 'b3_message_above_registration', b3_get_message_above_registration() );
+                $message = b3_get_message_above_registration();
             } elseif ( 'lostpassword' === $action ) {
-                $message = apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() );
+                $message = b3_get_message_above_lost_password();
             }
         } else {
-            $message = apply_filters( 'b3_message_above_login', b3_get_message_above_login() );
+            $message = b3_get_message_above_login();
         }
 
         if ( ! empty( $message ) ) {

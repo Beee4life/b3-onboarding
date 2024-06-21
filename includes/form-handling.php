@@ -201,10 +201,10 @@
                     $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
                     update_option( 'b3_activate_custom_emails', 1, false );
                     if ( ! get_option( 'b3_email_styling' ) ) {
-                        update_option( 'b3_email_styling', b3_get_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ) );
+                        update_option( 'b3_email_styling', b3_get_email_styling( b3_get_link_color() ) );
                     }
                     if ( ! get_option( 'b3_email_template' ) ) {
-                        update_option( 'b3_email_template', b3_get_email_template( apply_filters( 'b3_email_template', b3_get_email_template( $hide_logo ) ) ) );
+                        update_option( 'b3_email_template', b3_get_email_template( $hide_logo ) );
                     }
                 } else {
                     delete_option( 'b3_activate_custom_emails' );

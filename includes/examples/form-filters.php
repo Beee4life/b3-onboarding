@@ -185,7 +185,7 @@
      * @return string
      */
     function b3_message_above_registration_example( $registration_message ) {
-        return  'Filter registration text';
+        return 'Filter registration text';
     }
     add_filter( 'b3_message_above_registration', 'b3_message_above_registration_example' );
 

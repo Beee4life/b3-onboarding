@@ -28,7 +28,7 @@
 			$fields[] = [
 				'id'          => esc_attr( 'email_styling' ),
 				'title'       => esc_html__( 'Email styling', 'b3-onboarding' ),
-				'placeholder' => b3_default_email_styling( apply_filters( 'b3_link_color', b3_get_link_color() ) ),
+				'placeholder' => b3_default_email_styling( b3_get_link_color() ),
 				'preview'     => esc_attr( 'styling' ),
 				'value'       => $stored_email_styling,
 				'file_name'   => 'default-email-styling.css',
