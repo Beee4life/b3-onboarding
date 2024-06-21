@@ -25,7 +25,7 @@
                 $default_css .= '*/';
             }
             $default_css .= "\n";
-            $default_css .= '.one-time-code {' . "\n";
+            $default_css .= '.big-link-container {' . "\n";
             $default_css .= '    background-color: ' . $link_color . ";\n";
             $default_css .= '}' . "\n";
             $default_css .= "\n";
