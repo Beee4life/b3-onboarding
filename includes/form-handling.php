@@ -198,12 +198,12 @@
                 }
 
                 if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == $_POST[ 'b3_activate_custom_emails' ] ) {
-                    $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
                     update_option( 'b3_activate_custom_emails', 1, false );
                     if ( ! get_option( 'b3_email_styling' ) ) {
                         update_option( 'b3_email_styling', b3_get_email_styling( b3_get_link_color() ) );
                     }
                     if ( ! get_option( 'b3_email_template' ) ) {
+                        $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
                         update_option( 'b3_email_template', b3_get_email_template( $hide_logo ) );
                     }
                 } else {
@@ -216,6 +216,12 @@
                     update_option( 'b3_logo_in_email', 1, false );
                 } else {
                     delete_option( 'b3_logo_in_email' );
+                }
+                
+                if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
+                    update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ), false );
+                } else {
+                    delete_option( 'b3_main_logo' );
                 }
 
                 if ( isset( $_POST[ 'b3_welcome_new_user_subject' ] ) && ! empty( $_POST[ 'b3_welcome_new_user_subject' ] ) ) {
@@ -618,12 +624,6 @@
                 if ( isset( $_POST[ 'b3_reset_default' ] ) && 1 == $_POST[ 'b3_reset_default' ] ) {
                     $reset = true;
                     do_action( 'b3_reset_to_default' );
-                }
-
-                if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
-                    update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ), false );
-                } else {
-                    delete_option( 'b3_main_logo' );
                 }
                 
                 if ( true === $reset ) {
