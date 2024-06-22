@@ -54,7 +54,7 @@ jQuery(document).ready(function($){
             frame: 'select',
 
             /**
-             * We can determine whether or not we want to allow users to be able
+             * We can determine whether we want to allow users to be able
              * to upload multiple files at one time by setting this parameter to
              * true or false. It defaults to true, but we only want the user to
              * upload one file, so let's set it to false.
