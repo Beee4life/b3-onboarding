@@ -100,6 +100,18 @@
                 }
             }
         }
+        if ( current_user_can( 'manage_options' ) ) {
+            if ( get_option( 'b3_activate_filter_validation' ) ) {
+                $page_link     = admin_url( 'admin.php?page=b3-onboarding&tab=settings' );
+                $approval_args = [
+                    'id'    => 'verify_filters',
+                    'title' => '&rarr; ' . esc_attr__( 'Filter verification active', 'b3-onboarding' ),
+                    'href'  => $page_link,
+                    'meta'  => [ 'class' => 'topbar_verify_filters' ],
+                ];
+                $wp_admin_bar->add_node( $approval_args );
+            }
+        }
     }
     add_action( 'admin_bar_menu', 'b3_add_toolbar', 80 );
 
