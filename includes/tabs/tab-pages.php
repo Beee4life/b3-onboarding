@@ -122,7 +122,7 @@
                 </div>
             <?php } ?>
 
-            <p><small><?php esc_html_e( 'Links open in new tab.', 'b3-onboarding' ); ?></small></p>
+            <?php echo sprintf( '<p><small>%s</small></p>', esc_html__( 'Links open in new tab.', 'b3-onboarding' ) ); ?>
 
             <?php b3_get_submit_button(); ?>
         </form>
