@@ -63,7 +63,7 @@
                     <?php b3_get_close(); ?>
                 <?php } ?>
 
-                <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_settings_field_open( false, true ); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_use_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
