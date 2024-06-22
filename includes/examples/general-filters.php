@@ -15,7 +15,15 @@
      * @return false|string
      */
     function b3_main_logo_example( $logo ) {
-        return 'https://your-url.com/your-logo.png';
+        $attachment_id = 'your_attachement_id';
+        if ( $attachment_id && get_post( $attachment_id ) ) {
+            $image_array = wp_get_attachment_image_src( $attachment_id, 'medium' );
+            if ( isset( $image_array[0] ) ) {
+                $logo = $image_array[0];
+            }
+        }
+        
+        return $logo;
     }
     add_filter( 'b3_main_logo', 'b3_main_logo_example' );
 
