@@ -333,7 +333,6 @@
         $message       .= esc_html__( 'To (re)set your password, click the button below.', 'b3-onboarding' );
         $message       .= '<br><br>' . "\n";
         $message       .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
-        $message       .= '<br>' . "\n";
         $message       .= b3_default_greetings();
 
         return $message;
@@ -371,7 +370,6 @@
             $message .= __( 'You can set your password by clicking the button below.', 'b3-onboarding' ) . "\n";
             $message .= '<br><br>' . "\n";
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
-            $message .= '<br>' . "\n";
         }
         $message .= b3_default_greetings();
 
@@ -426,7 +424,6 @@
         $message         .= esc_html__( 'You only need to confirm your email address through the link below.', 'b3-onboarding' );
         $message         .= '<br><br>' . "\n";
         $message         .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
-        $message         .= '<br>' . "\n";
         $message         .= b3_default_greetings();
 
         return $message;
