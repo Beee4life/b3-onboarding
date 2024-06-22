@@ -11,7 +11,7 @@
      * @return false|string
      */
     function b3_render_pages_tab() {
-        // get stored pages
+        // @TODO: get pages from function
         $b3_pages = [
             [
                 'id'      => 'register_page',
