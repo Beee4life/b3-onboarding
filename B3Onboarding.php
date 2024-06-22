@@ -541,8 +541,9 @@
 
                             if ( ! is_multisite() ) {
                                 $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
-                                $register = true;
-                                $role     = get_option( 'default_role', 'subscriber' );
+                                $register   = true;
+                                $role       = get_option( 'default_role', 'subscriber' );
+
                                 if ( 'none' === $registration_type ) {
                                     // Registration closed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
