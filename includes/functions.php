@@ -901,13 +901,6 @@
         ];
         
         $tabs[] = [
-            'id'      => 'pages',
-            'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
-            'content' => b3_render_tab_content( 'pages' ),
-            'icon'    => 'admin-page',
-        ];
-        
-        $tabs[] = [
             'id'      => 'emails',
             'title'   => esc_html__( 'Emails', 'b3-onboarding' ),
             'content' => b3_render_tab_content( 'emails' ),
@@ -941,6 +934,13 @@
                 ];
             }
         }
+        
+        $tabs[] = [
+            'id'      => 'pages',
+            'title'   => esc_html__( 'Pages', 'b3-onboarding' ),
+            'content' => b3_render_tab_content( 'pages' ),
+            'icon'    => 'admin-page',
+        ];
         
         $tabs[] = [
             'id'      => 'settings',
