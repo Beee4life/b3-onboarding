@@ -106,6 +106,9 @@
                 case 'account_rejected':
                     include 'emails/account-rejected.php';
                     break;
+                case 'logo':
+                    include 'emails/logo.php';
+                    break;
                 case 'lost_password':
                     include 'emails/lost-password.php';
                     break;

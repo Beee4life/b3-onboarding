@@ -113,6 +113,10 @@
             'id'    => 'lost_password',
             'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
         ];
+        $email_boxes[] = [
+            'id'    => 'logo',
+            'title' => esc_html__( 'Logo', 'b3-onboarding' ),
+        ];
         
         return $email_boxes;
     }
