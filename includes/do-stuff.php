@@ -318,9 +318,11 @@
      * @return bool
      */
     function b3_verify_email_domain( $email ) {
-        $disallowed_domains = get_option( 'b3_disallowed_domains' );
-        if ( get_option( 'b3_domain_restrictions' ) && $disallowed_domains ) {
+        $disallowed_domains = b3_get_disallowed_domain_names();
+        
+        if ( get_option( 'b3_set_domain_restrictions' ) && is_array( $disallowed_domains ) && ! empty( $disallowed_domains ) ) {
             $domain_name = substr( strrchr( $email, '@' ), 1 );
+            
             if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
                 return false;
             }

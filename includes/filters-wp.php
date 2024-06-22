@@ -242,7 +242,7 @@
      * @return array
      */
     function b3_check_domain_user_email( $result ) {
-        if ( get_option( 'b3_domain_restrictions' ) ) {
+        if ( get_option( 'b3_set_domain_restrictions' ) ) {
             $email         = $result[ 'user_email' ];
             $verify_domain = b3_verify_email_domain( $email );
 

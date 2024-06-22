@@ -21,7 +21,7 @@
         if ( is_array( $disallowed_usernames_array ) && ! empty( $disallowed_usernames_array ) ) {
             $disallowed_usernames = implode( ' ', $disallowed_usernames_array );
         }
-        $domain_restrictions     = get_option( 'b3_domain_restrictions' );
+        $domain_restrictions     = get_option( 'b3_set_domain_restrictions' );
         $front_end_approval      = get_option( 'b3_front_end_approval' );
         $front_end_approval_page = get_option( 'b3_approval_page_id' );
         $hide_admin_bar          = get_option( 'b3_hide_admin_bar' );
@@ -134,10 +134,10 @@
                 <?php $hide_domain_settings = ( true == $domain_restrictions ) ? false : true; ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
-                        <label for="b3_domain_restrictions"><?php esc_html_e( 'Disallow domains', 'b3-onboarding' ); ?></label>
+                        <label for="b3_set_domain_restrictions"><?php esc_html_e( 'Disallow domains', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_domain_restrictions" name="b3_domain_restrictions" value="1" <?php checked($domain_restrictions); ?>/>
+                        <input type="checkbox" id="b3_set_domain_restrictions" name="b3_set_domain_restrictions" value="1" <?php checked($domain_restrictions); ?>/>
                         <?php esc_html_e( 'Block certain domains from registering.', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>

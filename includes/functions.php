@@ -701,14 +701,14 @@
 
 
     /**
-     * Get blocked domain names
+     * Get disallowed domain names
      *
      * @since 3.5.0
      *
      * @return mixed|void
      */
-    function b3_get_blocked_domain_names() {
-        $domain_names = apply_filters( '', get_option( 'b3_disallowed_domains' ) );
+    function b3_get_disallowed_domain_names() {
+        return apply_filters( 'b3_disallowed_domains', get_option( 'b3_disallowed_domains' ) );
     }
 
 
