@@ -7,6 +7,7 @@
     include 'functions-email-general.php';
     include 'functions-email-ms.php';
     include 'functions-meta.php';
+    include 'retrieve-password.php';
 
     /**
      * Create an array of available email 'boxes'
@@ -200,11 +201,9 @@
      * @return bool|false|mixed|string|void
      */
     function b3_get_main_logo() {
-        $option_value = get_option( 'b3_main_logo' );
+        $main_logo = get_option( 'b3_main_logo' );
 
-        if ( false != $option_value ) {
-            $main_logo = $option_value;
-        } else {
+        if ( ! $main_logo ) {
             $main_logo = b3_default_main_logo();
         }
 
@@ -224,7 +223,7 @@
     function b3_get_registration_closed_message() {
         $user_input = get_option( 'b3_registration_closed_message' );
         
-        if ( false != $user_input ) {
+        if ( $user_input ) {
             $registration_closed_message = htmlspecialchars_decode( $user_input );
         } else {
             $registration_closed_message = b3_default_registration_closed_message();
@@ -242,7 +241,7 @@
     function b3_get_logged_in_registration_only_message() {
         $user_input = get_option( 'b3_logged_in_registration_only' );
         
-        if ( false != $user_input ) {
+        if ( $user_input ) {
             $logged_in_registration_only_message = htmlspecialchars_decode( $user_input );
         } else {
             $logged_in_registration_only_message = b3_default_logged_in_registration_only_message();
@@ -261,6 +260,7 @@
      */
     function b3_get_privacy_text() {
         $privacy_text = get_option( 'b3_privacy_text' );
+        
         if ( false != $privacy_text ) {
             $message = stripslashes( $privacy_text );
         } else {
@@ -347,6 +347,7 @@
      */
     function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
         $button_class = false;
+        
         if ( false === $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
         }
@@ -380,6 +381,7 @@
      */
     function b3_get_register_url( $return_id = false ) {
         $register_page_id = get_option( 'b3_register_page_id' );
+        
         if ( class_exists( 'Sitepress' ) ) {
             $register_page_id = apply_filters( 'wpml_object_id', $register_page_id, 'page', true );
         }
@@ -446,6 +448,7 @@
      */
     function b3_get_logout_url( $return_id = false ) {
         $id = get_option( 'b3_logout_page_id' );
+        
         if ( class_exists( 'Sitepress' ) ) {
             $id = apply_filters( 'wpml_object_id', $id, 'page', true );
         }
@@ -464,7 +467,7 @@
 
 
     /**
-     * Get account page page id/link
+     * Get page id/link for account page
      *
      * @since 1.0.6
      *
@@ -472,6 +475,7 @@
      */
     function b3_get_account_url( $return_id = false, $language = false ) {
         $account_page_id = get_option( 'b3_account_page_id' );
+        
         if ( class_exists( 'Sitepress' ) ) {
             $account_page_id = apply_filters( 'wpml_object_id', $account_page_id, 'page', true, $language );
         }
@@ -499,9 +503,11 @@
      */
     function b3_get_lostpassword_url() {
         $lost_password_page_id = get_option( 'b3_lost_password_page_id' );
+        
         if ( class_exists( 'Sitepress' ) ) {
             $lost_password_page_id = apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true );
         }
+        
         if ( false != $lost_password_page_id && get_post( $lost_password_page_id ) ) {
             return get_the_permalink( $lost_password_page_id );
         }
@@ -519,9 +525,11 @@
      */
     function b3_get_reset_password_url( $return_id = false ) {
         $reset_pass_page_id = get_option( 'b3_reset_password_page_id' );
+        
         if ( class_exists( 'Sitepress' ) ) {
             $reset_pass_page_id = apply_filters( 'wpml_object_id', $reset_pass_page_id, 'page', true );
         }
+        
         if ( false != $reset_pass_page_id ) {
             if ( true === $return_id ) {
                 return $reset_pass_page_id;
@@ -551,9 +559,11 @@
     function b3_get_user_approval_link( $return_id = false ) {
         if ( true == get_option( 'b3_front_end_approval' ) ) {
             $user_approval_page_id = get_option( 'b3_approval_page_id' );
+            
             if ( class_exists( 'Sitepress' ) ) {
                 $user_approval_page_id = apply_filters( 'wpml_object_id', $user_approval_page_id, 'page', true );
             }
+            
             if ( false != $user_approval_page_id ) {
                 if ( true === $return_id ) {
                     return $user_approval_page_id;
@@ -657,9 +667,9 @@
      * @return bool|mixed|string|void
      */
     function b3_get_message_above_request_access() {
-        $password_message = get_option( 'b3_message_above_request_access' );
+        $message = get_option( 'b3_message_above_request_access' );
         
-        if ( ! $password_message ) {
+        if ( ! $message ) {
             $message = b3_default_message_above_request_access();
         }
 
@@ -696,9 +706,7 @@
      * @return mixed|void
      */
     function b3_get_easy_passwords() {
-        $easy_passwords = b3_get_default_easy_passwords();
-
-        return apply_filters( 'b3_easy_passwords', $easy_passwords );
+        return apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
     }
 
 
@@ -863,6 +871,7 @@
                             esc_html__( 'Get support for resetting your password', 'b3-onboarding' ) ) )
                 )
             );
+            
             return $errors;
         }
 
@@ -1019,8 +1028,8 @@
      */
     function b3_get_plugin_file( $plugin_name ) {
         require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-        $plugins = get_plugins();
-        foreach( $plugins as $plugin_file => $plugin_info ) {
+
+        foreach( get_plugins() as $plugin_file => $plugin_info ) {
             if ( $plugin_info[ 'Name' ] === $plugin_name ) {
                 return $plugin_file;
             }
@@ -1266,6 +1275,7 @@
      */
     function b3_get_approvement_table_headers( $attributes ) {
         $headers[] = ( is_multisite() ) ? esc_html__( 'Signup ID', 'b3-onboarding' ) : esc_html__( 'User ID', 'b3-onboarding' );
+        
         if ( $attributes ) {
             if ( false == $attributes[ 'register_email_only' ] ) {
                 $headers[] = esc_html__( 'User name', 'b3-onboarding' );
@@ -1299,9 +1309,11 @@
         ob_start();
         echo '<tr>';
         echo sprintf( '<td>%s</td>', ( is_multisite() ) ? $user->signup_id : $user->ID );
+        
         if ( false == $attributes[ 'register_email_only' ] ) {
             echo sprintf( '<td>%s</td>', $user->user_login );
         }
+        
         if ( false != $attributes[ 'show_first_last_name' ] ) {
             if ( is_multisite() ) {
                 $meta       = unserialize( $user->meta );
