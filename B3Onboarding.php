@@ -58,9 +58,9 @@
                 }
 
 				$this->settings = [
-					'path'    => trailingslashit( dirname( __FILE__ ) ),
-					'version' => get_option( 'b3ob_version' ),
-                    // mabye add registration type ?
+                    'path'              => trailingslashit( dirname( __FILE__ ) ),
+                    'registration_type' => get_option( 'b3ob_registration_type' ),
+                    'version'           => get_option( 'b3ob_version' ),
 				];
 			}
 
