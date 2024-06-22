@@ -467,6 +467,7 @@
                         update_option( 'b3_restrict_usernames', 1, false );
 
                         if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
+                            // @TODO: check for @
                             $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
                             $new_value       = explode( ' ', $sanitized_value );
                             update_option( 'b3_disallowed_usernames', $new_value, false );
