@@ -150,6 +150,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * add magic link login option (single site only, for now)
 * improved blocking of disallowed usernames/domain names
 * moved logo field to emails tab
+* added indicator for filter verification
 * added new filters
 * * b3_otp_email()
 * * b3_otp_time_out()
