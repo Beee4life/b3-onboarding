@@ -309,21 +309,19 @@
     /**
      * Extend disallowed usernames
      *
-     * @since 2.0.x TODO
+     * @since 2.0
      *
      * @param $existing_user_names
      *
-     * @return string|array
+     * @return array
      */
     function b3_disallowed_usernames_example() {
-
         $disallowed_user_names = [
             'username1',
             'username2',
         ];
 
         return $disallowed_user_names;
-
     }
     add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
 
