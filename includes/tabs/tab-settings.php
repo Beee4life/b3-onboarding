@@ -32,7 +32,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
-                        <?php esc_html_e( 'Hide the action links on custom forms.', 'b3-onboarding' ); ?>
+                        <?php esc_html_e( 'Hide the action links on forms.', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
 
