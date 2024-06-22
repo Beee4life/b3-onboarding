@@ -59,7 +59,7 @@
 
 				$this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
-                    'registration_type' => get_option( 'b3ob_registration_type' ),
+                    'registration_type' => get_option( 'b3_registration_type' ),
                     'version'           => get_option( 'b3ob_version' ),
 				];
 			}
@@ -92,12 +92,10 @@
 				add_action( 'admin_notices', 				[ $this, 'b3_admin_notices' ] );
 				add_action( 'load-users.php', 				[ $this, 'b3_load_users_page' ] );
 
-				// Multisite specific
 				if ( is_multisite() ) {
 					add_action( 'wp_initialize_site', [ $this, 'b3_after_create_site' ] );
 				}
-
-                // Filters
+    
 				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
 				include 'includes/true-false.php';
