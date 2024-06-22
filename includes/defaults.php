@@ -164,8 +164,9 @@
             $button     = sprintf( '<div class="big-link">%s</div>', $login_link ) . "\n";
             $message    .= esc_html__( 'you have confirmed your email address and can now login through the link below.', 'b3-onboarding' );
         }
-        $message    .= '<br><br>' . "\n";
-        $message    .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message .= '<br><br>' . "\n";
+        $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -222,6 +223,7 @@
     function b3_default_request_access_message_user() {
         ob_start();
         echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) );
+        echo '<br>';
         echo b3_default_greetings();
 
         return ob_get_clean();
@@ -248,11 +250,24 @@
      * @return string
      */
     function b3_default_account_approved_message() {
-        if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
-            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_login_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
+        if ( get_option( 'b3_activate_custom_passwords' ) || get_option( 'b3_use_magic_link' ) ) {
+            $link = b3_get_login_url();
+            $label = esc_html__( 'Login', 'b3-onboarding' );
         } else {
-            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
+            $link = '%reset_url%';
+            $label = esc_html__( 'Set password', 'b3-onboarding' );
         }
+        
+        $link_element = sprintf( '<a href="%s">%s</a>', $link, strtoupper( $label ) );
+        $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+
+        if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
+            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login by clicking the button below.', 'b3-onboarding' ), get_option( 'blogname' ) );
+        } else {
+            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password by clicking the button below.', 'b3-onboarding' ), get_option( 'blogname' ) );
+        }
+        $message .= '<br><br>' . "\n";
+        $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -280,6 +295,7 @@
      */
     function b3_default_account_rejected_message() {
         $message = sprintf( esc_html__( "We're sorry to tell you, your request for access to %s has been rejected.", 'b3-onboarding' ), get_option( 'blogname' ) );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -317,6 +333,7 @@
         $message       .= esc_html__( 'To (re)set your password, click the button below.', 'b3-onboarding' );
         $message       .= '<br><br>' . "\n";
         $message       .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message       .= '<br>' . "\n";
         $message       .= b3_default_greetings();
 
         return $message;
@@ -344,12 +361,17 @@
      * @return string
      */
     function b3_default_welcome_user_message() {
+        $activation_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
+        $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
         $message = b3_get_email_intro();
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
             $message .= '<br><br>' . "\n";
-            $message .= sprintf( esc_html__( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) );
+            $message .= __( 'You can set your password by clicking the button below.', 'b3-onboarding' ) . "\n";
+            $message .= '<br><br>' . "\n";
+            $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+            $message .= '<br>' . "\n";
         }
         $message .= b3_default_greetings();
 
@@ -368,6 +390,7 @@
         $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'You can (re)set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -403,6 +426,7 @@
         $message         .= esc_html__( 'You only need to confirm your email address through the link below.', 'b3-onboarding' );
         $message         .= '<br><br>' . "\n";
         $message         .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message         .= '<br>' . "\n";
         $message         .= b3_default_greetings();
 
         return $message;
@@ -496,6 +520,7 @@
         $message .= esc_html__( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'Disable these notifications %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%settings_url%', esc_html__( 'here', 'b3-onboarding' ) ) );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -514,6 +539,7 @@
         $message .= esc_html__( 'Site address: %home_url%', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'Site name: %blog_name%', 'b3-onboarding' );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -556,6 +582,7 @@
         $message .= esc_html__( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
         $message .= '<br>' . "\n";
         $message .= '<a href="%home_url%">%home_url%</a>';
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -596,6 +623,7 @@
         $message .= sprintf( esc_html__( 'Login here: %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%login_url%', '%login_url%' ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'Enjoy your new site.', 'b3-onboarding' );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -698,7 +726,7 @@
      * @return string
      */
     function b3_default_greetings() {
-        $greetings = "\n" . '<br><br>' . "\n";
+        $greetings = "\n" . '<br>' . "\n";
         $greetings .= esc_html__( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $greetings .= '<br><br>' . "\n";
         $greetings .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
@@ -781,6 +809,7 @@
             $message    .= sprintf( '<div class="big-link-container">%s</div>', $your_code ) . "\n";
             $message    .= '<br>' . "\n";
             $message    .= esc_html__( "If this was a mistake, or you didn't ask for a 'magic link', just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+            $message    .= '<br>' . "\n";
             $message    .= b3_default_greetings();
             
             return $message;

@@ -59,6 +59,7 @@
         $new_message               .= 'This notice confirms that your email address on ###SITENAME### was changed to ###NEW_EMAIL### from ###EMAIL###.';
         $new_message               .= '<br><br>';
         $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###.';
+        $new_message               .= "\n<br>";
         $new_message               .= b3_default_greetings();
         $new_message               = b3_replace_template_styling( $new_message );
         $new_message               = strtr( $new_message, b3_get_replacement_vars() );
@@ -485,6 +486,7 @@
         $email_content = str_replace( "###ADMIN_URL###\n", '', $email_content );
         $email_content = str_replace( "\n###SITEURL###", '', $email_content );
         $email_content = str_replace( "\n", '<br>', $email_content );
+        $email_content .= "\n<br>";
         $email_content .= b3_default_greetings();
         $email_content = b3_replace_template_styling( $email_content );
         $email_content = strtr( $email_content, b3_get_replacement_vars() );
