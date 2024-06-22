@@ -35,7 +35,6 @@
      * @return false|string
      */
     function b3_basic_email_settings_field( $box = [] ) {
-        
         $add_id_fields = [
             'email_styling',
             'email_template',
