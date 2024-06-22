@@ -65,7 +65,6 @@
             'b3_request_access_message_user'           => [ 'string' ],
             'b3_request_access_subject_admin'          => [ 'string' ],
             'b3_request_access_subject_user'           => [ 'string' ],
-            'b3_reserved_usernames'                    => [ 'array' ],
             'b3_signup_for_site'                       => [ 'string' ],
             'b3_signup_for_user'                       => [ 'string' ],
             'b3_user_cap'                              => [ 'string' ],
