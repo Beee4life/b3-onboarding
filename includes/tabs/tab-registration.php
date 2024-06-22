@@ -94,17 +94,6 @@
                                 <?php esc_html_e( 'Activate custom passwords on the registration form.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
-
-                        <?php $hide_one_time_password = ( 1 == $custom_passwords ) ? ' hidden' : false; ?>
-                        <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
-                            <?php b3_get_label_field_open(); ?>
-                                <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
-                            <?php b3_get_close(); ?>
-                            <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
-                                <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
-                            </div>
-                        <?php b3_get_close(); ?>
                     <?php } ?>
 
                     <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
@@ -130,7 +119,20 @@
                             </div>
                         <?php b3_get_close(); ?>
                     </div>
-
+                    
+                    <?php if ( ! is_multisite() ) { ?>
+                        <?php $hide_one_time_password = ( 1 == $custom_passwords ) ? ' hidden' : false; ?>
+                        <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                        <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
+                            <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
+                        </div>
+                        <?php b3_get_close(); ?>
+                    <?php } ?>
+                    
                     <?php if ( 'open' === $registration_type ) { ?>
                         <?php $hide_redirect_field = ( 1 == $custom_passwords ) ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_redirect_field, 'redirect' ); ?>
