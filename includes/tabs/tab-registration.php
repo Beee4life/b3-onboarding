@@ -22,7 +22,7 @@
         $recaptcha                    = get_option( 'b3_activate_recaptcha' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
-        $use_one_time_password        = get_option( 'b3_use_one_time_password' );
+        $use_magic_link               = get_option( 'b3_use_magic_link' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
 
         ob_start();
@@ -83,7 +83,7 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'none' ] ) ) ? true : false; ?>
-                        <?php $hide_custom_passwords = ( 1 == $use_one_time_password ) ? true : $hide_custom_passwords; ?>
+                        <?php $hide_custom_passwords = ( 1 == $use_magic_link ) ? true : $hide_custom_passwords; ?>
                         <?php b3_get_settings_field_open( false, $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -97,10 +97,10 @@
                         <?php $hide_one_time_password = ( 1 == $custom_passwords ) ? ' hidden' : false; ?>
                         <?php b3_get_settings_field_open( false, $hide_one_time_password, 'one-time-password' ); ?>
                             <?php b3_get_label_field_open(); ?>
-                                <label for="b3_use_one_time_password"><?php esc_html_e( 'One-time password', 'b3-onboarding' ); ?></label>
+                                <label for="b3_use_magic_link"><?php esc_html_e( 'One-time password', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_use_one_time_password" name="b3_use_one_time_password" value="1" <?php checked($use_one_time_password); ?>/>
+                                <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
                                 <?php esc_html_e( 'Use one-time password.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
