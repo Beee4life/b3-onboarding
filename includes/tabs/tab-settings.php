@@ -129,6 +129,7 @@
                 <hr />
             <?php } ?>
 
+            <?php /* @TODO: move to email tab */ ?>
             <?php echo sprintf( '<h2>%s</h2>', esc_html__( 'Logo', 'b3-onboarding' ) ); ?>
             <?php b3_get_settings_field_open(); ?>
                 <div id="b3-main-logo-settings">
