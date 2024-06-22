@@ -11,11 +11,11 @@
      * @return bool
      */
     function is_localhost() {
-        if ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
+        if ( apply_filters( 'b3_localhost', false ) ) {
+            return true;
+        } elseif ( defined( 'LOCALHOST' ) && true == LOCALHOST ) {
             return true;
         } elseif ( true == getenv( 'LOCALHOST' ) ) {
-            return true;
-        } elseif ( apply_filters( 'b3_localhost', false ) ) {
             return true;
         }
 
