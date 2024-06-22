@@ -108,8 +108,8 @@
 }
 
 .b3_restrict-roles {
-  display:     flex;
-  flex-flow:   row wrap;
+  display:   flex;
+  flex-flow: row wrap;
 }
 
 .b3_restrict-roles div {
@@ -171,6 +171,24 @@
 
 .b3_table--debug-meta td:first-child {
   padding: 3px 40px 3px 0;
+}
+
+.b3_table--emails img.preview-logo {
+  margin-top: 10px;
+  max-width:  150px;
+}
+
+.b3_table--emails .logo-fields div {
+  flex: 1;
+}
+
+.b3_table--emails .logo-fields div:first-child {
+  margin-right: 10px;
+}
+
+.b3_table--emails .logo-fields {
+  display:     flex;
+  align-items: center;
 }
 
 .b3_message {
@@ -262,8 +280,8 @@
 }
 
 .b3_select-page label {
-  font-weight:  bold;
-  min-width:    200px;
+  font-weight: bold;
+  min-width:   200px;
 }
 
 .b3_select-page__create,
@@ -309,7 +327,7 @@
 }
 
 .b3 input#b3_main_logo {
-  max-width: 500px;
+  /*max-width: 500px;*/
   width:     100%;
 }
 
