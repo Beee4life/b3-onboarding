@@ -28,9 +28,9 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.11.0
+* added magic link login option (single site only, for now)
 * locate template from function
 * remove border width on submit button
-* add one time password option (single site only, for now)
 
 3.10.0
 * filter out nav menu items
