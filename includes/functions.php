@@ -301,12 +301,10 @@
      *
      * @param bool $hide
      */
-    function b3_get_settings_field_open( $no_render = false, $hide = false, $modifier = false ) {
-        if ( false === $no_render ) {
-            $hide_class = ( $hide != false ) ? ' hidden' : false;
-            $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
-            echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
-        }
+    function b3_get_settings_field_open( $hide = false, $modifier = false ) {
+        $hide_class = ( $hide != false ) ? ' hidden' : false;
+        $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
+        echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
     }
 
 

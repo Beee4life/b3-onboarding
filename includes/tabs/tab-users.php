@@ -39,7 +39,7 @@
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
             <?php $hide_front_end_approval = ( 'request_access' === $registration_type ) ? false : 'hidden'; ?>
-            <?php b3_get_settings_field_open( false, $hide_front_end_approval ); ?>
+            <?php b3_get_settings_field_open( $hide_front_end_approval ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
@@ -117,7 +117,7 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php b3_get_settings_field_open( false, $hide_username_restrictions, 'username-restrictions' ); ?>
+                    <?php b3_get_settings_field_open( $hide_username_restrictions, 'username-restrictions' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_disallowed_usernames"><?php esc_html_e( 'User names', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
@@ -142,7 +142,7 @@
                     </div>
                 <?php b3_get_close(); ?>
 
-                <?php b3_get_settings_field_open( false, $hide_domain_settings, 'domain-restrictions' ); ?>
+                <?php b3_get_settings_field_open( $hide_domain_settings, 'domain-restrictions' ); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_disallowed_domains"><?php esc_html_e( 'Domain names', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
