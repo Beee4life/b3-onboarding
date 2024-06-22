@@ -50,10 +50,6 @@
             $('.b3_settings-field--redirect').toggle();
         });
 
-        $('#b3_use_magic_link').change(function() {
-            $('.b3_settings-field--custom-passwords').toggle();
-        });
-
         $('#b3_activate_first_last').change(function() {
             $('.b3_settings-field--first-last-required').toggle();
         });
