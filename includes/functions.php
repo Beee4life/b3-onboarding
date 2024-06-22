@@ -668,7 +668,7 @@
 
 
     /**
-     * Reserved usernames
+     * Disallowed usernames
      *
      * @since 2.0.4
      *
@@ -684,7 +684,7 @@
             $disallowed_names = $default_user_names;
         }
         
-        return apply_filters( 'b3_reserved_usernames', $default_user_names );
+        return apply_filters( 'b3_disallowed_usernames', $disallowed_names );
     }
 
 
