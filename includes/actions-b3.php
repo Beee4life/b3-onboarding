@@ -630,20 +630,19 @@
             if ( ! empty( $user_sites ) ) {
                 ob_start();
                 foreach( $user_sites as $site_id => $site_info ) {
-                    $admin_url        = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
                     $disallowed_roles = ! array_diff( $current_user->roles, get_option( 'b3_restrict_admin', [
                         'b3_activation',
                         'b3_approval'
                     ] ) );
-                    $home_url         = get_home_url( $site_id );
-                    echo '<li>';
-                    $link             = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
-
+                    $admin_url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
+                    $home_url  = get_home_url( $site_id );
+                    $link      = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
+                    
                     if ( false === $disallowed_roles ) {
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
-                    echo $link;
-                    echo '</li>';
+                    
+                    echo sprintf( '<li>%s</li>', $link );
                 }
                 $links = ob_get_clean();
 
@@ -651,6 +650,7 @@
                     $label = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
+                    
                     echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, $links );
                 }
             }
