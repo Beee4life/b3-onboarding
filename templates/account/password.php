@@ -21,7 +21,7 @@
                         <div class="input">
                             <span class="password-input-wrapper">
                                 <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php esc_attr_e( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
-                                <br/>
+                                <br>
                                 <span class="password-input-description">
                                     <small><?php esc_html_e( 'You can also enter your own password', 'sexdates' ); ?></small>
                                 </span>
