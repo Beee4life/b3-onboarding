@@ -54,8 +54,9 @@
                 <?php if ( 'none' === $registration_type ) { ?>
                     <?php $filter_message = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) ); ?>
                     <?php $closed_message = htmlspecialchars( get_option( 'b3_registration_closed_message' ) ); ?>
-                    <?php $default_closed_message = b3_get_registration_closed_message(); ?>
-                    <?php $default_closed_message = ( false != $filter_message ) ? $filter_message : $default_closed_message; ?>
+                    <?php $default_closed_message = b3_default_registration_closed_message(); ?>
+                    <?php $placeholder_registration_closed = $filter_message ? $filter_message : $default_closed_message; ?>
+                    
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
@@ -64,7 +65,7 @@
                             <?php if ( false != $filter_message ) { ?>
                                 <?php echo sprintf( '<div class="filter-override">%s</div>', esc_html__( 'You have set a filter to override this setting', 'b3-onboarding' ) ); ?>
                             <?php } ?>
-                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $default_closed_message ); ?>" value="<?php if ( $closed_message ) { echo htmlspecialchars_decode(stripslashes( $closed_message )); } ?>"/>
+                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $placeholder_registration_closed ); ?>" value="<?php if ( $closed_message ) { echo htmlspecialchars_decode(stripslashes( $closed_message )); } ?>"/>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
@@ -101,7 +102,7 @@
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
                                 <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
-                                <?php esc_html_e( 'Use one-time password.', 'b3-onboarding' ); ?>
+                                <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>
