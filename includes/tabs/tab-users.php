@@ -122,7 +122,7 @@
                             <label for="b3_disallowed_usernames"><?php esc_html_e( 'User names', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <div class=""><?php echo sprintf( esc_html__( 'Some usernames are excluded already, see them %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', sprintf( '%s/filter/b3_disallowed_usernames', B3OB_PLUGIN_SITE ), esc_html__( 'here', 'b3-onboarding' ) ) ); ?></div>
+                            <div class=""><?php echo sprintf( esc_html__( 'Some usernames are excluded already by default, see them %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', sprintf( '%s/filter/b3_disallowed_usernames', B3OB_PLUGIN_SITE ), esc_html__( 'here', 'b3-onboarding' ) ) ); ?></div>
                             <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
                             <?php if ( $username_restrictions ) { ?>
                                 <?php echo sprintf( '<div><small>(%s)</small></div>', esc_html__( 'separate multiple user names with a space', 'b3-onboarding' ) ); ?>
