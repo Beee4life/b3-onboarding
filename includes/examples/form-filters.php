@@ -311,17 +311,18 @@
      *
      * @since 2.0
      *
-     * @param $existing_user_names
+     * @param $existing_disallowed_usernames
      *
      * @return array
      */
-    function b3_disallowed_usernames_example() {
-        $disallowed_user_names = [
+    function b3_disallowed_usernames_example( $existing_disallowed_usernames ) {
+        $your_disallowed_usernames = [
             'username1',
             'username2',
         ];
-
-        return $disallowed_user_names;
+        $existing_disallowed_usernames = array_merge( $existing_disallowed_usernames, $your_disallowed_usernames );
+    
+        return $existing_disallowed_usernames;
     }
     add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
 
