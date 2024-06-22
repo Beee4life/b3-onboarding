@@ -137,7 +137,7 @@
                         }
                     }
 
-                    if ( 1 == get_option( 'b3_use_one_time_password' ) && 'register' === $attributes[ 'template' ] ) {
+                    if ( 1 == get_option( 'b3_use_magic_link' ) && 'register' === $attributes[ 'template' ] ) {
                         $attributes[ 'one_time_password' ] = true;
                     }
 
@@ -188,7 +188,7 @@
                 // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
                 $attributes[ 'redirect' ]          = false;
-                $attributes[ 'one_time_password' ] = get_option( 'b3_use_one_time_password' );
+                $attributes[ 'one_time_password' ] = get_option( 'b3_use_magic_link' );
 
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
@@ -250,8 +250,8 @@
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
                 
-                if ( 1 == get_option( 'b3_use_one_time_password' ) && 'login' === $attributes[ 'template' ] ) {
-                    $button_value                 = get_option( 'b3_use_one_time_password' ) ? esc_attr__( 'Get magic link', 'b3-onboarding' ) : esc_attr__( 'Log in', 'b3-onboarding' );
+                if ( 1 == get_option( 'b3_use_magic_link' ) && 'login' === $attributes[ 'template' ] ) {
+                    $button_value                 = get_option( 'b3_use_magic_link' ) ? esc_attr__( 'Get magic link', 'b3-onboarding' ) : esc_attr__( 'Log in', 'b3-onboarding' );
                     $button_value                 = isset( $_GET[ 'login' ] ) && 'enter_code' === $_GET[ 'login' ] ? esc_attr__( 'Log in', 'b3-onboarding' ) : $button_value;
                     $attributes[ 'button_value' ] = $button_value;
                     $attributes[ 'enter_code' ]   = false;

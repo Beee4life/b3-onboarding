@@ -309,7 +309,7 @@
                 $user_object = new WP_User( $user->ID );
                 $user_object->set_role( get_option( 'default_role' ) );
 
-                if ( get_option( 'b3_use_one_time_password' ) ) {
+                if ( get_option( 'b3_use_magic_link' ) ) {
                     $redirect_url = b3_get_login_url();
                 } elseif ( false == get_option( 'b3_activate_custom_passwords' ) ) {
                     $redirect_url = b3_get_lostpassword_url();

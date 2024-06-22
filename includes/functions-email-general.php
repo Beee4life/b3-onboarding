@@ -521,7 +521,7 @@
     function b3_get_email_intro( $welcome = false ) {
         $welcome = ( false === $welcome ) ? esc_html__( 'Welcome', 'b3-onboarding' ) : $welcome;
         
-        if ( true == get_option( 'b3_register_email_only' ) || true == get_option( 'b3_use_one_time_password' ) ) {
+        if ( true == get_option( 'b3_register_email_only' ) || true == get_option( 'b3_use_magic_link' ) ) {
             $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
         } else {
             $message = $welcome . ' %user_login%' . ',' . "\n";

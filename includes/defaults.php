@@ -152,7 +152,7 @@
     function b3_default_account_activated_message() {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
-        if ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_one_time_password' ) ) {
+        if ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
             $lost_pass_link = '%lostpass_url%';
             $lost_pass_link = sprintf( '<a href="%s">%s</a>', esc_url( $lost_pass_link ), strtoupper( __( 'Set password', 'b3-onboarding' ) ) );
             $button         = sprintf( '<div class="big-link">%s</div>', $lost_pass_link ) . "\n";

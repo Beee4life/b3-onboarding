@@ -50,7 +50,7 @@
             $('.b3_settings-field--redirect').toggle();
         });
 
-        $('#b3_use_one_time_password').change(function() {
+        $('#b3_use_magic_link').change(function() {
             $('.b3_settings-field--custom-passwords').toggle();
         });
 

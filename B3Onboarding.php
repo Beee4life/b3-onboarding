@@ -1022,7 +1022,7 @@
 
                     // Activation
                     case 'activate_success':
-                        if ( get_option( 'b3_use_one_time_password' ) ) {
+                        if ( get_option( 'b3_use_magic_link' ) ) {
                             return esc_html__( 'You have successfully activated your account. You can now login through the use of a magic link. Please enter your email address below.', 'b3-onboarding' );
                         } elseif ( get_option( 'b3_activate_custom_passwords' ) ) {
                             return esc_html__( 'You have successfully activated your account. You can now login.', 'b3-onboarding' );
