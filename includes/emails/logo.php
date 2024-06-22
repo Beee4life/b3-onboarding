@@ -19,10 +19,11 @@
         </th>
         <td>
             <?php if ( false == apply_filters( 'b3_main_logo', false ) ) { ?>
+                <?php $logo_source = esc_url( $main_logo ); ?>
                 <div class="logo-fields">
                     <div>
                         <label>
-                            <input type="url" name="b3_main_logo" id="b3_main_logo" value="<?php echo esc_url( $main_logo ); ?>" />
+                            <input type="url" name="b3_main_logo" id="b3_main_logo" value="<?php echo $logo_source; ?>" />
                         </label>
                     </div>
                     <div>
@@ -31,15 +32,17 @@
                         </a>
                     </div>
                 </div>
-                <?php if ( $main_logo ) { ?>
-                    <div>
-                        <img src="<?php echo $main_logo; ?>" alt="Your logo" class="preview-logo" style="max-width: 150px;" />
-                    </div>
-                <?php } ?>
             <?php } else { ?>
+                <?php $logo_source = apply_filters( 'b3_main_logo', false ); ?>
                 <?php esc_html_e( "You've set this logo with a filter.", 'b3-onboarding' ); ?>
                 <br>
                 <img src="<?php echo apply_filters( 'b3_main_logo', false ); ?>" alt="" style="max-width: 300px;" />
+            <?php } ?>
+
+            <?php if ( $logo_source ) { ?>
+                <div>
+                    <img src="<?php echo $main_logo; ?>" alt="Your logo" class="preview-logo" style="max-width: 150px;" />
+                </div>
             <?php } ?>
         </td>
     </tr>
