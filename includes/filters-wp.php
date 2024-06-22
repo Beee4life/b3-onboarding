@@ -305,3 +305,28 @@
         return $items;
     }
     add_filter( 'wp_get_nav_menu_items', 'b3_filter_nav_menus', 5, 3 );
+    
+    
+    /**
+     * Validates allowed usernames
+     *
+     * @since 3.11.0
+     *
+     * @param $valid
+     * @param $user_name
+     *
+     * @return false|mixed
+     */
+    function b3_check_username( $valid, $user_name ) {
+        $disallowed_names = b3_get_disallowed_usernames();
+
+        foreach( $disallowed_names as $name ) {
+            // If any disallowed string is in the user_name, mark $valid as false.
+            if ( $valid && false !== strpos( $user_name, $name ) ) {
+                $valid = false;
+            }
+        }
+        
+        return $valid;
+    }
+    add_filter( 'validate_username', 'b3_check_username', 10, 2 );
