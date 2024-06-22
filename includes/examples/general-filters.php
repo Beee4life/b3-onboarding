@@ -60,3 +60,16 @@
 
     }
     add_filter( 'b3_widget_links', 'b3_widget_links_example' );
+    
+    
+    /**
+     * Filter to show email widget when localhost is inactive
+     *
+     * @param $setting
+     *
+     * @return bool
+     */
+    function b3_show_email_widget_example( $setting ) {
+        return true;
+    }
+    add_filter( 'b3_show_email_widget', 'b3_show_email_widget_example' );
