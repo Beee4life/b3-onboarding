@@ -67,7 +67,7 @@
         });
 
         $('#b3_logo_in_email').change(function() {
-            $('.b3_settings-input-description--logo').toggle();
+            $('.b3_settings-field--logo').toggle();
         });
 
         $('#b3_activate_frontend_approval').change(function() {
