@@ -351,7 +351,7 @@
                  */
                 if ( is_main_site() ) {
                     include 'admin/dashboard-widget.php';
-                    if ( is_localhost() ) {
+                    if ( is_localhost() || apply_filters( 'b3_show_email_widget', false ) ) {
                         include 'admin/dashboard-widget-debug.php';
                     }
                 }
