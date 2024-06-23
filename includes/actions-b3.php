@@ -58,9 +58,10 @@
         $signup_info->meta      = serialize( $meta_data );
 
         // set site to public and remove deleted status
-        // @TODO: use $wpdb->prepare
-        $wpdb->update(
-            $wpdb->prefix . 'signups', [ 'meta' => $signup_info->meta ], [ 'signup_id' => $signup_info->signup_id ], [ '%s' ] );
+        $table = $wpdb->prefix . 'signups';
+        $data  = [ 'meta' => $signup_info->meta ];
+        $where = [ 'signup_id' => $signup_info->signup_id ];
+        $wpdb->update( $table, $data, $where, [ '%s' ] );
         
         wpmu_activate_signup( $signup_info->activation_key );
     }
