@@ -469,6 +469,12 @@
                 }
 
                 if ( ! is_multisite() ) {
+                    if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == $_POST[ 'b3_activate_welcome_page' ] ) {
+                        update_option( 'b3_activate_welcome_page', 1, false );
+                    } else {
+                        delete_option( 'b3_activate_welcome_page' );
+                    }
+                    
                     if ( isset( $_POST[ 'b3_restrict_usernames' ] ) && 1 == $_POST[ 'b3_restrict_usernames' ] ) {
                         update_option( 'b3_restrict_usernames', 1, false );
 
@@ -585,12 +591,6 @@
                     update_option( 'b3_disable_action_links', 1, false );
                 } else {
                     delete_option( 'b3_disable_action_links' );
-                }
-
-                if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == $_POST[ 'b3_activate_welcome_page' ] ) {
-                    update_option( 'b3_activate_welcome_page', 1, false );
-                } else {
-                    delete_option( 'b3_activate_welcome_page' );
                 }
 
                 if ( isset( $_POST[ 'b3_remove_user_meta_seen' ] ) && 1 == $_POST[ 'b3_remove_user_meta_seen' ] ) {
