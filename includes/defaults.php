@@ -448,11 +448,17 @@
      * @return string|void
      */
     function b3_default_wpmu_activate_user_message() {
-        $message = esc_html__( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'To activate your account, please click %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%2$s', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
+        $link_element = sprintf( '<a href="%s">%s</a>', '%2$s', strtoupper( __( 'Activate account', 'b3-onboarding' ) ) );
+        $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+        $message      = esc_html__( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= esc_html__( 'To activate your account, please click the link below.', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
+        $message      .= '<br>' . "\n";
+        $message      .= b3_default_greetings();
 
         return $message;
     }
@@ -474,19 +480,22 @@
      * @return string|void
      */
     function b3_default_wpmu_user_activated_message() {
-        $message = esc_html__( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
-        $message .= '<br>' . "\n";
-        $message .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
-        $message .= '<br>' . "\n";
-        $message .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
-        $message .= '<br>' . "\n";
-        $message .= sprintf( esc_html__( 'You can login %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%4$s', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'The Team @ %5$s', 'b3-onboarding' );
+        $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+        $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+        $message      = esc_html__( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= esc_html__( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'You can login through the link below.', 'b3-onboarding' );
+        $message      .= '<br><br>' . "\n";
+        $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message      .= b3_default_greetings();
 
         return $message;
     }
