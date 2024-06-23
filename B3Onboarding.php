@@ -87,7 +87,7 @@
 				add_action( 'init', 							[ $this, 'b3_load_plugin_text_domain' ] );
 				add_action( 'init', 							[ $this, 'b3_registration_form_handling' ] );
 				add_action( 'init', 							[ $this, 'b3_reset_user_password' ] );
-				add_action( 'init', 							[ $this, 'b3_one_time_password_form_handling' ] );
+				add_action( 'init', 							[ $this, 'b3_magic_link_form_handling' ] );
 				add_action( 'init', 							[ $this, 'b3_check_email_link' ] );
 				add_action( 'admin_notices', 				[ $this, 'b3_admin_notices' ] );
 				add_action( 'load-users.php', 				[ $this, 'b3_load_users_page' ] );
@@ -805,7 +805,7 @@
             }
 
 
-            public function b3_one_time_password_form_handling() {
+            public function b3_magic_link_form_handling() {
                 if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_set_otp_nonce' ] ) ) {
                         $redirect_url = b3_get_login_url();
