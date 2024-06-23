@@ -775,14 +775,16 @@
      * @return array[]
      */
     function b3_get_admin_tabs() {
-        $tabs = [
-            [
+        $tabs = [];
+        
+        if ( ! is_multisite() || is_main_site() ) {
+            $tabs[] = [
                 'id'      => 'registration',
                 'title'   => esc_html__( 'Registration', 'b3-onboarding' ),
                 'content' => b3_render_tab_content( 'registration' ),
                 'icon'    => 'shield',
-            ],
-        ];
+            ];
+        }
         
         $tabs[] = [
             'id'      => 'emails',
@@ -826,12 +828,14 @@
             'icon'    => 'admin-page',
         ];
         
-        $tabs[] = [
-            'id'      => 'settings',
-            'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
-            'content' => b3_render_tab_content( 'settings' ),
-            'icon'    => 'admin-generic',
-        ];
+        if ( ! is_multisite() || is_main_site() ) {
+            $tabs[] = [
+                'id'      => 'settings',
+                'title'   => esc_html__( 'Settings', 'b3-onboarding' ),
+                'content' => b3_render_tab_content( 'settings' ),
+                'icon'    => 'admin-generic',
+            ];
+        }
         
         return $tabs;
     }
