@@ -33,20 +33,7 @@
         <form action="admin.php?page=b3-onboarding&tab=registration" method="post">
             <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
             <?php if ( is_main_site() ) { ?>
-                <?php
-                    $options       = '';
-                    $selected_type = '';
-
-                    foreach( b3_get_registration_types() as $registration_option ) {
-                        $options .= sprintf( '<option value="%s"%s>%s</option>', $registration_option[ 'value' ], selected( $registration_option[ 'value' ], $registration_type, false ), $registration_option[ 'label' ] );
-                        if ( $registration_option[ 'value' ] == $registration_type ) {
-                            $selected_type = $registration_option[ 'label' ];
-                        }
-                    }
-                    // @TODO: maybe hide keys
-                    echo sprintf( '<datalist id="b3-registration-options">%s</datalist>', $options );
-                ?>
-
+                <?php $options = b3_get_registration_types(); ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_registration_type"><?php esc_html_e( 'Registration type', 'b3-onboarding' ); ?></label>
@@ -56,7 +43,11 @@
                     <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $admin_url, esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
 
                     <div class="b3_settings-input b3_settings-input--select">
-                        <input list="b3-registration-options" placeholder="<?php echo $selected_type; ?>" name="b3_registration_type" id="b3_registration_type" />
+                        <select name="b3_registration_type" id="b3_registration_type">
+                            <?php foreach( $options as $option ) { ?>
+                            <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php selected( $option[ 'value' ], $registration_type ); ?>> <?php echo $option[ 'label' ]; ?>
+                                <?php } ?>
+                        </select>
                     </div>
                 <?php b3_get_close(); ?>
 
