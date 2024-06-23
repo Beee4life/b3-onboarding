@@ -177,6 +177,7 @@
 
                 if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
                     if ( ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
+                        // @TODO: check this error message
                         B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
 
                         return;
@@ -310,6 +311,7 @@
                             foreach( $email_array as $email ) {
                                 $email = trim( $email );
                                 if ( ! is_email( $email ) ) {
+                                    // @TODO: check error message
                                     B3Onboarding::b3_errors()->add( 'error_invalid_email', sprintf( esc_html__( '"%s" is not a valid email address.', 'b3-onboarding' ), $email ) );
 
                                     return;
