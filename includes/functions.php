@@ -1247,3 +1247,18 @@
         
         return $user_ip;
     }
+    
+    
+    /**
+     * Get message above 'Get pass' form (magic link)
+     *
+     * @since 3.11.0
+     *
+     * @return mixed|null
+     */
+    function b3_get_message_above_getpass_form() {
+        $default_notice = esc_html__( 'Please enter your email address. You will receive an email with a link to login with a magic link.', 'b3-onboarding' );
+        $notice         = apply_filters( 'b3_message_above_getpass', $default_notice );
+        
+        return $notice;
+    }
