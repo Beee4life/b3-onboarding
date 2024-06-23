@@ -66,14 +66,12 @@
      *
      * @since 2.0.0
      *
-     * @TODO: add user input option
+     * @TODO: maybe add user input option
      *
      * @return bool|false|mixed|string|void
      */
     function b3_get_email_footer() {
-        $email_footer = b3_default_email_footer();
-
-        return apply_filters( 'b3_email_footer_text', $email_footer );
+        return apply_filters( 'b3_email_footer_text', b3_default_email_footer() );
     }
 
 
