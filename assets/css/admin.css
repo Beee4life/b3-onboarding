@@ -594,7 +594,7 @@ input[type="checkbox"]:checked::before {
   content:   "";
   width:     10px;
   height:    10px;
-  top:       0.3rem;
+  top:       5px;
   transform: translateX(16px);
 }
 
@@ -603,7 +603,7 @@ input#b3_activate_custom_passwords:checked::before,
 input#b3_restrict_usernames:checked::before,
 input#b3_activate_filter_validation:checked::before,
 input#b3_privacy:checked::before {
-  top: 0.35rem;
+  /*top: 0.35rem;*/
 }
 
 input[type="checkbox"]:focus {
