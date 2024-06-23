@@ -68,6 +68,10 @@
                     $message = b3_get_lost_password_message();
                     $subject = b3_get_lost_password_subject();
                     break;
+                case 'mu-confirm-email':
+                    $message = b3_get_wpmu_activate_user_message();
+                    $subject = b3_get_wpmu_activate_user_subject();
+                    break;
                 case 'new-user-admin':
                     // @TODO: maybe make new one, don't use b3_get_new_user_message
                     $message = b3_get_new_user_message();
