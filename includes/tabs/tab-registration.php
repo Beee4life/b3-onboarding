@@ -43,6 +43,7 @@
                             $selected_type = $registration_option[ 'label' ];
                         }
                     }
+                    // @TODO: maybe hide keys
                     echo sprintf( '<datalist id="b3-registration-options">%s</datalist>', $options );
                 ?>
 
