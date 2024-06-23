@@ -11,6 +11,8 @@
      * @return false|string
      */
     function b3_render_users_tab() {
+        $activate_welcome_page      = get_option( 'b3_activate_welcome_page' );
+
         $disallowed_domains           = false;
         $disallowed_domains_array     = get_option( 'b3_disallowed_domains' );
         if ( is_array( $disallowed_domains_array ) && ! empty( $disallowed_domains_array ) ) {
@@ -89,6 +91,32 @@
             <?php b3_get_close(); ?>
 
             <?php if ( ! is_multisite() ) { ?>
+                <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                <label for="b3_activate_welcome_page"><?php esc_html_e( 'Welcome page', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/>
+                    <?php esc_html_e( "Redirect the user to a 'welcome' page after his first login.", 'b3-onboarding' ); ?>
+                    <?php $hide_welcome_page_note = ( 1 == $activate_welcome_page ) ? false : ' hidden'; ?>
+                    <div class="b3_settings-input-description b3_settings-input-description--welcome<?php echo $hide_welcome_page_note; ?>">
+                        <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url('https://b3onboarding.berryplasman.com/filter/b3_welcome_page/'), esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
+                    </div>
+                </div>
+                <?php b3_get_close(); ?>
+                
+                <?php if ( $activate_welcome_page ) { ?>
+                    <?php b3_get_settings_field_open(); ?>
+                    <?php b3_get_label_field_open(); ?>
+                    <label for="b3_remove_user_meta_seen"><?php esc_html_e( "Remove 'welcome_page_seen' meta", 'b3-onboarding' ); ?></label>
+                    <?php b3_get_close(); ?>
+                    <div class="b3_settings-input b3_settings-input--checkbox">
+                        <input type="checkbox" id="b3_remove_user_meta_seen" name="b3_remove_user_meta_seen" value="1"/>
+                        <?php esc_html_e( "Clear the 'welcome_page_seen' meta for all users, so you can show a new page.", 'b3-onboarding' ); ?>
+                    </div>
+                    <?php b3_get_close(); ?>
+                <?php } ?>
+                
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
