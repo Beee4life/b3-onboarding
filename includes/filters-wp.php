@@ -327,3 +327,23 @@
         return $valid;
     }
     add_filter( 'validate_username', 'b3_check_username', 10, 2 );
+    
+    
+    /**
+     * Hide password fields (if magic link is active)
+     *
+     * @since 3.11.0
+     *
+     * @param $show
+     * @param $current_user
+     *
+     * @return false|mixed
+     */
+    function b3_show_password_fields( $show, $current_user ) {
+        if ( get_option( 'b3_use_magic_link' ) ) {
+            $show = false;
+        }
+        
+        return $show;
+    }
+    add_filter( 'show_password_fields', 'b3_show_password_fields', 10, 2 );
