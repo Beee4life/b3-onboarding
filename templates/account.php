@@ -15,6 +15,7 @@
 ?>
 
 <div id="b3-account" class="b3_page b3_page--account">
+    <?php // @TODO: move to shortcode ?>
     <?php if ( isset( $attributes[ 'updated' ] ) ) { ?>
         <?php echo sprintf( '<p class="b3_message">%s</p>', esc_html__( 'Profile saved', 'b3-onboarding' ) ); ?>
     <?php } ?>
