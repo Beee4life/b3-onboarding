@@ -37,15 +37,15 @@
              *
              */
             public function b3_render_register_form( $shortcode_args ) {
-                $button_value      = esc_attr__( 'Register', 'b3-onboarding' );
-                $registration_type = get_option( 'b3_registration_type' );
-
-                if ( in_array( $registration_type, [
+                if ( in_array( $this->settings[ 'registration_type' ], [
                     'request_access',
                     'request_access_subdomain',
                 ] ) ) {
                     $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
+                } else {
+                    $button_value = esc_attr__( 'Register', 'b3-onboarding' );
                 }
+
                 $default_attributes = [
                     'button_modifier'   => 'register',
                     'button_value'      => $button_value,
@@ -55,10 +55,9 @@
                 ];
                 
                 $attributes                        = shortcode_atts( $default_attributes, $shortcode_args );
-                $registration_type                 = get_option( 'b3_registration_type' );
-                $attributes[ 'registration_type' ] = $registration_type;
+                $attributes[ 'registration_type' ] = $this->settings[ 'registration_type' ];
                 
-                if ( is_user_logged_in() && 'blog' != $registration_type ) {
+                if ( is_user_logged_in() && 'blog' != $this->settings[ 'registration_type' ] ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
@@ -89,14 +88,14 @@
                     }
                 }
 
-                if ( 'none' === $registration_type && ! current_user_can( 'manage_network' ) ) {
+                if ( 'none' === $this->settings[ 'registration_type' ] && ! current_user_can( 'manage_network' ) ) {
                     ob_start();
                     echo sprintf( '<p class="b3_message">%s</p>', b3_get_registration_closed_message() );
                     do_action( 'b3_add_action_links', $attributes[ 'template' ] );
                     $rego_closed = ob_get_clean();
                     return $rego_closed;
 
-                } elseif ( 'blog' === $registration_type && ! is_user_logged_in() ) {
+                } elseif ( 'blog' === $this->settings[ 'registration_type' ] && ! is_user_logged_in() ) {
                     // logged in registration only
                     return sprintf( '<p class="b3_message">%s</p>', b3_get_logged_in_registration_only_message() );
 
@@ -250,30 +249,12 @@
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
                 
-                if ( 1 == get_option( 'b3_use_magic_link' ) && 'login' === $attributes[ 'template' ] ) {
-                    $button_value                 = get_option( 'b3_use_magic_link' ) ? esc_attr__( 'Get magic link', 'b3-onboarding' ) : esc_attr__( 'Log in', 'b3-onboarding' );
-                    $button_value                 = isset( $_GET[ 'login' ] ) && 'enter_code' === $_GET[ 'login' ] ? esc_attr__( 'Log in', 'b3-onboarding' ) : $button_value;
-                    $attributes[ 'button_value' ] = $button_value;
-                    $attributes[ 'enter_code' ]   = false;
+                if ( 1 == get_option( 'b3_use_magic_link' ) ) {
+                    $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                    $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
+                    $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
+                    $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
                     $attributes[ 'template' ]     = 'getpass';
-                    
-                    if ( isset( $_REQUEST[ 'code' ] ) ) {
-                        $code = $_REQUEST[ 'code' ];
-                    }
-                    
-                    $form_action                 = b3_get_login_url();
-                    $form_action                 = add_query_arg( 'login', 'enter_code', $form_action );
-                    $attributes[ 'form_action' ] = $form_action;
-                    
-                    if ( isset( $_REQUEST[ 'login' ] ) && 'enter_code' == $_REQUEST[ 'login' ] ) {
-                        $attributes[ 'enter_code' ]  = true;
-                        $attributes[ 'form_action' ] = $form_action;
-                        $attributes[ 'nonce_id' ]    = 'b3_check_otp_nonce';
-                        $attributes[ 'nonce' ]       = wp_create_nonce( 'b3-check-otp-nonce' );
-                    } else {
-                        $attributes[ 'nonce_id' ] = 'b3_set_otp_nonce';
-                        $attributes[ 'nonce' ]    = wp_create_nonce( 'b3-set-otp-nonce' );
-                    }
                 }
                 
                 $attributes[ 'errors' ] = $errors;
@@ -319,7 +300,15 @@
                         $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success_enter_password' );
                     }
                 }
-
+                
+                if ( 1 == get_option( 'b3_use_magic_link' ) ) {
+                    $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                    $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
+                    $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
+                    $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
+                    $attributes[ 'template' ]     = 'getpass';
+                }
+                
                 $attributes = apply_filters( 'b3_attributes', $attributes );
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
