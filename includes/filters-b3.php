@@ -56,10 +56,9 @@
      *
      * @return array
      */
-    function b3_extra_fields_validation() {
+    function b3_extra_fields_validation( $error_array = [] ) {
         $b3_onboarding      = new B3Onboarding();
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-        $error_array        = [];
         
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
