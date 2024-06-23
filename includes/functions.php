@@ -606,8 +606,6 @@
     /**
      * Get the message above registration form
      *
-     * @TODO: create user input option
-     *
      * @param $message
      *
      * @return bool|mixed|string|void
@@ -626,8 +624,6 @@
     /**
      * Get the message above login form
      *
-     * @TODO: create user input option
-     *
      * @param $message
      *
      * @return bool|mixed|string|void
@@ -639,8 +635,6 @@
 
     /**
      * Get the message above lost password form
-     *
-     * @TODO: create user input option
      *
      * @param $message
      *
@@ -659,8 +653,6 @@
 
     /**
      * Get the message above request access form
-     *
-     * @TODO: create user input option
      *
      * @param $message
      *
