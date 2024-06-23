@@ -57,14 +57,6 @@
 
                     <div class="b3_settings-input b3_settings-input--select">
                         <input list="b3-registration-options" placeholder="<?php echo $selected_type; ?>" name="b3_registration_type" id="b3_registration_type" />
-                        <?php /*
-                        @TODO: remove
-                        <select name="b3_registration_type" id="b3_registration_type">
-                            <?php foreach( $options as $option ) { ?>
-                                <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php selected( $option[ 'value' ], $registration_type ); ?>> <?php echo $option[ 'label' ]; ?>
-                            <?php } ?>
-                        </select>
-                        */ ?>
                     </div>
                 <?php b3_get_close(); ?>
 
