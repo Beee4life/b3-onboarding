@@ -346,15 +346,12 @@
         if ( ! empty( $attributes ) ) {
             $messages          = [];
             $registration_type = get_option( 'b3_registration_type' );
-            $show_messages     = false;
 
             if ( isset( $attributes[ 'errors' ] ) && 0 < count( $attributes[ 'errors' ] ) ) {
-                $show_messages = true;
                 foreach( $attributes[ 'errors' ] as $error ) {
                     $messages[] = $error;
                 }
             } elseif ( isset( $attributes[ 'messages' ] ) && 0 < count( $attributes[ 'messages' ] ) ) {
-                $show_messages = true;
                 foreach( $attributes[ 'messages' ] as $message ) {
                     $messages[] = $message;
                 }
@@ -363,46 +360,41 @@
                     if ( 'login' === $attributes[ 'template' ] ) {
                         $login_form_message = apply_filters( 'b3_message_above_login', false );
                         if ( false != $login_form_message ) {
-                            $messages[]    = $login_form_message;
-                            $show_messages = true;
+                            $messages[] = $login_form_message;
                         }
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( strpos( $registration_type, 'request_access' ) !== false ) {
                             $request_access_message = b3_get_message_above_request_access();
                             if ( false != $request_access_message ) {
-                                $messages[]    = $request_access_message;
-                                $show_messages = true;
+                                $messages[] = $request_access_message;
                             }
                         } elseif ( 'email_activation' === $registration_type ) {
                             $registration_message = apply_filters( 'b3_message_above_registration', false );
                             if ( false != $registration_message ) {
-                                $messages[]    = $registration_message;
-                                $show_messages = true;
+                                $messages[] = $registration_message;
                             }
                         } else {
                             if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
                                 $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
                                 $registration_message = apply_filters( 'b3_message_above_registration', $message );
                                 if ( false != $registration_message ) {
-                                    $messages[]    = $registration_message;
-                                    $show_messages = true;
+                                    $messages[] = $registration_message;
                                 }
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        $messages[]    = esc_html__( b3_get_message_above_lost_password() );
-                        $show_messages = true;
+                        $messages[] = esc_html__( b3_get_message_above_lost_password() );
+
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
-                        $messages[]    = esc_html__( 'Enter your new password.', 'b3-onboarding' );
-                        $show_messages = true;
-                    } elseif ( 'getpass' === $attributes[ 'template' ] ) {
-                        $messages[]    = esc_html__( b3_get_message_above_getpass_form() );
-                        $show_messages = true;
+                        $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
+
+                    } elseif ( 'magiclink' === $attributes[ 'template' ] ) {
+                        $messages[] = esc_html__( b3_get_message_above_magiclink_form() );
                     }
                 }
             }
 
-            if ( true === $show_messages && ! empty( $messages ) ) {
+            if ( ! empty( $messages ) ) {
                 if ( isset( $attributes[ 'errors' ] ) && ! empty( $attributes[ 'errors' ] ) ) {
                     echo '<div class="b3_message b3_message--error">';
                 } else {
