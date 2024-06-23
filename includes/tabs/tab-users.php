@@ -12,26 +12,26 @@
      */
     function b3_render_users_tab() {
         $activate_welcome_page      = get_option( 'b3_activate_welcome_page' );
+        $disallowed_domains         = false;
+        $disallowed_domains_array   = get_option( 'b3_disallowed_domains', [] );
+        $disallowed_usernames       = false;
+        $disallowed_usernames_array = get_option( 'b3_disallowed_usernames', [] );
+        $domain_restrictions        = get_option( 'b3_set_domain_restrictions' );
+        $front_end_approval         = get_option( 'b3_front_end_approval' );
+        $front_end_approval_page    = get_option( 'b3_approval_page_id' );
+        $hide_admin_bar             = get_option( 'b3_hide_admin_bar' );
+        $roles                      = get_editable_roles();
+        $user_may_delete            = get_option( 'b3_user_may_delete' );
+        $restrict_admin             = get_option( 'b3_restrict_admin' );
+        $registration_type          = get_option( 'b3_registration_type' );
+        asort( $roles );
 
-        $disallowed_domains           = false;
-        $disallowed_domains_array     = get_option( 'b3_disallowed_domains' );
         if ( is_array( $disallowed_domains_array ) && ! empty( $disallowed_domains_array ) ) {
             $disallowed_domains = implode( ' ', $disallowed_domains_array );
         }
-        $disallowed_usernames         = false;
-        $disallowed_usernames_array   = get_option( 'b3_disallowed_usernames' );
         if ( is_array( $disallowed_usernames_array ) && ! empty( $disallowed_usernames_array ) ) {
             $disallowed_usernames = implode( ' ', $disallowed_usernames_array );
         }
-        $domain_restrictions     = get_option( 'b3_set_domain_restrictions' );
-        $front_end_approval      = get_option( 'b3_front_end_approval' );
-        $front_end_approval_page = get_option( 'b3_approval_page_id' );
-        $hide_admin_bar          = get_option( 'b3_hide_admin_bar' );
-        $roles                   = get_editable_roles();
-        $user_may_delete         = get_option( 'b3_user_may_delete' );
-        $restrict_admin          = get_option( 'b3_restrict_admin' );
-        $registration_type       = get_option( 'b3_registration_type' );
-        asort( $roles );
 
         ob_start();
         echo sprintf( '<h2>%s</h2>', esc_html__( 'Users', 'b3-onboarding' ) );
