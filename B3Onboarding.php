@@ -350,9 +350,10 @@
                  * Includes dashboard widget function + call
                  */
                 if ( is_main_site() ) {
-                    include 'admin/dashboard-widget.php';
+                    include 'admin/dashboard-widget-users.php';
+
                     if ( is_localhost() || apply_filters( 'b3_show_email_widget', false ) ) {
-                        include 'admin/dashboard-widget-debug.php';
+                        include 'admin/dashboard-widget-emails.php';
                     }
                 }
             }
