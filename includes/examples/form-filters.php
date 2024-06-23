@@ -264,7 +264,7 @@
 
 
     /**
-     * Filter a custom email address for localhost development
+     * Filter a custom username for localhost development
      *
      * @since 2.0.0
      *
@@ -291,6 +291,36 @@
         return 'filter@email.com';
     }
     add_filter( 'b3_localhost_email', 'b3_localhost_email_example' );
+
+
+    /**
+     * Filter a custom subdomain for localhost development (Multisite)
+     *
+     * @since 2.0.0
+     *
+     * @param $subdomain
+     *
+     * @return string
+     */
+    function b3_localhost_subdomain_example( $subdomain ) {
+        return 'subdomain';
+    }
+    add_filter( 'b3_localhost_subdomain', 'b3_localhost_subdomain_example' );
+
+
+    /**
+     * Filter a custom blog title for localhost development (Multisite))
+     *
+     * @since 2.0.0
+     *
+     * @param $email
+     *
+     * @return string
+     */
+    function b3_localhost_blogtitle_example( $email ) {
+        return 'Dummy Title';
+    }
+    add_filter( 'b3_localhost_blogtitle', 'b3_localhost_blogtitle_example' );
 
 
     /**
