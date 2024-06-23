@@ -195,15 +195,11 @@
                 
                 if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
+                        // @TODO: look into this
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
                             if ( isset( $_REQUEST[ 'code' ] ) ) {
                                 // enter code
                             } else {
-                                if ( isset( $_POST[ 'email' ] ) ) {
-                                    // access after form
-                                } else {
-                                    // direct access
-                                }
                                 $error_codes = explode( ',', $_REQUEST[ 'login' ] );
                             }
                         } else {
@@ -254,7 +250,7 @@
                     $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
                     $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
                     $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
-                    $attributes[ 'template' ]     = 'getpass';
+                    $attributes[ 'template' ]     = 'magiclink';
                 }
                 
                 $attributes[ 'errors' ] = $errors;
@@ -306,7 +302,7 @@
                     $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
                     $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
                     $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
-                    $attributes[ 'template' ]     = 'getpass';
+                    $attributes[ 'template' ]     = 'magiclink';
                 }
                 
                 $attributes = apply_filters( 'b3_attributes', $attributes );
