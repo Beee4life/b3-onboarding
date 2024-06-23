@@ -335,8 +335,9 @@ ul.b3_form-links li:last-child {
 /* Media queries */
 @media screen and ( min-width: 480px ) {
   .b3_form-element {
-    display:   flex;
-    flex-flow: row nowrap;
+    display:     flex;
+    flex-flow:   row nowrap;
+    align-items: center;
   }
 
   .b3_form-element label {
@@ -390,7 +391,6 @@ ul.b3_form-links li:last-child {
 }
 
 @media screen and ( min-width: 1024px ) {
-
   .b3_site-domain {
     display:    inline-block;
     margin-top: 0;
