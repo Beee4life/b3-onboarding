@@ -559,7 +559,7 @@ ul.b3_integrations--list {
   }
 }
 
-input[type="checkbox"] {
+.b3_settings-field input[type="checkbox"] {
   appearance:     none;
   position:       relative;
   display:        inline-block;
@@ -571,7 +571,7 @@ input[type="checkbox"] {
   transition:     0.25s linear background;
 }
 
-input[type="checkbox"]::before {
+.b3_settings-field input[type="checkbox"]::before {
   content:       "";
   display:       block;
   width:         10px;
@@ -586,11 +586,11 @@ input[type="checkbox"]::before {
   transform:     translateX(0);
 }
 
-input[type="checkbox"]:checked {
+.b3_settings-field input[type="checkbox"]:checked {
   background: lightgreen;
 }
 
-input[type="checkbox"]:checked::before {
+.b3_settings-field input[type="checkbox"]:checked::before {
   content:   "";
   width:     10px;
   height:    10px;
@@ -599,18 +599,18 @@ input[type="checkbox"]:checked::before {
 }
 
 /* small margin hack for certain fields */
-input#b3_activate_custom_passwords:checked::before,
-input#b3_restrict_usernames:checked::before,
-input#b3_activate_filter_validation:checked::before,
-input#b3_privacy:checked::before {
+.b3_settings-field input#b3_activate_custom_passwords:checked::before,
+.b3_settings-field input#b3_restrict_usernames:checked::before,
+.b3_settings-field input#b3_activate_filter_validation:checked::before,
+.b3_settings-field input#b3_privacy:checked::before {
   /*top: 0.35rem;*/
 }
 
-input[type="checkbox"]:focus {
+.b3_settings-field input[type="checkbox"]:focus {
   outline: none;
 }
 
-input[type="checkbox"]:focus-visible {
+.b3_settings-field input[type="checkbox"]:focus-visible {
   outline:        2px solid transparent;
   outline-offset: 2px;
 }
