@@ -49,7 +49,6 @@
                 $default_attributes = [
                     'button_modifier'   => 'register',
                     'button_value'      => $button_value,
-                    'one_time_password' => false,
                     'template'          => 'register',
                     'title'             => false,
                 ];
@@ -136,10 +135,6 @@
                         }
                     }
 
-                    if ( 1 == get_option( 'b3_use_magic_link' ) && 'register' === $attributes[ 'template' ] ) {
-                        $attributes[ 'one_time_password' ] = true;
-                    }
-
                     if ( 1 == get_option( 'b3_activate_recaptcha' ) && 'register' === $attributes[ 'template' ] ) {
                         $recaptcha_public  = get_option( 'b3_recaptcha_public' );
                         $recaptcha_version = get_option( 'b3_recaptcha_version' );
@@ -176,10 +171,9 @@
                 $errors             = [];
                 $error_codes        = [];
                 $default_attributes = [
-                    'button_value'      => esc_attr__( 'Log in', 'b3-onboarding' ),
-                    'one_time_password' => false,
-                    'template'          => 'login',
-                    'title'             => false,
+                    'button_value' => esc_attr__( 'Log in', 'b3-onboarding' ),
+                    'template'     => 'login',
+                    'title'        => false,
                 ];
                 $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
                 
@@ -187,7 +181,6 @@
                 // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
                 $attributes[ 'redirect' ]          = false;
-                $attributes[ 'one_time_password' ] = get_option( 'b3_use_magic_link' );
 
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
