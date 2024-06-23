@@ -482,6 +482,12 @@ ul.b3_integrations--list {
   width:   100%;
 }
 
+.b3_settings-field input#b3_registration_type {
+  width:     100%;
+  max-width: 50%;
+  padding:   5px;
+}
+
 .b3_settings-field input[type="checkbox"] {
   appearance:     none;
   position:       relative;
