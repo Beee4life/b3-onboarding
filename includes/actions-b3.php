@@ -395,6 +395,9 @@
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[]    = esc_html__( 'Enter your new password.', 'b3-onboarding' );
                         $show_messages = true;
+                    } elseif ( 'getpass' === $attributes[ 'template' ] ) {
+                        $messages[]    = esc_html__( b3_get_message_above_getpass_form() );
+                        $show_messages = true;
                     }
                 }
             }
