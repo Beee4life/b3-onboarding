@@ -58,6 +58,7 @@
         $signup_info->meta      = serialize( $meta_data );
 
         // set site to public and remove deleted status
+        // @TODO: use $wpdb->prepare
         $wpdb->update(
             $wpdb->prefix . 'signups', [ 'meta' => $signup_info->meta ], [ 'signup_id' => $signup_info->signup_id ], [ '%s' ] );
         
