@@ -559,3 +559,58 @@ ul.b3_integrations--list {
   }
 }
 
+input[type="checkbox"] {
+  appearance:     none;
+  position:       relative;
+  display:        inline-block;
+  height:         16px;
+  width:          30px;
+  vertical-align: middle;
+  border-radius:  2rem;
+  box-shadow:     0 1px 3px #0003 inset;
+  transition:     0.25s linear background;
+}
+
+input[type="checkbox"]::before {
+  content:       "";
+  display:       block;
+  width:         10px;
+  height:        10px;
+  background:    #3c434a;
+  border-radius: 1.2rem;
+  position:      absolute;
+  top:           2px;
+  left:          0.2rem;
+  box-shadow:    0 1px 3px #0003 inset;
+  transition:    0.25s linear transform;
+  transform:     translateX(0);
+}
+
+input[type="checkbox"]:checked {
+  background: lightgreen;
+}
+
+input[type="checkbox"]:checked::before {
+  content:   "";
+  width:     10px;
+  height:    10px;
+  top:       0.3rem;
+  transform: translateX(16px);
+}
+
+/* small margin hack for certain fields */
+input#b3_activate_custom_passwords:checked::before,
+input#b3_restrict_usernames:checked::before,
+input#b3_activate_filter_validation:checked::before,
+input#b3_privacy:checked::before {
+  top: 0.35rem;
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+}
+
+input[type="checkbox"]:focus-visible {
+  outline:        2px solid transparent;
+  outline-offset: 2px;
+}
