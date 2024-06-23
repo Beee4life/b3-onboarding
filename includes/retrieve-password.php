@@ -14,13 +14,12 @@
 
         if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
             $errors->add( 'empty_username', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'Enter a username or email address', 'b3-onboarding' ) ) );
-        } elseif ( strpos( $_POST['user_login'], '@' ) ) {
-            $user_data = get_user_by( 'email', trim( wp_unslash( $_POST['user_login'] ) ) );
-            if ( empty( $user_data ) ) {
-                $errors->add( 'invalid_email', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'There is no account with that username or email address', 'b3-onboarding' ) ) );
-            }
+        
+        } elseif ( strpos( $_POST[ 'user_login' ], '@' ) ) {
+            $user_data = get_user_by( 'email', trim( wp_unslash( $_POST[ 'user_login' ] ) ) );
+        
         } else {
-            $login     = trim( wp_unslash( $_POST['user_login'] ) );
+            $login     = trim( wp_unslash( $_POST[ 'user_login' ] ) );
             $user_data = get_user_by( 'login', $login );
         }
 
@@ -42,7 +41,7 @@
         }
 
         if ( ! $user_data ) {
-            $errors->add( 'invalidcombo', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'There is no account with that username or email address', 'b3-onboarding' ) ) );
+            $errors->add( 'lost_password_sent', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'There is no account with that username or email address', 'b3-onboarding' ) ) );
             return $errors;
         }
 
