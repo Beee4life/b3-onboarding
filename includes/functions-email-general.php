@@ -106,8 +106,6 @@
      *
      * @since 1.0.0
      *
-     * @param $blogname
-     *
      * @return mixed|string
      */
     function b3_get_email_activation_subject_user() {
@@ -125,9 +123,6 @@
      * Return email activation message (user)
      *
      * @since 1.0.0
-     *
-     * @param $blogname
-     * @param $user
      *
      * @return mixed|string
      */
@@ -147,8 +142,6 @@
      *
      * @since 1.0.0
      *
-     * @param $blogname
-     *
      * @return mixed|string
      */
     function b3_get_welcome_user_subject() {
@@ -166,9 +159,6 @@
      * Return welcome user message (user)
      *
      * @since 1.0.0
-     *
-     * @param $blogname
-     * @param $user
      *
      * @return mixed|string
      */
@@ -401,8 +391,6 @@
      *
      * @since 1.0.0
      *
-     * @param $blogname
-     *
      * @return mixed|string
      */
     function b3_get_new_user_subject() {
@@ -420,9 +408,6 @@
      * Return new user message (admin)
      *
      * @since 1.0.0
-     *
-     * @param $blogname
-     * @param $user
      *
      * @return mixed|string
      */
@@ -534,7 +519,8 @@
      *
      * @since 3.11.0
      *
-     * @param false $code
+     * @param false $password
+     * @param false $slug
      *
      * @return string
      */
