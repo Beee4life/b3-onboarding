@@ -521,14 +521,6 @@ ul.b3_integrations--list {
   transform: translateX(16px);
 }
 
-/* small margin hack for certain fields */
-.b3_settings-field input#b3_activate_custom_passwords:checked::before,
-.b3_settings-field input#b3_restrict_usernames:checked::before,
-.b3_settings-field input#b3_activate_filter_validation:checked::before,
-.b3_settings-field input#b3_privacy:checked::before {
-  /*top: 0.35rem;*/
-}
-
 .b3_settings-field input[type="checkbox"]:focus {
   outline: none;
 }
