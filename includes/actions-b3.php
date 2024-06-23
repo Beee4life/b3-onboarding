@@ -164,12 +164,12 @@
                 <?php
                 }
             } else {
-                if ( false == get_option( 'b3_register_email_only' ) ) {
-                    do_action( 'b3_render_form_element', 'register/user-login' );
-                } else { ?>
+                if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_use_magic_link' ) ) { ?>
                     <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
-                <?php }
-                    do_action( 'b3_render_form_element', 'register/user-email' );
+                <?php } else {
+                    do_action( 'b3_render_form_element', 'register/user-login' );
+                }
+                do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
             echo $output;
