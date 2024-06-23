@@ -282,18 +282,15 @@
     
                 foreach( $items as $key => $menu_values ) {
                     if ( ! is_user_logged_in() && in_array( $menu_values->object_id, [
-                            $logout_page,
                             $account_page,
+                            $logout_page,
+                            $reset_password_page,
                         ] ) ) {
                         unset( $items[ $key ] );
                     } elseif ( is_user_logged_in() && in_array( $menu_values->object_id, [
                             $login_page,
-                            $register_page,
                             $lost_password_page,
-                            $reset_password_page,
-                        ] ) ) {
-                        unset( $items[ $key ] );
-                    } elseif ( in_array( $menu_values->object_id, [
+                            $register_page,
                             $reset_password_page,
                         ] ) ) {
                         unset( $items[ $key ] );
