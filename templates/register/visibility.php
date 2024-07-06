@@ -2,7 +2,6 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    // @TODO (!): add languages option
 ?>
 <div class="b3_form-element b3_form-element--visbility">
     <div class="privacy-intro">

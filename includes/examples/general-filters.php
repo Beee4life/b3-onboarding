@@ -51,18 +51,10 @@
      * @return array|string[][]
      */
     function b3_widget_links_example( $links ) {
-        $new_links = [
-            [
-                'link' => 'https://your-link.com',
-                'label' => 'Your Label',
-            ],
+        $links[] = [
+            'link' => 'https://your-link.com',
+            'label' => 'Your Label',
         ];
-
-        if ( is_array( $links ) && ! empty( $links ) ) {
-            $links = array_merge( $links, $new_links );
-        } else {
-            $links = $new_links;
-        }
 
         return $links;
 
