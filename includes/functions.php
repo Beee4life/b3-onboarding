@@ -69,7 +69,7 @@
         if ( is_main_site() ) {
             if ( is_multisite() ) {
                 if ( in_array( $registration_type, [ 'user' ] ) ) {
-                    // @TODO: test this
+                    // @TODO (!): test this
                     // $email_boxes[] = array(
                     //     'id'    => 'email_activation',
                     //     'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
