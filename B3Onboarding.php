@@ -1080,9 +1080,12 @@
                     case 'wpmu_email_in_use':
                         return esc_html__( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.', 'b3-onboarding' );
 
-                    // Account remove
+                    // Account
                     case 'account_remove':
                         return esc_html__( 'Your account has been deleted.', 'b3-onboarding' );
+
+                    case 'profile_saved':
+                        return esc_html__( 'Profile saved', 'b3-onboarding' );
 
                     // Admin
                     case 'settings_saved': // same message
