@@ -190,8 +190,10 @@
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         // @TODO: look into this
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
+                            error_log('class-b3-shortcodes.php line 193');
                             if ( isset( $_REQUEST[ 'code' ] ) ) {
                                 // enter code
+                                error_log('class-b3-shortcodes.php line 196');
                             } else {
                                 $error_codes = explode( ',', $_REQUEST[ 'login' ] );
                             }
@@ -379,6 +381,8 @@
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                     } elseif ( isset( $_REQUEST[ 'message' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'message' ] );
+                    } elseif ( isset( $_REQUEST[ 'updated' ] ) ) {
+                        $error_codes = [ 'profile_saved' ];
                     }
                     if ( isset( $error_codes ) ) {
                         foreach( $error_codes as $code ) {
