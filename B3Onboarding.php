@@ -506,14 +506,14 @@
              */
             public function b3_registration_form_handling() {
 				if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    if ( isset( $_POST[ 'b3_register_user' ] ) ) {
+                    if ( isset( $_POST[ 'b3_register_user_nonce' ] ) ) {
                         $redirect_url = b3_get_register_url();
-                        if ( ! wp_verify_nonce( $_POST[ 'b3_register_user' ], 'b3-register-user' ) ) {
+                        if ( ! wp_verify_nonce( $_POST[ 'b3_register_user_nonce' ], 'b3-register-user-nonce' ) ) {
                             $redirect_url = add_query_arg( 'registration-error', 'unknown', $redirect_url );
                             wp_safe_redirect( $redirect_url );
                             exit;
-                        } else {
 
+                        } else {
                             $meta_data         = [];
 							$registration_type = get_option( 'b3_registration_type' );
                             $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( $_POST[ 'user_email' ] ) : false;
@@ -639,13 +639,16 @@
                                                 } elseif ( __( 'That username is currently reserved but may be available in a couple of days.' ) === $error_message_user_name ) {
                                                     $error_codes[] = 'wpmu_user_reserved';
                                                 }
-                                            } elseif ( ! empty( $error_message_user_email ) ) {
+                                            }
+                                            if ( ! empty( $error_message_user_email ) ) {
                                                 if ( __( 'Sorry, that email address is already used!' ) === $error_message_user_email ) {
                                                     $error_codes[] = 'email_exists';
                                                 } elseif ( __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' ) === $error_message_user_email ) {
                                                     $error_codes[] = 'wpmu_email_in_use';
                                                 }
-                                            } else {
+                                            }
+                                            if ( empty( $error_message_user_name ) && empty( $error_message_user_email ) ) {
+                                                // unknown error
                                                 $redirect_url = add_query_arg( 'registration-error', 'unknown', $redirect_url );
                                                 wp_safe_redirect( $redirect_url );
                                                 exit;
@@ -659,7 +662,6 @@
                                         wp_safe_redirect( $redirect_url );
                                         exit;
                                     } else {
-
                                         if ( 'user' === $signup_for ) {
                                             $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, false, false, $meta_data );
                                             if ( true == $result ) {
@@ -691,7 +693,6 @@
                                             $user->user_login = $user_login;
                                         }
 
-
                                         $blog_info   = wpmu_validate_blog_signup( sanitize_text_field( $_POST[ 'blogname' ] ), sanitize_title( $_POST[ 'blog_title' ] ), $user );
                                         $domain      = $blog_info[ 'domain' ];
                                         $path        = $blog_info[ 'path' ];
@@ -719,12 +720,13 @@
                                                 }
                                             }
 
-                                            $errors       = join( ',', $error_codes );
-                                            $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
+                                            if ( ! empty( $error_codes ) ) {
+                                                $errors       = join( ',', $error_codes );
+                                                $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
+                                            }
                                         }
 
                                         if ( empty( $error_codes ) ) {
-                                            // no errors
                                             $result = $this->b3_register_wpmu_user( $user_login, $user_email, $domain, $blog_title, $path, $meta_data );
                                             if ( is_wp_error( $result ) ) {
                                                 $errors       = join( ',', $result->get_error_codes() );
