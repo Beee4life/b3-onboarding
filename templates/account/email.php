@@ -23,7 +23,7 @@
 								esc_html__( 'There is a pending change of your email, which is sent to %s.', 'b3-onboarding' ),
 								'<code>' . esc_html( $new_email['newemail'] ) . '</code>'
 							);
-                            // @TODO: change to front-end url
+                            // @TODO (!): change to front-end url
 							printf(
 								' <a href="%1$s">%2$s</a>',
 								esc_url( wp_nonce_url( self_admin_url( 'profile.php?dismiss=' . $current_user->ID . '_new_email' ), 'dismiss-' . $current_user->ID . '_new_email' ) ),
