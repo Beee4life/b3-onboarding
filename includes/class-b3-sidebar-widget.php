@@ -126,9 +126,11 @@
                         echo $args[ 'after_title' ];
                     }
                     
+                    echo '<ul>';
                     foreach( $widget_links as $link ) {
                         echo sprintf( '<li>%s</li>', $link );
                     }
+                    echo '</ul>';
                     
                     echo $args[ 'after_widget' ];
                 }
