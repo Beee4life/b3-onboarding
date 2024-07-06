@@ -105,7 +105,9 @@
                 
                 if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
                     foreach( $custom_links as $link ) {
-                        $widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $link[ 'link' ] ), $link[ 'label' ] );
+                        if ( isset( $link[ 'link' ] ) && isset( $link[ 'label' ] ) ) {
+                            $widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $link[ 'link' ] ), $link[ 'label' ] );
+                        }
                     }
                 }
 
