@@ -1054,6 +1054,7 @@
         }
         
         $blog_id    = ( isset( $vars[ 'site' ]->blog_id ) ) ? $vars[ 'site' ]->blog_id : get_current_blog_id();
+        $blog_id    = ( isset( $vars[ 'blog_id' ] ) ) ? $vars[ 'blog_id' ] : $blog_id;
         $user_login = false;
 
         if ( '1' == get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) {
@@ -1079,10 +1080,10 @@
             restore_current_blog();
         }
         
-        // @TODO: merge $replacements
+        // @TODO: maybe merge $replacements (all allowed everywhere)
         switch( $type ) {
             case 'message':
-                $replacements = [
+                $add_replacements = [
                     '%account_page%' => esc_url( b3_get_account_url() ),
                     '%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ),
                     '%home_url%'     => get_home_url( $blog_id, '/' ),
@@ -1093,17 +1094,19 @@
                     '%user_ip%'      => b3_get_user_ip(),
                     '%user_login%'   => $user_login,
                 ];
+                $replacements = array_merge( $replacements, $add_replacements );
                 if ( isset( $local_registration_date ) ) {
                     $replacements[ '%registration_date%' ] = $local_registration_date;
                 }
                 break;
             case 'subject':
-                $replacements = [
+                $add_replacements = [
                     '%blog_name%'    => ( is_multisite() ) ? get_blog_option( $blog_id, 'blogname' ) : get_option( 'blogname' ),
                     '%network_name%' => get_site_option( 'site_name' ),
                     '%user_login%'   => $user_login,
                     '%first_name%'   => ( false != $user_data ) ? $user_data->first_name : false,
                 ];
+                $replacements = array_merge( $replacements, $add_replacements );
                 break;
             default:
                 $replacements = [];
