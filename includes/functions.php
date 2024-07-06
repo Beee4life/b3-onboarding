@@ -68,16 +68,8 @@
         }
         if ( is_main_site() ) {
             if ( is_multisite() ) {
+                error_log($registration_type);
                 if ( in_array( $registration_type, [ 'user' ] ) ) {
-                    // @TODO (!): test this
-                    // $email_boxes[] = array(
-                    //     'id'    => 'email_activation',
-                    //     'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
-                    // );
-                    // $email_boxes[] = array(
-                    //     'id'    => 'account_activated',
-                    //     'title' => esc_html__( 'Account activated (user)', 'b3-onboarding' ),
-                    // );
                     $email_boxes[] = [
                         'id'    => 'confirm_user_email',
                         'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
