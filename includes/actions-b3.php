@@ -11,10 +11,11 @@
      */
     function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
 
-        if ( is_multisite() ) {
-            // get activation key
-            error_log('@TODO (!): b3_do_stuff_after_new_user_approved_by_admin');
-        } else {
+        /*
+         * This action is called within single site only, but just to prevent inadvertent 'calling', it's enclosed
+         * in '! is_multisite()'
+         */
+        if ( ! is_multisite() ) {
             $custom_passwords  = get_option( 'b3_activate_custom_passwords' );
             $user_object       = get_userdata( $user_id );
             $user_login        = $user_object->user_login;
