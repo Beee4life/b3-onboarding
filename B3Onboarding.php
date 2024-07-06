@@ -122,7 +122,7 @@
                 b3_setup_initial_pages();
                 b3_set_default_settings();
 
-                // @TODO: check if this is needed on MS
+                // @TODO (!): check if this is needed on MS
                 if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
