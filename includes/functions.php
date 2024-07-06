@@ -68,7 +68,6 @@
         }
         if ( is_main_site() ) {
             if ( is_multisite() ) {
-                error_log($registration_type);
                 if ( in_array( $registration_type, [ 'user' ] ) ) {
                     $email_boxes[] = [
                         'id'    => 'confirm_user_email',
