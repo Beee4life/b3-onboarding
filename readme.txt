@@ -31,6 +31,7 @@ There are a ton of things, which you can set through the admin pages or with the
 * added magic link login option (single site only, for now)
 * locate template from function
 * remove border width on submit button
+* added a bunch of new filters
 
 3.10.0
 * filter out nav menu items

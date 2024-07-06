@@ -159,6 +159,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * * b3_disallowed_domains()
 * * b3_show_email_widget()
 * * b3_message_above_magiclink()
+* * b3_email_intro()
 
 3.10.0 - 02.10.23
 * filter out nav menu items
