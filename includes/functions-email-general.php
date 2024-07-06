@@ -179,7 +179,7 @@
      * @return string
      */
     function b3_get_new_site_created_message() {
-        // @TODO: add user input option
+        // @TODO: maybe add user input option
         $message = b3_default_message_new_site_created();
 
         return apply_filters( 'b3_new_site_created_message', $message );
@@ -510,8 +510,7 @@
             $message = $welcome . ' %user_login%' . ',' . "\n";
         }
         
-        // @TODO: add filter
-        return $message;
+        return apply_filters( 'b3_email_intro', $message );
     }
 
     /**
