@@ -150,17 +150,22 @@
      */
     function b3_after_signup_user( $user_login, $user_email, $key, $meta = [] ) {
         if ( ! is_admin() ) {
-            $needs_admin_approval = get_option( 'b3_needs_admin_approval' );
-            
-            if ( $needs_admin_approval ) {
-                $subject = b3_default_request_access_subject_user();
-                $message = b3_default_request_access_message_user();
+            $current_network = get_network();
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );
+                $message = sprintf( b3_default_request_access_message_user(), $current_network->site_name );
                 do_action( 'b3_inform_admin', 'request_access' );
                 
+                global $wpdb;
+                $meta[ 'pending' ] = '1';
+                $table             = $wpdb->signups;
+                $data[ 'meta' ]    = serialize( $meta );
+                $where             = [ 'user_login' => $user_login ];
+                $wpdb->update( $table, $data, $where );
+                
             } else {
-                $current_network = get_network();
-                $subject         = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
-                $message         = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
+                $subject = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
+                $message = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
             }
             
             $message = b3_replace_template_styling( $message );
