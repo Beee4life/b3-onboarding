@@ -83,9 +83,8 @@
                                     <?php esc_html_e( 'An administrator must approve each registration.', 'b3-onboarding' ); ?>
                                 </div>
                         <?php b3_get_close(); ?>
-                    <?php } ?>
-
-                    <?php if ( ! is_multisite() ) { ?>
+                    
+                    <?php } elseif ( ! is_multisite() ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_register_email_only"><?php esc_html_e( 'Email address only', 'b3-onboarding' ); ?></label>
