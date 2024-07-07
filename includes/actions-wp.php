@@ -80,28 +80,24 @@
             $approval_users = [];
             $registration_type = get_option( 'b3_registration_type' );
             
-            if ( get_option( 'b3_needs_admin_approval' ) ) {
-                if ( 'request_access' === $registration_type ) {
-                    $approval_args  = [ 'role' => 'b3_approval' ];
-                    $approval_users = get_users( $approval_args );
-                } elseif ( 'request_access_subdomain' === $registration_type || is_multisite() ) {
-                    global $wpdb;
-                    $query          = "SELECT * FROM $wpdb->signups WHERE active = '0'";
-                    $approval_users = $wpdb->get_results( $query );
-                } else {
-                    error_log( 'Catch else actions-wp.php : 98' );
-                }
-                
-                if ( 0 < count( $approval_users ) ) {
-                    $page_link     = admin_url( 'admin.php?page=b3-user-approval' );
-                    $approval_args = [
-                        'id'    => 'approval',
-                        'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
-                        'href'  => $page_link,
-                        'meta'  => [ 'class' => 'topbar_approve_user' ],
-                    ];
-                    $wp_admin_bar->add_node( $approval_args );
-                }
+            if ( 'request_access' === $registration_type ) {
+                $approval_args  = [ 'role' => 'b3_approval' ];
+                $approval_users = get_users( $approval_args );
+            } elseif ( is_multisite() && get_option( 'b3_needs_admin_approval' ) ) {
+                global $wpdb;
+                $query          = "SELECT * FROM $wpdb->signups WHERE active = '0'";
+                $approval_users = $wpdb->get_results( $query );
+            }
+            
+            if ( 0 < count( $approval_users ) ) {
+                $page_link     = admin_url( 'admin.php?page=b3-user-approval' );
+                $approval_args = [
+                    'id'    => 'approval',
+                    'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
+                    'href'  => $page_link,
+                    'meta'  => [ 'class' => 'topbar_approve_user' ],
+                ];
+                $wp_admin_bar->add_node( $approval_args );
             }
         }
         if ( current_user_can( 'manage_options' ) ) {
