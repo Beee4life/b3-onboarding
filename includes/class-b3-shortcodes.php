@@ -420,9 +420,11 @@
                         'title'    => false,
                         'template' => 'user-management',
                     ];
-                    $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
                     
-                    $errors = [];
+                    $attributes           = shortcode_atts( $default_attributes, $shortcode_args );
+                    $errors               = [];
+                    $needs_admin_approval = get_option( 'b3_needs_admin_approval' );
+                    
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                         foreach ( $error_codes as $code ) {
