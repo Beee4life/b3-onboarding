@@ -150,13 +150,22 @@
      */
     function b3_after_signup_user( $user_login, $user_email, $key, $meta = [] ) {
         if ( ! is_admin() ) {
-            $current_network = get_network();
-            $subject         = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
-            $message         = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
-            $message         = b3_replace_template_styling( $message );
-            $message         = strtr( $message, b3_get_replacement_vars() );
-            $message         = htmlspecialchars_decode( stripslashes( $message ) );
-
+            $needs_admin_approval = get_option( 'b3_needs_admin_approval' );
+            
+            if ( $needs_admin_approval ) {
+                $subject = b3_default_request_access_subject_user();
+                $message = b3_default_request_access_message_user();
+                do_action( 'b3_inform_admin', 'request_access' );
+                
+            } else {
+                $current_network = get_network();
+                $subject         = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
+                $message         = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
+            }
+            
+            $message = b3_replace_template_styling( $message );
+            $message = strtr( $message, b3_get_replacement_vars() );
+            $message = htmlspecialchars_decode( stripslashes( $message ) );
             wp_mail( $user_email, $subject, $message, [] );
         }
     }
