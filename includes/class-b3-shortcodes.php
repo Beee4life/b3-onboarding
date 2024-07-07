@@ -75,33 +75,29 @@
 
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
                     // @TODO: Improve/DRY this
-                    if ( $admin_approval ) {
-                        error_log('@TODO: class-b3-shortcodes.php : 79');
+                    if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
+                        switch_to_blog( $_GET[ 'site_id' ] );
+                        $home_url  = home_url( '/' );
+                        $site_info = get_site( $_GET[ 'site_id' ] );
+                        $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
+                        restore_current_blog();
+
+                        $message = '<p class="b3_message b3_message--success">';
+                        $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
+                        $message .= '<br>';
+                        $message .= esc_html__( 'Visit it on', 'b3-onboarding' ) . ': ';
+                        $message .= sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), esc_url( $home_url ) );
+                        $message .= '<br>';
+                        $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                        $message .= '</p>';
+
                     } else {
-                        if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
-                            switch_to_blog( $_GET[ 'site_id' ] );
-                            $home_url  = home_url( '/' );
-                            $site_info = get_site( $_GET[ 'site_id' ] );
-                            $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
-                            restore_current_blog();
-    
-                            $message = '<p class="b3_message b3_message--success">';
-                            $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
-                            $message .= '<br>';
-                            $message .= esc_html__( 'Visit it on', 'b3-onboarding' ) . ': ';
-                            $message .= sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), esc_url( $home_url ) );
-                            $message .= '<br>';
-                            $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                            $message .= '</p>';
-    
-                        } else {
-                            $message = '<p class="b3_message b3_message--success">';
-                            $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
-                            $message .= '</p>';
-                        }
-    
-                        return $message;
+                        $message = '<p class="b3_message b3_message--success">';
+                        $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
+                        $message .= '</p>';
                     }
+
+                    return $message;
                 }
 
                 if ( 'none' === $registration_type && ! current_user_can( 'manage_network' ) ) {
