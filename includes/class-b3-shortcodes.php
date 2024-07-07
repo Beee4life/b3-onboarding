@@ -76,6 +76,7 @@
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
                     // @TODO: Improve/DRY this
                     if ( $admin_approval ) {
+                        error_log('@TODO: class-b3-shortcodes.php : 79');
                     } else {
                         if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
                             switch_to_blog( $_GET[ 'site_id' ] );
