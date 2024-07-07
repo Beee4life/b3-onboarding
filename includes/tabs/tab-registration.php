@@ -24,6 +24,7 @@
         $registration_type            = get_option( 'b3_registration_type' );
         $use_magic_link               = get_option( 'b3_use_magic_link' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
+        $needs_admin_approval         = get_option( 'b3_needs_admin_approval' );
 
         ob_start();
 
@@ -72,7 +73,17 @@
 
                 <?php } else { ?>
 
-                    <?php if ( ! is_multisite() ) { ?>
+                    <?php if ( is_multisite() ) { ?>
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_needs_admin_approval"><?php esc_html_e( 'Needs admin approval', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                                <div class="b3_settings-input b3_settings-input--checkbox">
+                                    <input type="checkbox" id="b3_needs_admin_approval" name="b3_needs_admin_approval" value="1" <?php checked($needs_admin_approval); ?>/>
+                                    <?php esc_html_e( 'An administrator must approve each registration.', 'b3-onboarding' ); ?>
+                                </div>
+                        <?php b3_get_close(); ?>
+                    <?php } else  { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_register_email_only"><?php esc_html_e( 'Email address only', 'b3-onboarding' ); ?></label>
