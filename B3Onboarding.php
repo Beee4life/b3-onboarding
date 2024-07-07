@@ -608,10 +608,6 @@
                                         $user_login = $user->user_login;
                                         $user_email = $user->user_email;
                                         $register   = true;
-                                    } elseif ( 'request_access_subdomain' === $registration_type ) {
-                                        $register   = true;
-                                        $user_email = ( isset( $_POST[ 'user_email' ] ) ) ? $_POST[ 'user_email' ] : false;
-                                        $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? $_POST[ 'user_name' ] : false;
                                     } elseif ( false != get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
                                         // Recaptcha check failed, display error
                                         $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
@@ -621,9 +617,10 @@
                                 }
 
                                 if ( true == $register ) {
-                                    $signup_for = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
-                                    $user_valid = wpmu_validate_user_signup( $user_login, $user_email );
-                                    $errors     = $user_valid[ 'errors' ];
+                                    $signup_for     = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
+                                    $user_valid     = wpmu_validate_user_signup( $user_login, $user_email );
+                                    $errors         = $user_valid[ 'errors' ];
+                                    $admin_approval = get_option( 'b3_needs_admin_approval' );
 
                                     if ( $errors->has_errors() ) {
                                         if ( 'blog' != $registration_type ) {
@@ -666,7 +663,7 @@
                                             if ( true == $result ) {
                                                 // Success, redirect to login page.
                                                 $redirect_url = b3_get_login_url();
-                                                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                                                if ( $admin_approval ) {
                                                     $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
                                                 } else {
                                                     $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
@@ -684,9 +681,9 @@
                                         $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? $_POST[ 'blog_public' ] : 1;
                                         $user                   = '';
 
-                                        if ( 'request_access_subdomain' === $registration_type ) {
-                                            $meta_data[ 'deleted' ] = 0;
-                                            $meta_data[ 'public' ]  = 0;
+                                        if ( $admin_approval || 'request_access_subdomain' === $registration_type ) {
+                                            $meta_data[ 'active' ] = 0;
+                                            $meta_data[ 'public' ] = 0;
                                         }
 
                                         if ( is_user_logged_in() ) {
@@ -735,12 +732,12 @@
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                             } else {
-                                                if ( 'blog' === $registration_type ) {
+                                                if ( $admin_approval || 'request_access_subdomain' === $registration_type ) {
+                                                    $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
+                                                } elseif ( 'blog' === $registration_type ) {
                                                     // Success, redirect to message.
                                                     $redirect_url = add_query_arg( 'registered', 'new_blog', $redirect_url );
                                                     $redirect_url = add_query_arg( 'site_id', $result, $redirect_url );
-                                                } elseif ( 'request_access_subdomain' === $registration_type ) {
-                                                    $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
                                                 } elseif ( true == $result ) {
                                                     // Success, redirect to login page.
                                                     $redirect_url = b3_get_login_url();
@@ -1240,7 +1237,7 @@
              * @return bool|WP_Error
              */
             private function b3_register_wpmu_user( $user_name, $user_email, $domain, $blog_title, $path, $meta = [] ) {
-				$b3_register_type = get_option( 'b3_registration_type' );
+                $b3_register_type = get_option( 'b3_registration_type' );
 
                 if ( is_main_site() ) {
                     if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all', 'site' ] )) {

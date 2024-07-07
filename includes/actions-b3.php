@@ -10,7 +10,6 @@
      * @return void
      */
     function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
-
         /*
          * This action is called within single site only, but just to prevent inadvertent 'calling', it's enclosed
          * in '! is_multisite()'
@@ -53,15 +52,20 @@
     function b3_approve_new_wpmu_signup( $signup_info = [] ) {
         // update row
         global $wpdb;
-        $meta_data              = unserialize( $signup_info->meta );
-        $meta_data[ 'public' ]  = 1;
-        $meta_data[ 'deleted' ] = 0;
-        $signup_info->meta      = serialize( $meta_data );
+        $meta_data = unserialize( $signup_info->meta );
 
-        // set site to public and remove deleted status
-        $table = $wpdb->prefix . 'signups';
-        $data  = [ 'meta' => $signup_info->meta ];
-        $where = [ 'signup_id' => $signup_info->signup_id ];
+        if ( isset( $meta_data[ 'pending' ] ) ) {
+            unset( $meta_data[ 'pending' ] );
+        }
+
+        // activate site, set to public and remove deleted status
+        $meta_data[ 'active' ]  = 1;
+        $meta_data[ 'public' ]  = 1;
+        // $meta_data[ 'deleted' ] = 0;
+        $signup_info->meta      = serialize( $meta_data );
+        $table                  = $wpdb->prefix . 'signups';
+        $data                   = [ 'meta' => $signup_info->meta ];
+        $where                  = [ 'signup_id' => $signup_info->signup_id ];
         $wpdb->update( $table, $data, $where, [ '%s' ] );
         
         wpmu_activate_signup( $signup_info->activation_key );

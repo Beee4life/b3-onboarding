@@ -165,10 +165,10 @@
                     'value' => 'site',
                     'label' => esc_html__( "Visitor may register user + site (must register site)", 'b3-onboarding' ),
                 ],
-                [
-                    'value' => 'request_access_subdomain',
-                    'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
-                ],
+                // [
+                //     'value' => 'request_access_subdomain',
+                //     'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
+                // ],
             ];
         }
         

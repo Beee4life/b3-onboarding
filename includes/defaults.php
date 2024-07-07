@@ -618,6 +618,7 @@
             $message .= 'Hi %user_login%' . ",\n";
             $message .= '<br><br>' . "\n";
         }
+        // @TODO: add optional magic link
         $message .= sprintf( esc_html__( 'Your new site has been successfully set up at %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', '%home_url%' ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";

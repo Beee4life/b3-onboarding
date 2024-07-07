@@ -37,7 +37,16 @@
              *
              */
             public function b3_render_register_form( $shortcode_args ) {
-                if ( in_array( $this->settings[ 'registration_type' ], [
+                $admin_approval    = get_option( 'b3_needs_admin_approval' );
+                $registration_type = $this->settings[ 'registration_type' ];
+                
+                if ( is_user_logged_in() && 'blog' != $registration_type ) {
+                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
+                }
+
+                if ( $admin_approval && 'user' == $registration_type ) {
+                    $button_value = esc_attr__( 'Request user', 'b3-onboarding' );
+                } elseif ( in_array( $registration_type, [
                     'request_access',
                     'request_access_subdomain',
                 ] ) ) {
@@ -54,47 +63,54 @@
                 ];
                 
                 $attributes                        = shortcode_atts( $default_attributes, $shortcode_args );
-                $attributes[ 'registration_type' ] = $this->settings[ 'registration_type' ];
+                $attributes[ 'registration_type' ] = $registration_type;
                 
-                if ( is_user_logged_in() && 'blog' != $this->settings[ 'registration_type' ] ) {
-                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
+                if ( $admin_approval && ! isset( $_GET[ 'registered' ] ) ) {
+                    if ( 'user' === $registration_type ) {
+                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user.', 'b3-onboarding' ) );
+                    } elseif ( 'all' === $registration_type ) {
+                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user or site.', 'b3-onboarding' ) );
+                    }
                 }
 
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
-                    if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
-                        switch_to_blog( $_GET[ 'site_id' ] );
-                        $home_url  = home_url( '/' );
-                        $site_info = get_site( $_GET[ 'site_id' ] );
-                        $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
-                        restore_current_blog();
-
-                        $message = '<p class="b3_message b3_message--success">';
-                        $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
-                        $message .= '<br>';
-                        $message .= esc_html__( 'Visit it on', 'b3-onboarding' ) . ': ';
-                        $message .= sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), esc_url( $home_url ) );
-                        $message .= '<br>';
-                        $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                        $message .= '</p>';
-
-                        return $message;
+                    // @TODO: Improve/DRY this
+                    if ( $admin_approval ) {
                     } else {
-                        $message = '<p class="b3_message b3_message--success">';
-                        $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
-                        $message .= '</p>';
-
+                        if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
+                            switch_to_blog( $_GET[ 'site_id' ] );
+                            $home_url  = home_url( '/' );
+                            $site_info = get_site( $_GET[ 'site_id' ] );
+                            $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
+                            restore_current_blog();
+    
+                            $message = '<p class="b3_message b3_message--success">';
+                            $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
+                            $message .= '<br>';
+                            $message .= esc_html__( 'Visit it on', 'b3-onboarding' ) . ': ';
+                            $message .= sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), esc_url( $home_url ) );
+                            $message .= '<br>';
+                            $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                            $message .= '</p>';
+    
+                        } else {
+                            $message = '<p class="b3_message b3_message--success">';
+                            $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
+                            $message .= '</p>';
+                        }
+    
                         return $message;
                     }
                 }
 
-                if ( 'none' === $this->settings[ 'registration_type' ] && ! current_user_can( 'manage_network' ) ) {
+                if ( 'none' === $registration_type && ! current_user_can( 'manage_network' ) ) {
                     ob_start();
                     echo sprintf( '<p class="b3_message">%s</p>', b3_get_registration_closed_message() );
                     do_action( 'b3_add_action_links', $attributes[ 'template' ] );
                     $rego_closed = ob_get_clean();
                     return $rego_closed;
 
-                } elseif ( 'blog' === $this->settings[ 'registration_type' ] && ! is_user_logged_in() ) {
+                } elseif ( 'blog' === $registration_type && ! is_user_logged_in() ) {
                     // logged in registration only
                     return sprintf( '<p class="b3_message">%s</p>', b3_get_logged_in_registration_only_message() );
 
@@ -186,6 +202,7 @@
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
                 
+                // @TODO: create function for this
                 if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         // @TODO: look into this
@@ -210,14 +227,14 @@
                     
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( is_multisite() ) {
-                        $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
-                    } else {
                         if ( 'access_requested' === $_REQUEST[ 'registered' ] ) {
                             // access_requested
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
-                        } elseif ( 'confirm_email' === $_REQUEST[ 'registered' ] ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
-                        } elseif ( 'dummy' === $_REQUEST[ 'registered' ] ) {
+                        } else {
+                            $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
+                        }
+                    } else {
+                        if ( in_array( $_REQUEST[ 'registered' ], [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         } elseif ( 'success' === $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success' );

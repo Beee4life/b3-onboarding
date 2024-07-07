@@ -48,6 +48,7 @@
             'b3_message_above_new_blog'                => [ 'string' ],
             'b3_message_above_registration'            => [ 'string' ],
             'b3_message_above_request_access'          => [ 'string' ],
+            'b3_message_above_request_site'            => [ 'string' ],
             'b3_new_site_created_message'              => [ 'string' ],
             'b3_new_user_message'                      => [ 'string' ],
             'b3_new_user_notification_addresses'       => [ 'email' ],

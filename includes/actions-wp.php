@@ -77,15 +77,19 @@
      */
     function b3_add_toolbar( $wp_admin_bar ) {
         if ( current_user_can( 'promote_users' ) ) {
-            if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-                $approval_users = [];
-                if ( 'request_access' === get_option( 'b3_registration_type' ) ) {
+            $approval_users = [];
+            $registration_type = get_option( 'b3_registration_type' );
+            
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                if ( 'request_access' === $registration_type ) {
                     $approval_args  = [ 'role' => 'b3_approval' ];
                     $approval_users = get_users( $approval_args );
-                } elseif ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
+                } elseif ( 'request_access_subdomain' === $registration_type || is_multisite() ) {
                     global $wpdb;
                     $query          = "SELECT * FROM $wpdb->signups WHERE active = '0'";
                     $approval_users = $wpdb->get_results( $query );
+                } else {
+                    error_log( 'Catch else actions-wp.php : 98' );
                 }
                 
                 if ( 0 < count( $approval_users ) ) {
@@ -191,10 +195,18 @@
         $current_network = get_network();
         $user            = get_userdata( $user_id );
         $subject         = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
-        $message         = sprintf( b3_get_wpmu_user_activated_message(), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
-        $message         = b3_replace_template_styling( $message );
-        $message         = strtr( $message, b3_get_replacement_vars() );
-        $message         = htmlspecialchars_decode( stripslashes( $message ) );
+
+        if ( get_option( 'b3_needs_admin_approval' ) ) {
+            // @TODO: send magic link email
+            error_log('@TODO: send magic link email');
+            $message = sprintf( b3_get_wpmu_user_activated_message(), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        } else {
+            $message = sprintf( b3_get_wpmu_user_activated_message(), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        }
+        
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_get_replacement_vars() );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user->user_email, $subject, $message, [] );
     }
@@ -212,9 +224,13 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        if ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
-            $subject = b3_default_request_access_subject_user();
-            $message = b3_default_request_access_message_user();
+        $admin_approval  = get_option( 'b3_needs_admin_approval' );
+        $registration_type = get_option( 'b3_registration_type' );
+        $current_network = get_network();
+        
+        if ( $admin_approval || 'request_access_subdomain' === $registration_type ) {
+            $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );
+            $message = sprintf( b3_default_request_access_message_user(), $current_network->site_name );
             do_action( 'b3_inform_admin', 'request_access' );
 
         } else {
