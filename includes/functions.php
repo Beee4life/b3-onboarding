@@ -165,10 +165,11 @@
                     'value' => 'site',
                     'label' => esc_html__( "Visitor may register user + site (must register site)", 'b3-onboarding' ),
                 ],
-                // [
-                //     'value' => 'request_access_subdomain',
-                //     'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
-                // ],
+                // @TODO: test again
+                [
+                    'value' => 'request_access_subdomain',
+                    'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
+                ],
             ];
         }
         
@@ -1227,12 +1228,13 @@
     /**
      * Get user IP
      *
+     * @src: https://itman.in/en/how-to-get-client-ip-address-in-php/
+     *
      * @return mixed
      * @since 3.9.0
      *
      */
     function b3_get_user_ip() {
-        // More info: http://itman.in/en/how-to-get-client-ip-address-in-php/
         if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
             // check ip from share internet
             $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];

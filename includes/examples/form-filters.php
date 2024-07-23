@@ -294,18 +294,18 @@
 
 
     /**
-     * Filter a custom subdomain for localhost development (Multisite)
+     * Filter a custom blogname for localhost development (Multisite)
      *
      * @since 2.0.0
      *
-     * @param $subdomain
+     * @param $blogname
      *
      * @return string
      */
-    function b3_localhost_subdomain_example( $subdomain ) {
-        return 'subdomain';
+    function b3_localhost_blogname_example( $blogname ) {
+        return 'blogname';
     }
-    add_filter( 'b3_localhost_subdomain', 'b3_localhost_subdomain_example' );
+    add_filter( 'b3_localhost_blogname', 'b3_localhost_blogname_example' );
 
 
     /**
