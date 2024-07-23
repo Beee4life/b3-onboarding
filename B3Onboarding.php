@@ -88,7 +88,7 @@
                 add_action( 'init',                     [ $this, 'b3_registration_form_handling' ] );
                 add_action( 'init',                     [ $this, 'b3_reset_user_password' ] );
                 add_action( 'init',                     [ $this, 'b3_magic_link_form_handling' ] );
-                add_action( 'init',                     [ $this, 'b3_check_email_link' ] );
+                add_action( 'init',                     [ $this, 'b3_check_magic_link' ] );
                 add_action( 'admin_notices',            [ $this, 'b3_admin_notices' ] );
                 add_action( 'load-users.php',           [ $this, 'b3_load_users_page' ] );
                 
@@ -871,7 +871,7 @@
              *
              * @return void
              */
-            public function b3_check_email_link() {
+            public function b3_check_magic_link() {
                 if ( isset( $_GET[ 'code' ] ) ) {
                     $verify_otp = b3_verify_otp( $_GET[ 'code' ] );
                     
