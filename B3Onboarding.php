@@ -857,7 +857,6 @@
                                     error_log( sprintf( 'Transient is not set when "%s" requested a magic link and thus email is not sent.', $user_email ) );
                                 }
                             }
-
                         } else {
                             error_log('FALLBACK');
                         }
