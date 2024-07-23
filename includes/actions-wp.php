@@ -187,7 +187,6 @@
      * @param array $meta
      */
     function b3_after_activate_user( $user_id, $password, $meta = [] ) {
-        // @TODO: check if can be replaced by filter
         $current_network = get_network();
         $user            = get_userdata( $user_id );
         $subject         = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
