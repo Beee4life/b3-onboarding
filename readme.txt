@@ -28,10 +28,20 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.11.0
-* added magic link login option (single site only, for now)
-* locate template from function
-* remove border width on submit button
-* added a bunch of new filters
+* add magic link login option (single site only, for now)
+* improved blocking of disallowed usernames/domain names
+* moved logo field to emails tab
+* added indicator for filter verification
+* added new filters
+* * b3_otp_email()
+* * b3_otp_time_out()
+* * b3_password_special_chars()
+* * b3_password_extra_special_chars()
+* * b3_disallowed_domains()
+* * b3_show_email_widget()
+* * b3_message_above_magiclink()
+* * b3_email_intro()
+* * b3_message_above_request_site()
 
 3.10.0
 * filter out nav menu items
