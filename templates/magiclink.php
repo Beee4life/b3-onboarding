@@ -1,6 +1,6 @@
 <?php
     /**
-     * Ouptuts fields for get pass form (shortcode not used yet))
+     * Ouptuts fields for magic link form
      *
      * @since 3.11.0
      */
