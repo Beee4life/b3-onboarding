@@ -2,7 +2,7 @@
 Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
-Tested up to: 6.5.4
+Tested up to: 6.6.1
 Requires PHP: 5.6
 Stable tag: 3.11.0
 License: GNU v3
