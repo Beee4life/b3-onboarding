@@ -514,7 +514,7 @@
     }
 
     /**
-     * Get one time password email
+     * Get magic link email
      *
      * @since 3.11.0
      *
@@ -523,14 +523,14 @@
      *
      * @return string
      */
-    function b3_get_one_time_password_email( $password = false, $slug = false ) {
+    function b3_get_magic_link_email( $password = false, $slug = false ) {
         $message = '';
         
         if ( $password && $slug ) {
             // maybe add user input for this email
-            $message = b3_get_default_otp_email( $password, $slug );
+            $message = b3_get_default_magiclink_email( $password, $slug );
             
         }
         
-        return apply_filters( 'b3_otp_email', $message );
+        return apply_filters( 'b3_magic_link_email', $message );
     }

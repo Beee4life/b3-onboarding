@@ -333,7 +333,7 @@
     
     
     /**
-     * Verify OTP link
+     * Verify magic link
      *
      * @param $code
      *

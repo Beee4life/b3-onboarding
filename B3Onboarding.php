@@ -827,7 +827,7 @@
                             $existing_user = get_user_by( 'email', $user_email );
                             
                             if ( $existing_user instanceof WP_User ) {
-                                $amount_minutes         = apply_filters( 'b3_otp_time_out', 5 );
+                                $amount_minutes         = apply_filters( 'b3_magic_link_time_out', 5 );
                                 $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
                                 $pw_extra_special_chars = apply_filters( 'b3_password_extra_special_chars', false );
                                 $otp_password           = wp_generate_password( 8, $pw_special_chars, $pw_extra_special_chars );
@@ -841,7 +841,7 @@
                                     $to      = $user_email;
                                     $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                    $message = b3_get_one_time_password_email( $otp_password, $hashed_slug );
+                                    $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
                                     
                                     if ( ! empty( $message ) ) {
                                         $message = b3_replace_template_styling( $message );
@@ -851,10 +851,10 @@
                                         wp_mail( $to, $subject, $message, [] );
                                         
                                     } else {
-                                        error_log( 'Email message not set for OTP.' );
+                                        error_log( 'Email message not set for magic link.' );
                                     }
                                 } else {
-                                    error_log( sprintf( 'Transient is not set when "%s" requested an OTP password and thus email is not sent.', $user_email ) );
+                                    error_log( sprintf( 'Transient is not set when "%s" requested a magic link and thus email is not sent.', $user_email ) );
                                 }
                             }
 
@@ -934,7 +934,7 @@
                     case 'code_sent':
                         $message = esc_html__( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
                         $message .= '&nbsp;';
-                        $message .= esc_html__( sprintf( 'The link is valid for %d minutes.', apply_filters( 'b3_otp_time_out', 5 ) ), 'b3-onboarding' );
+                        $message .= esc_html__( sprintf( 'The link is valid for %d minutes.', apply_filters( 'b3_magic_link_time_out', 5 ) ), 'b3-onboarding' );
                         return $message;
 
                     case 'unknown_user':

@@ -58,10 +58,9 @@
             unset( $meta_data[ 'pending' ] );
         }
 
-        // activate site, set to public and remove deleted status
+        // activate site and set to public
         $meta_data[ 'active' ]  = 1;
         $meta_data[ 'public' ]  = 1;
-        // $meta_data[ 'deleted' ] = 0;
         $signup_info->meta      = serialize( $meta_data );
         $table                  = $wpdb->prefix . 'signups';
         $data                   = [ 'meta' => $signup_info->meta ];
@@ -728,7 +727,7 @@
     
     
     /**
-     * Log a user in after OTP verification
+     * Log a user in after magic link verification
      *
      * @param $user
      * @param $redirect

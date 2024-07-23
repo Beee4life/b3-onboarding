@@ -219,9 +219,9 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        $admin_approval  = get_option( 'b3_needs_admin_approval' );
+        $admin_approval    = get_option( 'b3_needs_admin_approval' );
+        $current_network   = get_network();
         $registration_type = get_option( 'b3_registration_type' );
-        $current_network = get_network();
         
         if ( $admin_approval || 'request_access_subdomain' === $registration_type ) {
             $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );

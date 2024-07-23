@@ -152,8 +152,8 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * moved logo field to emails tab
 * added indicator for filter verification
 * added new filters
-* * b3_otp_email()
-* * b3_otp_time_out()
+* * b3_magic_link_email()
+* * b3_magic_link_time_out()
 * * b3_password_special_chars()
 * * b3_password_extra_special_chars()
 * * b3_disallowed_domains()

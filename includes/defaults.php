@@ -791,7 +791,7 @@
     
     
     /**
-     * Get default OTP email
+     * Get default magic link email
      *
      * @since 3.11.0
      *
@@ -800,7 +800,7 @@
      *
      * @return string
      */
-    function b3_get_default_otp_email( $password, $slug ) {
+    function b3_get_default_magiclink_email( $password, $slug ) {
         if ( $password && $slug ) {
             $login_link = b3_get_login_url();
             $login_link = add_query_arg( 'login', 'enter_code', $login_link );
