@@ -46,10 +46,9 @@
 
                 if ( $admin_approval && 'user' == $registration_type ) {
                     $button_value = esc_attr__( 'Request user', 'b3-onboarding' );
-                } elseif ( in_array( $registration_type, [
-                    'request_access',
-                    'request_access_subdomain',
-                ] ) ) {
+                } elseif ( $admin_approval ) {
+                    $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
+                } elseif ( 'request_access' == $registration_type ) {
                     $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
                 } else {
                     $button_value = esc_attr__( 'Register', 'b3-onboarding' );

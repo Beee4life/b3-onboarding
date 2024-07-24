@@ -242,7 +242,6 @@
     function b3_add_site_fields( $registration_type ) {
         if ( is_multisite() && is_main_site() ) {
             if ( in_array( $registration_type, [
-                'request_access_subdomain',
                 'blog',
                 'all',
                 'site',

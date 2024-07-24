@@ -252,7 +252,7 @@
                 include 'admin/admin-page.php';
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL .  'assets/images/logo-b3onboarding-small.png', 99 );
 
-                if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) || is_multisite() && get_option( 'b3_needs_admin_approval' ) ) {
+                if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access' ] ) || is_multisite() && get_option( 'b3_needs_admin_approval' ) ) {
                     include 'admin/user-approval-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
@@ -676,12 +676,12 @@
                                         }
                                     }
 
-                                    if ( ( 'blog' === $signup_for || 'request_access_subdomain' === $registration_type ) && empty( $error_codes ) ) {
+                                    if ( 'blog' === $signup_for && empty( $error_codes ) ) {
                                         $meta_data[ 'lang_id' ] = ( isset( $_POST[ 'lang_id' ] ) ) ? $_POST[ 'lang_id' ] : 1;
                                         $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? $_POST[ 'blog_public' ] : 1;
                                         $user                   = '';
 
-                                        if ( $admin_approval || 'request_access_subdomain' === $registration_type ) {
+                                        if ( $admin_approval ) {
                                             $meta_data[ 'active' ] = 0;
                                             $meta_data[ 'public' ] = 0;
                                         }
@@ -732,7 +732,7 @@
                                                 $errors       = join( ',', $result->get_error_codes() );
                                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
                                             } else {
-                                                if ( $admin_approval || 'request_access_subdomain' === $registration_type ) {
+                                                if ( $admin_approval ) {
                                                     $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
                                                 } elseif ( 'blog' === $registration_type ) {
                                                     // Success, redirect to message.
@@ -1239,7 +1239,7 @@
                 $b3_register_type = get_option( 'b3_registration_type' );
 
                 if ( is_main_site() ) {
-                    if ( in_array( $b3_register_type, [ 'request_access', 'request_access_subdomain', 'user', 'all', 'site' ] )) {
+                    if ( in_array( $b3_register_type, [ 'request_access', 'user', 'all', 'site' ] )) {
                         if ( false == $domain ) {
                             wpmu_signup_user( $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
 

@@ -17,15 +17,16 @@
      * @return array
      */
     function b3_get_email_boxes() {
-        $registration_type = get_option( 'b3_registration_type' );
+        $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $email_boxes       = [];
+        $registration_type = get_option( 'b3_registration_type' );
         
         $email_boxes[] = [
             'id'    => 'email_settings',
             'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
         ];
         if ( is_main_site() ) {
-            if ( in_array( $registration_type, [ 'request_access', 'request_access_subdomain' ] ) ) {
+            if ( in_array( $registration_type, [ 'request_access' ] ) || $admin_approval ) {
                 $email_boxes[] = [
                     'id'    => 'request_access_user',
                     'title' => esc_html__( 'Request access email (user)', 'b3-onboarding' ),
@@ -132,10 +133,10 @@
         
         if ( ! is_multisite() ) {
             $normal_options = [
-                [
-                    'value' => 'request_access',
-                    'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
-                ],
+                // [
+                //     'value' => 'request_access',
+                //     'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
+                // ],
                 [
                     'value' => 'email_activation',
                     'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
@@ -164,11 +165,6 @@
                 [
                     'value' => 'site',
                     'label' => esc_html__( "Visitor may register user + site (must register site)", 'b3-onboarding' ),
-                ],
-                // @TODO: test again
-                [
-                    'value' => 'request_access_subdomain',
-                    'label' => esc_html__( 'Request access (admin approval + user domain request)', 'b3-onboarding' ),
                 ],
             ];
         }

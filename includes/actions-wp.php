@@ -223,7 +223,7 @@
         $current_network   = get_network();
         $registration_type = get_option( 'b3_registration_type' );
         
-        if ( $admin_approval || 'request_access_subdomain' === $registration_type ) {
+        if ( $admin_approval ) {
             $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );
             $message = sprintf( b3_default_request_access_message_user(), $current_network->site_name );
             do_action( 'b3_inform_admin', 'request_access' );
