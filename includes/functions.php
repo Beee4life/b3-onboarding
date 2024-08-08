@@ -133,10 +133,6 @@
         
         if ( ! is_multisite() ) {
             $normal_options = [
-                // [
-                //     'value' => 'request_access',
-                //     'label' => esc_html__( 'Request access (requires admin approval)', 'b3-onboarding' ),
-                // ],
                 [
                     'value' => 'email_activation',
                     'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
