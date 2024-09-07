@@ -42,6 +42,7 @@ There are a ton of things, which you can set through the admin pages or with the
 * * b3_message_above_magiclink()
 * * b3_email_intro()
 * * b3_message_above_request_site()
+* change settings to non-static method
 
 3.10.0
 * filter out nav menu items
