@@ -56,12 +56,6 @@
                     $plugin_site = 'https://b3onboarding.berryplasman.com';
                     define( 'B3OB_PLUGIN_SITE', $plugin_site );
                 }
-                
-                $this->settings = [
-                    'path'              => trailingslashit( dirname( __FILE__ ) ),
-                    'registration_type' => get_option( 'b3_registration_type' ),
-                    'version'           => get_option( 'b3ob_version' ),
-                ];
             }
 
 
@@ -110,6 +104,15 @@
                 include 'includes/form-handling.php';
                 include 'includes/tabs/tabs.php';
                 include 'admin/help-tabs.php';
+            }
+
+
+            public function b3_settings() {
+                return [
+                    'path'              => trailingslashit( dirname( __FILE__ ) ),
+                    'registration_type' => get_option( 'b3_registration_type' ),
+                    'version'           => get_option( 'b3ob_version' ),
+                ];
             }
 
 
@@ -199,8 +202,8 @@
 					wp_enqueue_style( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css', false, '0.9.1' );
                 }
 
-				wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), [], $this->settings[ 'version' ] );
-				wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
+				wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), [], $this->b3_settings()[ 'version' ] );
+				wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->b3_settings()[ 'version' ] );
 
 				wp_localize_script( 'b3ob', 'b3ob_vars', [
 						'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
@@ -212,13 +215,13 @@
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
-				wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->settings[ 'version' ] );
+				wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->b3_settings()[ 'version' ] );
 
 				if ( ! ( 'toplevel_page_b3-onboarding' === get_current_screen()->id ) ) {
                     return;
                 }
 
-				wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
+				wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->b3_settings()[ 'version' ] );
 
 				// https://wpreset.com/add-codemirror-editor-plugin-theme/
 				$b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( [
@@ -233,7 +236,7 @@
                 wp_enqueue_media();
 
                 // Register, localize and enqueue our custom JS.
-				wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], true );
+				wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), [ 'jquery' ], $this->b3_settings()[ 'version' ], true );
 				wp_localize_script( 'b3-media', 'b3_media', [
 						'title'  => esc_attr__( 'Upload or choose your custom logo', 'b3-onboarding' ),
 						'button' => esc_attr__( 'Insert logo', 'b3-onboarding' ),
@@ -1319,7 +1322,7 @@
                 ];
 
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
-                    if ( strpos( $this->settings[ 'version' ], 'dev' ) !== false || strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
+                    if ( strpos( $this->b3_settings()[ 'version' ], 'dev' ) !== false || strpos( $this->b3_settings()[ 'version' ], 'beta' ) !== false ) {
                         $show_warning = true;
                     }
                     if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) ) {
