@@ -1,5 +1,28 @@
 ## CHANGELOG
 
+3.9.0 - 11.01.23
+* remove jquery override
+
+3.8.2 - 28.07.22
+* change to correct versions
+
+3.8.1 - 28.07.22
+* add proper readmes
+
+* 3.8.0 - 28.07.22
+* fix non-working contextual help tabs
+* load admin scripts later so they don't conflict with `wp-themeplugin-editor`
+* remove new lines in default messages
+* added more filters for multisite
+* safer downloading of example files
+
+3.7.0 - 17.04.22
+* added [codemirror](https://codemirror.net/) for email template and styling
+* added new admin tab for email template and styling
+* add filters to override styling (but not input) for several emails
+* move link color field to settings tab
+* conditionally load admin.js
+
 3.6.0 - 05.04.22
 * fix incorrect field name login
 * don't autoload options

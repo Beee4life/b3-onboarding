@@ -10,16 +10,16 @@
      * @return void
      */
     function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
-
-        if ( is_multisite() ) {
-            // get activation key
-            error_log('@TODO: b3_do_stuff_after_new_user_approved_by_admin');
-        } else {
+        /*
+         * This action is called within single site only, but just to prevent inadvertent 'calling', it's enclosed
+         * in '! is_multisite()'
+         */
+        if ( ! is_multisite() ) {
             $custom_passwords  = get_option( 'b3_activate_custom_passwords' );
             $user_object       = get_userdata( $user_id );
             $user_login        = $user_object->user_login;
             $user_object->set_role( get_option( 'default_role' ) );
-
+            
             if ( false == $custom_passwords ) {
                 // user needs a password
                 $key                 = get_password_reset_key( $user_object );
@@ -27,19 +27,19 @@
                 $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_login );
             } else {
                 // user has set a custom password or requests access
-				$vars = [];
-			}
+                $vars = [];
+            }
 
             $to      = $user_object->user_email;
-            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = b3_get_account_approved_subject();
             $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_get_account_approved_message();
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
 
             wp_mail( $to, $subject, $message, [] );
-		}
+        }
     }
     add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
 
@@ -52,16 +52,22 @@
     function b3_approve_new_wpmu_signup( $signup_info = [] ) {
         // update row
         global $wpdb;
-        $meta_data              = unserialize( $signup_info->meta );
+        $meta_data = unserialize( $signup_info->meta );
+
+        if ( isset( $meta_data[ 'pending' ] ) ) {
+            unset( $meta_data[ 'pending' ] );
+        }
+
+        // activate site and set to public
+        $meta_data[ 'active' ]  = 1;
         $meta_data[ 'public' ]  = 1;
-        $meta_data[ 'deleted' ] = 0;
         $signup_info->meta      = serialize( $meta_data );
-
-        // set site to public and remove deleted status
-        $wpdb->update(
-            $wpdb->prefix . 'signups', [ 'meta' => $signup_info->meta ], [ 'signup_id' => $signup_info->signup_id ], [ '%s' ] );
-
-		wpmu_activate_signup( $signup_info->activation_key );
+        $table                  = $wpdb->prefix . 'signups';
+        $data                   = [ 'meta' => $signup_info->meta ];
+        $where                  = [ 'signup_id' => $signup_info->signup_id ];
+        $wpdb->update( $table, $data, $where, [ '%s' ] );
+        
+        wpmu_activate_signup( $signup_info->activation_key );
     }
     add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
 
@@ -77,8 +83,8 @@
     function b3_do_stuff_before_reject_user_by_admin( $user_info ) {
         if ( ! get_option( 'b3_disable_delete_user_email' ) ) {
             $multisite = false;
-            $message   = apply_filters( 'b3_account_rejected_message', b3_get_account_rejected_message() );
-            $subject   = apply_filters( 'b3_account_rejected_subject', b3_get_account_rejected_subject() );
+            $message   = b3_get_account_rejected_message();
+            $subject   = b3_get_account_rejected_subject();
 
             if ( isset( $user_info[ 'user_id' ] ) ) {
                 $user_object = get_userdata( $user_info[ 'user_id' ] );
@@ -93,7 +99,7 @@
                 $message = strtr( $message, b3_get_replacement_vars() );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
                 wp_mail( $to, $subject, $message, [] );
-			}
+            }
         }
     }
     add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
@@ -113,29 +119,29 @@
         if ( 1 != get_option( 'b3_disable_admin_notification_new_user' ) ) {
             // send 'new user' email to admin
             $user          = get_userdata( $user_id );
-            $admin_to      = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( 'email_activation' ) );
-            $admin_subject = apply_filters( 'b3_new_user_subject', b3_get_new_user_subject() );
-            $admin_email   = apply_filters( 'b3_new_user_message', b3_get_new_user_message() );
+            $admin_to      = b3_get_notification_addresses( 'email_activation' );
+            $admin_subject = b3_get_new_user_subject();
+            $admin_email   = b3_get_new_user_message();
             $admin_email   = b3_replace_template_styling( $admin_email );
             $admin_email   = strtr( $admin_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $admin_email   = htmlspecialchars_decode( stripslashes( $admin_email ) );
             $admin_message = $admin_email;
 
             wp_mail( $admin_to, $admin_subject, $admin_message, [] );
-		}
+        }
 
         // send 'account activated' email to user
         if ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
-            $subject = apply_filters( 'b3_account_activated_subject_user', b3_get_account_activated_subject_user() );
-            $message = apply_filters( 'b3_account_activated_message_user', b3_get_account_activated_message_user() );
+            $subject = b3_get_account_activated_subject_user();
+            $message = b3_get_account_activated_message_user();
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
 
             wp_mail( $to, $subject, $message, [] );
-		}
+        }
     }
     add_action( 'b3_after_user_activated', 'b3_do_stuff_after_user_activated' );
 
@@ -164,12 +170,12 @@
                 <?php
                 }
             } else {
-                if ( false == get_option( 'b3_register_email_only' ) ) {
-                    do_action( 'b3_render_form_element', 'register/user-login' );
-                } else { ?>
+                if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_use_magic_link' ) ) { ?>
                     <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
-                <?php }
-                    do_action( 'b3_render_form_element', 'register/user-email' );
+                <?php } else {
+                    do_action( 'b3_render_form_element', 'register/user-login' );
+                }
+                do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
             echo $output;
@@ -184,7 +190,7 @@
      * @since 0.8-beta
      */
     function b3_first_last_name_fields( $registration_type ) {
-        if ( get_option( 'b3_activate_first_last' ) && 1 != get_option( 'b3_register_email_only' ) && 'blog' != $registration_type ) {
+        if ( get_option( 'b3_activate_first_last' ) && ! get_option( 'b3_register_email_only' ) && 'blog' != $registration_type ) {
             do_action( 'b3_do_before_first_last_name' );
             ob_start();
             do_action( 'b3_render_form_element', 'register/first-name' );
@@ -235,19 +241,18 @@
      */
     function b3_add_site_fields( $registration_type ) {
         if ( is_multisite() && is_main_site() ) {
-			if ( in_array( $registration_type, [
-				'request_access_subdomain',
-				'blog',
-				'all',
-				'site',
-			] ) ) {
-				$register_for = apply_filters( 'b3_register_for', false );
+            if ( in_array( $registration_type, [
+                'blog',
+                'all',
+                'site',
+            ] ) ) {
+                $register_for = apply_filters( 'b3_register_for', false );
                 ob_start();
                 if ( false === $register_for || 'blog' === $register_for ) {
             ?>
                 <div class="b3_site-fields">
                     <?php do_action( 'b3_render_form_element', 'register/site-fields-header' ); ?>
-                    <?php do_action( 'b3_render_form_element', 'register/subdomain' ); ?>
+                    <?php do_action( 'b3_render_form_element', 'register/blogname' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/site-title' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/visibility' ); ?>
                 </div>
@@ -268,7 +273,7 @@
      */
     function b3_add_extra_fields_registration() {
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-		if ( ! empty( $extra_field_values ) ) {
+        if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
                 echo b3_render_extra_field( $extra_field );
             }
@@ -343,16 +348,13 @@
     function b3_render_form_messages( $attributes = [] ) {
         if ( ! empty( $attributes ) ) {
             $messages          = [];
-			$registration_type = get_option( 'b3_registration_type' );
-            $show_messages     = false;
+            $registration_type = get_option( 'b3_registration_type' );
 
             if ( isset( $attributes[ 'errors' ] ) && 0 < count( $attributes[ 'errors' ] ) ) {
-                $show_messages = true;
                 foreach( $attributes[ 'errors' ] as $error ) {
                     $messages[] = $error;
                 }
             } elseif ( isset( $attributes[ 'messages' ] ) && 0 < count( $attributes[ 'messages' ] ) ) {
-                $show_messages = true;
                 foreach( $attributes[ 'messages' ] as $message ) {
                     $messages[] = $message;
                 }
@@ -361,43 +363,41 @@
                     if ( 'login' === $attributes[ 'template' ] ) {
                         $login_form_message = apply_filters( 'b3_message_above_login', false );
                         if ( false != $login_form_message ) {
-                            $messages[]    = $login_form_message;
-                            $show_messages = true;
+                            $messages[] = $login_form_message;
                         }
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( strpos( $registration_type, 'request_access' ) !== false ) {
-                            $request_access_message = apply_filters( 'b3_message_above_request_access', b3_get_message_above_request_access() );
+                            $request_access_message = b3_get_message_above_request_access();
                             if ( false != $request_access_message ) {
-                                $messages[]    = $request_access_message;
-                                $show_messages = true;
+                                $messages[] = $request_access_message;
                             }
                         } elseif ( 'email_activation' === $registration_type ) {
                             $registration_message = apply_filters( 'b3_message_above_registration', false );
                             if ( false != $registration_message ) {
-                                $messages[]    = $registration_message;
-                                $show_messages = true;
+                                $messages[] = $registration_message;
                             }
                         } else {
                             if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
                                 $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
                                 $registration_message = apply_filters( 'b3_message_above_registration', $message );
                                 if ( false != $registration_message ) {
-                                    $messages[]    = $registration_message;
-                                    $show_messages = true;
+                                    $messages[] = $registration_message;
                                 }
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        $messages[]    = esc_html__( apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() ) );
-                        $show_messages = true;
+                        $messages[] = esc_html__( b3_get_message_above_lost_password() );
+
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
-                        $messages[]    = esc_html__( 'Enter your new password.', 'b3-onboarding' );
-                        $show_messages = true;
+                        $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
+
+                    } elseif ( 'magiclink' === $attributes[ 'template' ] ) {
+                        $messages[] = esc_html__( b3_get_message_above_magiclink_form() );
                     }
                 }
             }
 
-            if ( true === $show_messages && ! empty( $messages ) ) {
+            if ( ! empty( $messages ) ) {
                 if ( isset( $attributes[ 'errors' ] ) && ! empty( $attributes[ 'errors' ] ) ) {
                     echo '<div class="b3_message b3_message--error">';
                 } else {
@@ -421,9 +421,9 @@
     function b3_add_action_links( $form_type = 'login' ) {
         if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
             $links = [];
-
-			$values = [
-                'login' => [
+            
+            $values = [
+                'login'        => [
                     'title' => esc_html__( 'Log In', 'b3-onboarding' ),
                     'link'  => b3_get_login_url(),
                 ],
@@ -431,7 +431,7 @@
                     'title' => esc_html__( 'Lost password', 'b3-onboarding' ),
                     'link'  => b3_get_lostpassword_url(),
                 ],
-                'register' => [
+                'register'     => [
                     'title' => esc_html__( 'Register', 'b3-onboarding' ),
                     'link'  => b3_get_register_url(),
                 ],
@@ -511,15 +511,15 @@
             $user    = get_userdata( $user_id );
             $user->set_role( get_option( 'default_role' ) );
             $to      = $user->user_email;
-            $subject = apply_filters( 'b3_account_approved_subject', b3_get_account_approved_subject() );
+            $subject = b3_get_account_approved_subject();
             $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-            $message = apply_filters( 'b3_account_approved_message', b3_get_account_approved_message() );
+            $message = b3_get_account_approved_message();
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
 
             wp_mail( $to, $subject, $message, [] );
-		}
+        }
     }
     add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
 
@@ -535,8 +535,8 @@
         if ( $type ) {
             switch( $type ) {
                 case 'request_access':
-                    $subject = apply_filters( 'b3_request_access_subject_admin', b3_get_request_access_subject_admin() );
-                    $message = apply_filters( 'b3_request_access_message_admin', b3_get_request_access_message_admin() );
+                    $subject = b3_get_request_access_subject_admin();
+                    $message = b3_get_request_access_message_admin();
                     break;
                 default:
                     $subject = '';
@@ -544,13 +544,13 @@
             }
 
             if ( ! empty( $subject ) && ! empty( $message ) ) {
-                $admin_to = apply_filters( 'b3_new_user_notification_addresses', b3_get_notification_addresses( get_option( 'b3_registration-type' ) ) );
+                $admin_to = b3_get_notification_addresses( $type );
                 $message  = b3_replace_template_styling( $message );
                 $message  = strtr( $message, b3_get_replacement_vars() );
                 $message  = htmlspecialchars_decode( stripslashes( $message ) );
 
                 wp_mail( $admin_to, $subject, $message, [] );
-			}
+            }
         }
     }
     add_action( 'b3_inform_admin', 'b3_inform_admin' );
@@ -630,20 +630,19 @@
             if ( ! empty( $user_sites ) ) {
                 ob_start();
                 foreach( $user_sites as $site_id => $site_info ) {
-                    $admin_url        = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
                     $disallowed_roles = ! array_diff( $current_user->roles, get_option( 'b3_restrict_admin', [
                         'b3_activation',
                         'b3_approval'
                     ] ) );
-                    $home_url         = get_home_url( $site_id );
-                    echo '<li>';
-                    $link             = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
-
+                    $admin_url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
+                    $home_url  = get_home_url( $site_id );
+                    $link      = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
+                    
                     if ( false === $disallowed_roles ) {
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
-                    echo $link;
-                    echo '</li>';
+                    
+                    echo sprintf( '<li>%s</li>', $link );
                 }
                 $links = ob_get_clean();
 
@@ -651,6 +650,7 @@
                     $label = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
+                    
                     echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, $links );
                 }
             }
@@ -683,7 +683,7 @@
      */
     function b3_remove_welcome_page_meta() {
         $user_args = [
-            'fields' => 'ids',
+            'fields'     => 'ids',
             'meta_query' => [
                 [
                     'key'   => 'b3_welcome_page_seen',
@@ -704,6 +704,10 @@
     /**
      * Add custom fields to register form hook
      *
+     * @param $attributes
+     *
+     * @return void
+     *
      * @since 1.0.0
      */
     function b3_add_registration_fields( $attributes ) {
@@ -711,7 +715,7 @@
         do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
         do_action( 'b3_add_first_last_name_fields', $attributes[ 'registration_type' ] );
         do_action( 'b3_add_password_fields' );
-        do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] );
+        do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] ); // MS
         do_action( 'b3_add_extra_fields_registration' );
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields' );
@@ -719,3 +723,31 @@
         do_action( 'b3_add_action_links', $attributes[ 'template' ] );
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
+    
+    
+    /**
+     * Log a user in after magic link verification
+     *
+     * @param $user
+     * @param $redirect
+     *
+     * @return void
+     *
+     * @since 3.11.0
+     */
+    function b3_log_user_in( $user, $redirect = '' ) {
+        $account_url = b3_get_account_url();
+        $account_url = add_query_arg( 'message', 'logged_in', $account_url );
+        $redirect    = ! empty( $redirect ) ? $redirect : $account_url;
+        
+        if ( $user instanceof WP_User ) {
+            wp_set_current_user( $user->ID, $user->user_login );
+            wp_set_auth_cookie( $user->ID );
+            delete_transient( sprintf( 'otp_', $user->user_email ) );
+            do_action( 'wp_login', $user->user_login, $user );
+            
+            wp_redirect( $redirect );
+            exit;
+        }
+    }
+    add_action( 'b3_log_user_in', 'b3_log_user_in' );

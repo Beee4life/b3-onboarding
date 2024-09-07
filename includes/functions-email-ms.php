@@ -11,7 +11,7 @@
      * @return string|void
      */
     function b3_get_wpmu_activate_user_subject() {
-        return b3_default_wpmu_activate_user_subject();
+        return apply_filters( 'b3_wpmu_activate_user_subject', b3_default_wpmu_activate_user_subject() );
     }
 
 
@@ -23,7 +23,7 @@
      * @return string|void
      */
     function b3_get_wpmu_activate_user_message() {
-        return b3_default_wpmu_activate_user_message();
+        return apply_filters( 'b3_wpmu_activate_user_message', b3_default_wpmu_activate_user_message() );
     }
 
 
@@ -35,7 +35,7 @@
      * @return string|void
      */
     function b3_get_wpmu_user_activated_subject() {
-        return b3_default_wpmu_user_activated_subject();
+        return apply_filters( 'b3_wpmu_user_activated_subject', b3_default_wpmu_user_activated_subject() );
     }
 
 
@@ -47,7 +47,7 @@
      * @return string|void
      */
     function b3_get_wpmu_user_activated_message() {
-        return b3_default_wpmu_user_activated_message();
+        return apply_filters( 'b3_wpmu_user_activated_message', b3_default_wpmu_user_activated_message() );
     }
 
 
@@ -62,11 +62,12 @@
      */
     function b3_get_wpmu_activate_user_blog_subject( $user = false ) {
         $subject = get_option( 'b3_activate_wpmu_user_site_subject' );
+        
         if ( ! $subject ) {
             $subject = b3_default_subject_new_wpmu_user_blog( $user );
         }
 
-        return $subject;
+        return apply_filters( 'b3_wpmu_activate_user_blog_subject', $subject );
     }
 
 
@@ -85,8 +86,7 @@
             $message = b3_default_message_new_wpmu_user_blog( $user );
         }
 
-
-        return $message;
+        return apply_filters( 'b3_wpmu_activate_user_blog_message', $message );
     }
 
 
@@ -132,6 +132,7 @@
      * @return string
      */
     function b3_get_new_wpmu_user_subject_admin() {
+        // @TOOD: add filter
         return b3_default_subject_new_wpmu_user_admin();
     }
 
@@ -144,5 +145,5 @@
      * @return string
      */
     function b3_get_new_wpmu_user_message_admin() {
-        return b3_default_message_new_wpmu_user_admin();
+        return apply_filters( 'b3_new_wpmu_user_message_admin', b3_default_message_new_wpmu_user_admin() );
     }

@@ -17,10 +17,11 @@
             $basic_output = b3_basic_email_settings_field( $box );
             $basic_output = str_replace( '##FOLDOUTCONTENT##', b3_foldout_content( $box ), $basic_output );
 
-            return $basic_output;
+        } else {
+            $basic_output = sprintf( '<h4>%s...</h4>', esc_html__( 'Oops, no content yet', 'b3-onboarding' ) );
         }
 
-        return sprintf( '<h4>%s...</h4>', esc_html__( 'Oops, no content yet', 'b3-onboarding' ) );
+        return $basic_output;
     }
 
 
@@ -34,7 +35,6 @@
      * @return false|string
      */
     function b3_basic_email_settings_field( $box = [] ) {
-        
         $add_id_fields = [
             'email_styling',
             'email_template',
@@ -42,9 +42,10 @@
 
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
-            $id_field = in_array( $box[ 'id' ], $add_id_fields ) ? ' id="' . $box[ 'id' ] . '"' : false;
+            $hide_field = 'logo' == $box[ 'id' ] && ! get_option( 'b3_logo_in_email' ) ? ' hidden' : '';
+            $id_field   = in_array( $box[ 'id' ], $add_id_fields ) ? ' id="' . $box[ 'id' ] . '"' : false;
         ?>
-        <div class="metabox-handler metabox-handler--<?php echo $box['id']; ?>">
+        <div class="metabox-handler metabox-handler--<?php echo $box['id']; ?><?php echo $hide_field; ?>">
             <div class="b3__postbox">
                 <div class="b3_foldout--header foldout__toggle"<?php echo $id_field; ?>>
                     <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
@@ -105,6 +106,9 @@
                     break;
                 case 'account_rejected':
                     include 'emails/account-rejected.php';
+                    break;
+                case 'logo':
+                    include 'emails/logo.php';
                     break;
                 case 'lost_password':
                     include 'emails/lost-password.php';

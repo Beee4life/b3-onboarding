@@ -9,7 +9,7 @@
         exit;
     }
 
-    function b3_dashboard_widget_debug_function() {
+    function b3_dashboard_widget_email_previews() {
         $preview_page = admin_url( 'admin.php?page=b3-onboarding&preview=' );
         $widget_title = sprintf( '<h3>%s</h3>', esc_html__( 'Email preview links', 'b3-onboarding' ) );
 
@@ -42,5 +42,5 @@
         echo sprintf( '<div class="b3_widget--dashboard">%s</div>', $widget_content );
     }
     if ( current_user_can('manage_options' ) ) {
-        wp_add_dashboard_widget( 'b3-dashboard-debug', 'B3 OnBoarding (debug)', 'b3_dashboard_widget_debug_function' );
+        wp_add_dashboard_widget( 'b3-dashboard-debug', 'B3 OnBoarding (email previews)', 'b3_dashboard_widget_email_previews' );
     }

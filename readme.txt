@@ -2,9 +2,9 @@
 Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
-Tested up to: 6.3.1
+Tested up to: 6.6.1
 Requires PHP: 5.6
-Stable tag: 3.10.0
+Stable tag: 3.11.0
 License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +27,23 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.11.0
+* add magic link login option (single site only, for now)
+* improved blocking of disallowed usernames/domain names
+* moved logo field to emails tab
+* added indicator for filter verification
+* added new filters
+* * b3_magic_link_email()
+* * b3_magic_link_time_out()
+* * b3_password_special_chars()
+* * b3_password_extra_special_chars()
+* * b3_disallowed_domains()
+* * b3_show_email_widget()
+* * b3_message_above_magiclink()
+* * b3_email_intro()
+* * b3_message_above_request_site()
+* change settings to non-static method
+
 3.10.0
 * filter out nav menu items
 * sprintf admin tabs

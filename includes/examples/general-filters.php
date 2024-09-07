@@ -15,7 +15,15 @@
      * @return false|string
      */
     function b3_main_logo_example( $logo ) {
-        return 'https://your-url.com/your-logo.png';
+        $attachment_id = 'your_attachement_id';
+        if ( $attachment_id && get_post( $attachment_id ) ) {
+            $image_array = wp_get_attachment_image_src( $attachment_id, 'medium' );
+            if ( isset( $image_array[0] ) ) {
+                $logo = $image_array[0];
+            }
+        }
+        
+        return $logo;
     }
     add_filter( 'b3_main_logo', 'b3_main_logo_example' );
 
@@ -43,20 +51,25 @@
      * @return array|string[][]
      */
     function b3_widget_links_example( $links ) {
-        $new_links = [
-            [
-                'link' => 'https://your-link.com',
-                'label' => 'Your Label',
-            ],
+        $links[] = [
+            'link' => 'https://your-link.com',
+            'label' => 'Your Label',
         ];
-
-        if ( is_array( $links ) && ! empty( $links ) ) {
-            $links = array_merge( $links, $new_links );
-        } else {
-            $links = $new_links;
-        }
 
         return $links;
 
     }
     add_filter( 'b3_widget_links', 'b3_widget_links_example' );
+    
+    
+    /**
+     * Filter to show email widget when localhost is inactive
+     *
+     * @param $setting
+     *
+     * @return bool
+     */
+    function b3_show_email_widget_example( $setting ) {
+        return true;
+    }
+    add_filter( 'b3_show_email_widget', 'b3_show_email_widget_example' );

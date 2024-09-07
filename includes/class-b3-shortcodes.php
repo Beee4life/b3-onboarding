@@ -11,47 +11,69 @@
          *
          * @since 2.0.0
          */
-        class B3_Shortcodes extends B3Onboarding {
+        class B3Shortcodes extends B3Onboarding {
             /**
-             * B3_Shortcodes constructor
+             * B3Shortcodes constructor
              */
             public function __construct() {
                 parent::__construct();
-
-				add_shortcode( 'account-page', 	[ $this, 'b3_render_account_page' ] );
-				add_shortcode( 'lostpass-form', 	[ $this, 'b3_render_lost_password_form' ] );
-				add_shortcode( 'login-form', 		[ $this, 'b3_render_login_form' ] );
-				add_shortcode( 'register-form', 	[ $this, 'b3_render_register_form' ] );
-				add_shortcode( 'resetpass-form', 	[ $this, 'b3_render_reset_password_form' ] );
-				add_shortcode( 'user-management', 	[ $this, 'b3_render_user_approval_page' ] );
-			}
-
-
-			/**
+                
+                add_shortcode( 'account-page',      [ $this, 'b3_render_account_page' ] );
+                add_shortcode( 'lostpass-form',     [ $this, 'b3_render_lost_password_form' ] );
+                add_shortcode( 'login-form',        [ $this, 'b3_render_login_form' ] );
+                add_shortcode( 'register-form',     [ $this, 'b3_render_register_form' ] );
+                add_shortcode( 'resetpass-form',    [ $this, 'b3_render_reset_password_form' ] );
+                add_shortcode( 'user-management',   [ $this, 'b3_render_user_approval_page' ] );
+            }
+            
+            
+            /**
              * Renders the register form
              *
-             * @since 1.0.0
-             *
-             * @param      $user_variables
-             * @param null $content
+             * @param $shortcode_args
              *
              * @return mixed|string|void
+             * @since 1.0.0
+             *
              */
-            public function b3_render_register_form( $user_variables, $content = null ) {
-				$default_attributes = [
-					'title'    => false,
-					'template' => 'register',
-				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
-
-                $registration_type                 = get_option( 'b3_registration_type' );
-                $attributes[ 'registration_type' ] = $registration_type;
-
+            public function b3_render_register_form( $shortcode_args ) {
+                $admin_approval    = get_option( 'b3_needs_admin_approval' );
+                $registration_type = $this->settings[ 'registration_type' ];
+                
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
+                if ( $admin_approval && 'user' == $registration_type ) {
+                    $button_value = esc_attr__( 'Request user', 'b3-onboarding' );
+                } elseif ( $admin_approval ) {
+                    $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
+                } elseif ( 'request_access' == $registration_type ) {
+                    $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
+                } else {
+                    $button_value = esc_attr__( 'Register', 'b3-onboarding' );
+                }
+
+                $default_attributes = [
+                    'button_modifier'   => 'register',
+                    'button_value'      => $button_value,
+                    'template'          => 'register',
+                    'title'             => false,
+                ];
+                
+                $attributes                        = shortcode_atts( $default_attributes, $shortcode_args );
+                $attributes[ 'registration_type' ] = $registration_type;
+                
+                if ( $admin_approval && ! isset( $_GET[ 'registered' ] ) ) {
+                    if ( 'user' === $registration_type ) {
+                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user.', 'b3-onboarding' ) );
+                    } elseif ( 'all' === $registration_type ) {
+                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user or site.', 'b3-onboarding' ) );
+                    }
+                }
+
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
+                    // @TODO: Improve/DRY this
                     if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
                         switch_to_blog( $_GET[ 'site_id' ] );
                         $home_url  = home_url( '/' );
@@ -68,31 +90,29 @@
                         $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $message .= '</p>';
 
-                        return $message;
                     } else {
-                        // fallback
                         $message = '<p class="b3_message b3_message--success">';
                         $message .= esc_html__( "Congratulations, you've registered your new site.", 'b3-onboarding' );
                         $message .= '</p>';
-
-                        return $message;
                     }
+
+                    return $message;
                 }
 
                 if ( 'none' === $registration_type && ! current_user_can( 'manage_network' ) ) {
                     ob_start();
-                    echo sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_registration_closed_message', b3_get_registration_closed_message() ) );
+                    echo sprintf( '<p class="b3_message">%s</p>', b3_get_registration_closed_message() );
                     do_action( 'b3_add_action_links', $attributes[ 'template' ] );
                     $rego_closed = ob_get_clean();
                     return $rego_closed;
 
                 } elseif ( 'blog' === $registration_type && ! is_user_logged_in() ) {
                     // logged in registration only
-                    return sprintf( '<p class="b3_message">%s</p>', apply_filters( 'b3_logged_in_registration_only_message', b3_get_logged_in_registration_only_message() ) );
+                    return sprintf( '<p class="b3_message">%s</p>', b3_get_logged_in_registration_only_message() );
 
                 } else {
                     $attributes[ 'errors' ] = [];
-					if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
+                    if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'registration-error' ] );
                         $error_count = 1;
                         foreach ( $error_codes as $error_code ) {
@@ -104,7 +124,7 @@
                                     if ( strpos( $error_code, 'field_' ) !== false ) {
                                         $field_id           = substr( $error_code, 6 );
                                         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-										$column             = array_column( $extra_field_values, 'id' );
+                                        $column             = array_column( $extra_field_values, 'id' );
                                         $key                = array_search( $field_id, $column );
                                         if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
                                             $sprintf_variable         = $extra_field_values[ $key ][ 'label' ];
@@ -151,22 +171,24 @@
              *
              * @since 1.0.0
              *
-             * @param array $attributes Shortcode attributes.
-             * @param string $content The text content for shortcode. Not used.
+             * @param array  $shortcode_args Shortcode attributes.
              *
              * @return string  The shortcode output
              */
-            public function b3_render_login_form( $user_variables, $content = null ) {
-				$default_attributes = [
-					'title'    => false,
-					'template' => 'login',
-				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
-
+            public function b3_render_login_form( $shortcode_args ) {
                 if ( is_user_logged_in() ) {
                     return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
                 }
-
+                
+                $errors             = [];
+                $error_codes        = [];
+                $default_attributes = [
+                    'button_value' => esc_attr__( 'Log in', 'b3-onboarding' ),
+                    'template'     => 'login',
+                    'title'        => false,
+                ];
+                $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
+                
                 // Pass the redirect parameter to the WordPress login functionality: but
                 // only if a valid redirect URL has been passed as request parameter, use it.
                 $attributes[ 'registration_type' ] = get_option( 'b3_registration_type' );
@@ -175,11 +197,22 @@
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
                     $attributes[ 'redirect' ] = wp_validate_redirect( $_REQUEST[ 'redirect_to' ], $attributes[ 'redirect' ] );
                 }
-
-				$errors = [];
-				if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
+                
+                // @TODO: create function for this
+                if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
-                        $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                        // @TODO: look into this
+                        if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
+                            error_log('class-b3-shortcodes.php line 193');
+                            if ( isset( $_REQUEST[ 'code' ] ) ) {
+                                // enter code
+                                error_log('class-b3-shortcodes.php line 196');
+                            } else {
+                                $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                            }
+                        } else {
+                            $error_codes = explode( ',', $_REQUEST[ 'login' ] );
+                        }
                     } elseif ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                     }
@@ -187,17 +220,17 @@
                     foreach ( $error_codes as $code ) {
                         $errors[] = $this->b3_get_return_message( $code );
                     }
-
+                    
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     if ( is_multisite() ) {
-                        $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
-                    } else {
                         if ( 'access_requested' === $_REQUEST[ 'registered' ] ) {
                             // access_requested
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
-                        } elseif ( 'confirm_email' === $_REQUEST[ 'registered' ] ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
-                        } elseif ( 'dummy' === $_REQUEST[ 'registered' ] ) {
+                        } else {
+                            $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
+                        }
+                    } else {
+                        if ( in_array( $_REQUEST[ 'registered' ], [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         } elseif ( 'success' === $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success' );
@@ -219,7 +252,15 @@
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' === $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
-
+                
+                if ( 1 == get_option( 'b3_use_magic_link' ) ) {
+                    $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                    $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
+                    $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
+                    $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
+                    $attributes[ 'template' ]     = 'magiclink';
+                }
+                
                 $attributes[ 'errors' ] = $errors;
 
                 $attributes = apply_filters( 'b3_attributes', $attributes );
@@ -233,24 +274,24 @@
              *
              * @since 1.0.0
              *
-             * @param array $attributes Shortcode attributes.
-             * @param string $content The text content for shortcode. Not used.
+             * @param array $shortcode_args Shortcode attributes.
              *
              * @return string  The shortcode output
              */
-            public function b3_render_lost_password_form( $user_variables, $content = null ) {
-				$default_attributes = [
-					'title'    => false,
-					'template' => 'lostpassword',
-				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
+            public function b3_render_lost_password_form( $shortcode_args ) {
+                $default_attributes = [
+                    'button_value' => esc_attr__( 'Reset password', 'b3-onboarding' ),
+                    'template'     => 'lostpassword',
+                    'title'        => false,
+                ];
+                $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
                 $attributes[ 'errors' ] = [];
-				if ( isset( $_REQUEST[ 'error' ] ) ) {
+                if ( isset( $_REQUEST[ 'error' ] ) ) {
                     $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                     foreach ( $error_codes as $error_code ) {
                         $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
@@ -263,7 +304,15 @@
                         $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success_enter_password' );
                     }
                 }
-
+                
+                if ( 1 == get_option( 'b3_use_magic_link' ) ) {
+                    $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                    $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
+                    $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
+                    $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
+                    $attributes[ 'template' ]     = 'magiclink';
+                }
+                
                 $attributes = apply_filters( 'b3_attributes', $attributes );
 
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
@@ -275,17 +324,17 @@
              *
              * @since 1.0.0
              *
-             * @param array $attributes Shortcode attributes.
-             * @param string $content The text content for shortcode. Not used.
+             * @param array $shortcode_args Shortcode attributes.
              *
-             * @return string  The shortcode output
+             * @return string The shortcode output
              */
-            public function b3_render_reset_password_form( $user_variables, $content = null ) {
-				$default_attributes = [
-					'title'    => false,
-					'template' => 'resetpass',
-				];
-				$attributes         = shortcode_atts( $default_attributes, $user_variables );
+            public function b3_render_reset_password_form( $shortcode_args ) {
+                $default_attributes = [
+                    'button_value' => esc_attr__( 'Set password', 'b3-onboarding' ),
+                    'template'     => 'resetpass',
+                    'title'        => false,
+                ];
+                $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
                     return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
@@ -294,8 +343,8 @@
                         $attributes[ 'login' ] = $_REQUEST[ 'login' ];
                         $attributes[ 'key' ]   = $_REQUEST[ 'key' ];
                         $errors                = [];
-
-						if ( isset( $_REQUEST[ 'error' ] ) ) {
+                        
+                        if ( isset( $_REQUEST[ 'error' ] ) ) {
                             $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                             foreach ( $error_codes as $code ) {
                                 $errors[] = $this->b3_get_return_message( $code );
@@ -319,31 +368,37 @@
                     }
                 }
             }
-
-
+            
+            
             /**
              * Render user/account page
              *
              * @since 1.0.0
              *
-             * @param      $user_variables
-             * @param null $content
+             * @param $shortcode_args
              *
              * @return bool|string
              */
-            public function b3_render_account_page( $user_variables, $content = null ) {
+            public function b3_render_account_page( $shortcode_args ) {
                 if ( is_user_logged_in() ) {
                     wp_enqueue_script( 'user-profile' );
-					$errors             = [];
-					$default_attributes = [
-						'title'    => false,
-						'template' => 'account',
-					];
-					$attributes         = shortcode_atts( $default_attributes, $user_variables );
+                    $errors             = [];
+                    $default_attributes = [
+                        'button_value' => esc_attr__( 'Update profile', 'b3-onboarding' ),
+                        'template'     => 'account',
+                        'title'        => false,
+                    ];
+                    $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                     if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
-                        foreach ( $error_codes as $code ) {
+                    } elseif ( isset( $_REQUEST[ 'message' ] ) ) {
+                        $error_codes = explode( ',', $_REQUEST[ 'message' ] );
+                    } elseif ( isset( $_REQUEST[ 'updated' ] ) ) {
+                        $error_codes = [ 'profile_saved' ];
+                    }
+                    if ( isset( $error_codes ) ) {
+                        foreach( $error_codes as $code ) {
                             $errors[] = $this->b3_get_return_message( $code );
                         }
                     }
@@ -353,7 +408,7 @@
                     if ( isset( $_REQUEST[ 'updated' ] ) ) {
                         $attributes[ 'updated' ] = $this->b3_get_return_message( $_REQUEST[ 'updated' ] );
                     }
-
+                    
                     $attributes = apply_filters( 'b3_attributes', $attributes );
 
                     return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
@@ -368,21 +423,22 @@
              *
              * @since 1.0.0
              *
-             * @param      $user_variables
-             * @param null $content
+             * @param $shortcode_args
              *
              * @return bool|string
              */
-            public function b3_render_user_approval_page( $user_variables, $content = null ) {
+            public function b3_render_user_approval_page( $shortcode_args ) {
                 if ( current_user_can( 'promote_users' ) ) {
-					$default_attributes = [
-						'title'    => false,
-						'template' => 'user-management',
-					];
-					$attributes         = shortcode_atts( $default_attributes, $user_variables );
-
-					$errors = [];
-					if ( isset( $_REQUEST[ 'error' ] ) ) {
+                    $default_attributes = [
+                        'title'    => false,
+                        'template' => 'user-management',
+                    ];
+                    
+                    $attributes           = shortcode_atts( $default_attributes, $shortcode_args );
+                    $errors               = [];
+                    $needs_admin_approval = get_option( 'b3_needs_admin_approval' );
+                    
+                    if ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', $_REQUEST[ 'error' ] );
                         foreach ( $error_codes as $code ) {
                             $errors[] = $this->b3_get_return_message( $code );
@@ -399,7 +455,7 @@
                         $attributes[ 'users' ] = $wpdb->get_results( $query );
                     } else {
                         $user_args             = [ 'role' => 'b3_approval' ];
-						$attributes[ 'users' ] = get_users( $user_args );
+                        $attributes[ 'users' ] = get_users( $user_args );
                     }
 
                     B3Onboarding::b3_show_admin_notices();
@@ -413,5 +469,5 @@
             }
         }
 
-        new B3_Shortcodes();
+        new B3Shortcodes();
     }

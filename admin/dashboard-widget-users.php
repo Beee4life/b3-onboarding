@@ -39,18 +39,18 @@
 
         if ( count( $approval_users ) > 0 ) {
             if ( 'request_access' === get_option( 'b3_registration_type' ) ) {
-                $notice = sprintf( esc_html__( 'There %s %d %s awaiting approval. %s to manage %s.', 'b3-onboarding' ),
+                $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s awaiting approval. %4$s to manage %5$s.', 'b3-onboarding' ),
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),
                     _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
-                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
+                    sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
                     _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
             } else {
-                $notice = sprintf( esc_html__( "There %s %d %s awaiting approval but you changed the registration type. That's why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %s.", 'b3-onboarding' ),
+                $notice = sprintf( esc_html__( "There %1$s %2$d %3$s awaiting approval but you changed the registration type. That's why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %4$s.", 'b3-onboarding' ),
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),
                     _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
-                    sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                    sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
             }
         } elseif ( count( $activation_users ) > 0 ) {
             $notice = sprintf( esc_html__( 'There %s %d %s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );

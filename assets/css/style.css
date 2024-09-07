@@ -1,39 +1,39 @@
 .no-js .hide-if-no-js,
 .js .hide-if-js {
-    display: none;
+  display: none;
 }
 
 /* Error message */
 .b3_message {
-    border:        1px dashed black;
-    box-sizing:    border-box;
-    margin-bottom: 1em;
-    padding:       5px 10px;
-    position:      relative;
-    word-wrap:     initial;
+  border:        1px dashed black;
+  box-sizing:    border-box;
+  margin-bottom: 1em;
+  padding:       5px 10px;
+  position:      relative;
+  word-wrap:     initial;
 }
 
 .b3_message p {
-    margin: 0;
+  margin: 0;
 }
 
 /* used on front-end profile only */
 .b3_message .error__close {
-    position:      absolute;
-    font-size:     80%;
-    top:           0;
-    right:         0;
-    padding-top:   0.5rem;
-    padding-right: 1rem;
+  position:      absolute;
+  font-size:     80%;
+  top:           0;
+  right:         0;
+  padding-top:   0.5rem;
+  padding-right: 1rem;
 }
 
 .b3_message .error__close:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Forms */
 .b3_page form {
-    width: 100%;
+  width: 100%;
 }
 
 .b3_page form input[type="text"],
@@ -44,10 +44,10 @@
 .b3_page form button,
 .b3_page form select,
 .b3_page form textarea {
-    border:        1px solid #ccc;
-    border-radius: 3px;
-    font-family:   inherit;
-    padding:       0.375rem;
+  border:        1px solid #ccc;
+  border-radius: 3px;
+  font-family:   inherit;
+  padding:       0.375rem;
 }
 
 .b3_page form .site-links,
@@ -58,333 +58,345 @@
 .b3_page form input[type="url"],
 .b3_page form select,
 .b3_page form textarea {
-    box-sizing: border-box;
-    width:      100%;
+  box-sizing: border-box;
+  width:      100%;
 }
 
 .b3_page form input[type="checkbox"],
 .b3_page form input[type="radio"] {
-    transform: scale(1.25);
+  transform: scale(1.25);
 }
 
 .b3_page form input[name="b3_delete_account"] {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .b3_page form input[name="signup_for"] {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .b3_page form input[name="b3_privacy_accept"] {
-    margin-left: 0;
-    margin-top:  0.5rem;
+  margin-left: 0;
+  margin-top:  0.5rem;
 }
 
 .b3_page form input#rememberme {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .b3_page form .password-input {
-    display:    flex;
-    margin-top: 1rem;
+  display:    flex;
+  margin-top: 1rem;
 }
 
 .b3_page form .password-input .b3_form-label {
-    padding-top: 0.25rem;
+  padding-top: 0.25rem;
 }
 
 .b3_page form .input {
-    max-width: 210px;
+  max-width: 210px;
 }
 
 .b3_page form .password-hint {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .b3_page form .user-login,
 .b3_page form .site-links {
-    display: inline-block;
+  display: inline-block;
 }
 
 .b3_page form .site-links ul {
-    list-style:   none;
-    padding-left: 0;
+  list-style:   none;
+  padding-left: 0;
 }
 
 .b3_page .b3_form-label {
-    display: block;
+  display: block;
 }
 
 .b3_form-element {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
-.b3_form-element-my-sites {
-    align-items: flex-start;
+.b3_form-element--button input[type="submit"] {
+  border-width: 0;
+}
+
+.b3_form-element--delete div {
+  margin-top: 1rem;
+}
+
+.b3_form-element--delete strong {
+  font-size: 1.15rem;
 }
 
 .b3_form-element--email .inline p {
-    margin-top:    0.5rem;
-    margin-bottom: 0;
+  margin-top:    0.5rem;
+  margin-bottom: 0;
 }
 
 .b3_page .b3_form-element--checkbox .b3_form-label,
 .b3_page .b3_form-element--radio .b3_form-label {
-    vertical-align: top;
+  vertical-align: top;
 }
 
-.b3_page p.rememberme {
-    margin-top: 1rem;
+.b3_form-element-my-sites {
+  align-items: flex-start;
 }
 
 .b3_form-element-my-sites .site-links ul,
 .b3_form-element-my-sites .site-links ul li {
-    margin: 0;
+  margin: 0;
 }
 
-.b3_form-element--delete div {
-    margin-top: 1rem;
-}
-
-.b3_form-element--delete strong {
-    font-size: 1.15rem;
+.b3_form-element--password .change-password-button {
+  margin-right: 20px;
 }
 
 .b3_form-element--pooh {
-    display: none !important;
+  display: none !important;
+}
+
+.b3_page p.rememberme {
+  margin-top: 1rem;
 }
 
 /* Label on password reset input */
 .b3_page .b3_form-label--email {
-    width: 150px;
+  width: 150px;
 }
 
 .b3_site-fields {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .b3_site-fields-header {
-    font-weight: bold;
-    font-size:   1.25rem;
+  font-weight: bold;
+  font-size:   1.25rem;
 }
 
 .b3_input-options {
-    display:   inline-block;
-    width:     initial;
-    min-width: 220px;
+  display:   inline-block;
+  width:     initial;
+  min-width: 220px;
 }
 
 /* Links in form footer */
 ul.b3_form-links {
-    list-style:   none;
-    margin-top:   1.5rem;
-    padding-left: 0;
-    position:     relative;
+  list-style:   none;
+  margin-top:   1.5rem;
+  padding-left: 0;
+  position:     relative;
 }
 
 ul.b3_form-links li {
-    border-right:  1px solid grey;
-    display:       inline-block;
-    line-height:   1;
-    margin-left:   0;
-    padding-left:  1em;
-    padding-right: 1em;
+  border-right:  1px solid grey;
+  display:       inline-block;
+  line-height:   1;
+  margin-left:   0;
+  padding-left:  1em;
+  padding-right: 1em;
 }
 
 ul.b3_form-links li:first-child {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 ul.b3_form-links li:last-child {
-    border-right: 0;
+  border-right: 0;
 }
 
 /* User approval page */
 .b3_table--user th {
-    text-align: left;
+  text-align: left;
 }
 
 .b3_table--account tr td:first-child {
-    width: 95px;
+  width: 95px;
 }
 
 /* Password strength */
 #pass-strength-result {
-    background-color: #eee;
-    border:           1px solid #ddd;
-    box-sizing:       border-box;
-    color:            #23282d;
-    font-weight:      600;
-    margin:           1rem 0;
-    padding:          3px 5px;
-    text-align:       center;
-    width:            100%;
-    max-width:        100%;
-    opacity:          0;
+  background-color: #eee;
+  border:           1px solid #ddd;
+  box-sizing:       border-box;
+  color:            #23282d;
+  font-weight:      600;
+  margin:           1rem 0;
+  padding:          3px 5px;
+  text-align:       center;
+  width:            100%;
+  max-width:        100%;
+  opacity:          0;
 }
 
 #pass-strength-result.short {
-    background-color: #f1adad;
-    border-color:     #e35b5b;
-    opacity:          1;
+  background-color: #f1adad;
+  border-color:     #e35b5b;
+  opacity:          1;
 }
 
 #pass1.short,
 #pass1-text.short {
-    border-color: #e35b5b;
+  border-color: #e35b5b;
 }
 
 #pass-strength-result.bad {
-    background-color: #fbc5a9;
-    border-color:     #f78b53;
-    opacity:          1;
+  background-color: #fbc5a9;
+  border-color:     #f78b53;
+  opacity:          1;
 }
 
 #pass1.bad,
 #pass1-text.bad {
-    border-color: #f78b53;
+  border-color: #f78b53;
 }
 
 #pass-strength-result.good {
-    background-color: #ffe399;
-    border-color:     #ffc733;
-    opacity:          1;
+  background-color: #ffe399;
+  border-color:     #ffc733;
+  opacity:          1;
 }
 
 #pass1.good,
 #pass1-text.good {
-    border-color: #ffc733;
+  border-color: #ffc733;
 }
 
 #pass-strength-result.strong {
-    background-color: #c1e1b9;
-    border-color:     #83c373;
-    opacity:          1;
+  background-color: #c1e1b9;
+  border-color:     #83c373;
+  opacity:          1;
 }
 
 #pass1.strong,
 #pass1-text.strong {
-    border-color: #83c373;
+  border-color: #83c373;
 }
 
 .pw-weak {
-    display:    none;
-    margin-top: 1rem;
+  display:    none;
+  margin-top: 1rem;
 }
 
 .indicator-hint {
-    padding-top: 8px;
+  padding-top: 8px;
 }
 
 #pass1-text,
 .show-password #pass1 {
-    display: none;
+  display: none;
 }
 
 .show-password #pass1-text {
-    display: inline-block;
+  display: inline-block;
 }
 
 .button .text.hide {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 /* Admin topbar notification for user approval */
 #wpadminbar .topbar_approve_user a.ab-item {
-    color: #ee6102;
+  color: #ee6102;
 }
 
 /* Modal */
 
 .modal {
-    padding: 15px;
+  padding: 15px;
 }
 
 .modal__logo {
-    margin-bottom: 1rem;
-    text-align:    center;
+  margin-bottom: 1rem;
+  text-align:    center;
 }
 
 .modal__logo img {
-    max-height: 100px;
-    width:      auto;
+  max-height: 100px;
+  width:      auto;
 }
 
 .modal .b3_form-element:first-of-type {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 /* Misc */
 .widget .widget-no-settings {
-    border:  1px dashed red;
-    padding: 5px 10px;
+  border:  1px dashed red;
+  padding: 5px 10px;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 /* Media queries */
 @media screen and ( min-width: 480px ) {
-    .b3_form-element {
-        display:   flex;
-        flex-flow: row nowrap;
-    }
+  .b3_form-element {
+    display:     flex;
+    flex-flow:   row nowrap;
+    align-items: center;
+  }
 
-    .b3_form-element label {
-        min-width: 250px;
-    }
+  .b3_form-element label {
+    min-width: 250px;
+  }
 
-    .b3_form-element--email .inline p {
-        margin-top:    0.5rem;
-        margin-bottom: 0;
-    }
+  .b3_form-element--delete {
+    display: block;
+  }
 
-    .b3_site-domain {
-        margin-top: 0.5rem;
-    }
+  .b3_form-element--email .inline p {
+    margin-top:    0.5rem;
+    margin-bottom: 0;
+  }
 
-    .b3_page form .login,
-    .b3_page form .site-links,
-    .b3_page form input[type="text"],
-    .b3_page form input[type="email"],
-    .b3_page form input[type="number"],
-    .b3_page form input[type="password"],
-    .b3_page form input[type="url"],
-    .b3_page form select,
-    .b3_page form textarea {
-        display:   inline-block;
-        width:     initial;
-        max-width: 250px;
-    }
+  .b3_site-domain {
+    margin-top: 0.5rem;
+  }
 
-    .b3_page form input[name="b3_privacy_accept"] {
-        margin-top: 0;
-    }
+  .b3_page form .login,
+  .b3_page form .site-links,
+  .b3_page form input[type="text"],
+  .b3_page form input[type="email"],
+  .b3_page form input[type="number"],
+  .b3_page form input[type="password"],
+  .b3_page form input[type="url"],
+  .b3_page form select,
+  .b3_page form textarea {
+    display:   inline-block;
+    width:     initial;
+    max-width: 250px;
+  }
 
-    .b3_table--account tr td:first-child {
-        width: 150px;
-    }
+  .b3_page form input[name="b3_privacy_accept"] {
+    margin-top: 0;
+  }
 
-    .b3_page form .password-input-description {
-        /*margin-left: 255px;*/
-    }
+  .b3_table--account tr td:first-child {
+    width: 150px;
+  }
+
+  .b3_page form .password-input-description {
+    /*margin-left: 255px;*/
+  }
 }
 
 @media screen and ( min-width: 640px ) {
-    .b3_table--account tr td:first-child {
-        width: 175px;
-    }
+  .b3_table--account tr td:first-child {
+    width: 175px;
+  }
 }
 
 @media screen and ( min-width: 1024px ) {
+  .b3_site-domain {
+    display:    inline-block;
+    margin-top: 0;
+  }
 
-    .b3_site-domain {
-        display:    inline-block;
-        margin-top: 0;
-    }
-
-    .b3_table--account tr td:first-child {
-        width: 250px;
-    }
+  .b3_table--account tr td:first-child {
+    width: 250px;
+  }
 }

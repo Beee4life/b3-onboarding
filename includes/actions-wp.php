@@ -77,27 +77,39 @@
      */
     function b3_add_toolbar( $wp_admin_bar ) {
         if ( current_user_can( 'promote_users' ) ) {
-            if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access', 'request_access_subdomain' ] ) ) {
-                $approval_users = [];
-                if ( 'request_access' === get_option( 'b3_registration_type' ) ) {
-                    $approval_args  = [ 'role' => 'b3_approval' ];
-					$approval_users = get_users( $approval_args );
-                } elseif ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
-                    global $wpdb;
-                    $query = "SELECT * FROM $wpdb->signups WHERE active = '0'";
-                    $approval_users = $wpdb->get_results( $query );
-                }
-
-                if ( 0 < count( $approval_users ) ) {
-					$page_link     = admin_url( 'admin.php?page=b3-user-approval' );
-					$approval_args = [
-						'id'    => 'approval',
-						'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
-						'href'  => $page_link,
-						'meta'  => [ 'class' => 'topbar_approve_user' ],
-					];
-					$wp_admin_bar->add_node( $approval_args );
-                }
+            $approval_users = [];
+            $registration_type = get_option( 'b3_registration_type' );
+            
+            if ( 'request_access' === $registration_type ) {
+                $approval_args  = [ 'role' => 'b3_approval' ];
+                $approval_users = get_users( $approval_args );
+            } elseif ( is_multisite() && get_option( 'b3_needs_admin_approval' ) ) {
+                global $wpdb;
+                $query          = "SELECT * FROM $wpdb->signups WHERE active = '0'";
+                $approval_users = $wpdb->get_results( $query );
+            }
+            
+            if ( 0 < count( $approval_users ) ) {
+                $page_link     = admin_url( 'admin.php?page=b3-user-approval' );
+                $approval_args = [
+                    'id'    => 'approval',
+                    'title' => '&rarr; ' . esc_attr__( 'Approve', 'b3-onboarding' ) . ' (' . count( $approval_users ) . ')',
+                    'href'  => $page_link,
+                    'meta'  => [ 'class' => 'topbar_approve_user' ],
+                ];
+                $wp_admin_bar->add_node( $approval_args );
+            }
+        }
+        if ( current_user_can( 'manage_options' ) ) {
+            if ( get_option( 'b3_activate_filter_validation' ) ) {
+                $page_link     = admin_url( 'admin.php?page=b3-onboarding&tab=settings' );
+                $approval_args = [
+                    'id'    => 'verify_filters',
+                    'title' => '&rarr; ' . esc_attr__( 'Filter verification active', 'b3-onboarding' ),
+                    'href'  => $page_link,
+                    'meta'  => [ 'class' => 'topbar_verify_filters' ],
+                ];
+                $wp_admin_bar->add_node( $approval_args );
             }
         }
     }
@@ -139,12 +151,26 @@
     function b3_after_signup_user( $user_login, $user_email, $key, $meta = [] ) {
         if ( ! is_admin() ) {
             $current_network = get_network();
-            $subject         = sprintf( apply_filters( 'b3_wpmu_activate_user_subject', b3_get_wpmu_activate_user_subject() ), $current_network->site_name );
-            $message         = sprintf( apply_filters( 'b3_wpmu_activate_user_message', b3_get_wpmu_activate_user_message() ), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
-            $message         = b3_replace_template_styling( $message );
-            $message         = strtr( $message, b3_get_replacement_vars() );
-            $message         = htmlspecialchars_decode( stripslashes( $message ) );
-
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );
+                $message = sprintf( b3_default_request_access_message_user(), $current_network->site_name );
+                do_action( 'b3_inform_admin', 'request_access' );
+                
+                global $wpdb;
+                $meta[ 'pending' ] = '1';
+                $table             = $wpdb->signups;
+                $data[ 'meta' ]    = serialize( $meta );
+                $where             = [ 'user_login' => $user_login ];
+                $wpdb->update( $table, $data, $where );
+                
+            } else {
+                $subject = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
+                $message = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
+            }
+            
+            $message = b3_replace_template_styling( $message );
+            $message = strtr( $message, b3_get_replacement_vars() );
+            $message = htmlspecialchars_decode( stripslashes( $message ) );
             wp_mail( $user_email, $subject, $message, [] );
         }
     }
@@ -161,14 +187,21 @@
      * @param array $meta
      */
     function b3_after_activate_user( $user_id, $password, $meta = [] ) {
-        // @TODO: check if can be replaced by filter
         $current_network = get_network();
         $user            = get_userdata( $user_id );
-        $subject         = sprintf( apply_filters( 'b3_wpmu_user_activated_subject', b3_get_wpmu_user_activated_subject() ), $current_network->site_name, $user->user_login );
-        $message         = sprintf( apply_filters( 'b3_wpmu_user_activated_message', b3_get_wpmu_user_activated_message() ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
-        $message         = b3_replace_template_styling( $message );
-        $message         = strtr( $message, b3_get_replacement_vars() );
-        $message         = htmlspecialchars_decode( stripslashes( $message ) );
+        $subject         = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
+
+        if ( get_option( 'b3_needs_admin_approval' ) ) {
+            // @TODO: send magic link email
+            error_log('@TODO: send magic link email');
+            $message = sprintf( b3_get_wpmu_user_activated_message(), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        } else {
+            $message = sprintf( b3_get_wpmu_user_activated_message(), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        }
+        
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_get_replacement_vars() );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user->user_email, $subject, $message, [] );
     }
@@ -186,9 +219,13 @@
      * @param $key
      */
     function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        if ( 'request_access_subdomain' === get_option( 'b3_registration_type' ) ) {
-            $subject = b3_default_request_access_subject_user();
-            $message = b3_default_request_access_message_user();
+        $admin_approval    = get_option( 'b3_needs_admin_approval' );
+        $current_network   = get_network();
+        $registration_type = get_option( 'b3_registration_type' );
+        
+        if ( $admin_approval ) {
+            $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );
+            $message = sprintf( b3_default_request_access_message_user(), $current_network->site_name );
             do_action( 'b3_inform_admin', 'request_access' );
 
         } else {
@@ -196,13 +233,13 @@
             $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
             $message = b3_get_wpmu_activate_user_blog_message();
         }
-		$message = b3_replace_template_styling( $message );
-		$message = strtr( $message, b3_get_replacement_vars( 'message', [
-			'domain' => $domain,
-			'key'    => $key,
-			'path'   => $path,
-		], true ) );
-		$message = htmlspecialchars_decode( stripslashes( $message ) );
+        $message = b3_replace_template_styling( $message );
+        $message = strtr( $message, b3_get_replacement_vars( 'message', [
+            'domain' => $domain,
+            'key'    => $key,
+            'path'   => $path,
+        ], true ) );
+        $message = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
     }
@@ -219,18 +256,18 @@
      * @param $meta
      */
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
-		$user_data = get_userdata( $user_id );
-		$subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
-		$message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
-		$message   = b3_replace_template_styling( $message );
-		$message   = strtr( $message, b3_get_replacement_vars( 'message', [
-			'blog_id'       => $blog_id,
-			'user_data'     => $user_data,
-			'user_password' => $password,
-		] ) );
-		$message   = htmlspecialchars_decode( stripslashes( $message ) );
-
-		wp_mail( $user_data->user_email, $subject, $message, [] );
+        $user_data = get_userdata( $user_id );
+        $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
+        $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
+        $message   = b3_replace_template_styling( $message );
+        $message   = strtr( $message, b3_get_replacement_vars( 'message', [
+            'blog_id'       => $blog_id,
+            'user_data'     => $user_data,
+            'user_password' => $password,
+        ] ) );
+        $message   = htmlspecialchars_decode( stripslashes( $message ) );
+        
+        wp_mail( $user_data->user_email, $subject, $message, [] );
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
 

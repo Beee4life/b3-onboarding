@@ -61,6 +61,25 @@ table td.b3_email_content {
   height:    auto;
 }
 
+.big-link-container {
+  background-color: #e0144b;
+  padding: 10px;
+}
+
+.big-link-container .big-link {
+  font-size:   200%;
+  font-weight: bold;
+  text-align:  center;
+}
+
+#b3_email_main .big-link a:link,
+#b3_email_main .big-link a:visited,
+#b3_email_main .big-link a:active {
+  display: block;
+  color:   white;
+  width:   100%;
+}
+
 .underline {
   text-decoration: underline;
 }

@@ -14,8 +14,10 @@
         $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
         $link_color             = b3_get_link_color();
+        $main_logo              = get_option( 'b3_main_logo' );
         $filter_link_color      = apply_filters( 'b3_link_color', false );
         $logo_in_email          = get_option( 'b3_logo_in_email' );
+        $hide_logo_field        = $logo_in_email ? false : ' hidden';
         $hide_logo_notice       = $logo_in_email ? false : ' hidden';
 
         ob_start();
@@ -32,7 +34,7 @@
                     <?php b3_get_close(); ?>
                     <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
                     <?php if ( $filter_link_color ) { ?>
-                        <?php esc_html_e( "You've set a filter to override the link color.", 'b3-onboarding' ); ?>
+                        <?php esc_html_e( "The 'b3_link_color' filter is active which sets the link color.", 'b3-onboarding' ); ?>
                     <?php } ?>
                 <?php b3_get_close(); ?>
 
@@ -54,7 +56,6 @@
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/>
                             <?php esc_html_e( 'Activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
-                            <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--logo%s">%s</div>', $hide_logo_notice, sprintf( esc_html__( 'Image can be set on the "%s" tab.','b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=settings' ), 'Settings' ) ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -63,7 +64,7 @@
             <?php foreach( $email_boxes as $box ) { ?>
                 <?php echo b3_render_email_settings_field( $box ); ?>
             <?php } ?>
-
+            
             <?php b3_get_submit_button(); ?>
         </form>
 

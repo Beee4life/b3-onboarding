@@ -185,7 +185,7 @@
      * @return string
      */
     function b3_message_above_registration_example( $registration_message ) {
-        return  'Filter registration text';
+        return 'Filter registration text';
     }
     add_filter( 'b3_message_above_registration', 'b3_message_above_registration_example' );
 
@@ -264,7 +264,7 @@
 
 
     /**
-     * Filter a custom email address for localhost development
+     * Filter a custom username for localhost development
      *
      * @since 2.0.0
      *
@@ -294,6 +294,36 @@
 
 
     /**
+     * Filter a custom blogname for localhost development (Multisite)
+     *
+     * @since 2.0.0
+     *
+     * @param $blogname
+     *
+     * @return string
+     */
+    function b3_localhost_blogname_example( $blogname ) {
+        return 'blogname';
+    }
+    add_filter( 'b3_localhost_blogname', 'b3_localhost_blogname_example' );
+
+
+    /**
+     * Filter a custom blog title for localhost development (Multisite))
+     *
+     * @since 2.0.0
+     *
+     * @param $email
+     *
+     * @return string
+     */
+    function b3_localhost_blogtitle_example( $email ) {
+        return 'Dummy Title';
+    }
+    add_filter( 'b3_localhost_blogtitle', 'b3_localhost_blogtitle_example' );
+
+
+    /**
      * Disable the admin links
      *
      * @param $email
@@ -309,21 +339,20 @@
     /**
      * Extend disallowed usernames
      *
-     * @since 2.0.x TODO
+     * @since 2.0
      *
-     * @param $existing_user_names
+     * @param $existing_disallowed_usernames
      *
-     * @return string|array
+     * @return array
      */
-    function b3_disallowed_usernames_example() {
-
-        $disallowed_user_names = [
+    function b3_disallowed_usernames_example( $existing_disallowed_usernames ) {
+        $your_disallowed_usernames = [
             'username1',
             'username2',
         ];
-
-        return $disallowed_user_names;
-
+        $existing_disallowed_usernames = array_merge( $existing_disallowed_usernames, $your_disallowed_usernames );
+    
+        return $existing_disallowed_usernames;
     }
     add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
 

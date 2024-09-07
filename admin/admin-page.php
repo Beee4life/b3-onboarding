@@ -30,7 +30,8 @@
                     include 'preview.php';
 
                 } else {
-                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : 'registration';
+                    $default_tab = ! is_multisite() || is_main_site() ? 'registration' : 'emails';
+                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : $default_tab;
                     $tabs        = b3_get_admin_tabs();
 
                     echo sprintf( '<h1 id="b3__admin-title">%s</h1>', get_admin_page_title() );

@@ -22,7 +22,9 @@
         $recaptcha                    = get_option( 'b3_activate_recaptcha' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
+        $use_magic_link               = get_option( 'b3_use_magic_link' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
+        $needs_admin_approval         = get_option( 'b3_needs_admin_approval' );
 
         ob_start();
 
@@ -44,8 +46,8 @@
                     <div class="b3_settings-input b3_settings-input--select">
                         <select name="b3_registration_type" id="b3_registration_type">
                             <?php foreach( $options as $option ) { ?>
-                                <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php selected( $option[ 'value' ], $registration_type ); ?>> <?php echo $option[ 'label' ]; ?>
-                            <?php } ?>
+                            <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php selected( $option[ 'value' ], $registration_type ); ?>> <?php echo $option[ 'label' ]; ?>
+                                <?php } ?>
                         </select>
                     </div>
                 <?php b3_get_close(); ?>
@@ -53,8 +55,9 @@
                 <?php if ( 'none' === $registration_type ) { ?>
                     <?php $filter_message = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) ); ?>
                     <?php $closed_message = htmlspecialchars( get_option( 'b3_registration_closed_message' ) ); ?>
-                    <?php $default_closed_message = b3_get_registration_closed_message(); ?>
-                    <?php $default_closed_message = ( false != $filter_message ) ? $filter_message : $default_closed_message; ?>
+                    <?php $default_closed_message = b3_default_registration_closed_message(); ?>
+                    <?php $placeholder_registration_closed = $filter_message ? $filter_message : $default_closed_message; ?>
+                    
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
@@ -63,14 +66,25 @@
                             <?php if ( false != $filter_message ) { ?>
                                 <?php echo sprintf( '<div class="filter-override">%s</div>', esc_html__( 'You have set a filter to override this setting', 'b3-onboarding' ) ); ?>
                             <?php } ?>
-                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $default_closed_message ); ?>" value="<?php if ( $closed_message ) { echo htmlspecialchars_decode(stripslashes( $closed_message )); } ?>"/>
+                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $placeholder_registration_closed ); ?>" value="<?php if ( $closed_message ) { echo htmlspecialchars_decode(stripslashes( $closed_message )); } ?>"/>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
                 <?php } else { ?>
 
-                    <?php if ( ! is_multisite() ) { ?>
+                    <?php if ( in_array( $registration_type, [ 'user', 'all', 'site' ] ) ) { ?>
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_needs_admin_approval"><?php esc_html_e( 'Needs admin approval', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                                <div class="b3_settings-input b3_settings-input--checkbox">
+                                    <input type="checkbox" id="b3_needs_admin_approval" name="b3_needs_admin_approval" value="1" <?php checked($needs_admin_approval); ?>/>
+                                    <?php esc_html_e( 'An administrator must approve each registration.', 'b3-onboarding' ); ?>
+                                </div>
+                        <?php b3_get_close(); ?>
+                    
+                    <?php } elseif ( ! is_multisite() ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_register_email_only"><?php esc_html_e( 'Email address only', 'b3-onboarding' ); ?></label>
@@ -82,7 +96,8 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'none' ] ) ) ? true : false; ?>
-                        <?php b3_get_settings_field_open( false, $hide_custom_passwords, 'custom-passwords' ); ?>
+                        <?php $hide_custom_passwords = ( 1 == $use_magic_link ) ? true : $hide_custom_passwords; ?>
+                        <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
@@ -95,7 +110,6 @@
 
                     <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
                     <div class="b3-name-fields<?php echo $hide_extended_fields; ?>">
-
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_first_last"><?php esc_html_e( 'First and last name', 'b3-onboarding' ); ?></label>
@@ -107,7 +121,7 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_first_last_required = ( 1 == $first_last ) ? false : true; ?>
-                        <?php b3_get_settings_field_open( false, $hide_first_last_required, 'first-last-required' ); ?>
+                        <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
@@ -117,10 +131,23 @@
                             </div>
                         <?php b3_get_close(); ?>
                     </div>
-
+                    
+                    <?php if ( ! is_multisite() ) { ?>
+                        <?php $hide_one_time_password = ( 1 == $custom_passwords ) ? ' hidden' : false; ?>
+                        <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                        <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
+                            <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
+                        </div>
+                        <?php b3_get_close(); ?>
+                    <?php } ?>
+                    
                     <?php if ( 'open' === $registration_type ) { ?>
                         <?php $hide_redirect_field = ( 1 == $custom_passwords ) ? true : false; ?>
-                        <?php b3_get_settings_field_open( false, $hide_redirect_field, 'redirect' ); ?>
+                        <?php b3_get_settings_field_open( $hide_redirect_field, 'redirect' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
@@ -169,7 +196,7 @@
                     <?php b3_get_close(); ?>
 
                     <?php $hide_privacy_settings = ( 1 == $privacy ) ? false : true; ?>
-                    <?php b3_get_settings_field_open( false, $hide_privacy_settings, 'privacy' ); ?>
+                    <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
@@ -179,21 +206,21 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php b3_get_settings_field_open( false, $hide_privacy_settings, 'privacy' ); ?>
+                    <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_page_id"><?php esc_html_e( 'Privacy page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <?php
-								$page_args = [
-									'post_type'        => 'page',
-									'posts_per_page'   => -1,
-									'orderby'          => 'title',
-									'order'            => 'ASC',
-									'suppress_filters' => false,
-								];
-								$all_pages = get_posts( $page_args );
-							?>
+                                $page_args = [
+                                    'post_type'        => 'page',
+                                    'posts_per_page'   => -1,
+                                    'orderby'          => 'title',
+                                    'order'            => 'ASC',
+                                    'suppress_filters' => false,
+                                ];
+                                $all_pages = get_posts( $page_args );
+                            ?>
                             <select name="b3_privacy_page_id" id="b3_privacy_page_id">
                                 <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
                                 <?php foreach( $all_pages as $page ) { ?>

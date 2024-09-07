@@ -25,6 +25,10 @@
                 $default_css .= '*/';
             }
             $default_css .= "\n";
+            $default_css .= '.big-link-container {' . "\n";
+            $default_css .= '    background-color: ' . $link_color . ";\n";
+            $default_css .= '}' . "\n";
+            $default_css .= "\n";
             $default_css .= '#b3_email_main a:link,' . "\n";
             $default_css .= '#b3_email_main a:visited,' . "\n";
             $default_css .= '#b3_email_main a:active {' . "\n";
@@ -148,11 +152,21 @@
     function b3_default_account_activated_message() {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
-        if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
-            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now set your password through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%lostpass_url%', esc_html__( 'this link', 'b3-onboarding' ) ) );
+        if ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
+            $lost_pass_link = '%lostpass_url%';
+            $lost_pass_link = sprintf( '<a href="%s">%s</a>', esc_url( $lost_pass_link ), strtoupper( __( 'Set password', 'b3-onboarding' ) ) );
+            $button         = sprintf( '<div class="big-link">%s</div>', $lost_pass_link ) . "\n";
+            $message        .= esc_html__( 'you have confirmed your email address and can now set a password through the link below.', 'b3-onboarding' );
+
         } else {
-            $message .= sprintf( esc_html__( 'you have confirmed your email address and can now login %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'here', 'b3-onboarding' ) ) );
+            $login_link = b3_get_login_url();
+            $login_link = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+            $button     = sprintf( '<div class="big-link">%s</div>', $login_link ) . "\n";
+            $message    .= esc_html__( 'you have confirmed your email address and can now login through the link below.', 'b3-onboarding' );
         }
+        $message .= '<br><br>' . "\n";
+        $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -209,6 +223,7 @@
     function b3_default_request_access_message_user() {
         ob_start();
         echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) );
+        echo '<br>';
         echo b3_default_greetings();
 
         return ob_get_clean();
@@ -235,11 +250,24 @@
      * @return string
      */
     function b3_default_account_approved_message() {
-        if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
-            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_login_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
+        if ( get_option( 'b3_activate_custom_passwords' ) || get_option( 'b3_use_magic_link' ) ) {
+            $link = b3_get_login_url();
+            $label = esc_html__( 'Login', 'b3-onboarding' );
         } else {
-            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password %s.', 'b3-onboarding' ), get_option( 'blogname' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
+            $link = '%reset_url%';
+            $label = esc_html__( 'Set password', 'b3-onboarding' );
         }
+        
+        $link_element = sprintf( '<a href="%s">%s</a>', $link, strtoupper( $label ) );
+        $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+
+        if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
+            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login by clicking the button below.', 'b3-onboarding' ), get_option( 'blogname' ) );
+        } else {
+            $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now set your password by clicking the button below.', 'b3-onboarding' ), get_option( 'blogname' ) );
+        }
+        $message .= '<br><br>' . "\n";
+        $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -267,6 +295,7 @@
      */
     function b3_default_account_rejected_message() {
         $message = sprintf( esc_html__( "We're sorry to tell you, your request for access to %s has been rejected.", 'b3-onboarding' ), get_option( 'blogname' ) );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -293,14 +322,18 @@
      * @return string
      */
     function b3_default_lost_password_message() {
-        $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'To (re)set your password, go to %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%reset_url%', esc_html__( 'this page', 'b3-onboarding' ) ) );
-        $message .= b3_default_greetings();
+        $lost_pass_url = sprintf( '<a href="%s">%s</a>',  '%reset_url%', strtoupper( __( 'Reset password', 'b3-onboarding' ) ) );
+        $button        = sprintf( '<div class="big-link">%s</div>', $lost_pass_url ) . "\n";
+        $message       = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
+        $message       .= '<br><br>' . "\n";
+        $message       .= esc_html__( 'Someone requested a password reset for the account using this email address.', 'b3-onboarding' ) . "\n";
+        $message       .= '<br><br>' . "\n";
+        $message       .= esc_html__( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+        $message       .= '<br><br>' . "\n";
+        $message       .= esc_html__( 'To (re)set your password, click the button below.', 'b3-onboarding' );
+        $message       .= '<br><br>' . "\n";
+        $message       .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message       .= b3_default_greetings();
 
         return $message;
 
@@ -327,12 +360,16 @@
      * @return string
      */
     function b3_default_welcome_user_message() {
+        $activation_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
+        $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
         $message = b3_get_email_intro();
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
             $message .= '<br><br>' . "\n";
-            $message .= sprintf( esc_html__( 'You can set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) );
+            $message .= __( 'You can set your password by clicking the button below.', 'b3-onboarding' ) . "\n";
+            $message .= '<br><br>' . "\n";
+            $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         }
         $message .= b3_default_greetings();
 
@@ -351,6 +388,7 @@
         $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'You can (re)set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -377,12 +415,16 @@
      * @return string
      */
     function b3_default_email_activation_message() {
-        $message = b3_get_email_intro();
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'You only need to confirm your email address through %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'this link', 'b3-onboarding' ) ) );
-        $message .= b3_default_greetings();
+        $activation_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( __( 'Confirm email', 'b3-onboarding' ) ) );
+        $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
+        $message         = b3_get_email_intro();
+        $message         .= '<br><br>' . "\n";
+        $message         .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message         .= '<br><br>' . "\n";
+        $message         .= esc_html__( 'You only need to confirm your email address through the link below.', 'b3-onboarding' );
+        $message         .= '<br><br>' . "\n";
+        $message         .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message         .= b3_default_greetings();
 
         return $message;
     }
@@ -406,11 +448,17 @@
      * @return string|void
      */
     function b3_default_wpmu_activate_user_message() {
-        $message = esc_html__( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= sprintf( esc_html__( 'To activate your account, please click %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%2$s', esc_html__( 'this link', 'b3-onboarding' ) ) ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
+        $link_element = sprintf( '<a href="%s">%s</a>', '%2$s', strtoupper( __( 'Activate account', 'b3-onboarding' ) ) );
+        $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+        $message      = esc_html__( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= esc_html__( 'To activate your account, please click the link below.', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
+        $message      .= '<br>' . "\n";
+        $message      .= b3_default_greetings();
 
         return $message;
     }
@@ -432,19 +480,22 @@
      * @return string|void
      */
     function b3_default_wpmu_user_activated_message() {
-        $message = esc_html__( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
-        $message .= '<br>' . "\n";
-        $message .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
-        $message .= '<br>' . "\n";
-        $message .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
-        $message .= '<br>' . "\n";
-        $message .= sprintf( esc_html__( 'You can login %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%4$s', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'The Team @ %5$s', 'b3-onboarding' );
+        $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+        $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+        $message      = esc_html__( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= esc_html__( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
+        $message      .= '<br><br>' . "\n";
+        $message      .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
+        $message      .= '<br>' . "\n";
+        $message      .= esc_html__( 'You can login through the link below.', 'b3-onboarding' );
+        $message      .= '<br><br>' . "\n";
+        $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $message      .= b3_default_greetings();
 
         return $message;
     }
@@ -475,6 +526,7 @@
         $message .= esc_html__( 'Remote IP address: %user_ip%.', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= sprintf( esc_html__( 'Disable these notifications %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%settings_url%', esc_html__( 'here', 'b3-onboarding' ) ) );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -493,6 +545,7 @@
         $message .= esc_html__( 'Site address: %home_url%', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'Site name: %blog_name%', 'b3-onboarding' );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -535,6 +588,7 @@
         $message .= esc_html__( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
         $message .= '<br>' . "\n";
         $message .= '<a href="%home_url%">%home_url%</a>';
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -564,6 +618,7 @@
             $message .= 'Hi %user_login%' . ",\n";
             $message .= '<br><br>' . "\n";
         }
+        // @TODO: add optional magic link
         $message .= sprintf( esc_html__( 'Your new site has been successfully set up at %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', '%home_url%' ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
@@ -575,6 +630,7 @@
         $message .= sprintf( esc_html__( 'Login here: %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%login_url%', '%login_url%' ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'Enjoy your new site.', 'b3-onboarding' );
+        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;
@@ -677,7 +733,7 @@
      * @return string
      */
     function b3_default_greetings() {
-        $greetings = "\n" . '<br><br>' . "\n";
+        $greetings = "\n" . '<br>' . "\n";
         $greetings .= esc_html__( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
         $greetings .= '<br><br>' . "\n";
         $greetings .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
@@ -731,4 +787,88 @@
         ];
         
         return $default_passwords;
+    }
+    
+    
+    /**
+     * Get default magic link email
+     *
+     * @since 3.11.0
+     *
+     * @param $password
+     * @param $slug
+     *
+     * @return string
+     */
+    function b3_get_default_magiclink_email( $password, $slug ) {
+        if ( $password && $slug ) {
+            $login_link = b3_get_login_url();
+            $login_link = add_query_arg( 'login', 'enter_code', $login_link );
+            $login_link = add_query_arg( 'code', $slug, $login_link );
+            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+            $your_code  = sprintf( '<div class="big-link">%s</div>', $enter_url ) . "\n";
+            $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
+            $message    .= '<br><br>' . "\n";
+            $message    .= esc_html__( 'Someone requested a "magic login link" for the account using this email address.', 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= esc_html__( 'If this request was made by you, you can click the following link to login.', 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= sprintf( '<div class="big-link-container">%s</div>', $your_code ) . "\n";
+            $message    .= '<br>' . "\n";
+            $message    .= esc_html__( "If this was a mistake, or you didn't ask for a 'magic link', just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+            $message    .= '<br>' . "\n";
+            $message    .= b3_default_greetings();
+            
+            return $message;
+        }
+        
+        return '';
+    }
+
+    
+    function b3_default_admin_pages() {
+        $b3_pages = [
+            [
+                'id'      => 'register_page',
+                'label'   => esc_html__( 'Register', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_register_page_id' ),
+            ],
+            [
+                'id'      => 'login_page',
+                'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_login_page_id' ),
+            ],
+            [
+                'id'      => 'logout_page',
+                'label'   => esc_html__( 'Log Out', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_logout_page_id' ),
+            ],
+            [
+                'id'      => 'lost_password_page',
+                'label'   => esc_html__( 'Lost Password', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_lost_password_page_id' ),
+            ],
+            [
+                'id'      => 'reset_password_page',
+                'label'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_reset_password_page_id' ),
+            ],
+            [
+                'id'      => 'account_page',
+                'label'   => esc_html__( 'Account', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_account_page_id' ),
+            ],
+        ];
+        
+        if ( true == get_option( 'b3_front_end_approval' ) ) {
+            $front_end_approval = [
+                'id'      => 'approval_page',
+                'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
+                'page_id' => get_option( 'b3_approval_page_id' ),
+            ];
+            
+            $b3_pages[] = $front_end_approval;
+        }
+        
+        return $b3_pages;
     }

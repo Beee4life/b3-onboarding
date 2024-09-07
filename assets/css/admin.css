@@ -39,7 +39,6 @@
 .b3_tab-header .dashicons {
   font-size:    15px;
   margin-right: 5px;
-  width:        10px;
   height:       10px;
 }
 
@@ -109,8 +108,8 @@
 }
 
 .b3_restrict-roles {
-  display:     flex;
-  flex-flow:   row wrap;
+  display:   flex;
+  flex-flow: row wrap;
 }
 
 .b3_restrict-roles div {
@@ -172,6 +171,24 @@
 
 .b3_table--debug-meta td:first-child {
   padding: 3px 40px 3px 0;
+}
+
+.b3_table--emails img.preview-logo {
+  margin-top: 10px;
+  max-width:  150px;
+}
+
+.b3_table--emails .logo-fields div {
+  flex: 1;
+}
+
+.b3_table--emails .logo-fields div:first-child {
+  margin-right: 10px;
+}
+
+.b3_table--emails .logo-fields {
+  display:     flex;
+  align-items: center;
 }
 
 .b3_message {
@@ -263,8 +280,8 @@
 }
 
 .b3_select-page label {
-  font-weight:  bold;
-  min-width:    200px;
+  font-weight: bold;
+  min-width:   200px;
 }
 
 .b3_select-page__create,
@@ -310,8 +327,7 @@
 }
 
 .b3 input#b3_main_logo {
-  max-width: 500px;
-  width:     100%;
+  width: 100%;
 }
 
 /* Emails page */
@@ -466,6 +482,60 @@ ul.b3_integrations--list {
   width:   100%;
 }
 
+.b3_settings-field input#b3_registration_type {
+  width:     100%;
+  max-width: 50%;
+  padding:   5px;
+}
+
+.b3_settings-field input[type="checkbox"] {
+  appearance:     none;
+  position:       relative;
+  display:        inline-block;
+  height:         16px;
+  width:          30px;
+  vertical-align: middle;
+  border-radius:  2rem;
+  box-shadow:     0 1px 3px #0003 inset;
+  transition:     0.25s linear background;
+}
+
+.b3_settings-field input[type="checkbox"]::before {
+  content:       "";
+  display:       block;
+  width:         10px;
+  height:        10px;
+  background:    #3c434a;
+  border-radius: 1.2rem;
+  position:      absolute;
+  top:           2px;
+  left:          0.2rem;
+  box-shadow:    0 1px 3px #0003 inset;
+  transition:    0.25s linear transform;
+  transform:     translateX(0);
+}
+
+.b3_settings-field input[type="checkbox"]:checked {
+  background: lightgreen;
+}
+
+.b3_settings-field input[type="checkbox"]:checked::before {
+  content:   "";
+  width:     10px;
+  height:    10px;
+  top:       5px;
+  transform: translateX(16px);
+}
+
+.b3_settings-field input[type="checkbox"]:focus {
+  outline: none;
+}
+
+.b3_settings-field input[type="checkbox"]:focus-visible {
+  outline:        2px solid transparent;
+  outline-offset: 2px;
+}
+
 .b3 #template .CodeMirror {
   border:     1px solid #ddd;
   min-height: initial;
@@ -501,7 +571,8 @@ ul.b3_integrations--list {
   margin-top: 2rem;
 }
 
-#wpadminbar .topbar_approve_user a.ab-item {
+#wpadminbar .topbar_approve_user a.ab-item,
+#wpadminbar .topbar_verify_filters a.ab-item {
   color: #ee6102;
 }
 
@@ -514,7 +585,6 @@ ul.b3_integrations--list {
   padding:   5px 0 0 0;
 }
 
-/*.no-approval-page #adminmenu .toplevel_page_b3-onboarding ul li:nth-child(3),*/
 .hidden {
   display: none;
 }
@@ -541,4 +611,3 @@ ul.b3_integrations--list {
     max-width: 1024px;
   }
 }
-

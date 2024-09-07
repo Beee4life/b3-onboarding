@@ -45,6 +45,11 @@
             $('.b3-name-fields').toggle();
         });
 
+        $('#b3_activate_custom_passwords').change(function() {
+            $('.b3_settings-field--magic-link').toggle();
+            $('.b3_settings-field--redirect').toggle();
+        });
+
         $('#b3_activate_first_last').change(function() {
             $('.b3_settings-field--first-last-required').toggle();
         });
@@ -58,22 +63,18 @@
         });
 
         $('#b3_logo_in_email').change(function() {
-            $('.b3_settings-input-description--logo').toggle();
+            $('.metabox-handler--logo').toggle();
         });
 
         $('#b3_activate_frontend_approval').change(function() {
             $('.b3_settings-input-description--approval').toggle();
         });
 
-        $('#b3_activate_custom_passwords').change(function() {
-            $('.b3_settings-field--redirect').toggle();
-        });
-
         $('#b3_restrict_usernames').change(function () {
             $('.b3_settings-field--username-restrictions').toggle();
         });
 
-        $('#b3_domain_restrictions').change(function () {
+        $('#b3_set_domain_restrictions').change(function () {
             $('.b3_settings-field--domain-restrictions').toggle();
         });
 

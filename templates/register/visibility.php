@@ -3,7 +3,6 @@
         exit;
     }
 ?>
-<?php // @TODO: add languages option ?>
 <div class="b3_form-element b3_form-element--visbility">
     <div class="privacy-intro">
         <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>

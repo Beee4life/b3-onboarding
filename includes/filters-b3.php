@@ -10,8 +10,8 @@
         if ( ! is_array( $fields ) ) {
             $fields = [];
         }
-        $fields[ 'b3_form' ]          = 'register';
-        $fields[ 'b3_register_user' ] = wp_create_nonce( 'b3-register-user' );
+        $fields[ 'b3_form' ]                = 'register';
+        $fields[ 'b3_register_user_nonce' ] = wp_create_nonce( 'b3-register-user-nonce' );
 
         return $fields;
     }
@@ -25,7 +25,7 @@
      *
      * @return mixed
      */
-    function b3_add_extra_fields( $fields ) {
+    function b3_add_honeypot( $fields ) {
         if ( get_option( 'b3_honeypot' ) ) {
             $id          = 'b3_pooh';
             $input_class = '';
@@ -48,7 +48,7 @@
         }
         return $fields;
     }
-    add_filter( 'b3_extra_fields', 'b3_add_extra_fields' );
+    add_filter( 'b3_extra_fields', 'b3_add_honeypot' );
 
 
     /**
@@ -56,10 +56,9 @@
      *
      * @return array
      */
-    function b3_extra_fields_validation() {
+    function b3_extra_fields_validation( $error_array = [] ) {
         $b3_onboarding      = new B3Onboarding();
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-        $error_array        = [];
         
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {

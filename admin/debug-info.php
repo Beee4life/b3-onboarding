@@ -40,6 +40,10 @@
                 <td><?php echo get_home_url(); ?></td>
             </tr>
             <tr>
+                <td>Site url</td>
+                <td><?php echo get_site_url(); ?></td>
+            </tr>
+            <tr>
                 <td>Blog public</td>
                 <td><?php echo get_option( 'blog_public' ); ?></td>
             </tr>
@@ -101,10 +105,9 @@
                 $plugins = get_plugins();
                 foreach( $plugins as $key => $value ) {
                     if ( is_plugin_active( $key ) ) {
-                        echo '<tr>';
-                        echo sprintf( '<td>%s</td>', $value[ 'Name' ] );
-                        echo sprintf( '<td>%s</td>', $value[ 'Version' ] );
-                        echo '</tr>';
+                        $plugin_name_cell   = sprintf( '<td>%s</td>', $value[ 'Name' ] );
+                        $plugin_status_cell = sprintf( '<td>%s</td>', $value[ 'Version' ] );
+                        echo sprintf( '<tr>%s%s</tr>', $plugin_name_cell, $plugin_status_cell );
                     }
                 }
             ?>
@@ -116,10 +119,9 @@
                 $plugins = get_plugins();
                 foreach( $plugins as $key => $value ) {
                     if ( ! is_plugin_active( $key ) ) {
-                        echo '<tr>';
-                        echo sprintf( '<td>%s</td>', $value[ 'Name' ] );
-                        echo sprintf( '<td>%s</td>', $value[ 'Version' ] );
-                        echo '</tr>';
+                        $plugin_name_cell   = sprintf( '<td>%s</td>', $value[ 'Name' ] );
+                        $plugin_status_cell = sprintf( '<td>%s</td>', $value[ 'Version' ] );
+                        echo sprintf( '<tr>%s%s</tr>', $plugin_name_cell, $plugin_status_cell );
                     }
                 }
             ?>
@@ -140,23 +142,24 @@
                         'message',
                     ];
 
-                    $hide_meta = [
+                    $hide_value = [
                         'b3_email_styling',
                         'b3_email_template',
                     ];
 
-                    if ( is_array( $value ) ) {
-                        $meta_value = 'array( ' . implode( ', ', $value ) . ' )';
-                    } else {
-                        $value      = ( in_array( $meta_key, $hide_meta ) ) ? 'Set' : $value;
-                        $meta_value = ( ! $value ) ? esc_html__( 'not set', 'b3-onboarding' ) : $value;
-                    }
-
-                    if ( 'not set' != $meta_value ) {
-                        echo '<tr>';
-                        echo sprintf( '<td>%s</td>', $meta_key );
-                        echo sprintf( '<td>%s</td>', esc_html( $meta_value ) );
-                        echo '</tr>';
+                    if ( ! empty( $value ) ) {
+                        if ( is_array( $value ) ) {
+                            $meta_value = 'array( ' . implode( ', ', $value ) . ' )';
+                        } else {
+                            if ( in_array( $meta_key, $hide_value ) ) {
+                                $value = ! empty( $value ) ? 'Custom' : 'Default';
+                            }
+                            $meta_value = ( ! $value ) ? esc_html__( 'not set', 'b3-onboarding' ) : $value;
+                        }
+                        
+                        $meta_key_cell   = sprintf( '<td>%s</td>', $meta_key );
+                        $meta_value_cell = sprintf( '<td>%s</td>', esc_html( $meta_value ) );
+                        echo sprintf( '<tr>%s%s</tr>', $meta_key_cell, $meta_value_cell );
                     }
                 }
             ?>

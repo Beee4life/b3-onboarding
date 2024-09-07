@@ -70,12 +70,12 @@
         if ( isset( $_GET[ 'action' ] ) ) {
             $action = $_GET[ 'action' ];
             if ( 'register' === $action ) {
-                $message = apply_filters( 'b3_message_above_registration', b3_get_message_above_registration() );
+                $message = b3_get_message_above_registration();
             } elseif ( 'lostpassword' === $action ) {
-                $message = apply_filters( 'b3_message_above_lost_password', b3_get_message_above_lost_password() );
+                $message = b3_get_message_above_lost_password();
             }
         } else {
-            $message = apply_filters( 'b3_message_above_login', b3_get_message_above_login() );
+            $message = b3_get_message_above_login();
         }
 
         if ( ! empty( $message ) ) {
@@ -242,7 +242,7 @@
      * @return array
      */
     function b3_check_domain_user_email( $result ) {
-        if ( get_option( 'b3_domain_restrictions' ) ) {
+        if ( get_option( 'b3_set_domain_restrictions' ) ) {
             $email         = $result[ 'user_email' ];
             $verify_domain = b3_verify_email_domain( $email );
 
@@ -282,14 +282,15 @@
     
                 foreach( $items as $key => $menu_values ) {
                     if ( ! is_user_logged_in() && in_array( $menu_values->object_id, [
-                            $logout_page,
                             $account_page,
+                            $logout_page,
+                            $reset_password_page,
                         ] ) ) {
                         unset( $items[ $key ] );
                     } elseif ( is_user_logged_in() && in_array( $menu_values->object_id, [
                             $login_page,
-                            $register_page,
                             $lost_password_page,
+                            $register_page,
                             $reset_password_page,
                         ] ) ) {
                         unset( $items[ $key ] );
@@ -301,3 +302,48 @@
         return $items;
     }
     add_filter( 'wp_get_nav_menu_items', 'b3_filter_nav_menus', 5, 3 );
+    
+    
+    /**
+     * Validates allowed usernames
+     *
+     * @since 3.11.0
+     *
+     * @param $valid
+     * @param $user_name
+     *
+     * @return false|mixed
+     */
+    function b3_check_username( $valid, $user_name ) {
+        $disallowed_names = b3_get_disallowed_usernames();
+
+        foreach( $disallowed_names as $name ) {
+            // If any disallowed string is in the user_name, mark $valid as false.
+            if ( $valid && false !== strpos( $user_name, $name ) ) {
+                $valid = false;
+            }
+        }
+        
+        return $valid;
+    }
+    add_filter( 'validate_username', 'b3_check_username', 10, 2 );
+    
+    
+    /**
+     * Hide password fields (if magic link is active)
+     *
+     * @since 3.11.0
+     *
+     * @param $show
+     * @param $current_user
+     *
+     * @return false|mixed
+     */
+    function b3_show_password_fields( $show, $current_user ) {
+        if ( get_option( 'b3_use_magic_link' ) ) {
+            $show = false;
+        }
+        
+        return $show;
+    }
+    add_filter( 'show_password_fields', 'b3_show_password_fields', 10, 2 );

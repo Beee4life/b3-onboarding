@@ -47,11 +47,29 @@
                         delete_option( 'b3_recaptcha_version' );
                     }
                 }
+                
+                if ( in_array( $_POST[ 'b3_registration_type' ], [ 'user', 'all', 'site' ] ) ) {
+                    if ( is_multisite() ) {
+                        if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
+                            update_option( 'b3_needs_admin_approval', 1, false );
+                        } else {
+                            delete_option( 'b3_needs_admin_approval' );
+                        }
+                    }
+                } else {
+                    delete_option( 'b3_needs_admin_approval' );
+                }
 
                 if ( isset( $_POST[ 'b3_activate_custom_passwords' ] ) && 1 == $_POST[ 'b3_activate_custom_passwords' ] ) {
                     update_option( 'b3_activate_custom_passwords', 1, false );
                 } else {
                     delete_option( 'b3_activate_custom_passwords' );
+                }
+
+                if ( isset( $_POST[ 'b3_use_magic_link' ] ) && 1 == $_POST[ 'b3_use_magic_link' ] ) {
+                    update_option( 'b3_use_magic_link', 1, false );
+                } else {
+                    delete_option( 'b3_use_magic_link' );
                 }
 
                 if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == $_POST[ 'b3_first_last_required' ] ) {
@@ -161,14 +179,17 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
-                if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
-                    update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
-                } else {
-                    delete_option( 'b3_link_color' );
+                if ( ! apply_filters( 'b3_link_color', false ) ) {
+                    if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
+                        update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
+                    } else {
+                        delete_option( 'b3_link_color' );
+                    }
                 }
 
                 if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
                     if ( ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
+                        // @TODO: check this error message
                         B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
 
                         return;
@@ -191,14 +212,29 @@
 
                 if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == $_POST[ 'b3_activate_custom_emails' ] ) {
                     update_option( 'b3_activate_custom_emails', 1, false );
+                    if ( ! get_option( 'b3_email_styling' ) ) {
+                        update_option( 'b3_email_styling', b3_get_email_styling( b3_get_link_color() ) );
+                    }
+                    if ( ! get_option( 'b3_email_template' ) ) {
+                        $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
+                        update_option( 'b3_email_template', b3_get_email_template( $hide_logo ) );
+                    }
                 } else {
                     delete_option( 'b3_activate_custom_emails' );
+                    delete_option( 'b3_email_styling' );
+                    delete_option( 'b3_email_template' );
                 }
 
                 if ( isset( $_POST[ 'b3_logo_in_email' ] ) && 1 == $_POST[ 'b3_logo_in_email' ] ) {
                     update_option( 'b3_logo_in_email', 1, false );
                 } else {
                     delete_option( 'b3_logo_in_email' );
+                }
+                
+                if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
+                    update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ), false );
+                } else {
+                    delete_option( 'b3_main_logo' );
                 }
 
                 if ( isset( $_POST[ 'b3_welcome_new_user_subject' ] ) && ! empty( $_POST[ 'b3_welcome_new_user_subject' ] ) ) {
@@ -287,6 +323,7 @@
                             foreach( $email_array as $email ) {
                                 $email = trim( $email );
                                 if ( ! is_email( $email ) ) {
+                                    // @TODO: check this error message
                                     B3Onboarding::b3_errors()->add( 'error_invalid_email', sprintf( esc_html__( '"%s" is not a valid email address.', 'b3-onboarding' ), $email ) );
 
                                     return;
@@ -446,10 +483,17 @@
                 }
 
                 if ( ! is_multisite() ) {
+                    if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == $_POST[ 'b3_activate_welcome_page' ] ) {
+                        update_option( 'b3_activate_welcome_page', 1, false );
+                    } else {
+                        delete_option( 'b3_activate_welcome_page' );
+                    }
+                    
                     if ( isset( $_POST[ 'b3_restrict_usernames' ] ) && 1 == $_POST[ 'b3_restrict_usernames' ] ) {
                         update_option( 'b3_restrict_usernames', 1, false );
 
                         if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
+                            // @TODO: check for @
                             $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
                             $new_value       = explode( ' ', $sanitized_value );
                             update_option( 'b3_disallowed_usernames', $new_value, false );
@@ -463,8 +507,8 @@
                 }
 
                 // @TODO: check if this should be kept out of MS
-                if ( isset( $_POST[ 'b3_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_domain_restrictions' ] ) ) {
-                    update_option( 'b3_domain_restrictions', $_POST[ 'b3_domain_restrictions' ], false );
+                if ( isset( $_POST[ 'b3_set_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_set_domain_restrictions' ] ) ) {
+                    update_option( 'b3_set_domain_restrictions', $_POST[ 'b3_set_domain_restrictions' ], false );
 
                     if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
                         $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_domains' ] );
@@ -475,7 +519,7 @@
                     }
                 } else {
                     delete_option( 'b3_disallowed_domains' );
-                    delete_option( 'b3_domain_restrictions' );
+                    delete_option( 'b3_set_domain_restrictions' );
                 }
 
                 if ( isset( $_POST[ 'b3_restrict_admin' ] ) && ! empty( $_POST[ 'b3_restrict_admin' ] ) ) {
@@ -563,12 +607,6 @@
                     delete_option( 'b3_disable_action_links' );
                 }
 
-                if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == $_POST[ 'b3_activate_welcome_page' ] ) {
-                    update_option( 'b3_activate_welcome_page', 1, false );
-                } else {
-                    delete_option( 'b3_activate_welcome_page' );
-                }
-
                 if ( isset( $_POST[ 'b3_remove_user_meta_seen' ] ) && 1 == $_POST[ 'b3_remove_user_meta_seen' ] ) {
                     do_action( 'b3_remove_welcome_page_meta' );
                 }
@@ -601,17 +639,11 @@
                     $reset = true;
                     do_action( 'b3_reset_to_default' );
                 }
-
-                if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
-                    update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ), false );
-                } else {
-                    delete_option( 'b3_main_logo' );
-                }
-
+                
                 if ( true === $reset ) {
-					B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings. Remember to set your pages again, before you log out !', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings. Remember to set your pages again, before you log out !', 'b3-onboarding' ) );
                 } else {
-					B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Settings saved', 'b3-onboarding' ) );
+                    B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'Settings saved', 'b3-onboarding' ) );
                 }
 
             }
@@ -637,8 +669,8 @@
 
             if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_nonce_mismatch', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
-            } else {
 
+            } else {
                 $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? true : false;
                 $reject      = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? true : false;
                 $signup_id   = ( isset( $_POST[ 'b3_signup_id' ] ) ) ? (int) $_POST[ 'b3_signup_id' ] : false;
