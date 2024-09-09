@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.11.0 - released xx.07.24
+3.12.0 - released 07.09.24
 
 <a name="features"></a>
 ### Features
@@ -146,7 +146,10 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
-3.11.0 - xx.06.24
+3.12.0
+* ?
+
+3.11.0 - 07.09.24
 * add magic link login option (single site only, for now)
 * improved blocking of disallowed usernames/domain names
 * moved logo field to emails tab
