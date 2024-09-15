@@ -30,6 +30,9 @@ There are a ton of things, which you can set through the admin pages or with the
 3.12.0
 * ?
 
+3.11.1
+* fix forgotten creation of dynamic property in shortcodes file
+
 3.11.0
 * add magic link login option (single site only, for now)
 * improved blocking of disallowed usernames/domain names

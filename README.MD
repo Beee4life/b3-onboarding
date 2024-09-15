@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.12.0 - released 07.09.24
+3.11.0 - released xx.09.24
 
 <a name="features"></a>
 ### Features
@@ -148,6 +148,9 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.12.0
 * ?
+
+3.11.1 - 15.09.24
+* fix forgotten creation of dynamic property in shortcodes file
 
 3.11.0 - 07.09.24
 * add magic link login option (single site only, for now)
