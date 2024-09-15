@@ -38,7 +38,7 @@
              */
             public function b3_render_register_form( $shortcode_args ) {
                 $admin_approval    = get_option( 'b3_needs_admin_approval' );
-                $registration_type = $this->settings[ 'registration_type' ];
+                $registration_type = get_option( 'b3_registration_type' );
                 
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
