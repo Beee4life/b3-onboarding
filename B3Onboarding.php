@@ -5,7 +5,7 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            3.12.0
     Requires at least:  4.3
-    Tested up to:       6.6.1
+    Tested up to:       6.6.2
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -92,6 +92,7 @@
                 
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
                 
+                include 'includes/constants.php';
                 include 'includes/true-false.php';
                 include 'includes/actions.php';
                 include 'includes/class-b3-shortcodes.php';
