@@ -363,19 +363,30 @@
      *
      * @return bool|string
      */
-    function b3_get_register_url( $return_id = false ) {
+    function b3_get_register_url( $return_id = false, $blog_id = false ) {
+
+        if ( false != $blog_id && is_multisite() ) {
+            switch_to_blog($blog_id);
+        }
+
         $register_page_id = get_option( 'b3_register_page_id' );
 
-        if ( $register_page_id && class_exists( 'Sitepress' ) ) {
-            $register_page_id = apply_filters( 'wpml_object_id', $register_page_id, 'page', true );
-        }
         if ( false != $register_page_id ) {
-            if ( false != $return_id ) {
-                return $register_page_id;
-            }
             if ( get_post( $register_page_id ) ) {
-                return get_the_permalink( $register_page_id );
+                if ( false != $return_id ) {
+                    if ( false != $blog_id && is_multisite() ) {
+                        restore_current_blog();
+                    }
+                    return $register_page_id;
+                }
+
+                $register_link = get_the_permalink( $register_page_id );
+                if ( false != $blog_id && is_multisite() ) {
+                    restore_current_blog();
+                }
+                return $register_link;
             }
+
         } elseif ( is_multisite() ) {
             $allow_subsite_registration = get_network_option( get_current_network_id(), 'b3_allow_subsite_registration' );
             if ( ! $allow_subsite_registration ) {
@@ -408,11 +419,7 @@
 
         $login_page_id = get_option( 'b3_login_page_id' );
 
-        if ( class_exists( 'Sitepress' ) ) {
-            $login_page_id = apply_filters( 'wpml_object_id', $login_page_id, 'page', true );
-        }
-
-        if ( false != $login_page_id ) {
+        if ( false != $login_page_id && get_post( $login_page_id ) ) {
             if ( false != $return_id ) {
                 if ( false != $blog_id && is_multisite() ) {
                     restore_current_blog();
@@ -420,13 +427,23 @@
                 return $login_page_id;
             }
 
-            if ( get_post( $login_page_id ) ) {
-                $login_url = get_the_permalink( $login_page_id );
-                if ( false != $blog_id && is_multisite() ) {
-                    restore_current_blog();
-                }
+            $login_url = get_the_permalink( $login_page_id );
+            if ( false != $blog_id && is_multisite() ) {
+                restore_current_blog();
+            }
 
-                return $login_url;
+            return $login_url;
+
+        } elseif ( is_multisite() ) {
+            $allow_subsite_registration = get_network_option( get_current_network_id(), 'b3_allow_subsite_registration' );
+            if ( ! $allow_subsite_registration ) {
+                switch_to_blog( get_main_site_id() );
+                $login_url = b3_get_login_url();
+                restore_current_blog();
+
+                if ( $login_url ) {
+                    return $login_url;
+                }
             }
         }
 
@@ -441,18 +458,28 @@
      *
      * @return bool|string
      */
-    function b3_get_logout_url( $return_id = false ) {
-        $id = get_option( 'b3_logout_page_id' );
+    function b3_get_logout_url( $return_id = false, $blog_id = false ) {
 
-        if ( class_exists( 'Sitepress' ) ) {
-            $id = apply_filters( 'wpml_object_id', $id, 'page', true );
+        if ( false != $blog_id && is_multisite() ) {
+            switch_to_blog($blog_id);
         }
-        if ( false != $id ) {
-            if ( false != $return_id ) {
-                return $id;
-            }
-            if ( get_post( $id ) ) {
-                return get_the_permalink( $id );
+
+        $log_out_page_id = get_option( 'b3_logout_page_id' );
+
+        if ( false != $log_out_page_id ) {
+            if ( get_post( $log_out_page_id ) ) {
+                if ( false != $return_id ) {
+                    if ( false != $blog_id && is_multisite() ) {
+                        restore_current_blog();
+                    }
+                    return $log_out_page_id;
+                }
+
+                $log_out_link = get_the_permalink( $log_out_page_id );
+                if ( false != $blog_id && is_multisite() ) {
+                    restore_current_blog();
+                }
+                return $log_out_link;
             }
         }
 
@@ -468,21 +495,36 @@
      *
      * @return bool|mixed
      */
-    function b3_get_account_url( $return_id = false, $language = false ) {
+    function b3_get_account_url( $return_id = false, $blog_id = false ) {
+
+        if ( false != $blog_id && is_multisite() ) {
+            switch_to_blog($blog_id);
+        }
+
         $account_page_id = get_option( 'b3_account_page_id' );
 
-        if ( class_exists( 'Sitepress' ) ) {
-            $account_page_id = apply_filters( 'wpml_object_id', $account_page_id, 'page', true, $language );
-        }
         if ( false != $account_page_id ) {
-            if ( false != $return_id ) {
-                return $account_page_id;
-            }
             if ( get_post( $account_page_id ) ) {
-                return get_the_permalink( $account_page_id );
+                if ( false != $return_id ) {
+                    if ( false != $blog_id && is_multisite() ) {
+                        restore_current_blog();
+                    }
+                    return $account_page_id;
+                }
+
+                $account_link = get_the_permalink( $account_page_id );
+                if ( false != $blog_id && is_multisite() ) {
+                    restore_current_blog();
+                }
+                return $account_link;
             }
+
         } else {
-            return admin_url( 'profile.php' );
+            $wp_url = admin_url( 'profile.php' );
+            if ( false != $blog_id && is_multisite() ) {
+                restore_current_blog();
+            }
+            return $wp_url;
         }
 
         return false;
@@ -496,15 +538,27 @@
      *
      * @return bool|string
      */
-    function b3_get_lostpassword_url() {
-        $lost_password_page_id = get_option( 'b3_lost_password_page_id' );
+    function b3_get_lostpassword_url( $return_id = false, $blog_id = false ) {
 
-        if ( class_exists( 'Sitepress' ) ) {
-            $lost_password_page_id = apply_filters( 'wpml_object_id', $lost_password_page_id, 'page', true );
+        if ( false != $blog_id && is_multisite() ) {
+            switch_to_blog($blog_id);
         }
 
+        $lost_password_page_id = get_option( 'b3_lost_password_page_id' );
+
         if ( false != $lost_password_page_id && get_post( $lost_password_page_id ) ) {
-            return get_the_permalink( $lost_password_page_id );
+            if ( false != $return_id ) {
+                if ( false != $blog_id && is_multisite() ) {
+                    restore_current_blog();
+                }
+                return $lost_password_page_id;
+            }
+
+            $lost_password_link = get_the_permalink( $lost_password_page_id );
+            if ( false != $blog_id && is_multisite() ) {
+                restore_current_blog();
+            }
+            return $lost_password_link;
         }
 
         return wp_lostpassword_url();
