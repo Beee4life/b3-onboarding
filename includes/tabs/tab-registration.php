@@ -11,6 +11,7 @@
      * @return false|string
      */
     function b3_render_registration_tab() {
+        $allow_subsite_registration   = get_option( 'b3_allow_subsite_registration' );
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
@@ -81,6 +82,16 @@
                                 <div class="b3_settings-input b3_settings-input--checkbox">
                                     <input type="checkbox" id="b3_needs_admin_approval" name="b3_needs_admin_approval" value="1" <?php checked($needs_admin_approval); ?>/>
                                     <?php esc_html_e( 'An administrator must approve each registration.', 'b3-onboarding' ); ?>
+                                </div>
+                        <?php b3_get_close(); ?>
+                    
+                        <?php b3_get_settings_field_open(); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_allow_subsite_registration"><?php esc_html_e( 'Allow subsite registration', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                                <div class="b3_settings-input b3_settings-input--checkbox">
+                                    <input type="checkbox" id="b3_allow_subsite_registration" name="b3_allow_subsite_registration" value="1" <?php checked($allow_subsite_registration); ?>/>
+                                    <?php esc_html_e( "Can user register at a 'subsite' ?", 'b3-onboarding' ); ?>
                                 </div>
                         <?php b3_get_close(); ?>
                     

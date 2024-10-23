@@ -48,15 +48,22 @@
                     }
                 }
                 
+                
                 if ( in_array( $_POST[ 'b3_registration_type' ], [ 'user', 'all', 'site' ] ) ) {
-                    if ( is_multisite() ) {
-                        if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
-                            update_option( 'b3_needs_admin_approval', 1, false );
+                    if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
+                        update_option( 'b3_needs_admin_approval', 1, false );
+                    } else {
+                        delete_option( 'b3_needs_admin_approval' );
+                    }
+                    if ( in_array( $_POST[ 'b3_registration_type' ], [ 'all' ] ) ) {
+                        if ( isset( $_POST[ 'b3_allow_subsite_registration' ] ) && 1 == $_POST[ 'b3_allow_subsite_registration' ] ) {
+                            update_option( 'b3_allow_subsite_registration', 1, false );
                         } else {
-                            delete_option( 'b3_needs_admin_approval' );
+                            delete_option( 'b3_allow_subsite_registration' );
                         }
                     }
                 } else {
+                    // TODO: check in single site
                     delete_option( 'b3_needs_admin_approval' );
                 }
 
