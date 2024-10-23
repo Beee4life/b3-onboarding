@@ -9,8 +9,6 @@
             if ( ! wp_verify_nonce( $_POST[ 'b3_registration_nonce' ], 'b3-registration-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
-                
-                error_log(print_r( $_POST, true ));
 
                 if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                     if ( is_multisite() ) {
@@ -49,7 +47,7 @@
                         delete_option( 'b3_recaptcha_version' );
                     }
                 }
-                
+
                 if ( in_array( $_POST[ 'b3_registration_type' ], [ 'user', 'all', 'site' ] ) ) {
                     if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
                         update_option( 'b3_needs_admin_approval', 1, false );
@@ -57,7 +55,7 @@
                         delete_option( 'b3_needs_admin_approval' );
                     }
 
-                    if ( in_array( $_POST[ 'b3_registration_type' ], [ 'all' ] ) ) {
+                    if ( in_array( $_POST[ 'b3_registration_type' ], [ 'site' ] ) ) {
                         if ( isset( $_POST[ 'b3_allow_subsite_registration' ] ) && 1 == $_POST[ 'b3_allow_subsite_registration' ] ) {
                             update_option( 'b3_allow_subsite_registration', 1, false );
                         } else {
@@ -239,7 +237,7 @@
                 } else {
                     delete_option( 'b3_logo_in_email' );
                 }
-                
+
                 if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
                     update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ), false );
                 } else {
@@ -497,7 +495,7 @@
                     } else {
                         delete_option( 'b3_activate_welcome_page' );
                     }
-                    
+
                     if ( isset( $_POST[ 'b3_restrict_usernames' ] ) && 1 == $_POST[ 'b3_restrict_usernames' ] ) {
                         update_option( 'b3_restrict_usernames', 1, false );
 
@@ -648,7 +646,7 @@
                     $reset = true;
                     do_action( 'b3_reset_to_default' );
                 }
-                
+
                 if ( true === $reset ) {
                     B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings. Remember to set your pages again, before you log out !', 'b3-onboarding' ) );
                 } else {
