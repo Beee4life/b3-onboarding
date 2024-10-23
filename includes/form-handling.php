@@ -9,6 +9,8 @@
             if ( ! wp_verify_nonce( $_POST[ 'b3_registration_nonce' ], 'b3-registration-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
+                
+                error_log(print_r( $_POST, true ));
 
                 if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                     if ( is_multisite() ) {
@@ -48,13 +50,13 @@
                     }
                 }
                 
-                
                 if ( in_array( $_POST[ 'b3_registration_type' ], [ 'user', 'all', 'site' ] ) ) {
                     if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
                         update_option( 'b3_needs_admin_approval', 1, false );
                     } else {
                         delete_option( 'b3_needs_admin_approval' );
                     }
+
                     if ( in_array( $_POST[ 'b3_registration_type' ], [ 'all' ] ) ) {
                         if ( isset( $_POST[ 'b3_allow_subsite_registration' ] ) && 1 == $_POST[ 'b3_allow_subsite_registration' ] ) {
                             update_option( 'b3_allow_subsite_registration', 1, false );
