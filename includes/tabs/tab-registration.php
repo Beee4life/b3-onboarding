@@ -91,7 +91,7 @@
                             <?php b3_get_close(); ?>
                                 <div class="b3_settings-input b3_settings-input--checkbox">
                                     <input type="checkbox" id="b3_allow_subsite_registration" name="b3_allow_subsite_registration" value="1" <?php checked($allow_subsite_registration); ?>/>
-                                    <?php esc_html_e( "Can user register at a 'subsite' ?", 'b3-onboarding' ); ?>
+                                    <?php esc_html_e( "Can new users register at a 'subsite' ?", 'b3-onboarding' ); ?>
                                 </div>
                         <?php b3_get_close(); ?>
                     
