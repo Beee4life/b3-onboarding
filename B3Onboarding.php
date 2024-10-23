@@ -10,10 +10,8 @@
     Author:             Beee
     Author URI:         https://berryplasman.com
     Tags:               user, management, registration, login, lost password, reset password, account, multisite, wpml, multilang, onboarding, onboard, user registration, user management, forms, email, override, otp, one time password, magic link
-    Text-domain:        b3-onboarding
     License:            GPL v2 (or later)
     License URI:        https://www.gnu.org/licenses/gpl-2.0.html
-    Domain Path:        /languages
     Network:            true
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
@@ -66,7 +64,7 @@
                 // actions
                 register_activation_hook( __FILE__,             [ $this, 'b3_plugin_activation' ] );
                 register_deactivation_hook( __FILE__,           [ $this, 'b3_plugin_deactivation' ] );
-                
+
                 add_action( 'wp_enqueue_scripts',       [ $this, 'b3_enqueue_scripts_frontend' ], 40 );
                 add_action( 'wp_enqueue_scripts',       [ $this, 'b3_add_recaptcha_js_to_footer' ] );
                 add_action( 'login_enqueue_scripts',    [ $this, 'b3_add_recaptcha_js_to_footer' ] );
@@ -85,13 +83,13 @@
                 add_action( 'init',                     [ $this, 'b3_check_magic_link' ] );
                 add_action( 'admin_notices',            [ $this, 'b3_admin_notices' ] );
                 add_action( 'load-users.php',           [ $this, 'b3_load_users_page' ] );
-                
+
                 if ( is_multisite() ) {
                     add_action( 'wp_initialize_site',   [ $this, 'b3_after_create_site' ] );
                 }
-                
+
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
-                
+
                 include 'includes/constants.php';
                 include 'includes/true-false.php';
                 include 'includes/actions.php';
@@ -125,7 +123,7 @@
             public function b3_plugin_activation() {
                 b3_setup_initial_pages();
                 b3_set_default_settings();
-                
+
                 if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
@@ -703,7 +701,7 @@
                                         $blog_title  = $blog_info[ 'blog_title' ];
                                         $errors      = $blog_info[ 'errors' ];
                                         $error_codes = [];
-                                        
+
                                         if ( $errors->has_errors() ) {
                                             $error_message_name  = $errors->get_error_message( 'blogname' );
                                             $error_message_title = $errors->get_error_message( 'blog_title' );
@@ -829,7 +827,7 @@
                         } elseif ( isset( $_POST[ 'email' ] ) ) {
                             $user_email    = $_POST[ 'email' ];
                             $existing_user = get_user_by( 'email', $user_email );
-                            
+
                             if ( $existing_user instanceof WP_User ) {
                                 $amount_minutes         = apply_filters( 'b3_magic_link_time_out', 5 );
                                 $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
@@ -846,14 +844,14 @@
                                     $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                     $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
-                                    
+
                                     if ( ! empty( $message ) ) {
                                         $message = b3_replace_template_styling( $message );
                                         $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
                                         $message = htmlspecialchars_decode( stripslashes( $message ) );
-                                        
+
                                         wp_mail( $to, $subject, $message, [] );
-                                        
+
                                     } else {
                                         error_log( 'Email message not set for magic link.' );
                                     }
@@ -867,8 +865,8 @@
                     }
                 }
             }
-            
-            
+
+
             /**
              * Verify a link clicked from an email
              *
@@ -877,7 +875,7 @@
             public function b3_check_magic_link() {
                 if ( isset( $_GET[ 'code' ] ) ) {
                     $verify_otp = b3_verify_otp( $_GET[ 'code' ] );
-                    
+
                     if ( $verify_otp instanceof WP_User ) {
                         do_action( 'b3_log_user_in', $verify_otp );
                     } else {
@@ -888,8 +886,8 @@
                     }
                 }
             }
-            
-            
+
+
             /**
              * Finds and returns a matching error message for the given error code.
              *
