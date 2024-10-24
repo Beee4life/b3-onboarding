@@ -67,6 +67,7 @@
                     'registration_type' => get_option( 'b3_registration_type' ),
                     'version'           => get_option( 'b3ob_version' ),
                 ];
+                
                 // actions
                 register_activation_hook( __FILE__,             [ $this, 'b3_plugin_activation' ] );
                 register_deactivation_hook( __FILE__,           [ $this, 'b3_plugin_deactivation' ] );
