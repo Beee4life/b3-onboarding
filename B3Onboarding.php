@@ -3,17 +3,15 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.11.1
+    Version:            3.12.0
     Requires at least:  4.3
-    Tested up to:       6.6.1
+    Tested up to:       6.6.2
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
     Tags:               user, management, registration, login, lost password, reset password, account, multisite, wpml, multilang, onboarding, onboard, user registration, user management, forms, email, override, otp, one time password, magic link
-    Text-domain:        b3-onboarding
     License:            GPL v2 (or later)
     License URI:        https://www.gnu.org/licenses/gpl-2.0.html
-    Domain Path:        /languages
     Network:            true
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
@@ -25,7 +23,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-
+    
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
         /**
@@ -36,6 +34,7 @@
             /**
              * Construct
              */
+            private array $settings = [];
             function __construct() {
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
                     $plugin_url = plugins_url( '/', __FILE__ );
@@ -63,10 +62,16 @@
              * This initializes the whole shabang
              */
             public function init() {
+                $this->settings = [
+                    'path'              => trailingslashit( dirname( __FILE__ ) ),
+                    'registration_type' => get_option( 'b3_registration_type' ),
+                    'version'           => get_option( 'b3ob_version' ),
+                ];
+                
                 // actions
                 register_activation_hook( __FILE__,             [ $this, 'b3_plugin_activation' ] );
                 register_deactivation_hook( __FILE__,           [ $this, 'b3_plugin_deactivation' ] );
-                
+
                 add_action( 'wp_enqueue_scripts',       [ $this, 'b3_enqueue_scripts_frontend' ], 40 );
                 add_action( 'wp_enqueue_scripts',       [ $this, 'b3_add_recaptcha_js_to_footer' ] );
                 add_action( 'login_enqueue_scripts',    [ $this, 'b3_add_recaptcha_js_to_footer' ] );
@@ -85,13 +90,14 @@
                 add_action( 'init',                     [ $this, 'b3_check_magic_link' ] );
                 add_action( 'admin_notices',            [ $this, 'b3_admin_notices' ] );
                 add_action( 'load-users.php',           [ $this, 'b3_load_users_page' ] );
-                
+
                 if ( is_multisite() ) {
                     add_action( 'wp_initialize_site',   [ $this, 'b3_after_create_site' ] );
                 }
-                
+
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
-                
+
+                include 'includes/constants.php';
                 include 'includes/true-false.php';
                 include 'includes/actions.php';
                 include 'includes/class-b3-shortcodes.php';
@@ -107,15 +113,6 @@
             }
 
 
-            public function b3_settings() {
-                return [
-                    'path'              => trailingslashit( dirname( __FILE__ ) ),
-                    'registration_type' => get_option( 'b3_registration_type' ),
-                    'version'           => get_option( 'b3ob_version' ),
-                ];
-            }
-
-
             /*
              * Do stuff upon plugin activation
              *
@@ -124,7 +121,7 @@
             public function b3_plugin_activation() {
                 b3_setup_initial_pages();
                 b3_set_default_settings();
-                
+
                 if ( ! is_multisite() ) {
                     $b3_activation = get_role( 'b3_activation' );
                     if ( ! $b3_activation ) {
@@ -202,8 +199,8 @@
 					wp_enqueue_style( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css', false, '0.9.1' );
                 }
 
-				wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), [], $this->b3_settings()[ 'version' ] );
-				wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->b3_settings()[ 'version' ] );
+				wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), [], $this->settings[ 'version' ] );
+				wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
 
 				wp_localize_script( 'b3ob', 'b3ob_vars', [
 						'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
@@ -215,13 +212,13 @@
              * Enqueue scripts in backend
              */
             public function b3_enqueue_scripts_backend() {
-				wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->b3_settings()[ 'version' ] );
+				wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->settings[ 'version' ] );
 
 				if ( ! ( 'toplevel_page_b3-onboarding' === get_current_screen()->id ) ) {
                     return;
                 }
 
-				wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->b3_settings()[ 'version' ] );
+				wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
 
 				// https://wpreset.com/add-codemirror-editor-plugin-theme/
 				$b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( [
@@ -236,7 +233,7 @@
                 wp_enqueue_media();
 
                 // Register, localize and enqueue our custom JS.
-				wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), [ 'jquery' ], $this->b3_settings()[ 'version' ], true );
+				wp_register_script( 'b3-media', plugins_url( '/assets/js/media.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], true );
 				wp_localize_script( 'b3-media', 'b3_media', [
 						'title'  => esc_attr__( 'Upload or choose your custom logo', 'b3-onboarding' ),
 						'button' => esc_attr__( 'Insert logo', 'b3-onboarding' ),
@@ -702,7 +699,7 @@
                                         $blog_title  = $blog_info[ 'blog_title' ];
                                         $errors      = $blog_info[ 'errors' ];
                                         $error_codes = [];
-                                        
+
                                         if ( $errors->has_errors() ) {
                                             $error_message_name  = $errors->get_error_message( 'blogname' );
                                             $error_message_title = $errors->get_error_message( 'blog_title' );
@@ -828,7 +825,7 @@
                         } elseif ( isset( $_POST[ 'email' ] ) ) {
                             $user_email    = $_POST[ 'email' ];
                             $existing_user = get_user_by( 'email', $user_email );
-                            
+
                             if ( $existing_user instanceof WP_User ) {
                                 $amount_minutes         = apply_filters( 'b3_magic_link_time_out', 5 );
                                 $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
@@ -845,14 +842,14 @@
                                     $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                     $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
-                                    
+
                                     if ( ! empty( $message ) ) {
                                         $message = b3_replace_template_styling( $message );
                                         $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
                                         $message = htmlspecialchars_decode( stripslashes( $message ) );
-                                        
+
                                         wp_mail( $to, $subject, $message, [] );
-                                        
+
                                     } else {
                                         error_log( 'Email message not set for magic link.' );
                                     }
@@ -866,8 +863,8 @@
                     }
                 }
             }
-            
-            
+
+
             /**
              * Verify a link clicked from an email
              *
@@ -876,7 +873,7 @@
             public function b3_check_magic_link() {
                 if ( isset( $_GET[ 'code' ] ) ) {
                     $verify_otp = b3_verify_otp( $_GET[ 'code' ] );
-                    
+
                     if ( $verify_otp instanceof WP_User ) {
                         do_action( 'b3_log_user_in', $verify_otp );
                     } else {
@@ -887,8 +884,8 @@
                     }
                 }
             }
-            
-            
+
+
             /**
              * Finds and returns a matching error message for the given error code.
              *
@@ -1322,7 +1319,7 @@
                 ];
 
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
-                    if ( strpos( $this->b3_settings()[ 'version' ], 'dev' ) !== false || strpos( $this->b3_settings()[ 'version' ], 'beta' ) !== false ) {
+                    if ( strpos( $this->settings[ 'version' ], 'dev' ) !== false || strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                         $show_warning = true;
                     }
                     if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) ) {

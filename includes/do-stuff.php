@@ -11,10 +11,6 @@
      * @param bool $site_id
      */
     function b3_setup_initial_pages( $site_id = false ) {
-        if ( false != $site_id && is_multisite() ) {
-            switch_to_blog( $site_id );
-        }
-        
         $page_definitions = [
             _x( 'account', 'slug', 'b3-onboarding' )        => [
                 'title'   => esc_html__( 'Account', 'b3-onboarding' ),
@@ -47,10 +43,19 @@
                 'meta'    => 'b3_reset_password_page_id',
             ],
         ];
-        b3_create_pages( $page_definitions );
 
-        if ( false != $site_id && is_multisite() ) {
-            restore_current_blog();
+        // @TODO: test in single site
+        $allow_subsite_registration = get_network_option( get_current_network_id(), 'b3_allow_subsite_registration' );
+        if ( $allow_subsite_registration || ! is_multisite() ) {
+            if ( false != $site_id && is_multisite() ) {
+                switch_to_blog( $site_id );
+            }
+
+            b3_create_pages( $page_definitions );
+
+            if ( false != $site_id && is_multisite() ) {
+                restore_current_blog();
+            }
         }
     }
 
@@ -73,7 +78,7 @@
             } else {
                 // no stored id, so continue
             }
-            
+
             $existing_page_args = [
                 'post_type'      => 'page',
                 'posts_per_page' => 1,
@@ -245,7 +250,7 @@
             $link_color   = b3_get_link_color();
             $styling      = b3_get_email_styling( $link_color );
             $template     = b3_get_email_template( $hide_logo );
-            
+
             if ( false != $styling && false != $template ) {
                 $replace_vars = [
                     '%email_footer%'  => $email_footer,
@@ -319,10 +324,10 @@
      */
     function b3_verify_email_domain( $email ) {
         $disallowed_domains = b3_get_disallowed_domain_names();
-        
+
         if ( get_option( 'b3_set_domain_restrictions' ) && is_array( $disallowed_domains ) && ! empty( $disallowed_domains ) ) {
             $domain_name = substr( strrchr( $email, '@' ), 1 );
-            
+
             if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
                 return false;
             }
@@ -330,8 +335,8 @@
 
         return true;
     }
-    
-    
+
+
     /**
      * Verify magic link
      *
@@ -349,31 +354,31 @@
                 } else {
                     // maybe get user by code ?
                 }
-                
+
             } else {
                 // hashed code
                 $decoded_code = base64_decode( $code );
                 $args         = explode( ':', $decoded_code );
-                
+
                 if ( isset( $args[ 0 ] ) && isset( $args[ 1 ] ) ) {
                     $user_email = $args[ 0 ];
                     $user_input = $args[ 1 ];
                 }
             }
-            
+
             if ( isset( $user_email ) ) {
                 $user = get_user_by( 'email', $user_email );
-                
+
                 if ( $user instanceof WP_User ) {
                     $transient       = get_transient( sprintf( 'otp_%s', $user_email ) );
                     $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
-                    
+
                     if ( hash_equals( $hashed_password, crypt( $user_input, $hashed_password ) ) ) {
                         return $user;
                     }
                 }
             }
         }
-        
+
         return false;
     }
