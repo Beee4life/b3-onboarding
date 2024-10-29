@@ -28,7 +28,7 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.12.0
-* ?
+* change 'code' argument/var to 'otpcode' to avoid conflicts
 
 3.11.1
 * fix forgotten creation of dynamic property in shortcodes file
