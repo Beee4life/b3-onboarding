@@ -204,7 +204,7 @@
                         // @TODO: look into this
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
                             error_log('class-b3-shortcodes.php line 193');
-                            if ( isset( $_REQUEST[ 'code' ] ) ) {
+                            if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
                                 error_log('class-b3-shortcodes.php line 196');
                             } else {

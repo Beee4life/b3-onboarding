@@ -871,8 +871,8 @@
              * @return void
              */
             public function b3_check_magic_link() {
-                if ( isset( $_GET[ 'code' ] ) ) {
-                    $verify_otp = b3_verify_otp( $_GET[ 'code' ] );
+                if ( isset( $_GET[ 'otpcode' ] ) ) {
+                    $verify_otp = b3_verify_otp( $_GET[ 'otpcode' ] );
 
                     if ( $verify_otp instanceof WP_User ) {
                         do_action( 'b3_log_user_in', $verify_otp );
