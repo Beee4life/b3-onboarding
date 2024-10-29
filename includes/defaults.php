@@ -804,7 +804,7 @@
         if ( $password && $slug ) {
             $login_link = b3_get_login_url();
             $login_link = add_query_arg( 'login', 'enter_code', $login_link );
-            $login_link = add_query_arg( 'code', $slug, $login_link );
+            $login_link = add_query_arg( 'otpcode', $slug, $login_link );
             $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( __( 'Login', 'b3-onboarding' ) ) );
             $your_code  = sprintf( '<div class="big-link">%s</div>', $enter_url ) . "\n";
             $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );

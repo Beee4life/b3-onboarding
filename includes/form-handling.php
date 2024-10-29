@@ -47,16 +47,26 @@
                         delete_option( 'b3_recaptcha_version' );
                     }
                 }
-                
+
                 if ( in_array( $_POST[ 'b3_registration_type' ], [ 'user', 'all', 'site' ] ) ) {
-                    if ( is_multisite() ) {
-                        if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
-                            update_option( 'b3_needs_admin_approval', 1, false );
+                    if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
+                        update_option( 'b3_needs_admin_approval', 1, false );
+                    } else {
+                        delete_option( 'b3_needs_admin_approval' );
+                    }
+
+                    if ( in_array( $_POST[ 'b3_registration_type' ], [ 'site' ] ) ) {
+                        if ( isset( $_POST[ 'b3_allow_subsite_registration' ] ) && 1 == $_POST[ 'b3_allow_subsite_registration' ] ) {
+                            update_option( 'b3_allow_subsite_registration', 1, false );
+                            // @TODO: Create pages for plugin
                         } else {
-                            delete_option( 'b3_needs_admin_approval' );
+                            delete_option( 'b3_allow_subsite_registration' );
+                            // @TODO: Delete pages for plugin
+                            // @TODO: Delete options for plugin pages
                         }
                     }
                 } else {
+                    // TODO: check in single site
                     delete_option( 'b3_needs_admin_approval' );
                 }
 
@@ -230,7 +240,7 @@
                 } else {
                     delete_option( 'b3_logo_in_email' );
                 }
-                
+
                 if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
                     update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ), false );
                 } else {
@@ -488,7 +498,7 @@
                     } else {
                         delete_option( 'b3_activate_welcome_page' );
                     }
-                    
+
                     if ( isset( $_POST[ 'b3_restrict_usernames' ] ) && 1 == $_POST[ 'b3_restrict_usernames' ] ) {
                         update_option( 'b3_restrict_usernames', 1, false );
 
@@ -639,7 +649,7 @@
                     $reset = true;
                     do_action( 'b3_reset_to_default' );
                 }
-                
+
                 if ( true === $reset ) {
                     B3Onboarding::b3_errors()->add( 'success_reset', esc_html__( 'You have successfully resetted all settings. Remember to set your pages again, before you log out !', 'b3-onboarding' ) );
                 } else {
