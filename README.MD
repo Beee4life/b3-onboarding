@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.12.1 - released 30.10.24
+3.13.0 - released 30.10.24
 
 <a name="features"></a>
 ### Features
@@ -146,8 +146,11 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.13.0
+* change version everywhere
+
 3.12.2
-* change version to get it in line with releases
+* change composer file
 
 3.12.1
 * change composer version
