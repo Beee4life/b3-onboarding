@@ -27,6 +27,9 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.12.1
+* change composer version
+
 3.12.0
 * change 'code' argument/var to 'otpcode' to avoid conflicts
 
