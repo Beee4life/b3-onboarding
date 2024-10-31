@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.13.0 - released ??.??.24
+3.13.0 - released 30.10.24
 
 <a name="features"></a>
 ### Features
@@ -147,7 +147,13 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.13.0
-* ?
+* change version everywhere
+
+3.12.2
+* change composer file
+
+3.12.1
+* change composer version
 
 3.12.0
 * change 'code' argument/var to 'otpcode' to avoid conflicts

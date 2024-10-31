@@ -28,7 +28,13 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.13.0
-* ?
+* change version everywhere
+
+3.12.2
+* change composer file
+
+3.12.1
+* change composer version
 
 3.12.0
 * change 'code' argument/var to 'otpcode' to avoid conflicts
