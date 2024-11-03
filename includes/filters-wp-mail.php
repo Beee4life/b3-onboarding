@@ -468,12 +468,12 @@
     /**
      * Filter to change styling for multiple emails
      *
-     * @since 3.7.0
-     *
      * @param $email_content
      * @param $new_email
      *
      * @return string
+     *
+     * @since 3.7.0
      */
     function b3_confirm_change_email( $email_content, $new_email ) {
         $search  = 'If this is correct, please click on the following link to change it:';
@@ -494,12 +494,24 @@
 
         return $email_content;
     }
+    // @TODO: split these into own functions
     add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change email
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
     add_filter( 'site_admin_email_change_email', 'b3_confirm_change_email', 10, 3 ); // after site admin email change
     add_filter( 'network_admin_email_change_email', 'b3_confirm_change_email', 10, 2 ); // after network admin email change
 
 
+    /**
+     * Filter to change styling for new admin email
+     *
+     * @param $email_content
+     * @param $new_email_address
+     *
+     * @return string
+     * @throws Exception
+     *
+     * @since 3.14.0
+     */
     function b3_filter_new_admin_email_content( $email_content, $new_email_address ) {
         $email_text = __(
             'Hi ###USERNAME###,
