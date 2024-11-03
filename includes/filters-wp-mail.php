@@ -158,7 +158,7 @@
         } else {
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = [];
-            
+
             if ( 'request_access' === $registration_type ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
                 $user_email = b3_get_request_access_message_user();
@@ -260,7 +260,7 @@
      */
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
         $b3_lost_password_subject = b3_get_lost_password_subject();
-        
+
         if ( $b3_lost_password_subject ) {
             $subject = $b3_lost_password_subject;
         }
@@ -284,7 +284,7 @@
      */
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
         $lost_password_message = b3_get_lost_password_message();
-        
+
         if ( $lost_password_message ) {
             $message = $lost_password_message;
         }
@@ -318,7 +318,7 @@
                 'message' => false,
                 'headers' => false,
             ];
-            
+
             return $pass_change_email;
         }
 
@@ -343,7 +343,7 @@
         $message = b3_replace_template_styling( $pass_change_text );
         $message = strtr( $message, b3_get_replacement_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
-        
+
         $pass_change_email = [
             'to'      => $user[ 'user_email' ],
             /* translators: Password change notification email subject. %s: Site title. */
@@ -351,7 +351,7 @@
             'message' => $message,
             'headers' => '',
         ];
-        
+
         return $pass_change_email;
     }
     add_filter( 'password_change_email', 'b3_content_password_change_notification', 10, 3 );
@@ -425,7 +425,7 @@
     function b3_email_from( $original_email_address ) {
         // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
         $from_email = b3_get_notification_sender_email();
-        
+
         if ( $from_email ) {
             return $from_email;
         }
@@ -443,7 +443,7 @@
      */
     function b3_email_from_name( $original_from_name ) {
         $sender_name = b3_get_notification_sender_name();
-        
+
         if ( $sender_name ) {
             return $sender_name;
         }
@@ -495,10 +495,37 @@
         return $email_content;
     }
     add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change email
-    add_filter( 'new_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change site admin email
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
     add_filter( 'site_admin_email_change_email', 'b3_confirm_change_email', 10, 3 ); // after site admin email change
     add_filter( 'network_admin_email_change_email', 'b3_confirm_change_email', 10, 2 ); // after network admin email change
+
+
+    function b3_filter_new_admin_email_content( $email_content, $new_email_address ) {
+        $email_text = __(
+            'Hi ###USERNAME###,
+
+Someone with administrator capabilities recently requested to have the
+administration email address changed on this site:
+###SITEURL###
+
+To confirm this change, please click on the following link:
+###ADMIN_URL###
+
+You can safely ignore and delete this email if you do not want to
+take this action.
+
+This email has been sent to ###EMAIL###.'
+        );
+        $email_text .= "\n<br>";
+        $email_text .= b3_default_greetings();
+        $email_text = str_replace( "\n", '<br>', $email_text );
+        $email_text = b3_replace_template_styling( $email_text );
+        $email_text = strtr( $email_text, b3_get_replacement_vars() );
+        $email_text = htmlspecialchars_decode( stripslashes( $email_text ) );
+
+        return $email_text;
+    }
+    add_filter( 'new_admin_email_content', 'b3_filter_new_admin_email_content', 10, 2 ); // attempt change site admin email
 
 
     /**
