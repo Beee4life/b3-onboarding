@@ -2,7 +2,7 @@
 Contributors: Beee
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 5.6
 Stable tag: 3.14.0
 License: GNU v3
@@ -28,7 +28,7 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.14.0
-* ?
+* improve new admin email content
 
 3.13.0
 * change version everywhere

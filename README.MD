@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.13.0 - released 30.10.24
+3.14.0 - released xx.11.24
 
 <a name="features"></a>
 ### Features
@@ -147,7 +147,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.14.0
-* ?
+* improve new admin email content
 
 3.13.0
 * change version everywhere
