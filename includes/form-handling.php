@@ -55,16 +55,6 @@
                         delete_option( 'b3_needs_admin_approval' );
                     }
 
-                    if ( in_array( $_POST[ 'b3_registration_type' ], [ 'site' ] ) ) {
-                        if ( isset( $_POST[ 'b3_allow_subsite_registration' ] ) && 1 == $_POST[ 'b3_allow_subsite_registration' ] ) {
-                            update_option( 'b3_allow_subsite_registration', 1, false );
-                            // @TODO: Create pages for plugin
-                        } else {
-                            delete_option( 'b3_allow_subsite_registration' );
-                            // @TODO: Delete pages for plugin
-                            // @TODO: Delete options for plugin pages
-                        }
-                    }
                 } else {
                     // TODO: check in single site
                     delete_option( 'b3_needs_admin_approval' );

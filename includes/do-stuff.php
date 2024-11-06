@@ -11,54 +11,40 @@
      * @param bool $site_id
      */
     function b3_setup_initial_pages( $site_id = false ) {
-        $allow_subsite_registration = get_network_option( get_current_network_id(), 'b3_allow_subsite_registration' );
-        if ( $allow_subsite_registration || ! is_multisite() ) {
-            $page_definitions = [
-                _x( 'account', 'slug', 'b3-onboarding' )        => [
-                    'title'   => esc_html__( 'Account', 'b3-onboarding' ),
-                    'content' => '[account-page]',
-                    'meta'    => 'b3_account_page_id',
-                ],
-                _x( 'lostpassword', 'slug', 'b3-onboarding' )   => [
-                    'title'   => esc_html__( 'Lost password', 'b3-onboarding' ),
-                    'content' => '[lostpass-form]',
-                    'meta'    => 'b3_lost_password_page_id',
-                ],
-                _x( 'login', 'slug', 'b3-onboarding' )          => [
-                    'title'   => esc_html__( 'Login', 'b3-onboarding' ),
-                    'content' => '[login-form]',
-                    'meta'    => 'b3_login_page_id',
-                ],
-                _x( 'logout', 'slug', 'b3-onboarding' )         => [
-                    'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-                    'content' => '',
-                    'meta'    => 'b3_logout_page_id',
-                ],
-                _x( 'register', 'slug', 'b3-onboarding' )       => [
-                    'title'   => esc_html__( 'Register', 'b3-onboarding' ),
-                    'content' => '[register-form]',
-                    'meta'    => 'b3_register_page_id',
-                ],
-                _x( 'reset-password', 'slug', 'b3-onboarding' ) => [
-                    'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
-                    'content' => '[resetpass-form]',
-                    'meta'    => 'b3_reset_password_page_id',
-                ],
-            ];
-        } else {
-            $page_definitions = [
-                _x( 'account', 'slug', 'b3-onboarding' )        => [
-                    'title'   => esc_html__( 'Account', 'b3-onboarding' ),
-                    'content' => '[account-page]',
-                    'meta'    => 'b3_account_page_id',
-                ],
-                _x( 'logout', 'slug', 'b3-onboarding' )         => [
-                    'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
-                    'content' => '',
-                    'meta'    => 'b3_logout_page_id',
-                ],
-            ];
-        }
+        // @TODO: check all subsites, set pages + meta
+
+        $page_definitions = [
+            _x( 'account', 'slug', 'b3-onboarding' )        => [
+                'title'   => esc_html__( 'Account', 'b3-onboarding' ),
+                'content' => '[account-page]',
+                'meta'    => 'b3_account_page_id',
+            ],
+            _x( 'lostpassword', 'slug', 'b3-onboarding' )   => [
+                'title'   => esc_html__( 'Lost password', 'b3-onboarding' ),
+                'content' => '[lostpass-form]',
+                'meta'    => 'b3_lost_password_page_id',
+            ],
+            _x( 'login', 'slug', 'b3-onboarding' )          => [
+                'title'   => esc_html__( 'Login', 'b3-onboarding' ),
+                'content' => '[login-form]',
+                'meta'    => 'b3_login_page_id',
+            ],
+            _x( 'logout', 'slug', 'b3-onboarding' )         => [
+                'title'   => esc_html__( 'Log Out', 'b3-onboarding' ),
+                'content' => '',
+                'meta'    => 'b3_logout_page_id',
+            ],
+            _x( 'register', 'slug', 'b3-onboarding' )       => [
+                'title'   => esc_html__( 'Register', 'b3-onboarding' ),
+                'content' => '[register-form]',
+                'meta'    => 'b3_register_page_id',
+            ],
+            _x( 'reset-password', 'slug', 'b3-onboarding' ) => [
+                'title'   => esc_html__( 'Reset Password', 'b3-onboarding' ),
+                'content' => '[resetpass-form]',
+                'meta'    => 'b3_reset_password_page_id',
+            ],
+        ];
 
         // @TODO: test in single site
         if ( false != $site_id && is_multisite() ) {

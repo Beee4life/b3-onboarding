@@ -11,7 +11,6 @@
      * @return false|string
      */
     function b3_render_registration_tab() {
-        $allow_subsite_registration   = get_option( 'b3_allow_subsite_registration' );
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
@@ -58,7 +57,7 @@
                     <?php $closed_message = htmlspecialchars( get_option( 'b3_registration_closed_message' ) ); ?>
                     <?php $default_closed_message = b3_default_registration_closed_message(); ?>
                     <?php $placeholder_registration_closed = $filter_message ? $filter_message : $default_closed_message; ?>
-                    
+
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
@@ -84,17 +83,7 @@
                                     <?php esc_html_e( 'An administrator must approve each registration.', 'b3-onboarding' ); ?>
                                 </div>
                         <?php b3_get_close(); ?>
-                    
-                        <?php b3_get_settings_field_open(); ?>
-                            <?php b3_get_label_field_open(); ?>
-                                <label for="b3_allow_subsite_registration"><?php esc_html_e( 'Allow subsite registration', 'b3-onboarding' ); ?></label>
-                            <?php b3_get_close(); ?>
-                                <div class="b3_settings-input b3_settings-input--checkbox">
-                                    <input type="checkbox" id="b3_allow_subsite_registration" name="b3_allow_subsite_registration" value="1" <?php checked($allow_subsite_registration); ?>/>
-                                    <?php esc_html_e( "Can new users register at a 'subsite' ?", 'b3-onboarding' ); ?>
-                                </div>
-                        <?php b3_get_close(); ?>
-                    
+
                     <?php } elseif ( ! is_multisite() ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
@@ -142,7 +131,7 @@
                             </div>
                         <?php b3_get_close(); ?>
                     </div>
-                    
+
                     <?php if ( ! is_multisite() ) { ?>
                         <?php $hide_one_time_password = ( 1 == $custom_passwords ) ? ' hidden' : false; ?>
                         <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
@@ -155,7 +144,7 @@
                         </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>
-                    
+
                     <?php if ( 'open' === $registration_type ) { ?>
                         <?php $hide_redirect_field = ( 1 == $custom_passwords ) ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_redirect_field, 'redirect' ); ?>
