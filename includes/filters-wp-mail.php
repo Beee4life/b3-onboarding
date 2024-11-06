@@ -494,11 +494,22 @@
 
         return $email_content;
     }
-    // @TODO: split these into own functions
     add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change email
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
-    add_filter( 'site_admin_email_change_email', 'b3_confirm_change_email', 10, 3 ); // after site admin email change
-    add_filter( 'network_admin_email_change_email', 'b3_confirm_change_email', 10, 2 ); // after network admin email change
+
+
+    // @TODO: fix this
+    function b3_after_change_email( $email_content, $new_email ) {
+        $email_content .= "\n<br>";
+        $email_content .= b3_default_greetings();
+        $email_content = b3_replace_template_styling( $email_content );
+        $email_content = strtr( $email_content, b3_get_replacement_vars() );
+        $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
+
+        return $email_content;
+    }
+    add_filter( 'site_admin_email_change_email', 'b3_after_change_email', 10, 3 ); // after site admin email change
+    add_filter( 'network_admin_email_change_email', 'b3_after_change_email', 10, 2 ); // after network admin email change
 
 
     /**
@@ -528,11 +539,11 @@ take this action.
 
 This email has been sent to ###EMAIL###.'
         );
-        // @TODO: replace ###ADMIN_URL###
-        $email_text .= "<br>";
         $email_text = str_replace( "\n", '<br>', $email_text );
+        $email_text .= "<br>";
         $email_text .= b3_default_greetings();
-        // error_log( $email_text );
+        $admin_change_link = sprintf( '<a href="%s">%s</a>', '###ADMIN_URL###', '###ADMIN_URL###' );
+        $email_text = str_replace( "###ADMIN_URL###", $admin_change_link, $email_text );
         $email_text = b3_replace_template_styling( $email_text );
         $email_text = strtr( $email_text, b3_get_replacement_vars() );
         $email_text = htmlspecialchars_decode( stripslashes( $email_text ) );
