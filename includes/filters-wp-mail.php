@@ -528,9 +528,11 @@ take this action.
 
 This email has been sent to ###EMAIL###.'
         );
-        $email_text .= "\n<br>";
-        $email_text .= b3_default_greetings();
+        // @TODO: replace ###ADMIN_URL###
+        $email_text .= "<br>";
         $email_text = str_replace( "\n", '<br>', $email_text );
+        $email_text .= b3_default_greetings();
+        // error_log( $email_text );
         $email_text = b3_replace_template_styling( $email_text );
         $email_text = strtr( $email_text, b3_get_replacement_vars() );
         $email_text = htmlspecialchars_decode( stripslashes( $email_text ) );
