@@ -498,7 +498,7 @@
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
 
 
-    // @TODO: fix this
+    // @TODO: optimize this
     function b3_after_change_email( $email_content, $new_email ) {
         $email_content .= "\n<br>";
         $email_content .= b3_default_greetings();
