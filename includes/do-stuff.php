@@ -245,6 +245,7 @@
     function b3_replace_template_styling( $message = false ) {
         if ( false != $message ) {
             $email_footer = b3_get_email_footer();
+            // @TODO: get option from network if default mail is used
             $hide_logo    = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
             $link_color   = b3_get_link_color();
             $styling      = b3_get_email_styling( $link_color );
