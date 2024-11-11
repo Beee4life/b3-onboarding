@@ -499,7 +499,7 @@
 
 
     function b3_after_change_email( $email_array, $old_email, $new_email ) {
-        // @TODO: set message
+        // @TODO: format message
         $email_array[ 'message' ] .= "\n<br>";
         $email_array[ 'message' ] .= b3_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
@@ -512,6 +512,7 @@
 
 
     function b3_after_change_network_email( $email_array, $old_email, $new_email, $network_id ) {
+        // @TODO: format message
         $email_array[ 'message' ] .= "\n<br>";
         $email_array[ 'message' ] .= b3_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
