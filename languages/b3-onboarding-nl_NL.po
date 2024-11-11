@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
 "POT-Creation-Date: 2024-11-11 01:34+0100\n"
-"PO-Revision-Date: 2024-11-11 01:38+0100\n"
+"PO-Revision-Date: 2024-11-11 02:01+0100\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -421,7 +421,7 @@ msgstr "Activatie mail opnieuw verzonden."
 #, php-format
 msgid "%s takes control over the 'Membership' option. You can change this %s."
 msgstr ""
-"%s neemt controle over van de 'Membership' optie. Je kan deze %s wijzigen."
+"%s neemt controle over van de ‘Lidmaatschap’ optie. Je kan deze %s wijzigen."
 
 #: admin/admin-page.php:15 admin/debug-page.php:14
 #: admin/user-approval-page.php:15
