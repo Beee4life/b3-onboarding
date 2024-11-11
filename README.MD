@@ -147,7 +147,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 
 <a name="changelog"></a>
 3.14.0
-* improve new admin email content
+* improve emails
 
 3.13.0
 * change version everywhere
