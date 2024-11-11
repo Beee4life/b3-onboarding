@@ -498,18 +498,29 @@
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
 
 
-    // @TODO: optimize this
-    function b3_after_change_email( $email_content, $new_email ) {
-        $email_content .= "\n<br>";
-        $email_content .= b3_default_greetings();
-        $email_content = b3_replace_template_styling( $email_content );
-        $email_content = strtr( $email_content, b3_get_replacement_vars() );
-        $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
+    function b3_after_change_email( $email_array, $old_email, $new_email ) {
+        // @TODO: set message
+        $email_array[ 'message' ] .= "\n<br>";
+        $email_array[ 'message' ] .= b3_default_greetings();
+        $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
+        $email_array[ 'message' ] = strtr( $email_array[ 'message' ], b3_get_replacement_vars() );
+        $email_array[ 'message' ] = htmlspecialchars_decode( stripslashes( $email_array[ 'message' ] ) );
 
-        return $email_content;
+        return $email_array;
     }
     add_filter( 'site_admin_email_change_email', 'b3_after_change_email', 10, 3 ); // after site admin email change
-    add_filter( 'network_admin_email_change_email', 'b3_after_change_email', 10, 2 ); // after network admin email change
+
+
+    function b3_after_change_network_email( $email_array, $old_email, $new_email, $network_id ) {
+        $email_array[ 'message' ] .= "\n<br>";
+        $email_array[ 'message' ] .= b3_default_greetings();
+        $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
+        $email_array[ 'message' ] = strtr( $email_array[ 'message' ], b3_get_replacement_vars() );
+        $email_array[ 'message' ] = htmlspecialchars_decode( stripslashes( $email_array[ 'message' ] ) );
+
+        return $email_array;
+    }
+    add_filter( 'network_admin_email_change_email', 'b3_after_change_network_email', 10, 4 ); // after network admin email change
 
 
     /**
@@ -537,7 +548,7 @@ To confirm this change, please click on the following link:
 You can safely ignore and delete this email if you do not want to
 take this action.
 
-This email has been sent to ###EMAIL###.'
+This email has been sent to ###EMAIL###.', 'b3-onboarding'
         );
         $email_text = str_replace( "\n", '<br>', $email_text );
         $email_text .= "<br>";
