@@ -148,6 +148,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.14.0
 * improve emails
+* add language on signup
 
 3.13.0
 * change version everywhere
