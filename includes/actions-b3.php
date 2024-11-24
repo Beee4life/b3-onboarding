@@ -254,7 +254,7 @@
                     <?php do_action( 'b3_render_form_element', 'register/site-fields-header' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/blogname' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/site-title' ); ?>
-                    <?php do_action( 'b3_render_form_element', 'register/language' ); ?>
+                    <?php //do_action( 'b3_render_form_element', 'register/language' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/visibility' ); ?>
                 </div>
             <?php
