@@ -19,7 +19,7 @@
             $user_object       = get_userdata( $user_id );
             $user_login        = $user_object->user_login;
             $user_object->set_role( get_option( 'default_role' ) );
-            
+
             if ( false == $custom_passwords ) {
                 // user needs a password
                 $key                 = get_password_reset_key( $user_object );
@@ -66,7 +66,7 @@
         $data                   = [ 'meta' => $signup_info->meta ];
         $where                  = [ 'signup_id' => $signup_info->signup_id ];
         $wpdb->update( $table, $data, $where, [ '%s' ] );
-        
+
         wpmu_activate_signup( $signup_info->activation_key );
     }
     add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
@@ -254,6 +254,7 @@
                     <?php do_action( 'b3_render_form_element', 'register/site-fields-header' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/blogname' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/site-title' ); ?>
+                    <?php do_action( 'b3_render_form_element', 'register/language' ); ?>
                     <?php do_action( 'b3_render_form_element', 'register/visibility' ); ?>
                 </div>
             <?php
@@ -421,7 +422,7 @@
     function b3_add_action_links( $form_type = 'login' ) {
         if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
             $links = [];
-            
+
             $values = [
                 'login'        => [
                     'title' => esc_html__( 'Log In', 'b3-onboarding' ),
@@ -637,11 +638,11 @@
                     $admin_url = apply_filters( 'b3_dashboard_url', get_admin_url( $site_id ) );
                     $home_url  = get_home_url( $site_id );
                     $link      = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
-                    
+
                     if ( false === $disallowed_roles ) {
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
-                    
+
                     echo sprintf( '<li>%s</li>', $link );
                 }
                 $links = ob_get_clean();
@@ -650,7 +651,7 @@
                     $label = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
-                    
+
                     echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, $links );
                 }
             }
@@ -723,8 +724,8 @@
         do_action( 'b3_add_action_links', $attributes[ 'template' ] );
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
-    
-    
+
+
     /**
      * Log a user in after magic link verification
      *
@@ -739,13 +740,13 @@
         $account_url = b3_get_account_url();
         $account_url = add_query_arg( 'message', 'logged_in', $account_url );
         $redirect    = ! empty( $redirect ) ? $redirect : $account_url;
-        
+
         if ( $user instanceof WP_User ) {
             wp_set_current_user( $user->ID, $user->user_login );
             wp_set_auth_cookie( $user->ID );
             delete_transient( sprintf( 'otp_', $user->user_email ) );
             do_action( 'wp_login', $user->user_login, $user );
-            
+
             wp_redirect( $redirect );
             exit;
         }
