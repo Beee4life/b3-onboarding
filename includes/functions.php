@@ -1313,3 +1313,27 @@
 
         return $message;
     }
+
+    /**
+     * Prepares available languages for register form
+     *
+     * @return array
+     *
+     * @since 3.14.0
+     */
+    function b3_get_languages() {
+        $language_array = [ '' => __( 'English', 'b3-onboarding' ) ];
+        $languages      = get_available_languages();
+        require_once ABSPATH . 'wp-admin/includes/ms.php';
+
+        foreach( $languages as $language_code ) {
+            $name = format_code_lang( $language_code );
+            $name_array = array_map( 'trim', explode( ';', $name ) );
+
+            if ( ! empty( $name_array[ 0 ] ) ) {
+                $language_array[ $language_code ] = $name_array[ 0 ];
+            }
+        }
+
+        return $language_array;
+    }
