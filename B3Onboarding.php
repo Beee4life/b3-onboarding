@@ -5,7 +5,7 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            3.14.0
     Requires at least:  4.3
-    Tested up to:       6.6.2
+    Tested up to:       6.8.2
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -98,19 +98,18 @@
 
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
-                include 'includes/constants.php';
-                include 'includes/true-false.php';
-                include 'includes/actions.php';
-                include 'includes/class-b3-shortcodes.php';
-                include 'includes/do-stuff.php';
-                include 'includes/filters.php';
-                include 'includes/functions.php';
-                include 'includes/defaults.php';
-                include 'includes/emails.php';
-                include 'includes/redirects.php';
-                include 'includes/form-handling.php';
-                include 'includes/tabs/tabs.php';
-                include 'admin/help-tabs.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/true-false.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/actions.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/class-b3-shortcodes.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/do-stuff.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/filters.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/functions.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/defaults.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/emails.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/redirects.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/form-handling.php';
+                require_once plugin_dir_path(__FILE__) . 'includes/tabs/tabs.php';
+                require_once plugin_dir_path(__FILE__) . 'admin/help-tabs.php';
             }
 
 
@@ -250,16 +249,16 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                include 'admin/admin-page.php';
+                require_once plugin_dir_path(__FILE__) . 'admin/admin-page.php';
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding-small.png', 99 );
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access' ] ) || is_multisite() && get_option( 'b3_needs_admin_approval' ) ) {
-                    include 'admin/user-approval-page.php';
+                    require_once plugin_dir_path(__FILE__) . 'admin/user-approval-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
 
                 if ( is_localhost() || get_option( 'b3_debug_info' ) ) {
-                    include 'admin/debug-page.php';
+                    require_once plugin_dir_path(__FILE__) . 'admin/debug-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
                 }
             }
@@ -337,7 +336,7 @@
              */
             public function b3_register_widgets() {
                 if ( is_main_site() ) {
-                    include 'includes/class-b3-sidebar-widget.php';
+                    require_once plugin_dir_path(__FILE__) . 'includes/class-b3-sidebar-widget.php';
                 }
             }
 
@@ -350,10 +349,10 @@
                  * Includes dashboard widget function + call
                  */
                 if ( is_main_site() ) {
-                    include 'admin/dashboard-widget-users.php';
+                    require_once plugin_dir_path(__FILE__) . 'admin/dashboard-widget-users.php';
 
                     if ( is_localhost() || apply_filters( 'b3_show_email_widget', false ) ) {
-                        include 'admin/dashboard-widget-emails.php';
+                        require_once plugin_dir_path(__FILE__) . 'admin/dashboard-widget-emails.php';
                     }
                 }
             }
