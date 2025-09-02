@@ -829,18 +829,11 @@
                             $existing_user = get_user_by( 'email', $user_email );
 
                             if ( $existing_user instanceof WP_User ) {
-                                $amount_minutes         = apply_filters( 'b3_magic_link_time_out', 5 );
-                                $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
-                                $pw_extra_special_chars = apply_filters( 'b3_password_extra_special_chars', false );
-                                $otp_password           = wp_generate_password( 8, $pw_special_chars, $pw_extra_special_chars );
-                                $hashed_password        = password_hash( $otp_password, PASSWORD_BCRYPT );
-                                $slug                   = sprintf( '%s:%s', $user_email, $hashed_password );
-                                $hashed_slug            = base64_encode( $slug );
-                                $transient_set          = set_transient( sprintf( 'otp_%s', $user_email ), $hashed_password, $amount_minutes * MINUTE_IN_SECONDS );
+                                $otp_password = b3_get_otp_password();
+                                $hashed_slug  = b3_get_hashed_slug( $user_email, $otp_password );
 
-                                if ( $transient_set ) {
+                                if ( $hashed_slug ) {
                                     $vars    = []; // empty right now, but might be filled later on...
-                                    $to      = $user_email;
                                     $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                     $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
@@ -850,7 +843,7 @@
                                         $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
                                         $message = htmlspecialchars_decode( stripslashes( $message ) );
 
-                                        wp_mail( $to, $subject, $message, [] );
+                                        wp_mail( $user_email, $subject, $message, [] );
 
                                     } else {
                                         error_log( 'Email message not set for magic link.' );

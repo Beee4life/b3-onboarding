@@ -534,3 +534,48 @@
         
         return apply_filters( 'b3_magic_link_email', $message );
     }
+    
+    
+    /**
+     * Get otp password
+     *
+     * @since 3.14.0
+     *
+     * @return mixed|null
+     */
+    function b3_get_otp_password() {
+        $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
+        $pw_extra_special_chars = apply_filters( 'b3_password_extra_special_chars', false );
+        $otp_password           = wp_generate_password( 8, $pw_special_chars, $pw_extra_special_chars );
+        
+        return $otp_password;
+    }
+    
+    /**
+     * Get hashed slug
+     *
+     * @since 3.14.0
+     *
+     * @param $user_email
+     * @param $otp_password
+     *
+     * @return false|string
+     */
+    function b3_get_hashed_slug( $user_email = '', $otp_password = '' ) {
+        if ( $user_email && $otp_password ) {
+            $hashed_password = password_hash( $otp_password, PASSWORD_BCRYPT );
+
+            if ( $hashed_password ) {
+                $amount_minutes = apply_filters( 'b3_magic_link_time_out', 5 );
+                $slug           = sprintf( '%s:%s', $user_email, $hashed_password );
+                $hashed_slug    = base64_encode( $slug );
+                $transient_set  = set_transient( sprintf( 'otp_%s', $user_email ), $hashed_password, $amount_minutes * MINUTE_IN_SECONDS );
+                
+                if ( $transient_set ) {
+                    return $hashed_slug;
+                }
+            }
+        }
+        
+        return false;
+    }
