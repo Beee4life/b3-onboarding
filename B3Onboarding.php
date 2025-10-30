@@ -928,7 +928,7 @@
                     case 'code_sent':
                         $message = esc_html__( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
                         $message .= '&nbsp;';
-                        $message .= esc_html__( sprintf( 'The link is valid for %d minutes.', apply_filters( 'b3_magic_link_time_out', 5 ) ), 'b3-onboarding' );
+                        $message .= sprintf( esc_html__( 'The link is valid for %d minutes.', 'b3-onboarding' ), apply_filters( 'b3_magic_link_time_out', 5 ) );
 
                         return $message;
 
