@@ -218,6 +218,7 @@
      */
     function b3_maybe_redirect_at_authenticate( $user, $username, $password ) {
         // Check if the earlier authenticate filter (most likely, the default WordPress authentication) functions have found errors
+        // @TODO: restrict more
         if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             if ( is_wp_error( $user ) ) {
                 $error_codes = join( ',', $user->get_error_codes() );

@@ -5,7 +5,7 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            3.14.0
     Requires at least:  4.3
-    Tested up to:       6.8.2
+    Tested up to:       6.9
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -926,11 +926,11 @@
 
                     // Login errors
                     case 'code_sent':
-                        $message = esc_html__( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
+                        $message = __( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
                         $message .= '&nbsp;';
-                        $message .= sprintf( esc_html__( 'The link is valid for %d minutes.', 'b3-onboarding' ), apply_filters( 'b3_magic_link_time_out', 5 ) );
+                        $message .= sprintf( __( 'The link is valid for %d minutes.', 'b3-onboarding' ), (int) apply_filters( 'b3_magic_link_time_out', 5 ) );
 
-                        return $message;
+                        return esc_html( $message );
 
                     case 'unknown_user':
                         return esc_html__( 'There is no user with this email address.', 'b3-onboarding' );
