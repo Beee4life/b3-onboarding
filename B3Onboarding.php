@@ -926,11 +926,11 @@
 
                     // Login errors
                     case 'code_sent':
-                        $message = esc_html__( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
+                        $message = __( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
                         $message .= '&nbsp;';
-                        $message .= esc_html__( sprintf( 'The link is valid for %d minutes.', apply_filters( 'b3_magic_link_time_out', 5 ) ), 'b3-onboarding' );
+                        $message .= sprintf( __( 'The link is valid for %d minutes.', 'b3-onboarding' ), (int) apply_filters( 'b3_magic_link_time_out', 5 ) );
 
-                        return $message;
+                        return esc_html( $message );
 
                     case 'unknown_user':
                         return esc_html__( 'There is no user with this email address.', 'b3-onboarding' );
