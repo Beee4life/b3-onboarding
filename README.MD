@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.14.0 - released xx.09.25
+3.14.0 - released xx.01.26
 
 <a name="features"></a>
 ### Features
@@ -149,6 +149,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 3.14.0
 * improve emails
 * add language on signup
+* optimize otp functions
 
 3.13.0
 * change version everywhere
