@@ -4,6 +4,8 @@
     }
     $current_language = empty( get_option( 'WPLANG' ) ) ? 'en' : get_option( 'WPLANG' );
     $languages        = b3_get_languages();
+
+    if ( 1 < count( $languages ) ) {
 ?>
 
 <div class="b3_form-element b3_form-element--language">
@@ -14,3 +16,4 @@
         <?php } ?>
     </select>
 </div>
+<?php } ?>
