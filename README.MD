@@ -148,9 +148,9 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 <a name="changelog"></a>
 3.14.0
 * improve emails
-* add language on signup
 * optimize otp functions
 * optimize use of repeated wp functions
+* add language on signup (tbc)
 
 3.13.0
 * change version everywhere

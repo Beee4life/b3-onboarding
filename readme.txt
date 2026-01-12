@@ -1,5 +1,5 @@
 === B3 Onboarding ===
-Contributors: Beee
+Contributors: Beee, mrjohnmc
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
 Tested up to: 6.9
@@ -29,9 +29,9 @@ There are a ton of things, which you can set through the admin pages or with the
 == Changelog ==
 3.14.0
 * improve emails
-* add language on signup
 * optimize otp functions
 * optimize use of repeated wp functions
+* add language on signup (tbc)
 
 3.13.0
 * change version everywhere
