@@ -28,8 +28,10 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 3.14.0
-* improve new admin email content
+* improve emails
+* add language on signup
 * optimize otp functions
+* optimize use of repeated wp functions
 
 3.13.0
 * change version everywhere

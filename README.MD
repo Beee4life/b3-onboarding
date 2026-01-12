@@ -150,6 +150,7 @@ If you have any suggestions/requests, please [read this](https://github.com/Beee
 * improve emails
 * add language on signup
 * optimize otp functions
+* optimize use of repeated wp functions
 
 3.13.0
 * change version everywhere
