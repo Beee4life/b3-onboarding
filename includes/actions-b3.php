@@ -426,7 +426,7 @@
 
             $values = [
                 'login'        => [
-                    'title' => esc_html__( 'Log In', 'b3-onboarding' ),
+                    'title' => esc_html__( 'Login', 'b3-onboarding' ),
                     'link'  => b3_get_login_url(),
                 ],
                 'lostpassword' => [
