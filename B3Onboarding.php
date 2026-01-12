@@ -98,18 +98,19 @@
 
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
-                require_once plugin_dir_path(__FILE__) . 'includes/true-false.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/actions.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/class-b3-shortcodes.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/do-stuff.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/filters.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/functions.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/defaults.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/emails.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/redirects.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/form-handling.php';
-                require_once plugin_dir_path(__FILE__) . 'includes/tabs/tabs.php';
-                require_once plugin_dir_path(__FILE__) . 'admin/help-tabs.php';
+                $plugin_dir_path = plugin_dir_path(__FILE__);
+                require_once $plugin_dir_path . 'includes/true-false.php';
+                require_once $plugin_dir_path . 'includes/actions.php';
+                require_once $plugin_dir_path . 'includes/class-b3-shortcodes.php';
+                require_once $plugin_dir_path . 'includes/do-stuff.php';
+                require_once $plugin_dir_path . 'includes/filters.php';
+                require_once $plugin_dir_path . 'includes/functions.php';
+                require_once $plugin_dir_path . 'includes/defaults.php';
+                require_once $plugin_dir_path . 'includes/emails.php';
+                require_once $plugin_dir_path . 'includes/redirects.php';
+                require_once $plugin_dir_path . 'includes/form-handling.php';
+                require_once $plugin_dir_path . 'includes/tabs/tabs.php';
+                require_once $plugin_dir_path . 'admin/help-tabs.php';
             }
 
 
