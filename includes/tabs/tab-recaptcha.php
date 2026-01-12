@@ -17,7 +17,7 @@
         $secret_key        = get_option( 'b3_recaptcha_secret' );
 
         ob_start();
-        echo sprintf( '<h2>%s</h2>', esc_html__( 'Recaptcha', 'b3-onboarding' ) );
+        echo sprintf( '<h2>%s</h2>', esc_html__( 'reCaptcha', 'b3-onboarding' ) );
         ?>
         <p>
             <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>

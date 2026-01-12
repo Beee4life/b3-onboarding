@@ -183,7 +183,7 @@
                 $errors             = [];
                 $error_codes        = [];
                 $default_attributes = [
-                    'button_value' => esc_attr__( 'Log in', 'b3-onboarding' ),
+                    'button_value' => esc_attr__( 'Login', 'b3-onboarding' ),
                     'template'     => 'login',
                     'title'        => false,
                 ];
