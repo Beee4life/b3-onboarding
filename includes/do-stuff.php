@@ -46,7 +46,6 @@
             ],
         ];
 
-        // @TODO: test in single site
         if ( false != $site_id && is_multisite() ) {
             switch_to_blog( $site_id );
         }
@@ -245,7 +244,7 @@
     function b3_replace_template_styling( $message = false ) {
         if ( false != $message ) {
             $email_footer = b3_get_email_footer();
-            // @TODO: get options from main site if default mail is used
+            $custom_email = ( 1 == get_option( 'b3_activate_custom_emails' ) ) ? true : false;
             $hide_logo    = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
             $link_color   = b3_get_link_color();
             $styling      = b3_get_email_styling( $link_color );
