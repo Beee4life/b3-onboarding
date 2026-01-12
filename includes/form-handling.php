@@ -722,8 +722,8 @@
     function b3_profile_form_handling() {
         $account_page_id = b3_get_account_url( true );
         if ( false != $account_page_id && is_page( $account_page_id ) && is_user_logged_in() ) {
-            require_once( ABSPATH . 'wp-admin/includes/user.php' );
-            require_once( ABSPATH . 'wp-admin/includes/misc.php' );
+            require_once ABSPATH . 'wp-admin/includes/user.php';
+            require_once ABSPATH . 'wp-admin/includes/misc.php';
             define( 'IS_PROFILE_PAGE', true );
         }
 
