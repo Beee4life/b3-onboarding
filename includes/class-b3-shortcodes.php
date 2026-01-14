@@ -177,7 +177,7 @@
              */
             public function b3_render_login_form( $shortcode_args ) {
                 if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
                 
                 $errors             = [];
