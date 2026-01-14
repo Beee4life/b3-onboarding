@@ -835,7 +835,7 @@
             ],
             [
                 'id'      => 'login_page',
-                'label'   => esc_html__( 'Log In', 'b3-onboarding' ),
+                'label'   => esc_html__( 'Login', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_login_page_id' ),
             ],
             [

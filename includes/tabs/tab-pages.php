@@ -21,7 +21,7 @@
             'orderby'        => 'title',
             'order'          => 'ASC',
         ] );
-        
+
         ob_start();
         ?>
         <form action="admin.php?page=b3-onboarding&tab=pages" method="post">
@@ -64,7 +64,8 @@
                             </a>
                         </div>
                     <?php } ?>
-                    <?php if ( false != get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) { ?>
+                    <?php $page_id = get_option( 'b3_' . $page[ 'id' ] . '_id' ); ?>
+                    <?php if ( false != $page_id && get_post( $page_id ) instanceof WP_Post ) { ?>
                         <div class="b3_select-page__edit">
                             <a href="<?php echo esc_url( get_edit_post_link( get_option( 'b3_' . $page[ 'id' ] . '_id' ) ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
                                 <?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>

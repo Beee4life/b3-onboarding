@@ -2,6 +2,8 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
+
+    // @TODO: hide if email only is set
 ?>
 
 <div class="b3_form-element b3_form-element--login">

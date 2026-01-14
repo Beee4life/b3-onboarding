@@ -3,9 +3,9 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.13.0
+    Version:            3.14.0
     Requires at least:  4.3
-    Tested up to:       6.6.2
+    Tested up to:       6.9
     Requires PHP:       5.6
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -98,19 +98,19 @@
 
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
-                include 'includes/constants.php';
-                include 'includes/true-false.php';
-                include 'includes/actions.php';
-                include 'includes/class-b3-shortcodes.php';
-                include 'includes/do-stuff.php';
-                include 'includes/filters.php';
-                include 'includes/functions.php';
-                include 'includes/defaults.php';
-                include 'includes/emails.php';
-                include 'includes/redirects.php';
-                include 'includes/form-handling.php';
-                include 'includes/tabs/tabs.php';
-                include 'admin/help-tabs.php';
+                $plugin_dir_path = plugin_dir_path(__FILE__);
+                require_once $plugin_dir_path . 'includes/true-false.php';
+                require_once $plugin_dir_path . 'includes/actions.php';
+                require_once $plugin_dir_path . 'includes/class-b3-shortcodes.php';
+                require_once $plugin_dir_path . 'includes/do-stuff.php';
+                require_once $plugin_dir_path . 'includes/filters.php';
+                require_once $plugin_dir_path . 'includes/functions.php';
+                require_once $plugin_dir_path . 'includes/defaults.php';
+                require_once $plugin_dir_path . 'includes/emails.php';
+                require_once $plugin_dir_path . 'includes/redirects.php';
+                require_once $plugin_dir_path . 'includes/form-handling.php';
+                require_once $plugin_dir_path . 'includes/tabs/tabs.php';
+                require_once $plugin_dir_path . 'admin/help-tabs.php';
             }
 
 
@@ -250,16 +250,17 @@
              * Adds a page to admin sidebar menu
              */
             public function b3_add_admin_pages() {
-                include 'admin/admin-page.php';
+                $plugin_dir_path = plugin_dir_path(__FILE__);
+                require_once $plugin_dir_path . 'admin/admin-page.php';
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding-small.png', 99 );
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access' ] ) || is_multisite() && get_option( 'b3_needs_admin_approval' ) ) {
-                    include 'admin/user-approval-page.php';
+                    require_once $plugin_dir_path . 'admin/user-approval-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
 
                 if ( is_localhost() || get_option( 'b3_debug_info' ) ) {
-                    include 'admin/debug-page.php';
+                    require_once $plugin_dir_path . 'admin/debug-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
                 }
             }
@@ -337,7 +338,7 @@
              */
             public function b3_register_widgets() {
                 if ( is_main_site() ) {
-                    include 'includes/class-b3-sidebar-widget.php';
+                    require_once plugin_dir_path(__FILE__) . 'includes/class-b3-sidebar-widget.php';
                 }
             }
 
@@ -350,10 +351,11 @@
                  * Includes dashboard widget function + call
                  */
                 if ( is_main_site() ) {
-                    include 'admin/dashboard-widget-users.php';
+                    $plugin_dir_path = plugin_dir_path(__FILE__);
+                    require_once $plugin_dir_path . 'admin/dashboard-widget-users.php';
 
                     if ( is_localhost() || apply_filters( 'b3_show_email_widget', false ) ) {
-                        include 'admin/dashboard-widget-emails.php';
+                        require_once $plugin_dir_path . 'admin/dashboard-widget-emails.php';
                     }
                 }
             }
@@ -830,18 +832,11 @@
                             $existing_user = get_user_by( 'email', $user_email );
 
                             if ( $existing_user instanceof WP_User ) {
-                                $amount_minutes         = apply_filters( 'b3_magic_link_time_out', 5 );
-                                $pw_special_chars       = apply_filters( 'b3_password_special_chars', true );
-                                $pw_extra_special_chars = apply_filters( 'b3_password_extra_special_chars', false );
-                                $otp_password           = wp_generate_password( 8, $pw_special_chars, $pw_extra_special_chars );
-                                $hashed_password        = password_hash( $otp_password, PASSWORD_BCRYPT );
-                                $slug                   = sprintf( '%s:%s', $user_email, $hashed_password );
-                                $hashed_slug            = base64_encode( $slug );
-                                $transient_set          = set_transient( sprintf( 'otp_%s', $user_email ), $hashed_password, $amount_minutes * MINUTE_IN_SECONDS );
+                                $otp_password = b3_get_otp_password();
+                                $hashed_slug  = b3_get_hashed_slug( $user_email, $otp_password );
 
-                                if ( $transient_set ) {
+                                if ( $hashed_slug ) {
                                     $vars    = []; // empty right now, but might be filled later on...
-                                    $to      = $user_email;
                                     $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                     $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
@@ -851,7 +846,7 @@
                                         $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
                                         $message = htmlspecialchars_decode( stripslashes( $message ) );
 
-                                        wp_mail( $to, $subject, $message, [] );
+                                        wp_mail( $user_email, $subject, $message );
 
                                     } else {
                                         error_log( 'Email message not set for magic link.' );
@@ -934,11 +929,11 @@
 
                     // Login errors
                     case 'code_sent':
-                        $message = esc_html__( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
+                        $message = __( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
                         $message .= '&nbsp;';
-                        $message .= esc_html__( sprintf( 'The link is valid for %d minutes.', apply_filters( 'b3_magic_link_time_out', 5 ) ), 'b3-onboarding' );
+                        $message .= sprintf( __( 'The link is valid for %d minutes.', 'b3-onboarding' ), (int) apply_filters( 'b3_magic_link_time_out', 5 ) );
 
-                        return $message;
+                        return esc_html( $message );
 
                     case 'unknown_user':
                         return esc_html__( 'There is no user with this email address.', 'b3-onboarding' );

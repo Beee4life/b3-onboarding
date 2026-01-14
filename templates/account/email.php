@@ -26,7 +26,7 @@
                             // @TODO: maybe change to front-end url ?
 							printf(
 								' <a href="%1$s">%2$s</a>',
-								esc_url( wp_nonce_url( self_admin_url( 'profile.php?dismiss=' . $current_user->ID . '_new_email' ), 'dismiss-' . $current_user->ID . '_new_email' ) ),
+								esc_url( wp_nonce_url( sprintf( self_admin_url( 'profile.php?dismiss=%d_new_email' ), $current_user->ID ), sprintf( 'dismiss-%d_new_email', $current_user->ID ) ) ),
 								__( 'Cancel' )
 							);
                         ?>

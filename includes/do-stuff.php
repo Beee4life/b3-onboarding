@@ -11,6 +11,8 @@
      * @param bool $site_id
      */
     function b3_setup_initial_pages( $site_id = false ) {
+        // @TODO: check all subsites, set pages + meta
+
         $page_definitions = [
             _x( 'account', 'slug', 'b3-onboarding' )        => [
                 'title'   => esc_html__( 'Account', 'b3-onboarding' ),
@@ -44,18 +46,14 @@
             ],
         ];
 
-        // @TODO: test in single site
-        $allow_subsite_registration = get_network_option( get_current_network_id(), 'b3_allow_subsite_registration' );
-        if ( $allow_subsite_registration || ! is_multisite() ) {
-            if ( false != $site_id && is_multisite() ) {
-                switch_to_blog( $site_id );
-            }
+        if ( false != $site_id && is_multisite() ) {
+            switch_to_blog( $site_id );
+        }
 
-            b3_create_pages( $page_definitions );
+        b3_create_pages( $page_definitions );
 
-            if ( false != $site_id && is_multisite() ) {
-                restore_current_blog();
-            }
+        if ( false != $site_id && is_multisite() ) {
+            restore_current_blog();
         }
     }
 
@@ -246,6 +244,7 @@
     function b3_replace_template_styling( $message = false ) {
         if ( false != $message ) {
             $email_footer = b3_get_email_footer();
+            $custom_email = ( 1 == get_option( 'b3_activate_custom_emails' ) ) ? true : false;
             $hide_logo    = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
             $link_color   = b3_get_link_color();
             $styling      = b3_get_email_styling( $link_color );

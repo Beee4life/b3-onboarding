@@ -1,10 +1,10 @@
 === B3 Onboarding ===
-Contributors: Beee
+Contributors: Beee, mrjohnmc
 Tags: user, management, registration, login, lost password, reset password, account
 Requires at least: 4.3
-Tested up to: 6.6.1
+Tested up to: 6.9
 Requires PHP: 5.6
-Stable tag: 3.13.0
+Stable tag: 3.14.0
 License: GNU v3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +27,12 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+3.14.0
+* improve emails
+* optimize otp functions
+* optimize use of repeated wp functions
+* add language on signup
+
 3.13.0
 * change version everywhere
 

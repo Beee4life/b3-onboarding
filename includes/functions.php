@@ -388,15 +388,12 @@
             }
 
         } elseif ( is_multisite() ) {
-            $allow_subsite_registration = get_network_option( get_current_network_id(), 'b3_allow_subsite_registration' );
-            if ( ! $allow_subsite_registration ) {
-                switch_to_blog( get_main_site_id() );
-                $register_url = b3_get_register_url();
-                restore_current_blog();
+            switch_to_blog( get_main_site_id() );
+            $register_url = b3_get_register_url();
+            restore_current_blog();
 
-                if ( $register_url ) {
-                    return $register_url;
-                }
+            if ( $register_url ) {
+                return $register_url;
             }
         }
 
@@ -435,15 +432,12 @@
             return $login_url;
 
         } elseif ( is_multisite() ) {
-            $allow_subsite_registration = get_network_option( get_current_network_id(), 'b3_allow_subsite_registration' );
-            if ( ! $allow_subsite_registration ) {
-                switch_to_blog( get_main_site_id() );
-                $login_url = b3_get_login_url();
-                restore_current_blog();
+            switch_to_blog( get_main_site_id() );
+            $login_url = b3_get_login_url();
+            restore_current_blog();
 
-                if ( $login_url ) {
-                    return $login_url;
-                }
+            if ( $login_url ) {
+                return $login_url;
             }
         }
 
@@ -1318,4 +1312,28 @@
         $message         = apply_filters( 'b3_message_above_magiclink', $default_message );
 
         return $message;
+    }
+
+    /**
+     * Prepares available languages for register form
+     *
+     * @return array
+     *
+     * @since 3.14.0
+     */
+    function b3_get_languages() {
+        $language_array = [ '' => __( 'English', 'b3-onboarding' ) ];
+        $languages      = get_available_languages();
+        require_once ABSPATH . 'wp-admin/includes/ms.php';
+
+        foreach( $languages as $language_code ) {
+            $name = format_code_lang( $language_code );
+            $name_array = array_map( 'trim', explode( ';', $name ) );
+
+            if ( ! empty( $name_array[ 0 ] ) ) {
+                $language_array[ $language_code ] = $name_array[ 0 ];
+            }
+        }
+
+        return $language_array;
     }

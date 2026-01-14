@@ -74,7 +74,7 @@
 
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
                     // @TODO: Improve/DRY this
-                    if ( isset( $_GET[ 'site_id' ] ) && ! empty( $_GET[ 'site_id' ] ) ) {
+                    if ( ! empty( $_GET[ 'site_id' ] ) ) {
                         switch_to_blog( $_GET[ 'site_id' ] );
                         $home_url  = home_url( '/' );
                         $site_info = get_site( $_GET[ 'site_id' ] );
@@ -177,13 +177,13 @@
              */
             public function b3_render_login_form( $shortcode_args ) {
                 if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
                 
                 $errors             = [];
                 $error_codes        = [];
                 $default_attributes = [
-                    'button_value' => esc_attr__( 'Log in', 'b3-onboarding' ),
+                    'button_value' => esc_attr__( 'Login', 'b3-onboarding' ),
                     'template'     => 'login',
                     'title'        => false,
                 ];
@@ -203,10 +203,10 @@
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         // @TODO: look into this
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
-                            error_log('class-b3-shortcodes.php line 193');
+                            error_log('class-b3-shortcodes.php line 206');
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
-                                error_log('class-b3-shortcodes.php line 196');
+                                error_log('class-b3-shortcodes.php line 209');
                             } else {
                                 $error_codes = explode( ',', $_REQUEST[ 'login' ] );
                             }
@@ -235,7 +235,7 @@
                         } elseif ( 'success' === $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success' );
                         } else {
-                            error_log( 'FIX ELSE - line 116 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 238 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
