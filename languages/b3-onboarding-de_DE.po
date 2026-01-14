@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
 "POT-Creation-Date: 2026-01-12 18:13+0100\n"
-"PO-Revision-Date: 2026-01-12 18:14+0100\n"
+"PO-Revision-Date: 2026-01-14 19:03+0100\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -96,8 +96,8 @@ msgid ""
 "nothing."
 msgstr ""
 "Diese E-Mail-Adresse wurde bereits verwendet. Bitte prüfe deinen Posteingang "
-"auf eine Aktivierungs-E-Mail. Sie wird in ein paar Tagen wieder verfügbar, "
-"falls keine Aktivierung erfolgt."
+"auf eine Aktivierungs-E-Mail. Sie wird in ein paar Tagen wieder verfügbar "
+"sein, falls keine Aktivierung erfolgt."
 
 #: B3Onboarding.php:837
 msgid "Magic login link for %blog_name%"
@@ -183,7 +183,7 @@ msgstr "Der eingegebene Benutzer-Login ist ungültig."
 
 #: B3Onboarding.php:959
 msgid "An account already exists with this email address."
-msgstr "Mit dieser E-Mail-Adresse existiert bereits ein Konto."
+msgstr "Ein Konto existiert bereits unter dieser E-Mail-Adresse."
 
 #: B3Onboarding.php:962 includes/defaults.php:660
 msgid "Registering new users is currently not allowed."
@@ -251,7 +251,7 @@ msgstr ""
 
 #: B3Onboarding.php:1008
 msgid "That password is too easy, please use a better one."
-msgstr "Dieses Passwort ist zu einfach, bitte verwende ein sichereres."
+msgstr "Dieses Passwort ist zu einfach, bitte verwende ein stärkeres."
 
 #: B3Onboarding.php:1012
 msgid "You have successfully registered. You can now login."
@@ -288,13 +288,12 @@ msgstr ""
 "Du hast dein Konto erfolgreich aktiviert. Du kannst dich jetzt einloggen."
 
 #: B3Onboarding.php:1027
-#, fuzzy
 msgid ""
 "You have successfully activated your account. You can initiate a password "
 "(re)set below."
 msgstr ""
-"Du hast dein Konto erfolgreich aktiviert. Du kannst unten das (Neu-)Setzen "
-"deines Passworts veranlassen."
+"Du hast dein Konto erfolgreich aktiviert. Du kannst unten dein Passwort "
+"(neu) erstellen."
 
 #: B3Onboarding.php:1031
 msgid ""
@@ -386,7 +385,7 @@ msgstr ""
 "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut."
 
 #: B3Onboarding.php:1324
-#, fuzzy, php-format
+#, php-format
 msgid "You haven't set a page yet for registration. Set it %s."
 msgstr ""
 "Du hast noch keine Seite für die Registrierung festgelegt. Lege sie %s fest."
@@ -726,7 +725,8 @@ msgstr "Diese Seite enthält verschiedene globale Einstellungen, wie z.B.:"
 
 #: admin/help-tabs.php:119
 msgid "disable the links below the form button on login/registration forms"
-msgstr "Links unter dem Button in Login-/Registrierungsformularen deaktivieren"
+msgstr ""
+"deaktivieren die Links unter dem Button in Login-/Registrierungsformularen"
 
 #: admin/help-tabs.php:120
 msgid "use a popup for the login form, when using the B3 sidebar widget"
@@ -844,12 +844,12 @@ msgstr "Zugang anfordern"
 
 #: includes/class-b3-shortcodes.php:69
 msgid "You have to request access to register a user."
-msgstr "Du musst Zugang anfordern, um einen Benutzer zu registrieren."
+msgstr "Du musst Zugriff anfordern, um einen Benutzer zu registrieren."
 
 #: includes/class-b3-shortcodes.php:71
 msgid "You have to request access to register a user or site."
 msgstr ""
-"Du musst Zugang anfordern, um einen Benutzer oder eine Website zu "
+"Du musst Zugriff anfordern, um einen Benutzer oder eine Website zu "
 "registrieren."
 
 #: includes/class-b3-shortcodes.php:85 includes/class-b3-shortcodes.php:95
@@ -990,7 +990,6 @@ msgid "Hi"
 msgstr "Hallo"
 
 #: includes/defaults.php:159
-#, fuzzy
 msgid ""
 "you have confirmed your email address and can now set a password through the "
 "link below."
@@ -999,7 +998,6 @@ msgstr ""
 "untenstehenden Link ein Passwort festlegen."
 
 #: includes/defaults.php:165
-#, fuzzy
 msgid ""
 "you have confirmed your email address and can now login through the link "
 "below."
@@ -1081,8 +1079,8 @@ msgstr "Passwort-Reset für %s"
 msgid ""
 "Someone requested a password reset for the account using this email address."
 msgstr ""
-"Jemand hat ein Zurücksetzen des Passworts für das mit dieser E-Mail-Adresse "
-"verknüpfte Konto angefordert."
+"Jemand hat die Zurücksetzung des Passworts für den folgenden Account unter "
+"dieser E-Mail Adresse angefordert."
 
 #: includes/defaults.php:331
 msgid ""
@@ -1285,22 +1283,20 @@ msgid "log in"
 msgstr "einloggen"
 
 #: includes/defaults.php:685
-#, fuzzy
 msgid ""
 "Please enter your email address. You will receive an email with a link to "
 "(re)set your password."
 msgstr ""
 "Bitte gib deine E-Mail-Adresse ein. Du erhältst eine E-Mail mit einem Link "
-"zum (Neu-)Festlegen deines Passworts."
+"zur (Neu-)Erstellung deines Passworts."
 
 #: includes/defaults.php:687
-#, fuzzy
 msgid ""
 "Please enter your username or email address. You will receive an email with "
 "a link to (re)set your password."
 msgstr ""
 "Bitte gib deinen Benutzernamen oder deine E-Mail-Adresse ein. Du erhältst "
-"eine E-Mail mit einem Link zum (Neu-)Festlegen deines Passworts."
+"eine E-Mail mit einem Link zur (Neu-)Erstellung deines Passworts."
 
 #: includes/defaults.php:700
 msgid "You have to request access for this website."
@@ -1326,7 +1322,7 @@ msgstr "Viele Grüße"
 #: includes/defaults.php:739
 #, php-format
 msgid "The %s crew"
-msgstr "Das Team von %s"
+msgstr "Das %s Team"
 
 #: includes/defaults.php:812
 msgid ""
@@ -1392,7 +1388,6 @@ msgid "Select an option"
 msgstr "Option auswählen"
 
 #: includes/emails.php:21
-#, fuzzy
 msgid "Oops, no content yet"
 msgstr "Hoppla, noch kein Inhalt vorhanden"
 
@@ -1745,8 +1740,8 @@ msgid ""
 "A key value mismatch has been detected. Please follow the link provided in "
 "your activation email."
 msgstr ""
-"Ein Key-Value-Mismatch wurde erkannt. Bitte folge dem Link in deiner "
-"Aktivierungs-E-Mail."
+"Es wurde eine Nichtübereinstimmung eines Schlüsselwerts festgestellt. Bitte "
+"folge dem Link, der in deiner Aktivierungs-E-Mail enthalten ist."
 
 #: includes/redirects.php:238
 msgid "An error occurred during the activation"
@@ -1771,7 +1766,8 @@ msgstr "Es gibt kein Konto mit diesem Benutzernamen oder dieser E-Mail-Adresse"
 #: includes/retrieve-password.php:67
 msgid "Someone has requested a password reset for the following account:"
 msgstr ""
-"Jemand hat ein Zurücksetzen des Passworts für das folgende Konto angefordert:"
+"Jemand hat die Zurücksetzung des Passworts für den folgenden Account "
+"angefordert:"
 
 #: includes/retrieve-password.php:69
 #, php-format
@@ -2026,7 +2022,7 @@ msgstr "Du hast für eines deiner Felder keinen Feldtyp festgelegt."
 #: includes/verify-filters.php:178
 #, php-format
 msgid "A label for the field \"%s\" in the filter \"%s\" is required."
-msgstr "Ein Label für das Feld \"%s\" im Filter \"%s\" ist erforderlich."
+msgstr "Für das Feld „%s“ im Filter „%s“ ist eine Bezeichnung erforderlich."
 
 #: includes/verify-filters.php:181
 #, php-format
@@ -2133,7 +2129,7 @@ msgstr "Hier kannst du deine neue Website registrieren."
 
 #: templates/register/visibility.php:8
 msgid "Allow search engines to index this site."
-msgstr "Suchmaschinen erlauben, diese Website zu indexieren."
+msgstr "Erlaube Suchmaschinen diese Website zu indexieren."
 
 #: templates/user-management.php:32
 msgid "No (more) users to approve."
