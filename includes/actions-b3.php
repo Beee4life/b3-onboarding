@@ -168,7 +168,7 @@
                 <?php
                 }
             } else {
-                if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_use_magic_link' ) ) { ?>
+                if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_needs_admin_approval' ) || get_option( 'b3_use_magic_link' ) ) { ?>
                     <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
                 <?php } else {
                     do_action( 'b3_render_form_element', 'register/user-login' );
@@ -365,7 +365,7 @@
                             $messages[] = $login_form_message;
                         }
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
-                        if ( strpos( $registration_type, 'request_access' ) !== false ) {
+                        if ( get_option( 'b3_needs_admin_approval' ) ) {
                             $request_access_message = b3_get_message_above_request_access();
                             if ( false != $request_access_message ) {
                                 $messages[] = $request_access_message;
@@ -375,13 +375,11 @@
                             if ( false != $registration_message ) {
                                 $messages[] = $registration_message;
                             }
-                        } else {
-                            if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
-                                $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
-                                $registration_message = apply_filters( 'b3_message_above_registration', $message );
-                                if ( false != $registration_message ) {
-                                    $messages[] = $registration_message;
-                                }
+                        } elseif ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
+                            $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
+                            $registration_message = apply_filters( 'b3_message_above_registration', $message );
+                            if ( false != $registration_message ) {
+                                $messages[] = $registration_message;
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
@@ -398,14 +396,15 @@
 
             if ( ! empty( $messages ) ) {
                 if ( isset( $attributes[ 'errors' ] ) && ! empty( $attributes[ 'errors' ] ) ) {
-                    echo '<div class="b3_message b3_message--error">';
+                    $message_output = '<div class="b3_message b3_message--error">';
                 } else {
-                    echo '<div class="b3_message">';
+                    $message_output = '<div class="b3_message">';
                 }
                 foreach( $messages as $message ) {
-                    echo sprintf( '<p>%s</p>', $message );
+                    $message_output .= sprintf( '<p>%s</p>', $message );
                 }
-                echo '</div>';
+                $message_output .= '</div>';
+                echo $message_output;
             }
         }
     }

@@ -40,7 +40,7 @@
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
             <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
 
-            <?php $hide_front_end_approval = ( 'request_access' === $registration_type ) ? false : 'hidden'; ?>
+            <?php $hide_front_end_approval = ( get_option( 'b3_needs_admin_approval' ) ) ? false : 'hidden'; ?>
             <?php b3_get_settings_field_open( $hide_front_end_approval ); ?>
                 <?php b3_get_label_field_open(); ?>
                     <label for="b3_activate_frontend_approval"><?php esc_html_e( 'Front-end user approval', 'b3-onboarding' ); ?></label>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <?php b3_get_close(); ?>
-                
+
                 <?php if ( $activate_welcome_page ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
@@ -116,7 +116,7 @@
                     </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
-                
+
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>

@@ -1,5 +1,5 @@
 <?php
-    /**
+    /*
      * Form handling registration settings
      *
      * @since 3.0
@@ -13,6 +13,7 @@
                 if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                     if ( is_multisite() ) {
                         $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
+
                         if ( false != $ms_registration_type ) {
                             update_option( 'b3_registration_type', $ms_registration_type, false );
                         }
@@ -26,7 +27,7 @@
                     }
                 }
 
-                if ( in_array( $_POST[ 'b3_registration_type' ], [ 'request_access', 'none' ] ) ) {
+                if ( in_array( $_POST[ 'b3_registration_type' ], [ 'none' ] ) ) {
                     delete_option( 'b3_activate_custom_passwords' );
                 }
 
@@ -48,7 +49,7 @@
                     }
                 }
 
-                if ( in_array( $_POST[ 'b3_registration_type' ], [ 'user', 'all', 'site' ] ) ) {
+                if ( in_array( $_POST[ 'b3_registration_type' ], [ 'user', 'all', 'email_activation', 'site' ] ) ) {
                     if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == $_POST[ 'b3_needs_admin_approval' ] ) {
                         update_option( 'b3_needs_admin_approval', 1, false );
                     } else {
@@ -129,8 +130,7 @@
     }
     add_action( 'init', 'b3_registration_handling' );
 
-
-    /**
+    /*
      * Form handling page settings
      *
      * @since 3.0
@@ -167,8 +167,7 @@
     }
     add_action( 'admin_init', 'b3_pages_form_handling' );
 
-
-    /**
+    /*
      * Form handling for email settings
      *
      * @since 3.0
@@ -360,7 +359,7 @@
                     }
                 }
 
-                if ( 'request_access' == get_option( 'b3_registration_type' ) ) {
+                if ( get_option( 'b3_needs_admin_approval' ) ) {
                     // @TODO: add ifs for non-empty values
                     update_option( 'b3_account_approved_message', htmlspecialchars( $_POST[ 'b3_account_approved_message' ], ENT_QUOTES ), false );
                     update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ], false );
@@ -438,7 +437,6 @@
     }
     add_action( 'admin_init', 'b3_email_form_handling' );
 
-
     function b3_template_form_handling() {
         if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_template_nonce' ] ) ) {
             if ( ! wp_verify_nonce( $_POST[ 'b3_template_nonce' ], 'b3-template-nonce' ) ) {
@@ -463,8 +461,7 @@
     }
     add_action( 'admin_init', 'b3_template_form_handling' );
 
-
-    /**
+    /*
      * Form handling for user settings
      *
      * @since 3.0
@@ -546,8 +543,7 @@
     }
     add_action( 'admin_init', 'b3_users_form_handling' );
 
-
-    /**
+    /*
      * Form handling for reCaptcha settings
      *
      * @since 3.0
@@ -588,8 +584,7 @@
     }
     add_action( 'admin_init', 'b3_recaptcha_form_handling' );
 
-
-    /**
+    /*
      * Form handling admin settings page
      *
      * @since 1.0.0
@@ -651,8 +646,7 @@
     }
     add_action( 'init', 'b3_setings_form_handling', 1 );
 
-
-    /**
+    /*
      * Function which handles approve/deny user form
      *
      * @since 1.0.4
@@ -713,8 +707,7 @@
     }
     add_action( 'init', 'b3_approve_deny_users' );
 
-
-    /**
+    /*
      * Function to handle (front-end) profile form editing
      *
      * @since 1.0.4

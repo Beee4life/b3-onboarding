@@ -89,13 +89,14 @@
 
         } else {
             $admin_email       = false;
+            $admin_approval    = get_option( 'b3_needs_admin_approval' );
             $registration_type = get_option( 'b3_registration_type' );
 
             if ( false != get_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
                 // we don't want the email when a user registers, but only when he/she activates
                 $wp_new_user_notification_email_admin[ 'to' ] = '';
 
-            } elseif ( 'request_access' === $registration_type ) {
+            } elseif ( $admin_approval ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
                 $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_request_access_subject_admin();
                 $admin_email = b3_get_request_access_message_admin();
@@ -138,6 +139,7 @@
      * @return mixed
      */
     function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
+        $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $registration_type = get_option( 'b3_registration_type' );
 
         if ( isset( $_POST[ '_wp_http_referer' ] ) ) {
@@ -159,7 +161,11 @@
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = [];
 
-            if ( 'request_access' === $registration_type ) {
+            if ( $admin_approval && 'email_activation' === $registration_type ) {
+                $wp_new_user_notification_email[ 'subject' ] = b3_get_email_activation_subject_user();
+                $user_email = b3_get_email_activation_message_user();
+
+            } elseif ( $admin_approval ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
                 $user_email = b3_get_request_access_message_user();
 
@@ -167,11 +173,7 @@
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_email_activation_subject_user();
                 $user_email = b3_get_email_activation_message_user();
 
-            } elseif ( 'open' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email = b3_get_welcome_user_message();
-
-            } elseif ( 'blog' === $registration_type ) {
+            } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
                 $user_email = b3_get_welcome_user_message();
 

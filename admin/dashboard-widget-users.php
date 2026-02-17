@@ -38,7 +38,7 @@
         echo '<div class="b3_widget--dashboard">';
 
         if ( count( $approval_users ) > 0 ) {
-            if ( 'request_access' === get_option( 'b3_registration_type' ) ) {
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
                 $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s awaiting approval. %4$s to manage %5$s.', 'b3-onboarding' ),
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),

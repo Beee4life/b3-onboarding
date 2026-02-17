@@ -148,7 +148,7 @@
      */
     function b3_redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
         $exclude_from_admin = ( is_array( get_option( 'b3_restrict_admin' ) ) ) ? get_option( 'b3_restrict_admin' ) : [ 'subscriber' ];
-        
+
         if ( ! $user ) {
             return get_home_url();
         } elseif ( is_wp_error( $user ) ) {
@@ -229,7 +229,7 @@
             if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
                 $redirect_url = b3_get_login_url();
                 $valid_error_codes = [ 'already_active', 'blog_taken' ];
-                list( $activate_path ) = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
+                [ $activate_path ] = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
                 $activate_cookie = 'wp-activate-' . COOKIEHASH;
                 $key             = '';
                 $result          = null;
@@ -304,10 +304,14 @@
 
                 // remove user_activation_key
                 $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( $_GET[ 'user_login' ] ) ] );
-                
+
                 // activate user, change user role
                 $user_object = new WP_User( $user->ID );
-                $user_object->set_role( get_option( 'default_role' ) );
+                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                    $user_object->set_role( 'b3_approval' );
+                } else {
+                    $user_object->set_role( get_option( 'default_role' ) );
+                }
 
                 if ( get_option( 'b3_use_magic_link' ) ) {
                     $redirect_url = b3_get_login_url();
@@ -316,8 +320,12 @@
                 } else {
                     $redirect_url = b3_get_login_url();
                 }
-                $redirect_url = add_query_arg( [ 'activate' => 'success' ], $redirect_url );
-                
+                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                    $redirect_url = add_query_arg( [ 'activate' => 'success_approval' ], $redirect_url );
+                } else {
+                    $redirect_url = add_query_arg( [ 'activate' => 'success' ], $redirect_url );
+                }
+
                 do_action( 'b3_after_user_activated', $user->ID );
             }
 

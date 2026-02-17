@@ -73,7 +73,7 @@
 
                 <?php } else { ?>
 
-                    <?php if ( in_array( $registration_type, [ 'user', 'all', 'site' ] ) ) { ?>
+                    <?php if ( in_array( $registration_type, [ 'user', 'all', 'site', 'email_activation' ] ) ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_needs_admin_approval"><?php esc_html_e( 'Needs admin approval', 'b3-onboarding' ); ?></label>
@@ -83,8 +83,9 @@
                                     <?php esc_html_e( 'An administrator must approve each registration.', 'b3-onboarding' ); ?>
                                 </div>
                         <?php b3_get_close(); ?>
+                    <?php } ?>
 
-                    <?php } elseif ( ! is_multisite() ) { ?>
+                    <?php if ( ! is_multisite() ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_register_email_only"><?php esc_html_e( 'Email address only', 'b3-onboarding' ); ?></label>
@@ -95,7 +96,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'request_access', 'none' ] ) ) ? true : false; ?>
+                        <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'none' ] ) ) ? true : false; ?>
                         <?php $hide_custom_passwords = ( 1 == $use_magic_link ) ? true : $hide_custom_passwords; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>

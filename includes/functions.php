@@ -26,7 +26,7 @@
             'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
         ];
         if ( is_main_site() ) {
-            if ( in_array( $registration_type, [ 'request_access' ] ) || $admin_approval ) {
+            if ( $admin_approval ) {
                 $email_boxes[] = [
                     'id'    => 'request_access_user',
                     'title' => esc_html__( 'Request access email (user)', 'b3-onboarding' ),
@@ -114,7 +114,6 @@
         return $email_boxes;
     }
 
-
     /**
      * Return registration options
      *
@@ -194,7 +193,6 @@
         return apply_filters( 'b3_main_logo', $main_logo );;
     }
 
-
     /**
      * Get the 'registration closed' message
      *
@@ -216,7 +214,6 @@
         return apply_filters( 'b3_registration_closed_message', $registration_closed_message );
     }
 
-
     /**
      * Message to let user know they need to login first to register a site
      *
@@ -233,7 +230,6 @@
 
         return apply_filters( 'b3_logged_in_registration_only_message', $logged_in_registration_only_message );
     }
-
 
     /**
      * Get the privacy text
@@ -253,7 +249,6 @@
 
         return $message;
     }
-
 
     /**
      * Get a unique activation url for a user
@@ -281,7 +276,6 @@
         return $activation_url;
     }
 
-
     /**
      * General opening of settings field
      *
@@ -295,7 +289,6 @@
         echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
     }
 
-
     /**
      * General opening of settings label
      *
@@ -308,7 +301,6 @@
         echo sprintf( '<div class="b3_settings-label%s">', $hide_class );
     }
 
-
     /**
      * Close a div.
      * This function is not really needed, but it prevents PhpStorm from throwing a ton of errors.
@@ -318,7 +310,6 @@
     function b3_get_close() {
         echo '</div>';
     }
-
 
     /**
      * Return submit button
@@ -354,7 +345,6 @@
 
         echo $button;
     }
-
 
     /**
      * Get register page id/link
@@ -400,7 +390,6 @@
         return wp_registration_url();
     }
 
-
     /**
      * Get login page id/link
      *
@@ -444,7 +433,6 @@
         return wp_login_url();
     }
 
-
     /**
      * Get logout page id/link
      *
@@ -480,7 +468,6 @@
         return wp_logout_url();
 
     }
-
 
     /**
      * Get page id/link for account page
@@ -524,7 +511,6 @@
         return false;
     }
 
-
     /**
      * Get lost password page id/link
      *
@@ -557,7 +543,6 @@
 
         return wp_lostpassword_url();
     }
-
 
     /**
      * Get reset pass page id/link

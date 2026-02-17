@@ -152,7 +152,10 @@
     function b3_default_account_activated_message() {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
-        if ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
+        if ( get_option( 'b3_needs_admin_approval' ) ) {
+            $message .= esc_html__( 'you have confirmed your email address but the site owner choose to manually approve each account. You will be notified of the outcome.', 'b3-onboarding' );
+
+        } elseif ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
             $lost_pass_link = '%lostpass_url%';
             $lost_pass_link = sprintf( '<a href="%s">%s</a>', esc_url( $lost_pass_link ), strtoupper( __( 'Set password', 'b3-onboarding' ) ) );
             $button         = sprintf( '<div class="big-link">%s</div>', $lost_pass_link ) . "\n";
@@ -165,8 +168,10 @@
             $message    .= esc_html__( 'you have confirmed your email address and can now login through the link below.', 'b3-onboarding' );
         }
         $message .= '<br><br>' . "\n";
-        $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
-        $message .= '<br>' . "\n";
+        if ( isset( $button ) ) {
+            $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+            $message .= '<br>' . "\n";
+        }
         $message .= b3_default_greetings();
 
         return $message;
@@ -257,7 +262,7 @@
             $link = '%reset_url%';
             $label = esc_html__( 'Set password', 'b3-onboarding' );
         }
-        
+
         $link_element = sprintf( '<a href="%s">%s</a>', $link, strtoupper( $label ) );
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
 
@@ -758,7 +763,7 @@
             'invite',
             'files',
         ];
-        
+
         return $default_reserved_names;
     }
 
@@ -785,11 +790,11 @@
             '1wachtwoord',
             'wachtwoord',
         ];
-        
+
         return $default_passwords;
     }
-    
-    
+
+
     /**
      * Get default magic link email
      *
@@ -818,14 +823,14 @@
             $message    .= esc_html__( "If this was a mistake, or you didn't ask for a 'magic link', just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
             $message    .= '<br>' . "\n";
             $message    .= b3_default_greetings();
-            
+
             return $message;
         }
-        
+
         return '';
     }
 
-    
+
     function b3_default_admin_pages() {
         $b3_pages = [
             [
@@ -859,16 +864,16 @@
                 'page_id' => get_option( 'b3_account_page_id' ),
             ],
         ];
-        
+
         if ( true == get_option( 'b3_front_end_approval' ) ) {
             $front_end_approval = [
                 'id'      => 'approval_page',
                 'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),
                 'page_id' => get_option( 'b3_approval_page_id' ),
             ];
-            
+
             $b3_pages[] = $front_end_approval;
         }
-        
+
         return $b3_pages;
     }

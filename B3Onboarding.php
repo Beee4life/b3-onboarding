@@ -58,7 +58,6 @@
                 }
             }
 
-
             /**
              * This initializes the whole shabang
              */
@@ -113,7 +112,6 @@
                 require_once $plugin_dir_path . 'admin/help-tabs.php';
             }
 
-
             /*
              * Do stuff upon plugin activation
              *
@@ -134,7 +132,6 @@
                     }
                 }
             }
-
 
             /**
              * Do stuff upon plugin deactivation
@@ -160,7 +157,6 @@
                 delete_option( 'b3ob_version' );
             }
 
-
             /**
              * Set version
              */
@@ -173,7 +169,6 @@
                 }
             }
 
-
             /**
              * Load plugin text domain
              */
@@ -183,7 +178,6 @@
                 load_textdomain( $plugin_folder, trailingslashit( WP_LANG_DIR ) . $plugin_folder . '/' . $plugin_folder . '-' . $locale . '.mo' );
                 load_plugin_textdomain( $plugin_folder, false, $plugin_folder . '/languages/' );
             }
-
 
             /*
              * Enqueue scripts front-end
@@ -207,7 +201,6 @@
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
                 ] );
             }
-
 
             /*
              * Enqueue scripts in backend
@@ -254,7 +247,7 @@
                 require_once $plugin_dir_path . 'admin/admin-page.php';
                 add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding-small.png', 99 );
 
-                if ( in_array( get_option( 'b3_registration_type' ), [ 'request_access' ] ) || is_multisite() && get_option( 'b3_needs_admin_approval' ) ) {
+                if ( get_option( 'b3_needs_admin_approval' ) ) {
                     require_once $plugin_dir_path . 'admin/user-approval-page.php';
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
                 }
@@ -264,7 +257,6 @@
                     add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
                 }
             }
-
 
             /**
              * Redirect user away from certain pages
@@ -332,7 +324,6 @@
                 }
             }
 
-
             /*
              * Register widgets (if activated)
              */
@@ -341,7 +332,6 @@
                     require_once plugin_dir_path(__FILE__) . 'includes/class-b3-sidebar-widget.php';
                 }
             }
-
 
             /*
              * Add dashboard widget
@@ -360,7 +350,6 @@
                 }
             }
 
-
             /**
              * Add settings link to plugin page
              *
@@ -374,7 +363,6 @@
 
                 return $links;
             }
-
 
             /**
              * Check if user actions need to be taken
@@ -477,7 +465,6 @@
                 }
             }
 
-
             /**
              * An action function used to include the reCAPTCHA JavaScript file
              * at the end of the page.
@@ -487,7 +474,6 @@
                     wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [] );
                 }
             }
-
 
             /*
              * Enqueue js for recaptcha
@@ -503,7 +489,6 @@
                     <?php
                 }
             }
-
 
             /**
              * Handle registration form
@@ -560,7 +545,10 @@
 
                                 if ( true == $register && 'none' !== $registration_type ) {
                                     // Registration is not closed
-                                    if ( 'request_access' === $registration_type ) {
+                                    if ( 'email_activation' === $registration_type && get_option( 'b3_needs_admin_approval' ) ) {
+                                        $role      = 'b3_activation';
+                                        $query_arg = 'confirm_email';
+                                    } elseif ( get_option( 'b3_needs_admin_approval' ) ) {
                                         $role      = 'b3_approval';
                                         $query_arg = 'access_requested';
                                     } elseif ( 'email_activation' === $registration_type ) {
@@ -760,7 +748,6 @@
                 }
             }
 
-
             /**
              * Resets the user's password if the password reset form was submitted (with custom passwords)
              *
@@ -812,7 +799,6 @@
                 }
             }
 
-
             public function b3_magic_link_form_handling() {
                 if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_set_otp_nonce' ] ) ) {
@@ -862,7 +848,6 @@
                 }
             }
 
-
             /**
              * Verify a link clicked from an email
              *
@@ -882,7 +867,6 @@
                     }
                 }
             }
-
 
             /**
              * Finds and returns a matching error message for the given error code.
@@ -1030,6 +1014,9 @@
                             return esc_html__( 'You have successfully activated your account. You can initiate a password (re)set below.', 'b3-onboarding' );
                         }
 
+                    case 'activate_success_approval':
+                        return esc_html__( 'You have successfully activated your account but the site owner choose to manually approve each account. You will be notified of the outcome.', 'b3-onboarding' );
+
                     case 'mu_activate_success':
                         return esc_html__( 'You have successfully activated your account. Your password has been emailed to you.', 'b3-onboarding' );
 
@@ -1106,7 +1093,6 @@
                 return esc_html__( 'An unknown error occurred. Please try again later.', 'b3-onboarding' );
             }
 
-
             /**
              * Validates and then completes the (normal) user signup process if all went well.
              *
@@ -1122,13 +1108,13 @@
             private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
                 $errors                       = new WP_Error();
                 $registration_with_email_only = get_option( 'b3_register_email_only' );
+                $use_custom_passwords         = get_option( 'b3_use_custom_passwords' );
                 $user_data                    = [
                     'user_login' => $user_login,
                     'user_email' => $user_email,
-                    'user_pass'  => '', // for possible/future custom passwords
+                    'user_pass'  => time(),
                     'role'       => $role,
                 ];
-                $use_custom_passwords         = true;
 
                 if ( false == $registration_with_email_only ) {
                     if ( username_exists( $user_login ) ) {
@@ -1220,7 +1206,6 @@
                 return $user_id;
             }
 
-
             /**
              * Validates and then completes WPMU signup process if all went well.
              *
@@ -1237,7 +1222,7 @@
                 $b3_register_type = get_option( 'b3_registration_type' );
 
                 if ( is_main_site() ) {
-                    if ( in_array( $b3_register_type, [ 'request_access', 'user', 'all', 'site' ] ) ) {
+                    if ( in_array( $b3_register_type, [ 'user', 'all', 'site' ] ) || get_option( 'b3_needs_admin_approval' ) ) {
                         if ( false == $domain ) {
                             wpmu_signup_user( $user_name, $user_email, apply_filters( 'add_signup_meta', $meta ) );
 
@@ -1267,7 +1252,6 @@
 
                 return false;
             }
-
 
             /**
              * Renders the contents of the given template to a string and returns it.
@@ -1302,7 +1286,6 @@
 
                 return '';
             }
-
 
             /**
              * Add admin notices
@@ -1364,7 +1347,6 @@
                     do_action( 'b3_verify_filter_input' );
                 }
             }
-
 
             /**
              * Do stuff after create site
