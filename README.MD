@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.14.0 - released 14.01.26
+3.15.0 - released 14.01.26
 
 <a name="features"></a>
 ### Features
@@ -146,6 +146,9 @@ These are the things we have planned to add.
 If you have any suggestions/requests, please [read this](https://github.com/Beee4life/b3-onboarding/wiki/Feature-request).
 
 <a name="changelog"></a>
+3.15.0
+* improve approval + email confirmation
+
 3.14.0
 * improve emails
 * optimize otp functions
