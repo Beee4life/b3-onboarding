@@ -760,21 +760,22 @@
      * @return string
      */
     function b3_get_current_url( $include_query = false ) {
-        $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
-        $url_array  = parse_url( $url );
-        $port       = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
-        $path       = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
-        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $path;
+        $current_url = '';
 
-        if ( false !== $include_query ) {
-            if ( isset( $url_array[ 'query' ] ) ) {
+        if ( isset( $_SERVER ) ) {
+            $url         = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
+            $url_array   = parse_url( $url );
+            $port        = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
+            $path        = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
+            $current_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $path;
+
+            if ( false !== $include_query && isset( $url_array[ 'query' ] ) ) {
                 $query_string = $url_array[ 'query' ];
-                $return_url   .= '?' . $query_string;
+                $current_url   .= '?' . $query_string;
             }
-
         }
 
-        return $return_url;
+        return $current_url;
     }
 
 

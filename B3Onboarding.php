@@ -26,17 +26,16 @@
 
     if ( ! class_exists( 'B3Onboarding' ) ) {
 
-        /**
-         * Class B3Onboarding
-         */
         class B3Onboarding {
-
-            /**
-             * Construct
-             */
             private array $settings = [];
 
             function __construct() {
+                $this->settings = [
+                    'path'              => trailingslashit( dirname( __FILE__ ) ),
+                    'registration_type' => get_option( 'b3_registration_type' ),
+                    'version'           => get_option( 'b3ob_version' ),
+                ];
+
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
                     $plugin_url = plugins_url( '/', __FILE__ );
                     define( 'B3OB_PLUGIN_URL', $plugin_url );
@@ -56,17 +55,6 @@
                     $plugin_site = 'https://b3onboarding.berryplasman.com';
                     define( 'B3OB_PLUGIN_SITE', $plugin_site );
                 }
-            }
-
-            /**
-             * This initializes the whole shabang
-             */
-            public function init() {
-                $this->settings = [
-                    'path'              => trailingslashit( dirname( __FILE__ ) ),
-                    'registration_type' => get_option( 'b3_registration_type' ),
-                    'version'           => get_option( 'b3ob_version' ),
-                ];
 
                 // actions
                 register_activation_hook( __FILE__,             [ $this, 'b3_plugin_activation' ] );
@@ -112,11 +100,6 @@
                 require_once $plugin_dir_path . 'admin/help-tabs.php';
             }
 
-            /*
-             * Do stuff upon plugin activation
-             *
-             * @since 2.0.0
-             */
             public function b3_plugin_activation() {
                 b3_setup_initial_pages();
                 b3_set_default_settings();
@@ -133,9 +116,6 @@
                 }
             }
 
-            /**
-             * Do stuff upon plugin deactivation
-             */
             public function b3_plugin_deactivation() {
                 // set registration option accordingly
                 $registration_type = get_option( 'b3_registration_type' );
@@ -157,9 +137,6 @@
                 delete_option( 'b3ob_version' );
             }
 
-            /**
-             * Set version
-             */
             public function b3_set_version() {
                 $stored      = get_option( 'b3ob_version' );
                 $plugin_data = get_plugin_data( trailingslashit( dirname( __FILE__ ) ) . basename( __FILE__ ) );
@@ -169,9 +146,6 @@
                 }
             }
 
-            /**
-             * Load plugin text domain
-             */
             public function b3_load_plugin_text_domain() {
                 $plugin_folder = dirname( plugin_basename( __FILE__ ) );
                 $locale        = apply_filters( 'plugin_locale', get_locale(), $plugin_folder );
@@ -179,9 +153,6 @@
                 load_plugin_textdomain( $plugin_folder, false, $plugin_folder . '/languages/' );
             }
 
-            /*
-             * Enqueue scripts front-end
-             */
             public function b3_enqueue_scripts_frontend() {
                 if ( ! is_admin() ) {
                     if ( ! wp_script_is( 'jquery' ) ) {
@@ -202,9 +173,6 @@
                 ] );
             }
 
-            /*
-             * Enqueue scripts in backend
-             */
             public function b3_enqueue_scripts_backend() {
                 wp_enqueue_style( 'b3ob-admin', plugins_url( 'assets/css/admin.css', __FILE__ ), [], $this->settings[ 'version' ] );
 
@@ -239,9 +207,6 @@
                 wp_enqueue_script( 'wp-theme-plugin-editor', '', '', '', true );
             }
 
-            /*
-             * Adds a page to admin sidebar menu
-             */
             public function b3_add_admin_pages() {
                 $plugin_dir_path = plugin_dir_path(__FILE__);
                 require_once $plugin_dir_path . 'admin/admin-page.php';
@@ -258,9 +223,6 @@
                 }
             }
 
-            /**
-             * Redirect user away from certain pages
-             */
             public function b3_template_redirect() {
                 $account_page_id  = b3_get_account_url( true );
                 $account_url      = b3_get_account_url();
@@ -324,18 +286,12 @@
                 }
             }
 
-            /*
-             * Register widgets (if activated)
-             */
             public function b3_register_widgets() {
                 if ( is_main_site() ) {
                     require_once plugin_dir_path(__FILE__) . 'includes/class-b3-sidebar-widget.php';
                 }
             }
 
-            /*
-             * Add dashboard widget
-             */
             public function b3_add_dashboard_widget() {
                 /*
                  * Includes dashboard widget function + call
@@ -350,13 +306,6 @@
                 }
             }
 
-            /**
-             * Add settings link to plugin page
-             *
-             * @param $links
-             *
-             * @return mixed
-             */
             public function b3_settings_link( $links ) {
                 $settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding' ), esc_html__( 'Settings', 'b3-onboarding' ) );
                 array_unshift( $links, $settings_link );
@@ -364,9 +313,6 @@
                 return $links;
             }
 
-            /**
-             * Check if user actions need to be taken
-             */
             public function b3_load_users_page() {
                 add_action( 'admin_notices', [ $this, 'b3_admin_notices' ] );
 
@@ -413,20 +359,12 @@
                 }
             }
 
-            /*
-             * Error function
-             *
-             * @return WP_Error
-             */
             public static function b3_errors() {
                 static $wp_error; // Will hold global variable safely
 
                 return isset( $wp_error ) ? $wp_error : ( $wp_error = new WP_Error( null, null, null ) );
             }
 
-            /*
-             * Displays error messages from form submissions
-             */
             public static function b3_show_admin_notices() {
                 if ( $codes = B3Onboarding::b3_errors()->get_error_codes() ) {
                     if ( is_wp_error( B3Onboarding::b3_errors() ) ) {
@@ -465,19 +403,12 @@
                 }
             }
 
-            /**
-             * An action function used to include the reCAPTCHA JavaScript file
-             * at the end of the page.
-             */
             public function b3_add_recaptcha_js_to_footer() {
                 if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
                     wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [] );
                 }
             }
 
-            /*
-             * Enqueue js for recaptcha
-             */
             public function b3_add_rc3() {
                 if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
                     ?>
@@ -490,9 +421,6 @@
                 }
             }
 
-            /**
-             * Handle registration form
-             */
             public function b3_registration_form_handling() {
                 if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user_nonce' ] ) ) {
@@ -748,11 +676,6 @@
                 }
             }
 
-            /**
-             * Resets the user's password if the password reset form was submitted (with custom passwords)
-             *
-             * @since 1.0.6
-             */
             public function b3_reset_user_password() {
                 if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
@@ -848,11 +771,6 @@
                 }
             }
 
-            /**
-             * Verify a link clicked from an email
-             *
-             * @return void
-             */
             public function b3_check_magic_link() {
                 if ( isset( $_GET[ 'otpcode' ] ) ) {
                     $verify_otp = b3_verify_otp( $_GET[ 'otpcode' ] );
@@ -868,15 +786,6 @@
                 }
             }
 
-            /**
-             * Finds and returns a matching error message for the given error code.
-             *
-             * @param string $error_code The error code to look up.
-             *
-             * @return string            An error message.
-             * @since 1.0.6
-             *
-             */
             public function b3_get_return_message( $error_code, $sprintf = false ) {
 
                 switch( $error_code ) {
@@ -1093,18 +1002,6 @@
                 return esc_html__( 'An unknown error occurred. Please try again later.', 'b3-onboarding' );
             }
 
-            /**
-             * Validates and then completes the (normal) user signup process if all went well.
-             *
-             * @param $user_email
-             * @param $user_login
-             * @param $registration_type
-             * @param $role
-             *
-             * @return int|void|WP_Error
-             * @since 1.0.6
-             *
-             */
             private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
                 $errors                       = new WP_Error();
                 $registration_with_email_only = get_option( 'b3_register_email_only' );
@@ -1206,18 +1103,6 @@
                 return $user_id;
             }
 
-            /**
-             * Validates and then completes WPMU signup process if all went well.
-             *
-             * @param       $user_name
-             * @param       $user_email
-             * @param       $domain
-             * @param array $meta
-             *
-             * @return bool|WP_Error
-             * @since 1.0.6
-             *
-             */
             private function b3_register_wpmu_user( $user_name, $user_email, $domain, $blog_title, $path, $meta = [] ) {
                 $b3_register_type = get_option( 'b3_registration_type' );
 
@@ -1253,16 +1138,6 @@
                 return false;
             }
 
-            /**
-             * Renders the contents of the given template to a string and returns it.
-             *
-             * @param string $template_name The name of the template to render (without .php)
-             * @param array $attributes The PHP variables for the template
-             *
-             * @return string               The contents of the template.
-             * @since 1.0.6
-             *
-             */
             public function b3_get_template_html( $template_name, $attributes = null ) {
                 if ( ! $attributes ) {
                     $attributes = [];
@@ -1287,11 +1162,6 @@
                 return '';
             }
 
-            /**
-             * Add admin notices
-             *
-             * @since 1.0.6
-             */
             public function b3_admin_notices() {
                 $screen_ids = [
                     'toplevel_page_b3-onboarding',
@@ -1348,36 +1218,23 @@
                 }
             }
 
-            /**
-             * Do stuff after create site
-             *
-             * @param $site
-             */
             public function b3_after_create_site( $site ) {
                 // create necessary pages
                 b3_setup_initial_pages( $site->blog_id );
                 // set default values
                 b3_set_default_settings( $site->blog_id );
             }
-        }
 
+            public static function get_instance() {
+                static $instance;
 
-        /**
-         * The main function responsible for returning the one true B3Onboarding instance to functions everywhere.
-         *
-         * @return \B3Onboarding
-         */
-        function init_b3_onboarding() {
-            global $b3_onboarding;
+                if ( null === $instance ) {
+                    $instance = new self();
+                }
 
-            if ( ! isset( $b3_onboarding ) ) {
-                $b3_onboarding = new B3Onboarding();
-                $b3_onboarding->init();
+                return $instance;
             }
-
-            return $b3_onboarding;
         }
 
-        init_b3_onboarding();
-
+        B3Onboarding::get_instance();
     }
