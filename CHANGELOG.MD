@@ -1,5 +1,52 @@
 ## CHANGELOG
 
+3.15.0
+* improve approval + email confirmation
+
+3.14.0
+* improve emails
+* optimize otp functions
+* optimize use of repeated wp functions
+* add language on signup
+
+3.13.0
+* change version everywhere
+
+3.12.2
+* change composer file
+
+3.12.1
+* change composer version
+
+3.12.0
+* change 'code' argument/var to 'otpcode' to avoid conflicts
+
+3.11.1 - 15.09.24
+* fix forgotten creation of dynamic property in shortcodes file
+
+3.11.0 - 07.09.24
+* add magic link login option (single site only, for now)
+* improved blocking of disallowed usernames/domain names
+* moved logo field to emails tab
+* added indicator for filter verification
+* added new filters
+* * b3_magic_link_email()
+* * b3_magic_link_time_out()
+* * b3_password_special_chars()
+* * b3_password_extra_special_chars()
+* * b3_disallowed_domains()
+* * b3_show_email_widget()
+* * b3_message_above_magiclink()
+* * b3_email_intro()
+* * b3_message_above_request_site()
+* change settings to non-static method
+
+3.10.0 - 02.10.23
+* filter out nav menu items
+* sprintf admin tabs
+* honour redirect_to on logout
+* array refactoring `array()` to `[]`
+
 3.9.0 - 11.01.23
 * remove jquery override
 
