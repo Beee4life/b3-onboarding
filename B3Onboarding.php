@@ -1163,6 +1163,9 @@
             }
 
             public function b3_admin_notices() {
+                $show_error   = false;
+                $show_warning = false;
+
                 $screen_ids = [
                     'toplevel_page_b3-onboarding',
                     'b3-onboarding_page_b3-debug',
@@ -1176,11 +1179,11 @@
                     if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) ) {
                         $show_error = true;
                     }
-                    if ( isset( $show_error ) && $show_error ) {
+                    if ( $show_error ) {
                         $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         echo sprintf( '<div class="error"><p>%s</p></div>', $error_message );
                     }
-                    if ( isset( $show_warning ) && $show_warning ) {
+                    if ( $show_warning ) {
                         $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
                         $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
                         if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
@@ -1209,9 +1212,11 @@
                 }
 
                 global $pagenow;
-                if ( is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
+                static $membership_notice_shown = false;
+                if ( ! $membership_notice_shown && is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
                     echo sprintf( '<div class="notice notice-info"><p>' . esc_html__( "%s takes control over the 'Membership' option. You can change this %s.", 'b3-onboarding' ) . '</p></div>', 'B3 OnBoarding', sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ) );
                 }
+                $membership_notice_shown = true;
 
                 if ( get_option( 'b3_activate_filter_validation' ) ) {
                     do_action( 'b3_verify_filter_input' );
