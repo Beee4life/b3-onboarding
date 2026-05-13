@@ -29,7 +29,7 @@
         class B3Onboarding {
             private array $settings = [];
 
-            function __construct() {
+            public function __construct() {
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
                     'registration_type' => get_option( 'b3_registration_type' ),
