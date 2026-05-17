@@ -383,13 +383,13 @@
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        $messages[] = esc_html__( b3_get_message_above_lost_password() );
+                        $messages[] = esc_html( b3_get_message_above_lost_password() );
 
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
 
                     } elseif ( 'magiclink' === $attributes[ 'template' ] ) {
-                        $messages[] = esc_html__( b3_get_message_above_magiclink_form() );
+                        $messages[] = esc_html( b3_get_message_above_magiclink_form() );
                     }
                 }
             }
@@ -744,7 +744,7 @@
             delete_transient( sprintf( 'otp_', $user->user_email ) );
             do_action( 'wp_login', $user->user_login, $user );
 
-            wp_redirect( $redirect );
+            wp_safe_redirect( $redirect );
             exit;
         }
     }

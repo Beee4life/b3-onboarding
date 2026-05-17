@@ -3,13 +3,6 @@
         exit;
     }
 
-    /**
-     * Return default email styling
-     *
-     * @since 1.0.6
-     *
-     * @return false|string
-     */
     function b3_default_email_styling( $link_color = false ) {
         $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
 
@@ -39,14 +32,6 @@
         return $default_css;
     }
 
-
-    /**
-     * Return default email template
-     *
-     * @since 1.0.6
-     *
-     * @return false|string
-     */
     function b3_default_email_template( $hide_logo = false ) {
         $default_template = file_get_contents( dirname(__FILE__) . '/default-email-template.html' );
 
@@ -57,64 +42,24 @@
         return $default_template;
     }
 
-
-    /**
-     * Return default email footer text
-     *
-     * @since 2.0.0
-     *
-     * @return false|string
-     */
     function b3_default_email_footer() {
         $anchor = ( is_multisite() ) ? '%network_name%' : '%blog_name%';
 
         return sprintf( esc_html__( 'This is an automated email from the website %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', $anchor ) );
     }
 
-
-    /**
-     * Return default link color
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_link_color() {
         return '#e0144b';
     }
 
-
-    /**
-     * Return default main logo
-     *
-     * @since 2.0.0
-     *
-     * @return false|string
-     */
     function b3_default_main_logo() {
         return B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding.png';
     }
 
-
-    /**
-     * Return default new user subject (admin)
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
     function b3_default_new_user_admin_subject() {
         return sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
-
-    /**
-     * Return default new user message (admin)
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
     function b3_default_new_user_admin_message() {
         $admin_message = sprintf( esc_html__( 'A new user registered at %s on %s.', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\n";
         $admin_message .= '<br><br>' . "\n";
@@ -129,26 +74,10 @@
         return $admin_message;
     }
 
-
-    /**
-     * Return default account activated subject (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_account_activated_subject() {
         return esc_html__( 'Account activated', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default account activated message (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_account_activated_message() {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
@@ -177,26 +106,10 @@
         return $message;
     }
 
-
-    /**
-     * Return default request access subject (admin)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_request_access_subject_admin() {
         return esc_html__( 'A new user requests access', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default request access message (admin)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_request_access_message_admin() {
         $approval_link                = b3_get_user_approval_link();
         $user_approval_page           = ( false != $approval_link ) ? $approval_link : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
@@ -205,26 +118,10 @@
         return $request_access_message_admin;
     }
 
-
-    /**
-     * Return default request access subject (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_request_access_subject_user() {
         return sprintf( esc_html__( 'Request for access confirmed for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
-
-    /**
-     * Return default request access message (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_request_access_message_user() {
         ob_start();
         echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) );
@@ -234,26 +131,10 @@
         return ob_get_clean();
     }
 
-
-    /**
-     * Return default account approved subject (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_account_approved_subject() {
         return esc_html__( 'Account approved', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default account approved message (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_account_approved_message() {
         if ( get_option( 'b3_activate_custom_passwords' ) || get_option( 'b3_use_magic_link' ) ) {
             $link = b3_get_login_url();
@@ -278,26 +159,10 @@
         return $message;
     }
 
-
-    /**
-     * Return default account rejected subject (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_account_rejected_subject() {
         return esc_html__( 'Account rejected', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default account rejected message (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_account_rejected_message() {
         $message = sprintf( esc_html__( "We're sorry to tell you, your request for access to %s has been rejected.", 'b3-onboarding' ), get_option( 'blogname' ) );
         $message .= '<br>' . "\n";
@@ -306,26 +171,10 @@
         return $message;
     }
 
-
-    /**
-     * Return default lost password subject (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_lost_password_subject() {
         return sprintf( esc_html__( 'Password reset for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
-
-    /**
-     * Return default lost password message (user)
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
     function b3_default_lost_password_message() {
         $lost_pass_url = sprintf( '<a href="%s">%s</a>',  '%reset_url%', strtoupper( __( 'Reset password', 'b3-onboarding' ) ) );
         $button        = sprintf( '<div class="big-link">%s</div>', $lost_pass_url ) . "\n";
@@ -344,26 +193,10 @@
 
     }
 
-
-    /**
-     * Return default welcome user subject (user)
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
     function b3_default_welcome_user_subject() {
         return sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
-
-    /**
-     * Return default welcome user message (user)
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
     function b3_default_welcome_user_message() {
         $activation_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
         $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
@@ -381,12 +214,6 @@
         return $message;
     }
 
-
-    /**
-     * Override MANUAL welcome user email
-     *
-     * @return string
-     */
     function b3_default_manual_welcome_user_message() {
         $message = b3_get_email_intro();
         $message .= '<br><br>' . "\n";
@@ -399,26 +226,10 @@
         return $message;
     }
 
-
-    /**
-     * Return default welcome user subject (user)
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_email_activation_subject() {
         return esc_html__( 'Confirm your email address', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default welcome user message (user)
-     *
-     * @since 1.0.6
-     *
-     * @return string
-     */
     function b3_default_email_activation_message() {
         $activation_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( __( 'Confirm email', 'b3-onboarding' ) ) );
         $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
@@ -434,24 +245,10 @@
         return $message;
     }
 
-
-    /**
-     * Default activate user email subject (WPMU)
-     *
-     * %s = Site name, translated/replaced by Wordpress
-     *
-     * @return string|void
-     */
     function b3_default_wpmu_activate_user_subject() {
         return esc_html__( '%s: Confirm your registration', 'b3-onboarding' );
     }
 
-
-    /**
-     * Default activate user email message (WPMU)
-     *
-     * @return string|void
-     */
     function b3_default_wpmu_activate_user_message() {
         $link_element = sprintf( '<a href="%s">%s</a>', '%2$s', strtoupper( __( 'Activate account', 'b3-onboarding' ) ) );
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
@@ -468,22 +265,10 @@
         return $message;
     }
 
-
-    /**
-     * Default user activated email message (WPMU)
-     *
-     * @return string|void
-     */
     function b3_default_wpmu_user_activated_subject() {
         return esc_html__( 'Welcome to %1$s', 'b3-onboarding' );
     }
 
-
-    /**
-     * Default user activated email message (WPMU)
-     *
-     * @return string|void
-     */
     function b3_default_wpmu_user_activated_message() {
         $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( __( 'Login', 'b3-onboarding' ) ) );
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
@@ -505,26 +290,10 @@
         return $message;
     }
 
-
-    /**
-     * Default admin subject for new wpmu user (no site)
-     *
-     * @param false $user
-     *
-     * @return string
-     */
     function b3_default_subject_new_wpmu_user_admin() {
         return esc_html__( 'New User Registration: %s', 'b3-onboarding' );
     }
 
-
-    /**
-     * Default admin message for new wpmu user (no site)
-     *
-     * @param false $user
-     *
-     * @return string
-     */
     function b3_default_message_new_wpmu_user_admin() {
         $message = esc_html__( 'New user: %user_login%', 'b3-onboarding' ) . "\n";
         $message .= '<br><br>' . "\n";
@@ -537,12 +306,6 @@
         return $message;
     }
 
-
-    /**
-     * Default "New Site Created" email message
-     *
-     * @return string
-     */
     function b3_default_message_new_site_created() {
         // @TODO: add if for when added by admin
         $message = esc_html__( 'New site created by: %user_login%', 'b3-onboarding' ) . "\n";
@@ -556,29 +319,13 @@
         return $message;
     }
 
-
-    /**
-     * Default subject new wpmu user (blog)
-     *
-     * @param false $user
-     *
-     * @return string|void
-     */
     function b3_default_subject_new_wpmu_user_blog( $user = false ) {
-        $subject = _x( '[%network_name%] Activate your account', 'New site notification email subject' );
+        $subject = _x( '[%network_name%] Activate your account', 'New site notification email subject', 'b3-onboarding' );
 
         return $subject;
 
     }
 
-
-    /**
-     * Default message new wpmu user (blog)
-     *
-     * @param false $user
-     *
-     * @return string
-     */
     function b3_default_message_new_wpmu_user_blog( $user = false ) {
 
         $message = '';
@@ -599,24 +346,10 @@
         return $message;
     }
 
-
-    /**
-     * Default subject welcome new wpmu user (blog)
-     *
-     * @return string
-     */
     function b3_default_subject_welcome_wpmu_user_blog() {
         return 'New %network_name% Site: %site_name%';
     }
 
-
-    /**
-     * Default message welcome new wpmu user (blog)
-     *
-     * @param false $user_login
-     *
-     * @return string
-     */
     function b3_default_message_welcome_wpmu_user_blog( $user_login = false ) {
         $message = '';
         if ( false != $user_login ) {
@@ -641,50 +374,18 @@
         return $message;
     }
 
-
-    /**
-     * Return default registration message
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_message_above_registration() {
-        return esc_html__( 'Register For This Site' );
+        return esc_html__( 'Register For This Site', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default registration closed message text
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_registration_closed_message() {
         return esc_html__( 'Registering new users is currently not allowed.', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default registration register blog message
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_logged_in_registration_only_message() {
         return sprintf( esc_html__( 'You must first %s, and then you can create a new site.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'log in', 'b3-onboarding' ) ) ) . "\n";
     }
 
-
-    /**
-     * Return default lost password message
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_message_above_lost_password() {
         if ( 1 == get_option( 'b3_register_email_only' ) ) {
             return esc_html__( 'Please enter your email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
@@ -693,26 +394,10 @@
         }
     }
 
-
-    /**
-     * Return default request access message
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_message_above_request_access() {
         return esc_html__( 'You have to request access for this website.', 'b3-onboarding' );
     }
 
-
-    /**
-     * Return default privacy text
-     *
-     * @since 2.0.0
-     *
-     * @return string
-     */
     function b3_default_privacy_text() {
         $message      = esc_html__( 'Accept privacy settings', 'b3-onboarding' );
         $privacy_page = get_option( 'b3_privacy_page_id' );
@@ -731,12 +416,6 @@
         return $message;
     }
 
-
-    /**
-     * Return default greetings under each mail
-     *
-     * @return string
-     */
     function b3_default_greetings() {
         $greetings = "\n" . '<br>' . "\n";
         $greetings .= esc_html__( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
@@ -746,12 +425,6 @@
         return apply_filters( 'b3_default_greetings', $greetings );
     }
 
-
-    /**
-     * Get default reserved names
-     *
-     * @since 3.5.0
-     */
     function b3_get_default_reserved_user_names() {
         $default_reserved_names = [
             'admin',
@@ -767,14 +440,6 @@
         return $default_reserved_names;
     }
 
-
-    /**
-     * Get 'easy' passwords
-     *
-     * @since 3.5.0
-     *
-     * @return mixed|void
-     */
     function b3_get_default_easy_passwords() {
         $default_passwords = [
             '1234',
@@ -794,17 +459,6 @@
         return $default_passwords;
     }
 
-
-    /**
-     * Get default magic link email
-     *
-     * @since 3.11.0
-     *
-     * @param $password
-     * @param $slug
-     *
-     * @return string
-     */
     function b3_get_default_magiclink_email( $password, $slug ) {
         if ( $password && $slug ) {
             $login_link = b3_get_login_url();
@@ -829,7 +483,6 @@
 
         return '';
     }
-
 
     function b3_default_admin_pages() {
         $b3_pages = [

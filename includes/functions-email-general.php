@@ -506,9 +506,9 @@
         $welcome = ( false === $welcome ) ? esc_html__( 'Welcome', 'b3-onboarding' ) : $welcome;
 
         if ( true == get_option( 'b3_register_email_only' ) || true == get_option( 'b3_use_magic_link' ) ) {
-            $message = esc_html__( $welcome, 'b3-onboarding' ) . ',' . "\n";
+            $message = esc_html( $welcome ) . ',' . "\n";
         } else {
-            $message = $welcome . ' %user_login%' . ',' . "\n";
+            $message = esc_html( $welcome ) . ' %user_login%' . ',' . "\n";
         }
 
         return apply_filters( 'b3_email_intro', $message );

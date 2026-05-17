@@ -3,7 +3,6 @@
         exit;
     }
 
-    // check if class already exists
     if ( ! class_exists( 'B3Shortcodes' ) ) {
 
         /**
@@ -12,9 +11,6 @@
          * @since 2.0.0
          */
         class B3Shortcodes extends B3Onboarding {
-            /**
-             * B3Shortcodes constructor
-             */
             public function __construct() {
                 parent::__construct();
 
@@ -26,16 +22,6 @@
                 add_shortcode( 'user-management',   [ $this, 'b3_render_user_approval_page' ] );
             }
 
-
-            /**
-             * Renders the register form
-             *
-             * @param $shortcode_args
-             *
-             * @return mixed|string|void
-             * @since 1.0.0
-             *
-             */
             public function b3_render_register_form( $shortcode_args ) {
                 $admin_approval    = get_option( 'b3_needs_admin_approval' );
                 $registration_type = get_option( 'b3_registration_type' );
@@ -163,16 +149,6 @@
                 }
             }
 
-
-            /**
-             * A shortcode for rendering the login form.
-             *
-             * @since 1.0.0
-             *
-             * @param array  $shortcode_args Shortcode attributes.
-             *
-             * @return string  The shortcode output
-             */
             public function b3_render_login_form( $shortcode_args ) {
                 if ( is_user_logged_in() ) {
                     return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
@@ -269,16 +245,6 @@
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
 
-
-            /**
-             * A shortcode for rendering the password lost form.
-             *
-             * @since 1.0.0
-             *
-             * @param array $shortcode_args Shortcode attributes.
-             *
-             * @return string  The shortcode output
-             */
             public function b3_render_lost_password_form( $shortcode_args ) {
                 $default_attributes = [
                     'button_value' => esc_attr__( 'Reset password', 'b3-onboarding' ),
@@ -319,16 +285,6 @@
                 return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
             }
 
-
-            /**
-             * A shortcode for rendering the reset password form.
-             *
-             * @since 1.0.0
-             *
-             * @param array $shortcode_args Shortcode attributes.
-             *
-             * @return string The shortcode output
-             */
             public function b3_render_reset_password_form( $shortcode_args ) {
                 $default_attributes = [
                     'button_value' => esc_attr__( 'Set password', 'b3-onboarding' ),
@@ -370,16 +326,6 @@
                 }
             }
 
-
-            /**
-             * Render user/account page
-             *
-             * @since 1.0.0
-             *
-             * @param $shortcode_args
-             *
-             * @return bool|string
-             */
             public function b3_render_account_page( $shortcode_args ) {
                 if ( is_user_logged_in() ) {
                     wp_enqueue_script( 'user-profile' );
@@ -418,16 +364,6 @@
                 return false;
             }
 
-
-            /**
-             * Render user management page
-             *
-             * @since 1.0.0
-             *
-             * @param $shortcode_args
-             *
-             * @return bool|string
-             */
             public function b3_render_user_approval_page( $shortcode_args ) {
                 if ( current_user_can( 'promote_users' ) ) {
                     $default_attributes = [
@@ -452,7 +388,7 @@
 
                     if ( is_multisite() ) {
                         global $wpdb;
-                        $query                 = "SELECT * FROM $wpdb->signups WHERE active = '0'";
+                        $query                 = $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups );
                         $attributes[ 'users' ] = $wpdb->get_results( $query );
                     } else {
                         $user_args             = [ 'role' => 'b3_approval' ];

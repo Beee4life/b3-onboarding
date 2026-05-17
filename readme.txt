@@ -1,6 +1,6 @@
-=== B3 Onboarding ===
+=== B3 OnBoarding ===
 Contributors: Beee, mrjohnmc
-Tags: user, management, registration, login, lost password, reset password, account
+Tags: user management, registration, login, lost password, account
 Requires at least: 4.3
 Tested up to: 6.9
 Requires PHP: 5.6

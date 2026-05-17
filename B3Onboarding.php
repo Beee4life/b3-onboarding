@@ -204,7 +204,7 @@
             }
 
             public function b3_enqueue_scripts_backend_footer() {
-                wp_enqueue_script( 'wp-theme-plugin-editor', '', '', '', true );
+                wp_enqueue_script( 'wp-theme-plugin-editor', '', '', $this->settings['version'], true );
             }
 
             public function b3_add_admin_pages() {
@@ -549,18 +549,18 @@
                                             $error_message_user_email = $errors->get_error_message( 'user_email' );
 
                                             if ( ! empty( $error_message_user_name ) ) {
-                                                if ( __( 'Sorry, that username already exists!' ) === $error_message_user_name ) {
+                                                if ( 'Sorry, that username already exists!' === $error_message_user_name ) {
                                                     $error_codes[] = 'username_exists';
-                                                } elseif ( __( 'Usernames can only contain lowercase letters (a-z) and numbers.' ) === $error_message_user_name ) {
+                                                } elseif ( 'Usernames can only contain lowercase letters (a-z) and numbers.' === $error_message_user_name ) {
                                                     $error_codes[] = 'username_no_uppercase';
-                                                } elseif ( __( 'That username is currently reserved but may be available in a couple of days.' ) === $error_message_user_name ) {
+                                                } elseif ( 'That username is currently reserved but may be available in a couple of days.' === $error_message_user_name ) {
                                                     $error_codes[] = 'wpmu_user_reserved';
                                                 }
                                             }
                                             if ( ! empty( $error_message_user_email ) ) {
-                                                if ( __( 'Sorry, that email address is already used!' ) === $error_message_user_email ) {
+                                                if ( 'Sorry, that email address is already used!' === $error_message_user_email ) {
                                                     $error_codes[] = 'email_exists';
-                                                } elseif ( __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' ) === $error_message_user_email ) {
+                                                } elseif ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' === $error_message_user_email ) {
                                                     $error_codes[] = 'wpmu_email_in_use';
                                                 }
                                             }
@@ -746,6 +746,7 @@
 
                                 if ( $hashed_slug ) {
                                     $vars    = []; // empty right now, but might be filled later on...
+                                    /* translators: 1: Blog name */
                                     $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
                                     $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                     $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
@@ -804,7 +805,7 @@
                     case 'incorrect_password':
                         $error_message = esc_html__( "The username or password you entered wasn't quite right.", 'b3-onboarding' );
                         $error_message .= '<br>';
-                        $error_message .= sprintf( esc_html__( 'Did you %s your password ?', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', wp_lostpassword_url(), esc_html__( 'forget', 'b3-onboarding' ) ) );
+                        $error_message .= sprintf( esc_html__( 'Did you %s your password ?', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( wp_lostpassword_url() ), esc_html__( 'forget', 'b3-onboarding' ) ) );
 
                         return $error_message;
 
@@ -948,7 +949,7 @@
                         return esc_html__( "Sorry, we don't accept empty passwords.", 'b3-onboarding' );
 
                     case 'password_too_easy':
-                        return esc_html__( 'Sorry, that password is too easy.', 'b3-onbaording' );
+                        return esc_html__( 'Sorry, that password is too easy.', 'b3-onboarding' );
 
                     // Multisite
                     case 'domain_exists':

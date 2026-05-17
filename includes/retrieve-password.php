@@ -14,10 +14,10 @@
 
         if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
             $errors->add( 'empty_username', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'Enter a username or email address', 'b3-onboarding' ) ) );
-        
+
         } elseif ( strpos( $_POST[ 'user_login' ], '@' ) ) {
             $user_data = get_user_by( 'email', trim( wp_unslash( $_POST[ 'user_login' ] ) ) );
-        
+
         } else {
             $login     = trim( wp_unslash( $_POST[ 'user_login' ] ) );
             $user_data = get_user_by( 'login', $login );
@@ -64,17 +64,17 @@
             $site_name = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
         }
 
-        $message = esc_html__( 'Someone has requested a password reset for the following account:' ) . "\r\n\r\n";
+        $message = esc_html__( 'Someone has requested a password reset for the following account:', 'b3-onboarding' ) . "\r\n\r\n";
         /* translators: %s: Site name. */
-        $message .= sprintf( esc_html__( 'Site Name: %s' ), $site_name ) . "\r\n\r\n";
+        $message .= sprintf( esc_html__( 'Site Name: %s', 'b3-onboarding' ), $site_name ) . "\r\n\r\n";
         /* translators: %s: User login. */
-        $message .= sprintf( esc_html__( 'Username: %s' ), $user_login ) . "\r\n\r\n";
-        $message .= esc_html__( 'If this was a mistake, just ignore this email and nothing will happen.' ) . "\r\n\r\n";
-        $message .= esc_html__( 'To reset your password, visit the following address:' ) . "\r\n\r\n";
+        $message .= sprintf( esc_html__( 'Username: %s', 'b3-onboarding' ), $user_login ) . "\r\n\r\n";
+        $message .= esc_html__( 'If this was a mistake, just ignore this email and nothing will happen.', 'b3-onboarding' ) . "\r\n\r\n";
+        $message .= esc_html__( 'To reset your password, visit the following address:', 'b3-onboarding' ) . "\r\n\r\n";
         $message .= network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n";
 
         /* translators: Password reset notification email subject. %s: Site title. */
-        $title = sprintf( __( '[%s] Password Reset' ), $site_name );
+        $title = sprintf( __( '[%s] Password Reset', 'b3-onboarding' ), $site_name );
 
 
         /**
@@ -109,13 +109,13 @@
                 'retrieve_password_email_failure',
                 sprintf( '<strong>%s</strong>: %s',
                     esc_html__( 'Error', 'b3-onboarding' ),
-                    sprintf( __( 'The email could not be sent. Your site may not be correctly configured to send emails. %s.' ),
+                    sprintf( __( 'The email could not be sent. Your site may not be correctly configured to send emails. %s.', 'b3-onboarding' ),
                         sprintf( '<a href="%s">%s</a>',
                             esc_url( 'https://wordpress.org/support/article/resetting-your-password/' ),
                             esc_html__( 'Get support for resetting your password', 'b3-onboarding' ) ) )
                 )
             );
-            
+
             return $errors;
         }
 

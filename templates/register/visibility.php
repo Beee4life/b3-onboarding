@@ -8,11 +8,11 @@
         <?php _e( 'Allow search engines to index this site.', 'b3-onboarding' ); ?>
         <label class="checkbox" for="blog_public_on">
             <input type="radio" id="blog_public_on" name="blog_public" value="1" checked />
-            <?php _e( 'Yes' ); ?>
+            <?php _e( 'Yes', 'b3-onboarding' ); ?>
         </label>
         <label class="checkbox" for="blog_public_off">
             <input type="radio" id="blog_public_off" name="blog_public" value="0" />
-            <?php _e( 'No' ); ?>
+            <?php _e( 'No', 'b3-onboarding' ); ?>
         </label>
     </div>
 </div>

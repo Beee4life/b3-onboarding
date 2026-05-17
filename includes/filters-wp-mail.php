@@ -349,7 +349,7 @@
         $pass_change_email = [
             'to'      => $user[ 'user_email' ],
             /* translators: Password change notification email subject. %s: Site title. */
-            'subject' => __( '[%s] Password Changed' ),
+            'subject' => __( '[%s] Password Changed', 'b3-onboarding' ),
             'message' => $message,
             'headers' => '',
         ];

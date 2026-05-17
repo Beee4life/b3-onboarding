@@ -35,7 +35,7 @@
 
                     <div class="b3_select-page__selector">
                         <select name="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>_id" id="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>">
-                            <option value=""><?php esc_attr_e( "Select a page", "b3-user-regiser" ); ?></option>
+                            <option value=""><?php esc_attr_e( "Select a page", "b3-onboarding" ); ?></option>
                             <?php if ( class_exists( 'SitePress' ) ) { ?>
                                 <?php $default_lang = apply_filters( 'wpml_default_language', null ); ?>
                                 <?php foreach( $all_pages as $active_page ) { ?>

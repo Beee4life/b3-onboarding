@@ -235,7 +235,7 @@
                 $result          = null;
 
                 if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
-                    wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.' ), esc_html__( 'An error occurred during the activation' ), 400 );
+                    wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.','b3-onboarding' ), esc_html__( 'An error occurred during the activation', 'b3-onboarding' ), 400 );
                 } elseif ( ! empty( $_GET[ 'key' ] ) ) {
                     $key = sanitize_key( $_GET[ 'key' ] );
                 } elseif ( ! empty( $_POST[ 'key' ] ) ) {
