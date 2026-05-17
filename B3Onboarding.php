@@ -56,7 +56,6 @@
                     define( 'B3OB_PLUGIN_SITE', $plugin_site );
                 }
 
-                // actions
                 register_activation_hook( __FILE__,             [ $this, 'b3_plugin_activation' ] );
                 register_deactivation_hook( __FILE__,           [ $this, 'b3_plugin_deactivation' ] );
 
