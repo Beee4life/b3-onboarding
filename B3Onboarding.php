@@ -209,16 +209,65 @@
             public function b3_add_admin_pages() {
                 $plugin_dir_path = plugin_dir_path(__FILE__);
                 require_once $plugin_dir_path . 'admin/admin-page.php';
-                add_menu_page( 'B3 OnBoarding', 'B3 OnBoarding', apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-onboarding', 'b3_user_register_settings', B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding-small.png', 99 );
+                add_menu_page(
+                    'B3 OnBoarding',
+                    'B3 OnBoarding',
+                    apply_filters( 'b3_user_cap', 'manage_options' ),
+                    'b3-onboarding',
+                    'b3_user_register_settings',
+                    B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding-small.png',
+                    99
+                );
 
                 if ( get_option( 'b3_needs_admin_approval' ) ) {
                     require_once $plugin_dir_path . 'admin/user-approval-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ), esc_html__( 'User Approval', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-user-approval', 'b3_user_approval' );
+
+                    global $submenu;
+                    $approval_exists = false;
+                    if ( isset( $submenu[ 'b3-onboarding' ] ) ) {
+                        foreach( $submenu[ 'b3-onboarding' ] as $item ) {
+                            if ( $item[2] === 'b3-user-approval' ) { // Index 2 is the menu slug
+                                $approval_exists = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if ( ! $approval_exists ) {
+                        add_submenu_page(
+                            'b3-onboarding',
+                            'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ),
+                            esc_html__( 'User Approval', 'b3-onboarding' ),
+                            apply_filters( 'b3_user_cap', 'manage_options' ),
+                            'b3-user-approval',
+                            'b3_user_approval'
+                        );
+                    }
                 }
 
                 if ( is_localhost() || get_option( 'b3_debug_info' ) ) {
                     require_once $plugin_dir_path . 'admin/debug-page.php';
-                    add_submenu_page( 'b3-onboarding', 'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ), esc_html__( 'Debug info', 'b3-onboarding' ), apply_filters( 'b3_user_cap', 'manage_options' ), 'b3-debug', 'b3_debug_page' );
+
+                    global $submenu;
+                    $debug_exists = false;
+                    if ( isset( $submenu[ 'b3-onboarding' ] ) ) {
+                        foreach( $submenu[ 'b3-onboarding' ] as $item ) {
+                            if ( $item[2] === 'b3-debug' ) { // Index 2 is the menu slug
+                                $debug_exists = true;
+                                break;
+                            }
+                        }
+                    }
+                    if ( ! $debug_exists ) {
+                        add_submenu_page(
+                            'b3-onboarding',
+                            'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ),
+                            esc_html__( 'Debug info', 'b3-onboarding' ),
+                            apply_filters( 'b3_user_cap', 'manage_options' ),
+                            'b3-debug',
+                            'b3_debug_page'
+                        );
+                    }
                 }
             }
 
