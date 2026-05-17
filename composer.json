@@ -5,8 +5,8 @@
   "type": "wordpress-plugin",
   "authors": [
     {
-      "name": "Berry Plasman",
-      "email": "info@berryplasman.com"
+      "name":     "Berry Plasman",
+      "homepage": "https://berryplasman.com"
     }
   ],
   "require": {
