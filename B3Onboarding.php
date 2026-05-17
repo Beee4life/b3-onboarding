@@ -5,8 +5,8 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            3.14.0
     Requires at least:  4.3
-    Tested up to:       6.9
-    Requires PHP:       5.6
+    Tested up to:       7.0
+    Requires PHP:       7.4
     Author:             Beee
     Author URI:         https://berryplasman.com
     Tags:               user, management, registration, login, lost password, reset password, account, multisite, wpml, multilang, onboarding, onboard, user registration, user management, forms, email, override, otp, one time password, magic link
@@ -161,12 +161,12 @@
                 }
 
                 if ( false != get_option( 'b3_use_popup', false ) ) {
-                    wp_enqueue_script( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js', [ 'jquery' ], '0.9.1' );
+                    wp_enqueue_script( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js', [ 'jquery' ], '0.9.1', false );
                     wp_enqueue_style( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css', false, '0.9.1' );
                 }
 
                 wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), [], $this->settings[ 'version' ] );
-                wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
+                wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
 
                 wp_localize_script( 'b3ob', 'b3ob_vars', [
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
@@ -180,7 +180,7 @@
                     return;
                 }
 
-                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ] );
+                wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
 
                 // https://wpreset.com/add-codemirror-editor-plugin-theme/
                 $b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( [
@@ -405,7 +405,7 @@
 
             public function b3_add_recaptcha_js_to_footer() {
                 if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
-                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [] );
+                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [], $this->settings['version'], false );
                 }
             }
 

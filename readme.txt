@@ -2,8 +2,8 @@
 Contributors: Beee, mrjohnmc
 Tags: user management, registration, login, lost password, account
 Requires at least: 4.3
-Tested up to: 6.9
-Requires PHP: 5.6
+Tested up to: 7.0
+Requires PHP: 7.4
 Stable tag: 3.15.0
 License: GNU v3
 License: GPLv2 or later
