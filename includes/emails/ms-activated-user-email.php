@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     /*
      * Input fields for 'Confirm email for new user (no site)' (MS)
      *

@@ -26,7 +26,7 @@
                         $page_title = esc_html__( 'Template preview', 'b3-onboarding' );
                     }
 
-                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', $page_title );
+                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( $page_title ) );
                     include 'preview.php';
 
                 } else {
@@ -34,7 +34,7 @@
                     $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : $default_tab;
                     $tabs        = b3_get_admin_tabs();
 
-                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', get_admin_page_title() );
+                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( get_admin_page_title() ) );
 
                     B3Onboarding::b3_show_admin_notices();
 
@@ -48,7 +48,7 @@
                                 $add_icon = ( isset( $tab[ 'icon' ] ) ) ? true : false;
                                 $icon     = $add_icon ? sprintf( '<i class="dashicons dashicons-%s"></i>', $tab[ 'icon' ] ) : false;
                                 $title    = $tab[ 'title' ];
-                                echo sprintf( '<button id="b3_tab-button--%s" class="b3_tab-button b3_tab-button--%s%s" onclick="openTab(event, \'%s\')">%s%s</button>', $tab_id, $tab_id, $active, $tab_id, $icon, $title );
+                                echo sprintf( '<button id="b3_tab-button--%1$s" class="b3_tab-button b3_tab-button--%2$s%3$s" onclick="openTab(event, \'%4$s\')">%s%s</button>', esc_html( $tab_id ), esc_html( $tab_id ), esc_html( $active ), esc_html( $tab_id ), $icon, esc_html( $title ) );
                             }
                             ?>
                         </div>
@@ -58,7 +58,7 @@
                                 $active  = ( $tab[ 'id' ] === $default_tab ) ? ' style="display: block;"' : false;
                                 $content = $tab[ 'content' ];
                                 $tab_id  = $tab[ 'id' ];
-                                echo sprintf( '<div id="%s" class="b3_tab-content b3_tab-content--%s"%s>%s</div>', $tab_id, $tab_id, $active, $content );
+                                echo sprintf( '<div id="%1$s" class="b3_tab-content b3_tab-content--%2$s"%3$s>%4$s</div>', esc_html( $tab_id ), esc_html( $tab_id ), $active, $content );
                             }
                             ?>
                         </div>

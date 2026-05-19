@@ -61,7 +61,7 @@
     }
 
     function b3_default_new_user_admin_message() {
-        $admin_message = sprintf( esc_html__( 'A new user registered at %s on %s.', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\n";
+        $admin_message = sprintf( esc_html__( 'A new user registered at %1$s on %2$s.', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\n";
         $admin_message .= '<br><br>' . "\n";
         if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
             $admin_message .= sprintf( esc_html__( 'User ID: %s', 'b3-onboarding' ), '%user_login%' ) . "\n";

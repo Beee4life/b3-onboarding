@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     // This file contains functions hooked to the plugin's own hooks
 
     /**

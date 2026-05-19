@@ -439,13 +439,13 @@
                                 $prefix       = esc_html__( 'Error', 'b3-onboarding' );
                             }
                         }
-                        echo '<div class="' . $notice_class . 'is-dismissible">';
+                        echo sprintf( '<div class="%sis-dismissible">', esc_attr( $notice_class) );
                         foreach( $codes as $code ) {
                             $message = B3Onboarding::b3_errors()->get_error_message( $code );
-                            $message = ( true == $prefix ) ? '<strong>' . $prefix . ':</strong> ' . $message : $message;
-                            echo sprintf( '<p>%s</p>', $message );
+                            $message = ( true == $prefix ) ? sprintf( '<strong>%s:</strong> %s', esc_html( $prefix ), esc_html( $message ) ) : esc_html( $message );
+                            echo sprintf( '<p>%s</p>', esc_html( $message ) );
                         }
-                        echo '<button type="button" class="notice-dismiss"><span class="screen-reader-text">' . esc_attr__( 'Dismiss this notice', 'b3-onboarding' ) . '</span></button>';
+                        echo sprintf( '<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_attr__( 'Dismiss this notice', 'b3-onboarding' ) );
                         echo '</div>';
                     }
                 }
@@ -1230,13 +1230,12 @@
                     }
                     if ( $show_error ) {
                         $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                        echo sprintf( '<div class="error"><p>%s</p></div>', $error_message );
+                        echo sprintf( '<div class="error"><p>%s</p></div>', esc_html( $error_message ) );
                     }
                     if ( $show_warning ) {
                         $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
-                        $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
                         if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
-                            echo $notice;
+                            echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', esc_html( $warning_message ) );
                         }
                     }
                 }
@@ -1252,9 +1251,9 @@
                     if ( in_array( $_GET[ 'update' ], [ 'activated', 'sendactivation' ] ) ) {
                         echo '<div id="message" class="updated"><p>';
                         if ( 'activated' === $_GET[ 'update' ] ) {
-                            _e( 'User activated.', 'b3-onboarding' );
+                            esc_html_e( 'User activated.', 'b3-onboarding' );
                         } elseif ( 'sendactivation' === $_GET[ 'update' ] ) {
-                            _e( 'Activation mail resent.', 'b3-onboarding' );
+                            esc_html_e( 'Activation mail resent.', 'b3-onboarding' );
                         }
                         echo '</p></div>';
                     }
@@ -1263,7 +1262,7 @@
                 global $pagenow;
                 static $membership_notice_shown = false;
                 if ( ! $membership_notice_shown && is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
-                    echo sprintf( '<div class="notice notice-info"><p>' . esc_html__( "%s takes control over the 'Membership' option. You can change this %s.", 'b3-onboarding' ) . '</p></div>', 'B3 OnBoarding', sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                    echo sprintf( '<div class="notice notice-info"><p>' . esc_html__( '%1$s takes control over the \'Membership\' option. You can change this %2$s.', 'b3-onboarding' ) . '</p></div>', 'B3 OnBoarding', sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ) );
                 }
                 $membership_notice_shown = true;
 

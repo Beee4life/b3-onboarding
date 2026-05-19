@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     /*
      * This file contains functions hooked to WordPress' hooks
      */
@@ -42,7 +44,6 @@
     }
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
-
     /**
      * Do stuff after user registers.
      *
@@ -70,7 +71,6 @@
         }
     }
     add_action( 'user_register', 'b3_do_stuff_after_wp_register' );
-
 
     /**
      * Add approval to admin bar
@@ -121,7 +121,6 @@
     }
     add_action( 'admin_bar_menu', 'b3_add_toolbar', 80 );
 
-
     /**
      * Remove admin bar for users who are not allowed to access admin
      *
@@ -142,7 +141,6 @@
         }
     }
     add_action( 'after_setup_theme', 'b3_remove_admin_bar' );
-
 
     /**
      * Do stuff after signup WPMU user (only)
@@ -182,7 +180,6 @@
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
 
-
     /**
      * Do stuff after activate wpmu user only
      *
@@ -210,7 +207,6 @@
         wp_mail( $user->user_email, $subject, $message, [] );
     }
     add_action( 'wpmu_activate_user', 'b3_after_activate_user', 10, 3 );
-
 
     /**
      * Override activate new wpmu user + blog message
@@ -249,7 +245,6 @@
     }
     add_action( 'after_signup_site', 'b3_override_new_mu_user_blog_email', 10, 6 );
 
-
     /**
      * Override welcome mu user email message
      *
@@ -275,13 +270,9 @@
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
 
-
-    /**
-     * Network admin notices
-     */
     function b3_network_admin_notices() {
         if ( 'settings-network' === get_current_screen()->id ) {
-            echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( "%s overrides the 'Registration' option and the 'Registration notification'. You can change the registration type %s and the registration notification %s.", 'b3-onboarding' ) . '</p></div>',
+            echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( '%1$s overrides the \'Registration\' option and the \'Registration notification\'. You can change the registration type %2$s and the registration notification %3$s.', 'b3-onboarding' ) . '</p></div>',
                 'B3 OnBoarding',
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ),
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) ), esc_html__( 'here', 'b3-onboarding' ) )

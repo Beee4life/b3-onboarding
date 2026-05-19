@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     /**
      * Redirect to custom login page after the user has been logged out.
      *

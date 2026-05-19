@@ -15,7 +15,7 @@
         }
 
         echo '<div class="wrap b3 b3_admin b3_admin--debug">';
-        echo sprintf( '<h1 id="b3__admin-title">%s</h1>', get_admin_page_title() );
+        echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( get_admin_page_title() ) );
         include 'debug-info.php';
         echo '</div>';
 

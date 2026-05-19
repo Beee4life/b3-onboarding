@@ -46,17 +46,17 @@
                     sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
                     _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
             } else {
-                $notice = sprintf( esc_html__( "There %1$s %2$d %3$s awaiting approval but you changed the registration type. That's why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %4$s.", 'b3-onboarding' ),
+                $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s awaiting approval but you changed the registration type. That\'s why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %4$s.', 'b3-onboarding' ),
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),
                     _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
                     sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
             }
         } elseif ( count( $activation_users ) > 0 ) {
-            $notice = sprintf( esc_html__( 'There %s %d %s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
+            $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
         }
         if ( isset( $notice ) ) {
-            echo sprintf( '<p>%s</p>', $notice );
+            echo sprintf( '<p>%s</p>', esc_html( $notice ) );
         }
         if ( ! empty( $all_users ) ) {
             ob_start();
@@ -71,19 +71,19 @@
             echo '<tbody>';
             foreach( $all_users as $user ) {
                 echo '<tr>';
-                echo sprintf( '<td><a href="%s">%s</a></td>', admin_url( 'user-edit.php?user_id=' . $user->ID ), $user->user_login );
-                echo sprintf( '<td>%s</td>', $user->ID );
-                echo sprintf( '<td>%s</td>', b3_get_local_date_time( $user->user_registered ) );
+                echo sprintf( '<td><a href="%s">%s</a></td>', esc_url( admin_url( 'user-edit.php?user_id=' . $user->ID ) ), esc_html( $user->user_login ) );
+                echo sprintf( '<td>%s</td>', esc_html( $user->ID ) );
+                echo sprintf( '<td>%s</td>', esc_html( b3_get_local_date_time( $user->user_registered ) ) );
                 echo '</tr>';
             }
             echo '</tbody>';
             $table_rows    = ob_get_clean();
             $table_content = $table_headers . $table_rows;
-
+            // @TODO: ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo sprintf( '<table class="b3_table">%s</table>', $table_content );
         } else {
             if ( 'none' === get_option( 'b3_registration_type' ) ) {
-                echo sprintf( '<p>%s</p>', sprintf( esc_html__( "You're the only user right now, but that can be because user registration is not allowed. Change it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', B3OB_PLUGIN_SETTINGS . '&tab=registration', esc_html__( 'here', 'b3-onboarding' ) ) ) );
+                echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'You\'re the only user right now, but that can be because user registration is not allowed. Change it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_html( B3OB_PLUGIN_SETTINGS ) . '&tab=registration', esc_html__( 'here', 'b3-onboarding' ) ) ) );
             } else {
                 echo sprintf( '<p>%s</p>', esc_html__( "You're the only (activated) user right now.", 'b3-onboarding' ) );
             }

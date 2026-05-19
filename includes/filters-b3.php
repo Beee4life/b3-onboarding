@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     /**
      * Add hidden fields
      *
@@ -59,7 +61,7 @@
     function b3_extra_fields_validation( $error_array = [] ) {
         $b3_onboarding      = new B3Onboarding();
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-        
+
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( ! empty( $field[ 'id' ] ) ) {
@@ -83,7 +85,7 @@
                 }
             }
         }
-        
+
         return $error_array;
     }
     add_filter( 'b3_extra_fields_validation', 'b3_extra_fields_validation' );

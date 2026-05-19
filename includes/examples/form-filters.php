@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     ##################
     ## Form filters ##
     ##################
@@ -351,7 +353,7 @@
             'username2',
         ];
         $existing_disallowed_usernames = array_merge( $existing_disallowed_usernames, $your_disallowed_usernames );
-    
+
         return $existing_disallowed_usernames;
     }
     add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );

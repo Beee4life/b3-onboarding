@@ -10,7 +10,7 @@
     }
 
     function b3_dashboard_widget_email_previews() {
-        $preview_page = admin_url( 'admin.php?page=b3-onboarding&preview=' );
+        $preview_page = esc_url( admin_url( 'admin.php?page=b3-onboarding&preview=' ) );
         $widget_title = sprintf( '<h3>%s</h3>', esc_html__( 'Email preview links', 'b3-onboarding' ) );
 
         ob_start();
