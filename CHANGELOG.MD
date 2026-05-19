@@ -2,6 +2,7 @@
 
 3.15.0
 * improve approval + email confirmation
+* improve code based on plugin tester info
 
 3.14.0
 * improve emails
