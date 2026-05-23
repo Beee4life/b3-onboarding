@@ -69,6 +69,7 @@
                     $field_type = $field[ 'type' ];
                     if ( true == $field[ 'required' ] ) {
                         if ( in_array( $field_type, [ 'radio', 'checkbox', 'select' ] ) ) {
+                            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                             if ( ! isset( $_POST[ $field_id ] ) || ( isset( $_POST[ $field_id ] ) && empty( $_POST[ $field_id ] ) ) ) {
                                 $error_code = 'empty_field';
                             }

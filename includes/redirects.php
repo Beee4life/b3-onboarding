@@ -136,7 +136,6 @@
     add_action( 'login_form_resetpass', 'b3_redirect_to_custom_reset_password' );
     add_action( 'login_form_rp', 'b3_redirect_to_custom_reset_password' );
 
-
     /**
      * Returns the URL to which the user should be redirected after a (successful) login.
      *
@@ -194,7 +193,6 @@
         return $redirect_to;
     }
     add_filter( 'login_redirect', 'b3_redirect_after_login', 10, 3 );
-
 
     /**
      * Redirects "profile.php" to custom account page
@@ -293,7 +291,17 @@
             }
 
             // Validate activation key
-            $user = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_activation_key = %s AND user_login = %s", $key, sanitize_user( $_GET[ 'user_login' ] ) ) );
+            $cache_group = 'b3ob';
+            $cache_key   = 'user_info_' . md5( $user_login );
+            // @TODO: test
+            $results     = wp_cache_get( $cache_key, $cache_group );
+
+            if ( false === $results ) {
+                $query = $wpdb->prepare( 'SELECT * FROM %i WHERE user_activation_key = %s AND user_login = %s', $wpdb->users, $key, sanitize_user( $_GET[ 'user_login' ] ) );
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                $user  = $wpdb->get_row( $query );
+                wp_cache_set( $cache_key, $user, $cache_group );
+            }
 
             if ( empty( $user ) ) {
                 $errors = new WP_Error( 'invalid_user', esc_attr__( 'Invalid user', 'b3-onboarding' ) );
@@ -305,7 +313,10 @@
             } else {
 
                 // remove user_activation_key
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
                 $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( $_GET[ 'user_login' ] ) ] );
+                // @TODO: test
+                wp_cache_delete( $cache_key, $cache_group );
 
                 // activate user, change user role
                 $user_object = new WP_User( $user->ID );
@@ -337,13 +348,13 @@
     }
     add_action( 'init', 'b3_do_user_activate' );
 
-
     /**
      * Initiates password reset.
      *
      * @since 1.0.6
      */
     function b3_do_password_lost() {
+        //@TODO: add nonce check for b3_lost_pass
         if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_form' ] ) && 'lostpass' === $_POST[ 'b3_form' ] ) {
             $errors = b3_retrieve_password();
 

@@ -12,8 +12,8 @@
             'default-email-template.html',
         ];
 
-        if ( in_array( $_GET[ 'file' ], $allowed_files ) ) {
-            $file_name = $_GET[ 'file' ];
+        if ( in_array( sanitize_file_name( wp_unslash( $_GET[ 'file' ] ) ), $allowed_files ) ) {
+            $file_name = sanitize_file_name( wp_unslash( $_GET[ 'file' ] ) );
 
             if ( file_exists( $file_name ) && is_readable( $file_name ) ) {
                 header( "Content-Type: application/octet-stream" );

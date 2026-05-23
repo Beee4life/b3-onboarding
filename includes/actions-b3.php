@@ -67,6 +67,7 @@
         $table                  = $wpdb->prefix . 'signups';
         $data                   = [ 'meta' => $signup_info->meta ];
         $where                  = [ 'signup_id' => $signup_info->signup_id ];
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->update( $table, $data, $where, [ '%s' ] );
 
         wpmu_activate_signup( $signup_info->activation_key );
@@ -684,6 +685,7 @@
     function b3_remove_welcome_page_meta() {
         $user_args = [
             'fields'     => 'ids',
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
             'meta_query' => [
                 [
                     'key'   => 'b3_welcome_page_seen',

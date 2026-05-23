@@ -676,16 +676,30 @@
                 if ( false != $signup_id ) {
                     // multisite signup
                     global $wpdb;
-                    $signup_info = $wpdb->get_row( "SELECT * FROM $wpdb->signups WHERE signup_id = $signup_id" );
+                    $cache_group = 'b3ob';
+                    $cache_key   = 'signup_info_' . md5( $signup_id );
+                    $query       = sprintf( 'SELECT * FROM %i WHERE signup_id = %d', $wpdb->signups, $signup_id );
+                    $results     = wp_cache_get( $cache_key, $cache_group );
 
-                    if ( false != $approve ) {
-                        do_action( 'b3_approve_wpmu_signup', $signup_info );
-                        $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
-                    } elseif ( false != $reject ) {
-                        do_action( 'b3_before_reject_user', [ 'user_email' => $signup_info->user_email ] );
-                        $wpdb->delete( $wpdb->signups, [ 'signup_id' => $signup_info->signup_id ] );
-                        $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                    if ( false === $results ) {
+                        //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                        $signup_info = $wpdb->get_row( $query );
+                        wp_cache_set( $cache_key, $signup_info, $cache_group, 60 );
+
+                        if ( $signup_info ) {
+                            if ( false != $approve ) {
+                                do_action( 'b3_approve_wpmu_signup', $signup_info );
+                                $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
+                            } elseif ( false != $reject ) {
+                                do_action( 'b3_before_reject_user', [ 'user_email' => $signup_info->user_email ] );
+                                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                                $wpdb->delete( $wpdb->signups, [ 'signup_id' => $signup_info->signup_id ] );
+                                $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                            }
+                            wp_cache_delete( $cache_key, $cache_group );
+                        }
                     }
+
 
                 } elseif ( isset( $user_object->ID ) ) {
                     if ( false != $approve ) {

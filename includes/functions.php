@@ -265,13 +265,18 @@
 
         global $wpdb;
         // Set the activation key for the user
-        $wpdb->update( $wpdb->users, [ 'user_activation_key' => $key ], [ 'user_login' => $user_data->user_login ] );
+        $data  = [ 'user_activation_key' => $key ];
+        $where = [ 'user_login' => $user_data->user_login ];
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->update( $wpdb->users, $data, $where );
 
+        $query_args     = [
+            'action'     => 'activate',
+            'key'        => $key,
+            'user_login' => rawurlencode( $user_data->user_login ),
+        ];
         $login_url      = b3_get_login_url();
-        $activation_url = add_query_arg( [ 'action'     => 'activate',
-                                           'key'        => $key,
-                                           'user_login' => rawurlencode( $user_data->user_login ),
-        ], $login_url );
+        $activation_url = add_query_arg( $query_args, $login_url );
 
         return $activation_url;
     }

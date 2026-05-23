@@ -25,6 +25,7 @@
             <br>
             <?php echo b3_get_preview_link( 'template' ); ?>
             <br>
+            <?php // @TODO: add nonce ?>
             <?php echo sprintf(  '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=default-email-template.html&sentby=b3' ), esc_html__( 'Download template', 'b3-onboarding' ) ); ?>
         </th>
         <td>

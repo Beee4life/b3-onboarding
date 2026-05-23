@@ -24,6 +24,7 @@
             // @TODO: also get users not connected to a network
             foreach( $sites as $site_id ) {
                 $all_args = [
+                    // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
                     'exclude'      => [ get_current_user_id() ],
                     'blog_id'      => $site_id,
                     'number'       => '5',

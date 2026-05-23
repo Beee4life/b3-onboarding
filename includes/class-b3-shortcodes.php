@@ -388,8 +388,17 @@
 
                     if ( is_multisite() ) {
                         global $wpdb;
-                        $query                 = $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups );
-                        $attributes[ 'users' ] = $wpdb->get_results( $query );
+                        $cache_group = 'b3ob';
+                        $cache_key   = 'inactive_signups';
+                        $results     = wp_cache_get( $cache_key, $cache_group );
+
+                        if ( false !== $results ) {
+                            $query                 = $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups );
+                            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                            $attributes[ 'users' ] = $wpdb->get_results( $query );
+                            wp_cache_set( $cache_key, $attributes['users'], $cache_group, 3600 );
+                            // @TODO: clear after any signup
+                        }
                     } else {
                         $user_args             = [ 'role' => 'b3_approval' ];
                         $attributes[ 'users' ] = get_users( $user_args );

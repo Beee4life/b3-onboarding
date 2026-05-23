@@ -10,8 +10,8 @@
     }
 
     do_action( 'b3_add_form_messages', $attributes );
-
-    if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != $_REQUEST[ 'registered' ] ) {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) ) {
 ?>
     <div id="b3-register" class="b3_page b3_page--register">
         <?php if ( ! empty( $attributes[ 'title' ] ) ) { ?>

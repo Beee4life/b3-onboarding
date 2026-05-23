@@ -10,7 +10,7 @@
     Author:             Beee
     Author URI:         https://berryplasman.com
     Tags:               user, management, registration, login, lost password, reset password, account, multisite, wpml, multilang, onboarding, onboard, user registration, user management, forms, email, override, otp, one time password, magic link
-    License:            GPL v2 (or later)
+    License:            GPLv2 (or later)
     License URI:        https://www.gnu.org/licenses/gpl-2.0.html
     Network:            true
        ___  ____ ____ ____
@@ -790,6 +790,7 @@
 
                             if ( $existing_user instanceof WP_User ) {
                                 $otp_password = b3_get_otp_password();
+                                // @TODO: look into adding nonce
                                 $hashed_slug  = b3_get_hashed_slug( $user_email, $otp_password );
 
                                 if ( $hashed_slug ) {
@@ -821,8 +822,9 @@
             }
 
             public function b3_check_magic_link() {
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 if ( isset( $_GET[ 'otpcode' ] ) ) {
-                    $verify_otp = b3_verify_otp( $_GET[ 'otpcode' ] );
+                    $verify_otp = b3_verify_otp( sanitize_text_field( $_GET[ 'otpcode' ] ) );
 
                     if ( $verify_otp instanceof WP_User ) {
                         do_action( 'b3_log_user_in', $verify_otp );

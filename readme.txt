@@ -6,7 +6,7 @@ Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 3.15.0
 License: GNU v3
-License: GPLv2 or later
+License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
@@ -27,8 +27,10 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+
 3.15.0
 * improve approval + email confirmation
+* escape and sanitze A LOT
 
 3.14.0
 * improve emails

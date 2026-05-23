@@ -3,7 +3,8 @@
         exit;
     }
     $first_last_required = get_option( 'b3_first_last_required' );
-    $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? $_POST[ 'last_name' ] : false;
+    // phpcs:ignore WordPress.Security.NonceVerification.Missing
+    $last_name           = ( isset( $_POST[ 'last_name' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'last_name' ] ) ) : false;
     $required            = ( true == $first_last_required ) ? ' required="required"' : false;
 ?>
 <div class="b3_form-element b3_form-element--last-name">

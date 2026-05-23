@@ -87,8 +87,16 @@
 
             if ( is_multisite() && $admin_approval ) {
                 global $wpdb;
-                $query          = "SELECT * FROM $wpdb->signups WHERE active = '0'";
-                $approval_users = $wpdb->get_results( $query );
+                $cache_group = 'b3ob';
+                $cache_key   = 'inactive_users';
+                $results     = wp_cache_get( $cache_key, $cache_group );
+
+                if ( false !== $results ) {
+                    $query = $wpdb->prepare( 'SELECT * FROM %i WHERE active = %d', $wpdb->users, 0 );
+                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                    $approval_users = $wpdb->get_results( $query );
+                    wp_cache_set( $cache_key, $approval_users, $cache_group, HOUR_IN_SECONDS );
+                }
 
             } elseif ( $admin_approval ) {
                 $approval_args  = [ 'role' => 'b3_approval' ];
@@ -165,7 +173,16 @@
                 $table             = $wpdb->signups;
                 $data[ 'meta' ]    = serialize( $meta );
                 $where             = [ 'user_login' => $user_login ];
-                $wpdb->update( $table, $data, $where );
+                $cache_group       = 'b3ob';
+                $cache_key         = 'pending_signups';
+                $results           = wp_cache_get( $cache_key, $cache_group );
+
+                if ( false !== $results ) {
+                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                    $wpdb->update( $table, $data, $where );
+                    wp_cache_set( $cache_key, $data, $cache_group, HOUR_IN_SECONDS );
+                    // @TODO: add delete cache upon new signups
+                }
 
             } else {
                 $subject = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );

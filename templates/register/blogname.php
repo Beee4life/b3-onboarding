@@ -2,6 +2,15 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
+    if ( ! isset( $_SERVER[ 'HTTP_HOST' ] ) ) {
+        $host = sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_HOST' ] ) );
+    } else {
+        // @TODO: test this in MS
+        $current_url = b3_get_current_url();
+        $url_array   = $current_url( $current_url );
+        $host        = $url_array[ 'host' ];
+
+    }
 ?>
 <div class="b3_form-element b3_form-element--subdomain">
     <?php $current_network = get_network(); ?>
