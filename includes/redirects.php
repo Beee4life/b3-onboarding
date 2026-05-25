@@ -297,9 +297,8 @@
             $results     = wp_cache_get( $cache_key, $cache_group );
 
             if ( false === $results ) {
-                $query = $wpdb->prepare( 'SELECT * FROM %i WHERE user_activation_key = %s AND user_login = %s', $wpdb->users, $key, sanitize_user( $_GET[ 'user_login' ] ) );
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                $user  = $wpdb->get_row( $query );
+                $user  = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_activation_key = %s AND user_login = %s', $wpdb->users, $key, sanitize_user( $_GET[ 'user_login' ] ) ) );
                 wp_cache_set( $cache_key, $user, $cache_group );
             }
 
