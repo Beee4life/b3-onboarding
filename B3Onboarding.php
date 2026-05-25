@@ -4,14 +4,14 @@
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            3.15.0
-    Requires at least:  4.3
+    Requires at least:  6.2
     Tested up to:       7.0
     Requires PHP:       7.4
     Author:             Beee
     Author URI:         https://berryplasman.com
     Tags:               user, management, registration, login, lost password, reset password, account, multisite, wpml, multilang, onboarding, onboard, user registration, user management, forms, email, override, otp, one time password, magic link
-    License:            GPLv2 (or later)
-    License URI:        https://www.gnu.org/licenses/gpl-2.0.html
+    License:            GPLv2 or later
+    License URI:        https://www.gnu.org/licenses/gpl.html
     Network:            true
        ___  ____ ____ ____
       / _ )/ __/  __/  __/
@@ -149,7 +149,6 @@
                 $plugin_folder = dirname( plugin_basename( __FILE__ ) );
                 $locale        = apply_filters( 'plugin_locale', get_locale(), $plugin_folder );
                 load_textdomain( $plugin_folder, trailingslashit( WP_LANG_DIR ) . $plugin_folder . '/' . $plugin_folder . '-' . $locale . '.mo' );
-                load_plugin_textdomain( $plugin_folder, false, $plugin_folder . '/languages/' );
             }
 
             public function b3_enqueue_scripts_frontend() {
@@ -159,10 +158,21 @@
                     }
                 }
 
+                // @TODO: check if jquery is loaded
                 if ( false != get_option( 'b3_use_popup', false ) ) {
-                    wp_enqueue_script( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js', [ 'jquery' ], '0.9.1', false );
-                    wp_enqueue_style( 'modal', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css', false, '0.9.1' );
-                }
+                    wp_enqueue_script(
+                        'jquery-modal',
+                        plugins_url( 'assets/js/jquery.modal.min.js', __FILE__ ),
+                        [ 'jquery' ],
+                        '0.9.2',
+                        true
+                    );
+                    wp_enqueue_style(
+                        'jquery-modal',
+                        plugins_url( 'assets/css/jquery.modal.min.css', __FILE__ ),
+                        [],
+                        '0.9.2'
+                    );                }
 
                 wp_enqueue_style( 'b3ob-main', plugins_url( 'assets/css/style.css', __FILE__ ), [], $this->settings[ 'version' ] );
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
@@ -837,7 +847,7 @@
                 }
             }
 
-            public function b3_get_return_message( $error_code, $sprintf = false ) {
+            public function b3_get_return_message( $error_code, $label = false ) {
 
                 switch( $error_code ) {
                     case 'banned_domain':
@@ -855,6 +865,7 @@
                     case 'incorrect_password':
                         $error_message = esc_html__( "The username or password you entered wasn't quite right.", 'b3-onboarding' );
                         $error_message .= '<br>';
+                        /* translators: password update, forgot */
                         $error_message .= sprintf( esc_html__( 'Did you %s your password ?', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( wp_lostpassword_url() ), esc_html__( 'forget', 'b3-onboarding' ) ) );
 
                         return $error_message;
@@ -875,7 +886,8 @@
                     case 'code_sent':
                         $message = __( 'If your email address is associated with a user, you will receive an email shortly with a magic link.', 'b3-onboarding' );
                         $message .= '&nbsp;';
-                        $message .= sprintf( __( 'The link is valid for %d minutes.', 'b3-onboarding' ), (int) apply_filters( 'b3_magic_link_time_out', 5 ) );
+                        /* translators: amount of minutes for expiry */
+                        $message .= sprintf( esc_html__( 'The link is valid for %d minutes.', 'b3-onboarding' ), (int) apply_filters( 'b3_magic_link_time_out', 5 ) );
 
                         return esc_html( $message );
 
@@ -915,8 +927,9 @@
                         return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
 
                     case 'empty_field':
-                        if ( false != $sprintf ) {
-                            return sprintf( esc_html__( "You didn't select an option for '%s'.", 'b3-onboarding' ), $sprintf );
+                        if ( false != $label ) {
+                            /* translators: field label */
+                            return sprintf( esc_html__( "You didn't select an option for '%s'.", 'b3-onboarding' ), $label );
                         } else {
                             return esc_html__( "You didn't select an option.", 'b3-onboarding' );
                         }
@@ -962,6 +975,7 @@
                         }
 
                     case 'registration_success_enter_password':
+                        /* translators: site name */
                         return sprintf( esc_html__( 'You have successfully registered to %s. Enter your email address to set your password.', 'b3-onboarding' ), get_bloginfo( 'name' ) );
 
                     // Activation
@@ -1231,10 +1245,12 @@
                         $show_error = true;
                     }
                     if ( $show_error ) {
+                        /* translators: here */
                         $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         echo sprintf( '<div class="error"><p>%s</p></div>', esc_html( $error_message ) );
                     }
                     if ( $show_warning ) {
+                        /* translators: plugin name */
                         $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
                         if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
                             echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', esc_html( $warning_message ) );
@@ -1244,6 +1260,7 @@
 
                 // no page for front-end approval
                 if ( false == get_option( 'b3_approval_page_id' ) && true == get_option( 'b3_front_end_approval' ) ) {
+                    /* translators: here */
                     echo sprintf( '<div class="error"><p>%s</p></div>', sprintf( esc_html__( 'You have not set a page for front-end user approval. Set it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
                 }
 
@@ -1264,6 +1281,7 @@
                 global $pagenow;
                 static $membership_notice_shown = false;
                 if ( ! $membership_notice_shown && is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
+                    /* translators: 1 Plugin name 2. here */
                     echo sprintf( '<div class="notice notice-info"><p>' . esc_html__( '%1$s takes control over the \'Membership\' option. You can change this %2$s.', 'b3-onboarding' ) . '</p></div>', 'B3 OnBoarding', sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ) );
                 }
                 $membership_notice_shown = true;
