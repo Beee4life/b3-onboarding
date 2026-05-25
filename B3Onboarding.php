@@ -113,6 +113,7 @@
                         add_role( 'b3_approval', esc_html__( 'Awaiting approval', 'b3-onboarding' ), [] );
                     }
                 }
+                $this->b3_switch_users_to_fallback_role();
             }
 
             public function b3_plugin_deactivation() {
@@ -134,6 +135,8 @@
                     }
                 }
                 delete_option( 'b3ob_version' );
+
+                $this->b3_switch_users_to_default();
             }
 
             public function b3_set_version() {
@@ -1296,6 +1299,64 @@
                 b3_setup_initial_pages( $site->blog_id );
                 // set default values
                 b3_set_default_settings( $site->blog_id );
+            }
+
+            private function b3_switch_users_to_fallback_role() {
+                $user_args = [
+                    'fields'     => 'ID',
+                    'meta_query' => [
+                        [
+                            'key'     => '_b3_fallback_role',
+                            'value'   => '',
+                            'compare' => '!=',
+                        ],
+                    ],
+                ];
+                $user_ids = get_users( $user_args );
+
+                if ( empty( $user_ids ) ) {
+                    return;
+                }
+
+                foreach ( $user_ids as $user_id ) {
+                    $fallback_role = get_user_meta( $user_id, '_b3_fallback_role', true );
+
+                    if ( $fallback_role ) {
+                        $user_object = new WP_User( $user_id );
+
+                        if ( $user_object->exists() ) {
+                            $user_object->set_role( $fallback_role );
+                            delete_user_meta( $user_id, '_b3_fallback_role' );
+                        }
+                    }
+                }
+            }
+
+            private function b3_switch_users_to_default() {
+                $roles = [
+                    'b3_activation',
+                    'b3_approval',
+                ];
+
+                foreach ( $roles as $role ) {
+                    $user_ids = get_users( [
+                        'role'   => $role,
+                        'fields' => 'ID',
+                    ] );
+
+                    if ( empty( $user_ids ) ) {
+                        continue;
+                    }
+
+                    foreach ( $user_ids as $user_id ) {
+                        $user_object = get_userdata( $user_id );
+
+                        if ( $user_object ) {
+                            update_user_meta( $user_id, '_b3_fallback_role', $role );
+                            $user_object->set_role( 'subscriber' );
+                        }
+                    }
+                }
             }
 
             public static function get_instance() {
