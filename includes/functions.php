@@ -767,9 +767,9 @@
     function b3_get_current_url( $include_query = false ) {
         $current_url = '';
 
-        if ( isset( $_SERVER ) ) {
+        if ( isset( $_SERVER[ 'HTTP_HOST' ] ) && isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
             $url         = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
-            $url_array   = parse_url( $url );
+            $url_array   = wp_parse_url( $url );
             $port        = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
             $path        = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
             $current_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $path;
