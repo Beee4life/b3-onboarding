@@ -48,7 +48,7 @@
                                 $add_icon = ( isset( $tab[ 'icon' ] ) ) ? true : false;
                                 $icon     = $add_icon ? sprintf( '<i class="dashicons dashicons-%s"></i>', $tab[ 'icon' ] ) : false;
                                 $title    = $tab[ 'title' ];
-                                echo sprintf( '<button id="b3_tab-button--%1$s" class="b3_tab-button b3_tab-button--%2$s%3$s" onclick="openTab(event, \'%4$s\')">%s%s</button>', esc_html( $tab_id ), esc_html( $tab_id ), esc_html( $active ), esc_html( $tab_id ), $icon, esc_html( $title ) );
+                                echo sprintf( '<button id="b3_tab-button--%1$s" class="b3_tab-button b3_tab-button--%2$s%3$s" onclick="openTab(event, \'%4$s\')">%5$s%6$s</button>', esc_html( $tab_id ), esc_html( $tab_id ), esc_html( $active ), esc_html( $tab_id ), $icon, esc_html( $title ) );
                             }
                             ?>
                         </div>
