@@ -71,6 +71,7 @@
                         $message .= esc_html__( 'Visit it on', 'b3-onboarding' ) . ': ';
                         $message .= sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), esc_url( $home_url ) );
                         $message .= '<br>';
+                        /* translators: here */
                         $message .= sprintf( esc_html__( 'You can manage your new site %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $message .= '</p>';
 
@@ -110,10 +111,12 @@
                                         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
                                         $column             = array_column( $extra_field_values, 'id' );
                                         $key                = array_search( $field_id, $column );
+
                                         if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
-                                            $sprintf_variable         = $extra_field_values[ $key ][ 'label' ];
-                                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $sprintf_variable );
+                                            $label                    = $extra_field_values[ $key ][ 'label' ];
+                                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $label );
                                         }
+
                                     } else {
                                         $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                                     }
@@ -201,6 +204,7 @@
                             // access_requested
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $_REQUEST[ 'registered' ] );
                         } else {
+                            /* translators: site name */
                             $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
                         }
                     } else {
@@ -319,6 +323,7 @@
                         $message .= '<br>';
                         $message .= esc_html__( 'Please click the provided link in your email.', 'b3-onboarding' );
                         $message .= '<br>';
+                        /* translators: click here */
                         $message .= sprintf( esc_html__( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'click here', 'b3-onboarding' ) ) );
 
                         return $message;
@@ -393,9 +398,8 @@
                         $results     = wp_cache_get( $cache_key, $cache_group );
 
                         if ( false !== $results ) {
-                            $query                 = $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups );
                             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                            $attributes[ 'users' ] = $wpdb->get_results( $query );
+                            $attributes[ 'users' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups ) );
                             wp_cache_set( $cache_key, $attributes['users'], $cache_group, 3600 );
                             // @TODO: clear after any signup
                         }

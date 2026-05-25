@@ -58,6 +58,7 @@
                 </div>
             <?php b3_get_close(); ?>
 
+            <?php /* translators: here */ ?>
             <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), esc_html__( 'here', 'b3-onboarding' ) ) ) ); ?>
 
             <?php b3_get_settings_field_open(); ?>

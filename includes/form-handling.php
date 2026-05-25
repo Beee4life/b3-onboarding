@@ -325,6 +325,7 @@
                                 $email = trim( $email );
                                 if ( ! is_email( $email ) ) {
                                     // @TODO: check this error message
+                                    /* translators: email address */
                                     B3Onboarding::b3_errors()->add( 'error_invalid_email', sprintf( esc_html__( '"%s" is not a valid email address.', 'b3-onboarding' ), $email ) );
 
                                     return;
@@ -678,12 +679,11 @@
                     global $wpdb;
                     $cache_group = 'b3ob';
                     $cache_key   = 'signup_info_' . md5( $signup_id );
-                    $query       = sprintf( 'SELECT * FROM %i WHERE signup_id = %d', $wpdb->signups, $signup_id );
                     $results     = wp_cache_get( $cache_key, $cache_group );
 
                     if ( false === $results ) {
                         //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                        $signup_info = $wpdb->get_row( $query );
+                        $signup_info = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE signup_id = %d', $wpdb->signups, $signup_id ) );
                         wp_cache_set( $cache_key, $signup_info, $cache_group, 60 );
 
                         if ( $signup_info ) {

@@ -17,6 +17,7 @@
         $honeypot                     = get_option( 'b3_honeypot' );
         $privacy                      = get_option( 'b3_privacy' );
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
+        /* translators: click here link */
         $privacy_page_placeholder     = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
         $privacy_text                 = get_option( 'b3_privacy_text' );
         $recaptcha                    = get_option( 'b3_activate_recaptcha' );
@@ -41,6 +42,7 @@
                     <?php b3_get_close(); ?>
 
                     <?php $admin_url = is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'options-general.php' ); ?>
+                    <?php // translators: link to settings page ?>
                     <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $admin_url, esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
 
                     <div class="b3_settings-input b3_settings-input--select">

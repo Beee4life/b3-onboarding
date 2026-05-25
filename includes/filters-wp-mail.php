@@ -15,7 +15,8 @@
      * @return mixed
      */
     function b3_password_changed_email_admin( $wp_password_change_notification_email, $user, $blogname ) {
-        $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login ); // default: Password changed for user: {username}
+        /* translators: username */
+        $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login );
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_get_replacement_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -326,6 +327,7 @@
 
         $salutation = ( 1 == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
 
+        /* translators: salutation */
         $pass_change_text = sprintf( __(
             'Hi %s,
             <br><br>

@@ -317,6 +317,7 @@
                 }
             } else {
                 if ( current_user_can( 'manage_options') ) {
+                    // translators: link to where to set reCaptcha key
                     $message = sprintf( esc_html__( "You didn't set a reCaptcha key yet. You can set it %s.", 'b3-onboarding' ),
                         sprintf( '<a href="%s">%s</a>',
                             esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' ) ),

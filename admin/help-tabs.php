@@ -101,6 +101,7 @@
             echo sprintf( '<li><b>%s</b><br>%s</li>', '[account-page]', esc_html__( 'This renders the account page.', 'b3-onboarding' ) );
             echo sprintf( '<li><b>%s</b><br>%s</li>', '[user-management]', esc_html__( 'This renders the user management page.', 'b3-onboarding' ) );
             echo '</ul>';
+            /* translators: here */
             echo '<p>' . sprintf( esc_html__( 'More info about the use of shortcodes and their variables, please see %s.', 'b3-onboarding'  ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ), esc_html__( 'here', 'b3-onboarding' ) ) ) . '</p>';
             $shortcodes_message = ob_get_clean();
 
@@ -120,6 +121,7 @@
             echo sprintf( '<li>%s</li>', esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'activate the debug page', 'b3-onboarding' ) );
             echo '</ul>';
+            /* translators: link to filter on website */
             echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo. Or you can use the filter %s to use a perfectly cropped image.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', 'https://b3onboarding.berryplasman.com/filter/b3_main_logo/', 'b3_main_logo' ) ) );
             $settings_message = ob_get_clean();
 
@@ -131,6 +133,7 @@
 
             ob_start();
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Developers', 'b3-onboarding' ) );
+            /* translators: link to faq item */
             echo sprintf( '<p>%s</p>', sprintf( esc_html__( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/localhost-development/' ), esc_html__( 'this FAQ topic', 'b3-onboarding' ) ) ) );
             echo sprintf( '<p>%s</p>', esc_html__( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) );
             $developers_message = ob_get_clean();

@@ -92,9 +92,8 @@
                 $results     = wp_cache_get( $cache_key, $cache_group );
 
                 if ( false !== $results ) {
-                    $query = $wpdb->prepare( 'SELECT * FROM %i WHERE active = %d', $wpdb->users, 0 );
                     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                    $approval_users = $wpdb->get_results( $query );
+                    $approval_users = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE active = %d', $wpdb->users, 0 ) );
                     wp_cache_set( $cache_key, $approval_users, $cache_group, HOUR_IN_SECONDS );
                 }
 
@@ -289,6 +288,7 @@
 
     function b3_network_admin_notices() {
         if ( 'settings-network' === get_current_screen()->id ) {
+            // translators: 1. plugin name, 2. link to tab registration, 3. link to tab emails
             echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( '%1$s overrides the \'Registration\' option and the \'Registration notification\'. You can change the registration type %2$s and the registration notification %3$s.', 'b3-onboarding' ) . '</p></div>',
                 'B3 OnBoarding',
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ),
@@ -298,6 +298,7 @@
 
         $plugin = get_plugin_data( B3OB_PLUGIN_PATH . '/B3Onboarding.php' );
         if ( strpos( $plugin[ 'Version' ], 'dev' ) !== false || strpos( $plugin[ 'Version' ], 'beta' ) !== false ) {
+            // translators: plugin name
             $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
             $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
             if ( false === apply_filters( 'b3_hide_development_notice', false ) ) {

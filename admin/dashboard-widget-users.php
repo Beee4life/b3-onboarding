@@ -40,6 +40,7 @@
 
         if ( count( $approval_users ) > 0 ) {
             if ( get_option( 'b3_needs_admin_approval' ) ) {
+                /* translators: 1 is/are, 2. amount users, 3. user/users, 4. click here, 5. this user/these users */
                 $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s awaiting approval. %4$s to manage %5$s.', 'b3-onboarding' ),
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),
@@ -47,6 +48,7 @@
                     sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
                     _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
             } else {
+                /* translators: 1 is/are, 2. amount users, 3. user/users, 4. click here */
                 $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s awaiting approval but you changed the registration type. That\'s why the user approval page is not showing in the admin menu and there are no notifications in the admin bar, but you can reach it %4$s.', 'b3-onboarding' ),
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),
@@ -54,6 +56,7 @@
                     sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
             }
         } elseif ( count( $activation_users ) > 0 ) {
+            /* translators: 1 is/are, 2. amount users, 3. user/users */
             $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
         }
         if ( isset( $notice ) ) {
@@ -84,6 +87,7 @@
             echo sprintf( '<table class="b3_table">%s</table>', $table_content );
         } else {
             if ( 'none' === get_option( 'b3_registration_type' ) ) {
+                /* translators: here */
                 echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'You\'re the only user right now, but that can be because user registration is not allowed. Change it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_html( B3OB_PLUGIN_SETTINGS ) . '&tab=registration', esc_html__( 'here', 'b3-onboarding' ) ) ) );
             } else {
                 echo sprintf( '<p>%s</p>', esc_html__( "You're the only (activated) user right now.", 'b3-onboarding' ) );

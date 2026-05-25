@@ -109,6 +109,7 @@
                 'retrieve_password_email_failure',
                 sprintf( '<strong>%s</strong>: %s',
                     esc_html__( 'Error', 'b3-onboarding' ),
+                    // translators: link to WordPress support page explaining password reset
                     sprintf( __( 'The email could not be sent. Your site may not be correctly configured to send emails. %s.', 'b3-onboarding' ),
                         sprintf( '<a href="%s">%s</a>',
                             esc_url( 'https://wordpress.org/support/article/resetting-your-password/' ),
