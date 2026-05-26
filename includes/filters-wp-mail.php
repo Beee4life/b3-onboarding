@@ -85,7 +85,7 @@
      * @return mixed
      */
     function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
-        if ( isset( $_POST[ '_wp_http_referer' ] ) && ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false || strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) ) {
+        if ( isset( $_POST[ '_wp_http_referer' ] ) && ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false || strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) ) {
             $wp_new_user_notification_email_admin[ 'to' ] = '';
 
         } else {
@@ -145,7 +145,7 @@
 
         if ( isset( $_POST[ '_wp_http_referer' ] ) ) {
             // user is manually added
-            if ( strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) !== false ) {
+            if ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false ) {
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                     // user must get AN email, from WP or custom
                     $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
@@ -153,7 +153,7 @@
                     $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
                     $user_email                                  = b3_get_manual_welcome_user_message();
                 }
-            } elseif ( strpos( $_POST[ '_wp_http_referer' ], 'site-new.php' ) !== false ) {
+            } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
                 $user_email = b3_get_manual_welcome_user_message();
             }

@@ -155,7 +155,7 @@
             ob_start();
             echo sprintf( '<p><b>%s</b></p>', esc_html__( 'More info', 'b3-onboarding' ) );
             if ( isset( $_SERVER[ 'SERVER_NAME' ] ) ) {
-                $server_name = wp_unslash( $_SERVER[ 'SERVER_NAME' ] );
+                $server_name = sanitize_text_field( wp_unslash( $_SERVER[ 'SERVER_NAME' ] ) );
                 echo sprintf( '<p>%s</p>', sprintf( '<a href="%1$s">%2$s</a>', esc_url( B3OB_PLUGIN_SITE ) . '?utm_source=' . esc_attr( $server_name ) . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
             } else {
                 echo sprintf( '<p>%s</p>', sprintf( '<a href="%1$s">%2$s</a>', esc_url( B3OB_PLUGIN_SITE ), esc_html__( 'Official site', 'b3-onboarding' ) ) );

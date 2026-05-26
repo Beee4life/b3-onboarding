@@ -14,10 +14,10 @@
      */
     function b3_update_user_meta_after_register( $user_id ) {
         if ( isset( $_POST[ 'first_name' ] ) && ! empty( $_POST[ 'first_name' ] ) ) {
-            update_user_meta( $user_id, 'first_name', sanitize_text_field( $_POST[ 'first_name' ] ) );
+            update_user_meta( $user_id, 'first_name', sanitize_text_field( wp_unslash( $_POST[ 'first_name' ] ) ) );
         }
         if ( isset( $_POST[ 'last_name' ] ) && ! empty( $_POST[ 'last_name' ] ) ) {
-            update_user_meta( $user_id, 'last_name', sanitize_text_field( $_POST[ 'last_name' ] ) );
+            update_user_meta( $user_id, 'last_name', sanitize_text_field( wp_unslash( $_POST[ 'last_name' ] ) ) );
         }
 
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
@@ -25,7 +25,7 @@
             foreach( $extra_field_values as $field ) {
                 if ( isset( $field[ 'id' ] ) ) {
                     if ( ! empty( $_POST[ $field[ 'id' ] ] ) ) {
-                        update_user_meta( $user_id, $field[ 'id' ], $_POST[ $field[ 'id' ] ] );
+                        update_user_meta( $user_id, $field[ 'id' ], sanitize_text_field( wp_unslash( $_POST[ $field[ 'id' ] ] ) ) );
                     }
                 }
             }
@@ -212,6 +212,7 @@
 
         if ( get_option( 'b3_needs_admin_approval' ) ) {
             // @TODO: send magic link email
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log('@TODO: send magic link email');
         }
 

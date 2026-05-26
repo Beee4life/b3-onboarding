@@ -320,8 +320,8 @@
                         wp_logout();
 
                         if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
-                            $redirect_to           = $_REQUEST[ 'redirect_to' ];
-                            $requested_redirect_to = $_REQUEST[ 'redirect_to' ];
+                            $redirect_to           = sanitize_text_field( wp_unslash( $_REQUEST[ 'redirect_to' ] ) );
+                            $requested_redirect_to = $redirect_to;
                         } else {
                             $redirect_to           = site_url( 'wp-login.php?loggedout=true' );
                             $requested_redirect_to = '';
@@ -378,7 +378,7 @@
                 add_action( 'admin_notices', [ $this, 'b3_admin_notices' ] );
 
                 if ( isset( $_GET[ 'action' ] ) && in_array( $_GET[ 'action' ], [ 'activate', 'resendactivation' ] ) ) {
-                    $user_id = isset( $_GET[ 'user_id' ] ) ? $_GET[ 'user_id' ] : false;
+                    $user_id = isset( $_GET[ 'user_id' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'user_id' ] ) ) : false;
                     if ( ! $user_id ) {
                         wp_die( esc_html__( "There's no user with that ID.", 'b3-onboarding' ) );
                     } elseif ( ! current_user_can( 'edit_user', $user_id ) ) {
@@ -397,7 +397,7 @@
                     $redirect_to = isset( $_REQUEST[ 'wp_http_referer' ] ) ? remove_query_arg( [
                         'wp_http_referer',
                         'updated',
-                    ], stripslashes( $_REQUEST[ 'wp_http_referer' ] ) ) : 'users.php';
+                    ], sanitize_text_field( wp_unslash( $_REQUEST[ 'wp_http_referer' ] ) ) ) : 'users.php'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
                     switch( $_GET[ 'action' ] ) {
                         case 'activate' :
@@ -483,10 +483,10 @@
             }
 
             public function b3_registration_form_handling() {
-                if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user_nonce' ] ) ) {
                         $redirect_url = b3_get_register_url();
-                        if ( ! wp_verify_nonce( $_POST[ 'b3_register_user_nonce' ], 'b3-register-user-nonce' ) ) {
+                        if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_register_user_nonce' ] ) ), 'b3-register-user-nonce' ) ) {
                             $redirect_url = add_query_arg( 'registration-error', 'unknown', $redirect_url );
                             wp_safe_redirect( $redirect_url );
                             exit;
@@ -494,7 +494,7 @@
                         } else {
                             $meta_data         = [];
                             $registration_type = get_option( 'b3_registration_type' );
-                            $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( $_POST[ 'user_email' ] ) : false;
+                            $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( wp_unslash( $_POST[ 'user_email' ] ) ) : false;
 
                             if ( get_option( 'b3_honeypot' ) && isset( $_POST[ 'b3_pooh' ] ) ) {
                                 $errors = new WP_Error();
@@ -510,14 +510,14 @@
                             }
 
                             if ( isset( $_POST[ 'first_name' ] ) ) {
-                                $meta_data[ 'first_name' ] = sanitize_text_field( $_POST[ 'first_name' ] );
+                                $meta_data[ 'first_name' ] = sanitize_text_field( wp_unslash( $_POST[ 'first_name' ] ) );
                             }
                             if ( isset( $_POST[ 'last_name' ] ) ) {
-                                $meta_data[ 'last_name' ] = sanitize_text_field( $_POST[ 'last_name' ] );
+                                $meta_data[ 'last_name' ] = sanitize_text_field( wp_unslash( $_POST[ 'last_name' ] ) );
                             }
 
                             if ( ! is_multisite() ) {
-                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( $_POST[ 'user_login' ] ) : false;
+                                $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( wp_unslash( $_POST[ 'user_login' ] ) ) : false;
                                 $register   = true;
                                 $role       = get_option( 'default_role', 'subscriber' );
 
@@ -578,7 +578,7 @@
 
                             } else {
                                 // if is_multisite
-                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( $_POST[ 'user_name' ] ) : false;
+                                $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( wp_unslash( $_POST[ 'user_name' ] ) ) : false;
                                 $register   = false;
 
                                 if ( is_main_site() ) {
@@ -599,7 +599,7 @@
                                 }
 
                                 if ( true == $register ) {
-                                    $signup_for     = ( isset( $_POST[ 'signup_for' ] ) ) ? $_POST[ 'signup_for' ] : false;
+                                    $signup_for     = ( isset( $_POST[ 'signup_for' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'signup_for' ] ) ) : false;
                                     $user_valid     = wpmu_validate_user_signup( $user_login, $user_email );
                                     $errors         = $user_valid[ 'errors' ];
                                     $admin_approval = get_option( 'b3_needs_admin_approval' );
@@ -659,8 +659,8 @@
                                     }
 
                                     if ( 'blog' === $signup_for && empty( $error_codes ) ) {
-                                        $meta_data[ 'lang_id' ] = ( isset( $_POST[ 'lang_id' ] ) ) ? $_POST[ 'lang_id' ] : 1;
-                                        $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? $_POST[ 'blog_public' ] : 1;
+                                        $meta_data[ 'lang_id' ] = ( isset( $_POST[ 'lang_id' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'lang_id' ] ) ) : 1;
+                                        $meta_data[ 'public' ]  = ( isset( $_POST[ 'blog_public' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'blog_public' ] ) ) : 1;
                                         $user                   = '';
 
                                         if ( $admin_approval ) {
@@ -675,7 +675,10 @@
                                             $user->user_login = $user_login;
                                         }
 
-                                        $blog_info   = wpmu_validate_blog_signup( sanitize_text_field( $_POST[ 'blogname' ] ), sanitize_title( $_POST[ 'blog_title' ] ), $user );
+                                        $blog_name  = isset( $_POST[ 'blogname' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'blogname' ] ) ) : '';
+                                        $blog_title = isset( $_POST[ 'blog_title' ] ) && sanitize_text_field( wp_unslash( $_POST[ 'blog_title' ] ) );
+
+                                        $blog_info   = wpmu_validate_blog_signup( $blog_name, $blog_title, $user );
                                         $domain      = $blog_info[ 'domain' ];
                                         $path        = $blog_info[ 'path' ];
                                         $blog_title  = $blog_info[ 'blog_title' ];
@@ -738,9 +741,10 @@
             }
 
             public function b3_reset_user_password() {
-                if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? $_REQUEST[ 'rp_key' ] : false;
-                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? $_REQUEST[ 'rp_login' ] : false;
+                // @TODO: look into nonce
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'rp_key' ] ) ) : false;
+                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'rp_login' ] ) ) : false;
 
                     if ( $rp_key && $rp_login ) {
                         $user = check_password_reset_key( $rp_key, $rp_login );
@@ -757,7 +761,7 @@
                         }
 
                         if ( isset( $_POST[ 'pass1' ] ) ) {
-                            if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
+                            if ( isset( $_POST[ 'pass2' ] ) && $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
                                 // Password is empty or don't match
                                 $redirect_url = b3_get_reset_password_url();
                                 $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
@@ -769,7 +773,7 @@
                             }
 
                             // Parameter checks OK, reset password
-                            reset_password( $user, $_POST[ 'pass1' ] );
+                            reset_password( $user, sanitize_text_field( wp_unslash( $_POST[ 'pass1' ] )  ) );
                             $redirect_url = b3_get_login_url();
                             $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );
 
@@ -784,10 +788,10 @@
             }
 
             public function b3_magic_link_form_handling() {
-                if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_set_otp_nonce' ] ) ) {
                         $redirect_url = b3_get_login_url();
-                        if ( ! wp_verify_nonce( $_POST[ 'b3_set_otp_nonce' ], 'b3-set-otp-nonce' ) ) {
+                        if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_set_otp_nonce' ] ) ), 'b3-set-otp-nonce' ) ) {
                             $redirect_url = add_query_arg( 'login-error', 'unknown', $redirect_url );
                             wp_safe_redirect( $redirect_url );
                             exit;
@@ -798,7 +802,7 @@
                             exit;
 
                         } elseif ( isset( $_POST[ 'email' ] ) ) {
-                            $user_email    = $_POST[ 'email' ];
+                            $user_email    = sanitize_email( wp_unslash( $_POST[ 'email' ] ) );
                             $existing_user = get_user_by( 'email', $user_email );
 
                             if ( $existing_user instanceof WP_User ) {
@@ -821,14 +825,14 @@
                                         wp_mail( $user_email, $subject, $message );
 
                                     } else {
+                                        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                                         error_log( 'Email message not set for magic link.' );
                                     }
                                 } else {
+                                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                                     error_log( sprintf( 'Transient is not set when "%s" requested a magic link and thus email is not sent.', $user_email ) );
                                 }
                             }
-                        } else {
-                            error_log( 'FALLBACK' );
                         }
                     }
                 }
@@ -837,7 +841,7 @@
             public function b3_check_magic_link() {
                 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 if ( isset( $_GET[ 'otpcode' ] ) ) {
-                    $verify_otp = b3_verify_otp( sanitize_text_field( $_GET[ 'otpcode' ] ) );
+                    $verify_otp = b3_verify_otp( sanitize_text_field( wp_unslash( $_GET[ 'otpcode' ] ) ) );
 
                     if ( $verify_otp instanceof WP_User ) {
                         do_action( 'b3_log_user_in', $verify_otp );
@@ -1130,7 +1134,7 @@
 
                         } elseif ( $_POST[ 'pass1' ] === $_POST[ 'pass2' ] ) {
                             // Passwords are OK
-                            $hashed_password          = wp_hash_password( $_POST[ 'pass1' ] );
+                            $hashed_password          = wp_hash_password( sanitize_text_field( wp_unslash( $_POST[ 'pass1' ] ) ) );
                             $user_data[ 'user_pass' ] = $hashed_password;
                         }
                     }
@@ -1155,7 +1159,7 @@
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
                     if ( true == $use_custom_passwords && isset( $_POST[ 'pass1' ] ) ) {
-                        wp_set_password( $_POST[ 'pass1' ], $user_id );
+                        wp_set_password( sanitize_text_field( wp_unslash( $_POST[ 'pass1' ] ) ), $user_id );
                     }
 
                     $inform = 'both';

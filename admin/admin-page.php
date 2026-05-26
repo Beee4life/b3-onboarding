@@ -31,9 +31,8 @@
 
                 } else {
                     $default_tab = ! is_multisite() || is_main_site() ? 'registration' : 'emails';
-                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : $default_tab;
+                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? sanitize_text_field( wp_unslash( $_GET[ 'tab' ] ) ) : esc_html( $default_tab );
                     $tabs        = b3_get_admin_tabs();
-                    // echo '<pre>'; var_dump($tabs); echo '</pre>'; exit;
 
                     echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( get_admin_page_title() ) );
 

@@ -9,7 +9,7 @@
     function b3_redirect_after_logout() {
         $login_url = b3_get_login_url();
         if ( ! empty( $_REQUEST[ 'redirect_to' ] ) ) {
-            $redirect_url = $_REQUEST[ 'redirect_to' ];
+            $redirect_url = sanitize_text_field( wp_unslash( $_REQUEST[ 'redirect_to' ] ) );
         } else {
             $redirect_url = add_query_arg( 'logout', 'true', $login_url );
         }
@@ -17,7 +17,6 @@
         exit;
     }
     add_action( 'wp_logout', 'b3_redirect_after_logout', 1 );
-
 
     /**
      * Redirects the user to the custom registration page instead
@@ -64,8 +63,8 @@
      * Force user to custom login page instead of wp-login.php.
      */
     function b3_redirect_to_custom_login() {
-        if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-            $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( $_REQUEST[ 'redirect_to' ] ) . '&reauth=1' : null;
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+            $redirect_to = isset( $_REQUEST[ 'redirect_to' ] ) ? urlencode( sanitize_text_field( wp_unslash( $_REQUEST[ 'redirect_to' ] ) ) ) . '&reauth=1' : null;
 
             if ( is_user_logged_in() ) {
                 do_action( 'b3_redirect', 'logged_in', $redirect_to );
@@ -87,7 +86,7 @@
      * wp-login.php?action=lostpassword.
      */
     function b3_redirect_to_custom_lostpassword() {
-        if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( is_user_logged_in() ) {
                 do_action( 'b3_redirect', 'logged_in' );
             }
@@ -106,13 +105,13 @@
      * or the login page if there are errors.
      */
     function b3_redirect_to_custom_reset_password() {
-        if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
             // Verify key / login combo
             $redirect_url = b3_get_reset_password_url();
 
             if ( isset( $_REQUEST[ 'key' ] ) && isset( $_REQUEST[ 'login' ] ) ) {
                 $key   = sanitize_key( $_REQUEST[ 'key' ] );
-                $login = sanitize_user( $_REQUEST[ 'login' ] );
+                $login = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
                 $user  = check_password_reset_key( $key, $login );
 
                 if ( ! $user || is_wp_error( $user ) ) {
@@ -226,10 +225,10 @@
      */
     function b3_do_user_activate() {
         if ( is_multisite() ) {
-            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_SERVER[ 'REQUEST_URI' ] ) && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
                 $redirect_url = b3_get_login_url();
                 $valid_error_codes = [ 'already_active', 'blog_taken' ];
-                [ $activate_path ] = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
+                [ $activate_path ] = explode( '?', sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) );
                 $activate_cookie = 'wp-activate-' . COOKIEHASH;
                 $key             = '';
                 $result          = null;
@@ -255,7 +254,7 @@
                 }
 
                 if ( null === $result && isset( $_COOKIE[ $activate_cookie ] ) ) {
-                    $key    = $_COOKIE[ $activate_cookie ];
+                    $key    = sanitize_key( $_COOKIE[ $activate_cookie ] );
                     $result = wpmu_activate_signup( $key );
                     setcookie( $activate_cookie, ' ', time() - YEAR_IN_SECONDS, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
                 }
@@ -277,7 +276,7 @@
                 }
             }
 
-        } elseif ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+        } elseif ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
             global $wpdb;
             $errors = false;
             $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
@@ -298,7 +297,7 @@
 
             if ( false === $results ) {
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                $user  = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_activation_key = %s AND user_login = %s', $wpdb->users, $key, sanitize_user( $_GET[ 'user_login' ] ) ) );
+                $user  = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_activation_key = %s AND user_login = %s', $wpdb->users, $key, sanitize_user( wp_unslash( $_GET[ 'user_login' ] ) ) ) );
                 wp_cache_set( $cache_key, $user, $cache_group );
             }
 
@@ -313,7 +312,7 @@
 
                 // remove user_activation_key
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( $_GET[ 'user_login' ] ) ] );
+                $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( wp_unslash( $_GET[ 'user_login' ] ) ) ] );
                 // @TODO: test
                 wp_cache_delete( $cache_key, $cache_group );
 
@@ -354,7 +353,7 @@
      */
     function b3_do_password_lost() {
         //@TODO: add nonce check for b3_lost_pass
-        if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_form' ] ) && 'lostpass' === $_POST[ 'b3_form' ] ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_form' ] ) && 'lostpass' === $_POST[ 'b3_form' ] ) {
             $errors = b3_retrieve_password();
 
             if ( is_wp_error( $errors ) ) {
@@ -365,7 +364,7 @@
                 // Email sent
                 $site_id = get_current_blog_id();
                 if ( isset( $_POST[ 'b3_site_id' ] ) ) {
-                    $site_id = $_POST[ 'b3_site_id' ];
+                    $site_id = sanitize_text_field( wp_unslash( $_POST[ 'b3_site_id' ] ) );
                 }
                 $redirect_url = b3_get_login_url( false, $site_id );
                 $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );

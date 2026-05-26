@@ -7,14 +7,14 @@
      * @since 3.0
      */
     function b3_registration_handling() {
-        if ( 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_registration_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( $_POST[ 'b3_registration_nonce' ], 'b3-registration-nonce' ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_registration_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_nonce' ] ) ), 'b3-registration-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
                 if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                     if ( is_multisite() ) {
-                        $ms_registration_type = sanitize_text_field( $_POST[ 'b3_registration_type' ] );
+                        $ms_registration_type = sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_type' ] ) );
 
                         if ( false != $ms_registration_type ) {
                             update_option( 'b3_registration_type', $ms_registration_type, false );
@@ -25,7 +25,7 @@
                         } else {
                             update_option( 'users_can_register', 1 );
                         }
-                        update_option( 'b3_registration_type', $_POST[ 'b3_registration_type' ], false );
+                        update_option( 'b3_registration_type', sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_type' ] ) ), false );
                     }
                 }
 
@@ -35,7 +35,7 @@
 
                 if ( 'none' === $_POST[ 'b3_registration_type' ] ) {
                     if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
-                        update_option( 'b3_registration_closed_message', htmlspecialchars( $_POST[ 'b3_registration_closed_message' ] ), false );
+                        update_option( 'b3_registration_closed_message', sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_closed_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_registration_closed_message' );
                     }
@@ -115,13 +115,13 @@
                 }
 
                 if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
-                    update_option( 'b3_privacy_page_id', $_POST[ 'b3_privacy_page_id' ], false );
+                    update_option( 'b3_privacy_page_id', sanitize_text_field( wp_unslash( $_POST[ 'b3_privacy_page_id' ] ) ), false );
                 } else {
                     delete_option( 'b3_privacy_page_id' );
                 }
 
                 if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
-                    update_option( 'b3_privacy_text', htmlspecialchars( $_POST[ 'b3_privacy_text' ] ), false );
+                    update_option( 'b3_privacy_text', sanitize_text_field( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
                 } else {
                     delete_option( 'b3_privacy_text' );
                 }
@@ -138,8 +138,8 @@
      * @since 3.0
      */
     function b3_pages_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_pages_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( $_POST[ 'b3_pages_nonce' ], 'b3-pages-nonce' ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_pages_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_pages_nonce' ] ) ), 'b3-pages-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
@@ -156,10 +156,10 @@
                 }
                 foreach( $page_ids as $option_name ) {
                     $current_id = get_option( $option_name );
-                    if ( $current_id != $_POST[ $option_name ] ) {
-                        update_option( $option_name, $_POST[ $option_name ], false );
+                    if ( isset( $_POST[ $option_name ] ) && $current_id != $_POST[ $option_name ] ) {
+                        update_option( $option_name, sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ), false );
                         delete_post_meta( $current_id, '_b3_page' );
-                        update_post_meta( $_POST[ $option_name ], '_b3_page', true );
+                        update_post_meta( sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ), '_b3_page', true );
                     }
                 }
 
@@ -175,27 +175,27 @@
      * @since 3.0
      */
     function b3_email_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_emails_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( $_POST[ 'b3_emails_nonce' ], 'b3-emails-nonce' ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_emails_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_emails_nonce' ] ) ), 'b3-emails-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
                 if ( ! apply_filters( 'b3_link_color', false ) ) {
                     if ( ! empty( $_POST[ 'b3_link_color' ] ) ) {
-                        update_option( 'b3_link_color', $_POST[ 'b3_link_color' ], false );
+                        update_option( 'b3_link_color', sanitize_hex_color( wp_unslash( $_POST[ 'b3_link_color' ] ) ), false );
                     } else {
                         delete_option( 'b3_link_color' );
                     }
                 }
 
                 if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
-                    if ( ! is_email( $_POST[ 'b3_notification_sender_email' ] ) ) {
+                    if ( ! is_email( wp_unslash( $_POST[ 'b3_notification_sender_email' ] ) ) ) {
                         // @TODO: check this error message
                         B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
 
                         return;
                     } else {
-                        $sender_email = $_POST[ 'b3_notification_sender_email' ];
+                        $sender_email = sanitize_email( wp_unslash( $_POST[ 'b3_notification_sender_email' ] ) );
                     }
                 }
 
@@ -206,7 +206,7 @@
                     delete_option( 'b3_notification_sender_email' );
                 }
                 if ( isset( $_POST[ 'b3_notification_sender_name' ] ) && ! empty( $_POST[ 'b3_notification_sender_name' ] ) ) {
-                    update_option( 'b3_notification_sender_name', $_POST[ 'b3_notification_sender_name' ], false );
+                    update_option( 'b3_notification_sender_name', sanitize_text_field( wp_unslash( $_POST[ 'b3_notification_sender_name' ] ) ), false );
                 } else {
                     delete_option( 'b3_notification_sender_name' );
                 }
@@ -233,30 +233,31 @@
                 }
 
                 if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
-                    update_option( 'b3_main_logo', esc_url_raw( $_POST[ 'b3_main_logo' ] ), false );
+                    update_option( 'b3_main_logo', esc_url_raw( wp_unslash( $_POST[ 'b3_main_logo' ] ) ), false );
                 } else {
                     delete_option( 'b3_main_logo' );
                 }
 
                 if ( isset( $_POST[ 'b3_welcome_new_user_subject' ] ) && ! empty( $_POST[ 'b3_welcome_new_user_subject' ] ) ) {
-                    update_option( 'b3_welcome_new_user_subject', stripslashes( $_POST[ 'b3_welcome_new_user_subject' ] ), false );
+                    update_option( 'b3_welcome_new_user_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_welcome_new_user_subject' ] ) ), false );
                 } else {
                     delete_option( 'b3_welcome_new_user_subject' );
                 }
 
+                // @TODO: check if this is still used
                 if ( isset( $_POST[ 'b3_welcome_new_user_content' ] ) && ! empty( $_POST[ 'b3_welcome_new_user_content' ] ) ) {
-                    update_option( 'b3_welcome_new_user_content', stripslashes( $_POST[ 'b3_welcome_new_user_content' ] ), false );
+                    update_option( 'b3_welcome_new_user_content', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_welcome_new_user_content' ] ) ), false );
                 } else {
                     delete_option( 'b3_welcome_new_user_content' );
                 }
 
                 if ( isset( $_POST[ 'b3_lost_password_subject' ] ) && ! empty( $_POST[ 'b3_lost_password_subject' ] ) ) {
-                    update_option( 'b3_lost_password_subject', $_POST[ 'b3_lost_password_subject' ], false );
+                    update_option( 'b3_lost_password_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_lost_password_subject' ] ) ), false );
                 } else {
                     delete_option( 'b3_lost_password_subject' );
                 }
                 if ( isset( $_POST[ 'b3_lost_password_message' ] ) && ! empty( $_POST[ 'b3_lost_password_message' ] ) ) {
-                    update_option( 'b3_lost_password_message', htmlspecialchars( $_POST[ 'b3_lost_password_message' ] ), false );
+                    update_option( 'b3_lost_password_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_lost_password_message' ] ) ), false );
                 } else {
                     delete_option( 'b3_lost_password_message' );
                 }
@@ -286,40 +287,40 @@
 
                 /* specific boxes */
                 if ( isset( $_POST[ 'b3_welcome_user_subject' ] ) && ! empty( $_POST[ 'b3_welcome_user_subject' ] ) ) {
-                    update_option( 'b3_welcome_user_subject', stripslashes( $_POST[ 'b3_welcome_user_subject' ] ), false );
+                    update_option( 'b3_welcome_user_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_welcome_user_subject' ] ) ), false );
                 } else {
                     delete_option( 'b3_welcome_user_subject' );
                 }
                 if ( isset( $_POST[ 'b3_welcome_user_message' ] ) && ! empty( $_POST[ 'b3_welcome_user_message' ] ) ) {
-                    update_option( 'b3_welcome_user_message', htmlspecialchars( $_POST[ 'b3_welcome_user_message' ] ), false );
+                    update_option( 'b3_welcome_user_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_welcome_user_message' ] ) ), false );
                 } else {
                     delete_option( 'b3_welcome_user_message' );
                 }
                 if ( isset( $_POST[ 'b3_welcome_user_message_manual' ] ) && ! empty( $_POST[ 'b3_welcome_user_message_manual' ] ) ) {
-                    update_option( 'b3_welcome_user_message_manual', htmlspecialchars( $_POST[ 'b3_welcome_user_message_manual' ] ), false );
+                    update_option( 'b3_welcome_user_message_manual', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_welcome_user_message_manual' ] ) ), false );
                 } else {
                     delete_option( 'b3_welcome_user_message_manual' );
                 }
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
                     if ( isset( $_POST[ 'b3_account_activated_subject' ] ) && ! empty( $_POST[ 'b3_account_activated_subject' ] ) ) {
-                        update_option( 'b3_account_activated_subject', stripslashes( $_POST[ 'b3_account_activated_subject' ] ), false );
+                        update_option( 'b3_account_activated_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_activated_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_account_activated_subject' );
                     }
                     if ( isset( $_POST[ 'b3_account_activated_message' ] ) && ! empty( $_POST[ 'b3_account_activated_message' ] ) ) {
-                        update_option( 'b3_account_activated_message', htmlspecialchars( $_POST[ 'b3_account_activated_message' ] ), false );
+                        update_option( 'b3_account_activated_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_account_activated_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_account_activated_message' );
                     }
                     if ( isset( $_POST[ 'b3_new_user_message' ] ) && ! empty( $_POST[ 'b3_new_user_message' ] ) ) {
-                        update_option( 'b3_new_user_message', htmlspecialchars( $_POST[ 'b3_new_user_message' ] ), false );
+                        update_option( 'b3_new_user_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_new_user_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_new_user_message' );
                     }
 
                     if ( isset( $_POST[ 'b3_new_user_notification_addresses' ] ) && ! empty( $_POST[ 'b3_new_user_notification_addresses' ] ) ) {
-                        $email_array = explode( ',', $_POST[ 'b3_new_user_notification_addresses' ] );
+                        $email_array = explode( ',', sanitize_text_field( wp_unslash( $_POST[ 'b3_new_user_notification_addresses' ] ) ) );
                         if ( ! empty( $email_array ) ) {
                             foreach( $email_array as $email ) {
                                 $email = trim( $email );
@@ -343,19 +344,19 @@
                     }
 
                     if ( isset( $_POST[ 'b3_new_user_subject' ] ) && ! empty( $_POST[ 'b3_new_user_subject' ] ) ) {
-                        update_option( 'b3_new_user_subject', htmlspecialchars( $_POST[ 'b3_new_user_subject' ] ), false );
+                        update_option( 'b3_new_user_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_new_user_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_new_user_subject' );
                     }
 
                     if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
                         if ( isset( $_POST[ 'b3_email_activation_subject' ] ) && ! empty( $_POST[ 'b3_email_activation_subject' ] ) ) {
-                            update_option( 'b3_email_activation_subject', stripslashes( $_POST[ 'b3_email_activation_subject' ] ), false );
+                            update_option( 'b3_email_activation_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_email_activation_subject' ] ) ), false );
                         } else {
                             delete_option( 'b3_email_activation_subject' );
                         }
                         if ( isset( $_POST[ 'b3_email_activation_message' ] ) && ! empty( $_POST[ 'b3_email_activation_message' ] ) ) {
-                            update_option( 'b3_email_activation_message', htmlspecialchars( $_POST[ 'b3_email_activation_message' ] ), false );
+                            update_option( 'b3_email_activation_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_email_activation_message' ] ) ), false );
                         } else {
                             delete_option( 'b3_email_activation_message' );
                         }
@@ -364,15 +365,15 @@
 
                 if ( get_option( 'b3_needs_admin_approval' ) ) {
                     // @TODO: add ifs for non-empty values
-                    update_option( 'b3_account_approved_message', htmlspecialchars( $_POST[ 'b3_account_approved_message' ], ENT_QUOTES ), false );
-                    update_option( 'b3_account_approved_subject', $_POST[ 'b3_account_approved_subject' ], false );
-                    update_option( 'b3_request_access_message_admin', htmlspecialchars( $_POST[ 'b3_request_access_message_admin' ] ), false );
-                    update_option( 'b3_request_access_message_user', htmlspecialchars( $_POST[ 'b3_request_access_message_user' ] ), false );
-                    update_option( 'b3_request_access_notification_addresses', $_POST[ 'b3_request_access_notification_addresses' ], false );
-                    update_option( 'b3_request_access_subject_admin', $_POST[ 'b3_request_access_subject_admin' ], false );
-                    update_option( 'b3_request_access_subject_user', $_POST[ 'b3_request_access_subject_user' ], false );
-                    update_option( 'b3_account_rejected_message', htmlspecialchars( $_POST[ 'b3_account_rejected_message' ], ENT_QUOTES ), false );
-                    update_option( 'b3_account_rejected_subject', $_POST[ 'b3_account_rejected_subject' ], false );
+                    update_option( 'b3_account_approved_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_account_approved_message' ] ) ), false );
+                    update_option( 'b3_account_approved_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_approved_subject' ] ) ), false );
+                    update_option( 'b3_request_access_message_admin', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_request_access_message_admin' ] ) ), false );
+                    update_option( 'b3_request_access_message_user', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_request_access_message_user' ] ) ), false );
+                    update_option( 'b3_request_access_notification_addresses', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_notification_addresses' ] ) ), false );
+                    update_option( 'b3_request_access_subject_admin', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_subject_admin' ] ) ), false );
+                    update_option( 'b3_request_access_subject_user', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_subject_user' ] ) ), false );
+                    update_option( 'b3_account_rejected_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_account_rejected_message' ] ) ), false );
+                    update_option( 'b3_account_rejected_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_rejected_subject' ] ) ), false );
 
                     if ( isset( $_POST[ 'b3_disable_delete_user_email' ] ) && 1 == $_POST[ 'b3_disable_delete_user_email' ] ) {
                         update_option( 'b3_disable_delete_user_email', 1, false );
@@ -383,52 +384,52 @@
 
                 if ( is_multisite() ) {
                     if ( isset( $_POST[ 'b3_confirm_wpmu_user_subject' ] ) && ! empty( $_POST[ 'b3_confirm_wpmu_user_subject' ] ) ) {
-                        update_option( 'b3_confirm_wpmu_user_subject', stripslashes( $_POST[ 'b3_confirm_wpmu_user_subject' ] ), false );
+                        update_option( 'b3_confirm_wpmu_user_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_confirm_wpmu_user_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_confirm_wpmu_user_subject' );
                     }
                     if ( isset( $_POST[ 'b3_confirm_wpmu_user_message' ] ) && ! empty( $_POST[ 'b3_confirm_wpmu_user_message' ] ) ) {
-                        update_option( 'b3_confirm_wpmu_user_message', htmlspecialchars( $_POST[ 'b3_confirm_wpmu_user_message' ] ), false );
+                        update_option( 'b3_confirm_wpmu_user_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_confirm_wpmu_user_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_confirm_wpmu_user_message' );
                     }
                     if ( isset( $_POST[ 'b3_activated_wpmu_user_subject' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_subject' ] ) ) {
-                        update_option( 'b3_activated_wpmu_user_subject', stripslashes( $_POST[ 'b3_activated_wpmu_user_subject' ] ), false );
+                        update_option( 'b3_activated_wpmu_user_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_activated_wpmu_user_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_activated_wpmu_user_subject' );
                     }
                     if ( isset( $_POST[ 'b3_activated_wpmu_user_message' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_message' ] ) ) {
-                        update_option( 'b3_activated_wpmu_user_message', htmlspecialchars( $_POST[ 'b3_activated_wpmu_user_message' ] ), false );
+                        update_option( 'b3_activated_wpmu_user_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_activated_wpmu_user_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_activated_wpmu_user_message' );
                     }
                     if ( isset( $_POST[ 'b3_activate_wpmu_user_site_subject' ] ) && ! empty( $_POST[ 'b3_activate_wpmu_user_site_subject' ] ) ) {
-                        update_option( 'b3_activate_wpmu_user_site_subject', stripslashes( $_POST[ 'b3_activate_wpmu_user_site_subject' ] ), false );
+                        update_option( 'b3_activate_wpmu_user_site_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_activate_wpmu_user_site_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_activate_wpmu_user_site_subject' );
                     }
                     if ( isset( $_POST[ 'b3_activate_wpmu_user_site_message' ] ) && ! empty( $_POST[ 'b3_activate_wpmu_user_site_message' ] ) ) {
-                        update_option( 'b3_activate_wpmu_user_site_message', htmlspecialchars( $_POST[ 'b3_activate_wpmu_user_site_message' ] ), false );
+                        update_option( 'b3_activate_wpmu_user_site_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_activate_wpmu_user_site_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_activate_wpmu_user_site_message' );
                     }
                     if ( isset( $_POST[ 'b3_activated_wpmu_user_site_subject' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_site_subject' ] ) ) {
-                        update_option( 'b3_activated_wpmu_user_site_subject', stripslashes( $_POST[ 'b3_activated_wpmu_user_site_subject' ] ), false );
+                        update_option( 'b3_activated_wpmu_user_site_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_activated_wpmu_user_site_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_activated_wpmu_user_site_subject' );
                     }
                     if ( isset( $_POST[ 'b3_activated_wpmu_user_site_message' ] ) && ! empty( $_POST[ 'b3_activated_wpmu_user_site_message' ] ) ) {
-                        update_option( 'b3_activated_wpmu_user_site_message', htmlspecialchars( $_POST[ 'b3_activated_wpmu_user_site_message' ] ), false );
+                        update_option( 'b3_activated_wpmu_user_site_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_activated_wpmu_user_site_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_activated_wpmu_user_site_message' );
                     }
                     if ( isset( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) && ! empty( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ) {
-                        update_option( 'b3_new_wpmu_user_admin_subject', stripslashes( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ), false );
+                        update_option( 'b3_new_wpmu_user_admin_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_new_wpmu_user_admin_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_new_wpmu_user_admin_subject' );
                     }
                     if ( isset( $_POST[ 'b3_new_wpmu_user_admin_message' ] ) && ! empty( $_POST[ 'b3_new_wpmu_user_admin_message' ] ) ) {
-                        update_option( 'b3_new_wpmu_user_admin_message', htmlspecialchars( $_POST[ 'b3_new_wpmu_user_admin_message' ] ), false );
+                        update_option( 'b3_new_wpmu_user_admin_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_new_wpmu_user_admin_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_new_wpmu_user_admin_message' );
                     }
@@ -441,19 +442,19 @@
     add_action( 'admin_init', 'b3_email_form_handling' );
 
     function b3_template_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_template_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( $_POST[ 'b3_template_nonce' ], 'b3-template-nonce' ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_template_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_template_nonce' ] ) ), 'b3-template-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
                 if ( isset( $_POST[ 'b3_email_styling' ] ) && ! empty( $_POST[ 'b3_email_styling' ] ) ) {
-                    update_option( 'b3_email_styling', stripslashes( $_POST[ 'b3_email_styling' ] ), false );
+                    update_option( 'b3_email_styling', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_email_styling' ] ) ), false );
                 } else {
                     delete_option( 'b3_email_styling' );
                 }
 
                 if ( isset( $_POST[ 'b3_email_template' ] ) && ! empty( $_POST[ 'b3_email_template' ] ) ) {
-                    update_option( 'b3_email_template', stripslashes( $_POST[ 'b3_email_template' ] ), false );
+                    update_option( 'b3_email_template', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_email_template' ] ) ), false );
                 } else {
                     delete_option( 'b3_email_template' );
                 }
@@ -470,8 +471,8 @@
      * @since 3.0
      */
     function b3_users_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_users_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( $_POST[ 'b3_users_nonce' ], 'b3-users-nonce' ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) &&  'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_users_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_users_nonce' ] ) ), 'b3-users-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
@@ -494,7 +495,7 @@
 
                         if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
                             // @TODO: check for @
-                            $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_usernames' ] );
+                            $sanitized_value = sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_usernames' ] ) );
                             $new_value       = explode( ' ', $sanitized_value );
                             update_option( 'b3_disallowed_usernames', $new_value, false );
                         } else {
@@ -508,10 +509,10 @@
 
                 // @TODO: check if this should be kept out of MS
                 if ( isset( $_POST[ 'b3_set_domain_restrictions' ] ) && ! empty( $_POST[ 'b3_set_domain_restrictions' ] ) ) {
-                    update_option( 'b3_set_domain_restrictions', $_POST[ 'b3_set_domain_restrictions' ], false );
+                    update_option( 'b3_set_domain_restrictions', sanitize_text_field( wp_unslash( $_POST[ 'b3_set_domain_restrictions' ] ) ), false );
 
                     if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
-                        $sanitized_value = sanitize_text_field( $_POST[ 'b3_disallowed_domains' ] );
+                        $sanitized_value = sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_domains' ] ) );
                         $new_value       = explode( ' ', $sanitized_value );
                         update_option( 'b3_disallowed_domains', $new_value, false );
                     } else {
@@ -523,7 +524,7 @@
                 }
 
                 if ( isset( $_POST[ 'b3_restrict_admin' ] ) && ! empty( $_POST[ 'b3_restrict_admin' ] ) ) {
-                    update_option( 'b3_restrict_admin', $_POST[ 'b3_restrict_admin' ], false );
+                    update_option( 'b3_restrict_admin', array_map( 'sanitize_text_field', wp_unslash( $_POST[ 'b3_restrict_admin' ] ) ), false );
                 } else {
                     delete_option( 'b3_restrict_admin' );
                 }
@@ -552,31 +553,31 @@
      * @since 3.0
      */
     function b3_recaptcha_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( $_POST[ 'b3_recaptcha_nonce' ], 'b3-recaptcha-nonce' ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_recaptcha_nonce' ] ) ), 'b3-recaptcha-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
                 if ( isset( $_POST[ 'b3_recaptcha_public' ] ) && ! empty( $_POST[ 'b3_recaptcha_public' ] ) ) {
-                    update_option( 'b3_recaptcha_public', sanitize_text_field( $_POST[ 'b3_recaptcha_public' ] ), false );
+                    update_option( 'b3_recaptcha_public', sanitize_text_field( wp_unslash( $_POST[ 'b3_recaptcha_public' ] ) ), false );
                 } else {
                     delete_option( 'b3_recaptcha_public' );
                 }
 
                 if ( isset( $_POST[ 'b3_recaptcha_secret' ] ) && ! empty( $_POST[ 'b3_recaptcha_secret' ] ) ) {
-                    update_option( 'b3_recaptcha_secret', sanitize_text_field( $_POST[ 'b3_recaptcha_secret' ] ), false );
+                    update_option( 'b3_recaptcha_secret', sanitize_text_field( wp_unslash( $_POST[ 'b3_recaptcha_secret' ] ) ), false );
                 } else {
                     delete_option( 'b3_recaptcha_secret' );
                 }
 
                 if ( isset( $_POST[ 'b3_recaptcha_version' ] ) && ! empty( $_POST[ 'b3_recaptcha_version' ] ) ) {
-                    update_option( 'b3_recaptcha_version', sanitize_text_field( $_POST[ 'b3_recaptcha_version' ] ), false );
+                    update_option( 'b3_recaptcha_version', sanitize_text_field( wp_unslash( $_POST[ 'b3_recaptcha_version' ] ) ), false );
                 } else {
                     delete_option( 'b3_recaptcha_version' );
                 }
 
                 if ( isset( $_POST[ 'b3_recaptcha_theme' ] ) && ! empty( $_POST[ 'b3_recaptcha_theme' ] ) ) {
-                    update_option( 'b3_recaptcha_theme', sanitize_text_field( $_POST[ 'b3_recaptcha_theme' ] ), false );
+                    update_option( 'b3_recaptcha_theme', sanitize_text_field( wp_unslash( $_POST[ 'b3_recaptcha_theme' ] ) ), false );
                 } else {
                     delete_option( 'b3_recaptcha_theme' );
                 }
@@ -593,8 +594,8 @@
      * @since 1.0.0
      */
     function b3_setings_form_handling() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( $_POST[ 'b3ob_settings_nonce' ], 'b3ob-settings-nonce' ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3ob_settings_nonce' ] ) ), 'b3ob-settings-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
                 $reset = false;
@@ -655,7 +656,7 @@
      * @since 1.0.4
      */
     function b3_approve_deny_users() {
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
             $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
             if ( ! is_admin() ) {
                 $approval_link = b3_get_user_approval_link();
@@ -664,7 +665,7 @@
                 }
             }
 
-            if ( ! wp_verify_nonce( $_POST[ 'b3_manage_users_nonce' ], 'b3-manage-users-nonce' ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_manage_users_nonce' ] ) ), 'b3-manage-users-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_nonce_mismatch', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
@@ -737,7 +738,7 @@
         }
 
         // @TODO: check this
-        if ( 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
             $current_user = wp_get_current_user();
             check_admin_referer( 'update-user_' . $current_user->ID );
             wp_enqueue_script( 'user-profile' );

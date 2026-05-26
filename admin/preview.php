@@ -16,7 +16,7 @@
 
         if ( isset( $_GET[ 'preview' ] ) ) {
             $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
-            $preview   = $_GET[ 'preview' ];
+            $preview   = sanitize_text_field( wp_unslash( $_GET[ 'preview' ] ) );
             $user      = get_userdata( get_current_user_id() );
 
             $lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit <a href="">iaculis</a> enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.

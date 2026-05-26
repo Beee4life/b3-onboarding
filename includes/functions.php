@@ -579,7 +579,6 @@
         return network_site_url( 'wp-login.php', 'login' ) . '?action=rp';
     }
 
-
     /**
      * Get account page id/link
      *
@@ -614,7 +613,6 @@
         return false;
     }
 
-
     /**
      * Convert a GMT date/time to local, in system defined date/time format
      *
@@ -635,7 +633,6 @@
         return $date_time_gmt;
     }
 
-
     /**
      * Get the message above registration form
      *
@@ -653,7 +650,6 @@
         return apply_filters( 'b3_message_above_registration', $message );
     }
 
-
     /**
      * Get the message above login form
      *
@@ -664,7 +660,6 @@
     function b3_get_message_above_login() {
         return apply_filters( 'b3_message_above_login', get_option( 'b3_message_above_login' ) );
     }
-
 
     /**
      * Get the message above lost password form
@@ -683,7 +678,6 @@
         return apply_filters( 'b3_message_above_lost_password', $message );
     }
 
-
     /**
      * Get the message above request access form
      *
@@ -700,7 +694,6 @@
 
         return apply_filters( 'b3_message_above_request_access', $message );
     }
-
 
     /**
      * Disallowed usernames
@@ -722,7 +715,6 @@
         return apply_filters( 'b3_disallowed_usernames', $disallowed_names );
     }
 
-
     /**
      * Get 'easy' passwords
      *
@@ -733,7 +725,6 @@
     function b3_get_easy_passwords() {
         return apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
     }
-
 
     /**
      * Get disallowed domain names
@@ -746,7 +737,6 @@
         return apply_filters( 'b3_disallowed_domains', get_option( 'b3_disallowed_domains' ) );
     }
 
-
     /**
      * Get protocol
      *
@@ -755,7 +745,6 @@
     function b3_get_protocol() {
         return ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
     }
-
 
     /**
      * Get current URL
@@ -768,7 +757,7 @@
         $current_url = '';
 
         if ( isset( $_SERVER[ 'HTTP_HOST' ] ) && isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
-            $url         = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
+            $url         = b3_get_protocol() . '://' . sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_HOST' ] ) ) . sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
             $url_array   = wp_parse_url( $url );
             $port        = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
             $path        = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
@@ -782,7 +771,6 @@
 
         return $current_url;
     }
-
 
     /**
      * For email override in new user + blog
@@ -801,7 +789,6 @@
 
         return false;
     }
-
 
     /**
      * Get admin tabs
@@ -874,7 +861,6 @@
         return $tabs;
     }
 
-
     /**
      * Checks that the reCAPTCHA parameter (both versions) sent with the registration
      * request is valid.
@@ -882,8 +868,8 @@
      * @return bool True if the CAPTCHA is OK, otherwise false.
      */
     function b3_verify_recaptcha() {
-        if ( isset ( $_POST[ 'g-recaptcha-response' ] ) ) {
-            $recaptcha_response = $_POST[ 'g-recaptcha-response' ];
+        if ( isset( $_POST[ 'g-recaptcha-response' ] ) ) {
+            $recaptcha_response = sanitize_text_field( wp_unslash( $_POST[ 'g-recaptcha-response' ] ) );
         } else {
             return false;
         }
@@ -911,7 +897,6 @@
         return $success;
     }
 
-
     /**
      * Get email preview link
      *
@@ -926,7 +911,6 @@
 
         return false;
     }
-
 
     /**
      * Get plugin file (from name)
@@ -946,7 +930,6 @@
 
         return null;
     }
-
 
     /**
      * Set default settings
@@ -996,7 +979,6 @@
         }
     }
 
-
     /**
      * Get all possible template locations
      *
@@ -1019,7 +1001,6 @@
         return $template_paths;
     }
 
-
     /**
      * Locate file in possible template locations
      *
@@ -1038,7 +1019,6 @@
 
         return false;
     }
-
 
     /**
      * Render template
@@ -1060,7 +1040,6 @@
             do_action( 'b3_do_after_template', $template_name );
         }
     }
-
 
     /**
      * New function to do all replacements in 1 function
@@ -1177,7 +1156,6 @@
         return $replacements;
     }
 
-
     /**
      * Get approvement table headers
      *
@@ -1207,7 +1185,6 @@
 
         return $headers;
     }
-
 
     /**
      * Render approvement table row
@@ -1263,7 +1240,6 @@
         return $output;
     }
 
-
     /**
      * Get user IP
      *
@@ -1276,17 +1252,16 @@
     function b3_get_user_ip() {
         if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
             // check ip from share internet
-            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+            $user_ip = sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_CLIENT_IP' ] ) );
         } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
             // to check ip is pass from proxy
-            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } else {
-            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+            $user_ip = sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) );
+        } elseif ( ! empty( $_SERVER[ 'REMOTE_ADDR' ] ) ) {
+            $user_ip = sanitize_text_field( wp_unslash( $_SERVER[ 'REMOTE_ADDR' ] ) );
         }
 
         return $user_ip;
     }
-
 
     /**
      * Get message above 'Get pass' form (magic link)

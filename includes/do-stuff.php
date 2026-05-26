@@ -126,7 +126,6 @@
         }
     }
 
-
     /**
      * Render any extra fields
      * Options are: text, textarea, number, url, radio, checkbox, select
@@ -148,7 +147,7 @@
         $input_required    = ( isset( $extra_field[ 'required' ] ) && false != $extra_field[ 'required' ] ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
         $input_type        = ( isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
         $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : [];
-        $field_value       = ( isset( $_POST[ $input_id ] ) ) ? $_POST[ $input_id ] : '';
+        $field_value       = ( isset( $_POST[ $input_id ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $input_id ] ) ) : '';
 
         if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {
             ob_start();
@@ -231,7 +230,6 @@
         return false;
     }
 
-
     /**
      * Replace vars in email template
      *
@@ -263,7 +261,6 @@
         return $message;
     }
 
-
     /**
      * Verify if privacy checkbox is clicked (when activated)
      *
@@ -278,7 +275,6 @@
 
         return true;
     }
-
 
     /**
      * Check if a remote file exists
@@ -299,7 +295,6 @@
         }
     }
 
-
     /**
      * Generate user login
      *
@@ -312,7 +307,6 @@
 
         return $user_login;
     }
-
 
     /**
      * Verify domain in email (single site)
@@ -335,7 +329,6 @@
         return true;
     }
 
-
     /**
      * Verify magic link
      *
@@ -349,7 +342,7 @@
                 // raw code
                 $user_input = $code;
                 if ( isset( $_POST[ 'email' ] ) ) {
-                    $user_email = $_POST[ 'email' ];
+                    $user_email = sanitize_email( wp_unslash( $_POST[ 'email' ] ) );
                 } else {
                     // maybe get user by code ?
                 }

@@ -15,7 +15,7 @@
         if ( empty( $_POST[ 'user_login' ] ) || ! is_string( $_POST[ 'user_login' ] ) ) {
             $errors->add( 'empty_username', sprintf( '<strong>%s</strong>: %s.', esc_html__( 'Error', 'b3-onboarding' ), esc_html__( 'Enter a username or email address', 'b3-onboarding' ) ) );
 
-        } elseif ( strpos( wp_unslash( $_POST[ 'user_login' ] ), '@' ) ) {
+        } elseif ( strpos( sanitize_user( wp_unslash( $_POST[ 'user_login' ] ) ), '@' ) ) {
             $user_data = get_user_by( 'email', trim( sanitize_email( wp_unslash( $_POST[ 'user_login' ] ) ) ) );
 
         } else {
