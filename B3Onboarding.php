@@ -32,8 +32,8 @@
             public function __construct() {
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
-                    'registration_type' => get_option( 'b3_registration_type' ),
-                    'version'           => get_option( 'b3ob_version' ),
+                    'registration_type' => get_option( 'b3_registration_type', 'closed' ),
+                    'version'           => get_option( 'b3ob_version', '3.15.0' ),
                 ];
 
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
