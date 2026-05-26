@@ -27,7 +27,7 @@
                 $message = $user_not_deleted;
             }
             if ( $message ) {
-                echo sprintf( '<p class="b3_message">%s</p>', $message );
+                echo sprintf( '<p class="b3_message">%s</p>', esc_html( $message ) );
             }
         }
     }

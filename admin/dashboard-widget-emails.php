@@ -39,7 +39,7 @@
         $links_list = sprintf( '<ul>%s</ul>', $links );
 
         $widget_content = $widget_title . $links_list;
-        echo sprintf( '<div class="b3_widget--dashboard">%s</div>', $widget_content );
+        echo sprintf( '<div class="b3_widget--dashboard">%s</div>', wp_kses_post( $widget_content ) );
     }
     if ( current_user_can('manage_options' ) ) {
         wp_add_dashboard_widget( 'b3-dashboard-debug', 'B3 OnBoarding (email previews)', 'b3_dashboard_widget_email_previews' );

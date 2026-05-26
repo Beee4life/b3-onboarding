@@ -15,10 +15,10 @@
 ?>
     <div id="b3-register" class="b3_page b3_page--register">
         <?php if ( ! empty( $attributes[ 'title' ] ) ) { ?>
-            <?php echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] ); ?>
+            <?php echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) ); ?>
         <?php } ?>
 
-        <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo b3_get_current_url(); ?>" method="post">
+        <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo esc_url( b3_get_current_url() ); ?>" method="post">
             <?php do_action( 'b3_register_form', $attributes ); ?>
         </form>
     </div>

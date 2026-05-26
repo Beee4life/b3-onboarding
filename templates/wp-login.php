@@ -3,7 +3,7 @@
         exit;
     }
     if ( ! empty( $attributes[ 'title' ] ) ) {
-        echo sprintf( '<h3>%s</h3>', $attributes[ 'title' ] );
+        echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) );
     }
 ?>
 

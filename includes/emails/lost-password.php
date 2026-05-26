@@ -30,12 +30,12 @@
         <th class="align-top">
             <label for="b3__input--lost-password-message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br>
-            <?php echo b3_get_preview_link( 'lostpass' ); ?>
+            <?php echo wp_kses_post( b3_get_preview_link( 'lostpass' ) ); ?>
         </th>
         <td>
             <?php esc_html_e( "Be sure to include %reset_url% in your email, otherwise the user can't reset his/her password.", "b3-onboarding" ); ?>
             <br>
-            <textarea id="b3__input--lost-password-message" name="b3_lost_password_message" placeholder="<?php echo esc_attr( b3_default_lost_password_message() ); ?>" rows="6"><?php echo stripslashes( $lost_password_message ); ?></textarea>
+            <textarea id="b3__input--lost-password-message" name="b3_lost_password_message" placeholder="<?php echo esc_attr( b3_default_lost_password_message() ); ?>" rows="6"><?php echo wp_kses_post( $lost_password_message ); ?></textarea>
         </td>
     </tr>
     <tr>

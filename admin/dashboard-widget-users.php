@@ -84,7 +84,7 @@
             $table_rows    = ob_get_clean();
             $table_content = $table_headers . $table_rows;
             // @TODO: ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            echo sprintf( '<table class="b3_table">%s</table>', $table_content );
+            echo wp_kses_post( sprintf( '<table class="b3_table">%s</table>', $table_content ) );
         } else {
             if ( 'none' === get_option( 'b3_registration_type' ) ) {
                 /* translators: here */

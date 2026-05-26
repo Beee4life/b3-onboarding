@@ -172,14 +172,14 @@
                 }
             } else {
                 if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_needs_admin_approval' ) || get_option( 'b3_use_magic_link' ) ) { ?>
-                    <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
+                    <input type="hidden" name="user_login" value="<?php echo esc_attr( b3_generate_user_login() ); ?>">
                 <?php } else {
                     do_action( 'b3_render_form_element', 'register/user-login' );
                 }
                 do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
-            echo $output;
+            echo wp_kses_post( $output );
         }
     }
     add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
@@ -197,7 +197,7 @@
             do_action( 'b3_render_form_element', 'register/first-name' );
             do_action( 'b3_render_form_element', 'register/last-name' );
             $output = ob_get_clean();
-            echo $output;
+            echo wp_kses_post( $output );
             do_action( 'b3_do_after_first_last_name' );
         }
     }
@@ -225,6 +225,7 @@
             </div>
             <?php
             $results = ob_get_clean();
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $results;
             do_action( 'b3_do_after_passwords' );
         }
@@ -261,6 +262,7 @@
             <?php
                 }
                 $output = ob_get_clean();
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $output;
             }
         }
@@ -277,6 +279,7 @@
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo b3_render_extra_field( $extra_field );
             }
         }
@@ -309,7 +312,7 @@
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
                         <div class="recaptcha-container">
-                            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                            <div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_public ); ?>"></div>
                         </div>
                     </div>
                     <?php
@@ -322,6 +325,7 @@
                         sprintf( '<a href="%s">%s</a>',
                             esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' ) ),
                                     esc_html__( 'here', 'b3-onboarding' ) . '</a>' ) );
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo sprintf( '<div class="b3_form-element b3_form-element--recaptcha">%s</div>', $message );
                 }
             }
@@ -408,7 +412,7 @@
                     $message_output .= sprintf( '<p>%s</p>', $message );
                 }
                 $message_output .= '</div>';
-                echo $message_output;
+                echo wp_kses_post( $message_output );
             }
         }
     }
@@ -466,10 +470,10 @@
             if ( count( $links ) > 0 ) {
                 ob_start();
                 foreach( $links as $values ) {
-                    echo sprintf( '<li><a href="%s" rel="nofollow">%s</a></li>', $values[ 'link' ], $values[ 'title' ] );
+                    echo sprintf( '<li><a href="%s" rel="nofollow">%s</a></li>', esc_url( $values[ 'link' ] ), esc_html( $values[ 'title' ] ) );
                 }
                 $action_links = ob_get_clean();
-                echo sprintf( '<ul class="b3_form-links">%s</ul>', $action_links );
+                echo sprintf( '<ul class="b3_form-links">%s</ul>', wp_kses_post( $action_links ) );
             }
         }
     }
@@ -644,7 +648,7 @@
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
 
-                    echo sprintf( '<li>%s</li>', $link );
+                    echo sprintf( '<li>%s</li>', wp_kses_post( $link ) );
                 }
                 $links = ob_get_clean();
 
@@ -653,7 +657,7 @@
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
 
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, $links );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', esc_html( $label ), wp_kses_post( $links ) );
                 }
             }
         }

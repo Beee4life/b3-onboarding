@@ -133,9 +133,9 @@
     function b3_default_request_access_message_user() {
         ob_start();
         /* translators: site name */
-        echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) );
+        echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( get_option( 'blogname' ) ) );
         echo '<br>';
-        echo b3_default_greetings();
+        echo wp_kses_post( b3_default_greetings() );
 
         return ob_get_clean();
     }

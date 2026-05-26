@@ -8,6 +8,6 @@
         $notice = apply_filters( 'b3_message_above_new_blog', esc_html__( 'Here you can register your new site.', 'b3-onboarding' ) );
 
         if ( $notice ) {
-            echo sprintf( '<div class="b3_site-fields-header">%s</div>', $notice );
+            echo sprintf( '<div class="b3_site-fields-header">%s</div>', esc_attr( $notice ) );
         }
     }

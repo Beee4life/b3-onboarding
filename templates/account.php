@@ -15,7 +15,7 @@
 ?>
 
 <div id="b3-account" class="b3_page b3_page--account">
-    <form id="accountform" action="<?php echo b3_get_account_url(); ?>" method="post">
+    <form id="accountform" action="<?php echo esc_url( b3_get_account_url() ); ?>" method="post">
         <?php do_action( 'b3_do_before_account', $attributes, $current_user ); ?>
         <?php do_action( 'b3_render_form_element', 'account/hidden-fields', $attributes, $current_user ); ?>
         <?php do_action( 'b3_render_form_element', 'account/user-id', $attributes, $current_user ); ?>

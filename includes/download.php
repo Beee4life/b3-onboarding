@@ -25,7 +25,7 @@
                 header( "Content-Type: application/octet-stream" );
                 header( "Content-Disposition: attachment; filename={$file_name}" );
 
-                echo $wp_filesystem->get_contents( $file_name );
+                echo wp_kses_post( $wp_filesystem->get_contents( $file_name ) );
                 exit; // It is good practice to exit after a file download
             }
         }

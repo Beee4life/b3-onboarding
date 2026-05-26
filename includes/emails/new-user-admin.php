@@ -21,13 +21,13 @@
     <?php if ( 'email_activation' == get_option( 'b3_registration_type' ) ) { ?>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php _e( '<b>NOTE:</b> This email is sent after the user confirms his/her email address, not on initial registration.', "b3-onboarding" ); ?>
+            <?php esc_html_e( '<b>NOTE:</b> This email is sent after the user confirms his/her email address, not on initial registration.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <?php } ?>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( 'Enter the email addresses (searated by comma) which should receive the notification email.', "b3-onboarding" ); ?>
+            <?php esc_html_e( 'Enter the email addresses (searated by comma) which should receive the notification email.', 'b3-onboarding' ); ?>
         </td>
     </tr>
     <tr>
@@ -55,10 +55,10 @@
         <th class="align-top">
             <label for="b3__input--new-user-message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br>
-            <?php echo b3_get_preview_link( 'new-user-admin' ); ?>
+            <?php echo wp_kses_post( b3_get_preview_link( 'new-user-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_default_new_user_admin_message() ); ?>" rows="6"><?php echo stripslashes( $new_user_email_message ); ?></textarea>
+            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_default_new_user_admin_message() ); ?>" rows="6"><?php echo wp_kses_post( $new_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

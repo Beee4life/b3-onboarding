@@ -33,7 +33,7 @@
         ?>
 
         <form action="admin.php?page=b3-onboarding&tab=registration" method="post">
-            <input name="b3_registration_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-registration-nonce' ); ?>" />
+            <input name="b3_registration_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-registration-nonce' ) ); ?>" />
             <?php if ( is_main_site() ) { ?>
                 <?php $options = b3_get_registration_types(); ?>
                 <?php b3_get_settings_field_open(); ?>
@@ -43,13 +43,15 @@
 
                     <?php $admin_url = is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'options-general.php' ); ?>
                     <?php // translators: link to settings page ?>
-                    <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $admin_url, esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
+                    <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( "This setting 'controls' the Registration type on the %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $admin_url ), esc_html__( 'Settings page', 'b3-onboarding' ) ) ) ); ?>
 
                     <div class="b3_settings-input b3_settings-input--select">
                         <select name="b3_registration_type" id="b3_registration_type">
                             <?php foreach( $options as $option ) { ?>
-                            <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php selected( $option[ 'value' ], $registration_type ); ?>> <?php echo $option[ 'label' ]; ?>
-                                <?php } ?>
+                                <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>" <?php selected( $option[ 'value' ], $registration_type ); ?>>
+                                    <?php echo esc_attr( $option[ 'label' ] ); ?>
+                                </option>
+                            <?php } ?>
                         </select>
                     </div>
                 <?php b3_get_close(); ?>
@@ -68,7 +70,7 @@
                             <?php if ( false != $filter_message ) { ?>
                                 <?php echo sprintf( '<div class="filter-override">%s</div>', esc_html__( 'You have set a filter to override this setting', 'b3-onboarding' ) ); ?>
                             <?php } ?>
-                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $placeholder_registration_closed ); ?>" value="<?php if ( $closed_message ) { echo htmlspecialchars_decode(stripslashes( $closed_message )); } ?>"/>
+                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $placeholder_registration_closed ); ?>" value="<?php if ( $closed_message ) { echo wp_kses_post( $closed_message ); } ?>"/>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
@@ -112,7 +114,7 @@
                     <?php } ?>
 
                     <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
-                    <div class="b3-name-fields<?php echo $hide_extended_fields; ?>">
+                    <div class="b3-name-fields<?php echo esc_attr( $hide_extended_fields ); ?>">
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_first_last"><?php esc_html_e( 'First and last name', 'b3-onboarding' ); ?></label>
@@ -171,7 +173,7 @@
                             <?php $show_note = ( 1 == $recaptcha ) ? false : true; ?>
                             <?php $hide_recaptcha_note = ( 1 == $recaptcha ) ? false : ' hidden'; ?>
                             <?php if ( $show_note ) { ?>
-                                <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo $hide_recaptcha_note; ?>">
+                                <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo esc_attr( $hide_recaptcha_note ); ?>">
                                     <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
                                 </div>
                             <?php } ?>
@@ -204,7 +206,7 @@
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo stripslashes( $privacy_text ); } ?>"/>
+                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo wp_kses_post( $privacy_text ); } ?>"/>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
@@ -227,7 +229,7 @@
                             <select name="b3_privacy_page_id" id="b3_privacy_page_id">
                                 <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
                                 <?php foreach( $all_pages as $page ) { ?>
-                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($privacy_page, $page->ID); ?>><?php echo $page->post_title; ?></option>
+                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($privacy_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
                                 <?php } ?>
                             </select>
                         </div>

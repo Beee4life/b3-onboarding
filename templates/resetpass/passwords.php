@@ -13,4 +13,4 @@
     <input type="password" name="pass2" id="pass2" class="input" size="20" value="" autocomplete="off" />
 </div>
 
-<p class="password-hint"><?php echo wp_get_password_hint(); ?></p>
+<p class="password-hint"><?php echo esc_html( wp_get_password_hint() ); ?></p>

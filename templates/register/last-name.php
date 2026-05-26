@@ -9,5 +9,5 @@
 ?>
 <div class="b3_form-element b3_form-element--last-name">
     <label class="b3_form-label" for="b3_last_name"><?php esc_html_e( 'Last name', 'b3-onboarding' ); ?><?php if ( $required ) { ?> <strong>*</strong><?php } ?></label>
-    <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo $last_name; ?>"<?php echo $required; ?>>
+    <input type="text" name="last_name" id="b3_last_name" class="b3_form--input" value="<?php echo esc_attr( $last_name ); ?>"<?php echo esc_attr( $required ); ?>>
 </div>

@@ -126,12 +126,11 @@
             <?php } ?>
 
             <?php // @TODO: ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-            <?php echo $message; ?>
+            <?php echo wp_kses_post( $message ); ?>
 
         <?php } else { ?>
             <p><?php esc_html_e( "These are the email's styling definitions.", 'b3-onboarding' ); ?></p>
-            <?php // @TODO: ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-            <pre><?php echo $css; ?></pre>
+            <pre><?php echo esc_html( wp_strip_all_tags( $css ) ); ?></pre>
         <?php } // styling !== preview ?>
     <?php } //end $_GET preview ?>
 </div>

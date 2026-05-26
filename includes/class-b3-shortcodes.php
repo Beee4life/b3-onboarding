@@ -86,7 +86,7 @@
 
                 if ( 'none' === $registration_type && ! current_user_can( 'manage_network' ) ) {
                     ob_start();
-                    echo sprintf( '<p class="b3_message">%s</p>', b3_get_registration_closed_message() );
+                    echo sprintf( '<p class="b3_message">%s</p>', wp_kses_post( b3_get_registration_closed_message() ) );
                     do_action( 'b3_add_action_links', $attributes[ 'template' ] );
                     $rego_closed = ob_get_clean();
                     return $rego_closed;

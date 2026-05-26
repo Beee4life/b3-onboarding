@@ -23,17 +23,17 @@
             <label for="b3__input--confirm-wpmu-user-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--confirm-wpmu-user-subject" name="b3_confirm_wpmu_user_subject" type="text" placeholder="<?php echo $placeholder_subject; ?>" value="<?php echo esc_attr( $new_wpmu_user_subject ); ?>" />
+            <input id="b3__input--confirm-wpmu-user-subject" name="b3_confirm_wpmu_user_subject" type="text" placeholder="<?php echo esc_attr( $placeholder_subject ); ?>" value="<?php echo esc_attr( $new_wpmu_user_subject ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
             <label for="b3__input--confirm-wpmu-user-message"><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
             <br>
-            <?php echo b3_get_preview_link( 'mu-confirm-user-email' ); ?>
+            <?php echo wp_kses_post( b3_get_preview_link( 'mu-confirm-user-email' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--confirm-wpmu-user-message" name="b3_confirm_wpmu_user_message" placeholder="<?php echo $placeholder_message; ?>" rows="6"><?php echo stripslashes( $new_wpmu_user_message ); ?></textarea>
+            <textarea id="b3__input--confirm-wpmu-user-message" name="b3_confirm_wpmu_user_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo wp_kses_post( $new_wpmu_user_message ); ?></textarea>
         </td>
     </tr>
     <tr>

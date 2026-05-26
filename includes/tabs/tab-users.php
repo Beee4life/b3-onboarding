@@ -38,7 +38,7 @@
         ?>
 
         <form action="admin.php?page=b3-onboarding&tab=users" method="post">
-            <input name="b3_users_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-users-nonce' ); ?>">
+            <input name="b3_users_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-users-nonce' ) ); ?>">
 
             <?php $hide_front_end_approval = ( get_option( 'b3_needs_admin_approval' ) ) ? false : 'hidden'; ?>
             <?php b3_get_settings_field_open( $hide_front_end_approval ); ?>
@@ -50,7 +50,7 @@
                     <?php esc_html_e( 'Activate front-end user approval.', 'b3-onboarding' ); ?>
                     <?php if ( false == $front_end_approval_page ) { ?>
                         <?php $hide_user_approval_note = ( 1 == $front_end_approval ) ? false : ' hidden'; ?>
-                        <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--approval%s">%s</div>', $hide_user_approval_note, esc_html__( "You still need to set an approval page (after you save the settings).", 'b3-onboarding' ) ); ?>
+                        <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--approval%s">%s</div>', esc_attr( $hide_user_approval_note ), esc_html__( 'You still need to set an approval page (after you save the settings).', 'b3-onboarding' ) ); ?>
                     <?php } ?>
                 </div>
             <?php b3_get_close(); ?>
@@ -64,7 +64,7 @@
                     <?php foreach( $hidden_roles as $role ) { ?>
                         <input type="hidden" id="b3_restrict_<?php echo esc_attr( $role ); ?>" name="b3_restrict_admin[]" value="<?php echo esc_attr( $role ); ?>" />
                     <?php } ?>
-                    <?php echo sprintf( '<p>%s</p>', __( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
+                    <?php echo sprintf( '<p>%s</p>', wp_kses_post( 'Which user roles do <b>not</b> have access to the WordPress admin ?', 'b3-onboarding' ) ); ?>
 
                     <?php
                         if ( is_array( $roles ) && ! empty( $roles ) ) {
@@ -99,7 +99,7 @@
                     <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/>
                     <?php esc_html_e( "Redirect the user to a 'welcome' page after his first login.", 'b3-onboarding' ); ?>
                     <?php $hide_welcome_page_note = ( 1 == $activate_welcome_page ) ? false : ' hidden'; ?>
-                    <div class="b3_settings-input-description b3_settings-input-description--welcome<?php echo $hide_welcome_page_note; ?>">
+                    <div class="b3_settings-input-description b3_settings-input-description--welcome<?php echo esc_attr( $hide_welcome_page_note ); ?>">
                         <?php // translators: link to filter for 'welcome page' ?>
                         <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url('https://b3onboarding.berryplasman.com/filter/b3_welcome_page/'), esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
                     </div>
@@ -152,8 +152,8 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <?php // translators: link to function for 'default reserved usernames' ?>
-                            <div class="b3_above_input"><?php echo sprintf( esc_html__( 'Some usernames are excluded already by default, see them %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', sprintf( '%s/function/b3_get_default_reserved_user_names/', B3OB_PLUGIN_SITE ), esc_html__( 'here', 'b3-onboarding' ) ) ); ?></div>
-                            <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo stripslashes( $disallowed_usernames ); } ?>"/>
+                            <div class="b3_above_input"><?php echo sprintf( esc_html__( 'Some usernames are excluded already by default, see them %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', sprintf( '%s/function/b3_get_default_reserved_user_names/', esc_url( B3OB_PLUGIN_SITE ) ), esc_html__( 'here', 'b3-onboarding' ) ) ); ?></div>
+                            <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php esc_attr_e( 'Separate user names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_usernames ) { echo esc_attr( $disallowed_usernames ); } ?>"/>
                             <?php if ( $username_restrictions ) { ?>
                                 <?php echo sprintf( '<div><small>(%s)</small></div>', esc_html__( 'separate multiple user names with a space', 'b3-onboarding' ) ); ?>
                             <?php } ?>
@@ -178,7 +178,7 @@
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--text">
                         <?php echo sprintf( '<div>%s</div>', esc_html__( 'Email addresses from these domains are not allowed to register.', 'b3-onboarding' )); ?>
-                        <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php esc_attr_e( 'Separate domain names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_domains ) { echo stripslashes( $disallowed_domains ); } ?>"/>
+                        <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php esc_attr_e( 'Separate domain names with a space', 'b3-onboarding' ); ?>" value="<?php if ( $disallowed_domains ) { echo esc_attr( $disallowed_domains ); } ?>"/>
                         <?php if ( $disallowed_domains ) { ?>
                             <?php echo sprintf( '<div><small>(%s)</small></div>', esc_html__( 'separate multiple domain names with a space', 'b3-onboarding' ) ); ?>
                         <?php } ?>

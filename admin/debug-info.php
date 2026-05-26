@@ -9,23 +9,23 @@
         <table class="b3_table b3_table--debug">
             <tr>
                 <td>Operating system</td>
-                <td><?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?></td>
+                <td><?php echo isset( $_SERVER[ 'SERVER_SOFTWARE' ] ) ? esc_html( $_SERVER[ 'SERVER_SOFTWARE' ] ) : ''; ?></td>
             </tr>
             <tr>
                 <td>PHP</td>
-                <td><?php echo phpversion(); ?></td>
+                <td><?php echo esc_html( phpversion() ); ?></td>
             </tr>
             <tr>
                 <td>IP</td>
-                <td><?php echo $_SERVER[ 'SERVER_ADDR' ]; ?></td>
+                <td><?php echo isset( $_SERVER[ 'SERVER_ADDR' ] ) ? esc_html( $_SERVER[ 'SERVER_ADDR' ] ) : ''; ?></td>
             </tr>
             <tr>
                 <td>Scheme</td>
-                <td><?php echo $_SERVER[ 'REQUEST_SCHEME' ]; ?></td>
+                <td><?php echo isset( $_SERVER[ 'REQUEST_SCHEME' ] ) ? esc_html( $_SERVER[ 'REQUEST_SCHEME' ] ) : ''; ?></td>
             </tr>
             <tr>
                 <td>Home path</td>
-                <td><?php echo get_home_path(); ?></td>
+                <td><?php echo esc_html( get_home_path() ); ?></td>
             </tr>
         </table>
 
@@ -33,31 +33,31 @@
         <table class="b3_table b3_table--debug">
             <tr>
                 <td>WP version</td>
-                <td><?php echo get_bloginfo( 'version' ); ?></td>
+                <td><?php echo esc_html( get_bloginfo( 'version' ) ); ?></td>
             </tr>
             <tr>
                 <td>Home url</td>
-                <td><?php echo get_home_url(); ?></td>
+                <td><?php echo esc_html( get_home_url() ); ?></td>
             </tr>
             <tr>
                 <td>Site url</td>
-                <td><?php echo get_site_url(); ?></td>
+                <td><?php echo esc_html( get_site_url() ); ?></td>
             </tr>
             <tr>
                 <td>Blog public</td>
-                <td><?php echo get_option( 'blog_public' ); ?></td>
+                <td><?php echo esc_html( get_option( 'blog_public' ) ); ?></td>
             </tr>
             <tr>
                 <td>Users can register</td>
-                <td><?php echo get_option( 'users_can_register' ); ?></td>
+                <td><?php echo esc_html( get_option( 'users_can_register' ) ); ?></td>
             </tr>
             <tr>
                 <td>Page on front</td>
-                <td><?php echo get_option( 'page_on_front' ); ?></td>
+                <td><?php echo esc_html( get_option( 'page_on_front' ) ); ?></td>
             </tr>
             <tr>
                 <td>Charset</td>
-                <td><?php echo get_bloginfo( 'charset' ); ?></td>
+                <td><?php echo esc_html( get_bloginfo( 'charset' ) ); ?></td>
             </tr>
             <tr>
                 <td>Text direction</td>
@@ -65,7 +65,7 @@
             </tr>
             <tr>
                 <td>Language</td>
-                <td><?php echo get_bloginfo( 'language' ); ?></td>
+                <td><?php echo esc_html( get_bloginfo( 'language' ) ); ?></td>
             </tr>
         </table>
 
@@ -78,7 +78,7 @@
                 </tr>
                 <tr>
                     <td>Main registration</td>
-                    <td><?php echo ( get_site_option( 'registration' ) ) ? : false; ?> </td>
+                    <td><?php echo ( get_site_option( 'registration' ) ) ? esc_html( get_site_option( 'registration' ) ) : false; ?> </td>
                 </tr>
             </table>
         <?php } ?>
@@ -87,15 +87,15 @@
         <table class="b3_table b3_table--debug">
             <tr>
                 <td>Current theme</td>
-                <td>Current theme: <?php echo get_option( 'current_theme' ); ?></td>
+                <td>Current theme: <?php echo esc_html( get_option( 'current_theme' ) ); ?></td>
             </tr>
             <tr>
                 <td>Stylesheet</td>
-                <td>Stylesheet: <?php echo get_option( 'stylesheet' ); ?></td>
+                <td>Stylesheet: <?php echo esc_html( get_option( 'stylesheet' ) ); ?></td>
             </tr>
             <tr>
                 <td>Template</td>
-                <td>Template: <?php echo get_option( 'template' ); ?></td>
+                <td>Template: <?php echo esc_html( get_option( 'template' ) ); ?></td>
             </tr>
         </table>
 
@@ -107,7 +107,7 @@
                     if ( is_plugin_active( $key ) ) {
                         $plugin_name_cell   = sprintf( '<td>%s</td>', $value[ 'Name' ] );
                         $plugin_status_cell = sprintf( '<td>%s</td>', $value[ 'Version' ] );
-                        echo sprintf( '<tr>%s%s</tr>', $plugin_name_cell, $plugin_status_cell );
+                        echo sprintf( '<tr>%s%s</tr>', wp_kses_post( $plugin_name_cell ), wp_kses_post( $plugin_status_cell ) );
                     }
                 }
             ?>
@@ -121,7 +121,7 @@
                     if ( ! is_plugin_active( $key ) ) {
                         $plugin_name_cell   = sprintf( '<td>%s</td>', $value[ 'Name' ] );
                         $plugin_status_cell = sprintf( '<td>%s</td>', $value[ 'Version' ] );
-                        echo sprintf( '<tr>%s%s</tr>', $plugin_name_cell, $plugin_status_cell );
+                        echo sprintf( '<tr>%s%s</tr>', wp_kses_post( $plugin_name_cell ), wp_kses_post( $plugin_status_cell ) );
                     }
                 }
             ?>
@@ -156,10 +156,10 @@
                             }
                             $meta_value = ( ! $value ) ? esc_html__( 'not set', 'b3-onboarding' ) : $value;
                         }
-                        
+
                         $meta_key_cell   = sprintf( '<td>%s</td>', $meta_key );
                         $meta_value_cell = sprintf( '<td>%s</td>', esc_html( $meta_value ) );
-                        echo sprintf( '<tr>%s%s</tr>', $meta_key_cell, $meta_value_cell );
+                        echo sprintf( '<tr>%s%s</tr>', wp_kses_post( $meta_key_cell ), wp_kses_post( $meta_value_cell ) );
                     }
                 }
             ?>

@@ -291,7 +291,7 @@
     function b3_get_settings_field_open( $hide = false, $modifier = false ) {
         $hide_class = ( $hide != false ) ? ' hidden' : false;
         $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
-        echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
+        echo sprintf( '<div class="b3_settings-field%s%s">', esc_attr( $hide_class ), esc_attr( $modifier ) );
     }
 
     /**
@@ -303,7 +303,7 @@
      */
     function b3_get_label_field_open( $hide = false ) {
         $hide_class = ( $hide != false ) ? ' hidden' : false;
-        echo sprintf( '<div class="b3_settings-label%s">', $hide_class );
+        echo sprintf( '<div class="b3_settings-label%s">', esc_attr( $hide_class ) );
     }
 
     /**
@@ -348,7 +348,7 @@
             }
         }
 
-        echo $button;
+        echo wp_kses_post( $button );
     }
 
     /**
@@ -1220,10 +1220,10 @@
     function b3_render_approvement_table_row( $user, $attributes ) {
         ob_start();
         echo '<tr>';
-        echo sprintf( '<td>%s</td>', ( is_multisite() ) ? $user->signup_id : $user->ID );
+        echo sprintf( '<td>%s</td>', ( is_multisite() ) ? esc_html( $user->signup_id ) : esc_html( $user->ID ) );
 
         if ( false == $attributes[ 'register_email_only' ] ) {
-            echo sprintf( '<td>%s</td>', $user->user_login );
+            echo sprintf( '<td>%s</td>', esc_html( $user->user_login ) );
         }
 
         if ( false != $attributes[ 'show_first_last_name' ] ) {
@@ -1231,27 +1231,24 @@
                 $meta       = unserialize( $user->meta );
                 $first_name = ( isset( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : '';
                 $last_name  = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
-                echo sprintf( '<td>%s</td>', $first_name );
-                echo sprintf( '<td>%s</td>', $last_name );
+                echo sprintf( '<td>%s</td>', esc_html( $first_name ) );
+                echo sprintf( '<td>%s</td>', esc_html( $last_name ) );
             } else {
-                echo sprintf( '<td>%s</td>', $user->first_name );
-                echo sprintf( '<td>%s</td>', $user->last_name );
+                echo sprintf( '<td>%s</td>', esc_html( $user->first_name ) );
+                echo sprintf( '<td>%s</td>', esc_html( $user->last_name ) );
             }
         }
-        echo sprintf( '<td>%s</td>', $user->user_email );
+        echo sprintf( '<td>%s</td>', esc_html( $user->user_email ) );
         if ( is_multisite() ) {
-            echo sprintf( '<td>%s</td>', $user->domain );
-            echo sprintf( '<td>%s</td>', $user->title );
+            echo sprintf( '<td>%s</td>', esc_html( $user->domain ) );
+            echo sprintf( '<td>%s</td>', esc_html( $user->title ) );
         }
         echo '<td>';
         ?>
         <form name="b3_user_management" method="post">
-            <input name="b3_manage_users_nonce" type="hidden"
-                   value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>"/>
-            <input name="b3_approve_user" class="button" type="submit"
-                   value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>"/>
-            <input name="b3_reject_user" class="button" type="submit"
-                   value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
+            <input name="b3_manage_users_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-manage-users-nonce' ) ); ?>"/>
+            <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>"/>
+            <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
             <?php if ( is_multisite() ) { ?>
                 <input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>"/>
             <?php } else { ?>

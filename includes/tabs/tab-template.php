@@ -38,14 +38,14 @@
         ob_start();
         ?>
         <form action="admin.php?page=b3-onboarding&tab=template" method="post">
-            <input name="b3_template_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-template-nonce' ); ?>">
+            <input name="b3_template_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-template-nonce' ) ); ?>">
 
             <?php foreach( $fields as $field ) { ?>
                 <div class="template_box">
-                    <label for="b3__input--<?php echo $field['id']; ?>"><?php echo $field['title']; ?></label>
-                    <textarea id="b3__input--<?php echo $field['id']; ?>" name="b3_<?php echo $field['id']; ?>" rows="6"><?php echo $field[ 'value' ]; ?></textarea>
+                    <label for="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
+                    <textarea id="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>" name="b3_<?php echo esc_attr( $field[ 'id' ] ); ?>" rows="6"><?php echo wp_kses_post( $field[ 'value' ] ); ?></textarea>
                     <p>
-                        <?php echo b3_get_preview_link( $field[ 'preview' ] ); ?>
+                        <?php echo wp_kses_post( b3_get_preview_link( $field[ 'preview' ] ) ); ?>
                         <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
                         |
                         <?php // @TODO: add nonce ?>

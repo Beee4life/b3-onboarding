@@ -34,10 +34,10 @@
         <th class="align-top">
             <label for="b3__input--account-rejected__message"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
             <br>
-            <?php echo b3_get_preview_link( 'account-rejected' ); ?>
+            <?php echo wp_kses_post( b3_get_preview_link( 'account-rejected' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-rejected__message" name="b3_account_rejected_message" placeholder="<?php echo esc_attr( b3_default_account_rejected_message() ); ?>" rows="6"><?php echo stripslashes( $reject_user_email_message ); ?></textarea>
+            <textarea id="b3__input--account-rejected__message" name="b3_account_rejected_message" placeholder="<?php echo esc_attr( b3_default_account_rejected_message() ); ?>" rows="6"><?php echo wp_kses_post( $reject_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

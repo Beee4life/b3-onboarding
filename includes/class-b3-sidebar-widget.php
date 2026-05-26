@@ -118,21 +118,21 @@
                 }
 
                 if ( ! empty( $widget_links ) ) {
-                    echo $args[ 'before_widget' ];
+                    echo wp_kses_post( $args[ 'before_widget' ] );
 
                     if ( ! empty( $instance[ 'title' ] ) ) {
-                        echo $args[ 'before_title' ];
-                        echo apply_filters( 'widget_title', $instance[ 'title' ] );
-                        echo $args[ 'after_title' ];
+                        echo wp_kses_post( $args[ 'before_title' ] );
+                        echo esc_html( apply_filters( 'widget_title', $instance[ 'title' ] ) );
+                        echo wp_kses_post( $args[ 'after_title' ] );
                     }
 
                     echo '<ul>';
                     foreach( $widget_links as $link ) {
-                        echo sprintf( '<li>%s</li>', $link );
+                        echo sprintf( '<li>%s</li>', wp_kses_post( $link ) );
                     }
                     echo '</ul>';
 
-                    echo $args[ 'after_widget' ];
+                    echo wp_kses_post( $args[ 'after_widget' ] );
                 }
             }
         }

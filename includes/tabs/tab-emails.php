@@ -25,7 +25,7 @@
         ?>
 
         <form action="admin.php?page=b3-onboarding&tab=emails" method="post">
-            <input name="b3_emails_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-emails-nonce' ); ?>">
+            <input name="b3_emails_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-emails-nonce' ) ); ?>">
 
             <?php if ( is_main_site() ) { ?>
                 <?php b3_get_settings_field_open(); ?>
@@ -62,9 +62,9 @@
             <?php } ?>
 
             <?php foreach( $email_boxes as $box ) { ?>
-                <?php echo b3_render_email_settings_field( $box ); ?>
+                <?php echo wp_kses_post( b3_render_email_settings_field( $box ) ); ?>
             <?php } ?>
-            
+
             <?php b3_get_submit_button(); ?>
         </form>
 
