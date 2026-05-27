@@ -347,8 +347,8 @@
                 $button = sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_value ) );
             }
         }
-
-        echo wp_kses_post( $button );
+        // @TODO: fix escape this
+        echo $button;
     }
 
     /**
