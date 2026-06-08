@@ -784,6 +784,21 @@
     }
     add_action( 'template_redirect', 'b3_profile_form_handling' );
 
+    /*
+     * Function to check login form nonce
+     *
+     * @since 3.15.0
+     */
+    function b3_verify_login_nonce() {
+        if ( isset( $_POST[ 'b3_login_nonce' ] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_login_nonce' ] ) ), 'b3_login' ) ) {
+            $redirect_url = b3_get_login_url();
+            $redirect_url = add_query_arg( 'error', 'unlawful_form', $redirect_url );
+            wp_safe_redirect( $redirect_url );
+            exit;
+        }
+    }
+    add_action( 'login_init', 'b3_verify_login_nonce' );
+
     /**
      * Initiates password reset.
      *
@@ -792,7 +807,7 @@
     function b3_do_password_lost() {
         if ( isset( $_POST[ 'b3_lostpassword_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_lostpassword_nonce' ] ) ), 'b3_lostpassword' ) ) {
-                // @TODO: add notice
+                wp_die( esc_html__( 'Unlawful form entry, try again.', 'b3-onboarding' ) );
             } else {
                 $errors = b3_retrieve_password();
 
