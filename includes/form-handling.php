@@ -364,17 +364,33 @@
                 }
 
                 if ( get_option( 'b3_needs_admin_approval' ) ) {
-                    // @TODO: add ifs for non-empty values
-                    update_option( 'b3_account_approved_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_account_approved_message' ] ) ), false );
-                    update_option( 'b3_account_approved_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_approved_subject' ] ) ), false );
-                    update_option( 'b3_request_access_message_admin', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_request_access_message_admin' ] ) ), false );
-                    update_option( 'b3_request_access_message_user', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_request_access_message_user' ] ) ), false );
-                    update_option( 'b3_request_access_notification_addresses', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_notification_addresses' ] ) ), false );
-                    update_option( 'b3_request_access_subject_admin', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_subject_admin' ] ) ), false );
-                    update_option( 'b3_request_access_subject_user', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_subject_user' ] ) ), false );
-                    update_option( 'b3_account_rejected_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_account_rejected_message' ] ) ), false );
-                    update_option( 'b3_account_rejected_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_rejected_subject' ] ) ), false );
-
+                    if ( isset( $_POST[ 'b3_account_approved_message' ] ) ) {
+                        update_option( 'b3_account_approved_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_account_approved_message' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_account_approved_subject' ] ) ) {
+                        update_option( 'b3_account_approved_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_approved_subject' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_request_access_message_admin' ] ) ) {
+                        update_option( 'b3_request_access_message_admin', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_request_access_message_admin' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_request_access_message_user' ] ) ) {
+                        update_option( 'b3_request_access_message_user', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_request_access_message_user' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_request_access_notification_addresses' ] ) ) {
+                        update_option( 'b3_request_access_notification_addresses', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_notification_addresses' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_request_access_subject_admin' ] ) ) {
+                        update_option( 'b3_request_access_subject_admin', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_subject_admin' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_request_access_subject_user' ] ) ) {
+                        update_option( 'b3_request_access_subject_user', sanitize_text_field( wp_unslash( $_POST[ 'b3_request_access_subject_user' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_account_rejected_message' ] ) ) {
+                        update_option( 'b3_account_rejected_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_account_rejected_message' ] ) ), false );
+                    }
+                    if ( isset( $_POST[ 'b3_account_rejected_subject' ] ) ) {
+                        update_option( 'b3_account_rejected_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_rejected_subject' ] ) ), false );
+                    }
                     if ( isset( $_POST[ 'b3_disable_delete_user_email' ] ) && 1 == $_POST[ 'b3_disable_delete_user_email' ] ) {
                         update_option( 'b3_disable_delete_user_email', 1, false );
                     } else {
