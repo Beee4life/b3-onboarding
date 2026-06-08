@@ -71,7 +71,6 @@
                 add_action( 'widgets_init',             [ $this, 'b3_register_widgets' ] );
                 add_action( 'wp_dashboard_setup',       [ $this, 'b3_add_dashboard_widget' ] );
                 add_action( 'init',                     [ $this, 'b3_load_plugin_text_domain' ] ); //@TODO: remove
-                add_action( 'login_init',               [ $this, 'b3_verify_login_nonce' ] );
                 add_action( 'init',                     [ $this, 'b3_registration_form_handling' ] );
                 add_action( 'init',                     [ $this, 'b3_reset_user_password' ] );
                 add_action( 'init',                     [ $this, 'b3_magic_link_form_handling' ] );
@@ -483,15 +482,6 @@
                 }
             }
 
-            public function b3_verify_login_nonce() {
-                if ( isset( $_POST[ '_wpnonce' ] ) && ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'b3_login' ) ) {
-                    $redirect_url = b3_get_login_url();
-                    $redirect_url = add_query_arg( 'error', 'unlawful_form', $redirect_url );
-                    wp_safe_redirect( $redirect_url );
-                    exit;
-                }
-            }
-
             public function b3_registration_form_handling() {
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user_nonce' ] ) ) {
@@ -761,47 +751,51 @@
             }
 
             public function b3_reset_user_password() {
-                // @TODO: look into nonce
-                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
-                    $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'rp_key' ] ) ) : false;
-                    $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'rp_login' ] ) ) : false;
+                if ( isset( $_POST[ 'b3_resetpass_nonce' ] ) ) {
+                    if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_resetpass_nonce' ] ) ), 'b3_resetpass' ) ) {
+                        // @TODO: add notice
+                    } else {
+                        // b3_resetpass
+                        $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'rp_key' ] ) ) : false;
+                        $rp_login = ( isset( $_REQUEST[ 'rp_login' ] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'rp_login' ] ) ) : false;
 
-                    if ( $rp_key && $rp_login ) {
-                        $user = check_password_reset_key( $rp_key, $rp_login );
+                        if ( $rp_key && $rp_login ) {
+                            $user = check_password_reset_key( $rp_key, $rp_login );
 
-                        if ( ! $user || is_wp_error( $user ) ) {
-                            $login_url = b3_get_login_url();
-                            if ( $user && $user->get_error_code() === 'expired_key' ) {
-                                $redirect_url = add_query_arg( 'login', 'expiredkey', $login_url );
-                            } else {
-                                $redirect_url = add_query_arg( 'login', 'invalidkey', $login_url );
-                            }
-                            wp_safe_redirect( $redirect_url );
-                            exit;
-                        }
-
-                        if ( isset( $_POST[ 'pass1' ] ) ) {
-                            if ( isset( $_POST[ 'pass2' ] ) && $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
-                                // Password is empty or don't match
-                                $redirect_url = b3_get_reset_password_url();
-                                $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
-                                $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
-                                $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
-
+                            if ( ! $user || is_wp_error( $user ) ) {
+                                $login_url = b3_get_login_url();
+                                if ( $user && $user->get_error_code() === 'expired_key' ) {
+                                    $redirect_url = add_query_arg( 'login', 'expiredkey', $login_url );
+                                } else {
+                                    $redirect_url = add_query_arg( 'login', 'invalidkey', $login_url );
+                                }
                                 wp_safe_redirect( $redirect_url );
                                 exit;
                             }
 
-                            // Parameter checks OK, reset password
-                            reset_password( $user, $_POST[ 'pass1' ] );
-                            $redirect_url = b3_get_login_url();
-                            $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );
+                            if ( isset( $_POST[ 'pass1' ] ) ) {
+                                if ( isset( $_POST[ 'pass2' ] ) && $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
+                                    // Password is empty or don't match
+                                    $redirect_url = b3_get_reset_password_url();
+                                    $redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
+                                    $redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
+                                    $redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
 
-                            wp_safe_redirect( $redirect_url );
-                            exit;
+                                    wp_safe_redirect( $redirect_url );
+                                    exit;
+                                }
 
-                        } else {
-                            echo "Invalid request.";
+                                // Parameter checks OK, reset password
+                                reset_password( $user, $_POST[ 'pass1' ] );
+                                $redirect_url = b3_get_login_url();
+                                $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );
+
+                                wp_safe_redirect( $redirect_url );
+                                exit;
+
+                            } else {
+                                echo "Invalid request.";
+                            }
                         }
                     }
                 }
