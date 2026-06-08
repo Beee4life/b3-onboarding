@@ -31,7 +31,7 @@
         }
 
         if ( is_main_site() ) {
-            echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'lostpass' ),  esc_html__( 'Lost password (user)', 'b3-onboarding' ) );
+            echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'lostpassword' ),  esc_html__( 'Lost password (user)', 'b3-onboarding' ) );
             echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'styling' ),  esc_html__( 'Styling', 'b3-onboarding' ) );
             echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'template' ),  esc_html__( 'Template', 'b3-onboarding' ) );
         }

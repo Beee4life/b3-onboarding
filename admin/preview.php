@@ -64,7 +64,7 @@
                     $message = b3_get_email_activation_message_user();
                     $subject = b3_get_email_activation_subject_user();
                     break;
-                case 'lostpass':
+                case 'lostpassword':
                     $message = b3_get_lost_password_message();
                     $subject = b3_get_lost_password_subject();
                     break;
