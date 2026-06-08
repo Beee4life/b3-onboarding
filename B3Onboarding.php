@@ -70,7 +70,8 @@
                 add_action( 'template_redirect',        [ $this, 'b3_template_redirect' ] );
                 add_action( 'widgets_init',             [ $this, 'b3_register_widgets' ] );
                 add_action( 'wp_dashboard_setup',       [ $this, 'b3_add_dashboard_widget' ] );
-                add_action( 'init',                     [ $this, 'b3_load_plugin_text_domain' ] );
+                add_action( 'init',                     [ $this, 'b3_load_plugin_text_domain' ] ); //@TODO: remove
+                add_action( 'login_init',               [ $this, 'b3_verify_login_nonce' ] );
                 add_action( 'init',                     [ $this, 'b3_registration_form_handling' ] );
                 add_action( 'init',                     [ $this, 'b3_reset_user_password' ] );
                 add_action( 'init',                     [ $this, 'b3_magic_link_form_handling' ] );
@@ -482,6 +483,15 @@
                 }
             }
 
+            public function b3_verify_login_nonce() {
+                if ( isset( $_POST[ '_wpnonce' ] ) && ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'b3_login' ) ) {
+                    $redirect_url = b3_get_login_url();
+                    $redirect_url = add_query_arg( 'error', 'unlawful_form', $redirect_url );
+                    wp_safe_redirect( $redirect_url );
+                    exit;
+                }
+            }
+
             public function b3_registration_form_handling() {
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
                     if ( isset( $_POST[ 'b3_register_user_nonce' ] ) ) {
@@ -783,7 +793,7 @@
                             }
 
                             // Parameter checks OK, reset password
-                            reset_password( $user, sanitize_text_field( wp_unslash( $_POST[ 'pass1' ] )  ) );
+                            reset_password( $user, $_POST[ 'pass1' ] );
                             $redirect_url = b3_get_login_url();
                             $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );
 
@@ -899,6 +909,9 @@
 
                     case 'unknown':
                         return esc_html__( 'An unkown error has occured. Please try again.', 'b3-onboarding' );
+
+                    case 'unlawful_form':
+                        return esc_html__( 'Unlawful form entry. Please try again.', 'b3-onboarding' );
 
                     // Login errors
                     case 'code_sent':
