@@ -664,7 +664,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_setings_form_handling', 1 );
+    add_action( 'admin_init', 'b3_setings_form_handling', 1 );
 
     /*
      * Function which handles approve/deny user form
@@ -738,7 +738,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_approve_deny_users' );
+    add_action( 'admin_init', 'b3_approve_deny_users' );
 
     /*
      * Function to handle (front-end) profile form editing
@@ -783,3 +783,36 @@
         }
     }
     add_action( 'template_redirect', 'b3_profile_form_handling' );
+
+    /**
+     * Initiates password reset.
+     *
+     * @since 1.0.6
+     */
+    function b3_do_password_lost() {
+        if ( isset( $_POST[ 'b3_lostpassword_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_lostpassword_nonce' ] ) ), 'b3_lostpassword' ) ) {
+                // @TODO: add notice
+            } else {
+                $errors = b3_retrieve_password();
+
+                if ( is_wp_error( $errors ) ) {
+                    // errors found
+                    $redirect_url = b3_get_lostpassword_url();
+                    $redirect_url = add_query_arg( 'error', join( ',', $errors->get_error_codes() ), $redirect_url );
+                } else {
+                    // Email sent
+                    $site_id = get_current_blog_id();
+                    if ( isset( $_POST[ 'b3_site_id' ] ) ) {
+                        $site_id = sanitize_text_field( wp_unslash( $_POST[ 'b3_site_id' ] ) );
+                    }
+                    $redirect_url = b3_get_login_url( false, $site_id );
+                    $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
+                }
+
+                wp_safe_redirect( $redirect_url );
+                exit;
+            }
+        }
+    }
+    add_action( 'init', 'b3_do_password_lost' );
