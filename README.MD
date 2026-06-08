@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.15.0 - released xx.06.26
+3.15.0 - released 09.06.26
 
 <a name="features"></a>
 ### Features

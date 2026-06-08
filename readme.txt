@@ -29,7 +29,8 @@ There are a ton of things, which you can set through the admin pages or with the
 
 3.15.0
 * improve approval + email confirmation
-* escape and sanitze A LOT
+* escape and sanitize a lot
+* add nonces to forms
 
 3.14.0
 * improve emails
