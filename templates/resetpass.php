@@ -17,6 +17,7 @@
     <?php } ?>
 
     <form name="resetpassform" id="resetpassform" action="<?php echo esc_url( b3_get_reset_password_url() ); ?>" method="post" autocomplete="off">
+        <?php do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes ); ?>
         <?php do_action( 'b3_render_form_element', 'resetpass/hidden-fields', $attributes ); ?>
         <?php do_action( 'b3_render_form_element', 'resetpass/passwords', $attributes ); ?>
         <?php do_action( 'b3_render_form_element', 'general/button', $attributes ); ?>
