@@ -548,7 +548,17 @@
                                         $reset_password = ( true == get_option( 'b3_redirect_set_password' ) ) ? true : false;
                                     }
 
-                                    $result = $this->b3_register_user( $user_email, $user_login, $registration_type, $role );
+                                    $register_args = [
+                                        'registration_type' => $registration_type,
+                                        'role'              => $role,
+                                        'user_email'        => $user_email,
+                                        'user_login'        => $user_login,
+                                        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                        'pass1'             => isset( $_POST[ 'pass1' ] ) ? wp_hash_password( $_POST[ 'pass1' ] ) : '',
+                                        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                        'pass2'             => isset( $_POST[ 'pass2' ] ) ? wp_hash_password( $_POST[ 'pass2' ] ) : '',
+                                    ];
+                                    $result = $this->b3_register_user( $register_args );
 
                                     if ( is_wp_error( $result ) ) {
                                         // Parse errors into a string and append as parameter to redirect
@@ -841,6 +851,7 @@
             public function b3_check_magic_link() {
                 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 if ( isset( $_GET[ 'otpcode' ] ) ) {
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     $verify_otp = b3_verify_otp( sanitize_text_field( wp_unslash( $_GET[ 'otpcode' ] ) ) );
 
                     if ( $verify_otp instanceof WP_User ) {
@@ -1074,25 +1085,30 @@
                 return esc_html__( 'An unknown error occurred. Please try again later.', 'b3-onboarding' );
             }
 
-            private function b3_register_user( $user_email, $user_login, $registration_type, $role = 'subscriber' ) {
+            private function b3_register_user( $args = [] ) {
+                $default_args = [
+                    'pass1'             => '',
+                    'pass2'             => '',
+                    'registration_type' => $registration_type,
+                    'role'              => 'subscriber',
+                    'user_email'        => '',
+                    'user_login'        => '',
+                    'user_pass'         => time(),
+                ];
+
                 $errors                       = new WP_Error();
                 $registration_with_email_only = get_option( 'b3_register_email_only' );
                 $use_custom_passwords         = get_option( 'b3_use_custom_passwords' );
-                $user_data                    = [
-                    'user_login' => $user_login,
-                    'user_email' => $user_email,
-                    'user_pass'  => time(),
-                    'role'       => $role,
-                ];
+                $user_data                    = wp_parse_args( $args, $default_args );
 
                 if ( false == $registration_with_email_only ) {
-                    if ( username_exists( $user_login ) ) {
+                    if ( username_exists( $args[ 'user_login' ] ) ) {
                         $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
 
                         return $errors;
                     }
 
-                    if ( in_array( $user_login, b3_get_disallowed_usernames() ) ) {
+                    if ( in_array( $args[ 'user_login' ], b3_get_disallowed_usernames() ) ) {
                         $errors->add( 'disallowed_username', $this->b3_get_return_message( 'disallowed_username' ) );
 
                         return $errors;
@@ -1105,36 +1121,36 @@
                     return $errors;
                 }
 
-                if ( ! b3_verify_email_domain( $user_email ) ) {
+                if ( ! b3_verify_email_domain( $args[ 'user_email' ] ) ) {
                     $errors->add( 'banned_domain', $this->b3_get_return_message( 'banned_domain' ) );
 
                     return $errors;
                 }
 
-                if ( username_exists( $user_email ) || email_exists( $user_email ) ) {
+                if ( username_exists( $args[ 'user_email' ] ) || email_exists( $args[ 'user_email' ] ) ) {
                     $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
 
                     return $errors;
                 }
 
                 if ( true == $use_custom_passwords ) {
-                    if ( isset( $_POST[ 'pass1' ] ) && isset( $_POST[ 'pass2' ] ) ) {
+                    if ( ! empty( $args[ 'pass1' ] ) && ! empty( $args[ 'pass2' ] ) ) {
                         $easy_passwords = b3_get_easy_passwords();
-                        if ( in_array( $_POST[ 'pass1' ], $easy_passwords ) ) {
+                        if ( in_array( $args[ 'pass1' ], $easy_passwords ) ) {
                             $errors->add( 'pw_too_easy', $this->b3_get_return_message( 'password_too_easy' ) );
 
                             return $errors;
                         }
 
-                        if ( $_POST[ 'pass1' ] != $_POST[ 'pass2' ] || empty( $_POST[ 'pass1' ] ) ) {
+                        if ( $args[ 'pass1' ] != $args[ 'pass2' ] || empty( $args[ 'pass1' ] ) ) {
                             // Password is empty or don't match
                             $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
                             return $errors;
 
-                        } elseif ( $_POST[ 'pass1' ] === $_POST[ 'pass2' ] ) {
+                        } elseif ( $args[ 'pass1' ] === $args[ 'pass2' ] ) {
                             // Passwords are OK
-                            $hashed_password          = wp_hash_password( sanitize_text_field( wp_unslash( $_POST[ 'pass1' ] ) ) );
+                            $hashed_password          = wp_hash_password( sanitize_text_field( wp_unslash( $args[ 'pass1' ] ) ) );
                             $user_data[ 'user_pass' ] = $hashed_password;
                         }
                     }
@@ -1158,8 +1174,8 @@
 
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    if ( true == $use_custom_passwords && isset( $_POST[ 'pass1' ] ) ) {
-                        wp_set_password( sanitize_text_field( wp_unslash( $_POST[ 'pass1' ] ) ), $user_id );
+                    if ( true == $use_custom_passwords && isset( $args[ 'pass1' ] ) ) {
+                        wp_set_password( sanitize_text_field( wp_unslash( $args[ 'pass1' ] ) ), $user_id );
                     }
 
                     $inform = 'both';
@@ -1308,6 +1324,7 @@
             private function b3_switch_users_to_fallback_role() {
                 $user_args = [
                     'fields'     => 'ID',
+                    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
                     'meta_query' => [
                         [
                             'key'     => '_b3_fallback_role',
