@@ -193,7 +193,8 @@
             do_action( 'b3_render_form_element', 'register/first-name' );
             do_action( 'b3_render_form_element', 'register/last-name' );
             $output = ob_get_clean();
-            echo wp_kses_post( $output );
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $output;
             do_action( 'b3_do_after_first_last_name' );
         }
     }

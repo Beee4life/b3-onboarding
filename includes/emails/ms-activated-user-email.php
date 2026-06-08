@@ -33,7 +33,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'mu-user-activated' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--activated-wpmu-user-message" name="b3_activated_wpmu_user_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo wp_kses_post( $activated_wpmu_user_message ); ?></textarea>
+            <textarea id="b3__input--activated-wpmu-user-message" name="b3_activated_wpmu_user_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo esc_textarea( $activated_wpmu_user_message ); ?></textarea>
         </td>
     </tr>
     <tr>

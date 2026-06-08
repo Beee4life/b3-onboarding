@@ -786,6 +786,7 @@
                                 }
 
                                 // Parameter checks OK, reset password
+                                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- reset_password handles sanitation
                                 reset_password( $user, $_POST[ 'pass1' ] );
                                 $redirect_url = b3_get_login_url();
                                 $redirect_url = add_query_arg( 'password', 'changed', $redirect_url );

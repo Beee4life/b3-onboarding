@@ -58,7 +58,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'new-user-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_default_new_user_admin_message() ); ?>" rows="6"><?php echo wp_kses_post( $new_user_email_message ); ?></textarea>
+            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_default_new_user_admin_message() ); ?>" rows="6"><?php echo esc_textarea( $new_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

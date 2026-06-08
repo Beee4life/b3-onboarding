@@ -30,7 +30,7 @@
         </th>
         <td>
             <?php // @TODO: test styling output ?>
-            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo esc_attr( b3_default_email_styling( b3_get_link_color() ) ); ?>" rows="6"><?php if ( $stored_email_styling ) { echo wp_kses_post( $stored_email_styling ); } ?></textarea>
+            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo esc_attr( b3_default_email_styling( b3_get_link_color() ) ); ?>" rows="6"><?php if ( $stored_email_styling ) { echo esc_textarea( $stored_email_styling ); } ?></textarea>
         </td>
     </tr>
     <tr>

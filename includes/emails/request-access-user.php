@@ -36,7 +36,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'request-access-user' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--request-access-message-user" name="b3_request_access_message_user" placeholder="<?php echo esc_attr( b3_default_request_access_message_user() ); ?>" rows="6"><?php echo wp_kses_post( $request_access_email_message_user ); ?></textarea>
+            <textarea id="b3__input--request-access-message-user" name="b3_request_access_message_user" placeholder="<?php echo esc_attr( b3_default_request_access_message_user() ); ?>" rows="6"><?php echo esc_textarea( $request_access_email_message_user ); ?></textarea>
         </td>
     </tr>
     <tr>

@@ -39,7 +39,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'mu-new-user-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--new-wpmu-user-admin-message" name="b3_new_wpmu_user_admin_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo wp_kses_post( $new_wpmu_user_message_admin ); ?></textarea>
+            <textarea id="b3__input--new-wpmu-user-admin-message" name="b3_new_wpmu_user_admin_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo esc_textarea( $new_wpmu_user_message_admin ); ?></textarea>
         </td>
     </tr>
     <tr>

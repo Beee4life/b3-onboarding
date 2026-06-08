@@ -22,7 +22,6 @@
         return apply_filters( 'b3_email_styling', $email_styling );
     }
 
-
     /**
      * Return link color for emails
      *
@@ -39,7 +38,6 @@
 
         return apply_filters( 'b3_link_color', $link_color );
     }
-
 
     /**
      * Return user email template and default template if false
@@ -60,7 +58,6 @@
         return apply_filters( 'b3_email_template', $email_template );
     }
 
-
     /**
      * Return default email footer
      *
@@ -73,7 +70,6 @@
     function b3_get_email_footer() {
         return apply_filters( 'b3_email_footer_text', b3_default_email_footer() );
     }
-
 
     /**
      * Get notification addresses
@@ -101,7 +97,6 @@
         return apply_filters( 'b3_new_user_notification_addresses', $email_addresses );
     }
 
-
     /**
      * Return email activation subject (user)
      *
@@ -118,7 +113,6 @@
 
         return apply_filters( 'b3_email_activation_subject_user', $subject );
     }
-
 
     /**
      * Return email activation message (user)
@@ -137,7 +131,6 @@
         return apply_filters( 'b3_email_activation_message_user', $message );
     }
 
-
     /**
      * Return welcome user subject (user)
      *
@@ -154,7 +147,6 @@
 
         return apply_filters( 'b3_welcome_user_subject', $subject );
     }
-
 
     /**
      * Return welcome user message (user)
@@ -173,7 +165,6 @@
         return apply_filters( 'b3_welcome_user_message', $message );
     }
 
-
     /**
      * New site created message
      *
@@ -185,7 +176,6 @@
 
         return apply_filters( 'b3_new_site_created_message', $message );
     }
-
 
     /**
      * Get email subject for request access (admin)
@@ -204,7 +194,6 @@
         return apply_filters( 'b3_request_access_subject_admin', $subject );
     }
 
-
     /**
      * Get email message for request access (admin)
      *
@@ -221,7 +210,6 @@
 
         return apply_filters( 'b3_request_access_message_admin', $message );
     }
-
 
     /**
      * Get email subject for request access (user)
@@ -240,7 +228,6 @@
         return apply_filters( 'b3_request_access_subject_user', $subject );
     }
 
-
     /**
      * Get email message for request access (user)
      *
@@ -257,7 +244,6 @@
 
         return apply_filters( 'b3_request_access_message_user', $message );
     }
-
 
     /**
      * Get email subject for account approved
@@ -276,7 +262,6 @@
         return apply_filters( 'b3_account_approved_subject', $subject );
     }
 
-
     /**
      * Get email message for account approved
      *
@@ -294,7 +279,6 @@
         return apply_filters( 'b3_account_approved_message', $message );
     }
 
-
     /**
      * Get email subject for account activated (user)
      *
@@ -311,7 +295,6 @@
 
         return apply_filters( 'b3_account_activated_subject_user', $subject );
     }
-
 
     /**
      * Get email message for account activated (user)
@@ -332,7 +315,6 @@
         return apply_filters( 'b3_account_activated_message_user', $message );
     }
 
-
     /**
      * Get account rejected subject (user)
      *
@@ -349,7 +331,6 @@
 
         return apply_filters( 'b3_account_rejected_subject', $subject );
     }
-
 
     /**
      * Get account rejected message (user)
@@ -368,7 +349,6 @@
         return apply_filters( 'b3_account_rejected_message', $message );
     }
 
-
     /**
      * Get lost password message (user)
      *
@@ -385,7 +365,6 @@
 
         return apply_filters( 'b3_lost_password_message', $message );
     }
-
 
     /**
      * Return new user subject (admin)
@@ -404,7 +383,6 @@
         return apply_filters( 'b3_new_user_subject', $subject );
     }
 
-
     /**
      * Return new user message (admin)
      *
@@ -422,7 +400,6 @@
         return apply_filters( 'b3_new_user_message', $message );
     }
 
-
     /**
      * Get password subject (user)
      *
@@ -439,7 +416,6 @@
 
         return apply_filters( 'b3_lost_password_subject', $subject );
     }
-
 
     /**
      * Get sender email
@@ -474,7 +450,6 @@
 
         return apply_filters( 'b3_notification_sender_name', $notification_sender_name );
     }
-
 
     /**
      * Get manually added welcome message user
@@ -535,7 +510,6 @@
 
         return apply_filters( 'b3_magic_link_email', $message );
     }
-
 
     /**
      * Get otp password

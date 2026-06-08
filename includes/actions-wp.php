@@ -303,7 +303,7 @@
             $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
             $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
             if ( false === apply_filters( 'b3_hide_development_notice', false ) ) {
-                echo wp_Kses_post( $notice );
+                echo wp_kses_post( $notice );
             }
         }
     }

@@ -51,7 +51,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'request-access-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--request-access-message-admin" name="b3_request_access_message_admin" placeholder="<?php echo esc_attr( b3_default_request_access_message_admin() ); ?>" rows="6"><?php echo wp_kses_post( $request_access_email_message_admin ); ?></textarea>
+            <textarea id="b3__input--request-access-message-admin" name="b3_request_access_message_admin" placeholder="<?php echo esc_attr( b3_default_request_access_message_admin() ); ?>" rows="6"><?php echo esc_textarea( $request_access_email_message_admin ); ?></textarea>
         </td>
     </tr>
     <tr>

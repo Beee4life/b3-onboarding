@@ -44,7 +44,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'welcome-user-manual' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--welcome-user-message-manual" name="b3_welcome_user_message_manual" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo wp_kses_post( $new_user_message ); ?></textarea>
+            <textarea id="b3__input--welcome-user-message-manual" name="b3_welcome_user_message_manual" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo esc_textarea( $new_user_message ); ?></textarea>
         </td>
     </tr>
     <tr>

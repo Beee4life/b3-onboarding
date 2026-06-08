@@ -36,7 +36,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'email-activation' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_attr( b3_default_email_activation_message() ); ?>" rows="6"><?php echo wp_kses_post( $email_activation_message ); ?></textarea>
+            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_attr( b3_default_email_activation_message() ); ?>" rows="6"><?php echo esc_textarea( $email_activation_message ); ?></textarea>
         </td>
     </tr>
     <tr>

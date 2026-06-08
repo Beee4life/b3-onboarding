@@ -36,7 +36,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'account-approved' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_attr( b3_default_account_approved_message() ); ?>" rows="6"><?php echo wp_kses_post( $account_approved_email_message ); ?></textarea>
+            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_attr( b3_default_account_approved_message() ); ?>" rows="6"><?php echo esc_textarea( $account_approved_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

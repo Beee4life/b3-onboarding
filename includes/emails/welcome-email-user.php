@@ -36,7 +36,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'welcome-user' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--new-user" name="b3_welcome_user_message" placeholder="<?php echo esc_attr( b3_default_welcome_user_message() ); ?>" rows="6"><?php echo wp_kses_post( $welcome_user_email_message ); ?></textarea>
+            <textarea id="b3__input--new-user" name="b3_welcome_user_message" placeholder="<?php echo esc_attr( b3_default_welcome_user_message() ); ?>" rows="6"><?php echo esc_textarea( $welcome_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

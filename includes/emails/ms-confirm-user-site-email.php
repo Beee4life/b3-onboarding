@@ -34,7 +34,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'mu-confirm-user-email' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--confirm-wpmu-user-site-message" name="b3_activate_wpmu_user_site_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo wp_kses_post( $new_wpmu_user_message ); ?></textarea>
+            <textarea id="b3__input--confirm-wpmu-user-site-message" name="b3_activate_wpmu_user_site_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo esc_textarea( $new_wpmu_user_message ); ?></textarea>
         </td>
     </tr>
     <tr>
