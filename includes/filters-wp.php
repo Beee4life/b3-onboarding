@@ -203,11 +203,11 @@
     /**
      * Redirect the user after authentication if there were any errors.
      *
-     * @param Wp_User|Wp_Error  $user       The signed in user, or the errors that have occurred during login.
-     * @param string            $username   The user name used to log in.
+     * @param Wp_User|Wp_Error  $user       The signed-in user, or the errors that have occurred during login.
+     * @param string            $username   The username used to log in.
      * @param string            $password   The password used to log in.
      *
-     * @return Wp_User|Wp_Error The logged in user, or error information if there were errors.
+     * @return Wp_User|Wp_Error The logged-in user, or error information if there were errors.
      */
     function b3_maybe_redirect_at_authenticate( $user, $username, $password ) {
         // Check if the earlier authenticate filter (most likely, the default WordPress authentication) functions have found errors
