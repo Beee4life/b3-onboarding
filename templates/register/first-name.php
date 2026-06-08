@@ -9,7 +9,8 @@
 ?>
 <div class="b3_form-element b3_form-element--first-name">
     <label class="b3_form-label" for="b3_first_name">
-        <?php esc_html_e( 'First name', 'b3-onboarding' ); ?><?php if ( $required ) { ?> <strong>*</strong><?php } ?>
+        <?php esc_html_e( 'First name', 'b3-onboarding' ); ?>
+        <?php if ( $required ) { ?> <strong>*</strong><?php } ?>
     </label>
     <input type="text" name="first_name" id="b3_first_name" class="b3_form--input" value="<?php echo esc_attr( $first_name ); ?>"<?php echo esc_attr( $required ); ?>>
 </div>

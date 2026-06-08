@@ -10,8 +10,12 @@
 
     <div>
         <input id="signupblog" type="radio" name="signup_for" value="blog" checked="checked">
-        <label class="checkbox" for="signupblog"><?php echo esc_attr( apply_filters( 'b3_signup_for_site', esc_attr__( 'A site', 'b3-onboarding' ) ) ); ?></label>
+        <label class="checkbox" for="signupblog">
+            <?php echo esc_html( apply_filters( 'b3_signup_for_site', esc_attr__( 'A site', 'b3-onboarding' ) ) ); ?>
+        </label>
         <input id="signupuser" type="radio" name="signup_for" value="user">
-        <label class="checkbox" for="signupuser"><?php echo esc_attr( apply_filters( 'b3_signup_for_user', esc_attr__( 'Just a user', 'b3-onboarding' ) ) ); ?></label>
+        <label class="checkbox" for="signupuser">
+            <?php echo esc_html( apply_filters( 'b3_signup_for_user', esc_attr__( 'Just a user', 'b3-onboarding' ) ) ); ?>
+        </label>
     </div>
 </div>
