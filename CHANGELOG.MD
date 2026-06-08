@@ -2,7 +2,8 @@
 
 3.15.0
 * improve approval + email confirmation
-* improve code based on plugin tester info
+* escape and sanitize a lot
+* add nonces to forms
 
 3.14.0
 * improve emails
