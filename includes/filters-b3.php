@@ -19,7 +19,6 @@
     }
     add_filter( 'b3_hidden_fields', 'b3_add_hidden_fields', 5 );
 
-
     /**
      * Add honeypot field
      *
@@ -52,7 +51,6 @@
     }
     add_filter( 'b3_extra_fields', 'b3_add_honeypot' );
 
-
     /**
      * Validate custom fields
      *
@@ -69,7 +67,7 @@
                     $field_type = $field[ 'type' ];
                     if ( true == $field[ 'required' ] ) {
                         if ( in_array( $field_type, [ 'radio', 'checkbox', 'select' ] ) ) {
-                            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                            // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
                             if ( ! isset( $_POST[ $field_id ] ) || ( isset( $_POST[ $field_id ] ) && empty( $_POST[ $field_id ] ) ) ) {
                                 $error_code = 'empty_field';
                             }
