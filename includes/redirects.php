@@ -230,9 +230,9 @@
                     $redirect_url      = b3_get_login_url();
                     $valid_error_codes = [ 'already_active', 'blog_taken' ];
                     [ $activate_path ] = explode( '?', sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) );
-                    $activate_cookie = 'wp-activate-' . COOKIEHASH;
-                    $key             = '';
-                    $result          = null;
+                    $activate_cookie   = 'wp-activate-' . COOKIEHASH;
+                    $key               = '';
+                    $result            = null;
 
                     if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
                         wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.','b3-onboarding' ), esc_html__( 'An error occurred during the activation', 'b3-onboarding' ), 400 );
