@@ -45,7 +45,6 @@
     }
     add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
 
-
     /**
      * Approve new WPMU signup
      *
@@ -73,7 +72,6 @@
         wpmu_activate_signup( $signup_info->activation_key );
     }
     add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
-
 
     /**
      * Reject a user (by admin)
@@ -106,7 +104,6 @@
         }
     }
     add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
-
 
     /**
      * Do stuff after user clicked activate link
@@ -146,7 +143,6 @@
     }
     add_action( 'b3_after_user_activated', 'b3_do_stuff_after_user_activated' );
 
-
     /**
      * Ouptuts default login/email field
      *
@@ -179,11 +175,11 @@
                 do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
-            echo wp_kses_post( $output );
+            // @TODO: escape
+            echo $output;
         }
     }
     add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
-
 
     /**
      * Output for first/last name fields
@@ -202,7 +198,6 @@
         }
     }
     add_action( 'b3_add_first_last_name_fields', 'b3_first_last_name_fields' );
-
 
     /**
      * Output the password fields
@@ -231,7 +226,6 @@
         }
     }
     add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
-
 
     /**
      * Add field for subdomain when WPMU is active
@@ -269,7 +263,6 @@
     }
     add_action( 'b3_add_site_fields', 'b3_add_site_fields' );
 
-
     /**
      * Function to output any custom fields
      *
@@ -286,7 +279,6 @@
     }
     add_action( 'b3_add_extra_fields_registration', 'b3_add_extra_fields_registration' );
 
-
     /**
      * Output any hidden fields
      *
@@ -296,7 +288,6 @@
         do_action( 'b3_render_form_element', 'register/hidden-fields', $attributes );
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
-
 
     /**
      * Add reCAPTCHA check
@@ -333,7 +324,6 @@
     }
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
 
-
     /**
      * Function to output a privacy checkbox
      */
@@ -343,7 +333,6 @@
         }
     }
     add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
-
 
     /**
      * Echo error/info message above a (custom) form
@@ -412,12 +401,12 @@
                     $message_output .= sprintf( '<p>%s</p>', $message );
                 }
                 $message_output .= '</div>';
+                // @TODO: test this
                 echo wp_kses_post( $message_output );
             }
         }
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
-
 
     /**
      * Action links on custom forms
@@ -479,7 +468,6 @@
     }
     add_action( 'b3_add_action_links', 'b3_add_action_links' );
 
-
     /**
      * Resend user activation mail
      *
@@ -504,7 +492,6 @@
     }
     add_action( 'b3_resend_user_activation', 'b3_send_user_activation' );
 
-
     /**
      * Manually activate a user
      *
@@ -528,7 +515,6 @@
         }
     }
     add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
-
 
     /**
      * Inform admin about something
@@ -560,7 +546,6 @@
         }
     }
     add_action( 'b3_inform_admin', 'b3_inform_admin' );
-
 
     /**
      * Redirect a user
@@ -618,7 +603,6 @@
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );
 
-
     /**
      * Add before account page output
      *
@@ -664,7 +648,6 @@
     }
     add_action( 'b3_do_before_account', 'b3_do_before_account', 10, 2 );
 
-
     /**
      * Render a form element
      *
@@ -678,7 +661,6 @@
         b3_get_template( $element, $attributes, $current_user);
     }
     add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );
-
 
     /**
      * Remove welcome page meta
@@ -707,7 +689,6 @@
     }
     add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );
 
-
     /**
      * Add custom fields to register form hook
      *
@@ -730,7 +711,6 @@
         do_action( 'b3_add_action_links', $attributes[ 'template' ] );
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
-
 
     /**
      * Log a user in after magic link verification
