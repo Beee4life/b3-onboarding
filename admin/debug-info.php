@@ -9,7 +9,7 @@
         <table class="b3_table b3_table--debug">
             <tr>
                 <td>Operating system</td>
-                <td><?php echo isset( $_SERVER[ 'SERVER_SOFTWARE' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'SERVER_SOFTWARE' ] ) ) : ''; ?></td>
+                <td><?php echo isset( $_SERVER[ 'SERVER_SOFTWARE' ] ) ? esc_html( sanitize_text_field( wp_unslash( $_SERVER[ 'SERVER_SOFTWARE' ] ) ) ) : ''; ?></td>
             </tr>
             <tr>
                 <td>PHP</td>
@@ -17,11 +17,11 @@
             </tr>
             <tr>
                 <td>IP</td>
-                <td><?php echo isset( $_SERVER[ 'SERVER_ADDR' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'SERVER_ADDR' ] ) ) : ''; ?></td>
+                <td><?php echo isset( $_SERVER[ 'SERVER_ADDR' ] ) ? esc_html( sanitize_text_field( wp_unslash( $_SERVER[ 'SERVER_ADDR' ] ) ) ) : ''; ?></td>
             </tr>
             <tr>
                 <td>Scheme</td>
-                <td><?php echo isset( $_SERVER[ 'REQUEST_SCHEME' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_SCHEME' ] ) ) : ''; ?></td>
+                <td><?php echo isset( $_SERVER[ 'REQUEST_SCHEME' ] ) ? esc_html( sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_SCHEME' ] ) ) ) : ''; ?></td>
             </tr>
             <tr>
                 <td>Home path</td>

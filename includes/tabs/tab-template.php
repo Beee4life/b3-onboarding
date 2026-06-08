@@ -44,7 +44,7 @@
                 <div class="template_box">
                     <label for="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
                     <?php // @TODO: sanitize/escape $field['value'] properly ?>
-                    <textarea id="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>" name="b3_<?php echo esc_attr( $field[ 'id' ] ); ?>" rows="6"><?php echo $field[ 'value' ]; ?></textarea>
+                    <textarea id="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>" name="b3_<?php echo esc_attr( $field[ 'id' ] ); ?>" rows="6"><?php echo esc_textarea( $field[ 'value' ] ); ?></textarea>
                     <p>
                         <?php echo wp_kses_post( b3_get_preview_link( $field[ 'preview' ] ) ); ?>
                         <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
