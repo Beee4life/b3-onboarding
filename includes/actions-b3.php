@@ -287,7 +287,7 @@
      */
     function b3_add_hidden_fields_registration( $attributes ) {
         do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes );
-        do_action( 'b3_render_form_element', 'register/hidden-fields', $attributes );
+        do_action( 'b3_render_form_element', 'general/hidden-fields', $attributes );
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
 

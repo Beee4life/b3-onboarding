@@ -10,7 +10,7 @@
 <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
     <?php // Output of fields starts here ?>
     <?php do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes ); ?>
-    <?php do_action( 'b3_render_form_element', 'login/hidden-fields', $attributes ); ?>
+    <?php do_action( 'b3_render_form_element', 'general/hidden-fields', $attributes ); ?>
     <?php do_action( 'b3_render_form_element', 'login/user-login' ); ?>
     <?php do_action( 'b3_render_form_element', 'login/password' ); ?>
     <?php do_action( 'b3_render_form_element', 'login/rememberme' ); ?>

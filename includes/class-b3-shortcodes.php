@@ -239,9 +239,7 @@
 
                 if ( 1 == get_option( 'b3_use_magic_link' ) ) {
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
-                    $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
-                    $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
-                    $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
+                    $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';
                 }
 
@@ -281,9 +279,7 @@
 
                 if ( 1 == get_option( 'b3_use_magic_link' ) ) {
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
-                    $attributes[ 'form_action' ]  = add_query_arg( 'login', 'code_sent', b3_get_login_url() );
-                    $attributes[ 'nonce_id' ]     = 'b3_set_otp_nonce';
-                    $attributes[ 'nonce' ]        = wp_create_nonce( 'b3-set-otp-nonce' );
+                    $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';
                 }
 
