@@ -365,7 +365,6 @@
             $message .= '<br><br>' . "\n";
         }
         /* translators: 1. link to activate */
-        // @TODO: add button
         $message .= sprintf( esc_html__( 'To activate your registration, please click %s or the button below.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br><br>' . "\n";
         $message .= sprintf( '<div class="big-link-container"><div class="big-link"><a href="%s" class="">%s</a></div></div>', '%activation_url%', esc_html__( 'Click to activate', 'b3-onboarding' ) );
