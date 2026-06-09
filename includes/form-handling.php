@@ -6,8 +6,8 @@
      *
      * @since 3.0
      */
-    function b3_registration_handling() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_registration_nonce' ] ) ) {
+    function b3_registration_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_nonce' ] ) ), 'b3-registration-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
@@ -130,15 +130,15 @@
             }
         }
     }
-    add_action( 'init', 'b3_registration_handling' );
+    add_action( 'init', 'b3_registration_tab_form_handling' );
 
     /*
      * Form handling page settings
      *
      * @since 3.0
      */
-    function b3_pages_form_handling() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_pages_nonce' ] ) ) {
+    function b3_pages_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_pages_nonce' ] ) ), 'b3-pages-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
@@ -167,15 +167,15 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_pages_form_handling' );
+    add_action( 'admin_init', 'b3_pages_tab_form_handling' );
 
     /*
      * Form handling for email settings
      *
      * @since 3.0
      */
-    function b3_email_form_handling() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_emails_nonce' ] ) ) {
+    function b3_email_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_emails_nonce' ] ) ), 'b3-emails-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
@@ -455,10 +455,10 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_email_form_handling' );
+    add_action( 'admin_init', 'b3_email_tab_form_handling' );
 
-    function b3_template_form_handling() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_template_nonce' ] ) ) {
+    function b3_template_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_template_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_template_nonce' ] ) ), 'b3-template-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
@@ -479,15 +479,15 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_template_form_handling' );
+    add_action( 'admin_init', 'b3_template_tab_form_handling' );
 
     /*
      * Form handling for user settings
      *
      * @since 3.0
      */
-    function b3_users_form_handling() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) &&  'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_users_nonce' ] ) ) {
+    function b3_users_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_users_nonce' ] ) ), 'b3-users-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
@@ -561,15 +561,15 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_users_form_handling' );
+    add_action( 'admin_init', 'b3_users_tab_form_handling' );
 
     /*
      * Form handling for reCaptcha settings
      *
      * @since 3.0
      */
-    function b3_recaptcha_form_handling() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
+    function b3_recaptcha_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_recaptcha_nonce' ] ) ), 'b3-recaptcha-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
@@ -602,15 +602,15 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_recaptcha_form_handling' );
+    add_action( 'admin_init', 'b3_recaptcha_tab_form_handling' );
 
     /*
      * Form handling admin settings page
      *
      * @since 1.0.0
      */
-    function b3_setings_form_handling() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
+    function b3_setings_tab_form_handling() {
+        if ( isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3ob_settings_nonce' ] ) ), 'b3ob-settings-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
@@ -664,7 +664,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_setings_form_handling', 1 );
+    add_action( 'admin_init', 'b3_setings_tab_form_handling', 1 );
 
     /*
      * Function which handles approve/deny user form
@@ -672,7 +672,7 @@
      * @since 1.0.4
      */
     function b3_approve_deny_users() {
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
+        if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
             $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
             if ( ! is_admin() ) {
                 $approval_link = b3_get_user_approval_link();
@@ -691,7 +691,7 @@
                 $user_id     = ( isset( $_POST[ 'b3_user_id' ] ) ) ? (int) $_POST[ 'b3_user_id' ] : false;
                 $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
-                if ( false != $signup_id ) {
+                if ( 0 < $signup_id ) {
                     // multisite signup
                     global $wpdb;
                     $cache_group = 'b3ob';
@@ -754,7 +754,7 @@
         }
 
         // @TODO: check this
-        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' == $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
+        if ( ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
             $current_user = wp_get_current_user();
             check_admin_referer( 'update-user_' . $current_user->ID );
             wp_enqueue_script( 'user-profile' );
