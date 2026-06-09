@@ -105,7 +105,6 @@
         $message .= '<br><br>' . "\n";
         if ( isset( $button ) ) {
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
-            $message .= '<br>' . "\n";
         }
         $message .= b3_default_greetings();
 
