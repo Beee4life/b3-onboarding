@@ -113,9 +113,9 @@
             return;
         }
 
-        // Verify key / login combo
         $redirect_url = b3_get_reset_password_url();
 
+        // Verify key / login combo
         if ( isset( $_REQUEST[ 'key' ] ) && isset( $_REQUEST[ 'login' ] ) ) {
             $key   = sanitize_key( $_REQUEST[ 'key' ] );
             $login = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );

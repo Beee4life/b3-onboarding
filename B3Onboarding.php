@@ -209,7 +209,7 @@
             }
 
             public function b3_enqueue_scripts_backend_footer() {
-                wp_enqueue_script( 'wp-theme-plugin-editor', '', '', $this->settings['version'], true );
+                wp_enqueue_script( 'wp-theme-plugin-editor', '', '', $this->settings[ 'version' ], true );
             }
 
             public function b3_add_admin_pages() {
