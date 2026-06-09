@@ -65,7 +65,6 @@
 
             <?php foreach( $email_boxes as $box ) { ?>
                 <?php echo b3_render_email_settings_field( $box ); ?>
-                <?php //echo esc_textarea( b3_render_email_settings_field( $box ) ); ?>
             <?php } ?>
 
             <?php b3_get_submit_button(); ?>
