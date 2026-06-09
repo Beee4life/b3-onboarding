@@ -792,9 +792,9 @@
             }
 
             public function b3_magic_link_form_handling() {
-                if ( isset( $_POST[ 'b3_set_otp_nonce' ] ) ) {
+                if ( isset( $_POST[ 'b3_magiclink_nonce' ] ) ) {
                     $redirect_url = b3_get_login_url();
-                    if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_set_otp_nonce' ] ) ), 'b3-set-otp-nonce' ) ) {
+                    if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_magiclink_nonce' ] ) ), 'b3_magiclink' ) ) {
                         $redirect_url = add_query_arg( 'login-error', 'unknown', $redirect_url );
                         wp_safe_redirect( $redirect_url );
                         exit;
@@ -815,17 +815,20 @@
 
                             if ( $hashed_slug ) {
                                 $vars    = []; // empty right now, but might be filled later on...
-                                /* translators: 1: Blog name */
+                                /* translators: Blog name */
                                 $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
                                 $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                 $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
 
                                 if ( ! empty( $message ) ) {
-                                    $message = b3_replace_template_styling( $message );
-                                    $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
-                                    $message = htmlspecialchars_decode( stripslashes( $message ) );
+                                    $message      = b3_replace_template_styling( $message );
+                                    $message      = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
+                                    $message      = htmlspecialchars_decode( stripslashes( $message ) );
+                                    $redirect_url = add_query_arg( 'login', 'code_sent', $redirect_url );
 
                                     wp_mail( $user_email, $subject, $message );
+                                    wp_safe_redirect( $redirect_url );
+                                    exit;
 
                                 } else {
                                     // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
