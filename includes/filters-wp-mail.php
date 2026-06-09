@@ -8,13 +8,13 @@
      *
      * @since 2.0.0
      *
-     * @param $wp_password_change_notification_email
+     * @param $wp_mail
      * @param $user
      * @param $blogname
      *
      * @return mixed
      */
-    function b3_password_changed_email_admin( $wp_password_change_notification_email, $user, $blogname ) {
+    function b3_password_changed_email_admin( $wp_mail, $user, $blogname ) {
         /* translators: username */
         $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login );
         $message = b3_replace_template_styling( $message );
@@ -22,11 +22,11 @@
         $message = htmlspecialchars_decode( stripslashes( $message ) );
         $subject = __( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
 
-        $wp_password_change_notification_email[ 'subject' ] = $subject;
-        $wp_password_change_notification_email[ 'message' ] = $message;
+        $wp_mail[ 'subject' ] = $subject;
+        $wp_mail[ 'message' ] = $message;
 
         if ( 1 == get_option( 'b3_disable_admin_notification_password_change' ) ) {
-            $wp_password_change_notification_email = [
+            $wp_mail = [
                 'to'      => false,
                 'subject' => false,
                 'message' => false,
@@ -34,10 +34,9 @@
             ];
         }
 
-        return $wp_password_change_notification_email;
+        return $wp_mail;
     }
     add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
-
 
     /**
      * Filter email change notification mail (user)
@@ -69,7 +68,6 @@
         return $change_email;
     }
     add_filter( 'email_change_email', 'b3_email_changed_email_user', 5, 3 );
-
 
     /**
      * Override new user notification for admin
@@ -124,7 +122,6 @@
         return $wp_mail;
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
-
 
     /**
      * Override new user notification email for user
@@ -199,7 +196,6 @@
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
 
-
     /**
      * Disable admin email when registration is closed
      *
@@ -219,7 +215,6 @@
         return $status;
     }
     add_filter( 'send_new_site_email', 'b3_disable_admin_email', 10, 3 );
-
 
     /**
      * Filter to override new site email (New Site Created)
@@ -247,7 +242,6 @@
     }
     add_filter( 'new_site_email', 'b3_new_site_email', 10, 3 );
 
-
     /**
      * Returns the message subject for the password reset mail.
      *
@@ -269,7 +263,6 @@
         return $subject;
     }
     add_filter( 'retrieve_password_title', 'b3_replace_retrieve_password_subject', 10, 3 );
-
 
     /**
      * Returns the message body for the password reset mail.
@@ -299,7 +292,6 @@
         return $message;
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
-
 
     /**
      * Change content of password changed email (when user changed, when logged in)
@@ -358,7 +350,6 @@
     }
     add_filter( 'password_change_email', 'b3_content_password_change_notification', 10, 3 );
 
-
     /**
      * Disable WPMU user signup email to take it over
      *
@@ -373,7 +364,6 @@
         return false;
     }
     add_filter( 'wpmu_signup_user_notification', 'b3_disable_wpmu_user_signup_notification', 10, 5 );
-
 
     /**
      * Disable WPMU user welcome email to take it over
@@ -400,7 +390,6 @@
     }
     add_filter( 'wpmu_signup_blog_notification', 'b3_disable_signup_mu_user_blog_email' );
 
-
     /**
      * Disable new user mail with login credentials
      *
@@ -416,7 +405,6 @@
         return false;
     }
     add_filter( 'wpmu_welcome_notification', 'b3_disable_welcome_mu_user_blog_email', 10, 5 );
-
 
     /**
      * For filter 'wp_mail_from', returns a proper from-address when sending e-mails
@@ -436,7 +424,6 @@
     }
     add_filter( 'wp_mail_from', 'b3_email_from' );
 
-
     /**
      * For filter 'wp_mail_from_name', returns a proper from-name when sending e-mails
      *
@@ -454,7 +441,6 @@
     }
     add_filter( 'wp_mail_from_name', 'b3_email_from_name' );
 
-
     /**
      * For filter 'wp_mail_content_type', overrides content-type
      * Always return HTML
@@ -465,7 +451,6 @@
         return 'text/html';
     }
     add_filter( 'wp_mail_content_type', 'b3_email_content_type' );
-
 
     /**
      * Filter to change styling for multiple emails
@@ -499,7 +484,6 @@
     add_filter( 'new_user_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change email
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
 
-
     function b3_after_change_email( $email_array, $old_email, $new_email ) {
         // @TODO: format message
         $email_array[ 'message' ] .= "\n<br>";
@@ -512,7 +496,6 @@
     }
     add_filter( 'site_admin_email_change_email', 'b3_after_change_email', 10, 3 ); // after site admin email change
 
-
     function b3_after_change_network_email( $email_array, $old_email, $new_email, $network_id ) {
         // @TODO: format message
         $email_array[ 'message' ] .= "\n<br>";
@@ -524,7 +507,6 @@
         return $email_array;
     }
     add_filter( 'network_admin_email_change_email', 'b3_after_change_network_email', 10, 4 ); // after network admin email change
-
 
     /**
      * Filter to change styling for new admin email
@@ -566,7 +548,6 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
     }
     add_filter( 'new_admin_email_content', 'b3_filter_new_admin_email_content', 10, 2 ); // attempt change site admin email
 
-
     /**
      * Override 'invited user' email
      *
@@ -583,7 +564,6 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
         return $new_user_email;
     }
     add_filter( 'invited_user_email', 'b3_override_email', 10, 4 );
-
 
     /**
      * Just override email content/styling
