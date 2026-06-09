@@ -133,13 +133,13 @@
      *
      * @since 1.0.6
      *
-     * @param $wp_new_user_notification_email
+     * @param $wp_mail
      * @param $user
      * @param $blogname
      *
      * @return mixed
      */
-    function b3_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
+    function b3_new_user_notification_email( $wp_mail, $user, $blogname ) {
         $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $registration_type = get_option( 'b3_registration_type' );
 
@@ -148,35 +148,35 @@
             if ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false ) {
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                     // user must get AN email, from WP or custom
-                    $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
-                    $wp_new_user_notification_email[ 'headers' ] = [];
-                    $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                    $user_email                                  = b3_get_manual_welcome_user_message();
+                    $wp_mail[ 'to' ]      = $user->user_email;
+                    $wp_mail[ 'headers' ] = [];
+                    $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
+                    $user_email           = b3_get_manual_welcome_user_message();
                 }
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
-                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email = b3_get_manual_welcome_user_message();
+                $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email           = b3_get_manual_welcome_user_message();
+            }
 
-            } else {
-                $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
-                $wp_new_user_notification_email[ 'headers' ] = [];
+        } else {
+            $wp_mail[ 'to' ]      = $user->user_email;
+            $wp_mail[ 'headers' ] = [];
 
-                if ( $admin_approval ) {
-                    $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
-                    $user_email = b3_get_request_access_message_user();
+            if ( $admin_approval ) {
+                $wp_mail[ 'subject' ] = b3_get_request_access_subject_user();
+                $user_email           = b3_get_request_access_message_user();
 
-                } elseif ( 'email_activation' === $registration_type ) {
-                    $wp_new_user_notification_email[ 'subject' ] = b3_get_email_activation_subject_user();
-                    $user_email = b3_get_email_activation_message_user();
+            } elseif ( 'email_activation' === $registration_type ) {
+                $wp_mail[ 'subject' ] = b3_get_email_activation_subject_user();
+                $user_email           = b3_get_email_activation_message_user();
 
-                } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
-                    $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                    $user_email = b3_get_welcome_user_message();
+            } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
+                $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email           = b3_get_welcome_user_message();
 
-                } elseif ( 'none' === $registration_type ) {
-                    $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                    $user_email = b3_get_manual_welcome_user_message();
-                }
+            } elseif ( 'none' === $registration_type ) {
+                $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email           = b3_get_manual_welcome_user_message();
             }
         }
 
@@ -190,11 +190,11 @@
                 $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             }
 
-            $user_email = htmlspecialchars_decode( stripslashes( $user_email ) );
-            $wp_new_user_notification_email[ 'message' ] = $user_email;
+            $user_email           = htmlspecialchars_decode( stripslashes( $user_email ) );
+            $wp_mail[ 'message' ] = $user_email;
         }
 
-        return $wp_new_user_notification_email;
+        return $wp_mail;
 
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
