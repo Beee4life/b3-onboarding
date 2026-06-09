@@ -28,6 +28,7 @@
             <input name="b3_emails_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-emails-nonce' ) ); ?>">
 
             <?php if ( is_main_site() ) { ?>
+                <?php // @TODO: add to all sites ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
@@ -38,6 +39,7 @@
                     <?php } ?>
                 <?php b3_get_close(); ?>
 
+                <?php // @TODO: add to all sites ?>
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_activate_custom_emails"><?php esc_html_e( 'Custom email styling/template', 'b3-onboarding' ); ?></label>
