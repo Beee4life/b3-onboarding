@@ -109,9 +109,7 @@
 
             <p>
                 <?php
-                    if ( 'styling' === $_GET[ 'preview' ] ) {
-                        esc_html_e( 'These are css definitions which are used.', 'b3-onboarding' );
-                    } elseif ( 'template' === $_GET[ 'preview' ] ) {
+                    if ( 'template' === $_GET[ 'preview' ] ) {
                         esc_html_e( 'This is what the default email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
                     } else {
                         esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
@@ -126,11 +124,11 @@
             <?php } ?>
 
             <?php // @TODO: ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-            <?php echo wp_kses_post( $message ); ?>
+            <?php echo $message; ?>
 
         <?php } else { ?>
             <p><?php esc_html_e( "These are the email's styling definitions.", 'b3-onboarding' ); ?></p>
             <pre><?php echo esc_html( wp_strip_all_tags( $css ) ); ?></pre>
         <?php } // styling !== preview ?>
-    <?php } //end $_GET preview ?>
+    <?php } // end $_GET preview ?>
 </div>
