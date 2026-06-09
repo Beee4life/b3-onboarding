@@ -16,7 +16,7 @@
         <?php echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) ); ?>
     <?php } ?>
 
-    <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--lostpass" action="<?php echo esc_url( b3_get_current_url() ); ?>" method="post">
+    <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--lostpass" action="<?php echo esc_url( b3_get_lostpassword_url() ); ?>" method="post">
         <?php do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes ); ?>
         <?php do_action( 'b3_render_form_element', 'lostpassword/hidden-fields', $attributes ); ?>
         <?php do_action( 'b3_render_form_element', 'lostpassword/user-login', $attributes ); ?>

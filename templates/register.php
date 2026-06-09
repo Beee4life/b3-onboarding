@@ -18,7 +18,7 @@
             <?php echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) ); ?>
         <?php } ?>
 
-        <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo esc_url( b3_get_current_url() ); ?>" method="post">
+        <form name="registerform" id="registerform" class="b3_form b3_form--register" action="<?php echo esc_url( b3_get_register_url() ); ?>" method="post">
             <?php do_action( 'b3_register_form', $attributes ); ?>
         </form>
     </div>
