@@ -25,7 +25,6 @@
             <br>
             <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SETTINGS . '&preview=styling' ), esc_html__( 'Preview', 'b3-onboarding' ) ); ?>
             <br>
-            <?php // @TODO: add nonce ?>
             <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=default-email-styling.css&sentby=b3' ), esc_html__( 'Download styling', 'b3-onboarding' ) ); ?>
         </th>
         <td>
