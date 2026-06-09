@@ -78,15 +78,15 @@
      *
      * @since 1.0.6
      *
-     * @param $wp_new_user_notification_email_admin
+     * @param $wp_mail
      * @param $user
      * @param $blogname
      *
      * @return mixed
      */
-    function b3_new_user_notification_email_admin( $wp_new_user_notification_email_admin, $user, $blogname ) {
+    function b3_new_user_notification_email_admin( $wp_mail, $user, $blogname ) {
         if ( isset( $_POST[ '_wp_http_referer' ] ) && ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false || strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) ) {
-            $wp_new_user_notification_email_admin[ 'to' ] = '';
+            $wp_mail[ 'to' ] = '';
 
         } else {
             $admin_email       = false;
@@ -94,34 +94,34 @@
             $registration_type = get_option( 'b3_registration_type' );
 
             if ( $admin_approval ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
-                $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_request_access_subject_admin();
-                $admin_email = b3_get_request_access_message_admin();
+                $wp_mail[ 'to' ]      = b3_get_notification_addresses( $registration_type );
+                $wp_mail[ 'subject' ] = b3_get_request_access_subject_admin();
+                $admin_email          = b3_get_request_access_message_admin();
 
             } elseif ( false != get_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
                 // we don't want the email when a user registers, but only when he/she activates
-                $wp_new_user_notification_email_admin[ 'to' ] = '';
+                $wp_mail[ 'to' ] = '';
 
             } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
-                $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_new_user_subject();
-                $admin_email = b3_get_new_user_message();
+                $wp_mail[ 'to' ]      = b3_get_notification_addresses( $registration_type );
+                $wp_mail[ 'subject' ] = b3_get_new_user_subject();
+                $admin_email          = b3_get_new_user_message();
 
             } elseif ( in_array( $registration_type, [ 'blog' ] ) ) {
-                $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
-                $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_new_wpmu_user_subject_admin();
-                $admin_email = b3_get_new_wpmu_user_message_admin();
-
+                $wp_mail[ 'to' ]      = b3_get_notification_addresses( $registration_type );
+                $wp_mail[ 'subject' ] = b3_get_new_wpmu_user_subject_admin();
+                $admin_email          = b3_get_new_wpmu_user_message_admin();
             }
+
             if ( false != $admin_email ) {
-                $admin_email = b3_replace_template_styling( $admin_email );
-                $admin_email = strtr( $admin_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
-                $admin_email = htmlspecialchars_decode( stripslashes( $admin_email ) );
-                $wp_new_user_notification_email_admin[ 'message' ] = $admin_email;
+                $admin_email          = b3_replace_template_styling( $admin_email );
+                $admin_email          = strtr( $admin_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
+                $admin_email          = htmlspecialchars_decode( stripslashes( $admin_email ) );
+                $wp_mail[ 'message' ] = $admin_email;
             }
         }
 
-        return $wp_new_user_notification_email_admin;
+        return $wp_mail;
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
