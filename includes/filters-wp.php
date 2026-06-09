@@ -181,7 +181,7 @@
                 if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
                     unset( $actions[ 'resetpassword' ] );
                     $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
-                        add_query_arg( '_wp_http_referer', $request_uri,
+                        add_query_arg( 'wp_http_referer', $request_uri,
                             wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
                         ),
                         esc_attr__( 'Activate', 'b3-onboarding' )
@@ -191,8 +191,8 @@
             } elseif ( 'email_activation' === $registration_type ) {
                 if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
                     unset( $actions[ 'resetpassword' ] );
-                    $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( '_wp_http_referer', $request_uri, wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), esc_attr__( 'Resend activation', 'b3-onboarding' ) );
-                    $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( '_wp_http_referer', $request_uri, wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), esc_attr__( 'Activate', 'b3-onboarding' ) );
+                    $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', $request_uri, wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), esc_attr__( 'Resend activation', 'b3-onboarding' ) );
+                    $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', $request_uri, wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), esc_attr__( 'Activate', 'b3-onboarding' ) );
                 }
             }
         }
