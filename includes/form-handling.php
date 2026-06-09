@@ -108,20 +108,22 @@
                     delete_option( 'b3_honeypot' );
                 }
 
-                if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
-                    update_option( 'b3_privacy', 1, false );
-                } else {
-                    delete_option( 'b3_privacy' );
-                }
-
                 if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
                     update_option( 'b3_privacy_page_id', sanitize_text_field( wp_unslash( $_POST[ 'b3_privacy_page_id' ] ) ), false );
                 } else {
                     delete_option( 'b3_privacy_page_id' );
                 }
 
+                if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == $_POST[ 'b3_privacy' ] ) {
+                    update_option( 'b3_privacy', 1, false );
+                } else {
+                    delete_option( 'b3_privacy' );
+                    delete_option( 'b3_privacy_page_id' );
+                }
+
                 if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
-                    update_option( 'b3_privacy_text', sanitize_text_field( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
+                    // @TODO: better sanitation/storage
+                    update_option( 'b3_privacy_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
                 } else {
                     delete_option( 'b3_privacy_text' );
                 }
