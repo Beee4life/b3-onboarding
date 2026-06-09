@@ -87,18 +87,19 @@
     function b3_default_account_activated_message() {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
+
         if ( get_option( 'b3_needs_admin_approval' ) ) {
             $message .= esc_html__( 'you have confirmed your email address but the site owner choose to manually approve each account. You will be notified of the outcome.', 'b3-onboarding' );
 
         } elseif ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
             $lost_pass_link = '%lostpass_url%';
-            $lost_pass_link = sprintf( '<a href="%s">%s</a>', esc_url( $lost_pass_link ), strtoupper( __( 'Set password', 'b3-onboarding' ) ) );
+            $lost_pass_link = sprintf( '<a href="%s">%s</a>', esc_url( $lost_pass_link ), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
             $button         = sprintf( '<div class="big-link">%s</div>', $lost_pass_link ) . "\n";
             $message        .= esc_html__( 'you have confirmed your email address and can now set a password through the link below.', 'b3-onboarding' );
 
         } else {
             $login_link = b3_get_login_url();
-            $login_link = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+            $login_link = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
             $button     = sprintf( '<div class="big-link">%s</div>', $login_link ) . "\n";
             $message    .= esc_html__( 'you have confirmed your email address and can now login through the link below.', 'b3-onboarding' );
         }
@@ -188,7 +189,7 @@
     }
 
     function b3_default_lost_password_message() {
-        $lost_pass_url = sprintf( '<a href="%s">%s</a>',  '%reset_url%', strtoupper( __( 'Reset password', 'b3-onboarding' ) ) );
+        $lost_pass_url = sprintf( '<a href="%s">%s</a>',  '%reset_url%', strtoupper( esc_html__( 'Reset password', 'b3-onboarding' ) ) );
         $button        = sprintf( '<div class="big-link">%s</div>', $lost_pass_url ) . "\n";
         $message       = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message       .= '<br><br>' . "\n";
@@ -248,7 +249,7 @@
     }
 
     function b3_default_email_activation_message() {
-        $activation_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( __( 'Confirm email', 'b3-onboarding' ) ) );
+        $activation_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Confirm email', 'b3-onboarding' ) ) );
         $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
         $message         = b3_get_email_intro();
         $message         .= '<br><br>' . "\n";
@@ -269,7 +270,7 @@
     }
 
     function b3_default_wpmu_activate_user_message() {
-        $link_element = sprintf( '<a href="%s">%s</a>', '%2$s', strtoupper( __( 'Activate account', 'b3-onboarding' ) ) );
+        $link_element = sprintf( '<a href="%s">%s</a>', '%2$s', strtoupper( esc_html__( 'Activate account', 'b3-onboarding' ) ) );
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
         /* translators: 1. salutation, 2 . activate link */
         $message      = esc_html__( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
@@ -291,7 +292,7 @@
     }
 
     function b3_default_wpmu_user_activated_message() {
-        $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+        $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
         /* translators: salutation*/
         $message      = esc_html__( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
@@ -503,7 +504,7 @@
             $login_link = b3_get_login_url();
             $login_link = add_query_arg( 'login', 'enter_code', $login_link );
             $login_link = add_query_arg( 'otpcode', $slug, $login_link );
-            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( __( 'Login', 'b3-onboarding' ) ) );
+            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
             $your_code  = sprintf( '<div class="big-link">%s</div>', $enter_url ) . "\n";
             $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
             $message    .= '<br><br>' . "\n";
