@@ -123,7 +123,7 @@
                 </p>
             <?php } ?>
 
-            <?php // @TODO: ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+            <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             <?php echo $message; ?>
 
         <?php } else { ?>
