@@ -51,23 +51,24 @@
      *
      * @param $user_id
      */
-    function b3_do_stuff_after_wp_register( $user_id ) {
+    function b3_do_stuff_after_wp_register( int $user_id, array $user_data ) {
         if ( isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
             // user is manually added
-        } else {
+        } elseif ( 0 < $user_id ) {
             $admin_approval    = get_option( 'b3_needs_admin_approval' );
             $registration_type = get_option( 'b3_registration_type' );
+            $user              = new WP_User( $user_id );
 
-            if ( $admin_approval ) {
-                $user_object = new WP_User( $user_id );
-                $user_object->set_role( 'b3_approval' );
-            } elseif ( 'email_activation' === $registration_type ) {
-                $user_object = new WP_User( $user_id );
-                $user_object->set_role( 'b3_activation' );
+            if ( $user instanceof WP_User ) {
+                if ( $admin_approval ) {
+                    $user->set_role( 'b3_approval' );
+                } elseif ( 'email_activation' === $registration_type ) {
+                    $user->set_role( 'b3_activation' );
+                }
             }
         }
     }
-    add_action( 'user_register', 'b3_do_stuff_after_wp_register' );
+    add_action( 'user_register', 'b3_do_stuff_after_wp_register', 10, 2 );
 
     /**
      * Add approval to admin bar
@@ -77,6 +78,7 @@
      * @param $wp_admin_bar
      */
     function b3_add_toolbar( $wp_admin_bar ) {
+        // @TODO: check in multisite
         if ( current_user_can( 'promote_users' ) ) {
             $approval_users = [];
             $registration_type = get_option( 'b3_registration_type' );
@@ -84,15 +86,8 @@
 
             if ( is_multisite() && $admin_approval ) {
                 global $wpdb;
-                $cache_group = 'b3ob';
-                $cache_key   = 'inactive_users';
-                $results     = wp_cache_get( $cache_key, $cache_group );
-
-                if ( false !== $results ) {
-                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                    $approval_users = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE active = %d', $wpdb->users, 0 ) );
-                    wp_cache_set( $cache_key, $approval_users, $cache_group, HOUR_IN_SECONDS );
-                }
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                $approval_users = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE active = %d', $wpdb->users, 0 ) );
 
             } elseif ( $admin_approval ) {
                 $approval_args  = [ 'role' => 'b3_approval' ];
@@ -110,6 +105,7 @@
                 $wp_admin_bar->add_node( $approval_args );
             }
         }
+
         if ( current_user_can( 'manage_options' ) ) {
             if ( get_option( 'b3_activate_filter_validation' ) ) {
                 $page_link     = admin_url( 'admin.php?page=b3-onboarding&tab=settings' );
@@ -124,27 +120,6 @@
         }
     }
     add_action( 'admin_bar_menu', 'b3_add_toolbar', 80 );
-
-    /**
-     * Remove admin bar for users who are not allowed to access admin
-     *
-     * @since 2.0.0
-     */
-    function b3_remove_admin_bar() {
-        if ( ! is_multisite() ) {
-            $hide_admin_bar = get_option( 'b3_hide_admin_bar' );
-            if ( false != $hide_admin_bar ) {
-                $user             = wp_get_current_user();
-                $restricted_roles = get_option( 'b3_restrict_admin' );
-                $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
-
-                if ( true == $result ) {
-                    show_admin_bar( false );
-                }
-            }
-        }
-    }
-    add_action( 'after_setup_theme', 'b3_remove_admin_bar' );
 
     /**
      * Do stuff after signup WPMU user (only)
