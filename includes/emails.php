@@ -75,9 +75,7 @@
      * @return bool|false|string
      */
     function b3_foldout_content( $box = [] ) {
-
         if ( ! empty( $box ) ) {
-
             ob_start();
             switch( $box[ 'id' ] ) {
                 case 'email_settings':
@@ -148,12 +146,13 @@
                     include 'emails/ms-user-delete-site.php';
                     break;
                 // Email styling
-                case 'email_styling':
-                    include 'emails/email-styling.php';
-                    break;
-                case 'email_template':
-                    include 'emails/email-template.php';
-                    break;
+                // This can probably be removed, but keeping it here, just untl I'm sure.
+                // case 'email_styling':
+                //     include 'emails/email-styling.php';
+                //     break;
+                // case 'email_template':
+                //     include 'emails/email-template.php';
+                //     break;
                 default:
             }
             $output = ob_get_clean();
