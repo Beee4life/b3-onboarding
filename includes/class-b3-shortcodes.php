@@ -399,8 +399,9 @@
                         $cache_group = 'b3ob';
                         $cache_key   = 'inactive_signups';
                         $results     = wp_cache_get( $cache_key, $cache_group );
+                        $results     = false; // @TODO: remove if clear is fixed
 
-                        if ( false !== $results ) {
+                        if ( false === $results ) {
                             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
                             $attributes[ 'users' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups ) );
                             wp_cache_set( $cache_key, $attributes['users'], $cache_group, 3600 );
