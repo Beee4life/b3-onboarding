@@ -2,24 +2,6 @@
     if ( ! defined( 'ABSPATH' ) ) exit;
 
     /**
-     * Add hidden fields
-     *
-     * @param $fields
-     *
-     * @return mixed|string[]
-     */
-    function b3_add_hidden_fields( $fields ) {
-        if ( ! is_array( $fields ) ) {
-            $fields = [];
-        }
-
-        $fields[ 'b3_form' ] = 'register';
-
-        return $fields;
-    }
-    add_filter( 'b3_hidden_fields', 'b3_add_hidden_fields', 5 );
-
-    /**
      * Add honeypot field
      *
      * @param $fields
