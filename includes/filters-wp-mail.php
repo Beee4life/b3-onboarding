@@ -178,29 +178,6 @@
                     $user_email = b3_get_manual_welcome_user_message();
                 }
             }
-
-        } else {
-            // NOTE: it seems _wp_http_referrer is now added to each request, thus making this else redundant.
-            error_log('WHEN IS THIS HIT');
-            $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
-            $wp_new_user_notification_email[ 'headers' ] = [];
-
-            if ( $admin_approval ) {
-                $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
-                $user_email = b3_get_request_access_message_user();
-
-            } elseif ( 'email_activation' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = b3_get_email_activation_subject_user();
-                $user_email = b3_get_email_activation_message_user();
-
-            } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
-                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email = b3_get_welcome_user_message();
-
-            } elseif ( 'none' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email = b3_get_manual_welcome_user_message();
-            }
         }
 
         if ( isset( $user_email ) ) {
