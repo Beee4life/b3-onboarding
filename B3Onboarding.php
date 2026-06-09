@@ -70,7 +70,6 @@
                 add_action( 'template_redirect',        [ $this, 'b3_template_redirect' ] );
                 add_action( 'widgets_init',             [ $this, 'b3_register_widgets' ] );
                 add_action( 'wp_dashboard_setup',       [ $this, 'b3_add_dashboard_widget' ] );
-                add_action( 'init',                     [ $this, 'b3_load_plugin_text_domain' ] ); //@TODO: remove
                 add_action( 'init',                     [ $this, 'b3_registration_form_handling' ] );
                 add_action( 'init',                     [ $this, 'b3_reset_user_password' ] );
                 add_action( 'init',                     [ $this, 'b3_magic_link_form_handling' ] );
@@ -146,12 +145,6 @@
                 if ( $stored !== $plugin_data[ 'Version' ] ) {
                     update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
                 }
-            }
-
-            public function b3_load_plugin_text_domain() {
-                $plugin_folder = dirname( plugin_basename( __FILE__ ) );
-                $locale        = apply_filters( 'plugin_locale', get_locale(), $plugin_folder );
-                load_textdomain( $plugin_folder, trailingslashit( WP_LANG_DIR ) . $plugin_folder . '/' . $plugin_folder . '-' . $locale . '.mo' );
             }
 
             public function b3_enqueue_scripts_frontend() {
