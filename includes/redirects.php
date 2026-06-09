@@ -63,7 +63,7 @@
      * Force user to custom login page instead of wp-login.php.
      */
     function b3_redirect_to_custom_login() {
-        if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' !== $_SERVER['REQUEST_METHOD'] ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' !== $_SERVER[ 'REQUEST_METHOD' ] ) {
             return;
         }
 
@@ -88,7 +88,7 @@
      * wp-login.php?action=lostpassword.
      */
     function b3_redirect_to_custom_lostpassword() {
-        if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' !== $_SERVER['REQUEST_METHOD'] ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' !== $_SERVER[ 'REQUEST_METHOD' ] ) {
             return;
         }
 
@@ -109,7 +109,7 @@
      * or the login page if there are errors.
      */
     function b3_redirect_to_custom_reset_password() {
-        if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' !== $_SERVER['REQUEST_METHOD'] ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' !== $_SERVER[ 'REQUEST_METHOD' ] ) {
             return;
         }
 
@@ -230,12 +230,8 @@
      * @since 3.0 wpmu user activation
      */
     function b3_do_user_activate() {
-        if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' !== $_SERVER['REQUEST_METHOD'] ) {
-            return;
-        }
-
         if ( is_multisite() ) {
-            if ( isset( $_SERVER[ 'REQUEST_URI' ] ) && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
+            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
                 $redirect_url      = b3_get_login_url();
                 $valid_error_codes = [ 'already_active', 'blog_taken' ];
                 [ $activate_path ] = explode( '?', sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) );
@@ -243,6 +239,7 @@
                 $key               = '';
                 $result            = null;
 
+                // @TODO: test this again
                 if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
                     wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.','b3-onboarding' ), esc_html__( 'An error occurred during the activation', 'b3-onboarding' ), 400 );
                 } elseif ( ! empty( $_GET[ 'key' ] ) ) {
@@ -286,7 +283,7 @@
                 }
             }
 
-        } elseif ( ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+        } elseif ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
             global $wpdb;
             $errors = false;
             $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
