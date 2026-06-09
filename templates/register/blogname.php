@@ -7,7 +7,7 @@
     } else {
         // @TODO: test this in MS
         $current_url = b3_get_current_url();
-        $url_array   = $current_url( $current_url );
+        $url_array   = parse_url( $current_url );
         $host        = $url_array[ 'host' ];
 
     }
