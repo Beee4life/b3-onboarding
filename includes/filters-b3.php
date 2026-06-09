@@ -12,8 +12,8 @@
         if ( ! is_array( $fields ) ) {
             $fields = [];
         }
-        $fields[ 'b3_form' ]                = 'register';
-        $fields[ 'b3_register_user_nonce' ] = wp_create_nonce( 'b3-register-user-nonce' );
+
+        $fields[ 'b3_form' ] = 'register';
 
         return $fields;
     }
