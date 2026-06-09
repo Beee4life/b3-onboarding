@@ -59,9 +59,9 @@
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
                     // @TODO: Improve/DRY this
                     if ( ! empty( $_GET[ 'site_id' ] ) ) {
-                        switch_to_blog( sanitize_text_field( wp_unslash( $_GET[ 'site_id' ] ) ) );
+                        switch_to_blog( (int) $_GET[ 'site_id' ] );
                         $home_url  = home_url( '/' );
-                        $site_info = get_site( sanitize_text_field( wp_unslash( $_GET[ 'site_id' ] ) ) );
+                        $site_info = get_site( (int) $_GET[ 'site_id' ] );
                         $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
                         restore_current_blog();
 
@@ -181,11 +181,11 @@
                         // @TODO: look into this
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 206');
+                            error_log('class-b3-shortcodes.php line 184');
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 209');
+                                error_log('class-b3-shortcodes.php line 188');
                             } else {
                                 $error_codes = explode( ',', 'ente_code' );
                             }
