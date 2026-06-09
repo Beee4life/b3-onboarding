@@ -10,6 +10,10 @@
     }
 
     function b3_dashboard_widget_function() {
+        if ( ! current_user_can( 'promote_users' ) ) {
+            return;
+        }
+
         $activation_users = get_users( [ 'role' => 'b3_activation' ] );
         $all_users        = [];
         $approval_users   = get_users( [ 'role' => 'b3_approval' ] );
@@ -37,15 +41,14 @@
         }
 
         echo '<div class="b3_widget--dashboard">';
-
-        if ( count( $approval_users ) > 0 ) {
+        if ( 0 < count( $approval_users ) ) {
             if ( get_option( 'b3_needs_admin_approval' ) ) {
                 /* translators: 1 is/are, 2. amount users, 3. user/users, 4. click here, 5. this user/these users */
                 $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s awaiting approval. %4$s to manage %5$s.', 'b3-onboarding' ),
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),
                     _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
-                    sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'Click here', 'b3-onboarding' ) ),
+                    sprintf( '<a href="%1$s">%2$s</a>', esc_url( admin_url( 'admin.php?page=b3-user-approval' ) ), esc_html__( 'Click here', 'b3-onboarding' ) ),
                     _n( 'this user', 'these users', count( $approval_users ), 'b3-onboarding' ) );
             } else {
                 /* translators: 1 is/are, 2. amount users, 3. user/users, 4. click here */
@@ -53,14 +56,14 @@
                     _n( 'is', 'are', count( $approval_users ), 'b3-onboarding' ),
                     count( $approval_users ),
                     _n( 'user', 'users', count( $approval_users ), 'b3-onboarding' ),
-                    sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'admin.php?page=b3-user-approval' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                    sprintf( '<a href="%1$s">%2$s</a>', esc_url( admin_url( 'admin.php?page=b3-user-approval' ) ), esc_html__( 'here', 'b3-onboarding' ) ) );
             }
-        } elseif ( count( $activation_users ) > 0 ) {
+        } elseif ( 0 < count( $activation_users ) ) {
             /* translators: 1 is/are, 2. amount users, 3. user/users */
             $notice = sprintf( esc_html__( 'There %1$s %2$d %3$s pending email activation.', 'b3-onboarding' ), _n( 'is', 'are', count( $activation_users ), 'b3-onboarding' ), count( $activation_users ), _n( 'user', 'users', count( $activation_users ), 'b3-onboarding' ) );
         }
         if ( isset( $notice ) ) {
-            echo sprintf( '<p>%s</p>', esc_html( $notice ) );
+            echo sprintf( '<p>%s</p>', wp_kses_post( $notice ) );
         }
         if ( ! empty( $all_users ) ) {
             ob_start();
@@ -83,7 +86,6 @@
             echo '</tbody>';
             $table_rows    = ob_get_clean();
             $table_content = $table_headers . $table_rows;
-            // @TODO: ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo wp_kses_post( sprintf( '<table class="b3_table">%s</table>', $table_content ) );
         } else {
             if ( 'none' === get_option( 'b3_registration_type' ) ) {
@@ -96,8 +98,6 @@
 
         echo '</div>';
     }
-    if ( current_user_can( 'promote_users' ) ) {
-        wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding - Last registered users', 'b3_dashboard_widget_function' );
-    }
+    wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding - Last registered users', 'b3_dashboard_widget_function' );
 
 

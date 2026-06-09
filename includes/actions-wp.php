@@ -58,10 +58,7 @@
             $admin_approval    = get_option( 'b3_needs_admin_approval' );
             $registration_type = get_option( 'b3_registration_type' );
 
-            if ( $admin_approval && 'email_activation' === $registration_type ) {
-                $user_object = new WP_User( $user_id );
-                $user_object->set_role( 'b3_activation' );
-            } elseif ( $admin_approval ) {
+            if ( $admin_approval ) {
                 $user_object = new WP_User( $user_id );
                 $user_object->set_role( 'b3_approval' );
             } elseif ( 'email_activation' === $registration_type ) {
@@ -172,16 +169,7 @@
                 $table             = $wpdb->signups;
                 $data[ 'meta' ]    = serialize( $meta );
                 $where             = [ 'user_login' => $user_login ];
-                $cache_group       = 'b3ob';
-                $cache_key         = 'pending_signups';
-                $results           = wp_cache_get( $cache_key, $cache_group );
-
-                if ( false !== $results ) {
-                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                    $wpdb->update( $table, $data, $where );
-                    wp_cache_set( $cache_key, $data, $cache_group, HOUR_IN_SECONDS );
-                    // @TODO: add delete cache upon new signups
-                }
+                $wpdb->update( $table, $data, $where );
 
             } else {
                 $subject = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );

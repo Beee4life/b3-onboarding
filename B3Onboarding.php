@@ -485,6 +485,7 @@
 
                     } else {
                         $meta_data         = [];
+                        $admin_approval    = get_option( 'b3_needs_admin_approval' );
                         $registration_type = get_option( 'b3_registration_type' );
                         $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( wp_unslash( $_POST[ 'user_email' ] ) ) : false;
 
@@ -526,10 +527,7 @@
 
                             if ( true == $register && 'none' !== $registration_type ) {
                                 // Registration is not closed
-                                if ( 'email_activation' === $registration_type && get_option( 'b3_needs_admin_approval' ) ) {
-                                    $role      = 'b3_activation';
-                                    $query_arg = 'confirm_email';
-                                } elseif ( get_option( 'b3_needs_admin_approval' ) ) {
+                                if ( $admin_approval ) {
                                     $role      = 'b3_approval';
                                     $query_arg = 'access_requested';
                                 } elseif ( 'email_activation' === $registration_type ) {
@@ -1084,70 +1082,70 @@
 
             private function b3_register_user( $args = [] ) {
                 $default_args = [
-                    'pass1'             => '',
-                    'pass2'             => '',
-                    'registration_type' => $registration_type,
-                    'role'              => 'subscriber',
-                    'user_email'        => '',
-                    'user_login'        => '',
-                    'user_pass'         => time(),
+                    'pass1'      => '',
+                    'pass2'      => '',
+                    'role'       => 'subscriber',
+                    'user_email' => '',
+                    'user_login' => '',
+                    'user_pass'  => time(),
                 ];
 
+                $admin_approval               = get_option( 'b3_needs_admin_approval' );
                 $errors                       = new WP_Error();
                 $registration_with_email_only = get_option( 'b3_register_email_only' );
                 $use_custom_passwords         = get_option( 'b3_use_custom_passwords' );
                 $user_data                    = wp_parse_args( $args, $default_args );
 
                 if ( false == $registration_with_email_only ) {
-                    if ( username_exists( $args[ 'user_login' ] ) ) {
+                    if ( username_exists( $user_data[ 'user_login' ] ) ) {
                         $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
 
                         return $errors;
                     }
 
-                    if ( in_array( $args[ 'user_login' ], b3_get_disallowed_usernames() ) ) {
+                    if ( in_array( $user_data[ 'user_login' ], b3_get_disallowed_usernames() ) ) {
                         $errors->add( 'disallowed_username', $this->b3_get_return_message( 'disallowed_username' ) );
 
                         return $errors;
                     }
                 }
 
-                if ( ! is_email( $user_email ) ) {
+                if ( ! is_email( $user_data[ 'user_email' ] ) ) {
                     $errors->add( 'invalid_email', $this->b3_get_return_message( 'invalid_email' ) );
 
                     return $errors;
                 }
 
-                if ( ! b3_verify_email_domain( $args[ 'user_email' ] ) ) {
+                if ( ! b3_verify_email_domain( $user_data[ 'user_email' ] ) ) {
                     $errors->add( 'banned_domain', $this->b3_get_return_message( 'banned_domain' ) );
 
                     return $errors;
                 }
 
-                if ( username_exists( $args[ 'user_email' ] ) || email_exists( $args[ 'user_email' ] ) ) {
+                if ( username_exists( $user_data[ 'user_email' ] ) || email_exists( $user_data[ 'user_email' ] ) ) {
                     $errors->add( 'email_exists', $this->b3_get_return_message( 'email_exists' ) );
 
                     return $errors;
                 }
 
                 if ( true == $use_custom_passwords ) {
-                    if ( ! empty( $args[ 'pass1' ] ) && ! empty( $args[ 'pass2' ] ) ) {
+                    if ( ! empty( $user_data[ 'pass1' ] ) && ! empty( $user_data[ 'pass2' ] ) ) {
                         $easy_passwords = b3_get_easy_passwords();
-                        if ( in_array( $args[ 'pass1' ], $easy_passwords ) ) {
+                        if ( in_array( $user_data[ 'pass1' ], $easy_passwords ) ) {
                             $errors->add( 'pw_too_easy', $this->b3_get_return_message( 'password_too_easy' ) );
 
                             return $errors;
                         }
 
-                        if ( $args[ 'pass1' ] != $args[ 'pass2' ] || empty( $args[ 'pass1' ] ) ) {
+                        if ( $user_data[ 'pass1' ] != $user_data[ 'pass2' ] || empty( $user_data[ 'pass1' ] ) ) {
                             // Password is empty or don't match
                             $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
                             return $errors;
 
-                        } elseif ( $args[ 'pass1' ] === $args[ 'pass2' ] ) {
+                        } elseif ( $user_data[ 'pass1' ] === $user_data[ 'pass2' ] ) {
                             // Passwords are OK
-                            $hashed_password          = wp_hash_password( sanitize_text_field( wp_unslash( $args[ 'pass1' ] ) ) );
+                            $hashed_password          = wp_hash_password( sanitize_text_field( wp_unslash( $user_data[ 'pass1' ] ) ) );
                             $user_data[ 'user_pass' ] = $hashed_password;
                         }
                     }
@@ -1171,13 +1169,13 @@
 
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
-                    if ( true == $use_custom_passwords && isset( $args[ 'pass1' ] ) ) {
-                        wp_set_password( sanitize_text_field( wp_unslash( $args[ 'pass1' ] ) ), $user_id );
+                    if ( true == $use_custom_passwords && isset( $user_data[ 'pass1' ] ) ) {
+                        wp_set_password( sanitize_text_field( wp_unslash( $user_data[ 'pass1' ] ) ), $user_id );
                     }
 
                     $inform = 'both';
-                    if ( 'email_activation' === $registration_type ) {
-                        // never notify an admin if a user hasn't confirmed email yet
+                    if ( 'email_activation' === $user_data[ 'registration_type' ] || ! $admin_approval ) {
+                        // never notify an admin if a user hasn't confirmed email yet or no admin approval is needed
                         $inform = 'user';
                     }
                     $inform = apply_filters( 'b3_custom_register_inform', $inform );

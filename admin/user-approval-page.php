@@ -15,7 +15,9 @@
             wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to access this page.', 'b3-onboarding' ) );
         }
 
-        $admin_title = sprintf( '<h1 id="b3__admin-title">%s</h1>', get_admin_page_title() );
-        $shortcode   = do_shortcode( '[user-management]' );
-        echo sprintf( '<div class="wrap b3 b3__admin">%s%s</div>', esc_html( $admin_title ), wp_kses_post( $shortcode ) );
+        $shortcode = do_shortcode( '[user-management]' );
+        echo sprintf( '<div class="wrap b3 b3__admin">%s%s</div>',
+            sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( get_admin_page_title() ) ),
+            $shortcode
+        );
     }

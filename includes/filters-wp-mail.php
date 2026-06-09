@@ -93,14 +93,14 @@
             $admin_approval    = get_option( 'b3_needs_admin_approval' );
             $registration_type = get_option( 'b3_registration_type' );
 
-            if ( false != get_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
-                // we don't want the email when a user registers, but only when he/she activates
-                $wp_new_user_notification_email_admin[ 'to' ] = '';
-
-            } elseif ( $admin_approval ) {
+            if ( $admin_approval ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
                 $wp_new_user_notification_email_admin[ 'subject' ] = b3_get_request_access_subject_admin();
                 $admin_email = b3_get_request_access_message_admin();
+
+            } elseif ( false != get_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
+                // we don't want the email when a user registers, but only when he/she activates
+                $wp_new_user_notification_email_admin[ 'to' ] = '';
 
             } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
                 $wp_new_user_notification_email_admin[ 'to' ]      = b3_get_notification_addresses( $registration_type );
@@ -156,17 +156,36 @@
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
                 $user_email = b3_get_manual_welcome_user_message();
+
+            } else {
+                $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
+                $wp_new_user_notification_email[ 'headers' ] = [];
+
+                if ( $admin_approval ) {
+                    $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
+                    $user_email = b3_get_request_access_message_user();
+
+                } elseif ( 'email_activation' === $registration_type ) {
+                    $wp_new_user_notification_email[ 'subject' ] = b3_get_email_activation_subject_user();
+                    $user_email = b3_get_email_activation_message_user();
+
+                } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
+                    $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                    $user_email = b3_get_welcome_user_message();
+
+                } elseif ( 'none' === $registration_type ) {
+                    $wp_new_user_notification_email[ 'subject' ] = b3_get_welcome_user_subject();
+                    $user_email = b3_get_manual_welcome_user_message();
+                }
             }
 
         } else {
+            // NOTE: it seems _wp_http_referrer is now added to each request, thus making this else redundant.
+            error_log('WHEN IS THIS HIT');
             $wp_new_user_notification_email[ 'to' ]      = $user->user_email;
             $wp_new_user_notification_email[ 'headers' ] = [];
 
-            if ( $admin_approval && 'email_activation' === $registration_type ) {
-                $wp_new_user_notification_email[ 'subject' ] = b3_get_email_activation_subject_user();
-                $user_email = b3_get_email_activation_message_user();
-
-            } elseif ( $admin_approval ) {
+            if ( $admin_approval ) {
                 $wp_new_user_notification_email[ 'subject' ] = b3_get_request_access_subject_user();
                 $user_email = b3_get_request_access_message_user();
 
@@ -186,7 +205,9 @@
 
         if ( isset( $user_email ) ) {
             $user_email = b3_replace_template_styling( $user_email );
-            if ( 'email_activation' === $registration_type ) {
+            if ( $admin_approval ) {
+                $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
+            } elseif ( 'email_activation' === $registration_type ) {
                 $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ], true ) );
             } else {
                 $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );

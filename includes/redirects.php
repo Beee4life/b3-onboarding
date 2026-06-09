@@ -298,7 +298,7 @@
 
             // Validate activation key
             $cache_group = 'b3ob';
-            $cache_key   = 'user_info_' . md5( $user_login );
+            $cache_key   = 'user_info_' . md5( $_GET[ 'user_login' ] );
             // @TODO: test
             $results     = wp_cache_get( $cache_key, $cache_group );
 
