@@ -18,18 +18,18 @@
 
         if ( get_option( 'b3_activate_custom_emails' ) ) {
             $fields[] = [
-                'id'          => esc_attr( 'email_template' ),
-                'title'       => esc_html__( 'Email template', 'b3-onboarding' ),
-                'placeholder' => esc_attr( b3_default_email_template() ),
-                'preview'     => esc_attr( 'template' ),
+                'id'          => 'email_template',
+                'title'       => __( 'Email template', 'b3-onboarding' ),
+                'placeholder' => b3_default_email_template(),
+                'preview'     => 'template',
                 'value'       => $stored_email_template,
                 'file_name'   => 'default-email-template.html',
             ];
             $fields[] = [
-                'id'          => esc_attr( 'email_styling' ),
-                'title'       => esc_html__( 'Email styling', 'b3-onboarding' ),
+                'id'          => 'email_styling',
+                'title'       => __( 'Email styling', 'b3-onboarding' ),
                 'placeholder' => b3_default_email_styling( b3_get_link_color() ),
-                'preview'     => esc_attr( 'styling' ),
+                'preview'     => 'styling',
                 'value'       => $stored_email_styling,
                 'file_name'   => 'default-email-styling.css',
             ];
@@ -43,7 +43,6 @@
             <?php foreach( $fields as $field ) { ?>
                 <div class="template_box">
                     <label for="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
-                    <?php // @TODO: sanitize/escape $field['value'] properly ?>
                     <textarea id="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>" name="b3_<?php echo esc_attr( $field[ 'id' ] ); ?>" rows="6"><?php echo esc_textarea( $field[ 'value' ] ); ?></textarea>
                     <p>
                         <?php echo wp_kses_post( b3_get_preview_link( $field[ 'preview' ] ) ); ?>
