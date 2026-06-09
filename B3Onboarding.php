@@ -459,7 +459,7 @@
 
             public function b3_add_recaptcha_js_to_footer() {
                 if ( 1 == get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
-                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [], $this->settings['version'], false );
+                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [], $this->settings[ 'version' ], false );
                 }
             }
 
