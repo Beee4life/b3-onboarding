@@ -212,7 +212,7 @@
     }
 
     function b3_default_welcome_user_message() {
-        /* translators: 1. lost passwork url, 2. set password */
+        /* translators: 1. lost password url, 2. set password */
         $activation_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
         $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
         $message = b3_get_email_intro();
