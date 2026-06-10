@@ -9,10 +9,12 @@
 ?>
 
 <div class="b3_form-element b3_form-element--language">
-    <label class="b3_form-label" for="language"><?php _e( 'Language', 'b3-onboarding' ); ?></label>
+    <label class="b3_form-label" for="language">
+        <?php esc_html_e( 'Language', 'b3-onboarding' ); ?>
+    </label>
     <select id="language" name="language">
         <?php foreach( $languages as $code => $name ) { ?>
-            <?php echo sprintf( '<option value="%s"%s>%s</option>', $code, selected( $code, $current_language ), $name ); ?>
+            <?php echo sprintf( '<option value="%s"%s>%s</option>', esc_html( $code ), selected( $code, $current_language ), esc_html( $name ) ); ?>
         <?php } ?>
     </select>
 </div>

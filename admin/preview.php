@@ -16,7 +16,7 @@
 
         if ( isset( $_GET[ 'preview' ] ) ) {
             $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
-            $preview   = $_GET[ 'preview' ];
+            $preview   = sanitize_text_field( wp_unslash( $_GET[ 'preview' ] ) );
             $user      = get_userdata( get_current_user_id() );
 
             $lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit <a href="">iaculis</a> enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.
@@ -64,7 +64,7 @@
                     $message = b3_get_email_activation_message_user();
                     $subject = b3_get_email_activation_subject_user();
                     break;
-                case 'lostpass':
+                case 'lostpassword':
                     $message = b3_get_lost_password_message();
                     $subject = b3_get_lost_password_subject();
                     break;
@@ -109,9 +109,7 @@
 
             <p>
                 <?php
-                    if ( 'styling' === $_GET[ 'preview' ] ) {
-                        esc_html_e( 'These are css definitions which are used.', 'b3-onboarding' );
-                    } elseif ( 'template' === $_GET[ 'preview' ] ) {
+                    if ( 'template' === $_GET[ 'preview' ] ) {
                         esc_html_e( 'This is what the default email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
                     } else {
                         esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
@@ -125,10 +123,12 @@
                 </p>
             <?php } ?>
 
+            <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             <?php echo $message; ?>
+
         <?php } else { ?>
             <p><?php esc_html_e( "These are the email's styling definitions.", 'b3-onboarding' ); ?></p>
-            <pre><?php echo $css; ?></pre>
+            <pre><?php echo esc_html( wp_strip_all_tags( $css ) ); ?></pre>
         <?php } // styling !== preview ?>
-    <?php } //end $_GET preview ?>
+    <?php } // end $_GET preview ?>
 </div>

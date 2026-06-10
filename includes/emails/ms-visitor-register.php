@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     /*
      * Input fields for 'Visitor registers account' (MS)
      *

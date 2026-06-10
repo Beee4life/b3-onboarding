@@ -1,13 +1,12 @@
-=== B3 Onboarding ===
+=== B3 OnBoarding ===
 Contributors: Beee, mrjohnmc
-Tags: user, management, registration, login, lost password, reset password, account
-Requires at least: 4.3
-Tested up to: 6.9
-Requires PHP: 5.6
-Stable tag: 3.14.0
-License: GNU v3
+Tags: user management, registration, login, lost password, account
+Requires at least: 6.2
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 3.15.0
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl.html
 
 This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
 
@@ -15,7 +14,7 @@ This plugin styles the default WordPress pages into your own design. It gives yo
 
 This plugin was built to 'onboard' (in other words register/add) users to your site in the smoothest way possible.
 
-You can customise every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
+You can customize every aspect of the onboarding process, such as control the look and feel of any email sent out by the website.
 
 There are a ton of things, which you can set through the admin pages or with the help of [actions/filters](https://codex.wordpress.org/Plugin_API/Hooks)
 
@@ -27,6 +26,12 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+
+3.15.0
+* improve approval + email confirmation
+* escape and sanitize a lot
+* add nonces to forms
+
 3.14.0
 * improve emails
 * optimize otp functions

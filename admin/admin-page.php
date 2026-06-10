@@ -26,15 +26,15 @@
                         $page_title = esc_html__( 'Template preview', 'b3-onboarding' );
                     }
 
-                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', $page_title );
+                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( $page_title ) );
                     include 'preview.php';
 
                 } else {
                     $default_tab = ! is_multisite() || is_main_site() ? 'registration' : 'emails';
-                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? $_GET[ 'tab' ] : $default_tab;
+                    $default_tab = ( isset( $_GET[ 'tab' ] ) ) ? sanitize_text_field( wp_unslash( $_GET[ 'tab' ] ) ) : esc_html( $default_tab );
                     $tabs        = b3_get_admin_tabs();
 
-                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', get_admin_page_title() );
+                    echo sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( get_admin_page_title() ) );
 
                     B3Onboarding::b3_show_admin_notices();
 
@@ -48,18 +48,20 @@
                                 $add_icon = ( isset( $tab[ 'icon' ] ) ) ? true : false;
                                 $icon     = $add_icon ? sprintf( '<i class="dashicons dashicons-%s"></i>', $tab[ 'icon' ] ) : false;
                                 $title    = $tab[ 'title' ];
-                                echo sprintf( '<button id="b3_tab-button--%s" class="b3_tab-button b3_tab-button--%s%s" onclick="openTab(event, \'%s\')">%s%s</button>', $tab_id, $tab_id, $active, $tab_id, $icon, $title );
+                                echo sprintf( '<button id="b3_tab-button--%1$s" class="b3_tab-button b3_tab-button--%2$s%3$s" onclick="openTab(event, \'%4$s\')">%5$s%6$s</button>', esc_attr( $tab_id ), esc_attr( $tab_id ), esc_attr( $active ), esc_attr( $tab_id ), wp_kses_post( $icon ), esc_html( $title ) );
                             }
                             ?>
                         </div>
 
                         <div class="tab-contents">
-                            <?php foreach ( $tabs as $tab ) {
-                                $active  = ( $tab[ 'id' ] === $default_tab ) ? ' style="display: block;"' : false;
-                                $content = $tab[ 'content' ];
-                                $tab_id  = $tab[ 'id' ];
-                                echo sprintf( '<div id="%s" class="b3_tab-content b3_tab-content--%s"%s>%s</div>', $tab_id, $tab_id, $active, $content );
-                            }
+                            <?php
+                                foreach ( $tabs as $tab ) {
+                                    $style_value = ( $tab[ 'id' ] === $default_tab ) ? 'display: block;' : '';
+                                    $content     = $tab[ 'content' ];
+                                    $tab_id      = $tab[ 'id' ];
+                                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Content is safe, hardcoded plugin form markup.
+                                    echo sprintf( '<div id="%1$s" class="b3_tab-content b3_tab-content--%2$s" style="%3$s">%4$s</div>', esc_attr( $tab_id ), esc_attr( $tab_id ), esc_attr( $style_value ), $content );
+                                }
                             ?>
                         </div>
                     </div>

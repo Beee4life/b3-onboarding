@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     // This file contains functions hooked to the plugin's own hooks
 
     /**
@@ -43,7 +45,6 @@
     }
     add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
 
-
     /**
      * Approve new WPMU signup
      *
@@ -65,12 +66,12 @@
         $table                  = $wpdb->prefix . 'signups';
         $data                   = [ 'meta' => $signup_info->meta ];
         $where                  = [ 'signup_id' => $signup_info->signup_id ];
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->update( $table, $data, $where, [ '%s' ] );
 
         wpmu_activate_signup( $signup_info->activation_key );
     }
     add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
-
 
     /**
      * Reject a user (by admin)
@@ -103,7 +104,6 @@
         }
     }
     add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
-
 
     /**
      * Do stuff after user clicked activate link
@@ -143,7 +143,6 @@
     }
     add_action( 'b3_after_user_activated', 'b3_do_stuff_after_user_activated' );
 
-
     /**
      * Ouptuts default login/email field
      *
@@ -168,19 +167,19 @@
                 <?php
                 }
             } else {
-                if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_use_magic_link' ) ) { ?>
-                    <input type="hidden" name="user_login" value="<?php echo b3_generate_user_login(); ?>">
+                if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_needs_admin_approval' ) || get_option( 'b3_use_magic_link' ) ) { ?>
+                    <input type="hidden" name="user_login" value="<?php echo esc_attr( b3_generate_user_login() ); ?>">
                 <?php } else {
                     do_action( 'b3_render_form_element', 'register/user-login' );
                 }
                 do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
+            // @TODO: escape
             echo $output;
         }
     }
     add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
-
 
     /**
      * Output for first/last name fields
@@ -194,12 +193,12 @@
             do_action( 'b3_render_form_element', 'register/first-name' );
             do_action( 'b3_render_form_element', 'register/last-name' );
             $output = ob_get_clean();
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $output;
             do_action( 'b3_do_after_first_last_name' );
         }
     }
     add_action( 'b3_add_first_last_name_fields', 'b3_first_last_name_fields' );
-
 
     /**
      * Output the password fields
@@ -222,12 +221,12 @@
             </div>
             <?php
             $results = ob_get_clean();
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $results;
             do_action( 'b3_do_after_passwords' );
         }
     }
     add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
-
 
     /**
      * Add field for subdomain when WPMU is active
@@ -258,12 +257,12 @@
             <?php
                 }
                 $output = ob_get_clean();
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $output;
             }
         }
     }
     add_action( 'b3_add_site_fields', 'b3_add_site_fields' );
-
 
     /**
      * Function to output any custom fields
@@ -274,12 +273,12 @@
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo b3_render_extra_field( $extra_field );
             }
         }
     }
     add_action( 'b3_add_extra_fields_registration', 'b3_add_extra_fields_registration' );
-
 
     /**
      * Output any hidden fields
@@ -287,10 +286,10 @@
      * @since 2.0.0
      */
     function b3_add_hidden_fields_registration( $attributes ) {
-        do_action( 'b3_render_form_element', 'register/hidden-fields', $attributes );
+        do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes );
+        do_action( 'b3_render_form_element', 'general/hidden-fields', $attributes );
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
-
 
     /**
      * Add reCAPTCHA check
@@ -306,7 +305,7 @@
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
                         <div class="recaptcha-container">
-                            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public; ?>"></div>
+                            <div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_public ); ?>"></div>
                         </div>
                     </div>
                     <?php
@@ -314,17 +313,18 @@
                 }
             } else {
                 if ( current_user_can( 'manage_options') ) {
+                    // translators: link to where to set reCaptcha key
                     $message = sprintf( esc_html__( "You didn't set a reCaptcha key yet. You can set it %s.", 'b3-onboarding' ),
                         sprintf( '<a href="%s">%s</a>',
                             esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=recaptcha' ) ),
                                     esc_html__( 'here', 'b3-onboarding' ) . '</a>' ) );
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo sprintf( '<div class="b3_form-element b3_form-element--recaptcha">%s</div>', $message );
                 }
             }
         }
     }
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
-
 
     /**
      * Function to output a privacy checkbox
@@ -335,7 +335,6 @@
         }
     }
     add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
-
 
     /**
      * Echo error/info message above a (custom) form
@@ -365,7 +364,7 @@
                             $messages[] = $login_form_message;
                         }
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
-                        if ( strpos( $registration_type, 'request_access' ) !== false ) {
+                        if ( get_option( 'b3_needs_admin_approval' ) ) {
                             $request_access_message = b3_get_message_above_request_access();
                             if ( false != $request_access_message ) {
                                 $messages[] = $request_access_message;
@@ -375,42 +374,41 @@
                             if ( false != $registration_message ) {
                                 $messages[] = $registration_message;
                             }
-                        } else {
-                            if ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
-                                $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
-                                $registration_message = apply_filters( 'b3_message_above_registration', $message );
-                                if ( false != $registration_message ) {
-                                    $messages[] = $registration_message;
-                                }
+                        } elseif ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
+                            $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
+                            $registration_message = apply_filters( 'b3_message_above_registration', $message );
+                            if ( false != $registration_message ) {
+                                $messages[] = $registration_message;
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        $messages[] = esc_html__( b3_get_message_above_lost_password() );
+                        $messages[] = esc_html( b3_get_message_above_lost_password() );
 
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
 
                     } elseif ( 'magiclink' === $attributes[ 'template' ] ) {
-                        $messages[] = esc_html__( b3_get_message_above_magiclink_form() );
+                        $messages[] = esc_html( b3_get_message_above_magiclink_form() );
                     }
                 }
             }
 
             if ( ! empty( $messages ) ) {
                 if ( isset( $attributes[ 'errors' ] ) && ! empty( $attributes[ 'errors' ] ) ) {
-                    echo '<div class="b3_message b3_message--error">';
+                    $message_output = '<div class="b3_message b3_message--error">';
                 } else {
-                    echo '<div class="b3_message">';
+                    $message_output = '<div class="b3_message">';
                 }
                 foreach( $messages as $message ) {
-                    echo sprintf( '<p>%s</p>', $message );
+                    $message_output .= sprintf( '<p>%s</p>', $message );
                 }
-                echo '</div>';
+                $message_output .= '</div>';
+                // @TODO: test this
+                echo wp_kses_post( $message_output );
             }
         }
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
-
 
     /**
      * Action links on custom forms
@@ -463,15 +461,14 @@
             if ( count( $links ) > 0 ) {
                 ob_start();
                 foreach( $links as $values ) {
-                    echo sprintf( '<li><a href="%s" rel="nofollow">%s</a></li>', $values[ 'link' ], $values[ 'title' ] );
+                    echo sprintf( '<li><a href="%s" rel="nofollow">%s</a></li>', esc_url( $values[ 'link' ] ), esc_html( $values[ 'title' ] ) );
                 }
                 $action_links = ob_get_clean();
-                echo sprintf( '<ul class="b3_form-links">%s</ul>', $action_links );
+                echo sprintf( '<ul class="b3_form-links">%s</ul>', wp_kses_post( $action_links ) );
             }
         }
     }
     add_action( 'b3_add_action_links', 'b3_add_action_links' );
-
 
     /**
      * Resend user activation mail
@@ -497,7 +494,6 @@
     }
     add_action( 'b3_resend_user_activation', 'b3_send_user_activation' );
 
-
     /**
      * Manually activate a user
      *
@@ -521,7 +517,6 @@
         }
     }
     add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
-
 
     /**
      * Inform admin about something
@@ -553,7 +548,6 @@
         }
     }
     add_action( 'b3_inform_admin', 'b3_inform_admin' );
-
 
     /**
      * Redirect a user
@@ -611,7 +605,6 @@
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );
 
-
     /**
      * Add before account page output
      *
@@ -641,7 +634,7 @@
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
 
-                    echo sprintf( '<li>%s</li>', $link );
+                    echo sprintf( '<li>%s</li>', wp_kses_post( $link ) );
                 }
                 $links = ob_get_clean();
 
@@ -650,13 +643,12 @@
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
 
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, $links );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', esc_html( $label ), wp_kses_post( $links ) );
                 }
             }
         }
     }
     add_action( 'b3_do_before_account', 'b3_do_before_account', 10, 2 );
-
 
     /**
      * Render a form element
@@ -672,7 +664,6 @@
     }
     add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );
 
-
     /**
      * Remove welcome page meta
      *
@@ -683,6 +674,7 @@
     function b3_remove_welcome_page_meta() {
         $user_args = [
             'fields'     => 'ids',
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
             'meta_query' => [
                 [
                     'key'   => 'b3_welcome_page_seen',
@@ -698,7 +690,6 @@
         }
     }
     add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );
-
 
     /**
      * Add custom fields to register form hook
@@ -723,7 +714,6 @@
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
 
-
     /**
      * Log a user in after magic link verification
      *
@@ -745,7 +735,7 @@
             delete_transient( sprintf( 'otp_', $user->user_email ) );
             do_action( 'wp_login', $user->user_login, $user );
 
-            wp_redirect( $redirect );
+            wp_safe_redirect( $redirect );
             exit;
         }
     }

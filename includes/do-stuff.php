@@ -126,7 +126,6 @@
         }
     }
 
-
     /**
      * Render any extra fields
      * Options are: text, textarea, number, url, radio, checkbox, select
@@ -148,14 +147,14 @@
         $input_required    = ( isset( $extra_field[ 'required' ] ) && false != $extra_field[ 'required' ] ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
         $input_type        = ( isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
         $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : [];
-        $field_value       = ( isset( $_POST[ $input_id ] ) ) ? $_POST[ $input_id ] : '';
+        $field_value       = ( isset( $_POST[ $input_id ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $input_id ] ) ) : '';
 
         if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {
             ob_start();
             ?>
             <div class="b3_form-element b3_form-element--<?php echo esc_attr( $input_type ); ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo esc_attr( $container_class ); ?> <?php echo esc_attr( $container_class ); } ?>">
                 <?php if ( $input_label && $input_id ) { ?>
-                <label class="b3_form-label" for="<?php echo esc_attr( $input_id ); ?>"><?php echo $input_label; ?><?php echo $input_required; ?></label>
+                <label class="b3_form-label" for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_attr( $input_label ); ?><?php echo esc_attr( $input_required ); ?></label>
                 <?php } ?>
                 <?php if ( in_array( $input_type, [ 'text', 'number', 'url' ] ) ) { ?>
                     <?php $field_value =  ( false != $value && is_string( $value ) ) ? $value : false; ?>
@@ -165,7 +164,7 @@
                         <?php if ( false === $negatives_allowed ) { ?>
                             <?php $validation = " min=0 oninput=\"validity.valid||(value='');\""; ?>
                         <?php } ?>
-                        <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php echo $validation; ?> value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
+                        <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php echo esc_attr( $validation ); ?> value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php } else { ?>
                         <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?>value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php }  ?>
@@ -175,7 +174,7 @@
 
                 <?php } elseif ( in_array( $input_type, [ 'true_false' ] ) ) { ?>
                     <label for="<?php echo esc_attr( $input_id ); ?>" class="screen-reader-text"><?php echo esc_attr( $input_label ); ?></label>
-                    <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo $input_class; ?>" /> <?php echo $input_description; ?>
+                    <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>" /> <?php echo esc_attr( $input_description ); ?>
 
                 <?php } elseif ( in_array( $input_type, [ 'radio', 'checkbox' ] ) ) { ?>
                     <?php if ( $input_options ) { ?>
@@ -201,7 +200,7 @@
                                         <label for="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); ?>" class="screen-reader-text"><?php echo esc_html( $option[ 'label' ] ); ?></label>
                                     <?php } ?>
                                     <?php if ( isset( $option[ 'name' ] ) && isset( $option[ 'label' ] ) ) { ?>
-                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' === $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo $checked; ?>> <?php echo $option[ 'label' ]; ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' === $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo wp_kses_post( $checked ); ?>> <?php echo esc_attr( $option[ 'label' ] ); ?>
                                     <?php } ?>
                                 </div>
                                 <?php $counter++; ?>
@@ -213,10 +212,10 @@
                     <select name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="<?php echo esc_attr( $input_class ); ?>">
                         <?php if ( $input_options ) { ?>
                             <?php $input_placeholder_select = ( $input_placeholder ) ? $input_placeholder : esc_attr__( 'Select an option', 'b3-onboarding' ); ?>
-                            <option value=""><?php echo $input_placeholder_select; ?></option>
+                            <option value=""><?php echo esc_attr( $input_placeholder_select ); ?></option>
                             <?php foreach( $input_options as $option ) { ?>
                                 <?php $selected = ( isset( $value ) && $option[ 'value' ] == $value ) ? ' selected="selected"' : false; ?>
-                                <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>"<?php echo $selected; ?>><?php echo $option[ 'label' ]; ?></option>
+                                <option value="<?php echo esc_attr( $option[ 'value' ] ); ?>"<?php echo wp_kses_post( $selected ); ?>><?php echo esc_attr( $option[ 'label' ] ); ?></option>
                             <?php } ?>
                         <?php } ?>
                     </select>
@@ -230,7 +229,6 @@
 
         return false;
     }
-
 
     /**
      * Replace vars in email template
@@ -263,7 +261,6 @@
         return $message;
     }
 
-
     /**
      * Verify if privacy checkbox is clicked (when activated)
      *
@@ -278,7 +275,6 @@
 
         return true;
     }
-
 
     /**
      * Check if a remote file exists
@@ -299,7 +295,6 @@
         }
     }
 
-
     /**
      * Generate user login
      *
@@ -312,7 +307,6 @@
 
         return $user_login;
     }
-
 
     /**
      * Verify domain in email (single site)
@@ -335,7 +329,6 @@
         return true;
     }
 
-
     /**
      * Verify magic link
      *
@@ -349,7 +342,7 @@
                 // raw code
                 $user_input = $code;
                 if ( isset( $_POST[ 'email' ] ) ) {
-                    $user_email = $_POST[ 'email' ];
+                    $user_email = sanitize_email( wp_unslash( $_POST[ 'email' ] ) );
                 } else {
                     // maybe get user by code ?
                 }

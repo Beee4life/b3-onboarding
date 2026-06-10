@@ -1,12 +1,12 @@
 {
   "name": "beee4life/b3-onboarding",
-  "description": "Manage the onboarding of a user",
+  "description": "Manage the onboarding of a new user",
   "homepage": "https://github.com/beee4life/b3-onboarding",
   "type": "wordpress-plugin",
   "authors": [
     {
-      "name": "Berry Plasman",
-      "email": "info@berryplasman.com"
+      "name":     "Berry Plasman",
+      "homepage": "https://berryplasman.com"
     }
   ],
   "require": {

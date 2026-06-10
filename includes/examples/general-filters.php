@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     #####################
     ## General filters ##
     #####################
@@ -22,7 +24,7 @@
                 $logo = $image_array[0];
             }
         }
-        
+
         return $logo;
     }
     add_filter( 'b3_main_logo', 'b3_main_logo_example' );
@@ -60,8 +62,8 @@
 
     }
     add_filter( 'b3_widget_links', 'b3_widget_links_example' );
-    
-    
+
+
     /**
      * Filter to show email widget when localhost is inactive
      *

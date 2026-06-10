@@ -16,12 +16,13 @@
                 <thead>
                 <tr>
                     <?php foreach( b3_get_approvement_table_headers( $attributes ) as $header ) { ?>
-                        <?php echo sprintf( '<th>%s</th>', $header ); ?>
+                        <?php echo sprintf( '<th>%s</th>', esc_attr( $header ) ); ?>
                     <?php } ?>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach( $attributes[ 'users' ] as $user ) { ?>
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- content is safe, comes from plugin ?>
                     <?php echo b3_render_approvement_table_row( $user, $attributes ); ?>
                 <?php } ?>
                 </tbody>

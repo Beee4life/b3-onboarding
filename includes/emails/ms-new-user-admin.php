@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     /*
      * Input fields for 'New wpmu user' email (admin)
      *
@@ -27,17 +29,17 @@
             <label for="b3__input--new-wpmu-user-admin-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--new-wpmu-user-admin-subject" name="b3_new_wpmu_user_admin_subject" type="text" placeholder="<?php echo $placeholder_subject; ?>" value="<?php echo esc_attr( $new_wpmu_user_subject_admin ); ?>" />
+            <input id="b3__input--new-wpmu-user-admin-subject" name="b3_new_wpmu_user_admin_subject" type="text" placeholder="<?php echo esc_attr( $placeholder_subject ); ?>" value="<?php echo esc_attr( $new_wpmu_user_subject_admin ); ?>" />
         </td>
     </tr>
     <tr>
         <th class="align-top">
             <label for="b3__input--new-wpmu-user-admin-message"><?php esc_html_e( 'Email content', 'b3-onboarding' ); ?></label>
             <br>
-            <?php echo b3_get_preview_link( 'mu-new-user-admin' ); ?>
+            <?php echo wp_kses_post( b3_get_preview_link( 'mu-new-user-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--new-wpmu-user-admin-message" name="b3_new_wpmu_user_admin_message" placeholder="<?php echo $placeholder_message; ?>" rows="6"><?php echo stripslashes( $new_wpmu_user_message_admin ); ?></textarea>
+            <textarea id="b3__input--new-wpmu-user-admin-message" name="b3_new_wpmu_user_admin_message" placeholder="<?php echo esc_attr( $placeholder_message ); ?>" rows="6"><?php echo esc_textarea( $new_wpmu_user_message_admin ); ?></textarea>
         </td>
     </tr>
     <tr>

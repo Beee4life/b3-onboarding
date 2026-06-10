@@ -1,4 +1,6 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
     /*
      * Input fields for 'User deletes site' email (admin)
      *

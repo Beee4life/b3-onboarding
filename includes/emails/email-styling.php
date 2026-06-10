@@ -1,4 +1,5 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
     /*
      * Input fields for email styling
      *
@@ -27,7 +28,8 @@
             <?php echo sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=default-email-styling.css&sentby=b3' ), esc_html__( 'Download styling', 'b3-onboarding' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo b3_default_email_styling( b3_get_link_color() ); ?>" rows="6"><?php if ( $stored_email_styling ) { echo $stored_email_styling; } ?></textarea>
+            <?php // @TODO: test styling output ?>
+            <textarea id="b3__input--email-styling" name="b3_email_styling" placeholder="<?php echo esc_attr( b3_default_email_styling( b3_get_link_color() ) ); ?>" rows="6"><?php if ( $stored_email_styling ) { echo esc_textarea( $stored_email_styling ); } ?></textarea>
         </td>
     </tr>
     <tr>

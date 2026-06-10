@@ -26,7 +26,7 @@
         </p>
 
         <form action="admin.php?page=b3-onboarding&tab=recaptcha" method="post">
-            <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-recaptcha-nonce' ); ?>" />
+            <input name="b3_recaptcha_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-recaptcha-nonce' ) ); ?>" />
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
@@ -58,6 +58,7 @@
                 </div>
             <?php b3_get_close(); ?>
 
+            <?php /* translators: here */ ?>
             <?php echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'Get your (free) reCaptcha keys %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://www.google.com/recaptcha/admin#list' ), esc_html__( 'here', 'b3-onboarding' ) ) ) ); ?>
 
             <?php b3_get_settings_field_open(); ?>

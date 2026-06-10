@@ -25,7 +25,7 @@
         ob_start();
         ?>
         <form action="admin.php?page=b3-onboarding&tab=pages" method="post">
-            <input name="b3_pages_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3-pages-nonce' ); ?>" />
+            <input name="b3_pages_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-pages-nonce' ) ); ?>" />
             <?php echo sprintf( '<h2>%s</h2>', esc_html__( 'Pages', 'b3-onboarding' ) ); ?>
             <?php echo sprintf( '<p>%s</p>', esc_html__( "Here you can set which pages are assigned for the various 'actions'.", 'b3-onboarding' ) ); ?>
 
@@ -35,23 +35,23 @@
 
                     <div class="b3_select-page__selector">
                         <select name="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>_id" id="b3_<?php echo esc_attr( $page[ 'id' ] ); ?>">
-                            <option value=""><?php esc_attr_e( "Select a page", "b3-user-regiser" ); ?></option>
+                            <option value=""><?php esc_attr_e( "Select a page", "b3-onboarding" ); ?></option>
                             <?php if ( class_exists( 'SitePress' ) ) { ?>
-                                <?php $default_lang = apply_filters( 'wpml_default_language', null ); ?>
+                                <?php $default_lang = esc_html( apply_filters( 'wpml_default_language', null ) ); ?>
                                 <?php foreach( $all_pages as $active_page ) { ?>
                                     <?php if ( function_exists( 'wpml_get_language_information' ) ) { ?>
                                         <?php $post_language_information = wpml_get_language_information( '', $active_page->ID ); ?>
                                         <?php if ( $post_language_information[ 'language_code' ] === $default_lang ) { ?>
-                                            <option value="<?php echo $active_page->ID; ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo $active_page->post_title; ?></option>
+                                            <option value="<?php echo esc_attr( $active_page->ID ); ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo esc_attr( $active_page->post_title ); ?></option>
                                         <?php } ?>
                                     <?php } else { ?>
-                                        <option value="<?php echo $active_page->ID; ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo $active_page->post_title; ?></option>
+                                        <option value="<?php echo esc_attr( $active_page->ID ); ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo esc_attr( $active_page->post_title ); ?></option>
                                     <?php } ?>
 
                                 <?php } ?>
                             <?php } else { ?>
                                 <?php foreach( $all_pages as $active_page ) { ?>
-                                    <option value="<?php echo $active_page->ID; ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo $active_page->post_title; ?></option>
+                                    <option value="<?php echo esc_attr( $active_page->ID ); ?>"<?php echo selected($active_page->ID, $page[ 'page_id' ]); ?>> <?php echo esc_attr( $active_page->post_title ); ?></option>
                                 <?php } ?>
                             <?php } ?>
                         </select>

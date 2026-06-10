@@ -57,7 +57,7 @@
             if ( $show_register ) {
                 $register_url      = b3_get_register_url();
                 $registration_type = get_option( 'b3_registration_type' );
-                
+
                 if ( 'none' !== $registration_type && false !== $register_url ) {
                     if ( 'blog' === $registration_type && $is_user_logged_in ) {
                         $show_register_link = true;
@@ -90,19 +90,19 @@
                     }
                     $widget_links[] = $link;
                 }
-                
+
                 if ( isset( $register_url ) && true === $show_register_link ) {
                     $widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $register_url ), esc_html__( 'Register', 'b3-onboarding' ) );
                 }
-                
+
                 if ( $is_user_logged_in && isset( $account_url ) && false !== $account_url ) {
                     $widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $account_url ), esc_html__( 'Account', 'b3-onboarding' ) );
                 }
-                
+
                 if ( true === $show_settings ) {
                     $widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), 'B3 ' . esc_html__( 'Settings', 'b3-onboarding' ) );
                 }
-                
+
                 if ( is_array( $custom_links ) && ! empty( $custom_links ) ) {
                     foreach( $custom_links as $link ) {
                         if ( isset( $link[ 'link' ] ) && isset( $link[ 'label' ] ) ) {
@@ -116,23 +116,23 @@
                         $widget_links[] = sprintf( '<a href="%s">%s</a>', esc_url( $logout_url ), esc_html__( 'Log Out', 'b3-onboarding' ) );
                     }
                 }
-                
+
                 if ( ! empty( $widget_links ) ) {
-                    echo $args[ 'before_widget' ];
-                    
+                    echo wp_kses_post( $args[ 'before_widget' ] );
+
                     if ( ! empty( $instance[ 'title' ] ) ) {
-                        echo $args[ 'before_title' ];
-                        echo apply_filters( 'widget_title', $instance[ 'title' ] );
-                        echo $args[ 'after_title' ];
+                        echo wp_kses_post( $args[ 'before_title' ] );
+                        echo esc_html( apply_filters( 'widget_title', $instance[ 'title' ] ) );
+                        echo wp_kses_post( $args[ 'after_title' ] );
                     }
-                    
+
                     echo '<ul>';
                     foreach( $widget_links as $link ) {
-                        echo sprintf( '<li>%s</li>', $link );
+                        echo sprintf( '<li>%s</li>', wp_kses_post( $link ) );
                     }
                     echo '</ul>';
-                    
-                    echo $args[ 'after_widget' ];
+
+                    echo wp_kses_post( $args[ 'after_widget' ] );
                 }
             }
         }
@@ -180,7 +180,7 @@
                 <label for="<?php echo esc_attr( $this->get_field_id( 'show_logout' ) ); ?>"><?php esc_attr_e( 'Show log out link', 'b3-onboarding' ); ?></label>
             </p>
             <b><?php esc_html_e( 'Admin only', 'b3-onboarding' ); ?></b>
-            <?php if ( 'request_access' == $registration_type ) { ?>
+            <?php if ( get_option( 'b3_needs_admin_approval' ) ) { ?>
                 <p>
                     <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_approval' ) ); ?>" type="checkbox" value="1"<?php checked($show_user_approval); ?>>
                     <label for="<?php echo esc_attr( $this->get_field_id( 'show_approval' ) ); ?>"><?php esc_attr_e( 'Show user management link', 'b3-onboarding' ); ?></label>

@@ -80,7 +80,7 @@
                     <sup>&sup1;</sup> ' . esc_html__( 'available in every email', 'b3-onboarding' ) . '
                     <br>
                     <sup>&sup2;</sup> ' . esc_html__( 'only available in password reset email', 'b3-onboarding' ) .
-                    sprintf( '<p>%s</p>', sprintf( 'You can also find all variables %s.', sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/email-variables/' ), esc_html__( 'on our website' ) ) ) )
+                    sprintf( '<p>%s</p>', sprintf( 'You can also find all variables %s.', sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/email-variables/' ), esc_html__( 'on our website', 'b3-onboarding' ) ) ) )
 
             );
             $emails_message = ob_get_clean();
@@ -101,6 +101,7 @@
             echo sprintf( '<li><b>%s</b><br>%s</li>', '[account-page]', esc_html__( 'This renders the account page.', 'b3-onboarding' ) );
             echo sprintf( '<li><b>%s</b><br>%s</li>', '[user-management]', esc_html__( 'This renders the user management page.', 'b3-onboarding' ) );
             echo '</ul>';
+            /* translators: here */
             echo '<p>' . sprintf( esc_html__( 'More info about the use of shortcodes and their variables, please see %s.', 'b3-onboarding'  ), sprintf( '<a href="%s">%s</a>', esc_url( 'https://b3onboarding.berryplasman.com/faq/available-shortcodes/' ), esc_html__( 'here', 'b3-onboarding' ) ) ) . '</p>';
             $shortcodes_message = ob_get_clean();
 
@@ -120,6 +121,7 @@
             echo sprintf( '<li>%s</li>', esc_html__( 'use a popup for the login form, when using the B3 sidebar widget', 'b3-onboarding' ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'activate the debug page', 'b3-onboarding' ) );
             echo '</ul>';
+            /* translators: link to filter on website */
             echo sprintf( '<p>%s</p>', sprintf( esc_html__( 'If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo. Or you can use the filter %s to use a perfectly cropped image.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', 'https://b3onboarding.berryplasman.com/filter/b3_main_logo/', 'b3_main_logo' ) ) );
             $settings_message = ob_get_clean();
 
@@ -131,6 +133,7 @@
 
             ob_start();
             echo sprintf( '<h3>%s</h3>', esc_html__( 'Developers', 'b3-onboarding' ) );
+            /* translators: link to faq item */
             echo sprintf( '<p>%s</p>', sprintf( esc_html__( "If you're a developer, you might want to check out %s (if you haven't already).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/localhost-development/' ), esc_html__( 'this FAQ topic', 'b3-onboarding' ) ) ) );
             echo sprintf( '<p>%s</p>', esc_html__( 'It has some explanantion about how you can more easily test, when developing locally.', 'b3-onboarding' ) );
             $developers_message = ob_get_clean();
@@ -151,7 +154,12 @@
 
             ob_start();
             echo sprintf( '<p><b>%s</b></p>', esc_html__( 'More info', 'b3-onboarding' ) );
-            echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', B3OB_PLUGIN_SITE . '?utm_source=' . $_SERVER[ 'SERVER_NAME' ] . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
+            if ( isset( $_SERVER[ 'SERVER_NAME' ] ) ) {
+                $server_name = sanitize_text_field( wp_unslash( $_SERVER[ 'SERVER_NAME' ] ) );
+                echo sprintf( '<p>%s</p>', sprintf( '<a href="%1$s">%2$s</a>', esc_url( B3OB_PLUGIN_SITE ) . '?utm_source=' . esc_attr( $server_name ) . '&utm_medium=onboarding_admin&utm_campaign=free_promo', esc_html__( 'Official site', 'b3-onboarding' ) ) );
+            } else {
+                echo sprintf( '<p>%s</p>', sprintf( '<a href="%1$s">%2$s</a>', esc_url( B3OB_PLUGIN_SITE ), esc_html__( 'Official site', 'b3-onboarding' ) ) );
+            }
             echo sprintf( '<p>%s</p>', sprintf( '<a href="%s">%s</a>', 'https://github.com/Beee4life/b3-onboarding/', 'Github' ) );
             $sidebar_content = ob_get_clean();
             get_current_screen()->set_help_sidebar( $sidebar_content );

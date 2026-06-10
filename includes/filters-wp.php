@@ -36,7 +36,6 @@
     }
     add_filter( 'display_post_states', 'b3_add_post_state', 10, 2 );
 
-
     /**
      * Adds nonce to log out page link
      *
@@ -56,7 +55,6 @@
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
-
     /**
      * Filters message on default register form
      *
@@ -68,7 +66,7 @@
      */
     function wp_login_message( $message ) {
         if ( isset( $_GET[ 'action' ] ) ) {
-            $action = $_GET[ 'action' ];
+            $action = sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) );
             if ( 'register' === $action ) {
                 $message = b3_get_message_above_registration();
             } elseif ( 'lostpassword' === $action ) {
@@ -85,7 +83,6 @@
         return $message;
     }
     add_filter( 'login_message', 'wp_login_message' );
-
 
     /**
      * Check if user may login, if he/she has a custom role.
@@ -110,7 +107,6 @@
     }
     add_filter( 'wp_authenticate_user', 'b3_login_errors', 20, 2 );
 
-
     /**
      * Check setting to update B3
      *
@@ -123,7 +119,6 @@
         return 0;
     }
     add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multisite || main site
-
 
     /**
      * Check setting to update B3
@@ -138,7 +133,6 @@
     }
     add_filter( 'pre_update_site_option_registration', 'b3_check_network_registration_option', 10, 2 ); // multisite
 
-
     /**
      * Check setting to update B3
      *
@@ -152,7 +146,6 @@
     }
     add_filter( 'pre_update_site_option_registrationnotification', 'b3_prevent_update_registration_notification_option', 10, 2 );
 
-
     /**
      * Add to admin body class
      *
@@ -161,14 +154,13 @@
      * @return string
      */
     function b3_admin_body_class( $classes ) {
-        if ( 'request_access' != get_option( 'b3_registration_type' ) ) {
+        if ( ! get_option( 'b3_needs_admin_approval' ) ) {
             $classes .= 'no-approval-page';
         }
 
         return $classes;
     }
     add_filter( 'admin_body_class', 'b3_admin_body_class' );
-
 
     /**
      * Add user actions on users.php
@@ -180,24 +172,27 @@
      */
     function b3_user_row_actions( $actions, $user_object ) {
         $current_user      = wp_get_current_user();
+        $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $registration_type = get_option( 'b3_registration_type' );
 
-        if ( $current_user->ID != $user_object->ID ) {
-            if ( 'email_activation' === $registration_type ) {
-                if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
-                    unset( $actions[ 'resetpassword' ] );
-                    $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), esc_attr__( 'Resend activation', 'b3-onboarding' ) );
-                    $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ), wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), esc_attr__( 'Activate', 'b3-onboarding' ) );
-                }
-            } elseif ( 'request_access' === $registration_type ) {
+        if ( $current_user->ID != $user_object->ID && isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
+            $request_uri = urlencode( esc_url( sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) ) );
+            if ( $admin_approval ) {
                 if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
                     unset( $actions[ 'resetpassword' ] );
                     $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
-                        add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER[ 'REQUEST_URI' ] ) ) ),
+                        add_query_arg( 'wp_http_referer', $request_uri,
                             wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
                         ),
                         esc_attr__( 'Activate', 'b3-onboarding' )
                     );
+                }
+
+            } elseif ( 'email_activation' === $registration_type ) {
+                if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
+                    unset( $actions[ 'resetpassword' ] );
+                    $actions[ 'resend_activation' ] = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', $request_uri, wp_nonce_url( 'users.php?action=resendactivation&amp;user_id=' . $user_object->ID, 'resend-activation' ) ), esc_attr__( 'Resend activation', 'b3-onboarding' ) );
+                    $actions[ 'activate' ]          = sprintf( '<a href="%1$s">%2$s</a>', add_query_arg( 'wp_http_referer', $request_uri, wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' ) ), esc_attr__( 'Activate', 'b3-onboarding' ) );
                 }
             }
         }
@@ -206,20 +201,19 @@
     }
     add_filter( 'user_row_actions', 'b3_user_row_actions', 10, 2 );
 
-
     /**
      * Redirect the user after authentication if there were any errors.
      *
-     * @param Wp_User|Wp_Error  $user       The signed in user, or the errors that have occurred during login.
-     * @param string            $username   The user name used to log in.
+     * @param Wp_User|Wp_Error  $user       The signed-in user, or the errors that have occurred during login.
+     * @param string            $username   The username used to log in.
      * @param string            $password   The password used to log in.
      *
-     * @return Wp_User|Wp_Error The logged in user, or error information if there were errors.
+     * @return Wp_User|Wp_Error The logged-in user, or error information if there were errors.
      */
     function b3_maybe_redirect_at_authenticate( $user, $username, $password ) {
         // Check if the earlier authenticate filter (most likely, the default WordPress authentication) functions have found errors
         // @TODO: restrict more
-        if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'POST' === $_SERVER[ 'REQUEST_METHOD' ] ) {
             if ( is_wp_error( $user ) ) {
                 $error_codes = join( ',', $user->get_error_codes() );
                 $login_url   = b3_get_login_url();
@@ -233,7 +227,6 @@
         return $user;
     }
     add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );
-
 
     /**
      * Filter for banned domains in email validation MU signup
@@ -258,8 +251,7 @@
         return $result;
     }
     add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
-    
-    
+
     /**
      * Filters out any menu items for registered users/visitors
      *
@@ -280,7 +272,7 @@
                 $lost_password_page  = get_option( 'b3_lost_password_page_id' );
                 $register_page       = get_option( 'b3_register_page_id' );
                 $reset_password_page = get_option( 'b3_reset_password_page_id' );
-    
+
                 foreach( $items as $key => $menu_values ) {
                     if ( ! is_user_logged_in() && in_array( $menu_values->object_id, [
                             $account_page,
@@ -299,12 +291,11 @@
                 }
             }
         }
-        
+
         return $items;
     }
     add_filter( 'wp_get_nav_menu_items', 'b3_filter_nav_menus', 5, 3 );
-    
-    
+
     /**
      * Validates allowed usernames
      *
@@ -324,12 +315,11 @@
                 $valid = false;
             }
         }
-        
+
         return $valid;
     }
     add_filter( 'validate_username', 'b3_check_username', 10, 2 );
-    
-    
+
     /**
      * Hide password fields (if magic link is active)
      *
@@ -344,7 +334,28 @@
         if ( get_option( 'b3_use_magic_link' ) ) {
             $show = false;
         }
-        
+
         return $show;
     }
     add_filter( 'show_password_fields', 'b3_show_password_fields', 10, 2 );
+
+    /**
+     * Remove admin bar for users who are not allowed to access admin
+     *
+     * @since 2.0.0
+     */
+    function b3_remove_admin_bar( $show ) {
+        $hide_admin_bar = get_option( 'b3_hide_admin_bar' );
+        if ( false != $hide_admin_bar ) {
+            $user             = wp_get_current_user();
+            $restricted_roles = get_option( 'b3_restrict_admin' );
+            $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
+
+            if ( true === $result ) {
+                $show = false;
+            }
+        }
+
+        return $show;
+    }
+    add_filter( 'show_admin_bar', 'b3_remove_admin_bar' );

@@ -10,7 +10,7 @@
     }
 
     function b3_dashboard_widget_email_previews() {
-        $preview_page = admin_url( 'admin.php?page=b3-onboarding&preview=' );
+        $preview_page = esc_url( admin_url( 'admin.php?page=b3-onboarding&preview=' ) );
         $widget_title = sprintf( '<h3>%s</h3>', esc_html__( 'Email preview links', 'b3-onboarding' ) );
 
         ob_start();
@@ -31,7 +31,7 @@
         }
 
         if ( is_main_site() ) {
-            echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'lostpass' ),  esc_html__( 'Lost password (user)', 'b3-onboarding' ) );
+            echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'lostpassword' ),  esc_html__( 'Lost password (user)', 'b3-onboarding' ) );
             echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'styling' ),  esc_html__( 'Styling', 'b3-onboarding' ) );
             echo sprintf( '<li><a href="%s">%s</a></li>', esc_url( $preview_page . 'template' ),  esc_html__( 'Template', 'b3-onboarding' ) );
         }
@@ -39,7 +39,7 @@
         $links_list = sprintf( '<ul>%s</ul>', $links );
 
         $widget_content = $widget_title . $links_list;
-        echo sprintf( '<div class="b3_widget--dashboard">%s</div>', $widget_content );
+        echo sprintf( '<div class="b3_widget--dashboard">%s</div>', wp_kses_post( $widget_content ) );
     }
     if ( current_user_can('manage_options' ) ) {
         wp_add_dashboard_widget( 'b3-dashboard-debug', 'B3 OnBoarding (email previews)', 'b3_dashboard_widget_email_previews' );

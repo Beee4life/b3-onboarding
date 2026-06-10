@@ -26,7 +26,7 @@
             'title' => esc_html__( 'Global email settings', 'b3-onboarding' ),
         ];
         if ( is_main_site() ) {
-            if ( in_array( $registration_type, [ 'request_access' ] ) || $admin_approval ) {
+            if ( $admin_approval ) {
                 $email_boxes[] = [
                     'id'    => 'request_access_user',
                     'title' => esc_html__( 'Request access email (user)', 'b3-onboarding' ),
@@ -114,7 +114,6 @@
         return $email_boxes;
     }
 
-
     /**
      * Return registration options
      *
@@ -194,7 +193,6 @@
         return apply_filters( 'b3_main_logo', $main_logo );;
     }
 
-
     /**
      * Get the 'registration closed' message
      *
@@ -216,7 +214,6 @@
         return apply_filters( 'b3_registration_closed_message', $registration_closed_message );
     }
 
-
     /**
      * Message to let user know they need to login first to register a site
      *
@@ -233,7 +230,6 @@
 
         return apply_filters( 'b3_logged_in_registration_only_message', $logged_in_registration_only_message );
     }
-
 
     /**
      * Get the privacy text
@@ -254,7 +250,6 @@
         return $message;
     }
 
-
     /**
      * Get a unique activation url for a user
      *
@@ -270,17 +265,21 @@
 
         global $wpdb;
         // Set the activation key for the user
-        $wpdb->update( $wpdb->users, [ 'user_activation_key' => $key ], [ 'user_login' => $user_data->user_login ] );
+        $data  = [ 'user_activation_key' => $key ];
+        $where = [ 'user_login' => $user_data->user_login ];
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->update( $wpdb->users, $data, $where );
 
+        $query_args     = [
+            'action'     => 'activate',
+            'key'        => $key,
+            'user_login' => rawurlencode( $user_data->user_login ),
+        ];
         $login_url      = b3_get_login_url();
-        $activation_url = add_query_arg( [ 'action'     => 'activate',
-                                           'key'        => $key,
-                                           'user_login' => rawurlencode( $user_data->user_login ),
-        ], $login_url );
+        $activation_url = add_query_arg( $query_args, $login_url );
 
         return $activation_url;
     }
-
 
     /**
      * General opening of settings field
@@ -292,9 +291,8 @@
     function b3_get_settings_field_open( $hide = false, $modifier = false ) {
         $hide_class = ( $hide != false ) ? ' hidden' : false;
         $modifier   = ( $modifier != false ) ? ' b3_settings-field--' . $modifier : false;
-        echo sprintf( '<div class="b3_settings-field%s%s">', $hide_class, $modifier );
+        echo sprintf( '<div class="b3_settings-field%s%s">', esc_attr( $hide_class ), esc_attr( $modifier ) );
     }
-
 
     /**
      * General opening of settings label
@@ -305,9 +303,8 @@
      */
     function b3_get_label_field_open( $hide = false ) {
         $hide_class = ( $hide != false ) ? ' hidden' : false;
-        echo sprintf( '<div class="b3_settings-label%s">', $hide_class );
+        echo sprintf( '<div class="b3_settings-label%s">', esc_attr( $hide_class ) );
     }
-
 
     /**
      * Close a div.
@@ -318,7 +315,6 @@
     function b3_get_close() {
         echo '</div>';
     }
-
 
     /**
      * Return submit button
@@ -351,10 +347,9 @@
                 $button = sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_value ) );
             }
         }
-
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $button;
     }
-
 
     /**
      * Get register page id/link
@@ -400,7 +395,6 @@
         return wp_registration_url();
     }
 
-
     /**
      * Get login page id/link
      *
@@ -444,7 +438,6 @@
         return wp_login_url();
     }
 
-
     /**
      * Get logout page id/link
      *
@@ -480,7 +473,6 @@
         return wp_logout_url();
 
     }
-
 
     /**
      * Get page id/link for account page
@@ -524,7 +516,6 @@
         return false;
     }
 
-
     /**
      * Get lost password page id/link
      *
@@ -558,7 +549,6 @@
         return wp_lostpassword_url();
     }
 
-
     /**
      * Get reset pass page id/link
      *
@@ -588,7 +578,6 @@
 
         return network_site_url( 'wp-login.php', 'login' ) . '?action=rp';
     }
-
 
     /**
      * Get account page id/link
@@ -624,7 +613,6 @@
         return false;
     }
 
-
     /**
      * Convert a GMT date/time to local, in system defined date/time format
      *
@@ -645,7 +633,6 @@
         return $date_time_gmt;
     }
 
-
     /**
      * Get the message above registration form
      *
@@ -663,7 +650,6 @@
         return apply_filters( 'b3_message_above_registration', $message );
     }
 
-
     /**
      * Get the message above login form
      *
@@ -674,7 +660,6 @@
     function b3_get_message_above_login() {
         return apply_filters( 'b3_message_above_login', get_option( 'b3_message_above_login' ) );
     }
-
 
     /**
      * Get the message above lost password form
@@ -693,7 +678,6 @@
         return apply_filters( 'b3_message_above_lost_password', $message );
     }
 
-
     /**
      * Get the message above request access form
      *
@@ -710,7 +694,6 @@
 
         return apply_filters( 'b3_message_above_request_access', $message );
     }
-
 
     /**
      * Disallowed usernames
@@ -732,7 +715,6 @@
         return apply_filters( 'b3_disallowed_usernames', $disallowed_names );
     }
 
-
     /**
      * Get 'easy' passwords
      *
@@ -743,7 +725,6 @@
     function b3_get_easy_passwords() {
         return apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
     }
-
 
     /**
      * Get disallowed domain names
@@ -756,7 +737,6 @@
         return apply_filters( 'b3_disallowed_domains', get_option( 'b3_disallowed_domains' ) );
     }
 
-
     /**
      * Get protocol
      *
@@ -766,7 +746,6 @@
         return ( isset( $_SERVER[ 'HTTPS' ] ) && 'off' != $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http';
     }
 
-
     /**
      * Get current URL
      *
@@ -775,23 +754,23 @@
      * @return string
      */
     function b3_get_current_url( $include_query = false ) {
-        $url        = b3_get_protocol() . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
-        $url_array  = parse_url( $url );
-        $port       = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
-        $path       = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
-        $return_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $path;
+        $current_url = '';
 
-        if ( false !== $include_query ) {
-            if ( isset( $url_array[ 'query' ] ) ) {
+        if ( isset( $_SERVER[ 'HTTP_HOST' ] ) && isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
+            $url         = b3_get_protocol() . '://' . sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_HOST' ] ) ) . sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
+            $url_array   = wp_parse_url( $url );
+            $port        = ( isset( $url_array[ 'port' ] ) && ! empty( $url_array[ 'port' ] ) ) ? ':' . $url_array[ 'port' ] : false;
+            $path        = ( isset( $url_array[ 'path' ] ) && ! empty( $url_array[ 'path' ] ) ) ? $url_array[ 'path' ] : false;
+            $current_url = $url_array[ 'scheme' ] . '://' . $url_array[ 'host' ] . $port . $path;
+
+            if ( false !== $include_query && isset( $url_array[ 'query' ] ) ) {
                 $query_string = $url_array[ 'query' ];
-                $return_url   .= '?' . $query_string;
+                $current_url   .= '?' . $query_string;
             }
-
         }
 
-        return $return_url;
+        return $current_url;
     }
-
 
     /**
      * For email override in new user + blog
@@ -810,7 +789,6 @@
 
         return false;
     }
-
 
     /**
      * Get admin tabs
@@ -883,7 +861,6 @@
         return $tabs;
     }
 
-
     /**
      * Checks that the reCAPTCHA parameter (both versions) sent with the registration
      * request is valid.
@@ -891,8 +868,8 @@
      * @return bool True if the CAPTCHA is OK, otherwise false.
      */
     function b3_verify_recaptcha() {
-        if ( isset ( $_POST[ 'g-recaptcha-response' ] ) ) {
-            $recaptcha_response = $_POST[ 'g-recaptcha-response' ];
+        if ( isset( $_POST[ 'g-recaptcha-response' ] ) ) {
+            $recaptcha_response = sanitize_text_field( wp_unslash( $_POST[ 'g-recaptcha-response' ] ) );
         } else {
             return false;
         }
@@ -920,7 +897,6 @@
         return $success;
     }
 
-
     /**
      * Get email preview link
      *
@@ -935,7 +911,6 @@
 
         return false;
     }
-
 
     /**
      * Get plugin file (from name)
@@ -955,7 +930,6 @@
 
         return null;
     }
-
 
     /**
      * Set default settings
@@ -1005,7 +979,6 @@
         }
     }
 
-
     /**
      * Get all possible template locations
      *
@@ -1028,7 +1001,6 @@
         return $template_paths;
     }
 
-
     /**
      * Locate file in possible template locations
      *
@@ -1047,7 +1019,6 @@
 
         return false;
     }
-
 
     /**
      * Render template
@@ -1069,7 +1040,6 @@
             do_action( 'b3_do_after_template', $template_name );
         }
     }
-
 
     /**
      * New function to do all replacements in 1 function
@@ -1186,7 +1156,6 @@
         return $replacements;
     }
 
-
     /**
      * Get approvement table headers
      *
@@ -1217,7 +1186,6 @@
         return $headers;
     }
 
-
     /**
      * Render approvement table row
      *
@@ -1229,10 +1197,10 @@
     function b3_render_approvement_table_row( $user, $attributes ) {
         ob_start();
         echo '<tr>';
-        echo sprintf( '<td>%s</td>', ( is_multisite() ) ? $user->signup_id : $user->ID );
+        echo sprintf( '<td>%s</td>', ( is_multisite() ) ? esc_html( $user->signup_id ) : esc_html( $user->ID ) );
 
         if ( false == $attributes[ 'register_email_only' ] ) {
-            echo sprintf( '<td>%s</td>', $user->user_login );
+            echo sprintf( '<td>%s</td>', esc_html( $user->user_login ) );
         }
 
         if ( false != $attributes[ 'show_first_last_name' ] ) {
@@ -1240,27 +1208,24 @@
                 $meta       = unserialize( $user->meta );
                 $first_name = ( isset( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : '';
                 $last_name  = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
-                echo sprintf( '<td>%s</td>', $first_name );
-                echo sprintf( '<td>%s</td>', $last_name );
+                echo sprintf( '<td>%s</td>', esc_html( $first_name ) );
+                echo sprintf( '<td>%s</td>', esc_html( $last_name ) );
             } else {
-                echo sprintf( '<td>%s</td>', $user->first_name );
-                echo sprintf( '<td>%s</td>', $user->last_name );
+                echo sprintf( '<td>%s</td>', esc_html( $user->first_name ) );
+                echo sprintf( '<td>%s</td>', esc_html( $user->last_name ) );
             }
         }
-        echo sprintf( '<td>%s</td>', $user->user_email );
+        echo sprintf( '<td>%s</td>', esc_html( $user->user_email ) );
         if ( is_multisite() ) {
-            echo sprintf( '<td>%s</td>', $user->domain );
-            echo sprintf( '<td>%s</td>', $user->title );
+            echo sprintf( '<td>%s</td>', esc_html( $user->domain ) );
+            echo sprintf( '<td>%s</td>', esc_html( $user->title ) );
         }
         echo '<td>';
         ?>
         <form name="b3_user_management" method="post">
-            <input name="b3_manage_users_nonce" type="hidden"
-                   value="<?php echo wp_create_nonce( 'b3-manage-users-nonce' ); ?>"/>
-            <input name="b3_approve_user" class="button" type="submit"
-                   value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>"/>
-            <input name="b3_reject_user" class="button" type="submit"
-                   value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
+            <input name="b3_manage_users_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-manage-users-nonce' ) ); ?>"/>
+            <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>"/>
+            <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
             <?php if ( is_multisite() ) { ?>
                 <input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>"/>
             <?php } else { ?>
@@ -1275,7 +1240,6 @@
         return $output;
     }
 
-
     /**
      * Get user IP
      *
@@ -1288,17 +1252,16 @@
     function b3_get_user_ip() {
         if ( ! empty( $_SERVER[ 'HTTP_CLIENT_IP' ] ) ) {
             // check ip from share internet
-            $user_ip = $_SERVER[ 'HTTP_CLIENT_IP' ];
+            $user_ip = sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_CLIENT_IP' ] ) );
         } elseif ( ! empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) {
             // to check ip is pass from proxy
-            $user_ip = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } else {
-            $user_ip = $_SERVER[ 'REMOTE_ADDR' ];
+            $user_ip = sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) );
+        } elseif ( ! empty( $_SERVER[ 'REMOTE_ADDR' ] ) ) {
+            $user_ip = sanitize_text_field( wp_unslash( $_SERVER[ 'REMOTE_ADDR' ] ) );
         }
 
         return $user_ip;
     }
-
 
     /**
      * Get message above 'Get pass' form (magic link)

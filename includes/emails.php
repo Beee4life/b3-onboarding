@@ -45,10 +45,10 @@
             $hide_field = 'logo' == $box[ 'id' ] && ! get_option( 'b3_logo_in_email' ) ? ' hidden' : '';
             $id_field   = in_array( $box[ 'id' ], $add_id_fields ) ? ' id="' . $box[ 'id' ] . '"' : false;
         ?>
-        <div class="metabox-handler metabox-handler--<?php echo $box['id']; ?><?php echo $hide_field; ?>">
+        <div class="metabox-handler metabox-handler--<?php echo esc_attr( $box[ 'id' ] ); ?><?php echo esc_attr( $hide_field ); ?>">
             <div class="b3__postbox">
-                <div class="b3_foldout--header foldout__toggle"<?php echo $id_field; ?>>
-                    <?php echo ( isset( $box[ 'title' ] ) ) ? $box[ 'title' ] : 'Settings'; ?>
+                <div class="b3_foldout--header foldout__toggle"<?php echo esc_attr( $id_field ); ?>>
+                    <?php echo ( isset( $box[ 'title' ] ) ) ? esc_html( $box[ 'title' ] ) : 'Settings'; ?>
                     <i class="dashicons dashicons-plus"></i>
                 </div>
 
@@ -75,9 +75,7 @@
      * @return bool|false|string
      */
     function b3_foldout_content( $box = [] ) {
-
         if ( ! empty( $box ) ) {
-
             ob_start();
             switch( $box[ 'id' ] ) {
                 case 'email_settings':
@@ -148,12 +146,13 @@
                     include 'emails/ms-user-delete-site.php';
                     break;
                 // Email styling
-                case 'email_styling':
-                    include 'emails/email-styling.php';
-                    break;
-                case 'email_template':
-                    include 'emails/email-template.php';
-                    break;
+                // This can probably be removed, but keeping it here, just untl I'm sure.
+                // case 'email_styling':
+                //     include 'emails/email-styling.php';
+                //     break;
+                // case 'email_template':
+                //     include 'emails/email-template.php';
+                //     break;
                 default:
             }
             $output = ob_get_clean();

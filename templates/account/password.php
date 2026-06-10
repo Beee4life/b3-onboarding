@@ -20,10 +20,10 @@
                         </label>
                         <div class="input">
                             <span class="password-input-wrapper">
-                                <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php esc_attr_e( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
+                                <input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php echo esc_attr( wp_generate_password( 12 ) ); ?>" aria-describedby="pass-strength-result" />
                                 <br>
                                 <span class="password-input-description">
-                                    <small><?php esc_html_e( 'You can also enter your own password', 'sexdates' ); ?></small>
+                                    <small><?php esc_html_e( 'You can also enter your own password', 'b3-onboarding' ); ?></small>
                                 </span>
                             </span>
                         </div>

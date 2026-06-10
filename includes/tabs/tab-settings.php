@@ -22,7 +22,7 @@
         ?>
 
         <form action="admin.php?page=b3-onboarding&tab=settings" method="post">
-            <input name="b3ob_settings_nonce" type="hidden" value="<?php echo wp_create_nonce( 'b3ob-settings-nonce' ); ?>" />
+            <input name="b3ob_settings_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3ob-settings-nonce' ) ); ?>" />
             <?php if ( is_main_site() ) { ?>
 
                 <?php b3_get_settings_field_open(); ?>
@@ -53,7 +53,7 @@
                         <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/>
                         <?php esc_html_e( 'Activate the validation of all custom filters.', 'b3-onboarding' ); ?>
                         <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
-                        <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo $hide_validation_note; ?>">
+                        <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo esc_attr( $hide_validation_note ); ?>">
                             <?php esc_html_e( "Don't forget to turn it of later on, the validation can cause a higher load time.", 'b3-onboarding' ); ?>
                         </div>
                     </div>
@@ -94,6 +94,7 @@
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_reset_default" name="b3_reset_default" value="1" />
                         <?php esc_html_e( "This option resets everything back to 'factory settings'.", 'b3-onboarding' ); ?>
+                        <?php // translators: link to faq for 'reset to default settings' ?>
                         <?php echo sprintf( esc_html__( '%s to see what it does exactly.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( B3OB_PLUGIN_SITE . '/faq/reset-default-settings/' ), esc_html__( 'Click here', 'b3-onboarding' ) ) ); ?>
                     </div>
                 <?php b3_get_close(); ?>

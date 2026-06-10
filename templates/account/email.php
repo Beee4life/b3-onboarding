@@ -3,13 +3,13 @@
         exit;
     }
 
-    $value = ( is_user_logged_in() ) ? esc_attr__( $current_user->user_email ) : false;
+    $value = ( is_user_logged_in() ) ? esc_attr( $current_user->user_email ) : false;
 ?>
 <div class="b3_form-element b3_form-element--email">
     <label class="b3_form-label" for="email">
         <?php esc_attr_e( 'Email address', 'b3-onboarding' ); ?>
     </label>
-    <input type="text" name="email" id="email" value="<?php echo $value; ?>" class="input regular-text" />
+    <input type="text" name="email" id="email" value="<?php echo esc_attr( $value ); ?>" class="input regular-text" />
 
     <?php
         if ( isset( $attributes[ 'template' ] ) && 'account' == $attributes[ 'template' ] ) {
@@ -27,7 +27,7 @@
 							printf(
 								' <a href="%1$s">%2$s</a>',
 								esc_url( wp_nonce_url( sprintf( self_admin_url( 'profile.php?dismiss=%d_new_email' ), $current_user->ID ), sprintf( 'dismiss-%d_new_email', $current_user->ID ) ) ),
-								__( 'Cancel' )
+								esc_html__( 'Cancel', 'b3-onboarding' )
 							);
                         ?>
                     </p>
