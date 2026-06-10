@@ -485,7 +485,6 @@
     add_filter( 'new_network_admin_email_content', 'b3_confirm_change_email', 10, 2 ); // attempt change network admin email
 
     function b3_after_change_email( $email_array, $old_email, $new_email ) {
-        // @TODO: format message
         $email_array[ 'message' ] .= "\n<br>";
         $email_array[ 'message' ] .= b3_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
@@ -497,7 +496,6 @@
     add_filter( 'site_admin_email_change_email', 'b3_after_change_email', 10, 3 ); // after site admin email change
 
     function b3_after_change_network_email( $email_array, $old_email, $new_email, $network_id ) {
-        // @TODO: format message
         $email_array[ 'message' ] .= "\n<br>";
         $email_array[ 'message' ] .= b3_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
