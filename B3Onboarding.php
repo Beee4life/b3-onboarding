@@ -544,9 +544,9 @@
                                     'user_email'        => $user_email,
                                     'user_login'        => $user_login,
                                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                                    'pass1'             => isset( $_POST[ 'pass1' ] ) ? wp_hash_password( $_POST[ 'pass1' ] ) : '',
+                                    'pass1'             => isset( $_POST[ 'pass1' ] ) ? $_POST[ 'pass1' ] : '',
                                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                                    'pass2'             => isset( $_POST[ 'pass2' ] ) ? wp_hash_password( $_POST[ 'pass2' ] ) : '',
+                                    'pass2'             => isset( $_POST[ 'pass2' ] ) ? $_POST[ 'pass2' ] : '',
                                 ];
                                 $result = $this->b3_register_user( $register_args );
 
@@ -1148,8 +1148,7 @@
 
                         } elseif ( $user_data[ 'pass1' ] === $user_data[ 'pass2' ] ) {
                             // Passwords are OK
-                            $hashed_password          = wp_hash_password( sanitize_text_field( wp_unslash( $user_data[ 'pass1' ] ) ) );
-                            $user_data[ 'user_pass' ] = $hashed_password;
+                            $user_data[ 'user_pass' ] = $user_data[ 'pass1' ];
                         }
                     }
                 }
@@ -1170,10 +1169,11 @@
                     return $errors;
                 }
 
+                error_log( print_r( $user_data, true ) );
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
                     if ( true == $use_custom_passwords && isset( $user_data[ 'pass1' ] ) ) {
-                        wp_set_password( sanitize_text_field( wp_unslash( $user_data[ 'pass1' ] ) ), $user_id );
+                        // wp_set_password( $user_data[ 'pass1' ], $user_id );
                     }
 
                     $inform = 'both';
