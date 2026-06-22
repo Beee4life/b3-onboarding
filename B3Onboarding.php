@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.15.0
+    Version:            3.15.1
     Requires at least:  6.2
     Tested up to:       7.0
     Requires PHP:       7.4
@@ -33,7 +33,7 @@
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
                     'registration_type' => get_option( 'b3_registration_type', 'closed' ),
-                    'version'           => get_option( 'b3ob_version', '3.15.0' ),
+                    'version'           => get_option( 'b3ob_version', '3.15.1' ),
                 ];
 
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
@@ -544,9 +544,9 @@
                                     'user_email'        => $user_email,
                                     'user_login'        => $user_login,
                                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                                    'pass1'             => isset( $_POST[ 'pass1' ] ) ? wp_hash_password( $_POST[ 'pass1' ] ) : '',
+                                    'pass1'             => isset( $_POST[ 'pass1' ] ) ? $_POST[ 'pass1' ] : '',
                                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                                    'pass2'             => isset( $_POST[ 'pass2' ] ) ? wp_hash_password( $_POST[ 'pass2' ] ) : '',
+                                    'pass2'             => isset( $_POST[ 'pass2' ] ) ? $_POST[ 'pass2' ] : '',
                                 ];
                                 $result = $this->b3_register_user( $register_args );
 
@@ -1096,7 +1096,7 @@
                 $admin_approval               = get_option( 'b3_needs_admin_approval' );
                 $errors                       = new WP_Error();
                 $registration_with_email_only = get_option( 'b3_register_email_only' );
-                $use_custom_passwords         = get_option( 'b3_use_custom_passwords' );
+                $use_custom_passwords         = get_option( 'b3_activate_custom_passwords' );
                 $user_data                    = wp_parse_args( $args, $default_args );
 
                 if ( false == $registration_with_email_only ) {
@@ -1148,8 +1148,7 @@
 
                         } elseif ( $user_data[ 'pass1' ] === $user_data[ 'pass2' ] ) {
                             // Passwords are OK
-                            $hashed_password          = wp_hash_password( sanitize_text_field( wp_unslash( $user_data[ 'pass1' ] ) ) );
-                            $user_data[ 'user_pass' ] = $hashed_password;
+                            $user_data[ 'user_pass' ] = $user_data[ 'pass1' ];
                         }
                     }
                 }
@@ -1173,7 +1172,8 @@
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
                     if ( true == $use_custom_passwords && isset( $user_data[ 'pass1' ] ) ) {
-                        wp_set_password( sanitize_text_field( wp_unslash( $user_data[ 'pass1' ] ) ), $user_id );
+                        // @TODO: check if still needed
+                        wp_set_password( $user_data[ 'pass1' ], $user_id );
                     }
 
                     $inform = 'both';

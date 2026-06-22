@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+3.15.1
+* fix incorrect option key to set password on registration
+
 3.15.0
 * improve approval + email confirmation
 * escape and sanitize a lot
