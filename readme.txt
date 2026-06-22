@@ -27,8 +27,8 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 
-3.16.0
-* ?
+3.15.1
+* fix incorrect option key to set password on registration
 
 3.15.0
 * improve approval + email confirmation
