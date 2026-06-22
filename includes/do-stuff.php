@@ -154,7 +154,8 @@
             ?>
             <div class="b3_form-element b3_form-element--<?php echo esc_attr( $input_type ); ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo esc_attr( $container_class ); ?> <?php echo esc_attr( $container_class ); } ?>">
                 <?php if ( $input_label && $input_id ) { ?>
-                <label class="b3_form-label" for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_attr( $input_label ); ?><?php echo esc_attr( $input_required ); ?></label>
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                <label class="b3_form-label" for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_attr( $input_label ); ?><?php echo $input_required; ?></label>
                 <?php } ?>
                 <?php if ( in_array( $input_type, [ 'text', 'number', 'url' ] ) ) { ?>
                     <?php $field_value =  ( false != $value && is_string( $value ) ) ? $value : false; ?>
