@@ -1096,7 +1096,7 @@
                 $admin_approval               = get_option( 'b3_needs_admin_approval' );
                 $errors                       = new WP_Error();
                 $registration_with_email_only = get_option( 'b3_register_email_only' );
-                $use_custom_passwords         = get_option( 'b3_use_custom_passwords' );
+                $use_custom_passwords         = get_option( 'b3_activate_custom_passwords' );
                 $user_data                    = wp_parse_args( $args, $default_args );
 
                 if ( false == $registration_with_email_only ) {
@@ -1169,11 +1169,11 @@
                     return $errors;
                 }
 
-                error_log( print_r( $user_data, true ) );
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
                     if ( true == $use_custom_passwords && isset( $user_data[ 'pass1' ] ) ) {
-                        // wp_set_password( $user_data[ 'pass1' ], $user_id );
+                        // @TODO: check if still needed
+                        wp_set_password( $user_data[ 'pass1' ], $user_id );
                     }
 
                     $inform = 'both';
