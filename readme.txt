@@ -4,7 +4,7 @@ Tags: user management, registration, login, lost password, account
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 3.15.1
+Stable tag: 3.16.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -26,6 +26,9 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+
+3.16.0
+* add email replacement vars filter, so you can add your own
 
 3.15.1
 * fix incorrect option key to set password on registration

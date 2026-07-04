@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+3.16.0
+* add email replacement vars filter, so you can add your own
+
 3.15.1
 * fix incorrect option key to set password on registration
 
