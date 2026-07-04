@@ -71,6 +71,7 @@
             'b3_registration_access_requested_message' => [ 'string' ],
             'b3_registration_closed_message'           => [ 'string' ],
             'b3_registration_confirm_email_message'    => [ 'string' ],
+            'b3_replacement_vars'                      => [ 'array' ],
             'b3_request_access_message_admin'          => [ 'string' ],
             'b3_request_access_message_user'           => [ 'string' ],
             'b3_request_access_subject_admin'          => [ 'string' ],

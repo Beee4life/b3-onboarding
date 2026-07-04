@@ -1153,7 +1153,7 @@
             }
         }
 
-        return apply_filters( 'b3_filter_replacement_vars', $replacements, $type, $vars, $activation );
+        return apply_filters( 'b3_replacement_vars', $replacements, $type, $vars, $activation );
     }
 
     /**
