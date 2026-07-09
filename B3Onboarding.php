@@ -76,7 +76,7 @@
                 add_action( 'init',                     [ $this, 'b3_check_magic_link' ] );
                 add_action( 'admin_notices',            [ $this, 'b3_admin_notices' ] );
                 add_action( 'load-users.php',           [ $this, 'b3_load_users_page' ] );
-                add_action( 'init',                     [ $this, 'b3_load_textdomain' ] );
+                add_action( 'plugins_loaded',           [ $this, 'b3_load_textdomain' ] );
 
                 if ( is_multisite() ) {
                     add_action( 'wp_initialize_site', [ $this, 'b3_after_create_site' ] );
