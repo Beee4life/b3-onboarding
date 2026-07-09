@@ -50,6 +50,10 @@ table.b3_email_header td {
 
 table td.b3_email_footer {
   font-size: small;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 table td.b3_email_content {
@@ -75,9 +79,10 @@ table td.b3_email_content {
 #b3_email_main .big-link a:link,
 #b3_email_main .big-link a:visited,
 #b3_email_main .big-link a:active {
-  display: block;
-  color:   white;
-  width:   100%;
+  display:         block;
+  color:           white;
+  width:           100%;
+  text-decoration: none;
 }
 
 .underline {
@@ -92,12 +97,4 @@ table td.b3_email_content {
 
 .hidden {
   display: none;
-}
-
-/* Default color is added in case filter 'b3_link_color' fails */
-#b3_email_main a:link,
-#b3_email_main a:visited,
-#b3_email_main a:active {
-  color:           #e0144b;
-  text-decoration: none;
 }
