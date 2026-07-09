@@ -457,7 +457,7 @@
     function b3_default_greetings() {
         $greetings = "\n" . '<br>' . "\n";
         $greetings .= esc_html__( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $greetings .= '<br><br>' . "\n";
+        $greetings .= '<br>' . "\n";
         /* translators: site name */
         $greetings .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
