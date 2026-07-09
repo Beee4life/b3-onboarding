@@ -41,17 +41,26 @@
      *
      * @since 1.0.0
      *
-     * @param $permalink
+     * @param $link
      * @param $post_id
      *
      * @return string
      */
-    function b3_logout_link( $logout_link, $post_id ) {
-        if ( b3_get_logout_url( true ) == $post_id ) {
-            $logout_link = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $logout_link );
+    function b3_logout_link( $link, $post_id ) {
+        $log_out_page_id = get_option( 'b3_logout_page_id' );
+
+        if ( $log_out_page_id && class_exists( 'SitePress' ) ) {
+            $local_page_id = apply_filters( 'wpml_object_id', $log_out_page_id, 'page', true );
+            if ( get_post( $local_page_id ) instanceof WP_Post && (int) $log_out_page_id !== $local_page_id ) {
+                $log_out_page_id = $local_page_id;
+            }
         }
 
-        return $logout_link;
+        if ( (int) $log_out_page_id === $post_id ) {
+            $link = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $logout_link );
+        }
+
+        return $link;
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
