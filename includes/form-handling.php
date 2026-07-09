@@ -1,11 +1,6 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit;
 
-    /*
-     * Form handling registration settings
-     *
-     * @since 3.0
-     */
     function b3_registration_tab_form_handling() {
         if ( isset( $_POST[ 'b3_registration_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_nonce' ] ) ), 'b3-registration-nonce' ) ) {
@@ -134,11 +129,6 @@
     }
     add_action( 'init', 'b3_registration_tab_form_handling' );
 
-    /*
-     * Form handling page settings
-     *
-     * @since 3.0
-     */
     function b3_pages_tab_form_handling() {
         if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_pages_nonce' ] ) ), 'b3-pages-nonce' ) ) {
@@ -171,11 +161,6 @@
     }
     add_action( 'admin_init', 'b3_pages_tab_form_handling' );
 
-    /*
-     * Form handling for email settings
-     *
-     * @since 3.0
-     */
     function b3_email_tab_form_handling() {
         if ( isset( $_POST[ 'b3_emails_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_emails_nonce' ] ) ), 'b3-emails-nonce' ) ) {
@@ -483,11 +468,6 @@
     }
     add_action( 'admin_init', 'b3_template_tab_form_handling' );
 
-    /*
-     * Form handling for user settings
-     *
-     * @since 3.0
-     */
     function b3_users_tab_form_handling() {
         if ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_users_nonce' ] ) ), 'b3-users-nonce' ) ) {
@@ -565,11 +545,6 @@
     }
     add_action( 'admin_init', 'b3_users_tab_form_handling' );
 
-    /*
-     * Form handling for reCaptcha settings
-     *
-     * @since 3.0
-     */
     function b3_recaptcha_tab_form_handling() {
         if ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_recaptcha_nonce' ] ) ), 'b3-recaptcha-nonce' ) ) {
@@ -606,11 +581,6 @@
     }
     add_action( 'admin_init', 'b3_recaptcha_tab_form_handling' );
 
-    /*
-     * Form handling admin settings page
-     *
-     * @since 1.0.0
-     */
     function b3_setings_tab_form_handling() {
         if ( isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3ob_settings_nonce' ] ) ), 'b3ob-settings-nonce' ) ) {
@@ -668,11 +638,6 @@
     }
     add_action( 'admin_init', 'b3_setings_tab_form_handling', 1 );
 
-    /*
-     * Function which handles approve/deny user form
-     *
-     * @since 1.0.4
-     */
     function b3_approve_deny_users() {
         if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
             $redirect_url = admin_url( 'admin.php?page=b3-user-approval' );
@@ -742,11 +707,6 @@
     }
     add_action( 'admin_init', 'b3_approve_deny_users' );
 
-    /*
-     * Function to handle (front-end) profile form editing
-     *
-     * @since 1.0.4
-     */
     function b3_profile_form_handling() {
         $account_page_id = b3_get_account_url( true );
         if ( false != $account_page_id && is_page( $account_page_id ) && is_user_logged_in() ) {
@@ -786,11 +746,6 @@
     }
     add_action( 'template_redirect', 'b3_profile_form_handling' );
 
-    /*
-     * Function to check login form nonce
-     *
-     * @since 3.15.0
-     */
     function b3_verify_login_nonce() {
         if ( isset( $_POST[ 'b3_login_nonce' ] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_login_nonce' ] ) ), 'b3_login' ) ) {
             $redirect_url = b3_get_login_url();
@@ -801,11 +756,6 @@
     }
     add_action( 'login_init', 'b3_verify_login_nonce' );
 
-    /**
-     * Initiates password reset.
-     *
-     * @since 1.0.6
-     */
     function b3_do_password_lost() {
         if ( isset( $_POST[ 'b3_lostpassword_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_lostpassword_nonce' ] ) ), 'b3_lostpassword' ) ) {
