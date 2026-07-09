@@ -29,7 +29,9 @@
 
         // @TODO: check in Sandbox & MS
         $current_language = apply_filters( 'wpml_current_language', null );
+        // echo '<pre>'; var_dump($current_language); echo '</pre>'; exit;
         $default_lang     = apply_filters( 'wpml_default_language', null );
+        // echo '<pre>'; var_dump($default_lang); echo '</pre>'; exit;
 
         ob_start();
         ?>
@@ -107,8 +109,14 @@
                         $stored_page_id = get_option( 'b3_' . $b3_page[ 'id' ] . '_id' );
                         if ( class_exists( 'SitePress' ) ) {
                             if ( $current_language !== $default_lang ) {
-                                $local_page_id = apply_filters( 'wpml_object_id', $stored_page_id, 'page', true, $current_language );
-                                $page_id       = $active_page->ID;
+                                $local_page_id = apply_filters( 'wpml_object_id', $stored_page_id, 'page', false, $current_language );
+                                if ( $local_page_id ) {
+                                    $page_id = $stored_page_id;
+                                } else {
+                                    $page_id = 0;
+                                }
+
+                                // echo '<pre>'; var_dump($local_page_id); echo '</pre>'; exit;
                             } else {
                                 $page_id = $stored_page_id;
                             }
@@ -116,7 +124,7 @@
                             $page_id = $active_page->ID;
                         }
 
-                        if ( $page_id && get_post( (int) $page_id ) instanceof WP_Post ) {
+                        if ( isset( $page_id ) && get_post( (int) $page_id ) instanceof WP_Post ) {
                             ?>
                             <div class="b3_select-page__edit">
                                 <a href="<?php echo get_edit_post_link(  $page_id ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
