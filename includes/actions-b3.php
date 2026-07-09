@@ -416,7 +416,7 @@
      * @param string $form_type
      */
     function b3_add_action_links( $form_type = 'login' ) {
-        if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
+        if ( ! apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
             $links = [];
 
             $values = [
