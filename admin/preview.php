@@ -97,8 +97,8 @@
                     $css = b3_get_email_styling( b3_get_link_color() );
                     break;
                 default:
-                    $message = apply_filters( 'b3_filter_preview_email_message', sprintf( esc_html__( "No email message found for '%s'", 'b3-onboarding' ), $preview ), $preview );
-                    $subject = apply_filters( 'b3_filter_preview_email_subject', sprintf( esc_html__( "No email subject found for '%s'", 'b3-onboarding' ), $preview ), $preview );
+                    $message = apply_filters( 'b3_preview_email_message', sprintf( esc_html__( "No email message found for '%s'", 'b3-onboarding' ), $preview ), $preview );
+                    $subject = apply_filters( 'b3_preview_email_subject', sprintf( esc_html__( "No email subject found for '%s'", 'b3-onboarding' ), $preview ), $preview );
             }
 
             if ( 'styling' !== $_GET[ 'preview' ] ) {

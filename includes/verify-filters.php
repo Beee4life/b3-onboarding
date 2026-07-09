@@ -63,6 +63,8 @@
             'b3_magic_link_time_out'                   => [ 'int' ],
             'b3_password_special_chars'                => [ 'bool' ],
             'b3_password_extra_special_chars'          => [ 'bool' ],
+            'b3_preview_email_message'                 => [ 'string' ], // @TODO: add to site
+            'b3_preview_email_subject'                 => [ 'string' ], // @TODO: add to site
             'b3_privacy_text'                          => [ 'string' ],
             'b3_recaptcha_public'                      => [ 'string' ],
             'b3_recaptcha_secret'                      => [ 'string' ],
