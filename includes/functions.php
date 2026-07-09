@@ -574,16 +574,14 @@
     }
 
     // Convert a GMT date/time to local, in system defined date/time format
-    function b3_get_local_date_time( $date_time_gmt = false ) {
-        if ( false != $date_time_gmt ) {
-            $date_time = new DateTime( $date_time_gmt );
-            $date_time->setTimezone( new DateTimeZone( wp_timezone_string() ) );
-            $registration_date = $date_time->format( get_option( 'date_format' ) ) . ' @ ' . $date_time->format( get_option( 'time_format' ) );
-
-            return $registration_date;
+    function b3_get_local_date_time( $date_time_gmt ) {
+        if ( ! $date_time_gmt ) {
+            return false;
         }
+        $timestamp   = strtotime( $date_time_gmt );
+        $date_format = get_option( 'date_format' ) . ' \@ ' . get_option( 'time_format' );
 
-        return $date_time_gmt;
+        return wp_date( $date_format, $timestamp );
     }
 
     // Get the message above registration form
