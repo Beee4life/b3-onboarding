@@ -483,7 +483,6 @@
             public function b3_registration_form_handling() {
                 if ( isset( $_POST[ 'b3_register_nonce' ] ) ) {
                     $redirect_url = b3_get_register_url();
-                    error_log('Redirect url 1: ' . $redirect_url);
 
                     if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_register_nonce' ] ) ), 'b3_register' ) ) {
                         $redirect_url = add_query_arg( 'registration-error', 'unknown', $redirect_url );
@@ -566,27 +565,12 @@
                                 } else {
                                     // Success
                                     if ( isset( $reset_password ) && true == $reset_password ) {
-                                        $redirect_url       = b3_get_lostpassword_url();
-                                        $redirect_url       = add_query_arg( 'registered', $query_arg, $redirect_url );
-                                        // @TODO: look into filter usage
-                                        $redirect_url       = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                         // @TODO: also add to MU register
+                                        $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_lostpassword_url() );
 
                                     } else {
                                         // redirect to login page
-                                        $login_url     = b3_get_login_url();
-                                        $redirect_url  = $login_url;
-                                        $login_page_id = b3_get_login_url( true );
-
-                                        if ( class_exists( 'SitePress' ) ) {
-                                            // error_log(apply_filters( 'wpml_current_language', null ));
-                                            $login_page_id = b3_get_login_url( true );
-                                            $local_login_page_id = apply_filters( 'wpml_object_id', $login_page_id, 'page', false );
-                                            $redirect_url     = get_the_permalink( $login_page_id );
-                                        }
-
-                                        $redirect_url = add_query_arg( 'registered', $query_arg, $redirect_url );
-                                        // $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
+                                        $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_login_url() );
                                     }
                                 }
                             }
