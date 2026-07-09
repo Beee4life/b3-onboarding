@@ -372,6 +372,7 @@
                     if ( false != $blog_id && is_multisite() ) {
                         restore_current_blog();
                     }
+
                     return $register_page_id;
                 }
 
@@ -448,7 +449,7 @@
     function b3_get_logout_url( $return_id = false, $blog_id = false ) {
 
         if ( false != $blog_id && is_multisite() ) {
-            switch_to_blog($blog_id);
+            switch_to_blog( $blog_id );
         }
 
         $log_out_page_id = get_option( 'b3_logout_page_id' );
