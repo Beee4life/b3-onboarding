@@ -5,17 +5,11 @@
 
     include 'filters-wp-mail.php';
 
-    /**
-     * Add post states for B3 pages
-     *
-     * @since 1.0.6
-     *
-     * @param $post_states
-     * @param $post
-     *
-     * @return mixed
-     */
+    // Add post states for B3 pages
     function b3_add_post_state( $post_states, $post ) {
+        if ( class_exists( 'SitePress' ) ) {
+            $post->ID = apply_filters( 'wpml_object_id', $post->ID, 'page', true, apply_filters( 'wpml_default_language', null ) );
+        }
         if ( $post->ID == get_option( 'b3_account_page_id' ) ) {
             $post_states[] = 'B3 : Account';
         } elseif ( $post->ID == get_option( 'b3_register_page_id' ) ) {
@@ -36,16 +30,7 @@
     }
     add_filter( 'display_post_states', 'b3_add_post_state', 10, 2 );
 
-    /**
-     * Adds nonce to log out page link
-     *
-     * @since 1.0.0
-     *
-     * @param $link
-     * @param $post_id
-     *
-     * @return string
-     */
+    // Adds nonce to log out page link
     function b3_logout_link( $link, $post_id ) {
         $log_out_page_id = get_option( 'b3_logout_page_id' );
 
@@ -64,15 +49,7 @@
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
-    /**
-     * Filters message on default register form
-     *
-     * @since 2.0.0
-     *
-     * @param $message
-     *
-     * @return string
-     */
+    // Filters message on default register form
     function wp_login_message( $message ) {
         if ( isset( $_GET[ 'action' ] ) ) {
             $action = sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) );
@@ -93,16 +70,7 @@
     }
     add_filter( 'login_message', 'wp_login_message' );
 
-    /**
-     * Check if user may login, if he/she has a custom role.
-     *
-     * @since 2.4.0
-     *
-     * @param $user
-     * @param $password
-     *
-     * @return WP_Error
-     */
+    // Check if user may log in, if he/she has a custom role.
     function b3_login_errors( $user, $password ) {
         if ( $user ) {
             if ( in_array( 'b3_activation', $user->roles ) ) {
@@ -116,52 +84,25 @@
     }
     add_filter( 'wp_authenticate_user', 'b3_login_errors', 20, 2 );
 
-    /**
-     * Check setting to update B3
-     *
-     * @param $new_value
-     * @param $old_value
-     *
-     * @return false|mixed|string|void
-     */
+    // Check setting to update B3
     function b3_prevent_update_registration_option( $new_value, $old_value ) {
         return 0;
     }
     add_filter( 'pre_update_option_users_can_register', 'b3_prevent_update_registration_option', 10, 2 ); // non-multisite || main site
 
-    /**
-     * Check setting to update B3
-     *
-     * @param $new_value
-     * @param $old_value
-     *
-     * @return mixed
-     */
+    // Check setting to update B3
     function b3_check_network_registration_option( $new_value, $old_value ) {
         return 'none';
     }
     add_filter( 'pre_update_site_option_registration', 'b3_check_network_registration_option', 10, 2 ); // multisite
 
-    /**
-     * Check setting to update B3
-     *
-     * @param $new_value
-     * @param $old_value
-     *
-     * @return string
-     */
+    // Check setting to update B3
     function b3_prevent_update_registration_notification_option( $new_value, $old_value ) {
         return 'no';
     }
     add_filter( 'pre_update_site_option_registrationnotification', 'b3_prevent_update_registration_notification_option', 10, 2 );
 
-    /**
-     * Add to admin body class
-     *
-     * @param $classes
-     *
-     * @return string
-     */
+    // Add to admin body class
     function b3_admin_body_class( $classes ) {
         if ( ! get_option( 'b3_needs_admin_approval' ) ) {
             $classes .= 'no-approval-page';
@@ -171,14 +112,7 @@
     }
     add_filter( 'admin_body_class', 'b3_admin_body_class' );
 
-    /**
-     * Add user actions on users.php
-     *
-     * @param $actions
-     * @param $user_object
-     *
-     * @return mixed
-     */
+    // Add user actions on users.php
     function b3_user_row_actions( $actions, $user_object ) {
         $current_user      = wp_get_current_user();
         $admin_approval    = get_option( 'b3_needs_admin_approval' );
@@ -210,15 +144,7 @@
     }
     add_filter( 'user_row_actions', 'b3_user_row_actions', 10, 2 );
 
-    /**
-     * Redirect the user after authentication if there were any errors.
-     *
-     * @param Wp_User|Wp_Error  $user       The signed-in user, or the errors that have occurred during login.
-     * @param string            $username   The username used to log in.
-     * @param string            $password   The password used to log in.
-     *
-     * @return Wp_User|Wp_Error The logged-in user, or error information if there were errors.
-     */
+    // Redirect the user after authentication if there were any errors.
     function b3_maybe_redirect_at_authenticate( $user, $username, $password ) {
         // Check if the earlier authenticate filter (most likely, the default WordPress authentication) functions have found errors
         // @TODO: restrict more
@@ -237,13 +163,7 @@
     }
     add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );
 
-    /**
-     * Filter for banned domains in email validation MU signup
-     *
-     * @param $result
-     *
-     * @return array
-     */
+    // Filter for banned domains in email validation MU signup
     function b3_check_domain_user_email( $result ) {
         if ( get_option( 'b3_set_domain_restrictions' ) ) {
             $email         = $result[ 'user_email' ];
@@ -261,17 +181,7 @@
     }
     add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
 
-    /**
-     * Filters out any menu items for registered users/visitors
-     *
-     * @since 3.10.0
-     *
-     * @param $items
-     * @param $menu
-     * @param $args
-     *
-     * @return mixed
-     */
+    // Filters out any menu items for registered users/visitors
     function b3_filter_nav_menus( $items, $menu, $args ) {
         if ( ! is_admin() ) {
             if ( ! empty( $items ) ) {
@@ -305,16 +215,7 @@
     }
     add_filter( 'wp_get_nav_menu_items', 'b3_filter_nav_menus', 5, 3 );
 
-    /**
-     * Validates allowed usernames
-     *
-     * @since 3.11.0
-     *
-     * @param $valid
-     * @param $user_name
-     *
-     * @return false|mixed
-     */
+    // Validates allowed usernames
     function b3_check_username( $valid, $user_name ) {
         $disallowed_names = b3_get_disallowed_usernames();
 
@@ -329,16 +230,7 @@
     }
     add_filter( 'validate_username', 'b3_check_username', 10, 2 );
 
-    /**
-     * Hide password fields (if magic link is active)
-     *
-     * @since 3.11.0
-     *
-     * @param $show
-     * @param $current_user
-     *
-     * @return false|mixed
-     */
+    // Hide password fields (if magic link is active)
     function b3_show_password_fields( $show, $current_user ) {
         if ( get_option( 'b3_use_magic_link' ) ) {
             $show = false;
@@ -348,11 +240,7 @@
     }
     add_filter( 'show_password_fields', 'b3_show_password_fields', 10, 2 );
 
-    /**
-     * Remove admin bar for users who are not allowed to access admin
-     *
-     * @since 2.0.0
-     */
+    // Remove admin bar for users who are not allowed to access admin
     function b3_remove_admin_bar( $show ) {
         $hide_admin_bar = get_option( 'b3_hide_admin_bar' );
         if ( false != $hide_admin_bar ) {
