@@ -130,6 +130,7 @@
     add_action( 'init', 'b3_registration_tab_form_handling' );
 
     function b3_pages_tab_form_handling() {
+        // @TODO: add warning if saved in non default lang
         if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_pages_nonce' ] ) ), 'b3-pages-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
