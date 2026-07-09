@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) exit;
 
     function b3_add_honeypot_field( $fields ) {
-        if ( get_option( 'b3_honeypot' ) ) {
+        if ( ! is_admin() && ! empty( $fields ) && get_option( 'b3_honeypot' ) ) {
             $id          = 'b3_pooh';
             $input_class = '';
 
