@@ -66,7 +66,6 @@
             'b3_privacy_text'                          => [ 'string' ],
             'b3_recaptcha_public'                      => [ 'string' ],
             'b3_recaptcha_secret'                      => [ 'string' ],
-            'b3_redirect_after_register'               => [ 'url' ],
             'b3_register_for'                          => [ 'string' ],
             'b3_registration_access_requested_message' => [ 'string' ],
             'b3_registration_closed_message'           => [ 'string' ],

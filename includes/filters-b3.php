@@ -1,14 +1,7 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit;
 
-    /**
-     * Add honeypot field
-     *
-     * @param $fields
-     *
-     * @return mixed
-     */
-    function b3_add_honeypot( $fields ) {
+    function b3_add_honeypot_field( $fields ) {
         if ( get_option( 'b3_honeypot' ) ) {
             $id          = 'b3_pooh';
             $input_class = '';
@@ -31,13 +24,9 @@
         }
         return $fields;
     }
-    add_filter( 'b3_extra_fields', 'b3_add_honeypot' );
+    add_filter( 'b3_extra_fields', 'b3_add_honeypot_field' );
 
-    /**
-     * Validate custom fields
-     *
-     * @return array
-     */
+    // Validate extra/custom fields
     function b3_extra_fields_validation( $error_array = [] ) {
         $b3_onboarding      = new B3Onboarding();
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
@@ -70,15 +59,3 @@
         return $error_array;
     }
     add_filter( 'b3_extra_fields_validation', 'b3_extra_fields_validation' );
-
-    function b3_redirect_after_register( $url, $page_id ) {
-        if ( $url ) {
-            error_log('Redirect url in filter: '. $url);
-            if ( false != $url ) {
-                $url = add_query_arg( 'registered', 'success', $url );
-            }
-        }
-
-        return $url;
-    }
-    // add_filter( 'b3_redirect_after_register', 'b3_redirect_after_register',  10, 2 );
