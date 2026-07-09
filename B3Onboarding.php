@@ -366,10 +366,9 @@
             }
 
             public function b3_settings_link( $links ) {
-                $settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding' ), esc_html__( 'Settings', 'b3-onboarding' ) );
-                array_unshift( $links, $settings_link );
+                $settings_link = [ 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding' ), esc_html__( 'Settings', 'acf-city-selector' ) ) ];
 
-                return $links;
+                return array_merge( $settings_link, $links );
             }
 
             public function b3_load_users_page() {
