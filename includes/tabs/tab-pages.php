@@ -27,11 +27,9 @@
             'suppress_filters' => false,
         ] );
 
-        // @TODO: check in Sandbox & MS
+        // @TODO: check in Sandbox (also without WPML) & in MS
         $current_language = apply_filters( 'wpml_current_language', null );
-        // echo '<pre>'; var_dump($current_language); echo '</pre>'; exit;
         $default_lang     = apply_filters( 'wpml_default_language', null );
-        // echo '<pre>'; var_dump($default_lang); echo '</pre>'; exit;
 
         ob_start();
         ?>
@@ -82,7 +80,6 @@
                                     foreach( $all_pages as $active_page ) {
                                         if ( $current_language !== $default_lang ) {
                                             $translated_page_id = apply_filters( 'wpml_object_id', $active_page->ID, 'page', false, $current_language );
-                                            // echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $translated_page_id ), selected($translated_page_id, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
                                             echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected($active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( get_the_title( $translated_page_id ) ) );
                                         } else {
                                             echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected($active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
