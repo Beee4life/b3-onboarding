@@ -57,7 +57,7 @@
         }
 
         if ( (int) $log_out_page_id === $post_id ) {
-            $link = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $logout_link );
+            $link = add_query_arg( '_wpnonce', wp_create_nonce( 'logout' ), $link );
         }
 
         return $link;
