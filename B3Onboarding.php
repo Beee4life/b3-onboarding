@@ -76,6 +76,7 @@
                 add_action( 'init',                     [ $this, 'b3_check_magic_link' ] );
                 add_action( 'admin_notices',            [ $this, 'b3_admin_notices' ] );
                 add_action( 'load-users.php',           [ $this, 'b3_load_users_page' ] );
+                add_action( 'init',                     [ $this, 'b3_load_textdomain' ] );
 
                 if ( is_multisite() ) {
                     add_action( 'wp_initialize_site', [ $this, 'b3_after_create_site' ] );
@@ -145,6 +146,10 @@
                 if ( $stored !== $plugin_data[ 'Version' ] ) {
                     update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
                 }
+            }
+
+            public function b3_load_textdomain() {
+                load_plugin_textdomain( 'b3-onboarding', false, basename( dirname( __FILE__ ) ) . '/languages' );
             }
 
             public function b3_enqueue_scripts_frontend() {
