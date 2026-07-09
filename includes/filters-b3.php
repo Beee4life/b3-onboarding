@@ -70,3 +70,15 @@
         return $error_array;
     }
     add_filter( 'b3_extra_fields_validation', 'b3_extra_fields_validation' );
+
+    function b3_redirect_after_register( $url, $page_id ) {
+        if ( $url ) {
+            error_log('Redirect url in filter: '. $url);
+            if ( false != $url ) {
+                $url = add_query_arg( 'registered', 'success', $url );
+            }
+        }
+
+        return $url;
+    }
+    // add_filter( 'b3_redirect_after_register', 'b3_redirect_after_register',  10, 2 );
