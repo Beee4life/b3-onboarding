@@ -3,13 +3,7 @@
         exit;
     }
 
-    /**
-     * Render registration tab
-     *
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
+    // Render registration tab
     function b3_render_registration_tab() {
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );

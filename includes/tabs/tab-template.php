@@ -1,16 +1,9 @@
 <?php
-    /**
-     * Render template tab
-     *
-     * @since 3.7.0
-     *
-     * @return false|string
-     */
-
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
+    // Render template tab
     function b3_render_template_tab() {
         $fields           = [];
         $stored_email_styling  = get_option( 'b3_email_styling' );

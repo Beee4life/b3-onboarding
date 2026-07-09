@@ -1,11 +1,7 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit;
 
-    /*
-     * Input fields for the email logo
-     *
-     * @since 1.0.0
-     */
+    // Input fields for the email logo
     $main_logo = get_option( 'b3_main_logo' );
 ?>
 <table class="b3_table b3_table--emails">
@@ -20,7 +16,7 @@
             <label for="b3_main_logo"><?php esc_html_e( 'Logo', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <?php if ( false == apply_filters( 'b3_main_logo', false ) ) { ?>
+            <?php if ( ! apply_filters( 'b3_main_logo', false ) ) { ?>
                 <?php $logo_source = esc_url( $main_logo ); ?>
                 <div class="logo-fields">
                     <div>
@@ -36,14 +32,15 @@
                 </div>
             <?php } else { ?>
                 <?php $logo_source = apply_filters( 'b3_main_logo', false ); ?>
-                <?php esc_html_e( "You've set this logo with a filter.", 'b3-onboarding' ); ?>
-                <br>
-                <img src="<?php echo esc_url( apply_filters( 'b3_main_logo', false ) ) ; ?>" alt="" style="max-width: 300px;" />
             <?php } ?>
 
             <?php if ( $logo_source ) { ?>
                 <div>
-                    <img src="<?php echo esc_url( $main_logo ); ?>" alt="Your logo" class="preview-logo" style="max-width: 150px;" />
+                    <img src="<?php echo esc_url( $logo_source ); ?>" alt="Your logo" class="preview-logo" style="max-width: 150px;" />
+                    <?php if ( apply_filters( 'b3_main_logo', false ) ) { ?>
+                        <br>
+                        <?php esc_html_e( "You've set this logo with a filter.", 'b3-onboarding' ); ?>
+                    <?php } ?>
                 </div>
             <?php } ?>
         </td>

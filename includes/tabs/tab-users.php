@@ -3,13 +3,7 @@
         exit;
     }
 
-    /**
-     * Render emails tab
-     *
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
+    // Render users tab
     function b3_render_users_tab() {
         $activate_welcome_page      = get_option( 'b3_activate_welcome_page' );
         $disallowed_domains         = false;

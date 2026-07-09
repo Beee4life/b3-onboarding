@@ -3,13 +3,7 @@
         exit;
     }
 
-    /**
-     * Render pages tab
-     *
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
+    // Render pages tab
     function b3_render_pages_tab() {
         $b3_pages = b3_default_admin_pages();
 
@@ -49,7 +43,7 @@
                     <div class="b3_select-page__selector">
                         <?php
                             if ( $current_language !== $default_lang ) {
-                                // show what's stored in default language
+                                // show what's set in default language with localized items
                                 foreach( $all_pages as $active_page ) {
                                     $translated_id = apply_filters( 'wpml_object_id', $active_page->ID, 'page', true, $default_lang );
                                     if ( ! in_array( $translated_id, $b3_page_ids ) ) {

@@ -3,13 +3,7 @@
         exit;
     }
 
-    /**
-     * Render settings tab
-     *
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
+    // Render settings tab
     function b3_render_settings_tab() {
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
         $debug_info                 = get_option( 'b3_debug_info' );

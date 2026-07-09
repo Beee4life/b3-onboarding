@@ -3,19 +3,13 @@
         exit;
     }
 
-    /**
-     * Render emails tab
-     *
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
+    // Render emails tab
     function b3_render_emails_tab() {
         $activate_custom_emails = get_option( 'b3_activate_custom_emails' );
         $email_boxes            = b3_get_email_boxes();
         $link_color             = b3_get_link_color();
         $main_logo              = get_option( 'b3_main_logo' );
-        $filter_link_color      = apply_filters( 'b3_link_color', false );
+        $filter_link_color      = apply_filters( 'b3_link_color', false ); // used for setting
         $logo_in_email          = get_option( 'b3_logo_in_email' );
         $hide_logo_field        = $logo_in_email ? false : ' hidden';
         $hide_logo_notice       = $logo_in_email ? false : ' hidden';

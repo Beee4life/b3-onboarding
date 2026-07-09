@@ -3,13 +3,7 @@
         exit;
     }
 
-    /**
-     * Render recaptcha tab
-     *
-     * @since 2.0.0
-     *
-     * @return false|string
-     */
+    // Render reCaptcha tab
     function b3_render_recaptcha_tab() {
         $public_key        = get_option( 'b3_recaptcha_public' );
         $recaptcha_theme   = get_option( 'b3_recaptcha_theme', 'light' );
