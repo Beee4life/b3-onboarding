@@ -185,12 +185,12 @@
     function b3_filter_nav_menus( $items, $menu, $args ) {
         if ( ! is_admin() ) {
             if ( ! empty( $items ) ) {
-                $account_page        = get_option( 'b3_account_page_id' );
-                $login_page          = get_option( 'b3_login_page_id' );
-                $logout_page         = get_option( 'b3_logout_page_id' );
-                $lost_password_page  = get_option( 'b3_lost_password_page_id' );
-                $register_page       = get_option( 'b3_register_page_id' );
-                $reset_password_page = get_option( 'b3_reset_password_page_id' );
+                $account_page        = b3_get_account_url( true );
+                $login_page          = b3_get_login_url( true );
+                $logout_page         = b3_get_logout_url( true );
+                $lost_password_page  = b3_get_lostpassword_url( true );
+                $register_page       = b3_get_register_url( true );
+                $reset_password_page = b3_get_reset_password_url( true );
 
                 foreach( $items as $key => $menu_values ) {
                     if ( ! is_user_logged_in() && in_array( $menu_values->object_id, [
@@ -198,6 +198,7 @@
                             $logout_page,
                         ] ) ) {
                         unset( $items[ $key ] );
+
                     } elseif ( is_user_logged_in() && in_array( $menu_values->object_id, [
                             $login_page,
                             $lost_password_page,
