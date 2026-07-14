@@ -196,7 +196,6 @@
                     if ( ! is_user_logged_in() && in_array( $menu_values->object_id, [
                             $account_page,
                             $logout_page,
-                            $reset_password_page,
                         ] ) ) {
                         unset( $items[ $key ] );
                     } elseif ( is_user_logged_in() && in_array( $menu_values->object_id, [
