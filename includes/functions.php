@@ -527,7 +527,7 @@
                 if ( false != $blog_id && is_multisite() ) {
                     restore_current_blog();
                 }
-                return $lost_password_page_id;
+                return $reset_pass_page_id;
             }
             $reset_pass_link = get_the_permalink( $reset_pass_page_id );
             if ( false != $blog_id && is_multisite() ) {
