@@ -28,8 +28,8 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
-                        <input type="radio" name="b3_recaptcha_version" value="2" <?php checked($recaptcha_version, 2); ?> /> <?php esc_html_e( 'Challenges enabled', 'b3-onboarding' ); ?> (v2)
-                        <input type="radio" name="b3_recaptcha_version" value="3" <?php checked($recaptcha_version, 3); ?> /> <?php esc_html_e( 'Challenges disabled', 'b3-onboarding' ); ?> (v3)
+                        <input type="radio" name="b3_recaptcha_version" value="2" <?php checked($recaptcha_version, 2); ?> /> <?php esc_html_e( 'With challenges', 'b3-onboarding' ); ?> (v2)
+                        <input type="radio" name="b3_recaptcha_version" value="3" <?php checked($recaptcha_version, 3); ?> /> <?php esc_html_e( 'Silent', 'b3-onboarding' ); ?> (v3)
                     </label>
                 </div>
             <?php b3_get_close(); ?>
