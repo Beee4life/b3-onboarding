@@ -5,9 +5,9 @@
 
     // Render reCaptcha tab
     function b3_render_recaptcha_tab() {
-        $public_key        = get_option( 'b3_recaptcha_public' );
+        $public_key        = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );;
         $recaptcha_theme   = get_option( 'b3_recaptcha_theme', 'light' );
-        $recaptcha_version = get_option( 'b3_recaptcha_version', 2 );
+        $recaptcha_version = get_option( 'b3_recaptcha_version', 3 );
         $secret_key        = get_option( 'b3_recaptcha_secret' );
 
         ob_start();
@@ -28,9 +28,8 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
-                        <input type="radio" name="b3_recaptcha_version" value="2" <?php checked($recaptcha_version, 2); ?> /> 2
-                        <input type="radio" name="b3_recaptcha_version" value="3" <?php checked($recaptcha_version, 3); ?> /> 3
-                        <input type="radio" name="b3_recaptcha_version" value="migrated" <?php checked($recaptcha_version, 'migrated'); ?> /> <?php esc_html_e( 'Migrated', 'b3-onboarding' ); ?> (NEW)
+                        <input type="radio" name="b3_recaptcha_version" value="2" <?php checked($recaptcha_version, 2); ?> /> <?php esc_html_e( 'Challenges enabled', 'b3-onboarding' ); ?>
+                        <input type="radio" name="b3_recaptcha_version" value="3" <?php checked($recaptcha_version, 3); ?> /> <?php esc_html_e( 'Challenges disabled', 'b3-onboarding' ); ?>
                     </label>
                 </div>
             <?php b3_get_close(); ?>
