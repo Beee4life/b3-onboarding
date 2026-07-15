@@ -541,7 +541,7 @@
     }
 
     // Get account page id/link
-    function b3_get_user_approval_link( $return_id = false, $blog_id = false ) {
+    function b3_get_user_approval_url( $return_id = false, $blog_id = false ) {
         if ( true == get_option( 'b3_front_end_approval' ) ) {
             $user_approval_page_id = get_option( 'b3_approval_page_id' );
 

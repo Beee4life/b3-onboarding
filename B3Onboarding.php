@@ -256,14 +256,14 @@
                     }
                 }
 
-                if ( is_localhost() || get_option( 'b3_debug_info' ) ) {
+                if ( is_localhost() || get_option( 'b3_activate_debug_info' ) ) {
                     require_once $plugin_dir_path . 'admin/debug-page.php';
 
                     global $submenu;
                     $debug_exists = false;
                     if ( isset( $submenu[ 'b3-onboarding' ] ) ) {
                         foreach( $submenu[ 'b3-onboarding' ] as $item ) {
-                            if ( $item[2] === 'b3-debug' ) { // Index 2 is the menu slug
+                            if ( $item[ 2 ] === 'b3-debug' ) { // Index 2 is the menu slug
                                 $debug_exists = true;
                                 break;
                             }
@@ -285,7 +285,7 @@
             public function b3_template_redirect() {
                 $account_page_id  = b3_get_account_url( true );
                 $account_url      = b3_get_account_url();
-                $approval_page_id = b3_get_user_approval_link( true );
+                $approval_page_id = b3_get_user_approval_url( true );
                 $current_url      = b3_get_current_url();
                 $login_page_id    = b3_get_login_url( true );
                 $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
