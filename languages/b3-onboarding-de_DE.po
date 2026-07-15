@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
 "POT-Creation-Date: 2026-07-15 23:00+0200\n"
-"PO-Revision-Date: 2026-07-15 23:02+0200\n"
+"PO-Revision-Date: 2026-07-15 23:10+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -275,16 +275,12 @@ msgstr ""
 "(neu) erstellen."
 
 #: B3Onboarding.php:1011
-#, fuzzy
-#| msgid ""
-#| "You have successfully activated your account. Your password has been "
-#| "emailed to you."
 msgid ""
 "You have successfully activated your account but the site owner choose to "
 "manually approve each account. You will be notified of the outcome."
 msgstr ""
-"Du hast dein Konto erfolgreich aktiviert. Dein Passwort wurde dir per E-Mail "
-"zugesandt."
+"Du hast dein Konto erfolgreich aktiviert aber Eigner hat entschieden jede "
+"Registrierung zu bestätigen. Dein Passwort wurde dir per E-Mail zugesandt."
 
 #: B3Onboarding.php:1014
 msgid ""
@@ -426,14 +422,12 @@ msgstr ""
 "sie %s fest."
 
 #: B3Onboarding.php:1309
-#, fuzzy, php-format
-#| msgid ""
-#| "%s takes control over the 'Membership' option. You can change this %s."
+#, php-format
 msgid ""
 "%1$s takes control over the 'Membership' option. You can change this %2$s."
 msgstr ""
-"%s übernimmt die Kontrolle über die Option 'Mitgliedschaft'. Du kannst dies "
-"%s ändern."
+"%1$s übernimmt die Kontrolle über die Option 'Mitgliedschaft'. Du kannst "
+"dies %2$s ändern."
 
 #: admin/admin-page.php:15 admin/debug-page.php:14
 #: admin/user-approval-page.php:15
@@ -545,10 +539,9 @@ msgid ""
 msgstr ""
 
 #: admin/dashboard-widget-users.php:63
-#, fuzzy, php-format
-#| msgid "There %s %d %s pending email activation."
+#, php-format
 msgid "There %1$s %2$d %3$s pending email activation."
-msgstr "Es %s %d %s mit ausstehender E-Mail-Aktivierung."
+msgstr "Es %1$s %2$d %3$s mit ausstehender E-Mail-Aktivierung."
 
 #: admin/dashboard-widget-users.php:71 includes/functions.php:1022
 msgid "User name"
@@ -842,19 +835,15 @@ msgid "Filter verification active"
 msgstr "Filter-Verifizierung aktiv"
 
 #: includes/actions-wp.php:256
-#, fuzzy, php-format
-#| msgid ""
-#| "%s overrides the 'Registration' option and the 'Registration "
-#| "notification'. You can change the registration type %s and the "
-#| "registration notification %s."
+#, php-format
 msgid ""
 "%1$s overrides the 'Registration' option and the 'Registration "
 "notification'. You can change the registration type %2$s and the "
 "registration notification %3$s."
 msgstr ""
-"%s überschreibt die Option 'Registrierung' und die 'Registrierungs-"
-"Benachrichtigung'. Du kannst den Registrierungstyp %s und die "
-"Benachrichtigung %s ändern."
+"%1$s überschreibt die Option 'Registrierung' und die 'Registrierungs-"
+"Benachrichtigung'. Du kannst den Registrierungstyp %2$s und die "
+"Benachrichtigung %3$s ändern."
 
 #: includes/class-b3-shortcodes.php:30 includes/class-b3-shortcodes.php:157
 #: includes/class-b3-shortcodes.php:262 includes/class-b3-shortcodes.php:300
@@ -988,10 +977,9 @@ msgid "New user at %s"
 msgstr "Neuer Benutzer auf %s"
 
 #: includes/defaults.php:67
-#, fuzzy, php-format
-#| msgid "A new user registered at %s on %s."
+#, php-format
 msgid "A new user registered at %1$s on %2$s."
-msgstr "Ein neuer Benutzer hat sich auf %s am %s registriert."
+msgstr "Ein neuer Benutzer hat sich auf %1$s am %2$s registriert."
 
 #: includes/defaults.php:71
 #, php-format
@@ -1258,16 +1246,15 @@ msgid "[%network_name%] Activate your account"
 msgstr "[%network_name%] Aktiviere dein Konto"
 
 #: includes/defaults.php:368
-#, fuzzy, php-format
-#| msgid "To activate your registration, please click %s."
+#, php-format
 msgid "To activate your registration, please click %s or the button below."
-msgstr "Um deine Registrierung zu aktivieren, klicke bitte %s."
+msgstr ""
+"Um deine Registrierung zu aktivieren, klicke bitte %s oder den Button hier "
+"unter."
 
 #: includes/defaults.php:370
-#, fuzzy
-#| msgid "Account activated"
 msgid "Click to activate"
-msgstr "Konto aktiviert"
+msgstr "Klick hier zum aktivieren"
 
 #: includes/defaults.php:372
 msgid "After you activate, you will receive *another email* with your login."
@@ -1476,16 +1463,12 @@ msgid "PLEASE KEEP IN MIND"
 msgstr ""
 
 #: includes/emails/new-user-admin.php:24
-#, fuzzy
-#| msgid ""
-#| "<b>NOTE:</b> This email is sent after the user confirms his/her email "
-#| "address, not on initial registration."
 msgid ""
 "This email is sent after the user confirms his/her email address, not on "
 "initial registration."
 msgstr ""
-"<b>HINWEIS:</b> Diese E-Mail wird erst gesendet, wenn der Benutzer seine E-"
-"Mail-Adresse bestätigt hat, nicht bei der ersten Registrierung."
+"Diese E-Mail wird erst gesendet, wenn der Benutzer seine E-Mail-Adresse "
+"bestätigt hat, nicht bei der ersten Registrierung."
 
 #: includes/examples/email-filters.php:309
 msgid ""
@@ -1849,12 +1832,10 @@ msgid "Get support for resetting your password"
 msgstr "Support für das Zurücksetzen des Passworts erhalten"
 
 #: includes/tabs/tab-pages.php:34
-#, fuzzy
-#| msgid "Here you can set which pages are assigned for the various 'actions'."
 msgid "Here you can see which pages are set for the various 'actions'."
 msgstr ""
-"Hier kannst du festlegen, welche Seiten den verschiedenen 'Aktionen' "
-"zugewiesen sind."
+"Hier kannst du sehen, welche Seiten den verschiedenen 'Aktionen' zugewiesen "
+"sind."
 
 #: includes/tabs/tab-pages.php:34
 #, php-format
@@ -1889,10 +1870,8 @@ msgid "Visit"
 msgstr "Besuchen"
 
 #: includes/tabs/tab-pages.php:132
-#, fuzzy
-#| msgid "Links open in new tab."
 msgid "Links open in new tab/window."
-msgstr "Links öffnen sich in einem neuen Tab."
+msgstr "Links öffnen sich in einem neuen Tab/Fenster."
 
 #: includes/tabs/tab-recaptcha.php:56
 #, php-format
@@ -1996,13 +1975,12 @@ msgid "User is successfully rejected and the account is deleted."
 msgstr "Benutzer wurde abgelehnt und das Konto gelöscht."
 
 #: includes/verify-filters.php:107 includes/verify-filters.php:113
-#, fuzzy, php-format
-#| msgid ""
-#| "The email address \"%s\", which you set in the filter \"%s\", is invalid."
+#, php-format
 msgid ""
 "The email address \"%1$s\", which you set in the filter \"%2$s\", is invalid."
 msgstr ""
-"Die E-Mail-Adresse \"%s\", die im Filter \"%s\" gesetzt wurde, ist ungültig."
+"Die E-Mail-Adresse \"%1$s\", die im Filter \"%2$s\" gesetzt wurde, ist "
+"ungültig."
 
 #: includes/verify-filters.php:118
 #, php-format
@@ -2033,17 +2011,15 @@ msgid "The color, which you set in the filter \"%s\", is not invalid."
 msgstr "Die Farbe im Filter \"%s\" ist nicht ungültig."
 
 #: includes/verify-filters.php:145
-#, fuzzy, php-format
-#| msgid "The color (%s), which you set in the filter \"%s\", is not a string."
+#, php-format
 msgid ""
 "The color (%1$s), which you set in the filter \"%2$s\", is not a string."
-msgstr "Die Farbe (%s) im Filter \"%s\" ist kein String."
+msgstr "Die Farbe (%1$s) im Filter \"%2$s\" ist kein String."
 
 #: includes/verify-filters.php:148
-#, fuzzy, php-format
-#| msgid "The color (%s), which you set in the filter \"%s\", is invalid."
+#, php-format
 msgid "The color (%1$s), which you set in the filter \"%2$s\", is invalid."
-msgstr "Die Farbe (%s) im Filter \"%s\" ist ungültig."
+msgstr "Die Farbe (%1$s) im Filter \"%2$s\" ist ungültig."
 
 #: includes/verify-filters.php:157 includes/verify-filters.php:166
 #, php-format
@@ -2061,22 +2037,17 @@ msgid "The value, which you set in the filter \"%s\", is an empty array."
 msgstr "Der Wert im Filter \"%s\" ist ein leeres Array."
 
 #: includes/verify-filters.php:175
-#, fuzzy, php-format
-#| msgid ""
-#| "The field ID \"%s\", which you set in the filter \"%s\", is not a string."
+#, php-format
 msgid ""
 "The field ID \"%1$s\", which you set in the filter \"%2$s\", is not a string."
-msgstr "Die Feld-ID \"%s\" im Filter \"%s\" ist kein String."
+msgstr "Die Feld-ID \"%1$s\" im Filter \"%2$s\" ist kein String."
 
 #: includes/verify-filters.php:179
-#, fuzzy, php-format
-#| msgid ""
-#| "The field value \"%s\", which you set in the filter \"%s\", is not a "
-#| "string."
+#, php-format
 msgid ""
 "The field value \"%1$s\", which you set in the filter \"%2$s\", is not a "
 "string."
-msgstr "Der Feldwert \"%s\" im Filter \"%s\" ist kein String."
+msgstr "Der Feldwert \"%1$s\" im Filter \"%2$s\" ist kein String."
 
 #: includes/verify-filters.php:192
 #, php-format
@@ -2088,16 +2059,15 @@ msgid "You didn't set a field type for one of your fields."
 msgstr "Du hast für eines deiner Felder keinen Feldtyp festgelegt."
 
 #: includes/verify-filters.php:199
-#, fuzzy, php-format
-#| msgid "A label for the field \"%s\" in the filter \"%s\" is required."
+#, php-format
 msgid "A label for the field \"%1$s\" in the filter \"%2$s\" is required."
-msgstr "Für das Feld „%s“ im Filter „%s“ ist eine Bezeichnung erforderlich."
+msgstr ""
+"Für das Feld „%1$s“ im Filter „%2$s“ ist eine Bezeichnung erforderlich."
 
 #: includes/verify-filters.php:203
-#, fuzzy, php-format
-#| msgid "An ID for the field \"%s\" in the filter \"%s\" is required."
+#, php-format
 msgid "An ID for the field \"%1$s\" in the filter \"%2$s\" is required."
-msgstr "Eine ID für das Feld \"%s\" im Filter \"%s\" ist erforderlich."
+msgstr "Eine ID für das Feld \"%1$s\" im Filter \"%2$s\" ist erforderlich."
 
 #: includes/verify-filters.php:207
 #, php-format
@@ -2182,10 +2152,8 @@ msgid "your-blogname"
 msgstr ""
 
 #: templates/register/blogname.php:29
-#, fuzzy
-#| msgid "Email address"
 msgid "address"
-msgstr "E-Mail-Adresse"
+msgstr "Adresse"
 
 #: templates/register/register-for.php:14
 msgid "A site"
