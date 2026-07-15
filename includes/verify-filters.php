@@ -16,6 +16,7 @@
             'b3_account_approved_subject'              => [ 'string' ],
             'b3_account_rejected_message'              => [ 'string' ],
             'b3_account_rejected_subject'              => [ 'string' ],
+            'b3_activate_debug_info'                   => [ 'bool' ],
             'b3_attributes'                            => [ 'array' ],
             'b3_custom_register_inform'                => [ 'string' ],
             'b3_dashboard_url'                         => [ 'string' ],
