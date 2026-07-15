@@ -275,6 +275,7 @@
         if ( 'register' === $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
             $recaptcha_version  = get_option( 'b3_recaptcha_version' );
+
             if ( $activate_recaptcha && 3 == $recaptcha_version ) {
                 $button = sprintf( '<input type="submit" class="button g-recaptcha" data-sitekey="%s" data-callback="onSubmit" data-action="submit" value="%s" />', esc_attr( $attributes[ 'recaptcha' ][ 'public' ] ), esc_attr( $submit_value ) );
             }
@@ -760,6 +761,7 @@
 
         $recaptcha_secret = apply_filters( 'b3_recaptcha_secret', get_option( 'b3_recaptcha_secret' ) );
         $success          = false;
+
         if ( false != $recaptcha_secret ) {
             $response = wp_remote_post(
                 'https://www.google.com/recaptcha/api/siteverify', [
@@ -772,9 +774,24 @@
             $response_body = wp_remote_retrieve_body( $response );
             $response_code = wp_remote_retrieve_response_code( $response );
 
-            if ( 200 == $response_code && $response && is_array( $response ) ) {
+            if ( 200 == $response_code && $response && ! is_wp_error( $response ) ) {
                 $decoded_response = json_decode( $response_body );
-                $success          = $decoded_response->success;
+
+                if ( isset( $decoded_response->success ) && $decoded_response->success ) {
+                    $recaptcha_version = (int) get_option( 'b3_recaptcha_version' );
+
+                    if ( 3 === $recaptcha_version ) {
+                        // For v3, success isn't enough. We must check the score.
+                        // 0.5 is the recommended default threshold (0.0 is bot, 1.0 is human)
+                        $score = isset( $decoded_response->score ) ? (float) $decoded_response->score : 0;
+                        if ( $score >= 0.5 ) {
+                            $success = true;
+                        }
+                    } else {
+                        // For v2, simple success is sufficient
+                        $success = true;
+                    }
+                }
             }
         }
 
