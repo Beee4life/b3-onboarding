@@ -135,7 +135,7 @@
                     }
 
                     if ( 1 == get_option( 'b3_activate_recaptcha' ) && 'register' === $attributes[ 'template' ] ) {
-                        $recaptcha_public  = get_option( 'b3_recaptcha_public' );
+                        $recaptcha_public  = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );
                         $recaptcha_version = get_option( 'b3_recaptcha_version' );
 
                         $attributes[ 'recaptcha' ] = [
