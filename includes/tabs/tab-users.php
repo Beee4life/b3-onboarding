@@ -10,7 +10,7 @@
         $disallowed_domains_array    = apply_filters( 'b3_disallowed_domains', get_option( 'b3_disallowed_domains', [] ) );
         $disallowed_usernames_string = '';
         $disallowed_usernames_array  = apply_filters( 'b3_disallowed_usernames', get_option( 'b3_disallowed_usernames', [] ) );
-        $domain_restrictions         = get_option( 'b3_set_domain_restrictions' );
+        $domain_restrictions         = get_option( 'b3_activate_domain_restrictions' );
         $front_end_approval          = get_option( 'b3_front_end_approval' );
         $front_end_approval_page     = b3_get_user_approval_url();
         $hide_admin_bar              = get_option( 'b3_hide_admin_bar' );

@@ -89,7 +89,7 @@
             'b3_reset_password_page_id',
             'b3_restrict_admin',
             'b3_restrict_usernames',
-            'b3_set_domain_restrictions',
+            'b3_activate_domain_restrictions',
             'b3_sidebar_widget',
             'b3_use_magic_link',
             'b3_use_popup',

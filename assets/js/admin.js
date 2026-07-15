@@ -74,7 +74,7 @@
             $('.b3_settings-field--username-restrictions').toggle();
         });
 
-        $('#b3_set_domain_restrictions').change(function () {
+        $('#b3_activate_domain_restrictions').change(function () {
             $('.b3_settings-field--domain-restrictions').toggle();
         });
 
