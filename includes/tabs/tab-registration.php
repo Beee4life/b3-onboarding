@@ -9,7 +9,7 @@
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
         $honeypot                     = get_option( 'b3_honeypot' );
-        $privacy                      = get_option( 'b3_privacy' );
+        $activate_privacy_page        = get_option( 'b3_activate_privacy_page' );
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
         /* translators: click here link */
         $privacy_page_placeholder     = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
@@ -189,12 +189,12 @@
                             <label for="b3_privacy"><?php esc_html_e( 'Privacy', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php checked($privacy); ?>/>
+                            <input type="checkbox" id="b3_activate_privacy_page" name="b3_activate_privacy_page" value="1" <?php checked($activate_privacy_page); ?>/>
                             <?php esc_html_e( 'Activate a privacy checkbox.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_privacy_settings = ( 1 == $privacy ) ? false : true; ?>
+                    <?php $hide_privacy_settings = 1 == $activate_privacy_page ? false : true; ?>
                     <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>

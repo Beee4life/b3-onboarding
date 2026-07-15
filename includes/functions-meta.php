@@ -70,7 +70,7 @@
             'b3_notification_sender_email',
             'b3_notification_sender_name',
             'b3_preserve_settings',
-            'b3_privacy',
+            'b3_activate_privacy_page',
             'b3_privacy_page_id',
             'b3_privacy_text',
             'b3_recaptcha_public',

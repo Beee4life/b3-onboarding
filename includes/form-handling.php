@@ -105,10 +105,10 @@
                     delete_option( 'b3_privacy_page_id' );
                 }
 
-                if ( isset( $_POST[ 'b3_privacy' ] ) && 1 == (int) $_POST[ 'b3_privacy' ] ) {
-                    update_option( 'b3_privacy', 1, false );
+                if ( isset( $_POST[ 'b3_activate_privacy_page' ] ) && 1 == (int) $_POST[ 'b3_activate_privacy_page' ] ) {
+                    update_option( 'b3_activate_privacy_page', 1, false );
                 } else {
-                    delete_option( 'b3_privacy' );
+                    delete_option( 'b3_activate_privacy_page' );
                     delete_option( 'b3_privacy_page_id' );
                 }
 

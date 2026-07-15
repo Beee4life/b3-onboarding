@@ -54,7 +54,7 @@
             $('.b3_settings-field--first-last-required').toggle();
         });
 
-        $('#b3_privacy').change(function() {
+        $('#b3_activate_privacy_page').change(function() {
             $('.b3_settings-field--privacy').toggle();
         });
 
