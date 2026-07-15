@@ -300,7 +300,7 @@
         if ( false != get_option( 'b3_activate_recaptcha' ) ) {
             $recaptcha_public = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );
             if ( false != $recaptcha_public ) {
-                if ( '2' == get_option( 'b3_recaptcha_version', '2' ) ) {
+                if ( 2 === (int) get_option( 'b3_recaptcha_version') ) {
                     do_action( 'b3_do_before_recaptcha' );
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
