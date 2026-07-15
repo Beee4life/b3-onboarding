@@ -30,6 +30,7 @@
                     <label>
                         <input type="radio" name="b3_recaptcha_version" value="2" <?php checked($recaptcha_version, 2); ?> /> 2
                         <input type="radio" name="b3_recaptcha_version" value="3" <?php checked($recaptcha_version, 3); ?> /> 3
+                        <input type="radio" name="b3_recaptcha_version" value="migrated" <?php checked($recaptcha_version, 'migrated'); ?> /> <?php esc_html_e( 'Migrated', 'b3-onboarding' ); ?> (NEW)
                     </label>
                 </div>
             <?php b3_get_close(); ?>
