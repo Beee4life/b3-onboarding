@@ -2,7 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    
+
     /**
      * Return all custom meta keys
      *
@@ -11,7 +11,7 @@
      *
      */
     function b3_get_all_custom_meta_keys() {
-        
+
         // Keep this list updated
         $meta_keys = [
             'b3_account_activated_message',
@@ -23,6 +23,7 @@
             'b3_account_rejected_subject',
             'b3_activate_custom_emails',
             'b3_activate_custom_passwords',
+            'b3_activate_debug_info',
             'b3_activate_filter_validation',
             'b3_activate_first_last',
             'b3_activate_recaptcha',
@@ -38,7 +39,6 @@
             'b3_confirm_wpmu_user_site_subject',
             'b3_confirm_wpmu_user_subject',
             'b3_dashboard_widget',
-            'b3_debug_info',
             'b3_disable_action_links',
             'b3_disable_admin_notification_new_user',
             'b3_disable_admin_notification_password_change',
@@ -101,6 +101,6 @@
             'b3_welcome_user_message_manual',
             'b3ob_version',
         ];
-        
+
         return $meta_keys;
     }
