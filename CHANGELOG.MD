@@ -2,6 +2,7 @@
 
 3.16.0
 * add email replacement vars filter, so you can add previews for your own emails
+* change b3_get_user_approval_link() to b3_get_user_approval_url()
 
 3.15.1
 * fix incorrect option key to set password on registration
