@@ -6,7 +6,9 @@
     // Render settings tab
     function b3_render_settings_tab() {
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
-        $debug_info                 = get_option( 'b3_activate_debug_info' );
+        $debug_info_option          = get_option( 'b3_activate_debug_info' );
+        $debug_info_filter          = apply_filters( 'b3_activate_debug_info', false );
+        $debug_info                 = $debug_info_option || $debug_info_filter ? '1' : false;
         $disable_action_links       = apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links', false ) );
         $preserve_settings          = get_option( 'b3_preserve_settings' );
         $use_popup                  = get_option( 'b3_use_popup', false );
@@ -60,7 +62,10 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_debug_info" name="b3_activate_debug_info" value="1" <?php checked($debug_info); ?>/>
-                            <?php esc_html_e( "Activate the debug page.", 'b3-onboarding' ); ?>
+                            <?php esc_html_e( 'Activate the debug page.', 'b3-onboarding' ); ?>
+                            <?php if ( $debug_info_filter ) { ?>
+                            <?php echo ' (' . esc_html__( 'The debug page is activated by a filter', 'b3-onboarding' ) . ')'; ?>
+                            <?php } ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
