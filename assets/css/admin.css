@@ -318,6 +318,7 @@
   width: 80px;
 }
 
+/* @TODO: do I need this since now radio button */
 .b3 select#b3_recaptcha_version {
   width: 100px;
 }
