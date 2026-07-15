@@ -106,8 +106,6 @@
                                 } else {
                                     $page_id = 0;
                                 }
-
-                                // echo '<pre>'; var_dump($local_page_id); echo '</pre>'; exit;
                             } else {
                                 $page_id = $stored_page_id;
                             }
