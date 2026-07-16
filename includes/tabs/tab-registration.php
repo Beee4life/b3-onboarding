@@ -8,13 +8,13 @@
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
-        $honeypot                     = get_option( 'b3_activate_honeypot' );
-        $activate_privacy_page        = get_option( 'b3_activate_privacy_page' );
+        $activate_honeypot            = get_option( 'b3_activate_honeypot' ); // @TODO: add filter
+        $activate_privacy_page        = get_option( 'b3_activate_privacy_page' ); // @TODO: add filter
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
         /* translators: click here link */
         $privacy_page_placeholder     = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
-        $privacy_text                 = get_option( 'b3_privacy_text' );
-        $recaptcha                    = get_option( 'b3_activate_recaptcha' );
+        $privacy_text                 = get_option( 'b3_privacy_text' ); // @TODO: add filter
+        $recaptcha                    = get_option( 'b3_activate_recaptcha' ); // @TODO: add filter
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
         $use_magic_link               = get_option( 'b3_use_magic_link' );
@@ -179,7 +179,7 @@
                             <label for="b3_activate_honeypot"><?php esc_html_e( 'Honeypot', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_activate_honeypot" name="b3_activate_honeypot" value="1" <?php checked($honeypot); ?>/>
+                            <input type="checkbox" id="b3_activate_honeypot" name="b3_activate_honeypot" value="1" <?php checked($activate_honeypot); ?>/>
                             <?php esc_html_e( 'Activate a honeypot option.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
