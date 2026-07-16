@@ -1283,7 +1283,7 @@
                 }
 
                 // no page for front-end approval
-                if ( false == get_option( 'b3_approval_page_id' ) && true == get_option( 'b3_front_end_approval' ) ) {
+                if ( false == get_option( 'b3_approval_page_id' ) && 1 == (int) get_option( 'b3_activate_front_end_approval' ) ) {
                     /* translators: here */
                     echo sprintf( '<div class="error"><p>%s</p></div>', sprintf( esc_html__( 'You have not set a page for front-end user approval. Set it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
                 }

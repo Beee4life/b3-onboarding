@@ -6,6 +6,7 @@
 * change meta keys to reflect their function better
   * b3_activate_debug_info
   * b3_activate_domain_restrictions
+  * b3_activate_front_end_approval
   * b3_activate_honeypot
   * b3_activate_privacy_page
 * add new filters

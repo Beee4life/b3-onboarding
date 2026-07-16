@@ -557,7 +557,7 @@
             ],
         ];
 
-        if ( true == get_option( 'b3_front_end_approval' ) ) {
+        if ( 1 == (int) get_option( 'b3_activate_front_end_approval' ) ) {
             $front_end_approval = [
                 'id'      => 'approval_page',
                 'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),

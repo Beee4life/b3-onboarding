@@ -542,7 +542,7 @@
 
     // Get account page id/link
     function b3_get_user_approval_url( $return_id = false, $blog_id = false ) {
-        if ( true == get_option( 'b3_front_end_approval' ) ) {
+        if ( 1 == (int) get_option( 'b3_activate_front_end_approval' ) ) {
             $user_approval_page_id = get_option( 'b3_approval_page_id' );
 
             if ( $user_approval_page_id && get_post( $user_approval_page_id ) instanceof WP_Post ) {

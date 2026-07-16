@@ -439,9 +439,9 @@
             } else {
 
                 if ( isset( $_POST[ 'b3_activate_frontend_approval' ] ) && 1 == (int) $_POST[ 'b3_activate_frontend_approval' ] ) {
-                    update_option( 'b3_front_end_approval', 1, false );
+                    update_option( 'b3_activate_front_end_approval', 1, false );
                 } else {
-                    delete_option( 'b3_front_end_approval' );
+                    delete_option( 'b3_activate_front_end_approval' );
                     delete_option( 'b3_approval_page_id' );
                 }
 
