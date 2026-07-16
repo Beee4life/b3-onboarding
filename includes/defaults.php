@@ -117,12 +117,12 @@
     }
 
     function b3_default_request_access_message_admin() {
-        $approval_link                = b3_get_user_approval_url();
-        $user_approval_page           = ( false != $approval_link ) ? $approval_link : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
+        $approval_url       = b3_get_user_approval_url();
+        $user_approval_page = ( false != $approval_url ) ? $approval_url : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
         /* translators: link to user approval page */
-        $request_access_message_admin = sprintf( esc_html__( 'A new user has requested access. You can approve/deny him/her on the "%s" page.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $user_approval_page, esc_html__( 'User approval', 'b3-onboarding' ) ) );
+        $message            = sprintf( esc_html__( 'A new user has requested access. You can approve/deny him/her on the "%s" page.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $user_approval_page, esc_html__( 'User approval', 'b3-onboarding' ) ) );
 
-        return $request_access_message_admin;
+        return $message;
     }
 
     function b3_default_request_access_subject_user() {
