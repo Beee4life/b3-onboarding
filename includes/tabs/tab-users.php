@@ -12,7 +12,7 @@
         $disallowed_usernames_array  = apply_filters( 'b3_disallowed_usernames', get_option( 'b3_disallowed_usernames', [] ) );
         $domain_restrictions         = get_option( 'b3_activate_domain_restrictions' );
         $front_end_approval          = get_option( 'b3_front_end_approval' );
-        $front_end_approval_page     = b3_get_user_approval_url();
+        $front_end_approval_url      = b3_get_user_approval_url();
         $hide_admin_bar              = get_option( 'b3_hide_admin_bar' );
         $roles                       = get_editable_roles();
         $user_may_delete             = get_option( 'b3_user_may_delete' );
@@ -42,7 +42,7 @@
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_frontend_approval" name="b3_activate_frontend_approval" value="1" <?php checked($front_end_approval); ?>/>
                     <?php esc_html_e( 'Activate front-end user approval.', 'b3-onboarding' ); ?>
-                    <?php if ( false == $front_end_approval_page ) { ?>
+                    <?php if ( false == $front_end_approval_url ) { ?>
                         <?php $hide_user_approval_note = ( 1 == $front_end_approval ) ? false : ' hidden'; ?>
                         <?php echo sprintf( '<div class="b3_settings-input-description b3_settings-input-description--approval%s">%s</div>', esc_attr( $hide_user_approval_note ), esc_html__( 'You still need to set an approval page (after you save the settings).', 'b3-onboarding' ) ); ?>
                     <?php } ?>
