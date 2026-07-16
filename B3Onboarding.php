@@ -237,7 +237,7 @@
                     $approval_exists = false;
                     if ( isset( $submenu[ 'b3-onboarding' ] ) ) {
                         foreach( $submenu[ 'b3-onboarding' ] as $item ) {
-                            if ( $item[2] === 'b3-user-approval' ) { // Index 2 is the menu slug
+                            if ( $item[ 2 ] === 'b3-user-approval' ) { // Index 2 is the menu slug
                                 $approval_exists = true;
                                 break;
                             }
@@ -256,7 +256,7 @@
                     }
                 }
 
-                if ( is_localhost() || get_option( 'b3_activate_debug_info' ) ) {
+                if ( is_localhost() || get_option( 'b3_activate_debug_info' ) || apply_filters( 'b3_activate_debug_info', false ) ) {
                     require_once $plugin_dir_path . 'admin/debug-page.php';
 
                     global $submenu;
