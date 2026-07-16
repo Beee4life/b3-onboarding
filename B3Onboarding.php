@@ -495,7 +495,7 @@
                         $registration_type = get_option( 'b3_registration_type' );
                         $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( wp_unslash( $_POST[ 'user_email' ] ) ) : false;
 
-                        if ( get_option( 'b3_honeypot' ) && isset( $_POST[ 'b3_pooh' ] ) ) {
+                        if ( get_option( 'b3_activate_honeypot' ) && isset( $_POST[ 'b3_pooh' ] ) ) {
                             $errors = new WP_Error();
                             $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
 

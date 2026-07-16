@@ -8,7 +8,7 @@
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
-        $honeypot                     = get_option( 'b3_honeypot' );
+        $honeypot                     = get_option( 'b3_activate_honeypot' );
         $activate_privacy_page        = get_option( 'b3_activate_privacy_page' );
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
         /* translators: click here link */
@@ -176,10 +176,10 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_honeypot"><?php esc_html_e( 'Honeypot', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_honeypot"><?php esc_html_e( 'Honeypot', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_honeypot" name="b3_honeypot" value="1" <?php checked($honeypot); ?>/>
+                            <input type="checkbox" id="b3_activate_honeypot" name="b3_activate_honeypot" value="1" <?php checked($honeypot); ?>/>
                             <?php esc_html_e( 'Activate a honeypot option.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>

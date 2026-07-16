@@ -93,10 +93,10 @@
                     delete_option( 'b3_redirect_set_password' );
                 }
 
-                if ( isset( $_POST[ 'b3_honeypot' ] ) && 1 == (int) $_POST[ 'b3_honeypot' ] ) {
-                    update_option( 'b3_honeypot', 1, false );
+                if ( isset( $_POST[ 'b3_activate_honeypot' ] ) && 1 == (int) $_POST[ 'b3_activate_honeypot' ] ) {
+                    update_option( 'b3_activate_honeypot', 1, false );
                 } else {
-                    delete_option( 'b3_honeypot' );
+                    delete_option( 'b3_activate_honeypot' );
                 }
 
                 if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
