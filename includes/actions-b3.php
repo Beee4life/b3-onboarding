@@ -330,7 +330,7 @@
      * Function to output a privacy checkbox
      */
     function b3_add_privacy_checkbox() {
-        if ( true == get_option( 'b3_activate_privacy_page' ) ) {
+        if ( 1 === (int) get_option( 'b3_activate_privacy_page' ) ) {
             do_action( 'b3_render_form_element', 'register/privacy' );
         }
     }

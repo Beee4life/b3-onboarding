@@ -270,7 +270,7 @@
      * @return bool
      */
     function b3_verify_privacy() {
-        if ( '1' === get_option( 'b3_activate_privacy_page' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
+        if ( 1 === (int) get_option( 'b3_activate_privacy_page' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
             return false;
         }
 
@@ -319,7 +319,7 @@
     function b3_verify_email_domain( $email ) {
         $disallowed_domains = b3_get_disallowed_domain_names();
 
-        if ( get_option( 'b3_activate_domain_restrictions' ) && is_array( $disallowed_domains ) && ! empty( $disallowed_domains ) ) {
+        if ( 1 === (int) get_option( 'b3_activate_domain_restrictions' ) && is_array( $disallowed_domains ) && ! empty( $disallowed_domains ) ) {
             $domain_name = substr( strrchr( $email, '@' ), 1 );
 
             if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
