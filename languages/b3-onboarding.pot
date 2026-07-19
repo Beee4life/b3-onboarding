@@ -42,7 +42,7 @@ msgid "Debug info"
 msgstr ""
 
 #: B3Onboarding.php:369 admin/help-tabs.php:115 admin/help-tabs.php:130
-#: includes/class-b3-sidebar-widget.php:103 includes/functions.php:745
+#: includes/class-b3-sidebar-widget.php:103 includes/functions.php:759
 #: includes/tabs/tab-settings.php:17
 msgid "Settings"
 msgstr ""
@@ -77,7 +77,7 @@ msgid "This domain is not allowed to register."
 msgstr ""
 
 #: B3Onboarding.php:873
-msgid "Please enter a user name."
+msgid "Please enter a username."
 msgstr ""
 
 #: B3Onboarding.php:876
@@ -143,7 +143,7 @@ msgid "Usernames can only contain lowercase letters (a-z) and numbers."
 msgstr ""
 
 #: B3Onboarding.php:924
-msgid "That user name is not allowed, please choose another."
+msgid "That username is not allowed, please choose another."
 msgstr ""
 
 #: B3Onboarding.php:927 B3Onboarding.php:931
@@ -339,8 +339,8 @@ msgstr ""
 #: includes/actions-wp.php:258 includes/actions-wp.php:259
 #: includes/class-b3-shortcodes.php:75 includes/defaults.php:240
 #: includes/defaults.php:331 includes/defaults.php:368
-#: includes/tabs/tab-recaptcha.php:60 includes/tabs/tab-users.php:98
-#: includes/tabs/tab-users.php:149
+#: includes/tabs/tab-recaptcha.php:60 includes/tabs/tab-users.php:91
+#: includes/tabs/tab-users.php:144
 msgid "here"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgstr ""
 msgid "Styling"
 msgstr ""
 
-#: admin/dashboard-widget-emails.php:36 includes/functions.php:709
+#: admin/dashboard-widget-emails.php:36 includes/functions.php:723
 msgid "Template"
 msgstr ""
 
@@ -467,7 +467,7 @@ msgstr ""
 msgid "There %1$s %2$d %3$s pending email activation."
 msgstr ""
 
-#: admin/dashboard-widget-users.php:71 includes/functions.php:1022
+#: admin/dashboard-widget-users.php:71 includes/functions.php:1036
 msgid "User name"
 msgstr ""
 
@@ -504,7 +504,7 @@ msgstr ""
 msgid "not set"
 msgstr ""
 
-#: admin/help-tabs.php:27 admin/help-tabs.php:42 includes/functions.php:694
+#: admin/help-tabs.php:27 admin/help-tabs.php:42 includes/functions.php:708
 #: includes/tabs/tab-registration.php:26
 msgid "Registration"
 msgstr ""
@@ -541,7 +541,7 @@ msgstr ""
 msgid "activate privacy checkbox"
 msgstr ""
 
-#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:737
+#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:751
 #: includes/tabs/tab-pages.php:32
 msgid "Pages"
 msgstr ""
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Choose a page in your default language."
 msgstr ""
 
-#: admin/help-tabs.php:61 admin/help-tabs.php:90 includes/functions.php:702
+#: admin/help-tabs.php:61 admin/help-tabs.php:90 includes/functions.php:716
 #: includes/tabs/tab-emails.php:18
 msgid "Emails"
 msgstr ""
@@ -707,7 +707,7 @@ msgstr ""
 msgid "Your site(s)"
 msgstr ""
 
-#: includes/actions-wp.php:101 includes/functions.php:1071
+#: includes/actions-wp.php:101 includes/functions.php:1085
 msgid "Approve"
 msgstr ""
 
@@ -1242,7 +1242,7 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: includes/emails/email-styling.php:26 includes/functions.php:804
+#: includes/emails/email-styling.php:26 includes/functions.php:818
 msgid "Preview"
 msgstr ""
 
@@ -1467,55 +1467,55 @@ msgstr ""
 msgid "Visitor may register user + site (must register site)"
 msgstr ""
 
-#: includes/functions.php:719 includes/tabs/tab-users.php:31
+#: includes/functions.php:733 includes/tabs/tab-users.php:24
 msgid "Users"
 msgstr ""
 
-#: includes/functions.php:728 includes/tabs/tab-recaptcha.php:16
+#: includes/functions.php:742 includes/tabs/tab-recaptcha.php:16
 msgid "reCaptcha"
 msgstr ""
 
-#: includes/functions.php:1018
+#: includes/functions.php:1032
 msgid "Signup ID"
 msgstr ""
 
-#: includes/functions.php:1018 templates/account/user-id.php:14
+#: includes/functions.php:1032 templates/account/user-id.php:14
 msgid "User ID"
 msgstr ""
 
-#: includes/functions.php:1025
+#: includes/functions.php:1039
 msgid "First name"
 msgstr ""
 
-#: includes/functions.php:1026
+#: includes/functions.php:1040
 msgid "Last name"
 msgstr ""
 
-#: includes/functions.php:1029
+#: includes/functions.php:1043
 msgid "Email"
 msgstr ""
 
-#: includes/functions.php:1032
+#: includes/functions.php:1046
 msgid "Domain"
 msgstr ""
 
-#: includes/functions.php:1033
+#: includes/functions.php:1047
 msgid "Site name"
 msgstr ""
 
-#: includes/functions.php:1035
+#: includes/functions.php:1049
 msgid "Actions"
 msgstr ""
 
-#: includes/functions.php:1072
+#: includes/functions.php:1086
 msgid "Reject"
 msgstr ""
 
-#: includes/functions.php:1105
+#: includes/functions.php:1119
 msgid "Please enter your email address. You will receive an email with a link to login with a magic link."
 msgstr ""
 
-#: includes/functions.php:1113
+#: includes/functions.php:1127
 msgid "English"
 msgstr ""
 
@@ -1643,7 +1643,8 @@ msgstr ""
 msgid "Links are allowed."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:66
+#: includes/tabs/tab-settings.php:66 includes/tabs/tab-users.php:137
+#: includes/tabs/tab-users.php:162
 msgid "Set by filter"
 msgstr ""
 
@@ -1664,38 +1665,30 @@ msgstr ""
 msgid "to download the default."
 msgstr ""
 
-#: includes/tabs/tab-users.php:47
+#: includes/tabs/tab-users.php:40
 msgid "You still need to set an approval page (after you save the settings)."
 msgstr ""
 
-#: includes/tabs/tab-users.php:98
+#: includes/tabs/tab-users.php:91
 #, php-format
 msgid "This page can only be set with a filter (for now). See %s."
 msgstr ""
 
-#: includes/tabs/tab-users.php:149
+#: includes/tabs/tab-users.php:137
+msgid "Separate multiple usernames with a comma"
+msgstr ""
+
+#: includes/tabs/tab-users.php:144
 #, php-format
 msgid "Some usernames are excluded already by default, see them %s."
 msgstr ""
 
-#: includes/tabs/tab-users.php:150
-msgid "Separate user names with a space"
+#: includes/tabs/tab-users.php:162
+msgid "Separate multiple domain names with a comma"
 msgstr ""
 
-#: includes/tabs/tab-users.php:152
-msgid "separate multiple user names with a comma"
-msgstr ""
-
-#: includes/tabs/tab-users.php:174
+#: includes/tabs/tab-users.php:168
 msgid "Email addresses from these domains are not allowed to register."
-msgstr ""
-
-#: includes/tabs/tab-users.php:175
-msgid "Separate domain names with a space"
-msgstr ""
-
-#: includes/tabs/tab-users.php:177
-msgid "separate multiple domain names with a comma"
 msgstr ""
 
 #: includes/user-management-notices.php:6

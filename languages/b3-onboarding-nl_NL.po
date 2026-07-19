@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-07-19 12:30+0200\n"
-"PO-Revision-Date: 2026-07-19 12:30+0200\n"
+"POT-Creation-Date: 2026-07-19 14:05+0200\n"
+"PO-Revision-Date: 2026-07-19 14:05+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -46,7 +46,7 @@ msgid "Debug info"
 msgstr "Debug informatie"
 
 #: B3Onboarding.php:369 admin/help-tabs.php:115 admin/help-tabs.php:130
-#: includes/class-b3-sidebar-widget.php:103 includes/functions.php:745
+#: includes/class-b3-sidebar-widget.php:103 includes/functions.php:758
 #: includes/tabs/tab-settings.php:17
 msgid "Settings"
 msgstr "Instellingen"
@@ -82,7 +82,7 @@ msgid "This domain is not allowed to register."
 msgstr "Dit domein is niet toegestaan om te registreren."
 
 #: B3Onboarding.php:873
-msgid "Please enter a user name."
+msgid "Please enter a username."
 msgstr "Vul een gebruikersnaam in."
 
 #: B3Onboarding.php:876
@@ -156,7 +156,7 @@ msgstr ""
 "Gebruikersnamen kunnen alleen kleine letters (a-z) en nummers bevatten."
 
 #: B3Onboarding.php:924
-msgid "That user name is not allowed, please choose another."
+msgid "That username is not allowed, please choose another."
 msgstr "Deze gebruikersnaam is niet toegestaan, kies aub een andere."
 
 #: B3Onboarding.php:927 B3Onboarding.php:931
@@ -403,8 +403,8 @@ msgstr "Je hebt nog geen pagina ingesteld voor registratie. Stel dit %s in."
 #: includes/actions-wp.php:258 includes/actions-wp.php:259
 #: includes/class-b3-shortcodes.php:75 includes/defaults.php:240
 #: includes/defaults.php:331 includes/defaults.php:368
-#: includes/tabs/tab-recaptcha.php:60 includes/tabs/tab-users.php:98
-#: includes/tabs/tab-users.php:149
+#: includes/tabs/tab-recaptcha.php:60 includes/tabs/tab-users.php:91
+#: includes/tabs/tab-users.php:144
 msgid "here"
 msgstr "hier"
 
@@ -513,7 +513,7 @@ msgstr "Wachtwoord vergeten (gebruiker)"
 msgid "Styling"
 msgstr "Stijl"
 
-#: admin/dashboard-widget-emails.php:36 includes/functions.php:709
+#: admin/dashboard-widget-emails.php:36 includes/functions.php:722
 msgid "Template"
 msgstr "Template"
 
@@ -568,7 +568,7 @@ msgstr ""
 msgid "There %1$s %2$d %3$s pending email activation."
 msgstr "Er zijn %1$s %2$d %3$s in afwachting van email bevestiging."
 
-#: admin/dashboard-widget-users.php:71 includes/functions.php:1022
+#: admin/dashboard-widget-users.php:71 includes/functions.php:1035
 #: templates/register/user-login.php:9
 msgid "User name"
 msgstr "Gebruikersnaam"
@@ -611,7 +611,7 @@ msgstr "Een veld wordt alleen getoond indien deze een waarde heeft."
 msgid "not set"
 msgstr "niet ingesteld"
 
-#: admin/help-tabs.php:27 admin/help-tabs.php:42 includes/functions.php:694
+#: admin/help-tabs.php:27 admin/help-tabs.php:42 includes/functions.php:707
 #: includes/tabs/tab-registration.php:26
 msgid "Registration"
 msgstr "Registratie"
@@ -655,7 +655,7 @@ msgstr "activeer honeypot"
 msgid "activate privacy checkbox"
 msgstr "activeer privacy checkbox"
 
-#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:737
+#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:750
 #: includes/tabs/tab-pages.php:32
 msgid "Pages"
 msgstr "Pagina's"
@@ -673,7 +673,7 @@ msgstr ""
 msgid "Choose a page in your default language."
 msgstr "Kies een pagina in je default taal."
 
-#: admin/help-tabs.php:61 admin/help-tabs.php:90 includes/functions.php:702
+#: admin/help-tabs.php:61 admin/help-tabs.php:90 includes/functions.php:715
 #: includes/tabs/tab-emails.php:18
 msgid "Emails"
 msgstr "Emails"
@@ -907,7 +907,7 @@ msgstr "Registreren"
 msgid "Your site(s)"
 msgstr "Je site(s)"
 
-#: includes/actions-wp.php:101 includes/functions.php:1071
+#: includes/actions-wp.php:101 includes/functions.php:1084
 msgid "Approve"
 msgstr "Goedkeuren"
 
@@ -1626,7 +1626,7 @@ msgstr "Indien niet ingevuld, dan wordt de default styling gebruikt."
 msgid "Email styling"
 msgstr "E-mail stijl"
 
-#: includes/emails/email-styling.php:26 includes/functions.php:804
+#: includes/emails/email-styling.php:26 includes/functions.php:817
 msgid "Preview"
 msgstr "Preview"
 
@@ -1662,7 +1662,8 @@ msgstr "Kies een logo"
 
 #: includes/emails/logo.php:42 includes/tabs/tab-emails.php:32
 #: includes/tabs/tab-recaptcha.php:45 includes/tabs/tab-recaptcha.php:55
-#: includes/tabs/tab-settings.php:66
+#: includes/tabs/tab-settings.php:66 includes/tabs/tab-users.php:137
+#: includes/tabs/tab-users.php:162
 msgid "Set by filter"
 msgstr "Ingesteld door filter"
 
@@ -1979,53 +1980,53 @@ msgid "Visitor may register user + site (must register site)"
 msgstr ""
 "Gebruiker mag registreren voor een account + site (moet site registreren)"
 
-#: includes/functions.php:719 includes/tabs/tab-users.php:31
+#: includes/functions.php:732 includes/tabs/tab-users.php:24
 msgid "Users"
 msgstr "Gebruikers"
 
-#: includes/functions.php:728 includes/tabs/tab-recaptcha.php:16
+#: includes/functions.php:741 includes/tabs/tab-recaptcha.php:16
 msgid "reCaptcha"
 msgstr "reCaptcha"
 
-#: includes/functions.php:1018
+#: includes/functions.php:1031
 msgid "Signup ID"
 msgstr "Registratie ID"
 
-#: includes/functions.php:1018 templates/account/user-id.php:14
+#: includes/functions.php:1031 templates/account/user-id.php:14
 msgid "User ID"
 msgstr "Gebruikers ID"
 
-#: includes/functions.php:1025 templates/account/first-last.php:9
+#: includes/functions.php:1038 templates/account/first-last.php:9
 #: templates/register/first-name.php:12
 msgid "First name"
 msgstr "Voornaam"
 
-#: includes/functions.php:1026 templates/account/first-last.php:19
+#: includes/functions.php:1039 templates/account/first-last.php:19
 #: templates/register/last-name.php:12
 msgid "Last name"
 msgstr "Achternaam"
 
-#: includes/functions.php:1029 templates/register/user-email.php:8
+#: includes/functions.php:1042 templates/register/user-email.php:8
 msgid "Email"
 msgstr "Email"
 
-#: includes/functions.php:1032
+#: includes/functions.php:1045
 msgid "Domain"
 msgstr "Domein"
 
-#: includes/functions.php:1033
+#: includes/functions.php:1046
 msgid "Site name"
 msgstr "Site naam"
 
-#: includes/functions.php:1035
+#: includes/functions.php:1048
 msgid "Actions"
 msgstr "Acties"
 
-#: includes/functions.php:1072
+#: includes/functions.php:1085
 msgid "Reject"
 msgstr "Weigeren"
 
-#: includes/functions.php:1105
+#: includes/functions.php:1118
 msgid ""
 "Please enter your email address. You will receive an email with a link to "
 "login with a magic link."
@@ -2033,7 +2034,7 @@ msgstr ""
 "Vul je email adres in. Je ontvangt dan een email met een link om in te "
 "loggen met een 'magische login link'."
 
-#: includes/functions.php:1113
+#: includes/functions.php:1126
 msgid "English"
 msgstr "Engels"
 
@@ -2419,114 +2420,106 @@ msgstr "opent in een nieuw window"
 msgid "to download the default."
 msgstr "om de default te downloaden."
 
-#: includes/tabs/tab-users.php:40
+#: includes/tabs/tab-users.php:33
 msgid "Front-end user approval"
 msgstr "Front-end gebruiker goedkeuring"
 
-#: includes/tabs/tab-users.php:44
+#: includes/tabs/tab-users.php:37
 msgid "Activate front-end user approval."
 msgstr "Activeer gebruiker goedkeuring op de front-end."
 
-#: includes/tabs/tab-users.php:47
+#: includes/tabs/tab-users.php:40
 msgid "You still need to set an approval page (after you save the settings)."
 msgstr ""
 "Je moet nog een approval pagina instellen (nadat je de instellingen hebt "
 "opgeslagen)."
 
-#: includes/tabs/tab-users.php:54
+#: includes/tabs/tab-users.php:47
 msgid "Restrict admin access"
 msgstr "Beperk admin toegang"
 
-#: includes/tabs/tab-users.php:90
+#: includes/tabs/tab-users.php:83
 msgid "Welcome page"
 msgstr "Welkomstpagina"
 
-#: includes/tabs/tab-users.php:94
+#: includes/tabs/tab-users.php:87
 msgid "Redirect the user to a 'welcome' page after his first login."
 msgstr "Redirect de gebruiker naar een 'welkomst' pagina, na de eerste login."
 
 #. translators: link to filter for 'welcome page'
-#: includes/tabs/tab-users.php:98
+#: includes/tabs/tab-users.php:91
 #, php-format
 msgid "This page can only be set with a filter (for now). See %s."
 msgstr ""
 "Deze pagina kan alleen (nu) alleen met een filter worden ingesteld. Zie %s."
 
-#: includes/tabs/tab-users.php:106
+#: includes/tabs/tab-users.php:99
 msgid "Remove 'welcome_page_seen' meta"
 msgstr "Verwijder 'welcome_page_seen' meta"
 
-#: includes/tabs/tab-users.php:110
+#: includes/tabs/tab-users.php:103
 msgid ""
 "Clear the 'welcome_page_seen' meta for all users, so you can show a new page."
 msgstr ""
 "Verwijder de 'welcome_page_seen' meta voor alle gebruikers, zodat je een "
 "nieuwe pagina kan tonen."
 
-#: includes/tabs/tab-users.php:117
+#: includes/tabs/tab-users.php:110
 msgid "Hide admin bar"
 msgstr "Verberg admin bar"
 
-#: includes/tabs/tab-users.php:121
+#: includes/tabs/tab-users.php:114
 msgid "Hide the admin bar for user roles which don't have admin access."
 msgstr "Verberg de admin bar voor gebruikers die geen admin toegang hebben."
 
-#: includes/tabs/tab-users.php:135
-msgid "Disallow user names"
+#: includes/tabs/tab-users.php:128
+msgid "Disallow usernames"
 msgstr "Sluit gebruikersnamen uit"
 
-#: includes/tabs/tab-users.php:139
-msgid "Block certain user names from registering."
+#: includes/tabs/tab-users.php:132
+msgid "Block certain usernames from registering."
 msgstr "Blokkeer bepaalde gebruikersnamen voor registratie."
 
-#: includes/tabs/tab-users.php:145
+#: includes/tabs/tab-users.php:137
+msgid "Separate multiple usernames with a comma"
+msgstr "Scheid meerdere gebruikersnamen met een komma"
+
+#: includes/tabs/tab-users.php:140
 msgid "User names"
 msgstr "Gebruikersnamen"
 
 #. translators: link to function for 'default reserved usernames'
-#: includes/tabs/tab-users.php:149
+#: includes/tabs/tab-users.php:144
 #, php-format
 msgid "Some usernames are excluded already by default, see them %s."
 msgstr "Sommige gebruikersnamen zijn default al uitgesloten, zie ze %s."
 
-#: includes/tabs/tab-users.php:150
-msgid "Separate user names with a space"
-msgstr "Scheid gebruikers namen met een spatie"
-
-#: includes/tabs/tab-users.php:152
-msgid "separate multiple user names with a comma"
-msgstr "scheid meerdere gebruikers namen met een komma"
-
-#: includes/tabs/tab-users.php:161
+#: includes/tabs/tab-users.php:153
 msgid "Disallow domains"
 msgstr "Sluit domeinen uit"
 
-#: includes/tabs/tab-users.php:165
+#: includes/tabs/tab-users.php:157
 msgid "Block certain domains from registering."
 msgstr "Blokeer bepaalde domeinen voor registratie."
 
-#: includes/tabs/tab-users.php:171
+#: includes/tabs/tab-users.php:162
+msgid "Separate multiple domain names with a comma"
+msgstr "Scheid meerdere domein namen met een komma"
+
+#: includes/tabs/tab-users.php:165
 msgid "Domain names"
 msgstr "Domeinnamen"
 
-#: includes/tabs/tab-users.php:174
+#: includes/tabs/tab-users.php:168
 msgid "Email addresses from these domains are not allowed to register."
 msgstr ""
 "Email adressen met deze domeins zijn niet toegestaan om te registreren."
 
-#: includes/tabs/tab-users.php:175
-msgid "Separate domain names with a space"
-msgstr "Scheid domein namen namen met een spatie"
-
 #: includes/tabs/tab-users.php:177
-msgid "separate multiple domain names with a comma"
-msgstr "scheid meerdere domein namen met een komma"
-
-#: includes/tabs/tab-users.php:186
 msgid "User may delete account"
 msgstr "Gebruiker mag account verwijderen"
 
-#: includes/tabs/tab-users.php:190
+#: includes/tabs/tab-users.php:181
 msgid "Allow the user to delete his/her account (through custom profile page)."
 msgstr ""
 "Sta de gebruiker zijn/haar account te laten verwijderen (via custom profiel "
@@ -2844,6 +2837,12 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "Separate user names with a space"
+#~ msgstr "Scheid gebruikers namen met een spatie"
+
+#~ msgid "Separate domain names with a space"
+#~ msgstr "Scheid domein namen namen met een spatie"
 
 #~ msgid "The debug page is activated by a filter"
 #~ msgstr "De debug page is geactiveerd door een filter"
