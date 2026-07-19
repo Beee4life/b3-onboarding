@@ -43,7 +43,7 @@ msgstr ""
 
 #: B3Onboarding.php:369 admin/help-tabs.php:115 admin/help-tabs.php:130
 #: includes/class-b3-sidebar-widget.php:103 includes/functions.php:745
-#: includes/tabs/tab-settings.php:15
+#: includes/tabs/tab-settings.php:17
 msgid "Settings"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr ""
 msgid "An unkown error has occured. Please try again."
 msgstr ""
 
-#: B3Onboarding.php:902 includes/form-handling.php:763
+#: B3Onboarding.php:902 includes/form-handling.php:762
 msgid "Unlawful form entry, try again."
 msgstr ""
 
@@ -312,7 +312,7 @@ msgstr ""
 msgid "Profile saved"
 msgstr ""
 
-#: B3Onboarding.php:1073 includes/form-handling.php:634
+#: B3Onboarding.php:1073 includes/form-handling.php:633
 msgid "Settings saved"
 msgstr ""
 
@@ -339,7 +339,7 @@ msgstr ""
 #: includes/actions-wp.php:258 includes/actions-wp.php:259
 #: includes/class-b3-shortcodes.php:75 includes/defaults.php:240
 #: includes/defaults.php:331 includes/defaults.php:368
-#: includes/tabs/tab-recaptcha.php:56 includes/tabs/tab-users.php:98
+#: includes/tabs/tab-recaptcha.php:60 includes/tabs/tab-users.php:98
 #: includes/tabs/tab-users.php:149
 msgid "here"
 msgstr ""
@@ -449,7 +449,7 @@ msgid "user"
 msgstr ""
 
 #: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:15
-#: includes/tabs/tab-settings.php:92 includes/tabs/tab-template.php:44
+#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:44
 msgid "Click here"
 msgstr ""
 
@@ -1270,7 +1270,7 @@ msgstr ""
 msgid "You have successfully requested access. Someone will check your request."
 msgstr ""
 
-#: includes/examples/form-filters.php:41
+#: includes/examples/form-filters.php:40
 msgid "Placeholder text"
 msgstr ""
 
@@ -1335,51 +1335,51 @@ msgstr ""
 msgid "We're sorry, that domain is blocked from registering."
 msgstr ""
 
-#: includes/form-handling.php:7 includes/form-handling.php:136
-#: includes/form-handling.php:168 includes/form-handling.php:451
-#: includes/form-handling.php:475 includes/form-handling.php:552
-#: includes/form-handling.php:588 includes/form-handling.php:653
+#: includes/form-handling.php:7 includes/form-handling.php:131
+#: includes/form-handling.php:414 includes/form-handling.php:438
+#: includes/form-handling.php:515 includes/form-handling.php:552
+#: includes/form-handling.php:587 includes/form-handling.php:652
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: includes/form-handling.php:126
+#: includes/form-handling.php:122
 msgid "Registration settings saved"
 msgstr ""
 
-#: includes/form-handling.php:159
-msgid "Pages settings saved"
-msgstr ""
-
-#: includes/form-handling.php:182
+#: includes/form-handling.php:145
 msgid "That is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:318
+#: includes/form-handling.php:281
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:442
+#: includes/form-handling.php:405
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:466
+#: includes/form-handling.php:429
 msgid "Template settings saved"
 msgstr ""
 
-#: includes/form-handling.php:543
+#: includes/form-handling.php:506
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:579
+#: includes/form-handling.php:542
 msgid "reCaptcha settings saved"
 msgstr ""
 
-#: includes/form-handling.php:632
+#: includes/form-handling.php:578
+msgid "Pages settings saved"
+msgstr ""
+
+#: includes/form-handling.php:631
 msgid "You have successfully resetted all settings. Remember to set your pages again, before you log out !"
 msgstr ""
 
-#: includes/form-handling.php:726
+#: includes/form-handling.php:725
 msgid "You do not have permission to edit this user."
 msgstr ""
 
@@ -1471,7 +1471,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: includes/functions.php:728 includes/tabs/tab-recaptcha.php:14
+#: includes/functions.php:728 includes/tabs/tab-recaptcha.php:16
 msgid "reCaptcha"
 msgstr ""
 
@@ -1612,12 +1612,12 @@ msgstr ""
 msgid "Links open in new tab/window."
 msgstr ""
 
-#: includes/tabs/tab-recaptcha.php:56
+#: includes/tabs/tab-recaptcha.php:60
 #, php-format
 msgid "Get your (free) reCaptcha keys %s."
 msgstr ""
 
-#: includes/tabs/tab-recaptcha.php:70
+#: includes/tabs/tab-recaptcha.php:74
 msgid "Save reCaptcha"
 msgstr ""
 
@@ -1643,7 +1643,11 @@ msgstr ""
 msgid "Links are allowed."
 msgstr ""
 
-#: includes/tabs/tab-settings.php:92
+#: includes/tabs/tab-settings.php:66
+msgid "Set by filter"
+msgstr ""
+
+#: includes/tabs/tab-settings.php:95
 #, php-format
 msgid "%s to see what it does exactly."
 msgstr ""
@@ -1679,7 +1683,7 @@ msgid "Separate user names with a space"
 msgstr ""
 
 #: includes/tabs/tab-users.php:152
-msgid "separate multiple user names with a space"
+msgid "separate multiple user names with a comma"
 msgstr ""
 
 #: includes/tabs/tab-users.php:174
@@ -1691,7 +1695,7 @@ msgid "Separate domain names with a space"
 msgstr ""
 
 #: includes/tabs/tab-users.php:177
-msgid "separate multiple domain names with a space"
+msgid "separate multiple domain names with a comma"
 msgstr ""
 
 #: includes/user-management-notices.php:6
@@ -1706,101 +1710,101 @@ msgstr ""
 msgid "User is successfully rejected and the account is deleted."
 msgstr ""
 
-#: includes/verify-filters.php:107 includes/verify-filters.php:113
+#: includes/verify-filters.php:108 includes/verify-filters.php:114
 #, php-format
 msgid "The email address \"%1$s\", which you set in the filter \"%2$s\", is invalid."
 msgstr ""
 
-#: includes/verify-filters.php:118
+#: includes/verify-filters.php:119
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not a string or an array."
 msgstr ""
 
-#: includes/verify-filters.php:124
+#: includes/verify-filters.php:125
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not an integer."
 msgstr ""
 
-#: includes/verify-filters.php:129
+#: includes/verify-filters.php:130
 #, php-format
 msgid "The url, which you set in the filter \"%s\", is not a valid url."
 msgstr ""
 
-#: includes/verify-filters.php:134
+#: includes/verify-filters.php:135
 #, php-format
 msgid "The url, which you set in the filter \"%s\", does not exist or is unreachable."
 msgstr ""
 
-#: includes/verify-filters.php:142
+#: includes/verify-filters.php:143
 #, php-format
 msgid "The color, which you set in the filter \"%s\", is not invalid."
 msgstr ""
 
-#: includes/verify-filters.php:145
+#: includes/verify-filters.php:146
 #, php-format
 msgid "The color (%1$s), which you set in the filter \"%2$s\", is not a string."
 msgstr ""
 
-#: includes/verify-filters.php:148
+#: includes/verify-filters.php:149
 #, php-format
 msgid "The color (%1$s), which you set in the filter \"%2$s\", is invalid."
 msgstr ""
 
-#: includes/verify-filters.php:157 includes/verify-filters.php:166
+#: includes/verify-filters.php:158 includes/verify-filters.php:167
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not an array."
 msgstr ""
 
-#: includes/verify-filters.php:160
+#: includes/verify-filters.php:161
 #, php-format
 msgid "There are 1 or more errors in the filter \"%s\"."
 msgstr ""
 
-#: includes/verify-filters.php:169
+#: includes/verify-filters.php:170
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is an empty array."
 msgstr ""
 
-#: includes/verify-filters.php:175
+#: includes/verify-filters.php:176
 #, php-format
 msgid "The field ID \"%1$s\", which you set in the filter \"%2$s\", is not a string."
 msgstr ""
 
-#: includes/verify-filters.php:179
+#: includes/verify-filters.php:180
 #, php-format
 msgid "The field value \"%1$s\", which you set in the filter \"%2$s\", is not a string."
 msgstr ""
 
-#: includes/verify-filters.php:192
+#: includes/verify-filters.php:193
 #, php-format
 msgid "You didn't set a field type for \"%s\"."
 msgstr ""
 
-#: includes/verify-filters.php:194 includes/verify-filters.php:220
+#: includes/verify-filters.php:195 includes/verify-filters.php:221
 msgid "You didn't set a field type for one of your fields."
 msgstr ""
 
-#: includes/verify-filters.php:199
+#: includes/verify-filters.php:200
 #, php-format
 msgid "A label for the field \"%1$s\" in the filter \"%2$s\" is required."
 msgstr ""
 
-#: includes/verify-filters.php:203
+#: includes/verify-filters.php:204
 #, php-format
 msgid "An ID for the field \"%1$s\" in the filter \"%2$s\" is required."
 msgstr ""
 
-#: includes/verify-filters.php:207
+#: includes/verify-filters.php:208
 #, php-format
 msgid "An ID and label for your option in the filter \"%s\" is required."
 msgstr ""
 
-#: includes/verify-filters.php:218
+#: includes/verify-filters.php:219
 #, php-format
 msgid "You didn't set any options for the field \"%s\"."
 msgstr ""
 
-#: includes/verify-filters.php:232
+#: includes/verify-filters.php:233
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not a string."
 msgstr ""

@@ -39,7 +39,7 @@
                     <img src="<?php echo esc_url( $logo_source ); ?>" alt="Your logo" class="preview-logo" style="max-width: 150px;" />
                     <?php if ( apply_filters( 'b3_main_logo', false ) ) { ?>
                         <br>
-                        <?php esc_html_e( "You've set this logo with a filter.", 'b3-onboarding' ); ?>
+                        <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
                     <?php } ?>
                 </div>
             <?php } ?>

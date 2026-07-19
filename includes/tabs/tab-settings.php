@@ -63,9 +63,7 @@
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_debug_info" name="b3_activate_debug_info" value="1" <?php checked($debug_info); ?>/>
                             <?php esc_html_e( 'Activate the debug page.', 'b3-onboarding' ); ?>
-                            <?php if ( $debug_info_filter ) { ?>
-                            <?php echo ' (' . esc_html__( 'The debug page is activated by a filter', 'b3-onboarding' ) . ')'; ?>
-                            <?php } ?>
+                            <?php if ( $debug_info_filter ) { echo ' (' . esc_html__( 'Set by filter', 'b3-onboarding' ) . ')'; } ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>

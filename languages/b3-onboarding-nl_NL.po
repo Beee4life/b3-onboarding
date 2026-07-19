@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-07-15 22:59+0200\n"
-"PO-Revision-Date: 2026-07-15 23:00+0200\n"
+"POT-Creation-Date: 2026-07-19 12:30+0200\n"
+"PO-Revision-Date: 2026-07-19 12:30+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -47,7 +47,7 @@ msgstr "Debug informatie"
 
 #: B3Onboarding.php:369 admin/help-tabs.php:115 admin/help-tabs.php:130
 #: includes/class-b3-sidebar-widget.php:103 includes/functions.php:745
-#: includes/tabs/tab-settings.php:15
+#: includes/tabs/tab-settings.php:17
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -124,7 +124,7 @@ msgstr "Je code lijkt ongeldig te zijn. Probeer het aub nog een keer."
 msgid "An unkown error has occured. Please try again."
 msgstr "Er is een onbekende fout opgetreden. Probeer later nog eens."
 
-#: B3Onboarding.php:902 includes/form-handling.php:763
+#: B3Onboarding.php:902 includes/form-handling.php:762
 msgid "Unlawful form entry, try again."
 msgstr "Illegaal form verzoek, probeer opnieuw."
 
@@ -371,7 +371,7 @@ msgstr "Je account is verwijderd."
 msgid "Profile saved"
 msgstr "Profiel opgeslagen"
 
-#: B3Onboarding.php:1073 includes/form-handling.php:634
+#: B3Onboarding.php:1073 includes/form-handling.php:633
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
@@ -403,7 +403,7 @@ msgstr "Je hebt nog geen pagina ingesteld voor registratie. Stel dit %s in."
 #: includes/actions-wp.php:258 includes/actions-wp.php:259
 #: includes/class-b3-shortcodes.php:75 includes/defaults.php:240
 #: includes/defaults.php:331 includes/defaults.php:368
-#: includes/tabs/tab-recaptcha.php:56 includes/tabs/tab-users.php:98
+#: includes/tabs/tab-recaptcha.php:60 includes/tabs/tab-users.php:98
 #: includes/tabs/tab-users.php:149
 msgid "here"
 msgstr "hier"
@@ -539,7 +539,7 @@ msgstr[0] "gebruiker"
 msgstr[1] "gebruikers"
 
 #: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:15
-#: includes/tabs/tab-settings.php:92 includes/tabs/tab-template.php:44
+#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:44
 msgid "Click here"
 msgstr "Klik hier"
 
@@ -1660,9 +1660,11 @@ msgstr "Logo"
 msgid "Choose a logo"
 msgstr "Kies een logo"
 
-#: includes/emails/logo.php:42
-msgid "You've set this logo with a filter."
-msgstr "Je hebt dit logo met een filter ingesteld."
+#: includes/emails/logo.php:42 includes/tabs/tab-emails.php:32
+#: includes/tabs/tab-recaptcha.php:45 includes/tabs/tab-recaptcha.php:55
+#: includes/tabs/tab-settings.php:66
+msgid "Set by filter"
+msgstr "Ingesteld door filter"
 
 #: includes/emails/lost-password.php:36
 msgid ""
@@ -1745,7 +1747,7 @@ msgid ""
 msgstr ""
 "Je hebt succesvol toegang aangevraagd. Iemand zal je verzoek beoordelen."
 
-#: includes/examples/form-filters.php:41
+#: includes/examples/form-filters.php:40
 msgid "Placeholder text"
 msgstr "Placeholder tekst"
 
@@ -1841,48 +1843,48 @@ msgstr "Verstuur activatie"
 msgid "We're sorry, that domain is blocked from registering."
 msgstr "Sorry, dit domein is geblokkeerd van registratie."
 
-#: includes/form-handling.php:7 includes/form-handling.php:136
-#: includes/form-handling.php:168 includes/form-handling.php:451
-#: includes/form-handling.php:475 includes/form-handling.php:552
-#: includes/form-handling.php:588 includes/form-handling.php:653
+#: includes/form-handling.php:7 includes/form-handling.php:131
+#: includes/form-handling.php:414 includes/form-handling.php:438
+#: includes/form-handling.php:515 includes/form-handling.php:552
+#: includes/form-handling.php:587 includes/form-handling.php:652
 msgid "Something went wrong, please try again."
 msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
 
-#: includes/form-handling.php:126
+#: includes/form-handling.php:122
 msgid "Registration settings saved"
 msgstr "Registratie instellingen opgeslagen"
 
-#: includes/form-handling.php:159
-msgid "Pages settings saved"
-msgstr "Pagina instellingen opgeslagen"
-
-#: includes/form-handling.php:182
+#: includes/form-handling.php:145
 msgid "That is not a valid email address."
 msgstr "Dit is geen geldig email adres."
 
 #. translators: email address
-#: includes/form-handling.php:318
+#: includes/form-handling.php:281
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr "\"%s\" is geen geldig email adres."
 
-#: includes/form-handling.php:442
+#: includes/form-handling.php:405
 msgid "Email settings saved"
 msgstr "Email instellingen opgeslagen"
 
-#: includes/form-handling.php:466
+#: includes/form-handling.php:429
 msgid "Template settings saved"
 msgstr "Template instellingen opgeslagen"
 
-#: includes/form-handling.php:543
+#: includes/form-handling.php:506
 msgid "User settings saved"
 msgstr "Gebruikersinstellingen opgeslagen"
 
-#: includes/form-handling.php:579
+#: includes/form-handling.php:542
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha instellingen opgeslagen"
 
-#: includes/form-handling.php:632
+#: includes/form-handling.php:578
+msgid "Pages settings saved"
+msgstr "Pagina instellingen opgeslagen"
+
+#: includes/form-handling.php:631
 msgid ""
 "You have successfully resetted all settings. Remember to set your pages "
 "again, before you log out !"
@@ -1890,7 +1892,7 @@ msgstr ""
 "Je hebt je succesvol alle instellingen gereset. Vergeet niet je pagina's "
 "opnieuw in te stellen voordat je uitlogt !"
 
-#: includes/form-handling.php:726
+#: includes/form-handling.php:725
 msgid "You do not have permission to edit this user."
 msgstr "Je hebt niet voldoende rechten om deze gebruiker te bewerken."
 
@@ -1981,7 +1983,7 @@ msgstr ""
 msgid "Users"
 msgstr "Gebruikers"
 
-#: includes/functions.php:728 includes/tabs/tab-recaptcha.php:14
+#: includes/functions.php:728 includes/tabs/tab-recaptcha.php:16
 msgid "reCaptcha"
 msgstr "reCaptcha"
 
@@ -2109,10 +2111,6 @@ msgstr "Krijg support voor het resetten van je wachtwoord"
 msgid "Link color"
 msgstr "Link kleur"
 
-#: includes/tabs/tab-emails.php:32
-msgid "The 'b3_link_color' filter is active which sets the link color."
-msgstr "Het ‘b3_link_color’ filter is actief, welke de kleur bepaalt."
-
 #: includes/tabs/tab-emails.php:39
 msgid "Custom email styling/template"
 msgstr "Eigen email stijl/template"
@@ -2172,45 +2170,45 @@ msgstr "Bezoek"
 msgid "Links open in new tab/window."
 msgstr "Links openen in een nieuwe tab/venster."
 
-#: includes/tabs/tab-recaptcha.php:17
+#: includes/tabs/tab-recaptcha.php:19
 msgid "Here you can set the reCaptcha settings."
 msgstr "Hier kan je reCaptcha opties instellen."
 
-#: includes/tabs/tab-recaptcha.php:19
+#: includes/tabs/tab-recaptcha.php:21
 msgid "Both keys must be entered, for reCaptcha to work."
 msgstr "Beide sleutels moeten worden ingevuld, om reCaptcha te laten werken."
 
-#: includes/tabs/tab-recaptcha.php:27
+#: includes/tabs/tab-recaptcha.php:29
 msgid "reCaptcha version"
 msgstr "reCaptcha versie"
 
-#: includes/tabs/tab-recaptcha.php:31
+#: includes/tabs/tab-recaptcha.php:33
 msgid "With challenges"
 msgstr "Met puzzels"
 
-#: includes/tabs/tab-recaptcha.php:32
+#: includes/tabs/tab-recaptcha.php:34
 msgid "Silent"
 msgstr "Stil"
 
-#: includes/tabs/tab-recaptcha.php:39
+#: includes/tabs/tab-recaptcha.php:41
 msgid "Public key"
 msgstr "Publieke sleutel"
 
-#: includes/tabs/tab-recaptcha.php:48
+#: includes/tabs/tab-recaptcha.php:51
 msgid "Secret key"
 msgstr "Prive sleutel"
 
 #. translators: here
-#: includes/tabs/tab-recaptcha.php:56
+#: includes/tabs/tab-recaptcha.php:60
 #, php-format
 msgid "Get your (free) reCaptcha keys %s."
 msgstr "Haal je (gratis) reCaptcha sleutels %s."
 
-#: includes/tabs/tab-recaptcha.php:60
+#: includes/tabs/tab-recaptcha.php:64
 msgid "reCaptcha theme"
 msgstr "reCaptcha thema"
 
-#: includes/tabs/tab-recaptcha.php:70
+#: includes/tabs/tab-recaptcha.php:74
 msgid "Save reCaptcha"
 msgstr "ReCaptcha opslaan"
 
@@ -2339,34 +2337,34 @@ msgstr "Privacy tekst"
 msgid "Privacy page"
 msgstr "Privacy pagina"
 
-#: includes/tabs/tab-settings.php:24
+#: includes/tabs/tab-settings.php:26
 msgid "Disable action links"
 msgstr "Schakel actie links uit"
 
-#: includes/tabs/tab-settings.php:28
+#: includes/tabs/tab-settings.php:30
 msgid "Hide the action links on forms."
 msgstr "Verberg de actie links op formulieren."
 
-#: includes/tabs/tab-settings.php:34
+#: includes/tabs/tab-settings.php:36
 msgid "Use popup"
 msgstr "Gebruik popup"
 
-#: includes/tabs/tab-settings.php:38
+#: includes/tabs/tab-settings.php:40
 msgid ""
 "Show the login form in a popup (only available for the login link in the B3 "
 "widget)."
 msgstr ""
 "Activeer een popup voor de login link (alleen beschikbaar in de B3 widget)."
 
-#: includes/tabs/tab-settings.php:44
+#: includes/tabs/tab-settings.php:46
 msgid "Activate filter validation"
 msgstr "Activeer filter validatie"
 
-#: includes/tabs/tab-settings.php:48
+#: includes/tabs/tab-settings.php:50
 msgid "Activate the validation of all custom filters."
 msgstr "Activeer filter validatie voor alle custom filters."
 
-#: includes/tabs/tab-settings.php:51
+#: includes/tabs/tab-settings.php:53
 msgid ""
 "Don't forget to turn it of later on, the validation can cause a higher load "
 "time."
@@ -2374,24 +2372,24 @@ msgstr ""
 "Vergeet niet om dit later uit te schakelen, want validatie kan een hogere "
 "laadtijd veroorzaken."
 
-#: includes/tabs/tab-settings.php:59
+#: includes/tabs/tab-settings.php:61
 msgid "Activate debug info page"
 msgstr "Activeer debug info pagina"
 
-#: includes/tabs/tab-settings.php:63
+#: includes/tabs/tab-settings.php:65
 msgid "Activate the debug page."
 msgstr "Activeer de debug pagina."
 
-#: includes/tabs/tab-settings.php:70
+#: includes/tabs/tab-settings.php:73
 msgid "Preserve settings"
 msgstr "Bewaar instellingen"
 
-#: includes/tabs/tab-settings.php:76
+#: includes/tabs/tab-settings.php:79
 msgid "To remove the data upon plugin removal, uncheck this box."
 msgstr ""
 "Om de data te verwijderen bij plugin verwijdering, deselecteer deze checkbox."
 
-#: includes/tabs/tab-settings.php:78
+#: includes/tabs/tab-settings.php:81
 msgid ""
 "When removing the plugin, all data is removed. To prevent this from "
 "happening, check this box."
@@ -2399,16 +2397,16 @@ msgstr ""
 "Wanneer je de plugin verwijderd, wordt alle data ook verwijderd. Deze "
 "instelling voorkomt dat."
 
-#: includes/tabs/tab-settings.php:86
+#: includes/tabs/tab-settings.php:89
 msgid "Reset to default"
 msgstr "Reset to standaard instellingen"
 
-#: includes/tabs/tab-settings.php:90
+#: includes/tabs/tab-settings.php:93
 msgid "This option resets everything back to 'factory settings'."
 msgstr "Deze optie reset alles terug naar de standaard instellingen."
 
 #. translators: link to faq for 'reset to default settings'
-#: includes/tabs/tab-settings.php:92
+#: includes/tabs/tab-settings.php:95
 #, php-format
 msgid "%s to see what it does exactly."
 msgstr "%s om te lezen wat het precies doet."
@@ -2496,8 +2494,8 @@ msgid "Separate user names with a space"
 msgstr "Scheid gebruikers namen met een spatie"
 
 #: includes/tabs/tab-users.php:152
-msgid "separate multiple user names with a space"
-msgstr "scheid meerdere gebruikers namen met een spatie"
+msgid "separate multiple user names with a comma"
+msgstr "scheid meerdere gebruikers namen met een komma"
 
 #: includes/tabs/tab-users.php:161
 msgid "Disallow domains"
@@ -2521,8 +2519,8 @@ msgid "Separate domain names with a space"
 msgstr "Scheid domein namen namen met een spatie"
 
 #: includes/tabs/tab-users.php:177
-msgid "separate multiple domain names with a space"
-msgstr "scheid meerdere domein namen met een spatie"
+msgid "separate multiple domain names with a comma"
+msgstr "scheid meerdere domein namen met een komma"
 
 #: includes/tabs/tab-users.php:186
 msgid "User may delete account"
@@ -2550,7 +2548,7 @@ msgid "User is successfully rejected and the account is deleted."
 msgstr "Gebruiker succesvol geweigerd en de account is verwijderd."
 
 #. translators: 1. email address, 2. name of filter in error
-#: includes/verify-filters.php:107 includes/verify-filters.php:113
+#: includes/verify-filters.php:108 includes/verify-filters.php:114
 #, php-format
 msgid ""
 "The email address \"%1$s\", which you set in the filter \"%2$s\", is invalid."
@@ -2559,26 +2557,26 @@ msgstr ""
 "niet geldig."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:118
+#: includes/verify-filters.php:119
 #, php-format
 msgid ""
 "The value, which you set in the filter \"%s\", is not a string or an array."
 msgstr "De waarde die je hebt ingesteld in het filter \"%s\" is geen string."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:124
+#: includes/verify-filters.php:125
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not an integer."
 msgstr "De waarde die je hebt ingesteld in het filter \"%s\" is geen integer."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:129
+#: includes/verify-filters.php:130
 #, php-format
 msgid "The url, which you set in the filter \"%s\", is not a valid url."
 msgstr "De url die je hebt ingesteld in het filter \"%s\" is geen geldige url."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:134
+#: includes/verify-filters.php:135
 #, php-format
 msgid ""
 "The url, which you set in the filter \"%s\", does not exist or is "
@@ -2588,13 +2586,13 @@ msgstr ""
 "onbereikbaar."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:142
+#: includes/verify-filters.php:143
 #, php-format
 msgid "The color, which you set in the filter \"%s\", is not invalid."
 msgstr "De kleur die je hebt ingesteld in het filter \"%s\" is niet geldig."
 
 #. translators: 1. color, 2. name of filter in error
-#: includes/verify-filters.php:145
+#: includes/verify-filters.php:146
 #, php-format
 msgid ""
 "The color (%1$s), which you set in the filter \"%2$s\", is not a string."
@@ -2602,33 +2600,33 @@ msgstr ""
 "De kleur (%1$s) die je hebt ingesteld in het filter \"%2$s\" is geen string."
 
 #. translators: 1. color, 2. name of filter in error
-#: includes/verify-filters.php:148
+#: includes/verify-filters.php:149
 #, php-format
 msgid "The color (%1$s), which you set in the filter \"%2$s\", is invalid."
 msgstr ""
 "De kleur (%1$s) die je hebt ingesteld in het filter \"%2$s\" is niet geldig."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:157 includes/verify-filters.php:166
+#: includes/verify-filters.php:158 includes/verify-filters.php:167
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not an array."
 msgstr "De waarde die je hebt ingesteld in het filter \"%s\" is geen array."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:160
+#: includes/verify-filters.php:161
 #, php-format
 msgid "There are 1 or more errors in the filter \"%s\"."
 msgstr "Er zijn 1 of meer fouten in het filter \"%s\"."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:169
+#: includes/verify-filters.php:170
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is an empty array."
 msgstr ""
 "De waarde die je hebt ingesteld in het filter \"%s\" is een lege array."
 
 #. translators: 1. field id, 2. name of filter in error
-#: includes/verify-filters.php:175
+#: includes/verify-filters.php:176
 #, php-format
 msgid ""
 "The field ID \"%1$s\", which you set in the filter \"%2$s\", is not a string."
@@ -2637,7 +2635,7 @@ msgstr ""
 "string."
 
 #. translators: 1. field value, 2. name of filter in error
-#: includes/verify-filters.php:179
+#: includes/verify-filters.php:180
 #, php-format
 msgid ""
 "The field value \"%1$s\", which you set in the filter \"%2$s\", is not a "
@@ -2647,41 +2645,41 @@ msgstr ""
 "string."
 
 #. translators: field name/id in error
-#: includes/verify-filters.php:192
+#: includes/verify-filters.php:193
 #, php-format
 msgid "You didn't set a field type for \"%s\"."
 msgstr "Je hebt geen veld type ingesteld voor \"%s\"."
 
-#: includes/verify-filters.php:194 includes/verify-filters.php:220
+#: includes/verify-filters.php:195 includes/verify-filters.php:221
 msgid "You didn't set a field type for one of your fields."
 msgstr "Je hebt geen veld type ingesteld voor één van je velden."
 
 #. translators: 1. field name, 2. name of filter in error
-#: includes/verify-filters.php:199
+#: includes/verify-filters.php:200
 #, php-format
 msgid "A label for the field \"%1$s\" in the filter \"%2$s\" is required."
 msgstr "Een label voor het veld \"%1$s\" in het filter \"%2$s\" is verplicht."
 
 #. translators: 1. field name, 2. name of filter in error
-#: includes/verify-filters.php:203
+#: includes/verify-filters.php:204
 #, php-format
 msgid "An ID for the field \"%1$s\" in the filter \"%2$s\" is required."
 msgstr "Een ID voor het veld \"%1$s\" in het filter \"%2$s\" is verplicht."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:207
+#: includes/verify-filters.php:208
 #, php-format
 msgid "An ID and label for your option in the filter \"%s\" is required."
 msgstr "Een ID en label voor je optie in het filter \"%s\" is verplicht."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:218
+#: includes/verify-filters.php:219
 #, php-format
 msgid "You didn't set any options for the field \"%s\"."
 msgstr "Je hebt geen opties ingesteld voor het veld \"%s\"."
 
 #. translators: name of filter in error
-#: includes/verify-filters.php:232
+#: includes/verify-filters.php:233
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not a string."
 msgstr "De waarde die je hebt ingesteld in het filter \"%s\" is geen string."
@@ -2846,6 +2844,15 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "The debug page is activated by a filter"
+#~ msgstr "De debug page is geactiveerd door een filter"
+
+#~ msgid "You've set this logo with a filter."
+#~ msgstr "Je hebt dit logo met een filter ingesteld."
+
+#~ msgid "The 'b3_link_color' filter is active which sets the link color."
+#~ msgstr "Het ‘b3_link_color’ filter is actief, welke de kleur bepaalt."
 
 #, fuzzy
 #~| msgid "Something went wrong, please try again."

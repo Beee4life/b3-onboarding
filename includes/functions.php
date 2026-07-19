@@ -172,7 +172,7 @@
             $main_logo = b3_default_main_logo();
         }
 
-        return apply_filters( 'b3_main_logo', $main_logo );;
+        return apply_filters( 'b3_main_logo', $main_logo );
     }
 
     // Get the 'registration closed' message

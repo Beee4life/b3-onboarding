@@ -29,7 +29,7 @@
                     <?php b3_get_close(); ?>
                     <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
                     <?php if ( $filter_link_color ) { ?>
-                        <?php esc_html_e( "The 'b3_link_color' filter is active which sets the link color.", 'b3-onboarding' ); ?>
+                        <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
                     <?php } ?>
                 <?php b3_get_close(); ?>
 
