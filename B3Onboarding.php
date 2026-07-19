@@ -33,6 +33,7 @@
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
                     'registration_type' => get_option( 'b3_registration_type', 'closed' ),
+                    'version'           => '3.16.0',
                 ];
 
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
@@ -83,6 +84,7 @@
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
                 $plugin_dir_path = plugin_dir_path(__FILE__);
+                require_once $plugin_dir_path . 'admin/help-tabs.php';
                 require_once $plugin_dir_path . 'includes/true-false.php';
                 require_once $plugin_dir_path . 'includes/actions.php';
                 require_once $plugin_dir_path . 'includes/class-b3-shortcodes.php';
@@ -94,7 +96,6 @@
                 require_once $plugin_dir_path . 'includes/redirects.php';
                 require_once $plugin_dir_path . 'includes/form-handling.php';
                 require_once $plugin_dir_path . 'includes/tabs/tabs.php';
-                require_once $plugin_dir_path . 'admin/help-tabs.php';
             }
 
             public function b3_plugin_activation() {
@@ -219,10 +220,9 @@
                 );
 
                 if ( get_option( 'b3_needs_admin_approval' ) ) {
-                    require_once $plugin_dir_path . 'admin/user-approval-page.php';
-
                     global $submenu;
                     $approval_exists = false;
+
                     if ( isset( $submenu[ 'b3-onboarding' ] ) ) {
                         foreach( $submenu[ 'b3-onboarding' ] as $item ) {
                             if ( $item[ 2 ] === 'b3-user-approval' ) { // Index 2 is the menu slug
@@ -233,6 +233,7 @@
                     }
 
                     if ( ! $approval_exists ) {
+                        require_once $plugin_dir_path . 'admin/user-approval-page.php';
                         add_submenu_page(
                             'b3-onboarding',
                             'B3 OnBoarding - ' . esc_html__( 'User Approval', 'b3-onboarding' ),
@@ -245,7 +246,6 @@
                 }
 
                 if ( is_localhost() || get_option( 'b3_activate_debug_info' ) || apply_filters( 'b3_activate_debug_info', false ) ) {
-
                     global $submenu;
                     $debug_exists = false;
 
@@ -277,7 +277,7 @@
                 $approval_page_id = b3_get_user_approval_url( true );
                 $current_url      = b3_get_current_url();
                 $login_page_id    = b3_get_login_url( true );
-                $login_url        = ( false != $login_page_id ) ? get_the_permalink( $login_page_id ) : wp_login_url();
+                $login_url        = b3_get_login_url();
                 $logout_page_id   = b3_get_logout_url( true );
 
                 if ( is_page() ) {
@@ -315,16 +315,6 @@
                         }
 
                         $redirect_url = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $user );
-                    }
-
-                    if ( is_home() || is_front_page() ) {
-                        if ( isset( $_REQUEST[ 'logout' ] ) ) {
-                            check_admin_referer( 'logout' );
-                            $user = wp_get_current_user();
-                            wp_logout();
-                            $redirect_to  = home_url();
-                            $redirect_url = apply_filters( 'logout_redirect', $redirect_to, '', $user );
-                        }
                     }
                 }
 
@@ -1241,10 +1231,9 @@
             }
 
             public function b3_admin_notices() {
-                $show_error   = false;
-                $show_warning = false;
-                static $error_shown = false;
-                static $warning_shown = false;
+                static $no_frontend_approval_shown = false;
+                static $no_registration_page_shown = false;
+                static $dev_message_shown = false;
 
                 $screen_ids = [
                     'toplevel_page_b3-onboarding',
@@ -1255,23 +1244,24 @@
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
                     if ( strpos( $this->settings[ 'version' ], 'dev' ) !== false || strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
                         /* translators: plugin name */
-                        $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
-                        if ( false == apply_filters( 'b3_hide_development_notice', false ) && ! $warning_shown ) {
-                            $warning_shown = true;
-                            echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', esc_html( $warning_message ) );
+                        $dev_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
+                        if ( false == apply_filters( 'b3_hide_development_notice', false ) && ! $dev_message_shown ) {
+                            $dev_message_shown = true;
+                            echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', esc_html( $dev_message ) );
                         }
                     }
 
-                    if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) && ! $error_shown ) {
+                    if ( 'none' == get_option( 'b3_registration_type' ) && false != get_option( 'b3_register_page_id' ) && ! $no_registration_page_shown ) {
                         /* translators: here */
-                        $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                        $error_shown   = true;
-                        echo sprintf( '<div class="error"><p>%s</p></div>', $error_message );
+                        $no_registration_page       = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                        $no_registration_page_shown = true;
+                        echo sprintf( '<div class="error"><p>%s</p></div>', $no_registration_page );
                     }
                 }
 
                 // no page for front-end approval
-                if ( false == get_option( 'b3_approval_page_id' ) && 1 == (int) get_option( 'b3_activate_front_end_approval' ) ) {
+                if ( false == get_option( 'b3_approval_page_id' ) && 1 == (int) get_option( 'b3_activate_front_end_approval' ) && ! $no_frontend_approval_shown ) {
+                    $no_frontend_approval_shown = true;
                     /* translators: here */
                     echo sprintf( '<div class="error"><p>%s</p></div>', sprintf( esc_html__( 'You have not set a page for front-end user approval. Set it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
                 }
