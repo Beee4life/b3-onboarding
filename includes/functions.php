@@ -839,8 +839,6 @@
             switch_to_blog( $blog_id );
         }
 
-        $plugin_data = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . b3_get_plugin_file( 'B3 OnBoarding' ) );
-        update_option( 'b3ob_version', $plugin_data[ 'Version' ], false );
         update_option( 'b3_disable_admin_notification_password_change', 1, false );
         update_option( 'b3_logo_in_email', 1, false );
 

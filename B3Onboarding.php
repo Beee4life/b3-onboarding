@@ -33,7 +33,6 @@
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
                     'registration_type' => get_option( 'b3_registration_type', 'closed' ),
-                    'version'           => get_option( 'b3ob_version', '3.16.0' ),
                 ];
 
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
@@ -63,7 +62,6 @@
                 add_action( 'wp_enqueue_scripts',       [ $this, 'b3_add_recaptcha_js_to_footer' ] );
                 add_action( 'login_enqueue_scripts',    [ $this, 'b3_add_recaptcha_js_to_footer' ] );
                 add_action( 'wp_head',                  [ $this, 'b3_add_rc3' ] );
-                add_action( 'admin_init',               [ $this, 'b3_set_version' ] );
                 add_action( 'admin_enqueue_scripts',    [ $this, 'b3_enqueue_scripts_backend' ] );
                 add_action( 'admin_enqueue_scripts',    [ $this, 'b3_enqueue_scripts_backend_footer' ], 99 );
                 add_action( 'admin_menu',               [ $this, 'b3_add_admin_pages' ] );
@@ -134,18 +132,8 @@
                         update_option( 'users_can_register', '1' );
                     }
                 }
-                delete_option( 'b3ob_version' );
 
                 $this->b3_switch_users_to_default();
-            }
-
-            public function b3_set_version() {
-                $stored      = get_option( 'b3ob_version' );
-                $plugin_data = get_plugin_data( trailingslashit( dirname( __FILE__ ) ) . basename( __FILE__ ) );
-
-                if ( $stored !== $plugin_data[ 'Version' ] ) {
-                    update_option( 'b3ob_version', $plugin_data[ 'Version' ] );
-                }
             }
 
             public function b3_load_textdomain() {
@@ -257,25 +245,26 @@
                 }
 
                 if ( is_localhost() || get_option( 'b3_activate_debug_info' ) || apply_filters( 'b3_activate_debug_info', false ) ) {
-                    require_once $plugin_dir_path . 'admin/debug-page.php';
 
                     global $submenu;
                     $debug_exists = false;
+
                     if ( isset( $submenu[ 'b3-onboarding' ] ) ) {
                         foreach( $submenu[ 'b3-onboarding' ] as $item ) {
-                            if ( $item[ 2 ] === 'b3-debug' ) { // Index 2 is the menu slug
+                            if ( $item[ 2 ] === 'b3-debug-info' ) { // Index 2 is the menu slug
                                 $debug_exists = true;
                                 break;
                             }
                         }
                     }
                     if ( ! $debug_exists ) {
+                        require_once $plugin_dir_path . 'admin/debug-page.php';
                         add_submenu_page(
                             'b3-onboarding',
                             'B3 OnBoarding - ' . esc_html__( 'Debug info', 'b3-onboarding' ),
                             esc_html__( 'Debug info', 'b3-onboarding' ),
                             apply_filters( 'b3_user_cap', 'manage_options' ),
-                            'b3-debug',
+                            'b3-debug-info',
                             'b3_debug_page'
                         );
                     }
@@ -1254,31 +1243,30 @@
             public function b3_admin_notices() {
                 $show_error   = false;
                 $show_warning = false;
+                static $error_shown = false;
+                static $warning_shown = false;
 
                 $screen_ids = [
                     'toplevel_page_b3-onboarding',
-                    'b3-onboarding_page_b3-debug',
+                    'b3-onboarding_page_b3-debug-info',
                     'b3-onboarding_page_b3-user-approval',
                 ];
 
                 if ( in_array( get_current_screen()->id, $screen_ids ) ) {
                     if ( strpos( $this->settings[ 'version' ], 'dev' ) !== false || strpos( $this->settings[ 'version' ], 'beta' ) !== false ) {
-                        $show_warning = true;
-                    }
-                    if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) ) {
-                        $show_error = true;
-                    }
-                    if ( $show_error ) {
-                        /* translators: here */
-                        $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
-                        echo sprintf( '<div class="error"><p>%s</p></div>', esc_html( $error_message ) );
-                    }
-                    if ( $show_warning ) {
                         /* translators: plugin name */
                         $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
-                        if ( false == apply_filters( 'b3_hide_development_notice', false ) ) {
+                        if ( false == apply_filters( 'b3_hide_development_notice', false ) && ! $warning_shown ) {
+                            $warning_shown = true;
                             echo sprintf( '<div class="notice notice-warning"><p>%s</p></div>', esc_html( $warning_message ) );
                         }
+                    }
+
+                    if ( 'none' != get_option( 'b3_registration_type' ) && false == get_option( 'b3_register_page_id' ) && ! $error_shown ) {
+                        /* translators: here */
+                        $error_message = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
+                        $error_shown   = true;
+                        echo sprintf( '<div class="error"><p>%s</p></div>', $error_message );
                     }
                 }
 

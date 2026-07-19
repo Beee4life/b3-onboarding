@@ -8,7 +8,7 @@
         $public_key_filter = apply_filters( 'b3_recaptcha_public', false );
         $public_key_option = get_option( 'b3_recaptcha_public' );
         $recaptcha_theme   = get_option( 'b3_recaptcha_theme', 'light' );
-        $recaptcha_version = get_option( 'b3_recaptcha_version', 3 );
+        $recaptcha_version = get_option( 'b3_recaptcha_version' );
         $secret_key_filter = apply_filters( 'b3_recaptcha_secret', false );
         $secret_key_option = get_option( 'b3_recaptcha_secret' );
 

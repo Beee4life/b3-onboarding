@@ -99,7 +99,6 @@
             'b3_welcome_user_message',
             'b3_welcome_user_subject',
             'b3_welcome_user_message_manual',
-            'b3ob_version',
         ];
 
         return $meta_keys;
