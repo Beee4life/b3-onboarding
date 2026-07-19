@@ -406,7 +406,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_email_tab_form_handling' );
+    add_action( 'init', 'b3_email_tab_form_handling' );
 
     function b3_template_tab_form_handling() {
         if ( isset( $_POST[ 'b3_template_nonce' ] ) ) {
@@ -430,7 +430,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_template_tab_form_handling' );
+    add_action( 'init', 'b3_template_tab_form_handling' );
 
     function b3_users_tab_form_handling() {
         if ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
@@ -507,7 +507,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_users_tab_form_handling' );
+    add_action( 'init', 'b3_users_tab_form_handling' );
 
     function b3_recaptcha_tab_form_handling() {
         if ( isset( $_POST[ 'b3_recaptcha_nonce' ] ) ) {
@@ -543,7 +543,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_recaptcha_tab_form_handling' );
+    add_action( 'init', 'b3_recaptcha_tab_form_handling' );
 
     function b3_pages_tab_form_handling() {
         // @TODO: add warning if saved in non default lang
@@ -579,7 +579,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_pages_tab_form_handling' );
+    add_action( 'init', 'b3_pages_tab_form_handling' );
 
     function b3_setings_tab_form_handling() {
         if ( isset( $_POST[ 'b3ob_settings_nonce' ] ) ) {
@@ -636,7 +636,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_setings_tab_form_handling', 1 );
+    add_action( 'init', 'b3_setings_tab_form_handling', 1 );
 
     function b3_approve_deny_users() {
         if ( isset( $_POST[ 'b3_manage_users_nonce' ] ) ) {
@@ -705,7 +705,7 @@
             }
         }
     }
-    add_action( 'admin_init', 'b3_approve_deny_users' );
+    add_action( 'init', 'b3_approve_deny_users' );
 
     function b3_profile_form_handling() {
         $account_page_id = b3_get_account_url( true );
