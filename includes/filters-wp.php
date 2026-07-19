@@ -165,7 +165,7 @@
 
     // Filter for banned domains in email validation MU signup
     function b3_check_domain_user_email( $result ) {
-        if ( get_option( 'b3_activate_domain_restrictions' ) ) {
+        if ( get_option( 'b3_activate_domain_restriction' ) ) {
             $email         = $result[ 'user_email' ];
             $verify_domain = b3_verify_email_domain( $email );
 

@@ -452,37 +452,37 @@
                         delete_option( 'b3_activate_welcome_page' );
                     }
 
-                    if ( isset( $_POST[ 'b3_restrict_usernames' ] ) && 1 == (int) $_POST[ 'b3_restrict_usernames' ] ) {
-                        update_option( 'b3_restrict_usernames', 1, false );
+                    if ( isset( $_POST[ 'b3_activate_username_restriction' ] ) && 1 == (int) $_POST[ 'b3_activate_username_restriction' ] ) {
+                        update_option( 'b3_activate_username_restriction', 1, false );
 
                         if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
                             // @TODO: check for @
-                            $sanitized_value = sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_usernames' ] ) );
+                            $sanitized_value = str_replace( ' ', '', sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_usernames' ] ) ) );
                             $new_value       = explode( ',', $sanitized_value );
                             update_option( 'b3_disallowed_usernames', $new_value, false );
                         } else {
                             delete_option( 'b3_disallowed_usernames' );
                         }
                     } else {
-                        delete_option( 'b3_restrict_usernames' );
+                        delete_option( 'b3_activate_username_restriction' );
                         delete_option( 'b3_disallowed_usernames' );
                     }
                 }
 
                 // @TODO: check if this should be kept out of MS
-                if ( isset( $_POST[ 'b3_activate_domain_restrictions' ] ) && 1 == (int) $_POST[ 'b3_activate_domain_restrictions' ] ) {
-                    update_option( 'b3_activate_domain_restrictions', 1, false );
+                if ( isset( $_POST[ 'b3_activate_domain_restriction' ] ) && 1 == (int) $_POST[ 'b3_activate_domain_restriction' ] ) {
+                    update_option( 'b3_activate_domain_restriction', 1, false );
 
                     if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
-                        $sanitized_value = sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_domains' ] ) );
+                        $sanitized_value = str_replace( ' ', '', sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_domains' ] ) ) );
                         $new_value       = explode( ',', $sanitized_value );
-                        update_option( 'b3_disallowed_domains', $new_value, false );
+                        update_option( 'b3_disallowed_domains', $sanitized_value, false );
                     } else {
                         delete_option( 'b3_disallowed_domains' );
                     }
                 } else {
                     delete_option( 'b3_disallowed_domains' );
-                    delete_option( 'b3_activate_domain_restrictions' );
+                    delete_option( 'b3_activate_domain_restriction' );
                 }
 
                 if ( isset( $_POST[ 'b3_restrict_admin' ] ) && ! empty( $_POST[ 'b3_restrict_admin' ] ) ) {

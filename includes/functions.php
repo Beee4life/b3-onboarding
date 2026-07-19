@@ -624,17 +624,23 @@
     }
 
     // Disallowed usernames
-    function b3_get_disallowed_usernames() {
+    function b3_get_disallowed_usernames( $return = 'array' ) {
         $default_user_names = b3_get_default_reserved_user_names();
         $stored_names       = get_option( 'b3_disallowed_usernames' );
 
-        if ( is_array( $stored_names ) ) {
+        if ( is_array( $stored_names ) && ! empty( $stored_names ) ) {
             $disallowed_names = array_merge( $default_user_names, $stored_names );
         } else {
             $disallowed_names = $default_user_names;
         }
 
-        return apply_filters( 'b3_disallowed_usernames', $disallowed_names );
+        $user_name_array = apply_filters( 'b3_disallowed_usernames', $disallowed_names );
+
+        if ( 'string' == $return ) {
+            return implode( ',', $user_name_array );
+        }
+
+        return $user_name_array;
     }
 
     // Get 'easy' passwords
@@ -643,8 +649,15 @@
     }
 
     // Get disallowed domain names
-    function b3_get_disallowed_domain_names() {
-        return apply_filters( 'b3_disallowed_domains', get_option( 'b3_disallowed_domains' ) );
+    function b3_get_disallowed_domain_names( $return = 'array' ) {
+        $stored_domain_names = get_option( 'b3_disallowed_domains', [] );
+        $filtered_domains    = apply_filters( 'b3_disallowed_domains', $stored_domain_names );
+
+        if ( 'string' == $return ) {
+            return implode( ',', $filtered_domains );
+        }
+
+        return $filtered_domains;
     }
 
     // Get protocol

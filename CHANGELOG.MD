@@ -5,10 +5,11 @@
 * change b3_get_user_approval_link() to b3_get_user_approval_url()
 * change meta keys to reflect their function better
   * b3_activate_debug_info
-  * b3_activate_domain_restrictions
+  * b3_activate_domain_restriction
   * b3_activate_front_end_approval
   * b3_activate_honeypot
   * b3_activate_privacy_page
+  * b3_activate_username_restriction
 * add new filters
   * b3_activate_debug_info
   * b3_preview_email_message

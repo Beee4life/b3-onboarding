@@ -870,7 +870,7 @@
                         return esc_html__( 'This domain is not allowed to register.', 'b3-onboarding' );
 
                     case 'empty_username':
-                        return esc_html__( 'Please enter a user name.', 'b3-onboarding' );
+                        return esc_html__( 'Please enter a username.', 'b3-onboarding' );
 
                     case 'empty_password':
                         return esc_html__( 'Please enter a password.', 'b3-onboarding' );
@@ -921,7 +921,7 @@
                         return esc_html__( 'Usernames can only contain lowercase letters (a-z) and numbers.', 'b3-onboarding' );
 
                     case 'disallowed_username':
-                        return esc_html__( 'That user name is not allowed, please choose another.', 'b3-onboarding' );
+                        return esc_html__( 'That username is not allowed, please choose another.', 'b3-onboarding' );
 
                     case 'invalid_email':
                         return esc_html__( 'The email address you entered is not valid.', 'b3-onboarding' );
