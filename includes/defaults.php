@@ -215,10 +215,11 @@
         /* translators: 1. lost password url, 2. set password */
         $activation_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
         $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
-        $message = b3_get_email_intro();
-        $message .= '<br><br>' . "\n";
+        $message         = b3_get_email_intro();
+        $message         .= '<br><br>' . "\n";
         /* translators: site name */
-        $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message         .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
             $message .= '<br><br>' . "\n";
             $message .= __( 'You can set your password by clicking the button below.', 'b3-onboarding' ) . "\n";
@@ -226,8 +227,9 @@
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         } else {
             // @TODO: TEST
+            $message .= '<br><br>' . "\n";
+            $message .= __( 'You will get another email with a link to set your password.', 'b3-onboarding' ) . "\n";
             $message .= '<br>' . "\n";
-            $message .= __( 'You will get an email to set your password.', 'b3-onboarding' ) . "\n";
         }
         $message .= b3_default_greetings();
 
