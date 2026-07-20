@@ -5,7 +5,7 @@
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
     Version:            3.16.0
     Requires at least:  6.2
-    Tested up to:       7.0.2
+    Tested up to:       7.0
     Requires PHP:       7.4
     Author:             Beee
     Author URI:         https://berryplasman.com
@@ -1260,7 +1260,7 @@
                 }
 
                 // no page for front-end approval
-                if ( false == get_option( 'b3_approval_page_id' ) && 1 == (int) get_option( 'b3_activate_front_end_approval' ) && ! $no_frontend_approval_shown ) {
+                if ( ! get_option( 'b3_approval_page_id' ) && 1 == (int) get_option( 'b3_activate_front_end_approval' ) && ! $no_frontend_approval_shown ) {
                     $no_frontend_approval_shown = true;
                     /* translators: here */
                     echo sprintf( '<div class="error"><p>%s</p></div>', sprintf( esc_html__( 'You have not set a page for front-end user approval. Set it %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=pages' ) ), esc_html__( 'here', 'b3-onboarding' ) ) ) );
