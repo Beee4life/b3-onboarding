@@ -245,8 +245,7 @@
             $email_footer = b3_get_email_footer();
             $custom_email = ( 1 == get_option( 'b3_activate_custom_emails' ) ) ? true : false;
             $hide_logo    = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
-            $link_color   = b3_get_link_color();
-            $styling      = b3_get_email_styling( $link_color );
+            $styling      = b3_get_email_styling( b3_get_link_color() );
             $template     = b3_get_email_template( $hide_logo );
 
             if ( false != $styling && false != $template ) {
