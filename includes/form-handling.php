@@ -412,13 +412,17 @@
 
             } else {
                 if ( isset( $_POST[ 'b3_email_styling' ] ) && ! empty( $_POST[ 'b3_email_styling' ] ) ) {
-                    update_option( 'b3_email_styling', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_email_styling' ] ) ), false );
+                    if ( current_user_can( 'unfiltered_html' ) ) {
+                        update_option( 'b3_email_styling', wp_unslash( $_POST[ 'b3_email_styling' ] ), false );
+                    }
                 } else {
                     delete_option( 'b3_email_styling' );
                 }
 
                 if ( isset( $_POST[ 'b3_email_template' ] ) && ! empty( $_POST[ 'b3_email_template' ] ) ) {
-                    update_option( 'b3_email_template', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_email_template' ] ) ), false );
+                    if ( current_user_can( 'unfiltered_html' ) ) {
+                        update_option( 'b3_email_template', wp_unslash( $_POST[ 'b3_email_template' ] ), false );
+                    }
                 } else {
                     delete_option( 'b3_email_template' );
                 }
