@@ -6,7 +6,7 @@
     function b3_default_email_styling( $link_color = false ) {
         $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
 
-        if ( false != $link_color ) {
+        if ( false != $link_color && $link_color !== b3_default_link_color() ) {
             if ( current_user_can( 'manage_options' ) ) {
                 $default_css .= "\n";
                 $default_css .= '/*';
@@ -224,6 +224,10 @@
             $message .= __( 'You can set your password by clicking the button below.', 'b3-onboarding' ) . "\n";
             $message .= '<br><br>' . "\n";
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        } else {
+            // @TODO: TEST
+            $message .= '<br>' . "\n";
+            $message .= __( 'You will get an email to set your password.', 'b3-onboarding' ) . "\n";
         }
         $message .= b3_default_greetings();
 
