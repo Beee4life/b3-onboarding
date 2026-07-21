@@ -99,5 +99,3 @@
         echo '</div>';
     }
     wp_add_dashboard_widget( 'b3-dashboard', 'B3 OnBoarding - Last registered users', 'b3_dashboard_widget_function' );
-
-
