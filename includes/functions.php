@@ -717,12 +717,14 @@
             'icon'    => 'email',
         ];
         if ( get_option( 'b3_activate_custom_emails' ) ) {
-            $tabs[] = [
-                'id'      => 'template',
-                'title'   => esc_html__( 'Template', 'b3-onboarding' ),
-                'content' => b3_render_tab_content( 'template' ),
-                'icon'    => 'admin-customizer',
-            ];
+            if ( ! apply_filters( 'b3_email_styling', false ) || ! apply_filters( 'b3_email_template', false ) ) {
+                $tabs[] = [
+                    'id'      => 'template',
+                    'title'   => esc_html__( 'Template', 'b3-onboarding' ),
+                    'content' => b3_render_tab_content( 'template' ),
+                    'icon'    => 'admin-customizer',
+                ];
+            }
         }
 
         if ( is_main_site() ) {
