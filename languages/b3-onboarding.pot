@@ -42,7 +42,7 @@ msgid "Debug info"
 msgstr ""
 
 #: B3Onboarding.php:345 admin/help-tabs.php:115 admin/help-tabs.php:130
-#: includes/class-b3-sidebar-widget.php:86 includes/functions.php:758
+#: includes/class-b3-sidebar-widget.php:86 includes/functions.php:760
 #: includes/tabs/tab-settings.php:17
 msgid "Settings"
 msgstr ""
@@ -117,7 +117,7 @@ msgstr ""
 msgid "An unkown error has occured. Please try again."
 msgstr ""
 
-#: B3Onboarding.php:878 includes/form-handling.php:763
+#: B3Onboarding.php:878 includes/form-handling.php:767
 msgid "Unlawful form entry, try again."
 msgstr ""
 
@@ -312,7 +312,7 @@ msgstr ""
 msgid "Profile saved"
 msgstr ""
 
-#: B3Onboarding.php:1049 includes/form-handling.php:634
+#: B3Onboarding.php:1049 includes/form-handling.php:638
 msgid "Settings saved"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgstr ""
 msgid "Styling"
 msgstr ""
 
-#: admin/dashboard-widget-emails.php:36 includes/functions.php:722
+#: admin/dashboard-widget-emails.php:36 includes/functions.php:723
 msgid "Template"
 msgstr ""
 
@@ -448,8 +448,8 @@ msgstr ""
 msgid "user"
 msgstr ""
 
-#: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:15
-#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:51
+#: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:16
+#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:65
 msgid "Click here"
 msgstr ""
 
@@ -541,7 +541,7 @@ msgstr ""
 msgid "activate privacy checkbox"
 msgstr ""
 
-#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:750
+#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:752
 #: includes/tabs/tab-pages.php:32
 msgid "Pages"
 msgstr ""
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: includes/emails/email-styling.php:26 includes/functions.php:817
+#: includes/emails/email-styling.php:26 includes/functions.php:819
 msgid "Preview"
 msgstr ""
 
@@ -1340,9 +1340,9 @@ msgid "We're sorry, that domain is blocked from registering."
 msgstr ""
 
 #: includes/form-handling.php:7 includes/form-handling.php:128
-#: includes/form-handling.php:411 includes/form-handling.php:439
-#: includes/form-handling.php:516 includes/form-handling.php:553
-#: includes/form-handling.php:588 includes/form-handling.php:653
+#: includes/form-handling.php:415 includes/form-handling.php:443
+#: includes/form-handling.php:520 includes/form-handling.php:557
+#: includes/form-handling.php:592 includes/form-handling.php:657
 msgid "Something went wrong, please try again."
 msgstr ""
 
@@ -1350,40 +1350,40 @@ msgstr ""
 msgid "Registration settings saved"
 msgstr ""
 
-#: includes/form-handling.php:142
+#: includes/form-handling.php:171
 msgid "That is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:278
+#: includes/form-handling.php:295
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:402
+#: includes/form-handling.php:406
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:430
+#: includes/form-handling.php:434
 msgid "Template settings saved"
 msgstr ""
 
-#: includes/form-handling.php:507
+#: includes/form-handling.php:511
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:543
+#: includes/form-handling.php:547
 msgid "reCaptcha settings saved"
 msgstr ""
 
-#: includes/form-handling.php:579
+#: includes/form-handling.php:583
 msgid "Pages settings saved"
 msgstr ""
 
-#: includes/form-handling.php:632
+#: includes/form-handling.php:636
 msgid "You have successfully resetted all settings. Remember to set your pages again, before you log out !"
 msgstr ""
 
-#: includes/form-handling.php:726
+#: includes/form-handling.php:730
 msgid "You do not have permission to edit this user."
 msgstr ""
 
@@ -1471,11 +1471,11 @@ msgstr ""
 msgid "Visitor may register user + site (must register site)"
 msgstr ""
 
-#: includes/functions.php:732 includes/tabs/tab-users.php:24
+#: includes/functions.php:734 includes/tabs/tab-users.php:24
 msgid "Users"
 msgstr ""
 
-#: includes/functions.php:741 includes/tabs/tab-recaptcha.php:16
+#: includes/functions.php:743 includes/tabs/tab-recaptcha.php:16
 msgid "reCaptcha"
 msgstr ""
 
@@ -1596,7 +1596,7 @@ msgid "Here you can set which pages are assigned for the various 'actions'."
 msgstr ""
 
 #: includes/tabs/tab-pages.php:61 includes/tabs/tab-pages.php:71
-#: includes/tabs/tab-registration.php:228
+#: includes/tabs/tab-registration.php:226
 msgid "Select a page"
 msgstr ""
 
@@ -1625,7 +1625,7 @@ msgstr ""
 msgid "Save reCaptcha"
 msgstr ""
 
-#: includes/tabs/tab-registration.php:15
+#: includes/tabs/tab-registration.php:16
 #, php-format
 msgid "%s for more info."
 msgstr ""
@@ -1643,7 +1643,7 @@ msgstr ""
 msgid "You have set a filter to override this setting"
 msgstr ""
 
-#: includes/tabs/tab-registration.php:69 includes/tabs/tab-registration.php:208
+#: includes/tabs/tab-registration.php:69 includes/tabs/tab-registration.php:206
 msgid "Links are allowed."
 msgstr ""
 
@@ -1657,15 +1657,15 @@ msgstr ""
 msgid "%s to see what it does exactly."
 msgstr ""
 
-#: includes/tabs/tab-template.php:22
+#: includes/tabs/tab-template.php:24
 msgid "Email template"
 msgstr ""
 
-#: includes/tabs/tab-template.php:30
+#: includes/tabs/tab-template.php:33
 msgid "Email styling"
 msgstr ""
 
-#: includes/tabs/tab-template.php:51
+#: includes/tabs/tab-template.php:65
 msgid "to download the default."
 msgstr ""
 

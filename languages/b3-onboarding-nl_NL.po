@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-07-21 17:17+0200\n"
-"PO-Revision-Date: 2026-07-21 17:17+0200\n"
+"POT-Creation-Date: 2026-07-21 19:48+0200\n"
+"PO-Revision-Date: 2026-07-21 19:49+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -46,7 +46,7 @@ msgid "Debug info"
 msgstr "Debug informatie"
 
 #: B3Onboarding.php:345 admin/help-tabs.php:115 admin/help-tabs.php:130
-#: includes/class-b3-sidebar-widget.php:86 includes/functions.php:758
+#: includes/class-b3-sidebar-widget.php:86 includes/functions.php:760
 #: includes/tabs/tab-settings.php:17
 msgid "Settings"
 msgstr "Instellingen"
@@ -124,7 +124,7 @@ msgstr "Je code lijkt ongeldig te zijn. Probeer het aub nog een keer."
 msgid "An unkown error has occured. Please try again."
 msgstr "Er is een onbekende fout opgetreden. Probeer later nog eens."
 
-#: B3Onboarding.php:878 includes/form-handling.php:763
+#: B3Onboarding.php:878 includes/form-handling.php:767
 msgid "Unlawful form entry, try again."
 msgstr "Illegaal form verzoek, probeer opnieuw."
 
@@ -371,7 +371,7 @@ msgstr "Je account is verwijderd."
 msgid "Profile saved"
 msgstr "Profiel opgeslagen"
 
-#: B3Onboarding.php:1049 includes/form-handling.php:634
+#: B3Onboarding.php:1049 includes/form-handling.php:638
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
@@ -513,7 +513,7 @@ msgstr "Wachtwoord vergeten (gebruiker)"
 msgid "Styling"
 msgstr "Stijl"
 
-#: admin/dashboard-widget-emails.php:36 includes/functions.php:722
+#: admin/dashboard-widget-emails.php:36 includes/functions.php:723
 msgid "Template"
 msgstr "Template"
 
@@ -538,8 +538,8 @@ msgid_plural "users"
 msgstr[0] "gebruiker"
 msgstr[1] "gebruikers"
 
-#: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:15
-#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:51
+#: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:16
+#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:65
 msgid "Click here"
 msgstr "Klik hier"
 
@@ -655,7 +655,7 @@ msgstr "activeer honeypot"
 msgid "activate privacy checkbox"
 msgstr "activeer privacy checkbox"
 
-#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:750
+#: admin/help-tabs.php:47 admin/help-tabs.php:56 includes/functions.php:752
 #: includes/tabs/tab-pages.php:32
 msgid "Pages"
 msgstr "Pagina's"
@@ -1626,11 +1626,11 @@ msgstr "Dit is het email adres dat gebruikt wordt als afzender voor de emails."
 msgid "If left empty the default styling will be used."
 msgstr "Indien niet ingevuld, dan wordt de default styling gebruikt."
 
-#: includes/emails/email-styling.php:24 includes/tabs/tab-template.php:30
+#: includes/emails/email-styling.php:24 includes/tabs/tab-template.php:33
 msgid "Email styling"
 msgstr "E-mail stijl"
 
-#: includes/emails/email-styling.php:26 includes/functions.php:817
+#: includes/emails/email-styling.php:26 includes/functions.php:819
 msgid "Preview"
 msgstr "Preview"
 
@@ -1642,7 +1642,7 @@ msgstr "Download styling"
 msgid "If left empty the default template will be used."
 msgstr "Indien niet ingevuld, dan wordt het default template gebruikt."
 
-#: includes/emails/email-template.php:24 includes/tabs/tab-template.php:22
+#: includes/emails/email-template.php:24 includes/tabs/tab-template.php:24
 msgid "Email template"
 msgstr "E-mail template"
 
@@ -1666,7 +1666,7 @@ msgstr "Kies een logo"
 
 #: includes/emails/logo.php:42 includes/tabs/tab-emails.php:32
 #: includes/tabs/tab-recaptcha.php:45 includes/tabs/tab-recaptcha.php:55
-#: includes/tabs/tab-registration.php:206 includes/tabs/tab-settings.php:66
+#: includes/tabs/tab-registration.php:205 includes/tabs/tab-settings.php:66
 #: includes/tabs/tab-users.php:137 includes/tabs/tab-users.php:162
 msgid "Set by filter"
 msgstr "Ingesteld door filter"
@@ -1849,9 +1849,9 @@ msgid "We're sorry, that domain is blocked from registering."
 msgstr "Sorry, dit domein is geblokkeerd van registratie."
 
 #: includes/form-handling.php:7 includes/form-handling.php:128
-#: includes/form-handling.php:411 includes/form-handling.php:439
-#: includes/form-handling.php:516 includes/form-handling.php:553
-#: includes/form-handling.php:588 includes/form-handling.php:653
+#: includes/form-handling.php:415 includes/form-handling.php:443
+#: includes/form-handling.php:520 includes/form-handling.php:557
+#: includes/form-handling.php:592 includes/form-handling.php:657
 msgid "Something went wrong, please try again."
 msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
 
@@ -1859,37 +1859,37 @@ msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
 msgid "Registration settings saved"
 msgstr "Registratie instellingen opgeslagen"
 
-#: includes/form-handling.php:142
+#: includes/form-handling.php:171
 msgid "That is not a valid email address."
 msgstr "Dit is geen geldig email adres."
 
 #. translators: email address
-#: includes/form-handling.php:278
+#: includes/form-handling.php:295
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr "\"%s\" is geen geldig email adres."
 
-#: includes/form-handling.php:402
+#: includes/form-handling.php:406
 msgid "Email settings saved"
 msgstr "Email instellingen opgeslagen"
 
-#: includes/form-handling.php:430
+#: includes/form-handling.php:434
 msgid "Template settings saved"
 msgstr "Template instellingen opgeslagen"
 
-#: includes/form-handling.php:507
+#: includes/form-handling.php:511
 msgid "User settings saved"
 msgstr "Gebruikersinstellingen opgeslagen"
 
-#: includes/form-handling.php:543
+#: includes/form-handling.php:547
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha instellingen opgeslagen"
 
-#: includes/form-handling.php:579
+#: includes/form-handling.php:583
 msgid "Pages settings saved"
 msgstr "Pagina instellingen opgeslagen"
 
-#: includes/form-handling.php:632
+#: includes/form-handling.php:636
 msgid ""
 "You have successfully resetted all settings. Remember to set your pages "
 "again, before you log out !"
@@ -1897,7 +1897,7 @@ msgstr ""
 "Je hebt je succesvol alle instellingen gereset. Vergeet niet je pagina's "
 "opnieuw in te stellen voordat je uitlogt !"
 
-#: includes/form-handling.php:726
+#: includes/form-handling.php:730
 msgid "You do not have permission to edit this user."
 msgstr "Je hebt niet voldoende rechten om deze gebruiker te bewerken."
 
@@ -1984,11 +1984,11 @@ msgid "Visitor may register user + site (must register site)"
 msgstr ""
 "Gebruiker mag registreren voor een account + site (moet site registreren)"
 
-#: includes/functions.php:732 includes/tabs/tab-users.php:24
+#: includes/functions.php:734 includes/tabs/tab-users.php:24
 msgid "Users"
 msgstr "Gebruikers"
 
-#: includes/functions.php:741 includes/tabs/tab-recaptcha.php:16
+#: includes/functions.php:743 includes/tabs/tab-recaptcha.php:16
 msgid "reCaptcha"
 msgstr "reCaptcha"
 
@@ -2120,15 +2120,19 @@ msgstr "Link kleur"
 msgid "Custom email styling/template"
 msgstr "Eigen email stijl/template"
 
-#: includes/tabs/tab-emails.php:43
+#: includes/tabs/tab-emails.php:42
+msgid "You have set both template and styling by filter."
+msgstr "Je hebt zowel het template als de styling ingesteld via filter."
+
+#: includes/tabs/tab-emails.php:46
 msgid "Activate your own email styling and template."
 msgstr "Activeer je eigen emails/styling."
 
-#: includes/tabs/tab-emails.php:50
+#: includes/tabs/tab-emails.php:54
 msgid "Add logo in email"
 msgstr "Voeg logo toe in email"
 
-#: includes/tabs/tab-emails.php:54
+#: includes/tabs/tab-emails.php:58
 msgid "Activate a logo in the email header (of the default template)."
 msgstr "Activeer een logo in de email header (van het default template)."
 
@@ -2155,7 +2159,7 @@ msgstr ""
 "'acties'."
 
 #: includes/tabs/tab-pages.php:61 includes/tabs/tab-pages.php:71
-#: includes/tabs/tab-registration.php:228
+#: includes/tabs/tab-registration.php:226
 msgid "Select a page"
 msgstr "Selecteer een pagina"
 
@@ -2218,7 +2222,7 @@ msgid "Save reCaptcha"
 msgstr "ReCaptcha opslaan"
 
 #. translators: click here link
-#: includes/tabs/tab-registration.php:15
+#: includes/tabs/tab-registration.php:16
 #, php-format
 msgid "%s for more info."
 msgstr "%s voor meer informatie."
@@ -2245,7 +2249,7 @@ msgstr "Registratie gesloten bericht"
 msgid "You have set a filter to override this setting"
 msgstr "Je hebt een filter ingesteld om deze instelling te overschrijven"
 
-#: includes/tabs/tab-registration.php:69 includes/tabs/tab-registration.php:208
+#: includes/tabs/tab-registration.php:69 includes/tabs/tab-registration.php:206
 msgid "Links are allowed."
 msgstr "Links zijn toegestaan."
 
@@ -2338,7 +2342,7 @@ msgstr "Activeer een privacy checkbox."
 msgid "Privacy text"
 msgstr "Privacy tekst"
 
-#: includes/tabs/tab-registration.php:214
+#: includes/tabs/tab-registration.php:212
 msgid "Privacy page"
 msgstr "Privacy pagina"
 
@@ -2416,11 +2420,31 @@ msgstr "Deze optie reset alles terug naar de standaard instellingen."
 msgid "%s to see what it does exactly."
 msgstr "%s om te lezen wat het precies doet."
 
-#: includes/tabs/tab-template.php:49
+#: includes/tabs/tab-template.php:53
+msgid ""
+"You have set the filter 'b3_email_styling' to override the css, so you can't "
+"override that here again with this setting because the filter takes "
+"presedence."
+msgstr ""
+"Je hebt het filter 'b3_email_styling' ingesteld om de css aan te passen, dus "
+"je kan het hier niet nog een keer overschrijven omdat het filter prioriteit "
+"heeft."
+
+#: includes/tabs/tab-template.php:55
+msgid ""
+"You have set the filter 'b3_email_template' to override the html, so you "
+"can't override that here again with this setting because the filter takes "
+"presedence."
+msgstr ""
+"Je hebt het filter 'b3_email_template' ingesteld om de html aan te passen, "
+"dus je kan het hier niet nog een keer overschrijven omdat het filter "
+"prioriteit heeft."
+
+#: includes/tabs/tab-template.php:63
 msgid "opens in new window"
 msgstr "opent in een nieuw window"
 
-#: includes/tabs/tab-template.php:51
+#: includes/tabs/tab-template.php:65
 msgid "to download the default."
 msgstr "om de default te downloaden."
 
