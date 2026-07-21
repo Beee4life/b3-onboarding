@@ -191,11 +191,11 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_terms"><?php esc_html_e( 'General terms', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_terms_page"><?php esc_html_e( 'General terms', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_terms_page" name="b3_activate_terms_page" value="1" <?php checked($activate_terms_page); ?>/>
-                            <?php esc_html_e( 'Activate a terms checkbox.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( "Activate an 'Accept terms' checkbox.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -237,11 +237,11 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_privacy"><?php esc_html_e( 'Privacy', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_privacy_page"><?php esc_html_e( 'Privacy', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_privacy_page" name="b3_activate_privacy_page" value="1" <?php checked($activate_privacy_page); ?>/>
-                            <?php esc_html_e( 'Activate a privacy checkbox.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( "Activate an 'Accept privacy policy' checkbox.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
