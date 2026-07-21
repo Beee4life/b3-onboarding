@@ -202,9 +202,7 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
                             <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo wp_kses_post( $privacy_text ); } ?>"/>
-                            <?php if ( apply_filters( 'b3_privacy_text', '' ) ) { ?>
-                                <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                            <?php } ?>
+                            <?php if ( apply_filters( 'b3_privacy_text', '' ) ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
