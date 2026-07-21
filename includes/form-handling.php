@@ -136,6 +136,35 @@
                     }
                 }
 
+                if ( isset( $_POST[ 'b3_logo_in_email' ] ) && 1 == (int) $_POST[ 'b3_logo_in_email' ] ) {
+                    update_option( 'b3_logo_in_email', 1, false );
+                } else {
+                    delete_option( 'b3_logo_in_email' );
+                }
+
+                if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == (int) $_POST[ 'b3_activate_custom_emails' ] ) {
+                    update_option( 'b3_activate_custom_emails', 1, false );
+
+                    if ( ! get_option( 'b3_email_styling' ) ) {
+                        update_option( 'b3_email_styling', b3_get_email_styling( b3_get_link_color() ) );
+                    }
+
+                    if ( ! get_option( 'b3_email_template' ) ) {
+                        $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
+                        update_option( 'b3_email_template', b3_get_email_template( $hide_logo ) );
+                    }
+                } else {
+                    delete_option( 'b3_activate_custom_emails' );
+                    delete_option( 'b3_email_styling' );
+                    delete_option( 'b3_email_template' );
+                }
+
+                if ( isset( $_POST[ 'b3_notification_sender_name' ] ) && ! empty( $_POST[ 'b3_notification_sender_name' ] ) ) {
+                    update_option( 'b3_notification_sender_name', sanitize_text_field( wp_unslash( $_POST[ 'b3_notification_sender_name' ] ) ), false );
+                } else {
+                    delete_option( 'b3_notification_sender_name' );
+                }
+
                 if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
                     if ( ! is_email( wp_unslash( $_POST[ 'b3_notification_sender_email' ] ) ) ) {
                         // @TODO: check this error message
@@ -152,32 +181,6 @@
                     update_option( 'b3_notification_sender_email', $sender_email, false );
                 } else {
                     delete_option( 'b3_notification_sender_email' );
-                }
-                if ( isset( $_POST[ 'b3_notification_sender_name' ] ) && ! empty( $_POST[ 'b3_notification_sender_name' ] ) ) {
-                    update_option( 'b3_notification_sender_name', sanitize_text_field( wp_unslash( $_POST[ 'b3_notification_sender_name' ] ) ), false );
-                } else {
-                    delete_option( 'b3_notification_sender_name' );
-                }
-
-                if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == (int) $_POST[ 'b3_activate_custom_emails' ] ) {
-                    update_option( 'b3_activate_custom_emails', 1, false );
-                    if ( ! get_option( 'b3_email_styling' ) ) {
-                        update_option( 'b3_email_styling', b3_get_email_styling( b3_get_link_color() ) );
-                    }
-                    if ( ! get_option( 'b3_email_template' ) ) {
-                        $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
-                        update_option( 'b3_email_template', b3_get_email_template( $hide_logo ) );
-                    }
-                } else {
-                    delete_option( 'b3_activate_custom_emails' );
-                    delete_option( 'b3_email_styling' );
-                    delete_option( 'b3_email_template' );
-                }
-
-                if ( isset( $_POST[ 'b3_logo_in_email' ] ) && 1 == (int) $_POST[ 'b3_logo_in_email' ] ) {
-                    update_option( 'b3_logo_in_email', 1, false );
-                } else {
-                    delete_option( 'b3_logo_in_email' );
                 }
 
                 if ( isset( $_POST[ 'b3_main_logo' ] ) && ! empty( $_POST[ 'b3_main_logo' ] ) ) {
@@ -251,6 +254,20 @@
                 }
 
                 if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+
+                    if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
+                        if ( isset( $_POST[ 'b3_email_activation_subject' ] ) && ! empty( $_POST[ 'b3_email_activation_subject' ] ) ) {
+                            update_option( 'b3_email_activation_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_email_activation_subject' ] ) ), false );
+                        } else {
+                            delete_option( 'b3_email_activation_subject' );
+                        }
+                        if ( isset( $_POST[ 'b3_email_activation_message' ] ) && ! empty( $_POST[ 'b3_email_activation_message' ] ) ) {
+                            update_option( 'b3_email_activation_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_email_activation_message' ] ) ), false );
+                        } else {
+                            delete_option( 'b3_email_activation_message' );
+                        }
+                    }
+
                     if ( isset( $_POST[ 'b3_account_activated_subject' ] ) && ! empty( $_POST[ 'b3_account_activated_subject' ] ) ) {
                         update_option( 'b3_account_activated_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_account_activated_subject' ] ) ), false );
                     } else {
@@ -295,19 +312,6 @@
                         update_option( 'b3_new_user_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_new_user_subject' ] ) ), false );
                     } else {
                         delete_option( 'b3_new_user_subject' );
-                    }
-
-                    if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
-                        if ( isset( $_POST[ 'b3_email_activation_subject' ] ) && ! empty( $_POST[ 'b3_email_activation_subject' ] ) ) {
-                            update_option( 'b3_email_activation_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_email_activation_subject' ] ) ), false );
-                        } else {
-                            delete_option( 'b3_email_activation_subject' );
-                        }
-                        if ( isset( $_POST[ 'b3_email_activation_message' ] ) && ! empty( $_POST[ 'b3_email_activation_message' ] ) ) {
-                            update_option( 'b3_email_activation_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_email_activation_message' ] ) ), false );
-                        } else {
-                            delete_option( 'b3_email_activation_message' );
-                        }
                     }
                 }
 
