@@ -58,6 +58,10 @@
             $('.b3_settings-field--privacy').toggle();
         });
 
+        $('#b3_activate_terms_page').change(function() {
+            $('.b3_settings-field--terms').toggle();
+        });
+
         $('#b3_activate_recaptcha').change(function() {
             $('.b3_settings-input-description--recaptcha').toggle();
         });

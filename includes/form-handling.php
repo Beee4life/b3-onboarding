@@ -96,22 +96,45 @@
                     delete_option( 'b3_activate_honeypot' );
                 }
 
-                if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
-                    update_option( 'b3_privacy_page_id', (int) $_POST[ 'b3_privacy_page_id' ], false );
+                if ( isset( $_POST[ 'b3_activate_terms_page' ] ) && 1 == (int) $_POST[ 'b3_activate_terms_page' ] ) {
+                    update_option( 'b3_activate_terms_page', 1, false );
+
+                    if ( isset( $_POST[ 'b3_terms_page_id' ] ) && ! empty( $_POST[ 'b3_terms_page_id' ] ) ) {
+                        update_option( 'b3_terms_page_id', (int) $_POST[ 'b3_terms_page_id' ], false );
+                    } else {
+                        delete_option( 'b3_terms_page_id' );
+                    }
+
+                    if ( isset( $_POST[ 'b3_terms_text' ] ) && ! empty( $_POST[ 'b3_terms_text' ] ) ) {
+                        update_option( 'b3_terms_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_terms_text' ] ) ), false );
+                    } else {
+                        delete_option( 'b3_terms_text' );
+                    }
+
                 } else {
-                    delete_option( 'b3_privacy_page_id' );
+                    delete_option( 'b3_activate_terms_page' );
+                    delete_option( 'b3_terms_page_id' );
+                    delete_option( 'b3_terms_text' );
                 }
 
                 if ( isset( $_POST[ 'b3_activate_privacy_page' ] ) && 1 == (int) $_POST[ 'b3_activate_privacy_page' ] ) {
                     update_option( 'b3_activate_privacy_page', 1, false );
+
+                    if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
+                        update_option( 'b3_privacy_page_id', (int) $_POST[ 'b3_privacy_page_id' ], false );
+                    } else {
+                        delete_option( 'b3_privacy_page_id' );
+                    }
+
+                    if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
+                        update_option( 'b3_privacy_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
+                    } else {
+                        delete_option( 'b3_privacy_text' );
+                    }
+
                 } else {
                     delete_option( 'b3_activate_privacy_page' );
                     delete_option( 'b3_privacy_page_id' );
-                }
-
-                if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
-                    update_option( 'b3_privacy_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
-                } else {
                     delete_option( 'b3_privacy_text' );
                 }
 

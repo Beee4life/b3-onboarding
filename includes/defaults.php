@@ -441,6 +441,25 @@
         return esc_html__( 'You have to request access for this website.', 'b3-onboarding' );
     }
 
+    function b3_default_terms_text() {
+        $message    = esc_html__( 'Accept terms', 'b3-onboarding' );
+        $terms_page = get_option( 'b3_terms_page_id' );
+
+        if ( false != $terms_page ) {
+            if ( class_exists( 'SitePress' ) ) {
+                $terms_page = apply_filters( 'wpml_object_id', $terms_page, 'page', true );
+            }
+            $terms_page_object = get_post( $terms_page );
+            if ( is_object( $terms_page_object ) ) {
+                $link    = get_the_permalink( $terms_page_object );
+                /* translators: terms settings */
+                $message = sprintf( esc_html__( 'Accept %s', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html__( 'terms', 'b3-onboarding' ) ) ) . "\n";
+            }
+        }
+
+        return $message;
+    }
+
     function b3_default_privacy_text() {
         $message      = esc_html__( 'Accept privacy settings', 'b3-onboarding' );
         $privacy_page = get_option( 'b3_privacy_page_id' );

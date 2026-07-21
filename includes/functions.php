@@ -201,6 +201,19 @@
         return apply_filters( 'b3_logged_in_registration_only_message', $logged_in_registration_only_message );
     }
 
+    // Get the terms text
+    function b3_get_terms_text() {
+        $terms_text = get_option( 'b3_terms_text' );
+
+        if ( false != $terms_text ) {
+            $message = stripslashes( $terms_text );
+        } else {
+            $message = b3_default_terms_text();
+        }
+
+        return $message;
+    }
+
     // Get the privacy text
     function b3_get_privacy_text() {
         $privacy_text = get_option( 'b3_privacy_text' );

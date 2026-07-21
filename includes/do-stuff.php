@@ -268,6 +268,21 @@
      *
      * @return bool
      */
+    function b3_verify_terms() {
+        if ( get_option( 'b3_activate_terms_page' ) && ! isset( $_POST[ 'b3_terms_accept' ] ) ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Verify if privacy checkbox is clicked (when activated)
+     *
+     * @since 2.0.0
+     *
+     * @return bool
+     */
     function b3_verify_privacy() {
         if ( get_option( 'b3_activate_privacy_page' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
             return false;

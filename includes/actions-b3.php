@@ -327,6 +327,16 @@
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
 
     /**
+     * Function to output a terms checkbox
+     */
+    function b3_add_terms_checkbox() {
+        if ( get_option( 'b3_activate_terms_page' ) ) {
+            do_action( 'b3_render_form_element', 'register/terms' );
+        }
+    }
+    add_action( 'b3_add_terms_checkbox', 'b3_add_terms_checkbox' );
+
+    /**
      * Function to output a privacy checkbox
      */
     function b3_add_privacy_checkbox() {
@@ -707,6 +717,7 @@
         do_action( 'b3_add_password_fields' );
         do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] ); // MS
         do_action( 'b3_add_extra_fields_registration' );
+        do_action( 'b3_add_terms_checkbox' );
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields' );
         do_action( 'b3_render_form_element', 'general/button', $attributes );

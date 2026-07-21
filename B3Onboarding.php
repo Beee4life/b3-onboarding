@@ -921,6 +921,9 @@
                     case 'no_privacy':
                         return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
 
+                    case 'no_terms':
+                        return esc_html__( 'You have to accept the general terms.', 'b3-onboarding' );
+
                     case 'empty_field':
                         if ( false != $label ) {
                             /* translators: field label */
@@ -1130,6 +1133,12 @@
                             $user_data[ 'user_pass' ] = $user_data[ 'pass1' ];
                         }
                     }
+                }
+
+                if ( ! b3_verify_terms() ) {
+                    $errors->add( 'no_terms', $this->b3_get_return_message( 'no_terms' ) );
+
+                    return $errors;
                 }
 
                 if ( ! b3_verify_privacy() ) {
