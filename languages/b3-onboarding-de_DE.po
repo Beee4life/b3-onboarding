@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
 "POT-Creation-Date: 2026-07-21 17:17+0200\n"
-"PO-Revision-Date: 2026-07-21 17:18+0200\n"
+"PO-Revision-Date: 2026-07-21 20:06+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -79,8 +79,6 @@ msgid "This domain is not allowed to register."
 msgstr "Diese Domain ist für die Registrierung nicht zugelassen."
 
 #: B3Onboarding.php:849
-#, fuzzy
-#| msgid "Please enter a user name."
 msgid "Please enter a username."
 msgstr "Bitte gib einen Benutzernamen ein."
 
@@ -123,7 +121,7 @@ msgstr "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut."
 
 #: B3Onboarding.php:878 includes/form-handling.php:763
 msgid "Unlawful form entry, try again."
-msgstr ""
+msgstr "Illegale Formulareingabe, versuche es erneut."
 
 #: B3Onboarding.php:882
 msgid ""
@@ -151,10 +149,8 @@ msgid "Usernames can only contain lowercase letters (a-z) and numbers."
 msgstr "Benutzernamen dürfen nur Kleinbuchstaben (a-z) und Zahlen enthalten."
 
 #: B3Onboarding.php:900
-#, fuzzy
-#| msgid "That user name is not allowed, please choose another."
 msgid "That username is not allowed, please choose another."
-msgstr "Dieser Benutzername ist nicht erlaubt, bitte wähle einen anderen."
+msgstr "Dieser Benutzername ist nicht erlaubt, bitte wähle einen Anderen."
 
 #: B3Onboarding.php:903 B3Onboarding.php:907
 msgid "The email address you entered is not valid."
@@ -541,6 +537,10 @@ msgid ""
 "type. That's why the user approval page is not showing in the admin menu and "
 "there are no notifications in the admin bar, but you can reach it %4$s."
 msgstr ""
+"Es warten %1$s %2$d %3$s auf Freischaltung, aber die Registrierungstyp wurde "
+"geändert. Deshalb wird die Benutzer-Freischaltung Seite nicht im Admin Menü "
+"angezeigt, sowie keine Benachrichtigungen in der Admin-Leiste. Du erreichst "
+"sie %4$s."
 
 #: admin/dashboard-widget-users.php:63
 #, php-format
@@ -792,12 +792,12 @@ msgstr "Offizielle Website"
 #: admin/preview.php:100
 #, php-format
 msgid "No email message found for '%s'"
-msgstr ""
+msgstr "Keine E-Mail Nachricht gefunden für '%s'"
 
 #: admin/preview.php:101
 #, php-format
 msgid "No email subject found for '%s'"
-msgstr ""
+msgstr "Kein E-Mail Betreff gefunden für '%s'"
 
 #: includes/actions-b3.php:317
 #, php-format
@@ -1013,6 +1013,9 @@ msgid ""
 "you have confirmed your email address but the site owner choose to manually "
 "approve each account. You will be notified of the outcome."
 msgstr ""
+"Du hast deine E-Mail Adresse bestätigt, aber der Webseiten Besitzer hat sich "
+"dazu entschieden jedes Benutzerkonto händisch zu aktivieren. Du wirst über "
+"die Entscheidung informiert."
 
 #: includes/defaults.php:98
 msgid ""
@@ -1136,14 +1139,9 @@ msgstr ""
 "Du kannst dein Passwort festlegen, indem du auf den Button unten klickst."
 
 #: includes/defaults.php:231
-#, fuzzy
-#| msgid ""
-#| "Please enter your email address. You will receive an email with a link to "
-#| "(re)set your password."
 msgid "You will get another email with a link to set your password."
 msgstr ""
-"Bitte gib deine E-Mail-Adresse ein. Du erhältst eine E-Mail mit einem Link "
-"zur (Neu-)Erstellung deines Passworts."
+"Du bekommst eine weitere E-mail mit einem Link um dein Passwort zu erstellen."
 
 #: includes/defaults.php:243
 #, php-format
@@ -1474,7 +1472,7 @@ msgstr "Logo auswählen"
 
 #: includes/emails/new-user-admin.php:24
 msgid "PLEASE KEEP IN MIND"
-msgstr ""
+msgstr "BITTE BEACHTE"
 
 #: includes/emails/new-user-admin.php:24
 msgid ""
@@ -1855,10 +1853,13 @@ msgstr ""
 #, php-format
 msgid "Setting these pages is only possible in the default language (%s)."
 msgstr ""
+"Das einstellen dieser Seiten ist nur in der Standardsprache (%s) möglich."
 
 #: includes/tabs/tab-pages.php:34
 msgid "We store 1 central page ID and get the localized pages from it."
 msgstr ""
+"Wir speichern eine zentrale Seiten-ID und holen die lokalisierte Seite "
+"darüber."
 
 #: includes/tabs/tab-pages.php:36
 msgid "Here you can set which pages are assigned for the various 'actions'."
@@ -1921,7 +1922,7 @@ msgstr "Links sind erlaubt."
 #: includes/tabs/tab-settings.php:66 includes/tabs/tab-users.php:137
 #: includes/tabs/tab-users.php:162
 msgid "Set by filter"
-msgstr ""
+msgstr "Per Filter erstellt"
 
 #: includes/tabs/tab-settings.php:95
 #, php-format
@@ -1953,10 +1954,8 @@ msgstr ""
 "Diese Seite kann (vorerst) nur über einen Filter gesetzt werden. Siehe %s."
 
 #: includes/tabs/tab-users.php:137
-#, fuzzy
-#| msgid "separate multiple user names with a space"
 msgid "Separate multiple usernames with a comma"
-msgstr "Mehrere Benutzernamen durch Leerzeichen trennen"
+msgstr "Trenne mehrere Benutzernamen mit einem Komma"
 
 #: includes/tabs/tab-users.php:144
 #, php-format
@@ -1965,10 +1964,8 @@ msgstr ""
 "Einige Benutzernamen sind bereits standardmäßig ausgeschlossen, siehe %s."
 
 #: includes/tabs/tab-users.php:162
-#, fuzzy
-#| msgid "separate multiple domain names with a space"
 msgid "Separate multiple domain names with a comma"
-msgstr "Mehrere Domainnamen durch Leerzeichen trennen"
+msgstr "Trenne mehrere Domain-Namen mit einem Komma"
 
 #: includes/tabs/tab-users.php:168
 msgid "Email addresses from these domains are not allowed to register."
