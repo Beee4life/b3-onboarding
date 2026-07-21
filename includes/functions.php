@@ -843,7 +843,6 @@
         update_option( 'b3_logo_in_email', 1, false );
 
         if ( ! is_multisite() ) {
-            update_option( 'b3_dashboard_widget', 1, false );
             update_option( 'b3_hide_admin_bar', 1, false );
             update_option( 'users_can_register', 0 );
 
@@ -853,7 +852,6 @@
             }
 
         } elseif ( is_main_site() && false == $blog_id ) {
-            update_option( 'b3_dashboard_widget', 1, false );
             update_site_option( 'registrationnotification', 'no' );
         }
 

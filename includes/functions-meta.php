@@ -43,7 +43,6 @@
             'b3_confirm_wpmu_user_site_message',
             'b3_confirm_wpmu_user_site_subject',
             'b3_confirm_wpmu_user_subject',
-            'b3_dashboard_widget',
             'b3_disable_action_links',
             'b3_disable_admin_notification_new_user',
             'b3_disable_admin_notification_password_change',
