@@ -12,8 +12,9 @@
         $activate_privacy_page        = get_option( 'b3_activate_privacy_page' ); // @TODO: add filter
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
         /* translators: click here link */
-        $privacy_page_placeholder     = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
-        $privacy_text                 = get_option( 'b3_privacy_text' ); // @TODO: add filter
+        $default_privacy_placeholder  = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
+        $privacy_placeholder          = apply_filters( 'b3_privacy_text', $default_privacy_placeholder );
+        $privacy_text                 = apply_filters( 'b3_privacy_text', '' ) ? '' : get_option( 'b3_privacy_text' );
         $recaptcha                    = get_option( 'b3_activate_recaptcha' ); // @TODO: add filter
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
@@ -200,7 +201,10 @@
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo wp_kses_post( $privacy_text ); } ?>"/>
+                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo wp_kses_post( $privacy_text ); } ?>"/>
+                            <?php if ( apply_filters( 'b3_privacy_text', '' ) ) { ?>
+                                <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
+                            <?php } ?>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
