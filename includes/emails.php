@@ -3,15 +3,7 @@
         exit;
     }
 
-    /**
-     * Render email settings field with fold out
-     *
-     * @since 1.0.6
-     *
-     * @param bool $box
-     *
-     * @return false|mixed|string
-     */
+    // Render email settings field with fold out
     function b3_render_email_settings_field( $box = false ) {
         if ( false != $box ) {
             $basic_output = b3_basic_email_settings_field( $box );
@@ -25,15 +17,7 @@
     }
 
 
-    /**
-     * Content for an email settings field
-     *
-     * @since 1.0.6
-     *
-     * @param bool $box
-     *
-     * @return false|string
-     */
+    // Content for an email settings field
     function b3_basic_email_settings_field( $box = [] ) {
         $add_id_fields = [
             'email_styling',
@@ -42,7 +26,7 @@
 
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
-            $hide_field = 'logo' == $box[ 'id' ] && ! get_option( 'b3_logo_in_email' ) ? ' hidden' : '';
+            $hide_field = 'logo' == $box[ 'id' ] && ! get_option( 'b3_activate_logo_in_email' ) ? ' hidden' : '';
             $id_field   = in_array( $box[ 'id' ], $add_id_fields ) ? ' id="' . $box[ 'id' ] . '"' : false;
         ?>
         <div class="metabox-handler metabox-handler--<?php echo esc_attr( $box[ 'id' ] ); ?><?php echo esc_attr( $hide_field ); ?>">
@@ -65,15 +49,7 @@
     }
 
 
-    /**
-     * Load fold out content
-     *
-     * @since 1.0.6
-     *
-     * @param bool $box
-     *
-     * @return bool|false|string
-     */
+    // Load fold out content
     function b3_foldout_content( $box = [] ) {
         if ( ! empty( $box ) ) {
             ob_start();

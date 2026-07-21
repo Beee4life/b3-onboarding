@@ -3,17 +3,13 @@
         exit;
     }
 
-    /**
-     * Render settings tab
-     *
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
+    // Render settings tab
     function b3_render_settings_tab() {
         $activate_filter_validation = get_option( 'b3_activate_filter_validation' );
-        $debug_info                 = get_option( 'b3_debug_info' );
-        $disable_action_links       = get_option( 'b3_disable_action_links' );
+        $debug_info_option          = get_option( 'b3_activate_debug_info' );
+        $debug_info_filter          = apply_filters( 'b3_activate_debug_info', false );
+        $debug_info                 = $debug_info_option || $debug_info_filter ? '1' : false;
+        $disable_action_links       = apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links', false ) );
         $preserve_settings          = get_option( 'b3_preserve_settings' );
         $use_popup                  = get_option( 'b3_use_popup', false );
 
@@ -52,7 +48,7 @@
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/>
                         <?php esc_html_e( 'Activate the validation of all custom filters.', 'b3-onboarding' ); ?>
-                        <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
+                        <?php $hide_validation_note = $activate_filter_validation ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo esc_attr( $hide_validation_note ); ?>">
                             <?php esc_html_e( "Don't forget to turn it of later on, the validation can cause a higher load time.", 'b3-onboarding' ); ?>
                         </div>
@@ -62,11 +58,12 @@
                 <?php if ( current_user_can( 'manage_options' ) && ! is_localhost() ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_debug_info" name="b3_debug_info" value="1" <?php checked($debug_info); ?>/>
-                            <?php esc_html_e( "Activate the debug page.", 'b3-onboarding' ); ?>
+                            <input type="checkbox" id="b3_activate_debug_info" name="b3_activate_debug_info" value="1" <?php checked($debug_info); ?>/>
+                            <?php esc_html_e( 'Activate the debug page.', 'b3-onboarding' ); ?>
+                            <?php if ( $debug_info_filter ) { echo ' (' . esc_html__( 'Set by filter', 'b3-onboarding' ) . ')'; } ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -78,7 +75,7 @@
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php checked($preserve_settings); ?>/>
                         <?php
-                            if ( 1 == $preserve_settings ) {
+                            if ( $preserve_settings ) {
                                 esc_html_e( 'To remove the data upon plugin removal, uncheck this box.', 'b3-onboarding' );
                             } else {
                                 esc_html_e( 'When removing the plugin, all data is removed. To prevent this from happening, check this box.', 'b3-onboarding' );

@@ -3,13 +3,7 @@
         exit;
     }
 
-    /**
-     * Class B3_Sidebar_Widget
-     */
     class B3_Sidebar_Widget extends WP_Widget {
-        /**
-         * B3_Sidebar_Widget constructor.
-         */
         public function __construct() {
             parent::__construct( 'b3-widget',
                 'B3 User menu', [
@@ -18,17 +12,6 @@
                 ] );
         }
 
-
-        /**
-         * Front-end display of widget.
-         *
-         * @since 1.0.0
-         *
-         * @see WP_Widget::widget()
-         *
-         * @param array $args     Widget arguments.
-         * @param array $instance Saved values from database.
-         */
         public function widget( $args, $instance ) {
             $custom_links       = apply_filters( 'b3_widget_links', [] );
             $main_logo          = get_option( 'b3_main_logo' );
@@ -137,16 +120,6 @@
             }
         }
 
-
-        /**
-         * Back-end widget form.
-         *
-         * @since 1.0.0
-         *
-         * @see WP_Widget::form()
-         *
-         * @param array $instance Previously saved values from database.
-         */
         public function form( $instance ) {
             $registration_type  = get_option( 'b3_registration_type' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : '';
@@ -193,19 +166,6 @@
             <?php
         }
 
-
-        /**
-         * Sanitize widget form values as they are saved.
-         *
-         * @since 1.0.0
-         *
-         * @see WP_Widget::update()
-         *
-         * @param array $new_instance Values just sent to be saved.
-         * @param array $old_instance Previously saved values from database.
-         *
-         * @return array Updated safe values to be saved.
-         */
         public function update( $new_instance, $old_instance ) {
             $instance                    = [];
             $instance[ 'show_account' ] = ( ! empty( $new_instance[ 'show_account' ] ) ) ? $new_instance[ 'show_account' ] : '';

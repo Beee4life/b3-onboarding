@@ -21,7 +21,7 @@
     <?php if ( 'email_activation' == get_option( 'b3_registration_type' ) ) { ?>
     <tr>
         <td colspan="2" class="b3__intro">
-            <?php esc_html_e( '<b>NOTE:</b> This email is sent after the user confirms his/her email address, not on initial registration.', 'b3-onboarding' ); ?>
+            <?php echo sprintf( '<b>%s:</b> %s', esc_html__( 'PLEASE KEEP IN MIND', 'b3-onboarding' ), esc_html__( 'This email is sent after the user confirms his/her email address, not on initial registration.', 'b3-onboarding' ) ); ?>
         </td>
     </tr>
     <?php } ?>
@@ -67,7 +67,7 @@
             <label>
                 <input name="b3_disable_admin_notification_new_user" type="checkbox" value="1" <?php checked($disable_admin_notification); ?>/>
                 <?php
-                    if ( 1 == $disable_admin_notification ) {
+                    if ( $disable_admin_notification ) {
                         esc_html_e( 'Enable admin notification on new user registration', 'b3-onboarding' );
                     } else {
                         esc_html_e( 'Disable admin notification on new user registration', 'b3-onboarding' );

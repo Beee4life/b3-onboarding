@@ -15,7 +15,7 @@
         $subject = false;
 
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $hide_logo = ! get_option( 'b3_activate_logo_in_email' ) ? true : false;
             $preview   = sanitize_text_field( wp_unslash( $_GET[ 'preview' ] ) );
             $user      = get_userdata( get_current_user_id() );
 
@@ -97,7 +97,8 @@
                     $css = b3_get_email_styling( b3_get_link_color() );
                     break;
                 default:
-                    $message = 'OOPS';
+                    $message = apply_filters( 'b3_preview_email_message', sprintf( esc_html__( "No email message found for '%s'", 'b3-onboarding' ), $preview ), $preview );
+                    $subject = apply_filters( 'b3_preview_email_subject', sprintf( esc_html__( "No email subject found for '%s'", 'b3-onboarding' ), $preview ), $preview );
             }
 
             if ( 'styling' !== $_GET[ 'preview' ] ) {

@@ -134,8 +134,8 @@
                         }
                     }
 
-                    if ( 1 == get_option( 'b3_activate_recaptcha' ) && 'register' === $attributes[ 'template' ] ) {
-                        $recaptcha_public  = get_option( 'b3_recaptcha_public' );
+                    if ( get_option( 'b3_activate_recaptcha' ) && 'register' === $attributes[ 'template' ] ) {
+                        $recaptcha_public  = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );
                         $recaptcha_version = get_option( 'b3_recaptcha_version' );
 
                         $attributes[ 'recaptcha' ] = [
@@ -237,7 +237,7 @@
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
 
-                if ( 1 == get_option( 'b3_use_magic_link' ) ) {
+                if ( get_option( 'b3_use_magic_link' ) ) {
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
                     $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';
@@ -277,7 +277,7 @@
                     }
                 }
 
-                if ( 1 == get_option( 'b3_use_magic_link' ) ) {
+                if ( get_option( 'b3_use_magic_link' ) ) {
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
                     $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';

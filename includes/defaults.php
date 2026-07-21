@@ -6,7 +6,7 @@
     function b3_default_email_styling( $link_color = false ) {
         $default_css = file_get_contents( dirname(__FILE__) . '/default-email-styling.css' );
 
-        if ( false != $link_color ) {
+        if ( false != $link_color && $link_color !== b3_default_link_color() ) {
             if ( current_user_can( 'manage_options' ) ) {
                 $default_css .= "\n";
                 $default_css .= '/*';
@@ -117,12 +117,12 @@
     }
 
     function b3_default_request_access_message_admin() {
-        $approval_link                = b3_get_user_approval_link();
-        $user_approval_page           = ( false != $approval_link ) ? $approval_link : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
+        $approval_url       = b3_get_user_approval_url();
+        $user_approval_page = ( false != $approval_url ) ? $approval_url : esc_url( admin_url( 'admin.php?page=b3-user-approval' ) );
         /* translators: link to user approval page */
-        $request_access_message_admin = sprintf( esc_html__( 'A new user has requested access. You can approve/deny him/her on the "%s" page.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $user_approval_page, esc_html__( 'User approval', 'b3-onboarding' ) ) );
+        $message            = sprintf( esc_html__( 'A new user has requested access. You can approve/deny him/her on the "%s" page.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $user_approval_page, esc_html__( 'User approval', 'b3-onboarding' ) ) );
 
-        return $request_access_message_admin;
+        return $message;
     }
 
     function b3_default_request_access_subject_user() {
@@ -215,15 +215,21 @@
         /* translators: 1. lost password url, 2. set password */
         $activation_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
         $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
-        $message = b3_get_email_intro();
-        $message .= '<br><br>' . "\n";
+        $message         = b3_get_email_intro();
+        $message         .= '<br><br>' . "\n";
         /* translators: site name */
-        $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message         .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+
         if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
             $message .= '<br><br>' . "\n";
             $message .= __( 'You can set your password by clicking the button below.', 'b3-onboarding' ) . "\n";
             $message .= '<br><br>' . "\n";
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        } else {
+            // @TODO: TEST
+            $message .= '<br><br>' . "\n";
+            $message .= __( 'You will get another email with a link to set your password.', 'b3-onboarding' ) . "\n";
+            $message .= '<br>' . "\n";
         }
         $message .= b3_default_greetings();
 
@@ -424,7 +430,7 @@
     }
 
     function b3_default_message_above_lost_password() {
-        if ( 1 == get_option( 'b3_register_email_only' ) ) {
+        if ( get_option( 'b3_register_email_only' ) ) {
             return esc_html__( 'Please enter your email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
         } else {
             return esc_html__( 'Please enter your username or email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
@@ -457,7 +463,7 @@
     function b3_default_greetings() {
         $greetings = "\n" . '<br>' . "\n";
         $greetings .= esc_html__( 'Greetings', 'b3-onboarding' ) . ',' . "\n";
-        $greetings .= '<br><br>' . "\n";
+        $greetings .= '<br>' . "\n";
         /* translators: site name */
         $greetings .= sprintf( esc_html__( 'The %s crew', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
@@ -557,7 +563,7 @@
             ],
         ];
 
-        if ( true == get_option( 'b3_front_end_approval' ) ) {
+        if ( get_option( 'b3_activate_front_end_approval' ) ) {
             $front_end_approval = [
                 'id'      => 'approval_page',
                 'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),

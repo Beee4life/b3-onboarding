@@ -24,7 +24,6 @@
     }
     add_filter( 'b3_hidden_fields', 'b3_hidden_fields_example' );
 
-
     /**
      * Add custom fields to form (filter only)
      *
@@ -149,7 +148,6 @@
     }
     add_filter( 'b3_extra_fields', 'b3_extra_fields_example' );
 
-
     /**
      * Filters message before request access form (filter only)
      *
@@ -164,7 +162,6 @@
     }
     add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access_example' );
 
-
     /**
      * Filters message before password reset form (filter only)
      * @since 2.0.0
@@ -178,7 +175,6 @@
     }
     add_filter( 'b3_message_above_lost_password', 'b3_message_above_lost_password_example' );
 
-
     /**
      * Filters message above registration form (filter only)
      *
@@ -191,7 +187,6 @@
     }
     add_filter( 'b3_message_above_registration', 'b3_message_above_registration_example' );
 
-
     /**
      * Filters message above login form (filter only)
      *
@@ -203,7 +198,6 @@
         return 'Filter login text';
     }
     add_filter( 'b3_message_above_login', 'b3_message_above_login_example' );
-
 
     /**
      * Override registration closed message (filter only)
@@ -219,7 +213,6 @@
     }
     add_filter( 'b3_registration_closed_message', 'b3_registration_closed_message_example' );
 
-
     /**
      * Override privacy text
      *
@@ -233,7 +226,6 @@
         return '<a href="#">Click here</a> for more info';
     }
     add_filter( 'b3_privacy_text', 'b3_privacy_text_example' );
-
 
     /**
      * Override email styling
@@ -249,7 +241,6 @@
     }
     add_filter( 'b3_email_styling', 'b3_email_styling_example' );
 
-
     /**
      * Override email template
      *
@@ -263,7 +254,6 @@
         return '<a href="#">Click</a> here';
     }
     add_filter( 'b3_email_template', 'b3_email_template_example' );
-
 
     /**
      * Filter a custom username for localhost development
@@ -279,7 +269,6 @@
     }
     add_filter( 'b3_localhost_username', 'b3_localhost_username_example' );
 
-
     /**
      * Filter a custom email address for localhost development
      *
@@ -293,7 +282,6 @@
         return 'filter@email.com';
     }
     add_filter( 'b3_localhost_email', 'b3_localhost_email_example' );
-
 
     /**
      * Filter a custom blogname for localhost development (Multisite)
@@ -309,7 +297,6 @@
     }
     add_filter( 'b3_localhost_blogname', 'b3_localhost_blogname_example' );
 
-
     /**
      * Filter a custom blog title for localhost development (Multisite))
      *
@@ -324,7 +311,6 @@
     }
     add_filter( 'b3_localhost_blogtitle', 'b3_localhost_blogtitle_example' );
 
-
     /**
      * Disable the admin links
      *
@@ -336,7 +322,6 @@
         return true;
     }
     add_filter( 'b3_disable_action_links', 'b3_disable_action_links_example' );
-
 
     /**
      * Extend disallowed usernames
@@ -358,7 +343,6 @@
     }
     add_filter( 'b3_disallowed_usernames', 'b3_disallowed_usernames_example' );
 
-
     /**
      * Override label "A site"
      *
@@ -372,7 +356,6 @@
         return $label;
     }
     add_filter( 'b3_signup_for_site', 'b3_signup_for_site' );
-
 
     /**
      * Override label "Just a user"

@@ -25,7 +25,7 @@
         $wp_mail[ 'subject' ] = $subject;
         $wp_mail[ 'message' ] = $message;
 
-        if ( 1 == get_option( 'b3_disable_admin_notification_password_change' ) ) {
+        if ( get_option( 'b3_disable_admin_notification_password_change' ) ) {
             $wp_mail = [
                 'to'      => false,
                 'subject' => false,
@@ -50,7 +50,7 @@
      * @return mixed
      */
     function b3_email_changed_email_user( $change_email, $user, $userdata ) {
-        if ( 1 == get_option( 'b3_register_email_only' ) ) {
+        if ( get_option( 'b3_register_email_only' ) ) {
             $new_message = 'Hi,';
         } else {
             $new_message = 'Hi ###USERNAME###,';
@@ -304,7 +304,7 @@
      */
     function b3_content_password_change_notification( $pass_change_email, $user, $userdata ) {
         // if admin disabled user notification option
-        if ( 1 == get_option( 'b3_disable_user_notification_password_change' ) ) {
+        if ( get_option( 'b3_disable_user_notification_password_change' ) ) {
             $pass_change_email = [
                 'to'      => false,
                 'subject' => false,
@@ -315,7 +315,7 @@
             return $pass_change_email;
         }
 
-        $salutation = ( 1 == get_option( 'b3_register_email_only' ) ) ? false : '###USERNAME###';
+        $salutation = get_option( 'b3_register_email_only' ) ? false : '###USERNAME###';
 
         /* translators: salutation */
         $pass_change_text = sprintf( __(

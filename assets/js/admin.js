@@ -54,7 +54,7 @@
             $('.b3_settings-field--first-last-required').toggle();
         });
 
-        $('#b3_privacy').change(function() {
+        $('#b3_activate_privacy_page').change(function() {
             $('.b3_settings-field--privacy').toggle();
         });
 
@@ -62,7 +62,7 @@
             $('.b3_settings-input-description--recaptcha').toggle();
         });
 
-        $('#b3_logo_in_email').change(function() {
+        $('#b3_activate_logo_in_email').change(function() {
             $('.metabox-handler--logo').toggle();
         });
 
@@ -70,11 +70,11 @@
             $('.b3_settings-input-description--approval').toggle();
         });
 
-        $('#b3_restrict_usernames').change(function () {
+        $('#b3_activate_username_restriction').change(function () {
             $('.b3_settings-field--username-restrictions').toggle();
         });
 
-        $('#b3_set_domain_restrictions').change(function () {
+        $('#b3_activate_domain_restriction').change(function () {
             $('.b3_settings-field--domain-restrictions').toggle();
         });
 

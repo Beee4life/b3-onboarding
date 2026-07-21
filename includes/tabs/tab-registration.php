@@ -3,24 +3,19 @@
         exit;
     }
 
-    /**
-     * Render registration tab
-     *
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
+    // Render registration tab
     function b3_render_registration_tab() {
+        $activate_recaptcha           = get_option( 'b3_activate_recaptcha' ); // @TODO: add filter
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
-        $honeypot                     = get_option( 'b3_honeypot' );
-        $privacy                      = get_option( 'b3_privacy' );
+        $activate_honeypot            = get_option( 'b3_activate_honeypot' ); // @TODO: add filter
+        $activate_privacy_page        = get_option( 'b3_activate_privacy_page' ); // @TODO: add filter
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
         /* translators: click here link */
-        $privacy_page_placeholder     = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
-        $privacy_text                 = get_option( 'b3_privacy_text' );
-        $recaptcha                    = get_option( 'b3_activate_recaptcha' );
+        $default_privacy_placeholder  = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
+        $privacy_placeholder          = apply_filters( 'b3_privacy_text', $default_privacy_placeholder );
+        $privacy_text                 = apply_filters( 'b3_privacy_text', '' ) ? '' : get_option( 'b3_privacy_text' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
         $use_magic_link               = get_option( 'b3_use_magic_link' );
@@ -101,7 +96,7 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'none' ] ) ) ? true : false; ?>
-                        <?php $hide_custom_passwords = ( 1 == $use_magic_link ) ? true : $hide_custom_passwords; ?>
+                        <?php $hide_custom_passwords = $use_magic_link ? true : $hide_custom_passwords; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -113,7 +108,7 @@
                         <?php b3_get_close(); ?>
                     <?php } ?>
 
-                    <?php $hide_extended_fields = ( 1 == $registration_with_email_only ) ? ' hidden' : false; ?>
+                    <?php $hide_extended_fields = $registration_with_email_only ? ' hidden' : false; ?>
                     <div class="b3-name-fields<?php echo esc_attr( $hide_extended_fields ); ?>">
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
@@ -125,7 +120,7 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_first_last_required = ( 1 == $first_last ) ? false : true; ?>
+                        <?php $hide_first_last_required = $first_last ? false : true; ?>
                         <?php b3_get_settings_field_open( $hide_first_last_required, 'first-last-required' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_first_last_required"><?php esc_html_e( 'Make first and last name required', 'b3-onboarding' ); ?></label>
@@ -138,7 +133,7 @@
                     </div>
 
                     <?php if ( ! is_multisite() ) { ?>
-                        <?php $hide_one_time_password = ( 1 == $custom_passwords ) ? ' hidden' : false; ?>
+                        <?php $hide_one_time_password = $custom_passwords ? ' hidden' : false; ?>
                         <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
                         <?php b3_get_label_field_open(); ?>
                         <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
@@ -151,7 +146,7 @@
                     <?php } ?>
 
                     <?php if ( 'open' === $registration_type ) { ?>
-                        <?php $hide_redirect_field = ( 1 == $custom_passwords ) ? true : false; ?>
+                        <?php $hide_redirect_field = $custom_passwords ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_redirect_field, 'redirect' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
@@ -168,10 +163,10 @@
                             <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php checked($recaptcha); ?>/>
+                            <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php checked($activate_recaptcha); ?>/>
                             <?php esc_html_e( 'Activate reCAPTCHA.', 'b3-onboarding' ); ?>
-                            <?php $show_note = ( 1 == $recaptcha ) ? false : true; ?>
-                            <?php $hide_recaptcha_note = ( 1 == $recaptcha ) ? false : ' hidden'; ?>
+                            <?php $show_note = $activate_recaptcha ? false : true; ?>
+                            <?php $hide_recaptcha_note = $activate_recaptcha ? false : ' hidden'; ?>
                             <?php if ( $show_note ) { ?>
                                 <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo esc_attr( $hide_recaptcha_note ); ?>">
                                     <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
@@ -182,10 +177,10 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_honeypot"><?php esc_html_e( 'Honeypot', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_honeypot"><?php esc_html_e( 'Honeypot', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_honeypot" name="b3_honeypot" value="1" <?php checked($honeypot); ?>/>
+                            <input type="checkbox" id="b3_activate_honeypot" name="b3_activate_honeypot" value="1" <?php checked($activate_honeypot); ?>/>
                             <?php esc_html_e( 'Activate a honeypot option.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
@@ -195,18 +190,19 @@
                             <label for="b3_privacy"><?php esc_html_e( 'Privacy', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_privacy" name="b3_privacy" value="1" <?php checked($privacy); ?>/>
+                            <input type="checkbox" id="b3_activate_privacy_page" name="b3_activate_privacy_page" value="1" <?php checked($activate_privacy_page); ?>/>
                             <?php esc_html_e( 'Activate a privacy checkbox.', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php $hide_privacy_settings = ( 1 == $privacy ) ? false : true; ?>
+                    <?php $hide_privacy_settings = 1 == $activate_privacy_page ? false : true; ?>
                     <?php b3_get_settings_field_open( $hide_privacy_settings, 'privacy' ); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_privacy_text"><?php esc_html_e( 'Privacy text', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_page_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo wp_kses_post( $privacy_text ); } ?>"/>
+                            <input type="text" id="b3_privacy_text" name="b3_privacy_text" placeholder="<?php echo esc_attr( $privacy_placeholder ); ?>" value="<?php if ( $privacy_text ) { echo wp_kses_post( $privacy_text ); } ?>"/>
+                            <?php if ( apply_filters( 'b3_privacy_text', '' ) ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                             <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>

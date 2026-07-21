@@ -4,7 +4,7 @@ Tags: user management, registration, login, lost password, account
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 3.15.1
+Stable tag: 3.16.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -26,6 +26,23 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+
+3.16.0
+* add email replacement vars filter, so you can add previews for your own emails
+* change b3_get_user_approval_link() to b3_get_user_approval_url()
+* change meta keys to reflect their function better
+  * b3_activate_debug_info
+  * b3_activate_domain_restriction
+  * b3_activate_front_end_approval
+  * b3_activate_honeypot
+  * b3_activate_privacy_page
+  * b3_activate_username_restriction
+* add new filters
+  * b3_activate_debug_info
+  * b3_preview_email_message
+  * b3_preview_email_subject
+  * b3_replacement_vars
+* removed b3_redirect_after_register filter
 
 3.15.1
 * fix incorrect option key to set password on registration

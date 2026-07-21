@@ -300,7 +300,7 @@
         if ( false != get_option( 'b3_activate_recaptcha' ) ) {
             $recaptcha_public = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );
             if ( false != $recaptcha_public ) {
-                if ( '2' == get_option( 'b3_recaptcha_version', '2' ) ) {
+                if ( 2 === (int) get_option( 'b3_recaptcha_version') ) {
                     do_action( 'b3_do_before_recaptcha' );
                     ?>
                     <div class="b3_form-element b3_form-element--recaptcha">
@@ -330,7 +330,7 @@
      * Function to output a privacy checkbox
      */
     function b3_add_privacy_checkbox() {
-        if ( true == get_option( 'b3_privacy' ) ) {
+        if ( get_option( 'b3_activate_privacy_page' ) ) {
             do_action( 'b3_render_form_element', 'register/privacy' );
         }
     }
@@ -416,7 +416,7 @@
      * @param string $form_type
      */
     function b3_add_action_links( $form_type = 'login' ) {
-        if ( true != apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
+        if ( ! apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
             $links = [];
 
             $values = [
