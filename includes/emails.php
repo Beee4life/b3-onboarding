@@ -26,7 +26,7 @@
 
         ob_start();
         if ( ( ! empty( $box[ 'id' ] ) ) && ( ! empty( $box[ 'title' ] ) ) ) {
-            $hide_field = 'logo' == $box[ 'id' ] && ! get_option( 'b3_logo_in_email' ) ? ' hidden' : '';
+            $hide_field = 'logo' == $box[ 'id' ] && ! get_option( 'b3_activate_logo_in_email' ) ? ' hidden' : '';
             $id_field   = in_array( $box[ 'id' ], $add_id_fields ) ? ' id="' . $box[ 'id' ] . '"' : false;
         ?>
         <div class="metabox-handler metabox-handler--<?php echo esc_attr( $box[ 'id' ] ); ?><?php echo esc_attr( $hide_field ); ?>">

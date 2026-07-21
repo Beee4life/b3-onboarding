@@ -12,7 +12,7 @@
         $link_color             = b3_get_link_color();
         $main_logo              = get_option( 'b3_main_logo' );
         $filter_link_color      = apply_filters( 'b3_link_color', false ); // used for setting
-        $logo_in_email          = get_option( 'b3_logo_in_email' );
+        $logo_in_email          = get_option( 'b3_activate_logo_in_email' );
         $hide_logo_field        = $logo_in_email ? false : ' hidden';
         $hide_logo_notice       = $logo_in_email ? false : ' hidden';
 
@@ -53,10 +53,10 @@
                 <?php if ( ! $activate_custom_emails ) { ?>
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_logo_in_email"><?php esc_html_e( 'Add logo in email', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_logo_in_email"><?php esc_html_e( 'Add logo in email', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_logo_in_email" name="b3_logo_in_email" value="1" <?php checked($logo_in_email); ?>/>
+                            <input type="checkbox" id="b3_activate_logo_in_email" name="b3_activate_logo_in_email" value="1" <?php checked($logo_in_email); ?>/>
                             <?php esc_html_e( 'Activate a logo in the email header (of the default template).', 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>

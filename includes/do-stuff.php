@@ -243,8 +243,8 @@
     function b3_replace_template_styling( $message = false ) {
         if ( false != $message ) {
             $email_footer = b3_get_email_footer();
-            $custom_email = ( 1 == get_option( 'b3_activate_custom_emails' ) ) ? true : false;
-            $hide_logo    = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
+            $custom_email = get_option( 'b3_activate_custom_emails' ) ? true : false;
+            $hide_logo    = ! get_option( 'b3_activate_logo_in_email' ) ? true : false;
             $styling      = b3_get_email_styling( b3_get_link_color() );
             $template     = b3_get_email_template( $hide_logo );
 
@@ -269,7 +269,7 @@
      * @return bool
      */
     function b3_verify_privacy() {
-        if ( 1 === (int) get_option( 'b3_activate_privacy_page' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
+        if ( get_option( 'b3_activate_privacy_page' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
             return false;
         }
 
@@ -318,7 +318,7 @@
     function b3_verify_email_domain( $email ) {
         $disallowed_domains = b3_get_disallowed_domain_names();
 
-        if ( 1 === (int) get_option( 'b3_activate_domain_restriction' ) && ! empty( $disallowed_domains ) ) {
+        if ( get_option( 'b3_activate_domain_restriction' ) && ! empty( $disallowed_domains ) ) {
             $domain_name = substr( strrchr( $email, '@' ), 1 );
 
             if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {

@@ -136,10 +136,10 @@
                     }
                 }
 
-                if ( isset( $_POST[ 'b3_logo_in_email' ] ) && 1 == (int) $_POST[ 'b3_logo_in_email' ] ) {
-                    update_option( 'b3_logo_in_email', 1, false );
+                if ( isset( $_POST[ 'b3_activate_logo_in_email' ] ) && 1 == (int) $_POST[ 'b3_activate_logo_in_email' ] ) {
+                    update_option( 'b3_activate_logo_in_email', 1, false );
                 } else {
-                    delete_option( 'b3_logo_in_email' );
+                    delete_option( 'b3_activate_logo_in_email' );
                 }
 
                 if ( isset( $_POST[ 'b3_activate_custom_emails' ] ) && 1 == (int) $_POST[ 'b3_activate_custom_emails' ] ) {
@@ -150,7 +150,7 @@
                     }
 
                     if ( ! get_option( 'b3_email_template' ) ) {
-                        $hide_logo = ( 1 == get_option( 'b3_logo_in_email' ) ) ? false : true;
+                        $hide_logo = ! get_option( 'b3_activate_logo_in_email' ) ? true : false;
                         update_option( 'b3_email_template', b3_get_email_template( $hide_logo ) );
                     }
                 } else {

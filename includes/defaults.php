@@ -430,7 +430,7 @@
     }
 
     function b3_default_message_above_lost_password() {
-        if ( 1 == get_option( 'b3_register_email_only' ) ) {
+        if ( get_option( 'b3_register_email_only' ) ) {
             return esc_html__( 'Please enter your email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
         } else {
             return esc_html__( 'Please enter your username or email address. You will receive an email with a link to (re)set your password.', 'b3-onboarding' );
@@ -563,7 +563,7 @@
             ],
         ];
 
-        if ( 1 == (int) get_option( 'b3_activate_front_end_approval' ) ) {
+        if ( get_option( 'b3_activate_front_end_approval' ) ) {
             $front_end_approval = [
                 'id'      => 'approval_page',
                 'label'   => esc_html__( 'Approval page', 'b3-onboarding' ),

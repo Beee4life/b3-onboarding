@@ -48,7 +48,7 @@
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/>
                         <?php esc_html_e( 'Activate the validation of all custom filters.', 'b3-onboarding' ); ?>
-                        <?php $hide_validation_note = ( 1 == $activate_filter_validation ) ? false : ' hidden'; ?>
+                        <?php $hide_validation_note = $activate_filter_validation ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo esc_attr( $hide_validation_note ); ?>">
                             <?php esc_html_e( "Don't forget to turn it of later on, the validation can cause a higher load time.", 'b3-onboarding' ); ?>
                         </div>
@@ -75,7 +75,7 @@
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_preserve_settings" name="b3_preserve_settings" value="1" <?php checked($preserve_settings); ?>/>
                         <?php
-                            if ( 1 == $preserve_settings ) {
+                            if ( $preserve_settings ) {
                                 esc_html_e( 'To remove the data upon plugin removal, uncheck this box.', 'b3-onboarding' );
                             } else {
                                 esc_html_e( 'When removing the plugin, all data is removed. To prevent this from happening, check this box.', 'b3-onboarding' );

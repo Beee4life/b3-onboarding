@@ -62,7 +62,7 @@
             $('.b3_settings-input-description--recaptcha').toggle();
         });
 
-        $('#b3_logo_in_email').change(function() {
+        $('#b3_activate_logo_in_email').change(function() {
             $('.metabox-handler--logo').toggle();
         });
 

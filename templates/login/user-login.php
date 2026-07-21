@@ -3,7 +3,7 @@
         exit;
     }
     $label = esc_html__( 'Username or Email address', 'b3-onboarding' );
-    if ( 1 == get_option( 'b3_register_email_only' ) ) {
+    if ( get_option( 'b3_register_email_only' ) ) {
         $label = esc_html__( 'Email address', 'b3-onboarding' );
     }
 ?>
