@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
 "POT-Creation-Date: 2026-07-21 17:17+0200\n"
-"PO-Revision-Date: 2026-07-21 20:01+0200\n"
+"PO-Revision-Date: 2026-07-21 20:06+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -121,7 +121,7 @@ msgstr "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut."
 
 #: B3Onboarding.php:878 includes/form-handling.php:763
 msgid "Unlawful form entry, try again."
-msgstr "Fehlerhafte Formulareingabe, versuche es erneut."
+msgstr "Illegale Formulareingabe, versuche es erneut."
 
 #: B3Onboarding.php:882
 msgid ""
