@@ -245,7 +245,7 @@
                     }
                 }
 
-                if ( is_localhost() || get_option( 'b3_activate_debug_info' ) || apply_filters( 'b3_activate_debug_info', false ) ) {
+                if ( is_localhost() || apply_filters( 'b3_activate_debug_info', get_option( 'b3_activate_debug_info' ) ) ) {
                     global $submenu;
                     $debug_exists = false;
 
@@ -331,9 +331,6 @@
             }
 
             public function b3_add_dashboard_widget() {
-                /*
-                 * Includes dashboard widget function + call
-                 */
                 if ( is_main_site() ) {
                     $plugin_dir_path = plugin_dir_path(__FILE__);
                     require_once $plugin_dir_path . 'admin/dashboard-widget-users.php';
