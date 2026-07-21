@@ -49,7 +49,7 @@
             </tr>
             <tr>
                 <td>Users can register</td>
-                <td><?php echo esc_html( get_option( 'users_can_register' ) ); ?></td>
+                <td><?php echo esc_html( get_option( 'users_can_register' ) ); ?> - B3OB handles this</td>
             </tr>
             <tr>
                 <td>Page on front</td>
