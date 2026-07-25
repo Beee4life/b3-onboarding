@@ -1,16 +1,9 @@
 <?php
-    /**
-     * Render template tab
-     *
-     * @since 3.7.0
-     *
-     * @return false|string
-     */
-
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
 
+    // Render template tab
     function b3_render_template_tab() {
         $fields                = [];
         $stored_email_styling  = get_option( 'b3_email_styling' );
@@ -50,13 +43,27 @@
                     <?php if ( isset( $field[ 'filter' ] ) && false != $field[ 'filter' ] ) { ?>
                         <p>
                             <?php if ( 'email_styling' == $field[ 'id' ] ) { ?>
-                                <?php esc_html_e( "You have set the filter 'b3_email_styling' to override the css, so you can't override that here again with this setting because the filter takes presedence.", 'b3-onboarding' ); ?>
+                                <?php esc_html_e( "You have set the filter 'b3_email_styling' to change the css, so you can't override that here again with this setting because the filter takes presedence.", 'b3-onboarding' ); ?>
                             <?php } else { ?>
-                                <?php esc_html_e( "You have set the filter 'b3_email_template' to override the html, so you can't override that here again with this setting because the filter takes presedence.", 'b3-onboarding' ); ?>
+                                <?php esc_html_e( "You have set the filter 'b3_email_template' to change the html, so you can't override that here again with this setting because the filter takes presedence.", 'b3-onboarding' ); ?>
                             <?php } ?>
                         </p>
                     <?php } else { ?>
                         <textarea id="b3__input--<?php echo esc_attr( $field[ 'id' ] ); ?>" name="b3_<?php echo esc_attr( $field[ 'id' ] ); ?>" rows="6"><?php echo esc_textarea( $field[ 'value' ] ); ?></textarea>
+
+                        <?php if ( 'email_styling' == $field[ 'id' ] ) { ?>
+                            <p>
+                                <?php echo sprintf( esc_html__( "We don't recommend overriding the css here, but rather add css at the end of the file, after line %d by using the filter %s.", 'b3-onboarding' ), 106, sprintf( '<a href="%s" target="_blank">b3_email_styling</a>', esc_url( 'https://b3onboarding.berryplasman.com/filter/b3_email_styling/' )) ); ?>
+                            </p>
+                        <?php } ?>
+                        <?php if ( 'email_template' == $field[ 'id' ] ) { ?>
+                            <p>
+                                <?php esc_html_e( "We don't recommend overriding the template, unless you know what you're doing.", 'b3-onboarding' ); ?>
+                                <?php esc_html_e( "The default template is sufficient in most cases.", 'b3-onboarding' ); ?>
+                                <br>
+                                <?php echo sprintf( esc_html__( "It's easer to override the styling to achieve your wishes, but if you really want to change the template we recommend using the filter %s.", 'b3-onboarding' ), sprintf( '<a href="%s" target="_blank">b3_email_template</a>', esc_url( 'https://b3onboarding.berryplasman.com/filter/b3_email_template/' ) ) ); ?>
+                            </p>
+                       <?php } ?>
                     <?php } ?>
                     <p>
                         <?php echo wp_kses_post( b3_get_preview_link( $field[ 'preview' ] ) ); ?>

@@ -733,7 +733,7 @@
             if ( ! apply_filters( 'b3_email_styling', false ) || ! apply_filters( 'b3_email_template', false ) ) {
                 $tabs[] = [
                     'id'      => 'template',
-                    'title'   => esc_html__( 'Template', 'b3-onboarding' ),
+                    'title'   => esc_html__( 'Styling', 'b3-onboarding' ),
                     'content' => b3_render_tab_content( 'template' ),
                     'icon'    => 'admin-customizer',
                 ];
