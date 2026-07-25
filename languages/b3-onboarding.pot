@@ -363,20 +363,20 @@ msgstr ""
 msgid "%1$s takes control over the 'Membership' option. You can change this %2$s."
 msgstr ""
 
-#: admin/admin-page.php:15 admin/debug-page.php:14
+#: admin/admin-page.php:10 admin/debug-page.php:14
 #: admin/user-approval-page.php:15
 msgid "Sorry, you do not have sufficient permissions to access this page."
 msgstr ""
 
-#: admin/admin-page.php:22
+#: admin/admin-page.php:17
 msgid "Email preview"
 msgstr ""
 
-#: admin/admin-page.php:24
+#: admin/admin-page.php:19
 msgid "Styling preview"
 msgstr ""
 
-#: admin/admin-page.php:26
+#: admin/admin-page.php:21
 msgid "Template preview"
 msgstr ""
 
@@ -429,11 +429,11 @@ msgstr ""
 msgid "Lost password (user)"
 msgstr ""
 
-#: admin/dashboard-widget-emails.php:35
+#: admin/dashboard-widget-emails.php:35 includes/functions.php:736
 msgid "Styling"
 msgstr ""
 
-#: admin/dashboard-widget-emails.php:36 includes/functions.php:736
+#: admin/dashboard-widget-emails.php:36
 msgid "Template"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgid "user"
 msgstr ""
 
 #: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:16
-#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:65
+#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:72
 msgid "Click here"
 msgstr ""
 
@@ -1671,15 +1671,25 @@ msgstr ""
 msgid "%s to see what it does exactly."
 msgstr ""
 
-#: includes/tabs/tab-template.php:24
+#: includes/tabs/tab-template.php:17
 msgid "Email template"
 msgstr ""
 
-#: includes/tabs/tab-template.php:33
+#: includes/tabs/tab-template.php:26
 msgid "Email styling"
 msgstr ""
 
-#: includes/tabs/tab-template.php:65
+#: includes/tabs/tab-template.php:56
+#, php-format
+msgid "We don't recommend overriding the css here, but rather add css at the end of the file, after line %d by using the filter %s."
+msgstr ""
+
+#: includes/tabs/tab-template.php:64
+#, php-format
+msgid "It's easer to override the styling to achieve your wishes, but if you really want to change the template we recommend using the filter %s."
+msgstr ""
+
+#: includes/tabs/tab-template.php:72
 msgid "to download the default."
 msgstr ""
 

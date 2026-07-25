@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-07-22 01:14+0200\n"
-"PO-Revision-Date: 2026-07-22 01:16+0200\n"
+"POT-Creation-Date: 2026-07-25 14:07+0200\n"
+"PO-Revision-Date: 2026-07-25 14:09+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -447,20 +447,20 @@ msgstr ""
 "%1$s neemt controle over van de ‘Lidmaatschap’ optie. Je kan deze %2$s "
 "wijzigen."
 
-#: admin/admin-page.php:15 admin/debug-page.php:14
+#: admin/admin-page.php:10 admin/debug-page.php:14
 #: admin/user-approval-page.php:15
 msgid "Sorry, you do not have sufficient permissions to access this page."
 msgstr "Je hebt niet voldoende rechten om deze pagina te bekijken."
 
-#: admin/admin-page.php:22
+#: admin/admin-page.php:17
 msgid "Email preview"
 msgstr "Email preview"
 
-#: admin/admin-page.php:24
+#: admin/admin-page.php:19
 msgid "Styling preview"
 msgstr "Styling preview"
 
-#: admin/admin-page.php:26
+#: admin/admin-page.php:21
 msgid "Template preview"
 msgstr "Template preview"
 
@@ -513,11 +513,11 @@ msgstr "Welkom (gebruiker)"
 msgid "Lost password (user)"
 msgstr "Wachtwoord vergeten (gebruiker)"
 
-#: admin/dashboard-widget-emails.php:35
+#: admin/dashboard-widget-emails.php:35 includes/functions.php:736
 msgid "Styling"
 msgstr "Stijl"
 
-#: admin/dashboard-widget-emails.php:36 includes/functions.php:736
+#: admin/dashboard-widget-emails.php:36
 msgid "Template"
 msgstr "Template"
 
@@ -543,7 +543,7 @@ msgstr[0] "gebruiker"
 msgstr[1] "gebruikers"
 
 #: admin/dashboard-widget-users.php:51 includes/tabs/tab-registration.php:16
-#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:65
+#: includes/tabs/tab-settings.php:95 includes/tabs/tab-template.php:72
 msgid "Click here"
 msgstr "Klik hier"
 
@@ -1639,7 +1639,7 @@ msgstr "Dit is het email adres dat gebruikt wordt als afzender voor de emails."
 msgid "If left empty the default styling will be used."
 msgstr "Indien niet ingevuld, dan wordt de default styling gebruikt."
 
-#: includes/emails/email-styling.php:24 includes/tabs/tab-template.php:33
+#: includes/emails/email-styling.php:24 includes/tabs/tab-template.php:26
 msgid "Email styling"
 msgstr "E-mail stijl"
 
@@ -1655,7 +1655,7 @@ msgstr "Download styling"
 msgid "If left empty the default template will be used."
 msgstr "Indien niet ingevuld, dan wordt het default template gebruikt."
 
-#: includes/emails/email-template.php:24 includes/tabs/tab-template.php:24
+#: includes/emails/email-template.php:24 includes/tabs/tab-template.php:17
 msgid "Email template"
 msgstr "E-mail template"
 
@@ -2139,8 +2139,8 @@ msgid "You have set both template and styling by filter."
 msgstr "Je hebt zowel het template als de styling ingesteld via filter."
 
 #: includes/tabs/tab-emails.php:46
-msgid "Activate your own email styling and template."
-msgstr "Activeer je eigen emails/styling."
+msgid "Activate your own email styling."
+msgstr "Activeer je eigen email styling."
 
 #: includes/tabs/tab-emails.php:54
 msgid "Add logo in email"
@@ -2452,9 +2452,9 @@ msgstr "Deze optie reset alles terug naar de standaard instellingen."
 msgid "%s to see what it does exactly."
 msgstr "%s om te lezen wat het precies doet."
 
-#: includes/tabs/tab-template.php:53
+#: includes/tabs/tab-template.php:46
 msgid ""
-"You have set the filter 'b3_email_styling' to override the css, so you can't "
+"You have set the filter 'b3_email_styling' to change the css, so you can't "
 "override that here again with this setting because the filter takes "
 "presedence."
 msgstr ""
@@ -2462,21 +2462,51 @@ msgstr ""
 "je kan het hier niet nog een keer overschrijven omdat het filter prioriteit "
 "heeft."
 
-#: includes/tabs/tab-template.php:55
+#: includes/tabs/tab-template.php:48
 msgid ""
-"You have set the filter 'b3_email_template' to override the html, so you "
-"can't override that here again with this setting because the filter takes "
+"You have set the filter 'b3_email_template' to change the html, so you can't "
+"override that here again with this setting because the filter takes "
 "presedence."
 msgstr ""
 "Je hebt het filter 'b3_email_template' ingesteld om de html aan te passen, "
 "dus je kan het hier niet nog een keer overschrijven omdat het filter "
 "prioriteit heeft."
 
-#: includes/tabs/tab-template.php:63
+#: includes/tabs/tab-template.php:56
+#, php-format
+msgid ""
+"We don't recommend overriding the css here, but rather add css at the end of "
+"the file, after line %d by using the filter %s."
+msgstr ""
+"We raden niet aan de css hier aan te passen, maar dit toe te voegen aan het "
+"einde van de file, na regel %d door het filter %s te gebruiken."
+
+#: includes/tabs/tab-template.php:61
+msgid ""
+"We don't recommend overriding the template, unless you know what you're "
+"doing."
+msgstr ""
+"We raden niet aan het template te overschrijven, alleen als je echt weet wat "
+"je doet."
+
+#: includes/tabs/tab-template.php:62
+msgid "The default template is sufficient in most cases."
+msgstr "Het standaard template is toereikend in bijna alle gevallen."
+
+#: includes/tabs/tab-template.php:64
+#, php-format
+msgid ""
+"It's easer to override the styling to achieve your wishes, but if you really "
+"want to change the template we recommend using the filter %s."
+msgstr ""
+"Het is gemakkelijker om de stijl aan te passen naar je wensen, maar als je "
+"echt het template wilt aanpassen, raden we aan het filter %s te gebruiken."
+
+#: includes/tabs/tab-template.php:70
 msgid "opens in new window"
 msgstr "opent in een nieuw window"
 
-#: includes/tabs/tab-template.php:65
+#: includes/tabs/tab-template.php:72
 msgid "to download the default."
 msgstr "om de default te downloaden."
 
