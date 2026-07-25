@@ -139,13 +139,13 @@
                     <?php if ( ! is_multisite() ) { ?>
                         <?php $hide_one_time_password = $custom_passwords ? ' hidden' : false; ?>
                         <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
-                        <?php b3_get_label_field_open(); ?>
-                        <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
-                        <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
-                            <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
-                        </div>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
+                                <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
+                            </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>
 
@@ -201,38 +201,38 @@
 
                     <?php $hide_terms_settings = 1 == $activate_terms_page ? false : true; ?>
                     <?php b3_get_settings_field_open( $hide_terms_settings, 'terms' ); ?>
-                    <?php b3_get_label_field_open(); ?>
-                    <label for="b3_terms_text"><?php esc_html_e( 'Terms text', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--text">
-                        <input type="text" id="b3_terms_text" name="b3_terms_text" placeholder="<?php echo esc_attr( $terms_placeholder ); ?>" value="<?php if ( $terms_text ) { echo wp_kses_post( $terms_text ); } ?>"/>
-                        <?php if ( apply_filters( 'b3_terms_text', '' ) ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
-                        <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
-                    </div>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_terms_text"><?php esc_html_e( 'Terms text', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <input type="text" id="b3_terms_text" name="b3_terms_text" placeholder="<?php echo esc_attr( $terms_placeholder ); ?>" value="<?php if ( $terms_text ) { echo wp_kses_post( $terms_text ); } ?>"/>
+                            <?php if ( apply_filters( 'b3_terms_text', '' ) ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
+                            <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
+                        </div>
                     <?php b3_get_close(); ?>
 
                     <?php b3_get_settings_field_open( $hide_terms_settings, 'terms' ); ?>
-                    <?php b3_get_label_field_open(); ?>
-                    <label for="b3_terms_page_id"><?php esc_html_e( 'Terms page', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--text">
-                        <?php
-                            $page_args = [
-                                'post_type'        => 'page',
-                                'posts_per_page'   => -1,
-                                'orderby'          => 'title',
-                                'order'            => 'ASC',
-                                'suppress_filters' => false,
-                            ];
-                            $all_pages = get_posts( $page_args );
-                        ?>
-                        <select name="b3_terms_page_id" id="b3_terms_page_id">
-                            <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
-                            <?php foreach( $all_pages as $page ) { ?>
-                                <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($terms_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_terms_page_id"><?php esc_html_e( 'Terms page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <?php
+                                $page_args = [
+                                    'post_type'        => 'page',
+                                    'posts_per_page'   => -1,
+                                    'orderby'          => 'title',
+                                    'order'            => 'ASC',
+                                    'suppress_filters' => false,
+                                ];
+                                $all_pages = get_posts( $page_args );
+                            ?>
+                            <select name="b3_terms_page_id" id="b3_terms_page_id">
+                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                                <?php foreach( $all_pages as $page ) { ?>
+                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($terms_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
                     <?php b3_get_close(); ?>
 
                     <?php b3_get_settings_field_open(); ?>
