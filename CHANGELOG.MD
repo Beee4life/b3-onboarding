@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 3.17.0
-* added email replacement vars filter, so you can add previews for your own emails
+* added option to choose magic link or password
 * added new input boxes
   * magic link message
   * magic link subject
