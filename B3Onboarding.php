@@ -84,6 +84,7 @@
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
                 $plugin_dir_path = plugin_dir_path(__FILE__);
+                require_once $plugin_dir_path . 'admin/tabs/tabs.php';
                 require_once $plugin_dir_path . 'admin/help-tabs.php';
                 require_once $plugin_dir_path . 'includes/true-false.php';
                 require_once $plugin_dir_path . 'includes/actions.php';
@@ -95,7 +96,6 @@
                 require_once $plugin_dir_path . 'includes/emails.php';
                 require_once $plugin_dir_path . 'includes/redirects.php';
                 require_once $plugin_dir_path . 'includes/form-handling.php';
-                require_once $plugin_dir_path . 'includes/tabs/tabs.php';
             }
 
             public function b3_plugin_activation() {
