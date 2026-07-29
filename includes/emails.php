@@ -121,14 +121,6 @@
                 case 'user_deleted_site':
                     include 'emails/ms-user-delete-site.php';
                     break;
-                // Email styling
-                // This can probably be removed, but keeping it here, just untl I'm sure.
-                // case 'email_styling':
-                //     include 'emails/email-styling.php';
-                //     break;
-                // case 'email_template':
-                //     include 'emails/email-template.php';
-                //     break;
                 default:
             }
             $output = ob_get_clean();
