@@ -46,7 +46,6 @@
         });
 
         $('#b3_activate_custom_passwords').change(function() {
-            $('.b3_settings-field--magic-link').toggle();
             $('.b3_settings-field--redirect').toggle();
         });
 
@@ -60,6 +59,10 @@
 
         $('#b3_activate_terms_page').change(function() {
             $('.b3_settings-field--terms').toggle();
+        });
+
+        $('#b3_use_magic_link').change(function() {
+            $('.b3_settings-field--use-both').toggle();
         });
 
         $('#b3_activate_recaptcha').change(function() {
