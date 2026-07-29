@@ -33,7 +33,7 @@ jQuery(function($){
         $active_submit.val(b3ob_vars.login);
 
         var $button2 = $('#loginform #button2');
-        $button2.val(b3ob_vars.get_magic_link);
+        $button2.val(b3ob_vars.use_magic_link);
 
         $button2.removeClass('button-submit--use-password')
             .addClass('button-submit--use-magiclink');

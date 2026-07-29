@@ -168,7 +168,7 @@
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
 
                 wp_localize_script( 'b3ob', 'b3ob_vars', [
-                    'get_magic_link'  => esc_attr__( 'Get magic link', 'b3-onboarding' ),
+                    'use_magic_link'  => esc_attr__( 'Use magic link', 'b3-onboarding' ),
                     'login'           => esc_attr__( 'Login', 'b3-onboarding' ),
                     'login_nonce'     => wp_create_nonce( 'b3_login' ),
                     'magiclink_nonce' => wp_create_nonce( 'b3_magiclink' ),
