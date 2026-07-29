@@ -178,10 +178,9 @@
                 // @TODO: create function for this
                 if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
-                        // @TODO: look into this
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 184');
+                            error_log('class-b3-shortcodes.php line 183');
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
@@ -237,20 +236,16 @@
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
 
-                $use_both = true;
                 if ( get_option( 'b3_use_magic_link' ) ) {
+                    $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                    $attributes[ 'form_action' ]  = b3_get_login_url();
+                    $attributes[ 'template' ]     = 'magiclink';
+                    $use_both                     = get_option( 'b3_use_magic_link_password' );
+
                     if ( $use_both ) {
-                        $attributes[ 'button_value' ]     = esc_attr__( 'Get magic link', 'b3-onboarding' );
-                        $attributes[ 'button_value1' ]    = esc_attr__( 'Get magic link', 'b3-onboarding' );
                         $attributes[ 'button_modifier2' ] = esc_attr__( 'use-password', 'b3-onboarding' );
                         $attributes[ 'button_value2' ]    = esc_attr__( 'Use password', 'b3-onboarding' );
-                        $attributes[ 'form_action' ]      = b3_get_login_url();
                         $attributes[ 'template' ]         = 'magic-password';
-                    } else {
-                        $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
-                        $attributes[ 'form_action' ]  = b3_get_login_url();
-                        $attributes[ 'template' ]     = 'magiclink';
-
                     }
                 }
 
