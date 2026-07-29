@@ -14,7 +14,6 @@
     <?php do_action( 'b3_render_form_element', 'login/user-login' ); ?>
     <?php do_action( 'b3_render_form_element', 'login/password' ); ?>
     <?php do_action( 'b3_render_form_element', 'login/rememberme' ); ?>
-    <?php //echo '<pre>'; var_dump($attributes); echo '</pre>'; exit;; ?>
     <?php do_action( 'b3_render_form_element', 'general/button', $attributes ); ?>
     <?php do_action( 'b3_add_action_links', $attributes[ 'template' ] ); ?>
 </form>

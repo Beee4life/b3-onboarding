@@ -121,6 +121,10 @@
 
 .b3_form-element--button input[type="submit"] {
   border-width: 0;
+
+  + input[type="submit"] {
+    margin-left: 1rem;
+  }
 }
 
 .b3_form-element--delete div {

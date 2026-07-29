@@ -5,12 +5,17 @@ jQuery(document).ready(function () {
 jQuery(function($){
     var password_form = $('#b3-login');
     var magiclink_form = $('#b3-resetpass');
-    password_form.hide();
+    var use_both = b3ob_vars.use_both;
+
+    if ( '1' === use_both ) {
+        password_form.hide();
+    }
 
     $(document).on('click', '.button-submit--use-magiclink', function (e) {
         e.preventDefault();
         password_form.hide();
         magiclink_form.show();
+        $('.b3_message').show();
 
         $('#b3-resetpass #b3_magic-password_nonce')
             .attr('name', 'b3_login_nonce')
@@ -22,12 +27,13 @@ jQuery(function($){
         e.preventDefault();
         magiclink_form.hide();
         password_form.show();
+        $('.b3_message').hide();
 
         var $active_submit = $('#loginform #b3-submit');
-        $active_submit.val('Login');
+        $active_submit.val(b3ob_vars.login);
 
         var $button2 = $('#loginform #button2');
-        $button2.val('Get magic link');
+        $button2.val(b3ob_vars.get_magic_link);
 
         $button2.removeClass('button-submit--use-password')
             .addClass('button-submit--use-magiclink');

@@ -57,10 +57,17 @@
                     delete_option( 'b3_activate_custom_passwords' );
                 }
 
+                if ( isset( $_POST[ 'b3_use_magic_link_password' ] ) && 1 == (int) $_POST[ 'b3_use_magic_link_password' ] ) {
+                    update_option( 'b3_use_magic_link_password', 1, false );
+                } else {
+                    delete_option( 'b3_use_magic_link_password' );
+                }
+
                 if ( isset( $_POST[ 'b3_use_magic_link' ] ) && 1 == (int) $_POST[ 'b3_use_magic_link' ] ) {
                     update_option( 'b3_use_magic_link', 1, false );
                 } else {
                     delete_option( 'b3_use_magic_link' );
+                    delete_option( 'b3_use_magic_link_password' );
                 }
 
                 if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == (int) $_POST[ 'b3_first_last_required' ] ) {

@@ -61,6 +61,10 @@
             $('.b3_settings-field--terms').toggle();
         });
 
+        $('#b3_use_magic_link').change(function() {
+            $('.b3_settings-field--use-both').toggle();
+        });
+
         $('#b3_activate_recaptcha').change(function() {
             $('.b3_settings-input-description--recaptcha').toggle();
         });

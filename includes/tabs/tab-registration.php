@@ -25,6 +25,7 @@
         $terms_placeholder            = apply_filters( 'b3_terms_text', $default_accept_placeholder );
         $terms_text                   = apply_filters( 'b3_terms_text', '' ) ? '' : get_option( 'b3_terms_text' );
         $use_magic_link               = get_option( 'b3_use_magic_link' );
+        $use_magic_link_password      = get_option( 'b3_use_magic_link_password' );
 
         ob_start();
 
@@ -145,6 +146,17 @@
                             <div class="b3_settings-input b3_settings-input--checkbox">
                                 <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
                                 <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
+                            </div>
+                        <?php b3_get_close(); ?>
+
+                        <?php $hide_magic_password = $use_magic_link ? false : ' hidden'; ?>
+                        <?php b3_get_settings_field_open( $hide_magic_password, 'use-both' ); ?>
+                            <?php b3_get_label_field_open(); ?>
+                                <label for="b3_use_magic_link_password"><?php esc_html_e( 'Use both password and magic link for login', 'b3-onboarding' ); ?></label>
+                            <?php b3_get_close(); ?>
+                            <div class="b3_settings-input b3_settings-input--checkbox">
+                                <input type="checkbox" id="b3_use_magic_link_password" name="b3_use_magic_link_password" value="1" <?php checked($use_magic_link_password); ?>/>
+                                <?php esc_html_e( 'Use both magic link and password login.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
                     <?php } ?>

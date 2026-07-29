@@ -168,9 +168,12 @@
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
 
                 wp_localize_script( 'b3ob', 'b3ob_vars', [
+                    'get_magic_link'  => esc_attr__( 'Get magic link', 'b3-onboarding' ),
+                    'login'           => esc_attr__( 'Login', 'b3-onboarding' ),
                     'login_nonce'     => wp_create_nonce( 'b3_login' ),
                     'magiclink_nonce' => wp_create_nonce( 'b3_magiclink' ),
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
+                    'use_both'        => get_option( 'b3_use_magic_link_password' ),
                 ] );
             }
 
@@ -776,12 +779,12 @@
                 if ( isset( $_POST[ 'b3_magiclink_nonce' ] ) ) {
                     $redirect_url = b3_get_login_url();
                     if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_magiclink_nonce' ] ) ), 'b3_magiclink' ) ) {
-                        $redirect_url = add_query_arg( 'login-error', 'unknown', $redirect_url );
+                        $redirect_url = add_query_arg( 'error', 'unknown', $redirect_url );
                         wp_safe_redirect( $redirect_url );
                         exit;
 
                     } elseif ( ! isset( $_POST[ 'email' ] ) || empty( $_POST[ 'email' ] ) ) {
-                        $redirect_url = add_query_arg( 'login-error', 'empty_email', $redirect_url );
+                        $redirect_url = add_query_arg( 'error', 'empty_email', $redirect_url );
                         wp_safe_redirect( $redirect_url );
                         exit;
 
@@ -841,8 +844,6 @@
             }
 
             public function b3_get_return_message( $error_code, $label = false ) {
-                error_log($error_code);
-                error_log($label);
                 switch( $error_code ) {
                     case 'banned_domain':
                         return esc_html__( 'This domain is not allowed to register.', 'b3-onboarding' );
