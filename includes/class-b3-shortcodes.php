@@ -240,9 +240,9 @@
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
                     $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';
-                    $use_both                     = get_option( 'b3_use_magic_link_password' );
+                    $use_magiclink_and_password   = get_option( 'b3_use_magic_link_password' );
 
-                    if ( $use_both ) {
+                    if ( $use_magiclink_and_password ) {
                         $attributes[ 'button_modifier2' ] = esc_attr__( 'use-password', 'b3-onboarding' );
                         $attributes[ 'button_value2' ]    = esc_attr__( 'Use password', 'b3-onboarding' );
                         $attributes[ 'template' ]         = 'magic-password';
