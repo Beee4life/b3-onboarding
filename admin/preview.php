@@ -68,6 +68,10 @@
                     $message = b3_get_lost_password_message();
                     $subject = b3_get_lost_password_subject();
                     break;
+                case 'magiclink':
+                    $message = b3_get_magic_link_message( '123', '%s' );
+                    $subject = b3_get_magic_link_subject();
+                    break;
                 case 'mu-confirm-email':
                     $message = b3_get_wpmu_activate_user_message();
                     $subject = b3_get_wpmu_activate_user_subject();

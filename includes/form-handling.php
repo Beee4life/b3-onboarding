@@ -282,8 +282,18 @@
                     delete_option( 'b3_welcome_user_message_manual' );
                 }
 
-                if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+                if ( isset( $_POST[ 'b3_magic_link_subject' ] ) && ! empty( $_POST[ 'b3_magic_link_subject' ] ) ) {
+                    update_option( 'b3_magic_link_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_magic_link_subject' ] ) ), false );
+                } else {
+                    delete_option( 'b3_magic_link_subject' );
+                }
+                if ( isset( $_POST[ 'b3_magic_link_message' ] ) && ! empty( $_POST[ 'b3_magic_link_message' ] ) ) {
+                    update_option( 'b3_magic_link_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_magic_link_message' ] ) ), false );
+                } else {
+                    delete_option( 'b3_magic_link_message' );
+                }
 
+                if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
                     if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
                         if ( isset( $_POST[ 'b3_email_activation_subject' ] ) && ! empty( $_POST[ 'b3_email_activation_subject' ] ) ) {
                             update_option( 'b3_email_activation_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_email_activation_subject' ] ) ), false );

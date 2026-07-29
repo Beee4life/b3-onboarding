@@ -87,6 +87,9 @@
                 case 'lost_password':
                     include 'emails/lost-password.php';
                     break;
+                case 'magiclink':
+                    include 'emails/magic-link.php';
+                    break;
                 case 'welcome_user':
                     include 'emails/welcome-user.php';
                     break;

@@ -63,6 +63,8 @@
             'b3_lost_password_message',
             'b3_lost_password_page_id',
             'b3_lost_password_subject',
+            'b3_magic_link_message',
+            'b3_magic_link_subject',
             'b3_main_logo',
             'b3_new_user_message',
             'b3_new_user_notification_addresses',

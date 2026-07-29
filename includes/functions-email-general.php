@@ -314,16 +314,26 @@
     }
 
     // Get magic link email
-    function b3_get_magic_link_email( $password = false, $slug = false ) {
+    function b3_get_magic_link_subject() {
+        $subject = get_option( 'b3_magic_link_subject' );
+
+        if ( ! $subject ) {
+            $subject = b3_default_magic_link_subject();
+        }
+
+        return apply_filters( 'b3_magic_link_subject', $subject );
+    }
+
+    // Get magic link email
+    function b3_get_magic_link_message( $password = false, $slug = false ) {
         $message = '';
 
         if ( $password && $slug ) {
             // maybe add user input for this email
-            $message = b3_get_default_magiclink_email( $password, $slug );
-
+            $message = b3_default_magic_link_message( $password, $slug );
         }
 
-        return apply_filters( 'b3_magic_link_email', $message );
+        return apply_filters( 'b3_magic_link_message', $message );
     }
 
     // Get otp password

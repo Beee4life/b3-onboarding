@@ -416,6 +416,37 @@
         return $message;
     }
 
+    function b3_default_magic_link_subject() {
+        /* translators: Blog name */
+        return esc_html__( 'One time login link for %blog_name%', 'b3-onboarding' );
+    }
+
+    function b3_default_magic_link_message( $password = '', $slug = '' ) {
+        if ( $password && $slug ) {
+            $login_link = b3_get_login_url();
+            $login_link = add_query_arg( 'login', 'enter_code', $login_link );
+            $login_link = add_query_arg( 'otpcode', $slug, $login_link );
+            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+            $your_code  = sprintf( '<div class="big-link">%s</div>', $enter_url ) . "\n";
+            $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
+            $message    .= '<br><br>' . "\n";
+            $message    .= esc_html__( 'Someone requested a "one time login link" for the account using this email address.', 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= esc_html__( 'If this request was made by you, you can click the following link to login.', 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= sprintf( '<div class="big-link-container">%s</div>', $your_code ) . "\n";
+            $message    .= '<br>' . "\n";
+            $message    .= esc_html__( "If this was a mistake, or you didn't ask for a 'one time login link', just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+            $message    .= '<br>' . "\n";
+            $message    .= b3_default_greetings();
+
+            // @TODO: add filter
+            return $message;
+        }
+
+        return '';
+    }
+
     function b3_default_message_above_registration() {
         return esc_html__( 'Register For This Site', 'b3-onboarding' );
     }
@@ -521,32 +552,6 @@
         ];
 
         return $default_passwords;
-    }
-
-    function b3_get_default_magiclink_email( $password, $slug ) {
-        if ( $password && $slug ) {
-            $login_link = b3_get_login_url();
-            $login_link = add_query_arg( 'login', 'enter_code', $login_link );
-            $login_link = add_query_arg( 'otpcode', $slug, $login_link );
-            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
-            $your_code  = sprintf( '<div class="big-link">%s</div>', $enter_url ) . "\n";
-            $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
-            $message    .= '<br><br>' . "\n";
-            $message    .= esc_html__( 'Someone requested a "one time login link" for the account using this email address.', 'b3-onboarding' ) . "\n";
-            $message    .= '<br><br>' . "\n";
-            $message    .= esc_html__( 'If this request was made by you, you can click the following link to login.', 'b3-onboarding' ) . "\n";
-            $message    .= '<br><br>' . "\n";
-            $message    .= sprintf( '<div class="big-link-container">%s</div>', $your_code ) . "\n";
-            $message    .= '<br>' . "\n";
-            $message    .= esc_html__( "If this was a mistake, or you didn't ask for a 'one time login link', just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
-            $message    .= '<br>' . "\n";
-            $message    .= b3_default_greetings();
-
-            // @TODO: add filter
-            return $message;
-        }
-
-        return '';
     }
 
     function b3_default_admin_pages() {

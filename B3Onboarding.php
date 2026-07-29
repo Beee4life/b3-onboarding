@@ -798,10 +798,9 @@
 
                             if ( $hashed_slug ) {
                                 $vars    = []; // empty right now, but might be filled later on...
-                                /* translators: Blog name */
-                                $subject = __( 'One time login link for %blog_name%', 'b3-onboarding' );
+                                $subject = b3_get_magic_link_subject();
                                 $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
+                                $message = b3_get_magic_link_message( $otp_password, $hashed_slug );
 
                                 if ( ! empty( $message ) ) {
                                     $message      = b3_replace_template_styling( $message );
