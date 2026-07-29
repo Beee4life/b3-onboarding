@@ -369,6 +369,7 @@
             } else {
                 if ( isset( $attributes[ 'template' ] ) ) {
                     $attributes[ 'template' ] = 'magic-password' == $attributes[ 'template' ] ? 'magiclink' : $attributes[ 'template' ];
+
                     if ( 'login' === $attributes[ 'template' ] ) {
                         $login_form_message = apply_filters( 'b3_message_above_login', false );
                         if ( false != $login_form_message ) {
@@ -460,6 +461,20 @@
 
                 case 'lostpassword':
                     $links[] = $values[ 'login' ];
+                    if ( 'none' != get_option( 'b3_registration_type' ) ) {
+                        $links[] = $values[ 'register' ];
+                    }
+                    break;
+
+                case 'magiclink':
+                    $links[] = $values[ 'login' ];
+                    if ( 'none' != get_option( 'b3_registration_type' ) ) {
+                        $links[] = $values[ 'register' ];
+                    }
+                    break;
+
+                case 'magic-password':
+                    $links[] = $values[ 'lostpassword' ];
                     if ( 'none' != get_option( 'b3_registration_type' ) ) {
                         $links[] = $values[ 'register' ];
                     }
