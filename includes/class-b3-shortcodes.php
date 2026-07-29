@@ -243,7 +243,7 @@
                     $use_magiclink_and_password   = get_option( 'b3_use_magic_link_password' );
 
                     if ( $use_magiclink_and_password ) {
-                        $attributes[ 'button_modifier2' ] = esc_attr__( 'use-password', 'b3-onboarding' );
+                        $attributes[ 'button_modifier2' ] = esc_attr( 'use-password', 'b3-onboarding' );
                         $attributes[ 'button_value2' ]    = esc_attr__( 'Use password', 'b3-onboarding' );
                         $attributes[ 'template' ]         = 'magic-password';
                     }

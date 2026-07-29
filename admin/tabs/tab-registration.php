@@ -150,7 +150,7 @@
                         <?php $hide_magic_password = $use_magic_link ? false : ' hidden'; ?>
                         <?php b3_get_settings_field_open( $hide_magic_password, 'use-both' ); ?>
                             <?php b3_get_label_field_open(); ?>
-                                <label for="b3_use_magic_link_password"><?php esc_html_e( 'Use both password and magic link for login', 'b3-onboarding' ); ?></label>
+                                <label for="b3_use_magic_link_password"><?php esc_html_e( 'Use password and magic link', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
                                 <input type="checkbox" id="b3_use_magic_link_password" name="b3_use_magic_link_password" value="1" <?php checked($use_magic_link_password); ?>/>
