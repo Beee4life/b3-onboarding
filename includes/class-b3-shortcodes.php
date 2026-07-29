@@ -237,10 +237,16 @@
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
 
+                $use_both = true;
                 if ( get_option( 'b3_use_magic_link' ) ) {
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
                     $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';
+
+                    if ( $use_both ) {
+                        $attributes[ 'button_value' ] = esc_attr__( 'Use magic link', 'b3-onboarding' );
+                        $attributes[ 'template' ] = 'magic-password';
+                    }
                 }
 
                 $attributes[ 'errors' ] = $errors;
