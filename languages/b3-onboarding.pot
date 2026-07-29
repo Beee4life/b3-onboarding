@@ -1528,7 +1528,7 @@ msgid "Reject"
 msgstr ""
 
 #: includes/functions.php:1129
-msgid "Please enter your email address. You will receive an email with a link to login with a magic link."
+msgid "Please enter your email address. You will receive an email with a link to login immediately."
 msgstr ""
 
 #: includes/functions.php:1137
@@ -1608,8 +1608,8 @@ msgid "Here you can set which pages are assigned for the various 'actions'."
 msgstr ""
 
 #: includes/tabs/tab-pages.php:61 includes/tabs/tab-pages.php:71
-#: includes/tabs/tab-registration.php:230
-#: includes/tabs/tab-registration.php:276
+#: includes/tabs/tab-registration.php:229
+#: includes/tabs/tab-registration.php:275
 msgid "Select a page"
 msgstr ""
 
@@ -1656,8 +1656,8 @@ msgstr ""
 msgid "You have set a filter to override this setting"
 msgstr ""
 
-#: includes/tabs/tab-registration.php:73 includes/tabs/tab-registration.php:210
-#: includes/tabs/tab-registration.php:256
+#: includes/tabs/tab-registration.php:73 includes/tabs/tab-registration.php:209
+#: includes/tabs/tab-registration.php:255
 msgid "Links are allowed."
 msgstr ""
 

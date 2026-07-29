@@ -100,7 +100,6 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'none' ] ) ) ? true : false; ?>
-                        <?php $hide_custom_passwords = $use_magic_link ? true : $hide_custom_passwords; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>

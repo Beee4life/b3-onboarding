@@ -46,7 +46,6 @@
         });
 
         $('#b3_activate_custom_passwords').change(function() {
-            $('.b3_settings-field--magic-link').toggle();
             $('.b3_settings-field--redirect').toggle();
         });
 

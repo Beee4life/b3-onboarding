@@ -1126,7 +1126,7 @@
 
     // Get message above 'Get pass' form (magic link)
     function b3_get_message_above_magiclink_form() {
-        $default_message = esc_html__( 'Please enter your email address. You will receive an email with a link to login with a magic link.', 'b3-onboarding' );
+        $default_message = esc_html__( "Please enter your email address. You will receive an email with a link to login immediately.", 'b3-onboarding' );
         $message         = apply_filters( 'b3_message_above_magiclink', $default_message );
 
         return $message;
