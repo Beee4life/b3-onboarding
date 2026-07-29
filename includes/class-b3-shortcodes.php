@@ -187,7 +187,7 @@
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                                 error_log('class-b3-shortcodes.php line 188');
                             } else {
-                                $error_codes = explode( ',', 'ente_code' );
+                                $error_codes = explode( ',', 'enter_code' );
                             }
                         } else {
                             $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) ) );

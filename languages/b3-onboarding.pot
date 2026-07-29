@@ -68,8 +68,8 @@ msgstr ""
 msgid "Dismiss this notice"
 msgstr ""
 
-#: B3Onboarding.php:798
-msgid "Magic login link for %blog_name%"
+#: B3Onboarding.php:797
+msgid "One time login link for %blog_name%"
 msgstr ""
 
 #: B3Onboarding.php:846
@@ -693,7 +693,7 @@ msgstr ""
 #: includes/class-b3-sidebar-widget.php:69
 #: includes/class-b3-sidebar-widget.php:72 includes/defaults.php:102
 #: includes/defaults.php:150 includes/defaults.php:301
-#: includes/defaults.php:531 includes/defaults.php:560 includes/do-stuff.php:28
+#: includes/defaults.php:531 includes/defaults.php:561 includes/do-stuff.php:28
 msgid "Login"
 msgstr ""
 
@@ -702,7 +702,7 @@ msgid "Lost password"
 msgstr ""
 
 #: includes/actions-b3.php:442 includes/class-b3-shortcodes.php:38
-#: includes/class-b3-sidebar-widget.php:78 includes/defaults.php:555
+#: includes/class-b3-sidebar-widget.php:78 includes/defaults.php:556
 #: includes/do-stuff.php:38
 msgid "Register"
 msgstr ""
@@ -801,12 +801,12 @@ msgstr ""
 msgid "Custom user widget"
 msgstr ""
 
-#: includes/class-b3-sidebar-widget.php:82 includes/defaults.php:580
+#: includes/class-b3-sidebar-widget.php:82 includes/defaults.php:581
 #: includes/do-stuff.php:18
 msgid "Account"
 msgstr ""
 
-#: includes/class-b3-sidebar-widget.php:99 includes/defaults.php:565
+#: includes/class-b3-sidebar-widget.php:99 includes/defaults.php:566
 #: includes/do-stuff.php:33
 msgid "Log Out"
 msgstr ""
@@ -1179,7 +1179,7 @@ msgid "The %s crew"
 msgstr ""
 
 #: includes/defaults.php:535
-msgid "Someone requested a \"magic login link\" for the account using this email address."
+msgid "Someone requested a \"one time login link\" for the account using this email address."
 msgstr ""
 
 #: includes/defaults.php:537
@@ -1187,18 +1187,18 @@ msgid "If this request was made by you, you can click the following link to logi
 msgstr ""
 
 #: includes/defaults.php:541
-msgid "If this was a mistake, or you didn't ask for a 'magic link', just ignore this email and nothing will happen."
+msgid "If this was a mistake, or you didn't ask for a 'one time login link', just ignore this email and nothing will happen."
 msgstr ""
 
-#: includes/defaults.php:570
+#: includes/defaults.php:571
 msgid "Lost Password"
 msgstr ""
 
-#: includes/defaults.php:575 includes/do-stuff.php:43
+#: includes/defaults.php:576 includes/do-stuff.php:43
 msgid "Reset Password"
 msgstr ""
 
-#: includes/defaults.php:588
+#: includes/defaults.php:589
 msgid "Approval page"
 msgstr ""
 

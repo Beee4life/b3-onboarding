@@ -789,13 +789,12 @@
 
                         if ( $existing_user instanceof WP_User ) {
                             $otp_password = b3_get_otp_password();
-                            // @TODO: look into adding nonce
                             $hashed_slug  = b3_get_hashed_slug( $user_email, $otp_password );
 
                             if ( $hashed_slug ) {
                                 $vars    = []; // empty right now, but might be filled later on...
                                 /* translators: Blog name */
-                                $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
+                                $subject = __( 'One time login link for %blog_name%', 'b3-onboarding' );
                                 $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                                 $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
 
@@ -840,7 +839,8 @@
             }
 
             public function b3_get_return_message( $error_code, $label = false ) {
-
+                error_log($error_code);
+                error_log($label);
                 switch( $error_code ) {
                     case 'banned_domain':
                         return esc_html__( 'This domain is not allowed to register.', 'b3-onboarding' );
