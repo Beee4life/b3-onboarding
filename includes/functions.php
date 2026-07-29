@@ -270,8 +270,9 @@
     }
 
     // Return submit button
-    function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
+    function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [], $button_id = false ) {
         $button_class = false;
+        $button_id    = $button_id ? esc_attr( $button_id ) : 'b3-submit';
 
         if ( false === $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
@@ -283,7 +284,7 @@
             }
         }
 
-        $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
+        $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" id="%s" value="%s" />', $button_class, $button_id, $submit_value );
 
         if ( 'register' === $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );

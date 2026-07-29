@@ -168,6 +168,8 @@
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
 
                 wp_localize_script( 'b3ob', 'b3ob_vars', [
+                    'login_nonce'     => wp_create_nonce( 'b3_login' ),
+                    'magiclink_nonce' => wp_create_nonce( 'b3_magiclink' ),
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
                 ] );
             }

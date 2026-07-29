@@ -239,13 +239,18 @@
 
                 $use_both = true;
                 if ( get_option( 'b3_use_magic_link' ) ) {
-                    $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
-                    $attributes[ 'form_action' ]  = b3_get_login_url();
-                    $attributes[ 'template' ]     = 'magiclink';
-
                     if ( $use_both ) {
-                        $attributes[ 'button_value' ] = esc_attr__( 'Use magic link', 'b3-onboarding' );
-                        $attributes[ 'template' ] = 'magic-password';
+                        $attributes[ 'button_value' ]     = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                        $attributes[ 'button_value1' ]    = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                        $attributes[ 'button_modifier2' ] = esc_attr__( 'use-password', 'b3-onboarding' );
+                        $attributes[ 'button_value2' ]    = esc_attr__( 'Use password', 'b3-onboarding' );
+                        $attributes[ 'form_action' ]      = b3_get_login_url();
+                        $attributes[ 'template' ]         = 'magic-password';
+                    } else {
+                        $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
+                        $attributes[ 'form_action' ]  = b3_get_login_url();
+                        $attributes[ 'template' ]     = 'magiclink';
+
                     }
                 }
 

@@ -1,6 +1,6 @@
 <?php
     /**
-     * Ouptuts fields for magic link form
+     * Ouptuts fields for magic link form and normal login form
      *
      * @since 3.11.0
      */
@@ -16,6 +16,10 @@
     <form name="magiclinkform" id="magiclinkform" action="<?php echo esc_attr( $attributes[ 'form_action' ] ); ?>" method="post" autocomplete="off">
         <?php do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes ); ?>
         <?php do_action( 'b3_render_form_element', 'magiclink/user-email', $attributes ); ?>
-        <?php do_action( 'b3_render_form_element', 'magiclink/buttons', $attributes ); ?>
+        <?php do_action( 'b3_render_form_element', 'general/button', $attributes ); ?>
     </form>
+</div>
+
+<div id="b3-login" class="b3_page b3_page--login">
+    <?php include 'wp-login.php'; ?>
 </div>

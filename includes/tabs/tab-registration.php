@@ -136,7 +136,8 @@
                     </div>
 
                     <?php if ( ! is_multisite() ) { ?>
-                        <?php $hide_one_time_password = $custom_passwords ? ' hidden' : false; ?>
+                        <?php //$hide_one_time_password = $custom_passwords ? ' hidden' : false; ?>
+                        <?php $hide_one_time_password = false; ?>
                         <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
