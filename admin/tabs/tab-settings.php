@@ -26,8 +26,12 @@
                         <label for="b3_disable_action_links"><?php esc_html_e( 'Disable action links', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
-                        <?php esc_html_e( 'Hide the action links on forms.', 'b3-onboarding' ); ?>
+                        <?php if ( apply_filters( 'b3_disable_action_links', false ) ) { ?>
+                            <?php esc_html_e( 'Setting is activated by filter.', 'b3-onboarding' ); ?>
+                        <?php } else { ?>
+                            <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
+                            <?php esc_html_e( 'Hide the action links on forms.', 'b3-onboarding' ); ?>
+                        <?php } ?>
                     </div>
                 <?php b3_get_close(); ?>
 
@@ -61,9 +65,13 @@
                             <label for="b3_activate_debug_info"><?php esc_html_e( 'Activate debug info page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
-                            <input type="checkbox" id="b3_activate_debug_info" name="b3_activate_debug_info" value="1" <?php checked($debug_info); ?>/>
-                            <?php esc_html_e( 'Activate the debug page.', 'b3-onboarding' ); ?>
-                            <?php if ( $debug_info_filter ) { echo ' (' . esc_html__( 'Set by filter', 'b3-onboarding' ) . ')'; } ?>
+                            <?php if ( $debug_info_filter ) { ?>
+                                <?php esc_html_e( 'Setting is activated by filter.', 'b3-onboarding' ); ?>
+                            <?php } else { ?>
+                                <input type="checkbox" id="b3_activate_debug_info" name="b3_activate_debug_info" value="1" <?php checked($debug_info); ?>/>
+                                <?php esc_html_e( 'Activate the debug page.', 'b3-onboarding' ); ?>
+                            <?php } ?>
+
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>

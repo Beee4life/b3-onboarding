@@ -161,13 +161,22 @@
                 <?php b3_get_settings_field_open( $hide_domain_settings, 'domain-restrictions' ); ?>
                     <?php if ( $disallowed_domains_filter ) { $placeholder = sprintf( '%s (%s)', $disallowed_domains_string, esc_html__( 'Set by filter', 'b3-onboarding' ) ); } else { $placeholder = esc_html__( 'Separate multiple domain names with a comma', 'b3-onboarding' ); } ?>
                     <?php if ( $disallowed_domains_filter ) { $value = ''; } else { $value = $disallowed_domains_string; } ?>
+
                     <?php b3_get_label_field_open(); ?>
                         <label for="b3_disallowed_domains"><?php esc_html_e( 'Domain names', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--text">
-                        <?php echo sprintf( '<div>%s</div>', esc_html__( 'Email addresses from these domains are not allowed to register.', 'b3-onboarding' )); ?>
-                        <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php echo $placeholder; ?>" value="<?php echo (esc_attr( $value ) ); ?>"/>
-                    </div>
+
+                    <?php if ( ! empty( $disallowed_domains_filter ) && is_array( $disallowed_domains_filter ) ) { ?>
+                        <?php $string = implode( ', ', $disallowed_domains_filter ); ?>
+                        <div>
+                            <?php esc_html_e( "You've set the disallowed domains by filter", 'b3-onboarding' ); ?>: <?php echo $string; ?>.
+                        </div>
+                    <?php } else { ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <?php echo sprintf( '<div>%s</div>', esc_html__( 'Email addresses from these domains are not allowed to register.', 'b3-onboarding' )); ?>
+                            <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php echo $placeholder; ?>" value="<?php echo (esc_attr( $value ) ); ?>"/>
+                        </div>
+                    <?php } ?>
                 <?php b3_get_close(); ?>
             <?php } ?>
 
