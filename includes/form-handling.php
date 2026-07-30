@@ -520,7 +520,10 @@
                     if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
                         $sanitized_value = str_replace( ' ', '', sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_domains' ] ) ) );
                         $new_value       = explode( ',', $sanitized_value );
-                        update_option( 'b3_disallowed_domains', $sanitized_value, false );
+                        if ( is_string( $new_value ) ) {
+                            $new_value = [ $new_value ];
+                        }
+                        update_option( 'b3_disallowed_domains', $new_value, false );
                     } else {
                         delete_option( 'b3_disallowed_domains' );
                     }
