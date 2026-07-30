@@ -2,6 +2,7 @@
 
 3.17.0
 * added option to choose magic link or password
+* changed tab 'Template' to 'Styling'
 * added new input boxes
   * magic link message
   * magic link subject

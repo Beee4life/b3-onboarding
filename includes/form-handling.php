@@ -448,9 +448,9 @@
     }
     add_action( 'init', 'b3_email_tab_form_handling' );
 
-    function b3_template_tab_form_handling() {
-        if ( isset( $_POST[ 'b3_template_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_template_nonce' ] ) ), 'b3-template-nonce' ) ) {
+    function b3_styling_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_styling_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_styling_nonce' ] ) ), 'b3-styling-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
@@ -474,7 +474,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_template_tab_form_handling' );
+    add_action( 'init', 'b3_styling_tab_form_handling' );
 
     function b3_users_tab_form_handling() {
         if ( isset( $_POST[ 'b3_users_nonce' ] ) ) {

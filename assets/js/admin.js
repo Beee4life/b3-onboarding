@@ -26,13 +26,13 @@
         });
 
         // click admin tab
-        $('#b3_tab-button--template').click(function() {
+        $('#b3_tab-button--styling').click(function() {
             invokeCM(window.cm_invoked);
         });
 
         // direct page
         var get_var = get_query();
-        if ( 'template' === get_var.tab ) {
+        if ( 'styling' === get_var.tab ) {
             invokeCM(window.cm_invoked);
         }
 

@@ -534,7 +534,7 @@ ul.b3_integrations--list {
   outline-offset: 2px;
 }
 
-.b3 #template .CodeMirror {
+.b3 #styling .CodeMirror {
   border:     1px solid #ddd;
   min-height: initial;
   height:     25vh;

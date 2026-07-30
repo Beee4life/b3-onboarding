@@ -36,6 +36,10 @@
                 include 'tab-settings.php';
                 $content = b3_render_settings_tab();
                 break;
+            case 'styling':
+                include 'tab-styling.php';
+                $content = b3_render_template_tab();
+                break;
             case 'template':
                 include 'tab-template.php';
                 $content = b3_render_template_tab();
