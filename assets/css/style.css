@@ -352,7 +352,7 @@ ul.b3_form-links li:last-child {
     display: block;
   }
 
-  .b3_form-element--email .inline p {
+  .b3_form-element--user-email .inline p {
     margin-top:    0.5rem;
     margin-bottom: 0;
   }
