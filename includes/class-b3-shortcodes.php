@@ -286,7 +286,7 @@
                 if ( get_option( 'b3_use_magic_link' ) ) {
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
                     $attributes[ 'form_action' ]  = b3_get_login_url();
-                    $attributes[ 'template' ]     = 'magiclink';
+                    // $attributes[ 'template' ]     = 'magiclink';
                 }
 
                 $attributes = apply_filters( 'b3_attributes', $attributes );

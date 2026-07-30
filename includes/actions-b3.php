@@ -394,7 +394,11 @@
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        $messages[] = esc_html( b3_get_message_above_lost_password() );
+                        if ( get_option( 'b3_use_magic_link' ) ) {
+                            $messages[] = esc_html( b3_get_message_above_magiclink_form() );
+                        } else {
+                            $messages[] = esc_html( b3_get_message_above_lost_password() );
+                        }
 
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
@@ -669,7 +673,7 @@
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
 
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', esc_html( $label ), wp_kses_post( $links ) );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, wp_kses_post( $links ) );
                 }
             }
         }
