@@ -2,7 +2,6 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-    // This should be left untouched, it's needed.
 ?>
 <form name="lostpasswordform" id="lostpasswordform" class="b3_form b3_form--lostpass" action="<?php echo esc_url( b3_get_lostpassword_url() ); ?>" method="post">
     <?php do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes ); ?>

@@ -40,10 +40,6 @@
                 include 'tab-styling.php';
                 $content = b3_render_template_tab();
                 break;
-            case 'template':
-                include 'tab-template.php';
-                $content = b3_render_template_tab();
-                break;
             case 'users':
                 include 'tab-users.php';
                 $content = b3_render_users_tab();
