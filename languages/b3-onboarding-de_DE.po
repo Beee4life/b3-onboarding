@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
-"POT-Creation-Date: 2026-07-30 01:05+0200\n"
-"PO-Revision-Date: 2026-07-30 01:05+0200\n"
+"POT-Creation-Date: 2026-07-30 15:43+0200\n"
+"PO-Revision-Date: 2026-07-30 15:43+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -33,7 +33,7 @@ msgstr "Wartet auf Genehmigung"
 msgid "Use magic link"
 msgstr "Magischen Link anfordern"
 
-#: B3Onboarding.php:172 includes/actions-b3.php:436
+#: B3Onboarding.php:172 includes/actions-b3.php:440
 #: includes/class-b3-shortcodes.php:163 includes/class-b3-sidebar-widget.php:69
 #: includes/class-b3-sidebar-widget.php:72 includes/defaults.php:102
 #: includes/defaults.php:150 includes/defaults.php:301
@@ -129,7 +129,7 @@ msgstr "Dein Code scheint ungültig zu sein. Bitte versuche es erneut."
 msgid "An unkown error has occured. Please try again."
 msgstr "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut."
 
-#: B3Onboarding.php:880 includes/form-handling.php:806
+#: B3Onboarding.php:880 includes/form-handling.php:809
 msgid "Unlawful form entry, try again."
 msgstr "Illegale Formulareingabe, versuche es erneut."
 
@@ -383,7 +383,7 @@ msgstr "Dein Konto wurde gelöscht."
 msgid "Profile saved"
 msgstr "Profil gespeichert"
 
-#: B3Onboarding.php:1054 includes/form-handling.php:677
+#: B3Onboarding.php:1054 includes/form-handling.php:680
 msgid "Settings saved"
 msgstr "Einstellungen gespeichert"
 
@@ -421,7 +421,7 @@ msgstr ""
 
 #: B3Onboarding.php:1264 B3Onboarding.php:1274 B3Onboarding.php:1295
 #: admin/dashboard-widget-users.php:59 admin/dashboard-widget-users.php:93
-#: admin/help-tabs.php:105 admin/tabs/tab-recaptcha.php:60
+#: admin/help-tabs.php:105 admin/tabs/tab-recaptcha.php:68
 #: admin/tabs/tab-users.php:91 admin/tabs/tab-users.php:144
 #: includes/actions-b3.php:320 includes/actions-wp.php:258
 #: includes/actions-wp.php:259 includes/class-b3-shortcodes.php:75
@@ -538,7 +538,7 @@ msgid "user"
 msgstr "Benutzer"
 
 #: admin/dashboard-widget-users.php:51 admin/tabs/tab-registration.php:16
-#: admin/tabs/tab-settings.php:95 admin/tabs/tab-template.php:72
+#: admin/tabs/tab-settings.php:103 admin/tabs/tab-styling.php:72
 msgid "Click here"
 msgstr "Hier klicken"
 
@@ -840,7 +840,7 @@ msgstr ""
 "zugewiesen sind."
 
 #: admin/tabs/tab-pages.php:61 admin/tabs/tab-pages.php:71
-#: admin/tabs/tab-registration.php:240 admin/tabs/tab-registration.php:286
+#: admin/tabs/tab-registration.php:238 admin/tabs/tab-registration.php:284
 msgid "Select a page"
 msgstr "Seite auswählen"
 
@@ -864,12 +864,12 @@ msgstr "Links öffnen sich in einem neuen Tab/Fenster."
 msgid "reCaptcha"
 msgstr "reCaptcha"
 
-#: admin/tabs/tab-recaptcha.php:60
+#: admin/tabs/tab-recaptcha.php:68
 #, php-format
 msgid "Get your (free) reCaptcha keys %s."
 msgstr "Hole dir deine (kostenlosen) reCaptcha-Keys %s."
 
-#: admin/tabs/tab-recaptcha.php:74
+#: admin/tabs/tab-recaptcha.php:82
 msgid "Save reCaptcha"
 msgstr "reCaptcha speichern"
 
@@ -891,44 +891,39 @@ msgstr "Einstellungsseite"
 msgid "You have set a filter to override this setting"
 msgstr "Du hast einen Filter gesetzt, der diese Einstellung überschreibt"
 
-#: admin/tabs/tab-registration.php:74 admin/tabs/tab-registration.php:220
-#: admin/tabs/tab-registration.php:266
+#: admin/tabs/tab-registration.php:74 admin/tabs/tab-registration.php:218
+#: admin/tabs/tab-registration.php:264
 msgid "Links are allowed."
 msgstr "Links sind erlaubt."
 
-#: admin/tabs/tab-settings.php:66 admin/tabs/tab-users.php:137
-#: admin/tabs/tab-users.php:162
-msgid "Set by filter"
-msgstr "Per Filter erstellt"
-
-#: admin/tabs/tab-settings.php:95
+#: admin/tabs/tab-settings.php:103
 #, php-format
 msgid "%s to see what it does exactly."
 msgstr "%s, um zu sehen, was es genau macht."
 
-#: admin/tabs/tab-template.php:17
+#: admin/tabs/tab-styling.php:17
 msgid "Email template"
 msgstr "E-Mail-Vorlage"
 
-#: admin/tabs/tab-template.php:26
+#: admin/tabs/tab-styling.php:26
 msgid "Email styling"
 msgstr "E-Mail-Styling"
 
-#: admin/tabs/tab-template.php:56
+#: admin/tabs/tab-styling.php:56
 #, php-format
 msgid ""
 "We don't recommend overriding the css here, but rather add css at the end of "
 "the file, after line %d by using the filter %s."
 msgstr ""
 
-#: admin/tabs/tab-template.php:64
+#: admin/tabs/tab-styling.php:64
 #, php-format
 msgid ""
 "It's easer to override the styling to achieve your wishes, but if you really "
 "want to change the template we recommend using the filter %s."
 msgstr ""
 
-#: admin/tabs/tab-template.php:72
+#: admin/tabs/tab-styling.php:72
 msgid "to download the default."
 msgstr "um den Standard herunterzuladen."
 
@@ -948,6 +943,10 @@ msgid "This page can only be set with a filter (for now). See %s."
 msgstr ""
 "Diese Seite kann (vorerst) nur über einen Filter gesetzt werden. Siehe %s."
 
+#: admin/tabs/tab-users.php:137 admin/tabs/tab-users.php:162
+msgid "Set by filter"
+msgstr "Per Filter erstellt"
+
 #: admin/tabs/tab-users.php:137
 msgid "Separate multiple usernames with a comma"
 msgstr "Trenne mehrere Benutzernamen mit einem Komma"
@@ -962,7 +961,7 @@ msgstr ""
 msgid "Separate multiple domain names with a comma"
 msgstr "Trenne mehrere Domain-Namen mit einem Komma"
 
-#: admin/tabs/tab-users.php:168
+#: admin/tabs/tab-users.php:176
 msgid "Email addresses from these domains are not allowed to register."
 msgstr "E-Mail-Adressen von diesen Domains dürfen sich nicht registrieren."
 
@@ -971,21 +970,21 @@ msgstr "E-Mail-Adressen von diesen Domains dürfen sich nicht registrieren."
 msgid "You didn't set a reCaptcha key yet. You can set it %s."
 msgstr "Du hast noch keinen reCaptcha-Key gesetzt. Du kannst ihn %s festlegen."
 
-#: includes/actions-b3.php:400
+#: includes/actions-b3.php:404
 msgid "Enter your new password."
 msgstr "Gib dein neues Passwort ein."
 
-#: includes/actions-b3.php:440 includes/do-stuff.php:23
+#: includes/actions-b3.php:444 includes/do-stuff.php:23
 msgid "Lost password"
 msgstr "Passwort vergessen"
 
-#: includes/actions-b3.php:444 includes/class-b3-shortcodes.php:38
+#: includes/actions-b3.php:448 includes/class-b3-shortcodes.php:38
 #: includes/class-b3-sidebar-widget.php:78 includes/defaults.php:561
 #: includes/do-stuff.php:38
 msgid "Register"
 msgstr "Registrieren"
 
-#: includes/actions-b3.php:668
+#: includes/actions-b3.php:672
 msgid "Your site(s)"
 msgstr "Deine Website(s)"
 
@@ -1763,8 +1762,8 @@ msgstr ""
 
 #: includes/form-handling.php:7 includes/form-handling.php:157
 #: includes/form-handling.php:454 includes/form-handling.php:482
-#: includes/form-handling.php:559 includes/form-handling.php:596
-#: includes/form-handling.php:631 includes/form-handling.php:696
+#: includes/form-handling.php:562 includes/form-handling.php:599
+#: includes/form-handling.php:634 includes/form-handling.php:699
 msgid "Something went wrong, please try again."
 msgstr "Etwas ist schiefgelaufen, bitte versuche es erneut."
 
@@ -1789,19 +1788,19 @@ msgstr "E-Mail-Einstellungen gespeichert"
 msgid "Template settings saved"
 msgstr "Template-Einstellungen gespeichert"
 
-#: includes/form-handling.php:550
+#: includes/form-handling.php:553
 msgid "User settings saved"
 msgstr "Benutzereinstellungen gespeichert"
 
-#: includes/form-handling.php:586
+#: includes/form-handling.php:589
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha-Einstellungen gespeichert"
 
-#: includes/form-handling.php:622
+#: includes/form-handling.php:625
 msgid "Pages settings saved"
 msgstr "Seiteneinstellungen gespeichert"
 
-#: includes/form-handling.php:675
+#: includes/form-handling.php:678
 msgid ""
 "You have successfully resetted all settings. Remember to set your pages "
 "again, before you log out !"
@@ -1809,7 +1808,7 @@ msgstr ""
 "Du hast erfolgreich alle Einstellungen zurückgesetzt. Denke daran, deine "
 "Seiten neu zuzuweisen, bevor du dich ausloggst!"
 
-#: includes/form-handling.php:769
+#: includes/form-handling.php:772
 msgid "You do not have permission to edit this user."
 msgstr "Du hast keine Berechtigung, diesen Benutzer zu bearbeiten."
 
@@ -1951,8 +1950,8 @@ msgstr "Ablehnen"
 #| "Please enter your email address. You will receive an email with a link to "
 #| "login with a magic link."
 msgid ""
-"Please enter your email address. You will receive an email with a link to "
-"login immediately."
+"Please enter your email address. If your email address exists in our "
+"database, you will receive an email with a link to login immediately."
 msgstr ""
 "Bitte gib deine E-Mail-Adresse ein. Du erhältst eine E-Mail mit einem "
 "magischen Login-Link."
@@ -2210,7 +2209,8 @@ msgstr "Benutzername oder E-Mail-Adresse"
 msgid "User name or email address"
 msgstr "Benutzername oder E-Mail-Adresse"
 
-#: templates/magiclink/enter-code.php:5
+#: templates/magiclink/enter-code.php:6
+#: templates/magiclink/magiclink-form.php:5
 msgid "Enter code"
 msgstr "Code eingeben"
 
