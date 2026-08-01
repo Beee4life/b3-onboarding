@@ -327,6 +327,16 @@
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
 
     /**
+     * Function to output a terms checkbox
+     */
+    function b3_add_terms_checkbox() {
+        if ( get_option( 'b3_activate_terms_page' ) ) {
+            do_action( 'b3_render_form_element', 'register/terms' );
+        }
+    }
+    add_action( 'b3_add_terms_checkbox', 'b3_add_terms_checkbox' );
+
+    /**
      * Function to output a privacy checkbox
      */
     function b3_add_privacy_checkbox() {
@@ -358,6 +368,8 @@
                 }
             } else {
                 if ( isset( $attributes[ 'template' ] ) ) {
+                    $attributes[ 'template' ] = 'magic-password' == $attributes[ 'template' ] ? 'magiclink' : $attributes[ 'template' ];
+
                     if ( 'login' === $attributes[ 'template' ] ) {
                         $login_form_message = apply_filters( 'b3_message_above_login', false );
                         if ( false != $login_form_message ) {
@@ -382,7 +394,11 @@
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        $messages[] = esc_html( b3_get_message_above_lost_password() );
+                        if ( get_option( 'b3_use_magic_link' ) ) {
+                            $messages[] = esc_html( b3_get_message_above_magiclink_form() );
+                        } else {
+                            $messages[] = esc_html( b3_get_message_above_lost_password() );
+                        }
 
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
@@ -403,7 +419,7 @@
                     $message_output .= sprintf( '<p>%s</p>', $message );
                 }
                 $message_output .= '</div>';
-                // @TODO: test this
+                // @TODO: test this with a link
                 echo wp_kses_post( $message_output );
             }
         }
@@ -449,6 +465,20 @@
 
                 case 'lostpassword':
                     $links[] = $values[ 'login' ];
+                    if ( 'none' != get_option( 'b3_registration_type' ) ) {
+                        $links[] = $values[ 'register' ];
+                    }
+                    break;
+
+                case 'magiclink':
+                    $links[] = $values[ 'login' ];
+                    if ( 'none' != get_option( 'b3_registration_type' ) ) {
+                        $links[] = $values[ 'register' ];
+                    }
+                    break;
+
+                case 'magic-password':
+                    $links[] = $values[ 'lostpassword' ];
                     if ( 'none' != get_option( 'b3_registration_type' ) ) {
                         $links[] = $values[ 'register' ];
                     }
@@ -643,7 +673,7 @@
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
 
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', esc_html( $label ), wp_kses_post( $links ) );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, wp_kses_post( $links ) );
                 }
             }
         }
@@ -707,6 +737,7 @@
         do_action( 'b3_add_password_fields' );
         do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] ); // MS
         do_action( 'b3_add_extra_fields_registration' );
+        do_action( 'b3_add_terms_checkbox' );
         do_action( 'b3_add_privacy_checkbox' );
         do_action( 'b3_add_recaptcha_fields' );
         do_action( 'b3_render_form_element', 'general/button', $attributes );

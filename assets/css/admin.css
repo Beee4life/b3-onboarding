@@ -299,12 +299,14 @@
 }
 
 /* Registration */
-.b3 input#b3_privacy_page {
+.b3 input#b3_privacy_page,
+.b3 input#b3_terms_page {
   width:     100%;
   max-width: 300px;
 }
 
-.b3 input#b3_privacy_text {
+.b3 input#b3_privacy_text,
+.b3 input#b3_terms_text {
   width:     100%;
   max-width: 500px;
 }
@@ -532,7 +534,7 @@ ul.b3_integrations--list {
   outline-offset: 2px;
 }
 
-.b3 #template .CodeMirror {
+.b3 #styling .CodeMirror {
   border:     1px solid #ddd;
   min-height: initial;
   height:     25vh;

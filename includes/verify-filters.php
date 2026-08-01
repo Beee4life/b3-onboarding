@@ -44,6 +44,8 @@
             'b3_logged_in_registration_only_message'   => [ 'string' ],
             'b3_lost_password_message'                 => [ 'string' ],
             'b3_lost_password_subject'                 => [ 'string' ],
+            'b3_magic_link_message'                    => [ 'string' ], // @TODO: document on site
+            'b3_magic_link_subject'                    => [ 'string' ], // @TODO: document on site
             'b3_main_logo'                             => [ 'url', 'file' ],
             'b3_message_above_login'                   => [ 'string' ],
             'b3_message_above_lost_password'           => [ 'string' ],
@@ -81,8 +83,7 @@
             'b3_show_email_widget'                     => [ 'bool' ],
             'b3_signup_for_site'                       => [ 'string' ],
             'b3_signup_for_user'                       => [ 'string' ],
-            'b3_password_special_chars'                => [ 'bool' ],
-            'b3_password_extra_special_chars'          => [ 'bool' ],
+            'b3_terms_text'                            => [ 'string' ],
             'b3_user_cap'                              => [ 'string' ],
             'b3_welcome_page'                          => [ 'string' ],
             'b3_welcome_user_message'                  => [ 'string' ],

@@ -43,7 +43,7 @@
                     <?php } else { ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_custom_emails" name="b3_activate_custom_emails" value="1" <?php checked($activate_custom_emails); ?>/>
-                            <?php esc_html_e( 'Activate your own email styling and template.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( 'Activate your own email styling.', 'b3-onboarding' ); ?>
                         </div>
                     <?php } ?>
                 <?php b3_get_close(); ?>

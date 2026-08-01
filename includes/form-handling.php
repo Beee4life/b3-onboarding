@@ -57,10 +57,17 @@
                     delete_option( 'b3_activate_custom_passwords' );
                 }
 
+                if ( isset( $_POST[ 'b3_use_magic_link_password' ] ) && 1 == (int) $_POST[ 'b3_use_magic_link_password' ] ) {
+                    update_option( 'b3_use_magic_link_password', 1, false );
+                } else {
+                    delete_option( 'b3_use_magic_link_password' );
+                }
+
                 if ( isset( $_POST[ 'b3_use_magic_link' ] ) && 1 == (int) $_POST[ 'b3_use_magic_link' ] ) {
                     update_option( 'b3_use_magic_link', 1, false );
                 } else {
                     delete_option( 'b3_use_magic_link' );
+                    delete_option( 'b3_use_magic_link_password' );
                 }
 
                 if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == (int) $_POST[ 'b3_first_last_required' ] ) {
@@ -96,22 +103,45 @@
                     delete_option( 'b3_activate_honeypot' );
                 }
 
-                if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
-                    update_option( 'b3_privacy_page_id', (int) $_POST[ 'b3_privacy_page_id' ], false );
+                if ( isset( $_POST[ 'b3_activate_terms_page' ] ) && 1 == (int) $_POST[ 'b3_activate_terms_page' ] ) {
+                    update_option( 'b3_activate_terms_page', 1, false );
+
+                    if ( isset( $_POST[ 'b3_terms_page_id' ] ) && ! empty( $_POST[ 'b3_terms_page_id' ] ) ) {
+                        update_option( 'b3_terms_page_id', (int) $_POST[ 'b3_terms_page_id' ], false );
+                    } else {
+                        delete_option( 'b3_terms_page_id' );
+                    }
+
+                    if ( isset( $_POST[ 'b3_terms_text' ] ) && ! empty( $_POST[ 'b3_terms_text' ] ) ) {
+                        update_option( 'b3_terms_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_terms_text' ] ) ), false );
+                    } else {
+                        delete_option( 'b3_terms_text' );
+                    }
+
                 } else {
-                    delete_option( 'b3_privacy_page_id' );
+                    delete_option( 'b3_activate_terms_page' );
+                    delete_option( 'b3_terms_page_id' );
+                    delete_option( 'b3_terms_text' );
                 }
 
                 if ( isset( $_POST[ 'b3_activate_privacy_page' ] ) && 1 == (int) $_POST[ 'b3_activate_privacy_page' ] ) {
                     update_option( 'b3_activate_privacy_page', 1, false );
+
+                    if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
+                        update_option( 'b3_privacy_page_id', (int) $_POST[ 'b3_privacy_page_id' ], false );
+                    } else {
+                        delete_option( 'b3_privacy_page_id' );
+                    }
+
+                    if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
+                        update_option( 'b3_privacy_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
+                    } else {
+                        delete_option( 'b3_privacy_text' );
+                    }
+
                 } else {
                     delete_option( 'b3_activate_privacy_page' );
                     delete_option( 'b3_privacy_page_id' );
-                }
-
-                if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
-                    update_option( 'b3_privacy_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
-                } else {
                     delete_option( 'b3_privacy_text' );
                 }
 
@@ -252,8 +282,18 @@
                     delete_option( 'b3_welcome_user_message_manual' );
                 }
 
-                if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
+                if ( isset( $_POST[ 'b3_magic_link_subject' ] ) && ! empty( $_POST[ 'b3_magic_link_subject' ] ) ) {
+                    update_option( 'b3_magic_link_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_magic_link_subject' ] ) ), false );
+                } else {
+                    delete_option( 'b3_magic_link_subject' );
+                }
+                if ( isset( $_POST[ 'b3_magic_link_message' ] ) && ! empty( $_POST[ 'b3_magic_link_message' ] ) ) {
+                    update_option( 'b3_magic_link_message', sanitize_textarea_field( wp_unslash( $_POST[ 'b3_magic_link_message' ] ) ), false );
+                } else {
+                    delete_option( 'b3_magic_link_message' );
+                }
 
+                if ( in_array( get_option( 'b3_registration_type' ), [ 'open', 'email_activation' ] ) ) {
                     if ( in_array( get_option( 'b3_registration_type' ), [ 'email_activation' ] ) ) {
                         if ( isset( $_POST[ 'b3_email_activation_subject' ] ) && ! empty( $_POST[ 'b3_email_activation_subject' ] ) ) {
                             update_option( 'b3_email_activation_subject', sanitize_text_field( wp_unslash( $_POST[ 'b3_email_activation_subject' ] ) ), false );
@@ -408,9 +448,9 @@
     }
     add_action( 'init', 'b3_email_tab_form_handling' );
 
-    function b3_template_tab_form_handling() {
-        if ( isset( $_POST[ 'b3_template_nonce' ] ) ) {
-            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_template_nonce' ] ) ), 'b3-template-nonce' ) ) {
+    function b3_styling_tab_form_handling() {
+        if ( isset( $_POST[ 'b3_styling_nonce' ] ) ) {
+            if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_styling_nonce' ] ) ), 'b3-styling-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
@@ -434,7 +474,7 @@
             }
         }
     }
-    add_action( 'init', 'b3_template_tab_form_handling' );
+    add_action( 'init', 'b3_styling_tab_form_handling' );
 
     function b3_users_tab_form_handling() {
         if ( isset( $_POST[ 'b3_users_nonce' ] ) ) {
@@ -480,7 +520,10 @@
                     if ( isset( $_POST[ 'b3_disallowed_domains' ] ) && ! empty( $_POST[ 'b3_disallowed_domains' ] ) ) {
                         $sanitized_value = str_replace( ' ', '', sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_domains' ] ) ) );
                         $new_value       = explode( ',', $sanitized_value );
-                        update_option( 'b3_disallowed_domains', $sanitized_value, false );
+                        if ( is_string( $new_value ) ) {
+                            $new_value = [ $new_value ];
+                        }
+                        update_option( 'b3_disallowed_domains', $new_value, false );
                     } else {
                         delete_option( 'b3_disallowed_domains' );
                     }

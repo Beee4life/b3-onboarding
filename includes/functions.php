@@ -100,6 +100,12 @@
             'id'    => 'lost_password',
             'title' => esc_html__( 'Lost password email', 'b3-onboarding' ),
         ];
+        if ( get_option( 'b3_use_magic_link' ) ) {
+            $email_boxes[] = [
+                'id'    => 'magiclink',
+                'title' => esc_html__( 'Magic link email', 'b3-onboarding' ),
+            ];
+        }
         $email_boxes[] = [
             'id'    => 'logo',
             'title' => esc_html__( 'Logo', 'b3-onboarding' ),
@@ -201,6 +207,19 @@
         return apply_filters( 'b3_logged_in_registration_only_message', $logged_in_registration_only_message );
     }
 
+    // Get the terms text
+    function b3_get_terms_text() {
+        $terms_text = get_option( 'b3_terms_text' );
+
+        if ( false != $terms_text ) {
+            $message = stripslashes( $terms_text );
+        } else {
+            $message = b3_default_terms_text();
+        }
+
+        return $message;
+    }
+
     // Get the privacy text
     function b3_get_privacy_text() {
         $privacy_text = get_option( 'b3_privacy_text' );
@@ -257,8 +276,9 @@
     }
 
     // Return submit button
-    function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [] ) {
+    function b3_get_submit_button( $submit_value = false, $button_modifier = false, $attributes = [], $button_id = false ) {
         $button_class = false;
+        $button_id    = $button_id ? esc_attr( $button_id ) : 'b3-submit';
 
         if ( false === $submit_value || ! is_string( $submit_value ) ) {
             $submit_value = esc_attr__( 'Save settings', 'b3-onboarding' );
@@ -270,7 +290,7 @@
             }
         }
 
-        $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" value="%s" />', $button_class, $submit_value );
+        $button = sprintf( '<input class="button button-primary button--submit%s" type="submit" id="%s" value="%s" />', $button_class, $button_id, $submit_value );
 
         if ( 'register' === $button_modifier && isset( $attributes[ 'recaptcha' ][ 'public' ] ) && ! empty( $attributes[ 'recaptcha' ][ 'public' ] ) ) {
             $activate_recaptcha = get_option( 'b3_activate_recaptcha' );
@@ -719,9 +739,9 @@
         if ( get_option( 'b3_activate_custom_emails' ) ) {
             if ( ! apply_filters( 'b3_email_styling', false ) || ! apply_filters( 'b3_email_template', false ) ) {
                 $tabs[] = [
-                    'id'      => 'template',
-                    'title'   => esc_html__( 'Template', 'b3-onboarding' ),
-                    'content' => b3_render_tab_content( 'template' ),
+                    'id'      => 'styling',
+                    'title'   => esc_html__( 'Styling', 'b3-onboarding' ),
+                    'content' => b3_render_tab_content( 'styling' ),
                     'icon'    => 'admin-customizer',
                 ];
             }
@@ -1113,7 +1133,7 @@
 
     // Get message above 'Get pass' form (magic link)
     function b3_get_message_above_magiclink_form() {
-        $default_message = esc_html__( 'Please enter your email address. You will receive an email with a link to login with a magic link.', 'b3-onboarding' );
+        $default_message = esc_html__( "Please enter your email address. If your email address exists in our database, you will receive an email with a link to login immediately.", 'b3-onboarding' );
         $message         = apply_filters( 'b3_message_above_magiclink', $default_message );
 
         return $message;

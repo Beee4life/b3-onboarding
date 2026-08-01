@@ -7,7 +7,7 @@
         $label = esc_html__( 'Email address', 'b3-onboarding' );
     }
 ?>
-<div class="b3_form-element">
+<div class="b3_form-element b3_form-element--user-login">
     <label class="b3_form-label b3_form-label--userlogin" for="user_login"><?php echo esc_html( $label ); ?></label>
     <input type="text" name="log" id="user_login" class="input" value="" size="20" autocomplete="username">
 </div>

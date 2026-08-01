@@ -10,17 +10,22 @@
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
         $activate_honeypot            = get_option( 'b3_activate_honeypot' ); // @TODO: add filter
-        $activate_privacy_page        = get_option( 'b3_activate_privacy_page' ); // @TODO: add filter
-        $privacy_page                 = get_option( 'b3_privacy_page_id' );
+        $activate_privacy_page        = get_option( 'b3_activate_privacy_page' );
+        $activate_terms_page          = get_option( 'b3_activate_terms_page' );
         /* translators: click here link */
-        $default_privacy_placeholder  = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
-        $privacy_placeholder          = apply_filters( 'b3_privacy_text', $default_privacy_placeholder );
+        $default_accept_placeholder   = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
+        $needs_admin_approval         = get_option( 'b3_needs_admin_approval' );
+        $privacy_page                 = get_option( 'b3_privacy_page_id' );
+        $privacy_placeholder          = apply_filters( 'b3_privacy_text', $default_accept_placeholder );
         $privacy_text                 = apply_filters( 'b3_privacy_text', '' ) ? '' : get_option( 'b3_privacy_text' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
-        $use_magic_link               = get_option( 'b3_use_magic_link' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
-        $needs_admin_approval         = get_option( 'b3_needs_admin_approval' );
+        $terms_page                   = get_option( 'b3_terms_page_id' );
+        $terms_placeholder            = apply_filters( 'b3_terms_text', $default_accept_placeholder );
+        $terms_text                   = apply_filters( 'b3_terms_text', '' ) ? '' : get_option( 'b3_terms_text' );
+        $use_magic_link               = get_option( 'b3_use_magic_link' );
+        $use_magic_link_password      = get_option( 'b3_use_magic_link_password' );
 
         ob_start();
 
@@ -96,7 +101,6 @@
                         <?php b3_get_close(); ?>
 
                         <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'none' ] ) ) ? true : false; ?>
-                        <?php $hide_custom_passwords = $use_magic_link ? true : $hide_custom_passwords; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -132,18 +136,26 @@
                         <?php b3_get_close(); ?>
                     </div>
 
-                    <?php if ( ! is_multisite() ) { ?>
-                        <?php $hide_one_time_password = $custom_passwords ? ' hidden' : false; ?>
-                        <?php b3_get_settings_field_open( $hide_one_time_password, 'magic-link' ); ?>
+                    <?php b3_get_settings_field_open( false, 'magic-link' ); ?>
                         <?php b3_get_label_field_open(); ?>
-                        <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
+                            <label for="b3_use_magic_link"><?php esc_html_e( 'Magic link', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_use_magic_link" name="b3_use_magic_link" value="1" <?php checked($use_magic_link); ?>/>
                             <?php esc_html_e( 'Activate magic link login.', 'b3-onboarding' ); ?>
                         </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php $hide_magic_password = $use_magic_link ? false : ' hidden'; ?>
+                    <?php b3_get_settings_field_open( $hide_magic_password, 'use-both' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_use_magic_link_password"><?php esc_html_e( 'Use password and magic link', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
-                    <?php } ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_use_magic_link_password" name="b3_use_magic_link_password" value="1" <?php checked($use_magic_link_password); ?>/>
+                            <?php esc_html_e( 'Use both magic link and password login.', 'b3-onboarding' ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
 
                     <?php if ( 'open' === $registration_type ) { ?>
                         <?php $hide_redirect_field = $custom_passwords ? true : false; ?>
@@ -187,11 +199,57 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_privacy"><?php esc_html_e( 'Privacy', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_terms_page"><?php esc_html_e( 'General terms', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--checkbox">
+                            <input type="checkbox" id="b3_activate_terms_page" name="b3_activate_terms_page" value="1" <?php checked($activate_terms_page); ?>/>
+                            <?php esc_html_e( "Activate an 'Accept terms' checkbox.", 'b3-onboarding' ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php $hide_terms_settings = 1 == $activate_terms_page ? false : true; ?>
+                    <?php b3_get_settings_field_open( $hide_terms_settings, 'terms' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_terms_text"><?php esc_html_e( 'Terms text', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <input type="text" id="b3_terms_text" name="b3_terms_text" placeholder="<?php echo esc_attr( $terms_placeholder ); ?>" value="<?php if ( $terms_text ) { echo wp_kses_post( $terms_text ); } ?>"/>
+                            <?php if ( apply_filters( 'b3_terms_text', '' ) ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
+                            <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open( $hide_terms_settings, 'terms' ); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_terms_page_id"><?php esc_html_e( 'Terms page', 'b3-onboarding' ); ?></label>
+                        <?php b3_get_close(); ?>
+                        <div class="b3_settings-input b3_settings-input--text">
+                            <?php
+                                $page_args = [
+                                    'post_type'        => 'page',
+                                    'posts_per_page'   => -1,
+                                    'orderby'          => 'title',
+                                    'order'            => 'ASC',
+                                    'suppress_filters' => false,
+                                ];
+                                $all_pages = get_posts( $page_args );
+                            ?>
+                            <select name="b3_terms_page_id" id="b3_terms_page_id">
+                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                                <?php foreach( $all_pages as $page ) { ?>
+                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($terms_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    <?php b3_get_close(); ?>
+
+                    <?php b3_get_settings_field_open(); ?>
+                        <?php b3_get_label_field_open(); ?>
+                            <label for="b3_activate_privacy_page"><?php esc_html_e( 'Privacy', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_privacy_page" name="b3_activate_privacy_page" value="1" <?php checked($activate_privacy_page); ?>/>
-                            <?php esc_html_e( 'Activate a privacy checkbox.', 'b3-onboarding' ); ?>
+                            <?php esc_html_e( "Activate an 'Accept privacy policy' checkbox.", 'b3-onboarding' ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 

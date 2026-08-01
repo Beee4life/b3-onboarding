@@ -2,6 +2,7 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
+
     if ( ! empty( $attributes[ 'title' ] ) ) {
         echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) );
     }

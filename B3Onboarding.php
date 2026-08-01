@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.16.0
+    Version:            3.17.0
     Requires at least:  6.2
     Tested up to:       7.0
     Requires PHP:       7.4
@@ -33,7 +33,7 @@
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
                     'registration_type' => get_option( 'b3_registration_type', 'closed' ),
-                    'version'           => '3.16.0',
+                    'version'           => '3.17.0',
                 ];
 
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
@@ -84,6 +84,7 @@
                 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'b3_settings_link' ] );
 
                 $plugin_dir_path = plugin_dir_path(__FILE__);
+                require_once $plugin_dir_path . 'admin/tabs/tabs.php';
                 require_once $plugin_dir_path . 'admin/help-tabs.php';
                 require_once $plugin_dir_path . 'includes/true-false.php';
                 require_once $plugin_dir_path . 'includes/actions.php';
@@ -95,7 +96,6 @@
                 require_once $plugin_dir_path . 'includes/emails.php';
                 require_once $plugin_dir_path . 'includes/redirects.php';
                 require_once $plugin_dir_path . 'includes/form-handling.php';
-                require_once $plugin_dir_path . 'includes/tabs/tabs.php';
             }
 
             public function b3_plugin_activation() {
@@ -168,7 +168,12 @@
                 wp_enqueue_script( 'b3ob', plugins_url( 'assets/js/js.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
 
                 wp_localize_script( 'b3ob', 'b3ob_vars', [
+                    'use_magic_link'  => esc_attr__( 'Use magic link', 'b3-onboarding' ),
+                    'login'           => esc_attr__( 'Login', 'b3-onboarding' ),
+                    'login_nonce'     => wp_create_nonce( 'b3_login' ),
+                    'magiclink_nonce' => wp_create_nonce( 'b3_magiclink' ),
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
+                    'use_both'        => get_option( 'b3_use_magic_link_password' ),
                 ] );
             }
 
@@ -774,12 +779,12 @@
                 if ( isset( $_POST[ 'b3_magiclink_nonce' ] ) ) {
                     $redirect_url = b3_get_login_url();
                     if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_magiclink_nonce' ] ) ), 'b3_magiclink' ) ) {
-                        $redirect_url = add_query_arg( 'login-error', 'unknown', $redirect_url );
+                        $redirect_url = add_query_arg( 'error', 'unknown', $redirect_url );
                         wp_safe_redirect( $redirect_url );
                         exit;
 
                     } elseif ( ! isset( $_POST[ 'email' ] ) || empty( $_POST[ 'email' ] ) ) {
-                        $redirect_url = add_query_arg( 'login-error', 'empty_email', $redirect_url );
+                        $redirect_url = add_query_arg( 'error', 'empty_email', $redirect_url );
                         wp_safe_redirect( $redirect_url );
                         exit;
 
@@ -789,15 +794,13 @@
 
                         if ( $existing_user instanceof WP_User ) {
                             $otp_password = b3_get_otp_password();
-                            // @TODO: look into adding nonce
                             $hashed_slug  = b3_get_hashed_slug( $user_email, $otp_password );
 
                             if ( $hashed_slug ) {
                                 $vars    = []; // empty right now, but might be filled later on...
-                                /* translators: Blog name */
-                                $subject = __( 'Magic login link for %blog_name%', 'b3-onboarding' );
+                                $subject = b3_get_magic_link_subject();
                                 $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                $message = b3_get_magic_link_email( $otp_password, $hashed_slug );
+                                $message = b3_get_magic_link_message( $otp_password, $hashed_slug );
 
                                 if ( ! empty( $message ) ) {
                                     $message      = b3_replace_template_styling( $message );
@@ -840,7 +843,6 @@
             }
 
             public function b3_get_return_message( $error_code, $label = false ) {
-
                 switch( $error_code ) {
                     case 'banned_domain':
                         return esc_html__( 'This domain is not allowed to register.', 'b3-onboarding' );
@@ -920,6 +922,9 @@
 
                     case 'no_privacy':
                         return esc_html__( 'You have to accept the privacy statement.', 'b3-onboarding' );
+
+                    case 'no_terms':
+                        return esc_html__( 'You have to accept the general terms.', 'b3-onboarding' );
 
                     case 'empty_field':
                         if ( false != $label ) {
@@ -1130,6 +1135,12 @@
                             $user_data[ 'user_pass' ] = $user_data[ 'pass1' ];
                         }
                     }
+                }
+
+                if ( ! b3_verify_terms() ) {
+                    $errors->add( 'no_terms', $this->b3_get_return_message( 'no_terms' ) );
+
+                    return $errors;
                 }
 
                 if ( ! b3_verify_privacy() ) {
