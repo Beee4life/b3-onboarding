@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+3.18.0
+* ??
+
 3.17.0
 * added option to choose magic link or password
 * changed tab 'Template' to 'Styling'
