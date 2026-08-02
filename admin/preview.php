@@ -15,94 +15,16 @@
         $subject = false;
 
         if ( isset( $_GET[ 'preview' ] ) ) {
-            $hide_logo = ! get_option( 'b3_activate_logo_in_email' ) ? true : false;
-            $preview   = sanitize_text_field( wp_unslash( $_GET[ 'preview' ] ) );
-            $user      = get_userdata( get_current_user_id() );
+            $hide_logo       = ! get_option( 'b3_activate_logo_in_email' ) ? true : false;
+            $preview         = sanitize_text_field( wp_unslash( $_GET[ 'preview' ] ) );
+            $subject_message = b3_get_subject_message( $preview );
 
-            $lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non purus magna. Nam quam est, rutrum non consequat sed, finibus quis mi. Vestibulum eget felis risus. Phasellus nibh ligula, tristique non lorem in, blandit <a href="">iaculis</a> enim. In eleifend fermentum scelerisque. Mauris ultrices tortor non massa lobortis, eget molestie nunc fringilla. Integer fermentum ultrices quam vel scelerisque. Nullam non augue laoreet, sagittis orci ac, eleifend massa.
-            <br><br>
-            Quisque <a href="">quis nibh</a> gravida, condimentum nibh sed, facilisis ligula. Phasellus placerat, metus a ultricies vulputate, arcu massa ullamcorper enim, id iaculis nisl augue eu dolor. Aliquam vel nisi at lacus ultrices fringilla. In cursus mattis lectus, non ultricies orci vulputate nec. Fusce non vestibulum nulla. Cras libero metus, fermentum sit amet venenatis sit amet, vestibulum vitae lectus. Donec interdum volutpat blandit.
-            <br><br>
-            <div class="big-link-container"><div class="big-link"><a href="">BUTTON LABEL</a></div></div>
-            <br>
-            Morbi vehicula metus vestibulum, eleifend arcu quis, rutrum massa. Sed porttitor pellentesque convallis. Suspendisse potenti. Nam dapibus vitae tortor a egestas. Ut at lobortis tortor. Sed tellus sem, pulvinar sit amet posuere non, vulputate vitae mi. Vestibulum ac massa suscipit, placerat risus ut, rutrum turpis. Integer in risus ac turpis dapibus viverra. Nulla facilisi. Nam ut cursus felis. Pellentesque <a href="">congue scelerisque</a> nisl, nec ultricies ex. Vivamus id ex ac dolor porttitor tempus. Maecenas pulvinar porta nunc, in mollis erat egestas et.';
-
-            switch( $preview ) {
-                case 'template':
-                    $message = $lorem_ipsum;
-                    break;
-                case 'mu-confirm-user-email':
-                    $message = b3_get_wpmu_activate_user_message();
-                    $subject = b3_get_wpmu_activate_user_subject();
-                    break;
-                case 'mu-user-activated':
-                case 'mu-user-site-activated':
-                    $message = b3_get_wpmu_user_activated_message();
-                    $subject = b3_get_wpmu_user_activated_subject();
-                    break;
-                case 'mu-confirm-user-site-email':
-                    $message = b3_get_wpmu_activate_user_blog_message();
-                    $subject = b3_get_wpmu_activate_user_blog_subject();
-                    break;
-                case 'mu-new-user-admin':
-                    $message = b3_get_new_wpmu_user_message_admin();
-                    $subject = b3_get_new_wpmu_user_subject_admin();
-                    break;
-                case 'account-approved':
-                    $message = b3_get_account_approved_message();
-                    $subject = b3_get_account_approved_subject();
-                    break;
-                case 'account-activated':
-                    $message = b3_get_account_activated_message_user();
-                    $subject = b3_get_account_activated_subject_user();
-                    break;
-                case 'account-rejected':
-                    $message = b3_get_account_rejected_message();
-                    $subject = b3_get_account_rejected_subject();
-                    break;
-                case 'email-activation':
-                    $message = b3_get_email_activation_message_user();
-                    $subject = b3_get_email_activation_subject_user();
-                    break;
-                case 'lostpassword':
-                    $message = b3_get_lost_password_message();
-                    $subject = b3_get_lost_password_subject();
-                    break;
-                case 'magiclink':
-                    $message = b3_get_magic_link_message( '123', '%s' );
-                    $subject = b3_get_magic_link_subject();
-                    break;
-                case 'mu-confirm-email':
-                    $message = b3_get_wpmu_activate_user_message();
-                    $subject = b3_get_wpmu_activate_user_subject();
-                    break;
-                case 'new-user-admin':
-                    // @TODO: maybe make new one, don't use b3_get_new_user_message
-                    $message = b3_get_new_user_message();
-                    $subject = b3_get_new_user_subject();
-                    break;
-                case 'request-access-admin':
-                    $message = b3_get_request_access_message_admin();
-                    $subject = b3_get_request_access_subject_admin();
-                    break;
-                case 'request-access-user':
-                    $message = b3_get_request_access_message_user();
-                    $subject = b3_get_request_access_subject_user();
-                    break;
-                case 'welcome-user':
-                    $message = b3_get_welcome_user_message();
-                    $subject = b3_get_welcome_user_subject();
-                    break;
-                case 'welcome-user-manual':
-                    $message = b3_get_manual_welcome_user_message();
-                    $subject = b3_get_welcome_user_subject();
-                    break;
-                default:
-                    $message = apply_filters( 'b3_preview_email_message', sprintf( esc_html__( "No email message found for '%s'", 'b3-onboarding' ), $preview ), $preview );
-                    $subject = apply_filters( 'b3_preview_email_subject', sprintf( esc_html__( "No email subject found for '%s'", 'b3-onboarding' ), $preview ), $preview );
+            if ( ! empty( $subject_message ) ) {
+                $subject = $subject_message[ 'subject' ];
+                $message = $subject_message[ 'message' ];
             }
 
-            if ( 'styling' !== $_GET[ 'preview' ] ) {
+            if ( 'styling' !== $preview ) {
                 $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                 $message = b3_replace_template_styling( $message );
                 $message = strtr( $message, b3_get_replacement_vars() );
@@ -111,7 +33,7 @@
 
             <p>
                 <?php
-                    if ( 'template' === $_GET[ 'preview' ] ) {
+                    if ( 'template' === $preview ) {
                         esc_html_e( 'This is what the default email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
                     } else {
                         esc_html_e( 'This is what your email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
@@ -120,7 +42,7 @@
             </p>
 
             <?php
-                if ( 'styling' !== $_GET[ 'preview' ] ) {
+                if ( 'styling' !== $preview ) {
                     $button_label = esc_html__( 'Send test email', 'b3-onboarding' );
                     echo sprintf(
                         '<p><a href="#" id="b3-send-test-email" class="button button-primary">%s</a></p>',
@@ -140,7 +62,7 @@
 
         <?php } else { ?>
             <p><?php esc_html_e( "These are the email's styling definitions.", 'b3-onboarding' ); ?></p>
-            <pre><?php echo esc_html( wp_strip_all_tags( $css ) ); ?></pre>
+            <pre><?php echo esc_html( wp_strip_all_tags( $message ) ); ?></pre>
         <?php } // styling !== preview ?>
     <?php } // end $_GET preview ?>
 </div>
