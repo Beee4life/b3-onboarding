@@ -24,7 +24,7 @@
                 $message = $subject_message[ 'message' ];
             }
 
-            if ( 'styling' !== $preview ) {
+            if ( 'styling' !== $preview && ! empty( $message ) && ! empty( $subject ) ) {
                 $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
                 $message = b3_replace_template_styling( $message );
                 $message = strtr( $message, b3_get_replacement_vars() );
