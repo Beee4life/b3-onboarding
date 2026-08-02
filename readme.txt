@@ -28,7 +28,7 @@ There are a ton of things, which you can set through the admin pages or with the
 == Changelog ==
 
 3.18.0
-* ??
+* add option to send test email
 
 3.17.0
 * added option to choose magic link or password

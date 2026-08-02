@@ -97,9 +97,6 @@
                     $message = b3_get_manual_welcome_user_message();
                     $subject = b3_get_welcome_user_subject();
                     break;
-                case 'styling':
-                    $css = b3_get_email_styling( b3_get_link_color() );
-                    break;
                 default:
                     $message = apply_filters( 'b3_preview_email_message', sprintf( esc_html__( "No email message found for '%s'", 'b3-onboarding' ), $preview ), $preview );
                     $subject = apply_filters( 'b3_preview_email_subject', sprintf( esc_html__( "No email subject found for '%s'", 'b3-onboarding' ), $preview ), $preview );
@@ -117,10 +114,20 @@
                     if ( 'template' === $_GET[ 'preview' ] ) {
                         esc_html_e( 'This is what the default email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
                     } else {
-                        esc_html_e( 'This is what the email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
+                        esc_html_e( 'This is what your email will look like (approximately). Some elements can be overridden by the css loaded in your admin.', 'b3-onboarding' );
                     }
                 ?>
             </p>
+
+            <?php
+                if ( 'styling' !== $_GET[ 'preview' ] ) {
+                    $button_label = esc_html__( 'Send test email', 'b3-onboarding' );
+                    echo sprintf(
+                        '<p><a href="#" id="b3-send-test-email" class="button button-primary">%s</a></p>',
+                        $button_label
+                    );
+                }
+            ?>
 
             <?php if ( false != $subject ) { ?>
                 <p>

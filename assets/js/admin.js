@@ -89,6 +89,37 @@
             $('.b3_settings-input-description--welcome').toggle();
         });
 
+        $('#b3-send-test-email').on('click', function(e) {
+            e.preventDefault();
+
+            var $button = $(this);
+            var ajaxUrl = typeof b3Onboarding !== 'undefined' ? b3Onboarding.ajax_url : ajaxurl;
+
+            $button.prop('disabled', true).text(b3Onboarding.text.sending);
+
+            $.ajax({
+                url: ajaxUrl, // Available automatically in WordPress wp-admin
+                type: 'POST',
+                data: {
+                    action: 'b3_send_test_email',
+                    nonce: b3Onboarding.nonce,
+                    preview: b3Onboarding.preview
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.data.message);
+                    } else {
+                        alert(response.data.message || 'Error sending email.');
+                    }
+                },
+                error: function() {
+                    alert('Server error.');
+                },
+                complete: function() {
+                    $button.prop('disabled', false).text(b3Onboarding.text.success);
+                }
+            });
+        });
     });
 })(jQuery);
 

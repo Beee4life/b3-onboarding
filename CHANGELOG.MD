@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 3.18.0
-* ??
+* add option to send test email
 
 3.17.0
 * added option to choose magic link or password

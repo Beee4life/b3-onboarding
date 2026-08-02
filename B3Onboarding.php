@@ -96,6 +96,10 @@
                 require_once $plugin_dir_path . 'includes/emails.php';
                 require_once $plugin_dir_path . 'includes/redirects.php';
                 require_once $plugin_dir_path . 'includes/form-handling.php';
+
+                if ( is_admin() ) {
+                    require_once $plugin_dir_path . 'admin/admin-ajax.php';
+                }
             }
 
             public function b3_plugin_activation() {
@@ -185,6 +189,18 @@
                 }
 
                 wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
+
+                $preview_var = isset( $_GET[ 'preview' ] ) ? sanitize_text_field( $_GET[ 'preview' ] ) : '';
+                wp_localize_script( 'b3ob-admin', 'b3Onboarding', [
+                    'ajax_url' => admin_url( 'admin-ajax.php' ),
+                    'nonce'    => wp_create_nonce( 'b3_send_test_email_nonce' ),
+                    'preview'  => $preview_var,
+                    'text'     => [
+                        'sending' => __( 'Sending...', 'b3-onboarding' ),
+                        'success' => __( 'Email sent', 'b3-onboarding' ),
+                        'error'   => __( 'Failed to send email. Please try again.', 'b3-onboarding' ),
+                    ],
+                ] );
 
                 // https://wpreset.com/add-codemirror-editor-plugin-theme/
                 $b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( [
