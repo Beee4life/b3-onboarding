@@ -71,7 +71,21 @@
                         <?php echo wp_kses_post( b3_get_preview_link( $field[ 'preview' ] ) ); ?>
                         <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
                         |
-                        <?php echo sprintf( '<a href="%s">%s</a> %s', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=' . $field[ 'file_name' ] . '&sentby=b3' ), esc_html__( 'Click here', 'b3-onboarding' ), esc_html__( 'to download the default.', 'b3-onboarding' ) ); ?>
+                        <?php
+                            $download_url = add_query_arg(
+                                [
+                                    'action' => 'b3_download_file',
+                                    'file'   => $field[ 'file_name' ],
+                                ],
+                                admin_url( 'admin-post.php' )
+                            );
+                        ?>
+                        <?php echo sprintf(
+                            '<a href="%s">%s</a> %s',
+                            esc_url( $download_url ),
+                            esc_html__( 'Click here', 'b3-onboarding' ),
+                            esc_html__( 'to download the default.', 'b3-onboarding' )
+                        ); ?>
                     </p>
                 </div>
             <?php } ?>

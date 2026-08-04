@@ -271,3 +271,43 @@
         }
     }
     add_action( 'network_admin_notices', 'b3_network_admin_notices' );
+
+    function b3_handle_file_download() {
+        if ( ! isset( $_GET[ 'file' ] ) ) {
+            wp_die( 'Missing file parameter.' );
+        }
+
+        $allowed_files = [
+            'default-email-styling.css'   => trailingslashit( B3OB_PLUGIN_PATH ) . 'includes/default-email-styling.css',
+            'default-email-template.html' => trailingslashit( B3OB_PLUGIN_PATH ) . 'includes/default-email-template.html',
+        ];
+
+        $file_key = sanitize_text_field( $_GET['file'] );
+
+        if ( ! isset( $allowed_files[ $file_key ] ) ) {
+            wp_die( 'Invalid file selection.' );
+        }
+
+        $file_path = $allowed_files[ $file_key ];
+
+        if ( file_exists( $file_path ) && is_readable( $file_path ) ) {
+            // Clear any prior output buffers to prevent file corruption
+            if ( ob_get_level() ) {
+                ob_end_clean();
+            }
+
+            header( 'Content-Description: File Transfer' );
+            header( 'Content-Type: application/octet-stream' );
+            header( 'Content-Disposition: attachment; filename="' . basename( $file_path ) . '"' );
+            header( 'Expires: 0' );
+            header( 'Cache-Control: must-revalidate' );
+            header( 'Pragma: public' );
+            header( 'Content-Length: ' . filesize( $file_path ) );
+
+            readfile( $file_path );
+            exit;
+        }
+
+        wp_die( 'File not found.' );
+    }
+    add_action( 'admin_post_b3_download_file', 'b3_handle_file_download' );
