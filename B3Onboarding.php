@@ -1280,7 +1280,7 @@
                         /* translators: here */
                         $no_registration_page       = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $no_registration_page_shown = true;
-                        echo sprintf( '<div class="error"><p>%s</p></div>', $no_registration_page );
+                        echo sprintf( '<div class="error"><p>%s</p></div>', wp_kses_post( $no_registration_page ) );
                     }
                 }
 

@@ -116,7 +116,7 @@
 
                     echo '<ul>';
                     foreach( $widget_links as $link ) {
-                        echo sprintf( '<li>%s</li>', $link );
+                        echo sprintf( '<li>%s</li>', wp_kses_post( $link ) );
                     }
                     echo '</ul>';
 

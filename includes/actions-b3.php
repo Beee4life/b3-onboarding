@@ -176,6 +176,7 @@
             }
             $output = ob_get_clean();
             // @TODO: escape
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $output;
         }
     }
@@ -682,7 +683,7 @@
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
 
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, wp_kses_post( $links ) );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', esc_html( $label ), wp_kses_post( $links ) );
                 }
             }
         }

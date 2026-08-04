@@ -46,7 +46,7 @@
                     $button_label = esc_html__( 'Send test email', 'b3-onboarding' );
                     echo sprintf(
                         '<p><a href="#" id="b3-send-test-email" class="button button-primary">%s</a></p>',
-                        $button_label
+                        wp_kses_post( $button_label )
                     );
                 }
             ?>

@@ -62,6 +62,7 @@
             <?php } ?>
 
             <?php foreach( $email_boxes as $box ) { ?>
+                <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 <?php echo b3_render_email_settings_field( $box ); ?>
             <?php } ?>
 

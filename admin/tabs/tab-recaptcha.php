@@ -43,9 +43,9 @@
                 <div class="b3_settings-input b3_settings-input--text">
                     <?php if ( $public_key_filter ) { ?>
                         <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                        <?php echo ': ' . $public_key_filter; ?>
+                        <?php echo ': ' . esc_html( $public_key_filter ); ?>
                     <?php } else { ?>
-                        <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key_option ) { echo esc_attr( $public_key_option ); } ?>" placeholder="<?php echo $public_key_filter; ?>" />
+                        <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key_option ) { echo esc_attr( $public_key_option ); } ?>" placeholder="<?php echo esc_attr( $public_key_filter ); ?>" />
                     <?php } ?>
                 </div>
             <?php b3_get_close(); ?>
@@ -57,9 +57,9 @@
                 <div class="b3_settings-input b3_settings-input--text">
                     <?php if ( $secret_key_filter ) { ?>
                         <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                        <?php echo ': ' . $secret_key_filter; ?>
+                        <?php echo ': ' . esc_html( $secret_key_filter ); ?>
                     <?php } else { ?>
-                        <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key_option ) { echo esc_attr( $secret_key_option ); } ?>" placeholder="<?php echo $secret_key_filter; ?>" />
+                        <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key_option ) { echo esc_attr( $secret_key_option ); } ?>" placeholder="<?php echo esc_attr( $secret_key_filter ); ?>" />
                     <?php } ?>
                 </div>
             <?php b3_get_close(); ?>

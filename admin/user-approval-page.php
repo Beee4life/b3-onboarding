@@ -18,6 +18,7 @@
         $shortcode = do_shortcode( '[user-management]' );
         echo sprintf( '<div class="wrap b3 b3__admin">%s%s</div>',
             sprintf( '<h1 id="b3__admin-title">%s</h1>', esc_html( get_admin_page_title() ) ),
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             $shortcode
         );
     }

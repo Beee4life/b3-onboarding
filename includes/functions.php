@@ -1230,7 +1230,9 @@
                     $subject = '';
                     break;
                 default:
+                    // translators: preview identifier
                     $message = apply_filters( 'b3_preview_email_message', sprintf( esc_html__( "No email message found for '%s'", 'b3-onboarding' ), $preview ), $preview );
+                    // translators: preview identifier
                     $subject = apply_filters( 'b3_preview_email_subject', sprintf( esc_html__( "No email subject found for '%s'", 'b3-onboarding' ), $preview ), $preview );
             }
 
