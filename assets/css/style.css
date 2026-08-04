@@ -3,12 +3,6 @@
   display: none;
 }
 
-.b3-form-container {
-    margin:    0 auto;
-    width:     100%;
-    max-width: 500px;
-}
-
 /* Error message */
 .b3_message {
   border:        1px dashed black;
