@@ -30,355 +30,355 @@ msgid "Use magic link"
 msgstr ""
 
 #: B3Onboarding.php:176 includes/actions-b3.php:449
-#: includes/class-b3-shortcodes.php:165 includes/class-b3-sidebar-widget.php:74
+#: includes/class-b3-shortcodes.php:168 includes/class-b3-sidebar-widget.php:74
 #: includes/class-b3-sidebar-widget.php:77 includes/defaults.php:102
 #: includes/defaults.php:150 includes/defaults.php:301
-#: includes/defaults.php:429 includes/defaults.php:570 includes/do-stuff.php:28
+#: includes/defaults.php:429 includes/defaults.php:569 includes/do-stuff.php:28
 msgid "Login"
 msgstr ""
 
-#: B3Onboarding.php:199
+#: B3Onboarding.php:200
 msgid "Sending..."
 msgstr ""
 
-#: B3Onboarding.php:200
+#: B3Onboarding.php:201
 msgid "Email sent"
 msgstr ""
 
-#: B3Onboarding.php:201
+#: B3Onboarding.php:202
 msgid "Failed to send email. Please try again."
 msgstr ""
 
-#: B3Onboarding.php:220
+#: B3Onboarding.php:221
 msgid "Upload or choose your custom logo"
 msgstr ""
 
-#: B3Onboarding.php:221
+#: B3Onboarding.php:222
 msgid "Insert logo"
 msgstr ""
 
-#: B3Onboarding.php:260 B3Onboarding.php:261
+#: B3Onboarding.php:261 B3Onboarding.php:262
 msgid "User Approval"
 msgstr ""
 
-#: B3Onboarding.php:285 B3Onboarding.php:286
+#: B3Onboarding.php:286 B3Onboarding.php:287
 msgid "Debug info"
 msgstr ""
 
-#: B3Onboarding.php:366 admin/help-tabs.php:115 admin/help-tabs.php:130
+#: B3Onboarding.php:367 admin/help-tabs.php:115 admin/help-tabs.php:130
 #: admin/tabs/tab-settings.php:17 includes/class-b3-sidebar-widget.php:91
-#: includes/functions.php:776
+#: includes/functions.php:778
 msgid "Settings"
 msgstr ""
 
-#: B3Onboarding.php:377
+#: B3Onboarding.php:378
 msgid "There's no user with that ID."
 msgstr ""
 
-#: B3Onboarding.php:379
+#: B3Onboarding.php:380
 msgid "You're not allowed to edit that user."
 msgstr ""
 
-#: B3Onboarding.php:437 B3Onboarding.php:446 includes/retrieve-password.php:16
+#: B3Onboarding.php:438 B3Onboarding.php:447 includes/retrieve-password.php:16
 #: includes/retrieve-password.php:44 includes/retrieve-password.php:111
 msgid "Error"
 msgstr ""
 
-#: B3Onboarding.php:440
+#: B3Onboarding.php:441
 msgid "Warning"
 msgstr ""
 
-#: B3Onboarding.php:455
+#: B3Onboarding.php:456
 msgid "Dismiss this notice"
 msgstr ""
 
-#: B3Onboarding.php:864
+#: B3Onboarding.php:865
 msgid "This domain is not allowed to register."
 msgstr ""
 
-#: B3Onboarding.php:867
+#: B3Onboarding.php:868
 msgid "Please enter a username."
 msgstr ""
 
-#: B3Onboarding.php:870
+#: B3Onboarding.php:871
 msgid "Please enter a password."
 msgstr ""
 
-#: B3Onboarding.php:873
+#: B3Onboarding.php:874
 msgid "Please enter an email address."
 msgstr ""
 
-#: B3Onboarding.php:876
+#: B3Onboarding.php:877
 msgid "The username or password you entered wasn't quite right."
 msgstr ""
 
-#: B3Onboarding.php:879
+#: B3Onboarding.php:880
 #, php-format
 msgid "Did you %s your password ?"
 msgstr ""
 
-#: B3Onboarding.php:879
+#: B3Onboarding.php:880
 msgid "forget"
 msgstr ""
 
-#: B3Onboarding.php:884
+#: B3Onboarding.php:885
 msgid "You are now logged in."
 msgstr ""
 
-#: B3Onboarding.php:887
+#: B3Onboarding.php:888
 msgid "You are logged out."
 msgstr ""
 
-#: B3Onboarding.php:890
+#: B3Onboarding.php:891
 msgid "Your code seems to be invalid. Please try again."
 msgstr ""
 
-#: B3Onboarding.php:893
+#: B3Onboarding.php:894
 msgid "An unkown error has occured. Please try again."
 msgstr ""
 
-#: B3Onboarding.php:896 includes/form-handling.php:809
+#: B3Onboarding.php:897 includes/form-handling.php:817
 msgid "Unlawful form entry, try again."
 msgstr ""
 
-#: B3Onboarding.php:900
+#: B3Onboarding.php:901
 msgid "If your email address is associated with a user, you will receive an email shortly with a magic link."
 msgstr ""
 
-#: B3Onboarding.php:903
+#: B3Onboarding.php:904
 #, php-format
 msgid "The link is valid for %d minutes."
 msgstr ""
 
-#: B3Onboarding.php:908
+#: B3Onboarding.php:909
 msgid "There is no user with this email address."
 msgstr ""
 
-#: B3Onboarding.php:912
+#: B3Onboarding.php:913
 msgid "This username is already in use."
 msgstr ""
 
-#: B3Onboarding.php:915
+#: B3Onboarding.php:916
 msgid "Usernames can only contain lowercase letters (a-z) and numbers."
 msgstr ""
 
-#: B3Onboarding.php:918
+#: B3Onboarding.php:919
 msgid "That username is not allowed, please choose another."
 msgstr ""
 
-#: B3Onboarding.php:921 B3Onboarding.php:925
+#: B3Onboarding.php:922 B3Onboarding.php:926
 msgid "The email address you entered is not valid."
 msgstr ""
 
-#: B3Onboarding.php:927
+#: B3Onboarding.php:928
 msgid "The user login you entered is not valid."
 msgstr ""
 
-#: B3Onboarding.php:931
+#: B3Onboarding.php:932
 msgid "An account already exists with this email address."
 msgstr ""
 
-#: B3Onboarding.php:934 includes/defaults.php:455
+#: B3Onboarding.php:935 includes/defaults.php:454
 msgid "Registering new users is currently not allowed."
 msgstr ""
 
-#: B3Onboarding.php:937
+#: B3Onboarding.php:938
 msgid "The Google reCAPTCHA check failed. Are you a robot?"
 msgstr ""
 
-#: B3Onboarding.php:940
+#: B3Onboarding.php:941
 msgid "You have to accept the privacy statement."
 msgstr ""
 
-#: B3Onboarding.php:943
+#: B3Onboarding.php:944
 msgid "You have to accept the general terms."
 msgstr ""
 
-#: B3Onboarding.php:948
+#: B3Onboarding.php:949
 #, php-format
 msgid "You didn't select an option for '%s'."
 msgstr ""
 
-#: B3Onboarding.php:950
+#: B3Onboarding.php:951
 msgid "You didn't select an option."
 msgstr ""
 
-#: B3Onboarding.php:954
+#: B3Onboarding.php:955
 msgid "You have sucessfully requested access. Someone will check your request."
 msgstr ""
 
-#: B3Onboarding.php:959
+#: B3Onboarding.php:960
 msgid "You have sucessfully registered but need to confirm your email address first. Please check your email for an activation link."
 msgstr ""
 
-#: B3Onboarding.php:964
+#: B3Onboarding.php:965
 msgid "No robo signups."
 msgstr ""
 
-#: B3Onboarding.php:968
+#: B3Onboarding.php:969
 msgid "There are no users registered with this email address."
 msgstr ""
 
-#: B3Onboarding.php:971
+#: B3Onboarding.php:972
 msgid "You have to get approved first."
 msgstr ""
 
-#: B3Onboarding.php:974
+#: B3Onboarding.php:975
 msgid "You have to confirm your email address first. Please check your inbox."
 msgstr ""
 
-#: B3Onboarding.php:977
+#: B3Onboarding.php:978
 msgid "Your password has been changed. You can login now."
 msgstr ""
 
-#: B3Onboarding.php:980
+#: B3Onboarding.php:981
 msgid "If the email address you used is connected to an account, you will receive an email with a link to reset your password."
 msgstr ""
 
-#: B3Onboarding.php:984
+#: B3Onboarding.php:985
 msgid "That password is too easy, please use a better one."
 msgstr ""
 
-#: B3Onboarding.php:988
+#: B3Onboarding.php:989
 msgid "You have successfully registered. You can now login."
 msgstr ""
 
-#: B3Onboarding.php:990
+#: B3Onboarding.php:991
 msgid "You have successfully registered. Please check your email for a link to set your password."
 msgstr ""
 
-#: B3Onboarding.php:995
+#: B3Onboarding.php:996
 #, php-format
 msgid "You have successfully registered to %s. Enter your email address to set your password."
 msgstr ""
 
-#: B3Onboarding.php:1000
+#: B3Onboarding.php:1001
 msgid "You have successfully activated your account. You can now login through the use of a magic link. Please enter your email address below."
 msgstr ""
 
-#: B3Onboarding.php:1002
+#: B3Onboarding.php:1003
 msgid "You have successfully activated your account. You can now login."
 msgstr ""
 
-#: B3Onboarding.php:1004
+#: B3Onboarding.php:1005
 msgid "You have successfully activated your account. You can initiate a password (re)set below."
 msgstr ""
 
-#: B3Onboarding.php:1008
+#: B3Onboarding.php:1009
 msgid "You have successfully activated your account but the site owner choose to manually approve each account. You will be notified of the outcome."
 msgstr ""
 
-#: B3Onboarding.php:1011
+#: B3Onboarding.php:1012
 msgid "You have successfully activated your account. Your password has been emailed to you."
 msgstr ""
 
-#: B3Onboarding.php:1014
+#: B3Onboarding.php:1015
 msgid "The activation link you used is not valid."
 msgstr ""
 
-#: B3Onboarding.php:1017
+#: B3Onboarding.php:1018
 msgid "There appears to be no user account associated with this link."
 msgstr ""
 
-#: B3Onboarding.php:1022
+#: B3Onboarding.php:1023
 msgid "The password reset link you used is not valid anymore."
 msgstr ""
 
-#: B3Onboarding.php:1026
+#: B3Onboarding.php:1027
 msgid "The two passwords you entered don't match."
 msgstr ""
 
-#: B3Onboarding.php:1029
+#: B3Onboarding.php:1030
 msgid "Sorry, we don't accept empty passwords."
 msgstr ""
 
-#: B3Onboarding.php:1032
+#: B3Onboarding.php:1033
 msgid "Sorry, that password is too easy."
 msgstr ""
 
-#: B3Onboarding.php:1036
+#: B3Onboarding.php:1037
 msgid "Sorry, this domain has already been taken."
 msgstr ""
 
-#: B3Onboarding.php:1039
+#: B3Onboarding.php:1040
 msgid "Please enter a site address."
 msgstr ""
 
-#: B3Onboarding.php:1042
+#: B3Onboarding.php:1043
 msgid "Site name must be at least 4 characters."
 msgstr ""
 
-#: B3Onboarding.php:1045
+#: B3Onboarding.php:1046
 msgid "Sorry, site names must have letters too."
 msgstr ""
 
-#: B3Onboarding.php:1048
+#: B3Onboarding.php:1049
 msgid "Please enter a title."
 msgstr ""
 
-#: B3Onboarding.php:1051
+#: B3Onboarding.php:1052
 msgid "You have successfully registered. Please check your email for an activation link."
 msgstr ""
 
-#: B3Onboarding.php:1054
+#: B3Onboarding.php:1055
 msgid "That username is currently reserved but may be available in a couple of days."
 msgstr ""
 
-#: B3Onboarding.php:1057
+#: B3Onboarding.php:1058
 msgid "That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing."
 msgstr ""
 
-#: B3Onboarding.php:1061
+#: B3Onboarding.php:1062
 msgid "Your account has been deleted."
 msgstr ""
 
-#: B3Onboarding.php:1064
+#: B3Onboarding.php:1065
 msgid "Profile saved"
 msgstr ""
 
-#: B3Onboarding.php:1070 includes/form-handling.php:680
+#: B3Onboarding.php:1071 includes/form-handling.php:688
 msgid "Settings saved"
 msgstr ""
 
-#: B3Onboarding.php:1074
+#: B3Onboarding.php:1075
 msgid "You can't use a space there."
 msgstr ""
 
-#: B3Onboarding.php:1078
+#: B3Onboarding.php:1079
 msgid "You have just registered an account successfully but since this is a demonstration setup, your user account has been deleted immediately again."
 msgstr ""
 
-#: B3Onboarding.php:1083
+#: B3Onboarding.php:1084
 msgid "An unknown error occurred. Please try again later."
 msgstr ""
 
-#: B3Onboarding.php:1271 includes/actions-wp.php:266
+#: B3Onboarding.php:1272 includes/actions-wp.php:266
 #, php-format
 msgid "You're using a development version of %s, which has not been released yet and can give some unexpected results."
 msgstr ""
 
-#: B3Onboarding.php:1280
+#: B3Onboarding.php:1281
 #, php-format
 msgid "You haven't set a page yet for registration. Set it %s."
 msgstr ""
 
-#: B3Onboarding.php:1280 B3Onboarding.php:1290 B3Onboarding.php:1311
+#: B3Onboarding.php:1281 B3Onboarding.php:1291 B3Onboarding.php:1313
 #: admin/dashboard-widget-users.php:59 admin/dashboard-widget-users.php:93
-#: admin/help-tabs.php:105 admin/tabs/tab-recaptcha.php:68
+#: admin/help-tabs.php:105 admin/tabs/tab-recaptcha.php:60
 #: admin/tabs/tab-users.php:91 admin/tabs/tab-users.php:144
 #: includes/actions-b3.php:320 includes/actions-wp.php:258
-#: includes/actions-wp.php:259 includes/class-b3-shortcodes.php:75
+#: includes/actions-wp.php:259 includes/class-b3-shortcodes.php:76
 #: includes/defaults.php:246 includes/defaults.php:337
 #: includes/defaults.php:374
 msgid "here"
 msgstr ""
 
-#: B3Onboarding.php:1290
+#: B3Onboarding.php:1291
 #, php-format
 msgid "You have not set a page for front-end user approval. Set it %s."
 msgstr ""
 
-#: B3Onboarding.php:1311
+#: B3Onboarding.php:1313
 #, php-format
 msgid "%1$s takes control over the 'Membership' option. You can change this %2$s."
 msgstr ""
@@ -404,15 +404,15 @@ msgstr ""
 msgid "Sorry, you do not have sufficient permissions to access this page."
 msgstr ""
 
-#: admin/admin-page.php:17
+#: admin/admin-page.php:18
 msgid "Email preview"
 msgstr ""
 
-#: admin/admin-page.php:19
+#: admin/admin-page.php:21
 msgid "Styling preview"
 msgstr ""
 
-#: admin/admin-page.php:21
+#: admin/admin-page.php:23
 msgid "Template preview"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgid "User activated (user)"
 msgstr ""
 
 #: admin/dashboard-widget-emails.php:20 admin/dashboard-widget-emails.php:29
-#: includes/functions.php:88 includes/functions.php:95
+#: includes/functions.php:87 includes/functions.php:94
 msgid "New user (admin)"
 msgstr ""
 
@@ -437,7 +437,7 @@ msgstr ""
 msgid "Account approved (user)"
 msgstr ""
 
-#: admin/dashboard-widget-emails.php:24 includes/functions.php:48
+#: admin/dashboard-widget-emails.php:24 includes/functions.php:47
 msgid "Account activated (user)"
 msgstr ""
 
@@ -445,7 +445,7 @@ msgstr ""
 msgid "Account rejected (user)"
 msgstr ""
 
-#: admin/dashboard-widget-emails.php:26 includes/functions.php:44
+#: admin/dashboard-widget-emails.php:26 includes/functions.php:43
 msgid "Email activation (user)"
 msgstr ""
 
@@ -465,7 +465,7 @@ msgstr ""
 msgid "Lost password (user)"
 msgstr ""
 
-#: admin/dashboard-widget-emails.php:35 includes/functions.php:739
+#: admin/dashboard-widget-emails.php:35 includes/functions.php:741
 msgid "Styling"
 msgstr ""
 
@@ -489,7 +489,7 @@ msgid "user"
 msgstr ""
 
 #: admin/dashboard-widget-users.php:51 admin/tabs/tab-registration.php:16
-#: admin/tabs/tab-settings.php:103 admin/tabs/tab-styling.php:72
+#: admin/tabs/tab-settings.php:103 admin/tabs/tab-styling.php:85
 msgid "Click here"
 msgstr ""
 
@@ -507,7 +507,7 @@ msgstr ""
 msgid "There %1$s %2$d %3$s pending email activation."
 msgstr ""
 
-#: admin/dashboard-widget-users.php:71 includes/functions.php:1049
+#: admin/dashboard-widget-users.php:71 includes/functions.php:1051
 msgid "User name"
 msgstr ""
 
@@ -545,7 +545,7 @@ msgid "not set"
 msgstr ""
 
 #: admin/help-tabs.php:27 admin/help-tabs.php:42
-#: admin/tabs/tab-registration.php:32 includes/functions.php:723
+#: admin/tabs/tab-registration.php:32 includes/functions.php:725
 msgid "Registration"
 msgstr ""
 
@@ -582,7 +582,7 @@ msgid "activate privacy checkbox"
 msgstr ""
 
 #: admin/help-tabs.php:47 admin/help-tabs.php:56 admin/tabs/tab-pages.php:32
-#: includes/functions.php:768
+#: includes/functions.php:770
 msgid "Pages"
 msgstr ""
 
@@ -595,7 +595,7 @@ msgid "Choose a page in your default language."
 msgstr ""
 
 #: admin/help-tabs.php:61 admin/help-tabs.php:90 admin/tabs/tab-emails.php:18
-#: includes/functions.php:731
+#: includes/functions.php:733
 msgid "Emails"
 msgstr ""
 
@@ -710,54 +710,54 @@ msgstr ""
 msgid "Send test email"
 msgstr ""
 
-#: admin/tabs/tab-pages.php:34
+#: admin/tabs/tab-pages.php:35
 msgid "Here you can see which pages are set for the various 'actions'."
 msgstr ""
 
-#: admin/tabs/tab-pages.php:34
+#: admin/tabs/tab-pages.php:35
 #, php-format
 msgid "Setting these pages is only possible in the default language (%s)."
 msgstr ""
 
-#: admin/tabs/tab-pages.php:34
+#: admin/tabs/tab-pages.php:35
 msgid "We store 1 central page ID and get the localized pages from it."
 msgstr ""
 
-#: admin/tabs/tab-pages.php:36
+#: admin/tabs/tab-pages.php:37
 msgid "Here you can set which pages are assigned for the various 'actions'."
 msgstr ""
 
-#: admin/tabs/tab-pages.php:61 admin/tabs/tab-pages.php:71
+#: admin/tabs/tab-pages.php:62 admin/tabs/tab-pages.php:72
 #: admin/tabs/tab-registration.php:238 admin/tabs/tab-registration.php:284
 msgid "Select a page"
 msgstr ""
 
-#: admin/tabs/tab-pages.php:93
+#: admin/tabs/tab-pages.php:94
 msgid "Add new"
 msgstr ""
 
-#: admin/tabs/tab-pages.php:119
+#: admin/tabs/tab-pages.php:120
 msgid "Edit"
 msgstr ""
 
-#: admin/tabs/tab-pages.php:124
+#: admin/tabs/tab-pages.php:125
 msgid "Visit"
 msgstr ""
 
-#: admin/tabs/tab-pages.php:132
+#: admin/tabs/tab-pages.php:133
 msgid "Links open in new tab/window."
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:16 includes/functions.php:759
+#: admin/tabs/tab-recaptcha.php:16 includes/functions.php:761
 msgid "reCaptcha"
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:68
+#: admin/tabs/tab-recaptcha.php:60
 #, php-format
 msgid "Get your (free) reCaptcha keys %s."
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:82
+#: admin/tabs/tab-recaptcha.php:74
 msgid "Save reCaptcha"
 msgstr ""
 
@@ -797,21 +797,21 @@ msgstr ""
 msgid "Email styling"
 msgstr ""
 
-#: admin/tabs/tab-styling.php:56
+#: admin/tabs/tab-styling.php:57
 #, php-format
-msgid "We don't recommend overriding the css here, but rather add css at the end of the file, after line %d by using the filter %s."
+msgid "We don't recommend overriding the css here, but rather add css at the end of the file, after line %1$d by using the filter %2$s."
 msgstr ""
 
-#: admin/tabs/tab-styling.php:64
+#: admin/tabs/tab-styling.php:66
 #, php-format
 msgid "It's easer to override the styling to achieve your wishes, but if you really want to change the template we recommend using the filter %s."
 msgstr ""
 
-#: admin/tabs/tab-styling.php:72
+#: admin/tabs/tab-styling.php:86
 msgid "to download the default."
 msgstr ""
 
-#: admin/tabs/tab-users.php:24 includes/functions.php:750
+#: admin/tabs/tab-users.php:24 includes/functions.php:752
 msgid "Users"
 msgstr ""
 
@@ -841,7 +841,7 @@ msgstr ""
 msgid "Separate multiple domain names with a comma"
 msgstr ""
 
-#: admin/tabs/tab-users.php:176
+#: admin/tabs/tab-users.php:170
 msgid "Email addresses from these domains are not allowed to register."
 msgstr ""
 
@@ -859,16 +859,16 @@ msgid "Lost password"
 msgstr ""
 
 #: includes/actions-b3.php:457 includes/class-b3-shortcodes.php:38
-#: includes/class-b3-sidebar-widget.php:83 includes/defaults.php:565
+#: includes/class-b3-sidebar-widget.php:83 includes/defaults.php:564
 #: includes/do-stuff.php:38
 msgid "Register"
 msgstr ""
 
-#: includes/actions-b3.php:681
+#: includes/actions-b3.php:680
 msgid "Your site(s)"
 msgstr ""
 
-#: includes/actions-wp.php:101 includes/functions.php:1098
+#: includes/actions-wp.php:101 includes/functions.php:1100
 msgid "Approve"
 msgstr ""
 
@@ -881,8 +881,8 @@ msgstr ""
 msgid "%1$s overrides the 'Registration' option and the 'Registration notification'. You can change the registration type %2$s and the registration notification %3$s."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:30 includes/class-b3-shortcodes.php:159
-#: includes/class-b3-shortcodes.php:271 includes/class-b3-shortcodes.php:310
+#: includes/class-b3-shortcodes.php:30 includes/class-b3-shortcodes.php:162
+#: includes/class-b3-shortcodes.php:276 includes/class-b3-shortcodes.php:315
 msgid "You are already logged in."
 msgstr ""
 
@@ -902,59 +902,59 @@ msgstr ""
 msgid "You have to request access to register a user or site."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:69 includes/class-b3-shortcodes.php:80
+#: includes/class-b3-shortcodes.php:70 includes/class-b3-shortcodes.php:81
 msgid "Congratulations, you've registered your new site."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:71
+#: includes/class-b3-shortcodes.php:72
 msgid "Visit it on"
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:75
+#: includes/class-b3-shortcodes.php:76
 #, php-format
 msgid "You can manage your new site %s."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:211
+#: includes/class-b3-shortcodes.php:216
 #, php-format
 msgid "You have successfully registered to %s. We have emailed you an activation link."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:242 includes/class-b3-shortcodes.php:290
+#: includes/class-b3-shortcodes.php:247 includes/class-b3-shortcodes.php:295
 msgid "Get magic link"
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:249
+#: includes/class-b3-shortcodes.php:254
 msgid "Use password"
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:264 includes/defaults.php:192
+#: includes/class-b3-shortcodes.php:269 includes/defaults.php:192
 msgid "Reset password"
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:303 includes/defaults.php:96
+#: includes/class-b3-shortcodes.php:308 includes/defaults.php:96
 #: includes/defaults.php:153 includes/defaults.php:216
 msgid "Set password"
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:332
+#: includes/class-b3-shortcodes.php:337
 msgid "This is not a valid password reset link."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:334
+#: includes/class-b3-shortcodes.php:339
 msgid "Please click the provided link in your email."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:337
+#: includes/class-b3-shortcodes.php:342
 #, php-format
 msgid "If you haven't received any email, please %s."
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:337
+#: includes/class-b3-shortcodes.php:342
 msgid "click here"
 msgstr ""
 
-#: includes/class-b3-shortcodes.php:349 templates/account/save.php:7
+#: includes/class-b3-shortcodes.php:354 templates/account/save.php:7
 msgid "Update profile"
 msgstr ""
 
@@ -962,12 +962,12 @@ msgstr ""
 msgid "Custom user widget"
 msgstr ""
 
-#: includes/class-b3-sidebar-widget.php:87 includes/defaults.php:590
+#: includes/class-b3-sidebar-widget.php:87 includes/defaults.php:589
 #: includes/do-stuff.php:18
 msgid "Account"
 msgstr ""
 
-#: includes/class-b3-sidebar-widget.php:104 includes/defaults.php:575
+#: includes/class-b3-sidebar-widget.php:104 includes/defaults.php:574
 #: includes/do-stuff.php:33
 msgid "Log Out"
 msgstr ""
@@ -1300,74 +1300,74 @@ msgstr ""
 msgid "If this was a mistake, or you didn't ask for a 'one time login link', just ignore this email and nothing will happen."
 msgstr ""
 
-#: includes/defaults.php:451
+#: includes/defaults.php:450
 msgid "Register For This Site"
 msgstr ""
 
-#: includes/defaults.php:460
+#: includes/defaults.php:459
 #, php-format
 msgid "You must first %s, and then you can create a new site."
 msgstr ""
 
-#: includes/defaults.php:460
+#: includes/defaults.php:459
 msgid "log in"
 msgstr ""
 
-#: includes/defaults.php:465
+#: includes/defaults.php:464
 msgid "Please enter your email address. You will receive an email with a link to (re)set your password."
 msgstr ""
 
-#: includes/defaults.php:467
+#: includes/defaults.php:466
 msgid "Please enter your username or email address. You will receive an email with a link to (re)set your password."
 msgstr ""
 
-#: includes/defaults.php:472
+#: includes/defaults.php:471
 msgid "You have to request access for this website."
 msgstr ""
 
-#: includes/defaults.php:476
+#: includes/defaults.php:475
 msgid "Please enter your email address. If your email address exists in our database, you will receive an email with a link to login immediately."
 msgstr ""
 
-#: includes/defaults.php:480
+#: includes/defaults.php:479
 msgid "Accept terms"
 msgstr ""
 
-#: includes/defaults.php:491 includes/defaults.php:510
+#: includes/defaults.php:490 includes/defaults.php:509
 #, php-format
 msgid "Accept %s"
 msgstr ""
 
-#: includes/defaults.php:491
+#: includes/defaults.php:490
 msgid "terms"
 msgstr ""
 
-#: includes/defaults.php:499
+#: includes/defaults.php:498
 msgid "Accept privacy settings"
 msgstr ""
 
-#: includes/defaults.php:510
+#: includes/defaults.php:509
 msgid "privacy settings"
 msgstr ""
 
-#: includes/defaults.php:519
+#: includes/defaults.php:518
 msgid "Greetings"
 msgstr ""
 
-#: includes/defaults.php:522
+#: includes/defaults.php:521
 #, php-format
 msgid "The %s crew"
 msgstr ""
 
-#: includes/defaults.php:580
+#: includes/defaults.php:579
 msgid "Lost Password"
 msgstr ""
 
-#: includes/defaults.php:585 includes/do-stuff.php:43
+#: includes/defaults.php:584 includes/do-stuff.php:43
 msgid "Reset Password"
 msgstr ""
 
-#: includes/defaults.php:598
+#: includes/defaults.php:597
 msgid "Approval page"
 msgstr ""
 
@@ -1423,7 +1423,7 @@ msgstr ""
 #: includes/emails/request-access-user.php:45
 #: includes/emails/welcome-email-user.php:45
 #: includes/emails/welcome-user-manual.php:53
-#: includes/emails/welcome-user.php:45 includes/functions.php:284
+#: includes/emails/welcome-user.php:45 includes/functions.php:286
 msgid "Save settings"
 msgstr ""
 
@@ -1496,67 +1496,67 @@ msgid ""
 "This email has been sent to ###EMAIL###."
 msgstr ""
 
-#: includes/filters-wp.php:131 includes/filters-wp.php:139
+#: includes/filters-wp.php:109 includes/filters-wp.php:117
 msgid "Activate"
 msgstr ""
 
-#: includes/filters-wp.php:138
+#: includes/filters-wp.php:116
 msgid "Resend activation"
 msgstr ""
 
-#: includes/filters-wp.php:175
+#: includes/filters-wp.php:153
 msgid "We're sorry, that domain is blocked from registering."
 msgstr ""
 
-#: includes/filters-wp.php:238
+#: includes/filters-wp.php:216
 msgid "You don't need a password anymore, you can login with a 'magic link'."
 msgstr ""
 
-#: includes/form-handling.php:7 includes/form-handling.php:157
-#: includes/form-handling.php:454 includes/form-handling.php:482
-#: includes/form-handling.php:562 includes/form-handling.php:599
-#: includes/form-handling.php:634 includes/form-handling.php:699
+#: includes/form-handling.php:7 includes/form-handling.php:165
+#: includes/form-handling.php:462 includes/form-handling.php:490
+#: includes/form-handling.php:570 includes/form-handling.php:607
+#: includes/form-handling.php:642 includes/form-handling.php:707
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: includes/form-handling.php:148
+#: includes/form-handling.php:156
 msgid "Registration settings saved"
 msgstr ""
 
-#: includes/form-handling.php:200
+#: includes/form-handling.php:208
 msgid "That is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:334
+#: includes/form-handling.php:342
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:445
+#: includes/form-handling.php:453
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:473
+#: includes/form-handling.php:481
 msgid "Template settings saved"
 msgstr ""
 
-#: includes/form-handling.php:553
+#: includes/form-handling.php:561
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:589
+#: includes/form-handling.php:597
 msgid "reCaptcha settings saved"
 msgstr ""
 
-#: includes/form-handling.php:625
+#: includes/form-handling.php:633
 msgid "Pages settings saved"
 msgstr ""
 
-#: includes/form-handling.php:678
+#: includes/form-handling.php:686
 msgid "You have successfully resetted all settings. Remember to set your pages again, before you log out !"
 msgstr ""
 
-#: includes/form-handling.php:772
+#: includes/form-handling.php:780
 msgid "You do not have permission to edit this user."
 msgstr ""
 
@@ -1564,47 +1564,47 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: includes/functions.php:20
+#: includes/functions.php:19
 msgid "Global email settings"
 msgstr ""
 
-#: includes/functions.php:26
+#: includes/functions.php:25
 msgid "Request access email (user)"
 msgstr ""
 
-#: includes/functions.php:30
+#: includes/functions.php:29
 msgid "Request access email (admin)"
 msgstr ""
 
-#: includes/functions.php:34
+#: includes/functions.php:33
 msgid "Account approved email (user)"
 msgstr ""
 
-#: includes/functions.php:38
+#: includes/functions.php:37
 msgid "Account rejected email (user)"
 msgstr ""
 
-#: includes/functions.php:55
+#: includes/functions.php:54
 msgid "Welcome email (user)"
 msgstr ""
 
-#: includes/functions.php:61
+#: includes/functions.php:60
 msgid "Welcome email (user) - added by admin"
 msgstr ""
 
-#: includes/functions.php:69
+#: includes/functions.php:68
 msgid "Confirm email (user only)"
 msgstr ""
 
-#: includes/functions.php:73
+#: includes/functions.php:72
 msgid "User activated (user only)"
 msgstr ""
 
-#: includes/functions.php:78
+#: includes/functions.php:77
 msgid "Confirm email (user + site)"
 msgstr ""
 
-#: includes/functions.php:82
+#: includes/functions.php:81
 msgid "User activated (user + site)"
 msgstr ""
 
@@ -1612,109 +1612,109 @@ msgstr ""
 msgid "Lost password email"
 msgstr ""
 
-#: includes/functions.php:106
+#: includes/functions.php:108
 msgid "Magic link email"
 msgstr ""
 
-#: includes/functions.php:111
+#: includes/functions.php:113
 msgid "Logo"
 msgstr ""
 
-#: includes/functions.php:123
+#: includes/functions.php:125
 msgid "Closed (for everyone)"
 msgstr ""
 
-#: includes/functions.php:131
+#: includes/functions.php:133
 msgid "Email activation (user needs to confirm email)"
 msgstr ""
 
-#: includes/functions.php:135
+#: includes/functions.php:137
 msgid "Open (user is instantly active)"
 msgstr ""
 
-#: includes/functions.php:144
+#: includes/functions.php:146
 msgid "Visitor may register user"
 msgstr ""
 
-#: includes/functions.php:148
+#: includes/functions.php:150
 msgid "Logged in user may register a site (no public new user registration)"
 msgstr ""
 
-#: includes/functions.php:152
+#: includes/functions.php:154
 msgid "Visitor may register user and/or site"
 msgstr ""
 
-#: includes/functions.php:156
+#: includes/functions.php:158
 msgid "Visitor may register user + site (must register site)"
 msgstr ""
 
-#: includes/functions.php:835
+#: includes/functions.php:837
 msgid "Preview"
 msgstr ""
 
-#: includes/functions.php:1045
+#: includes/functions.php:1047
 msgid "Signup ID"
 msgstr ""
 
-#: includes/functions.php:1045
+#: includes/functions.php:1047
 msgid "User ID"
 msgstr ""
 
-#: includes/functions.php:1052
+#: includes/functions.php:1054
 msgid "First name"
 msgstr ""
 
-#: includes/functions.php:1053
+#: includes/functions.php:1055
 msgid "Last name"
 msgstr ""
 
-#: includes/functions.php:1056
+#: includes/functions.php:1058
 msgid "Email"
 msgstr ""
 
-#: includes/functions.php:1059
+#: includes/functions.php:1061
 msgid "Domain"
 msgstr ""
 
-#: includes/functions.php:1060
+#: includes/functions.php:1062
 msgid "Site name"
 msgstr ""
 
-#: includes/functions.php:1062
+#: includes/functions.php:1064
 msgid "Actions"
 msgstr ""
 
-#: includes/functions.php:1099
+#: includes/functions.php:1101
 msgid "Reject"
 msgstr ""
 
-#: includes/functions.php:1132
+#: includes/functions.php:1134
 msgid "English"
 msgstr ""
 
-#: includes/functions.php:1233
+#: includes/functions.php:1236
 #, php-format
 msgid "No email message found for '%s'"
 msgstr ""
 
-#: includes/functions.php:1234
+#: includes/functions.php:1238
 #, php-format
 msgid "No email subject found for '%s'"
 msgstr ""
 
-#: includes/redirects.php:244
+#: includes/redirects.php:246
 msgid "A key value mismatch has been detected. Please follow the link provided in your activation email."
 msgstr ""
 
-#: includes/redirects.php:244
+#: includes/redirects.php:246
 msgid "An error occurred during the activation"
 msgstr ""
 
-#: includes/redirects.php:292 includes/redirects.php:296
+#: includes/redirects.php:295 includes/redirects.php:299
 msgid "Invalid key"
 msgstr ""
 
-#: includes/redirects.php:311
+#: includes/redirects.php:314
 msgid "Invalid user"
 msgstr ""
 
