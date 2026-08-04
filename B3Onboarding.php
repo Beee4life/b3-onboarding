@@ -153,7 +153,7 @@
                 }
 
                 // @TODO: check if jquery is loaded
-                if ( false != get_option( 'b3_use_popup', false ) ) {
+                if ( get_option( 'b3_activate_login_popup' ) ) {
                     wp_enqueue_script(
                         'jquery-modal',
                         plugins_url( 'assets/js/jquery.modal.min.js', __FILE__ ),

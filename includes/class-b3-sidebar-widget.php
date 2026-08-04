@@ -23,7 +23,7 @@
             $show_widget        = false;
             $show_register_link = false;
             $show_settings      = false;
-            $use_popup          = get_option( 'b3_use_popup' );
+            $use_popup          = get_option( 'b3_activate_login_popup' );
             $is_user_logged_in  = is_user_logged_in();
 
             if ( $show_account ) {

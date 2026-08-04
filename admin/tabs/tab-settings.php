@@ -11,7 +11,7 @@
         $debug_info                 = $debug_info_option || $debug_info_filter ? '1' : false;
         $disable_action_links       = apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links', false ) );
         $preserve_settings          = get_option( 'b3_preserve_settings' );
-        $use_popup                  = get_option( 'b3_use_popup', false );
+        $use_popup                  = get_option( 'b3_activate_login_popup' );
 
         ob_start();
         echo sprintf( '<h2>%s</h2>', esc_html__( 'Settings', 'b3-onboarding' ) );
@@ -29,7 +29,7 @@
                         <?php if ( apply_filters( 'b3_disable_action_links', false ) ) { ?>
                             <?php esc_html_e( 'Setting is activated by filter.', 'b3-onboarding' ); ?>
                         <?php } else { ?>
-                            <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked($disable_action_links); ?>/>
+                            <input type="checkbox" id="b3_disable_action_links" name="b3_disable_action_links" value="1" <?php checked( $disable_action_links ); ?>/>
                             <?php esc_html_e( 'Hide the action links on forms.', 'b3-onboarding' ); ?>
                         <?php } ?>
                     </div>
@@ -37,10 +37,10 @@
 
                 <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
-                        <label for="b3_use_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
+                        <label for="b3_activate_login_popup"><?php esc_html_e( 'Use popup', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_use_popup" name="b3_use_popup" value="1" <?php checked($use_popup); ?>/>
+                        <input type="checkbox" id="b3_activate_login_popup" name="b3_activate_login_popup" value="1" <?php checked( $use_popup ); ?>/>
                         <?php esc_html_e( 'Show the login form in a popup (only available for the login link in the B3 widget).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
@@ -50,7 +50,7 @@
                         <label for="b3_activate_filter_validation"><?php esc_html_e( 'Activate filter validation', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked($activate_filter_validation); ?>/>
+                        <input type="checkbox" id="b3_activate_filter_validation" name="b3_activate_filter_validation" value="1" <?php checked( $activate_filter_validation ); ?>/>
                         <?php esc_html_e( 'Activate the validation of all custom filters.', 'b3-onboarding' ); ?>
                         <?php $hide_validation_note = $activate_filter_validation ? false : ' hidden'; ?>
                         <div class="b3_settings-input-description b3_settings-input-description--validation<?php echo esc_attr( $hide_validation_note ); ?>">
