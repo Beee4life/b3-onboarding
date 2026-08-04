@@ -72,13 +72,11 @@
                         <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
                         |
                         <?php
-                            $download_url = add_query_arg(
-                                [
-                                    'action' => 'b3_download',
-                                    'file'   => $field[ 'file_name' ],
-                                ],
-                                admin_url( 'admin-post.php' )
-                            );
+                            $query_args = [
+                                'action' => 'b3_download',
+                                'file'   => $field[ 'file_name' ],
+                            ];
+                            $download_url = add_query_arg( $query_args, admin_url( 'admin-post.php' ) );
                             echo sprintf(
                                 '<a href="%s">%s</a> %s',
                                 esc_url( $download_url ),
