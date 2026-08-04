@@ -144,7 +144,7 @@
                         ];
                     }
 
-                    // @TODO: check if can eb replaced with attributes['errors']
+                    // @TODO: check if can be replaced with attributes['errors']
                     B3Onboarding::b3_show_admin_notices();
 
                     $attributes = apply_filters( 'b3_attributes', $attributes );
@@ -182,11 +182,11 @@
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 183');
+                            error_log('class-b3-shortcodes.php line 185');
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 188');
+                                error_log('class-b3-shortcodes.php line 189');
                             } else {
                                 $error_codes = explode( ',', 'enter_code' );
                             }

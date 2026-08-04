@@ -1275,7 +1275,7 @@
                         }
                     }
 
-                    if ( 'none' == get_option( 'b3_registration_type' ) && false != get_option( 'b3_register_page_id' ) && ! $no_registration_page_shown ) {
+                    if ( 'none' == get_option( 'b3_registration_type' ) && ! get_option( 'b3_register_page_id' ) && ! $no_registration_page_shown ) {
                         /* translators: here */
                         $no_registration_page       = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $no_registration_page_shown = true;

@@ -607,40 +607,36 @@
 
     // Get the message above registration form
     function b3_get_message_above_registration() {
-        $message = get_option( 'b3_register_message' );
-
-        if ( ! $message ) {
-            $message = b3_default_message_above_registration();
-        }
+        $message = b3_default_message_above_registration();
 
         return apply_filters( 'b3_message_above_registration', $message );
     }
 
     // Get the message above login form
     function b3_get_message_above_login() {
-        return apply_filters( 'b3_message_above_login', get_option( 'b3_message_above_login' ) );
+        return apply_filters( 'b3_message_above_login', '' );
     }
 
     // Get the message above lost password form
     function b3_get_message_above_lost_password() {
-        $message = get_option( 'b3_message_above_lost_password' );
-
-        if ( ! $message ) {
-            $message = b3_default_message_above_lost_password();
-        }
+        $message = b3_default_message_above_lost_password();
 
         return apply_filters( 'b3_message_above_lost_password', $message );
     }
 
     // Get the message above request access form
     function b3_get_message_above_request_access() {
-        $message = get_option( 'b3_message_above_request_access' );
-
-        if ( ! $message ) {
-            $message = b3_default_message_above_request_access();
-        }
+        $message = b3_default_message_above_request_access();
 
         return apply_filters( 'b3_message_above_request_access', $message );
+    }
+
+    // Get the message above magic link form
+    function b3_get_message_above_magiclink_form() {
+        $default_message = b3_default_message_above_magic_link();
+        $message         = apply_filters( 'b3_message_above_magic_link', $default_message );
+
+        return $message;
     }
 
     // Disallowed usernames
@@ -1129,14 +1125,6 @@
         }
 
         return $user_ip;
-    }
-
-    // Get message above 'Get pass' form (magic link)
-    function b3_get_message_above_magiclink_form() {
-        $default_message = esc_html__( "Please enter your email address. If your email address exists in our database, you will receive an email with a link to login immediately.", 'b3-onboarding' );
-        $message         = apply_filters( 'b3_message_above_magiclink', $default_message );
-
-        return $message;
     }
 
     // Prepares available languages for register form

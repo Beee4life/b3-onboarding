@@ -4,7 +4,7 @@
     }
 
     $show_password_fields = apply_filters( 'show_password_fields', true, $current_user );
-    if ( $show_password_fields ) {
+    if ( true === $show_password_fields ) {
         ?>
         <div class="b3_form-element b3_form-element--password">
             <div class="password-input user-pass1-wrap">
@@ -51,6 +51,10 @@
                 <input type="checkbox" id="pw_weak" name="pw_weak" class="pw-checkbox" />
                 <?php esc_html_e( 'Confirm use of weak password', 'b3-onboarding' ); ?>
             </div>
+        </div>
+    <?php } elseif ( is_string( $show_password_fields ) ) { ?>
+        <div class="b3_form-element b3_form-element--password">
+            <?php echo $show_password_fields; ?>
         </div>
     <?php } ?>
 

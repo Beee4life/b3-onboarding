@@ -231,10 +231,13 @@
     }
     add_filter( 'validate_username', 'b3_check_username', 10, 2 );
 
-    // Hide password fields (if magic link is active)
+    // Hide password fields (if only magic link is active)
     function b3_show_password_fields( $show, $current_user ) {
         if ( get_option( 'b3_use_magic_link' ) ) {
-            $show = false;
+            if ( ! get_option( 'b3_use_magic_link_password' ) ) {
+                $message = esc_html__( "You don't need a password anymore, you can login with a 'magic link'.", 'b3-onboarding' );
+                $show    = sprintf( '<div class="b3_message">%s</div>', $message );
+            }
         }
 
         return $show;

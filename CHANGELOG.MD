@@ -2,6 +2,9 @@
 
 3.18.0
 * add option to send test email
+* added new filters
+  * b3_message_above_magic_link
+  * b3_show_first_last_account
 
 3.17.0
 * added option to choose magic link or password

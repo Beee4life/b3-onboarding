@@ -472,6 +472,10 @@
         return esc_html__( 'You have to request access for this website.', 'b3-onboarding' );
     }
 
+    function b3_default_message_above_magic_link() {
+        return esc_html__( "Please enter your email address. If your email address exists in our database, you will receive an email with a link to login immediately.", 'b3-onboarding' );
+    }
+
     function b3_default_terms_text() {
         $message    = esc_html__( 'Accept terms', 'b3-onboarding' );
         $terms_page = get_option( 'b3_terms_page_id' );
