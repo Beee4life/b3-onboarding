@@ -440,7 +440,6 @@
             $message    .= '<br>' . "\n";
             $message    .= b3_default_greetings();
 
-            // @TODO: add filter
             return $message;
         }
 
