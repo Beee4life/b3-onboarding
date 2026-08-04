@@ -81,7 +81,7 @@
             'b3_request_access_subject_admin'          => [ 'string' ],
             'b3_request_access_subject_user'           => [ 'string' ],
             'b3_show_email_widget'                     => [ 'bool' ],
-            'b3_show_first_last_account'               => [ 'bool' ],
+            'b3_show_first_last_name_account'          => [ 'bool' ],
             'b3_signup_for_site'                       => [ 'string' ],
             'b3_signup_for_user'                       => [ 'string' ],
             'b3_terms_text'                            => [ 'string' ],

@@ -4,7 +4,7 @@
     }
 
     $required    = get_option( 'b3_first_last_required' ) ? ' required="required"' : false;
-    $show_fields = apply_filters( 'b3_show_first_last_account', true );
+    $show_fields = apply_filters( 'b3_show_first_last_name_account', true );
 
     if ( $show_fields ) {
 ?>

@@ -6,7 +6,7 @@
 * improved form messages
 * added new filters
   * b3_message_above_magic_link
-  * b3_show_first_last_account
+  * b3_show_first_last_name_account
 * changed meta keys to reflect their function better
   * b3_activate_login_popup
 
