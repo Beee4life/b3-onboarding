@@ -28,9 +28,7 @@
                         <label for="b3_link_color"><?php esc_html_e( 'Link color', 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <input name="b3_link_color" id="b3_link_color" type="color" value="<?php echo esc_attr( $link_color ); ?>">
-                    <?php if ( $filter_link_color ) { ?>
-                        <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                    <?php } ?>
+                    <?php if ( $filter_link_color ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                 <?php b3_get_close(); ?>
 
                 <?php // @TODO: add to all sites ?>
