@@ -175,8 +175,7 @@
                 do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
-            // @TODO: escape
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped - output set by plugin or admin
             echo $output;
         }
     }
