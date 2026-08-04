@@ -142,11 +142,7 @@
                         <div class="b3_settings-input b3_settings-input--text">
                             <?php // translators: link to function for 'default reserved usernames' ?>
                             <div class="b3_above_input"><?php echo sprintf( esc_html__( 'Some usernames are excluded already by default, see them %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', sprintf( '%s/function/b3_get_default_reserved_user_names/', esc_url( B3OB_PLUGIN_SITE ) ), esc_html__( 'here', 'b3-onboarding' ) ) ); ?></div>
-                            <?php if ( ! empty( $disallowed_usernames_filter ) && is_array( $disallowed_usernames_filter ) ) { ?>
-                                <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>" disabled />
-                            <?php } else { ?>
-                                <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>"/>
-                            <?php } ?>
+                            <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>"<?php if ( ! empty( $disallowed_usernames_filter ) && is_array( $disallowed_usernames_filter ) ) { ?> disabled<?php }?> />
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -172,11 +168,7 @@
 
                     <div class="b3_settings-input b3_settings-input--text">
                         <?php echo sprintf( '<div>%s</div>', esc_html__( 'Email addresses from these domains are not allowed to register.', 'b3-onboarding' )); ?>
-                        <?php if ( ! empty( $disallowed_domains_filter ) && is_array( $disallowed_domains_filter ) ) { ?>
-                            <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>" disabled />
-                        <?php } else { ?>
-                            <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>"/>
-                        <?php } ?>
+                        <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>"<?php if ( ! empty( $disallowed_domains_filter ) && is_array( $disallowed_domains_filter ) ) { ?> disabled<?php } ?> />
                     </div>
                 <?php b3_get_close(); ?>
             <?php } ?>

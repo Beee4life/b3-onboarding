@@ -41,12 +41,8 @@
                     <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
-                    <?php if ( $public_key_filter ) { ?>
-                        <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                        <?php echo ': ' . esc_html( $public_key_filter ); ?>
-                    <?php } else { ?>
-                        <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key_option ) { echo esc_attr( $public_key_option ); } ?>" placeholder="<?php echo esc_attr( $public_key_filter ); ?>" />
-                    <?php } ?>
+                    <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key_option ) { echo esc_attr( $public_key_option ); } ?>" placeholder="<?php echo esc_attr( $public_key_filter ); ?>"<?php if ( $public_key_filter ) { ?> disabled<?php } ?> />
+                    <?php if ( $public_key_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                 </div>
             <?php b3_get_close(); ?>
 
@@ -55,12 +51,8 @@
                     <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
-                    <?php if ( $secret_key_filter ) { ?>
-                        <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                        <?php echo ': ' . esc_html( $secret_key_filter ); ?>
-                    <?php } else { ?>
-                        <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key_option ) { echo esc_attr( $secret_key_option ); } ?>" placeholder="<?php echo esc_attr( $secret_key_filter ); ?>" />
-                    <?php } ?>
+                    <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key_option ) { echo esc_attr( $secret_key_option ); } ?>" placeholder="<?php echo esc_attr( $secret_key_filter ); ?>"<?php if ( $secret_key_filter ) { ?> disabled<?php } ?> />
+                    <?php if ( $secret_key_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                 </div>
             <?php b3_get_close(); ?>
 
