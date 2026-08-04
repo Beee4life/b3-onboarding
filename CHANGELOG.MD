@@ -3,7 +3,7 @@
 3.18.0
 * add option to send test email
 * re-activated login in popup option
-* improve form messages
+* improved form messages
 * added new filters
   * b3_message_above_magic_link
   * b3_show_first_last_account
