@@ -59,9 +59,10 @@
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
                     // @TODO: Improve/DRY this
                     if ( ! empty( $_GET[ 'site_id' ] ) ) {
-                        switch_to_blog( (int) $_GET[ 'site_id' ] );
+                        $site_id = (int) $_GET[ 'site_id' ];
+                        switch_to_blog( $site_id );
                         $home_url  = home_url( '/' );
-                        $site_info = get_site( (int) $_GET[ 'site_id' ] );
+                        $site_info = get_site( $site_id );
                         $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
                         restore_current_blog();
 
@@ -100,6 +101,7 @@
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'registration-error' ] ) ) );
                         $error_count = 1;
+
                         foreach ( $error_codes as $error_code ) {
                             if ( 1 === count( $error_codes ) ) {
                                 $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
@@ -126,9 +128,10 @@
                         }
 
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                        if ( 'access_requested' === $_REQUEST[ 'registered' ] ) {
+                        $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
+                        if ( 'access_requested' === $registered_var ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'access_requested' );
-                        } elseif ( 'dummy' === $_REQUEST[ 'registered' ] ) {
+                        } elseif ( 'dummy' === $registered_var ) {
                             // dummy is for demonstration setup
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'dummy' );
                         }
@@ -174,13 +177,15 @@
                 $attributes[ 'redirect' ]          = false;
 
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
-                    $attributes[ 'redirect' ] = wp_validate_redirect( sanitize_text_field( wp_unslash( $_REQUEST[ 'redirect_to' ] ) ), $attributes[ 'redirect' ] );
+                    $redirect_to              = sanitize_text_field( wp_unslash( $_REQUEST[ 'redirect_to' ] ) );
+                    $attributes[ 'redirect' ] = wp_validate_redirect( $redirect_to, $attributes[ 'redirect' ] );
                 }
 
                 // @TODO: create function for this
                 if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
-                        if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
+                        $login_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
+                        if ( 'enter_code' === $login_var ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                             error_log('class-b3-shortcodes.php line 185');
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
@@ -191,7 +196,7 @@
                                 $error_codes = explode( ',', 'enter_code' );
                             }
                         } else {
-                            $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) ) );
+                            $error_codes = explode( ',', $login_var );
                         }
                     } elseif ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'error' ] ) ) );

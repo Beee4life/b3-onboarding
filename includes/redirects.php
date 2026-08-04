@@ -231,10 +231,12 @@
      */
     function b3_do_user_activate() {
         if ( is_multisite() ) {
-            if ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
                 $redirect_url      = b3_get_login_url();
                 $valid_error_codes = [ 'already_active', 'blog_taken' ];
-                [ $activate_path ] = explode( '?', sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) );
+                // was [ $activate_path ] - @TODO: test in MS
+                $request_uri       = isset( $_SERVER[ 'REQUEST_URI' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) : '';
+                $activate_path     = explode( '?', $request_uri );
                 $activate_cookie   = 'wp-activate-' . COOKIEHASH;
                 $key               = '';
                 $result            = null;
@@ -283,27 +285,28 @@
                 }
             }
 
-        } elseif ( 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+        } elseif ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
             global $wpdb;
-            $errors = false;
-            $key    = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
+            $errors     = false;
+            $key        = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
+            $user_login = sanitize_user( wp_unslash( $_GET[ 'user_login' ] ) );
 
             if ( empty( $key ) || ! is_string( $key ) ) {
                 $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
             }
 
-            if ( empty( $_GET[ 'user_login' ] ) || ! is_string( $_GET[ 'user_login' ] ) ) {
+            if ( empty( $user_login ) || ! is_string( $user_login ) ) {
                 $errors = new WP_Error( 'invalid_key', esc_attr__( 'Invalid key', 'b3-onboarding' ) );
             }
 
             // Validate activation key
             $cache_group = 'b3ob';
-            $cache_key   = 'user_info_' . md5( $_GET[ 'user_login' ] );
+            $cache_key   = 'user_info_' . md5( $user_login );
             // @TODO: test
             $results     = wp_cache_get( $cache_key, $cache_group );
 
             if ( false === $results ) {
-                $user = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_activation_key = %s AND user_login = %s', $wpdb->users, $key, sanitize_user( wp_unslash( $_GET[ 'user_login' ] ) ) ) );
+                $user = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_activation_key = %s AND user_login = %s', $wpdb->users, $key, $user_login ) );
                 wp_cache_set( $cache_key, $user, $cache_group );
             }
 
@@ -317,7 +320,7 @@
             } else {
 
                 // remove user_activation_key
-                $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => sanitize_user( wp_unslash( $_GET[ 'user_login' ] ) ) ] );
+                $wpdb->update( $wpdb->users, [ 'user_activation_key' => '' ], [ 'user_login' => $user_login ] );
                 // @TODO: test
                 wp_cache_delete( $cache_key, $cache_group );
 

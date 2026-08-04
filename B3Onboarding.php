@@ -191,7 +191,7 @@
 
                 wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
 
-                $preview_var = isset( $_GET[ 'preview' ] ) ? sanitize_text_field( $_GET[ 'preview' ] ) : '';
+                $preview_var = isset( $_GET[ 'preview' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'preview' ] ) ) : '';
                 wp_localize_script( 'b3ob-admin', 'b3Onboarding', [
                     'ajax_url' => admin_url( 'admin-ajax.php' ),
                     'nonce'    => wp_create_nonce( 'b3_send_test_email_nonce' ),
@@ -461,7 +461,7 @@
 
             public function b3_add_recaptcha_js_to_footer() {
                 if ( get_option( 'b3_activate_recaptcha' ) && is_page( b3_get_register_url( true ) ) ) {
-                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [], null, true );
+                    wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js', [], $this->settings[ 'version' ], true );
                 }
             }
 
@@ -1294,11 +1294,12 @@
                 // manual actions
                 // @TODO: look into this, when is it used (after change from user list in admin ?)
                 if ( isset( $_GET[ 'update' ] ) ) {
-                    if ( in_array( $_GET[ 'update' ], [ 'activated', 'sendactivation' ] ) ) {
+                    $update_var = sanitize_text_field( wp_unslash( $_GET[ 'update' ] ) );
+                    if ( in_array( $update_var, [ 'activated', 'sendactivation' ] ) ) {
                         echo '<div id="message" class="updated"><p>';
-                        if ( 'activated' === $_GET[ 'update' ] ) {
+                        if ( 'activated' === $update_var ) {
                             esc_html_e( 'User activated.', 'b3-onboarding' );
-                        } elseif ( 'sendactivation' === $_GET[ 'update' ] ) {
+                        } elseif ( 'sendactivation' === $update_var ) {
                             esc_html_e( 'Activation mail resent.', 'b3-onboarding' );
                         }
                         echo '</p></div>';

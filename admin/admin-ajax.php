@@ -10,7 +10,7 @@
             wp_send_json_error( [ 'message' => __( 'Unauthorized user.', 'b3-onboarding' ) ] );
         }
 
-        $preview         = isset( $_POST[ 'preview' ] ) ? sanitize_text_field( $_POST[ 'preview' ] ) : '';
+        $preview         = isset( $_POST[ 'preview' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'preview' ] ) ) : '';
         $subject_message = b3_get_subject_message( $preview );
 
         if ( ! empty( $subject_message ) ) {

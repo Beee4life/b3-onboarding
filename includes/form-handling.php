@@ -113,7 +113,11 @@
                     }
 
                     if ( isset( $_POST[ 'b3_terms_text' ] ) && ! empty( $_POST[ 'b3_terms_text' ] ) ) {
-                        update_option( 'b3_terms_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_terms_text' ] ) ), false );
+                        update_option(
+                            'b3_terms_text',
+                            wp_kses_post( wp_unslash( $_POST[ 'b3_terms_text' ] ) ),
+                            false
+                        );
                     } else {
                         delete_option( 'b3_terms_text' );
                     }
@@ -134,7 +138,11 @@
                     }
 
                     if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
-                        update_option( 'b3_privacy_text', htmlspecialchars( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
+                        update_option(
+                            'b3_privacy_text',
+                            wp_kses_post( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ),
+                            false
+                        );
                     } else {
                         delete_option( 'b3_privacy_text' );
                     }

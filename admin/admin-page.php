@@ -14,10 +14,12 @@
         <div class="wrap b3 b3__admin">
             <?php
                 if ( ! empty( $_GET[ 'preview' ] ) ) {
+                    $preview    = sanitize_text_field( wp_unslash( $_GET[ 'preview' ] ) );
                     $page_title = esc_html__( 'Email preview', 'b3-onboarding' );
-                    if ( 'styling' === $_GET[ 'preview' ] ) {
+
+                    if ( 'styling' === $preview ) {
                         $page_title = esc_html__( 'Styling preview', 'b3-onboarding' );
-                    } elseif ( 'template' === $_GET[ 'preview' ] ) {
+                    } elseif ( 'template' === $preview ) {
                         $page_title = esc_html__( 'Template preview', 'b3-onboarding' );
                     }
 
