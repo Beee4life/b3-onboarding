@@ -645,10 +645,10 @@
                     do_action( 'b3_remove_welcome_page_meta' );
                 }
 
-                if ( isset( $_POST[ 'b3_use_popup' ] ) && 1 == (int) $_POST[ 'b3_use_popup' ] ) {
-                    update_option( 'b3_use_popup', 1, false );
+                if ( isset( $_POST[ 'b3_activate_login_popup' ] ) && 1 == (int) $_POST[ 'b3_activate_login_popup' ] ) {
+                    update_option( 'b3_activate_login_popup', 1, false );
                 } else {
-                    delete_option( 'b3_use_popup' );
+                    delete_option( 'b3_activate_login_popup' );
                 }
 
                 if ( isset( $_POST[ 'b3_activate_filter_validation' ] ) && 1 == (int) $_POST[ 'b3_activate_filter_validation' ] ) {

@@ -1,5 +1,15 @@
 ## CHANGELOG
 
+3.18.0
+* add option to send test email
+* re-activated login in popup option
+* improved form messages
+* added new filters
+  * b3_message_above_magic_link
+  * b3_show_first_last_name_account
+* changed meta keys to reflect their function better
+  * b3_activate_login_popup
+
 3.17.0
 * added option to choose magic link or password
 * changed tab 'Template' to 'Styling'
@@ -12,8 +22,8 @@
 
 3.16.0
 * added email replacement vars filter, so you can add previews for your own emails
-* change b3_get_user_approval_link() to b3_get_user_approval_url()
-* change meta keys to reflect their function better
+* changed b3_get_user_approval_link() to b3_get_user_approval_url()
+* changed meta keys to reflect their function better
   * b3_activate_debug_info
   * b3_activate_domain_restriction
   * b3_activate_front_end_approval

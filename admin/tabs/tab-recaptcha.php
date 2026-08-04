@@ -30,8 +30,8 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
-                        <input type="radio" name="b3_recaptcha_version" value="2" <?php checked($recaptcha_version, 2); ?> /> <?php esc_html_e( 'With challenges', 'b3-onboarding' ); ?> (v2)
-                        <input type="radio" name="b3_recaptcha_version" value="3" <?php checked($recaptcha_version, 3); ?> /> <?php esc_html_e( 'Silent', 'b3-onboarding' ); ?> (v3)
+                        <input type="radio" name="b3_recaptcha_version" value="2" <?php checked( $recaptcha_version, 2 ); ?> /> <?php esc_html_e( 'With challenges', 'b3-onboarding' ); ?> (v2)
+                        <input type="radio" name="b3_recaptcha_version" value="3" <?php checked( $recaptcha_version, 3 ); ?> /> <?php esc_html_e( 'Silent', 'b3-onboarding' ); ?> (v3)
                     </label>
                 </div>
             <?php b3_get_close(); ?>
@@ -41,12 +41,8 @@
                     <label for="b3_recaptcha_public"><?php esc_html_e( 'Public key', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
-                    <?php if ( $public_key_filter ) { ?>
-                        <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                        <?php echo ': ' . $public_key_filter; ?>
-                    <?php } else { ?>
-                        <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key_option ) { echo esc_attr( $public_key_option ); } ?>" placeholder="<?php echo $public_key_filter; ?>" />
-                    <?php } ?>
+                    <input type="text" id="b3_recaptcha_public" name="b3_recaptcha_public" class="b3_recaptcha_input" value="<?php if ( $public_key_option ) { echo esc_attr( $public_key_option ); } ?>" placeholder="<?php echo esc_attr( $public_key_filter ); ?>"<?php if ( $public_key_filter ) { ?> disabled<?php } ?> />
+                    <?php if ( $public_key_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                 </div>
             <?php b3_get_close(); ?>
 
@@ -55,12 +51,8 @@
                     <label for="b3_recaptcha_secret"><?php esc_html_e( 'Secret key', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--text">
-                    <?php if ( $secret_key_filter ) { ?>
-                        <?php esc_html_e( 'Set by filter', 'b3-onboarding' ); ?>
-                        <?php echo ': ' . $secret_key_filter; ?>
-                    <?php } else { ?>
-                        <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key_option ) { echo esc_attr( $secret_key_option ); } ?>" placeholder="<?php echo $secret_key_filter; ?>" />
-                    <?php } ?>
+                    <input type="text" id="b3_recaptcha_secret" name="b3_recaptcha_secret" class="b3_recaptcha_input" value="<?php if ( $secret_key_option ) { echo esc_attr( $secret_key_option ); } ?>" placeholder="<?php echo esc_attr( $secret_key_filter ); ?>"<?php if ( $secret_key_filter ) { ?> disabled<?php } ?> />
+                    <?php if ( $secret_key_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                 </div>
             <?php b3_get_close(); ?>
 
@@ -73,8 +65,8 @@
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
-                        <input type="radio" name="b3_recaptcha_theme" value="light" <?php checked($recaptcha_theme, 'light'); ?> /> light
-                        <input type="radio" name="b3_recaptcha_theme" value="dark" <?php checked($recaptcha_theme, 'dark'); ?> /> dark
+                        <input type="radio" name="b3_recaptcha_theme" value="light" <?php checked( $recaptcha_theme, 'light' ); ?> /> light
+                        <input type="radio" name="b3_recaptcha_theme" value="dark" <?php checked( $recaptcha_theme, 'dark' ); ?> /> dark
                     </label>
                 </div>
             <?php b3_get_close(); ?>

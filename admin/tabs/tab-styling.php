@@ -53,7 +53,8 @@
 
                         <?php if ( 'email_styling' == $field[ 'id' ] ) { ?>
                             <p>
-                                <?php echo sprintf( esc_html__( "We don't recommend overriding the css here, but rather add css at the end of the file, after line %d by using the filter %s.", 'b3-onboarding' ), 106, sprintf( '<a href="%s" target="_blank">b3_email_styling</a>', esc_url( 'https://b3onboarding.berryplasman.com/filter/b3_email_styling/' )) ); ?>
+                                <?php // translators: filter name, line number, link to filter info ?>
+                                <?php echo sprintf( esc_html__( "We don't recommend overriding the css here, but rather add css at the end of the file, after line %1\$d by using the filter %2\$s.", 'b3-onboarding' ), 106, sprintf( '<a href="%s" target="_blank">b3_email_styling</a>', esc_url( 'https://b3onboarding.berryplasman.com/filter/b3_email_styling/' )) ); ?>
                             </p>
                         <?php } ?>
                         <?php if ( 'email_template' == $field[ 'id' ] ) { ?>
@@ -61,6 +62,7 @@
                                 <?php esc_html_e( "We don't recommend overriding the template, unless you know what you're doing.", 'b3-onboarding' ); ?>
                                 <?php esc_html_e( "The default template is sufficient in most cases.", 'b3-onboarding' ); ?>
                                 <br>
+                                <?php // translators: filter name + link to filter info ?>
                                 <?php echo sprintf( esc_html__( "It's easer to override the styling to achieve your wishes, but if you really want to change the template we recommend using the filter %s.", 'b3-onboarding' ), sprintf( '<a href="%s" target="_blank">b3_email_template</a>', esc_url( 'https://b3onboarding.berryplasman.com/filter/b3_email_template/' ) ) ); ?>
                             </p>
                        <?php } ?>

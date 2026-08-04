@@ -167,7 +167,7 @@
                 <?php
                 }
             } else {
-                if ( get_option( 'b3_register_email_only' ) || get_option( 'b3_needs_admin_approval' ) || get_option( 'b3_use_magic_link' ) ) { ?>
+                if ( get_option( 'b3_register_email_only' ) ) { ?>
                     <input type="hidden" name="user_login" value="<?php echo esc_attr( b3_generate_user_login() ); ?>">
                 <?php } else {
                     do_action( 'b3_render_form_element', 'register/user-login' );
@@ -175,7 +175,7 @@
                 do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
-            // @TODO: escape
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped - output set by plugin or admin
             echo $output;
         }
     }
@@ -367,44 +367,53 @@
                     $messages[] = $message;
                 }
             } else {
+                // @TODO: set this in each shortcode already
+                // This should only be rendering
                 if ( isset( $attributes[ 'template' ] ) ) {
                     $attributes[ 'template' ] = 'magic-password' == $attributes[ 'template' ] ? 'magiclink' : $attributes[ 'template' ];
 
                     if ( 'login' === $attributes[ 'template' ] ) {
-                        $login_form_message = apply_filters( 'b3_message_above_login', false );
-                        if ( false != $login_form_message ) {
+                        $login_form_message = b3_get_message_above_login();
+                        if ( is_string( $login_form_message ) && ! empty( $login_form_message ) ) {
                             $messages[] = $login_form_message;
                         }
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( get_option( 'b3_needs_admin_approval' ) ) {
                             $request_access_message = b3_get_message_above_request_access();
-                            if ( false != $request_access_message ) {
+                            if ( is_string( $request_access_message ) && ! empty( $request_access_message ) ) {
                                 $messages[] = $request_access_message;
                             }
                         } elseif ( 'email_activation' === $registration_type ) {
-                            $registration_message = apply_filters( 'b3_message_above_registration', false );
-                            if ( false != $registration_message ) {
+                            $registration_message = b3_get_message_above_registration();
+                            if ( is_string( $registration_message ) && ! empty( $registration_message ) ) {
                                 $messages[] = $registration_message;
                             }
                         } elseif ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
-                            $message              = ( 'closed' === $registration_type ) ? b3_get_registration_closed_message() : false;
-                            $registration_message = apply_filters( 'b3_message_above_registration', $message );
-                            if ( false != $registration_message ) {
+                            $registration_message = 'closed' === $registration_type ? b3_get_registration_closed_message() : b3_get_message_above_registration();
+
+                            if ( is_string( $registration_message ) && ! empty( $registration_message ) ) {
                                 $messages[] = $registration_message;
                             }
                         }
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
                         if ( get_option( 'b3_use_magic_link' ) ) {
-                            $messages[] = esc_html( b3_get_message_above_magiclink_form() );
+                            $message_above = b3_get_message_above_magiclink_form();
                         } else {
-                            $messages[] = esc_html( b3_get_message_above_lost_password() );
+                            $message_above = b3_get_message_above_lost_password();
+                        }
+                        if ( is_string( $message_above ) && ! empty( $message_above ) ) {
+                            $messages[] = esc_html( $message_above );
                         }
 
                     } elseif ( 'resetpass' === $attributes[ 'template' ] ) {
                         $messages[] = esc_html__( 'Enter your new password.', 'b3-onboarding' );
 
                     } elseif ( 'magiclink' === $attributes[ 'template' ] ) {
-                        $messages[] = esc_html( b3_get_message_above_magiclink_form() );
+                        $message_above = b3_get_message_above_magiclink_form();
+
+                        if ( is_string($message_above ) && ! empty( $message_above ) ) {
+                            $messages[] = esc_html( $message_above );
+                        }
                     }
                 }
             }
@@ -612,7 +621,6 @@
     }
     add_action( 'b3_redirect', 'b3_redirect', 10, 2 );
 
-
     /**
      * Reset to default option
      *
@@ -673,7 +681,7 @@
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
 
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', $label, wp_kses_post( $links ) );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', esc_html( $label ), wp_kses_post( $links ) );
                 }
             }
         }

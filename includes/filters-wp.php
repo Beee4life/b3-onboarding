@@ -49,28 +49,6 @@
     }
     add_filter( 'page_link', 'b3_logout_link', 10, 2 );
 
-    // Filters message on default register form
-    // @TODO: look into this
-    function wp_login_message( $message ) {
-        if ( isset( $_GET[ 'action' ] ) ) {
-            $action = sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) );
-            if ( 'register' === $action ) {
-                $message = b3_get_message_above_registration();
-            } elseif ( 'lostpassword' === $action ) {
-                $message = b3_get_message_above_lost_password();
-            }
-        } else {
-            $message = b3_get_message_above_login();
-        }
-
-        if ( ! empty( $message ) ) {
-            $message = '<p class="message">' . $message . '</p>';
-        }
-
-        return $message;
-    }
-    add_filter( 'login_message', 'wp_login_message' );
-
     // Check if user may log in, if he/she has a custom role.
     function b3_login_errors( $user, $password ) {
         if ( $user ) {
@@ -231,10 +209,13 @@
     }
     add_filter( 'validate_username', 'b3_check_username', 10, 2 );
 
-    // Hide password fields (if magic link is active)
+    // Hide password fields (if only magic link is active)
     function b3_show_password_fields( $show, $current_user ) {
         if ( get_option( 'b3_use_magic_link' ) ) {
-            $show = false;
+            if ( ! get_option( 'b3_use_magic_link_password' ) ) {
+                $message = esc_html__( "You don't need a password anymore, you can login with a 'magic link'.", 'b3-onboarding' );
+                $show    = sprintf( '<div class="b3_message">%s</div>', $message );
+            }
         }
 
         return $show;

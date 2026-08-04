@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.17.0
+    Version:            3.18.0
     Requires at least:  6.2
     Tested up to:       7.0
     Requires PHP:       7.4
@@ -33,7 +33,7 @@
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
                     'registration_type' => get_option( 'b3_registration_type', 'closed' ),
-                    'version'           => '3.17.0',
+                    'version'           => '3.18.0',
                 ];
 
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {
@@ -96,6 +96,10 @@
                 require_once $plugin_dir_path . 'includes/emails.php';
                 require_once $plugin_dir_path . 'includes/redirects.php';
                 require_once $plugin_dir_path . 'includes/form-handling.php';
+
+                if ( is_admin() ) {
+                    require_once $plugin_dir_path . 'admin/admin-ajax.php';
+                }
             }
 
             public function b3_plugin_activation() {
@@ -149,7 +153,7 @@
                 }
 
                 // @TODO: check if jquery is loaded
-                if ( false != get_option( 'b3_use_popup', false ) ) {
+                if ( get_option( 'b3_activate_login_popup' ) ) {
                     wp_enqueue_script(
                         'jquery-modal',
                         plugins_url( 'assets/js/jquery.modal.min.js', __FILE__ ),
@@ -172,6 +176,7 @@
                     'login'           => esc_attr__( 'Login', 'b3-onboarding' ),
                     'login_nonce'     => wp_create_nonce( 'b3_login' ),
                     'magiclink_nonce' => wp_create_nonce( 'b3_magiclink' ),
+                    'login_message'   => apply_filters( 'b3_message_above_login', false ),
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
                     'use_both'        => get_option( 'b3_use_magic_link_password' ),
                 ] );
@@ -185,6 +190,18 @@
                 }
 
                 wp_enqueue_script( 'b3ob-admin', plugins_url( 'assets/js/admin.js', __FILE__ ), [ 'jquery' ], $this->settings[ 'version' ], false );
+
+                $preview_var = isset( $_GET[ 'preview' ] ) ? sanitize_text_field( $_GET[ 'preview' ] ) : '';
+                wp_localize_script( 'b3ob-admin', 'b3Onboarding', [
+                    'ajax_url' => admin_url( 'admin-ajax.php' ),
+                    'nonce'    => wp_create_nonce( 'b3_send_test_email_nonce' ),
+                    'preview'  => $preview_var,
+                    'text'     => [
+                        'sending' => __( 'Sending...', 'b3-onboarding' ),
+                        'success' => __( 'Email sent', 'b3-onboarding' ),
+                        'error'   => __( 'Failed to send email. Please try again.', 'b3-onboarding' ),
+                    ],
+                ] );
 
                 // https://wpreset.com/add-codemirror-editor-plugin-theme/
                 $b3cm_settings[ 'codeEditor' ] = wp_enqueue_code_editor( [
@@ -1259,11 +1276,11 @@
                         }
                     }
 
-                    if ( 'none' == get_option( 'b3_registration_type' ) && false != get_option( 'b3_register_page_id' ) && ! $no_registration_page_shown ) {
+                    if ( 'none' == get_option( 'b3_registration_type' ) && ! get_option( 'b3_register_page_id' ) && ! $no_registration_page_shown ) {
                         /* translators: here */
                         $no_registration_page       = sprintf( esc_html__( "You haven't set a page yet for registration. Set it %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=pages' ), esc_html__( 'here', 'b3-onboarding' ) ) );
                         $no_registration_page_shown = true;
-                        echo sprintf( '<div class="error"><p>%s</p></div>', $no_registration_page );
+                        echo sprintf( '<div class="error"><p>%s</p></div>', wp_kses_post( $no_registration_page ) );
                     }
                 }
 

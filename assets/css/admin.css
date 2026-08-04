@@ -107,6 +107,18 @@
   padding:    0.5rem;
 }
 
+.b3_preview .button-primary {
+  background: #e0144b;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background:   #e0144b;
+    border-color: #e0144b;
+    box-shadow:   none;
+  }
+}
+
 .b3_restrict-roles {
   display:   flex;
   flex-flow: row wrap;

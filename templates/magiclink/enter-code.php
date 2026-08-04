@@ -1,5 +1,5 @@
 <?php
-    // @TODO: do I need this ?
+    // @TODO: add back option to input code
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }

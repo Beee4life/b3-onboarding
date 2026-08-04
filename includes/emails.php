@@ -16,7 +16,6 @@
         return $basic_output;
     }
 
-
     // Content for an email settings field
     function b3_basic_email_settings_field( $box = [] ) {
         $add_id_fields = [
@@ -31,7 +30,7 @@
         ?>
         <div class="metabox-handler metabox-handler--<?php echo esc_attr( $box[ 'id' ] ); ?><?php echo esc_attr( $hide_field ); ?>">
             <div class="b3__postbox">
-                <div class="b3_foldout--header foldout__toggle"<?php echo esc_attr( $id_field ); ?>>
+                <div class="b3_foldout--header foldout__toggle"<?php echo $id_field ? ' id="' . esc_attr( $box[ 'id' ] ) . '"' : ''; ?>>
                     <?php echo ( isset( $box[ 'title' ] ) ) ? esc_html( $box[ 'title' ] ) : 'Settings'; ?>
                     <i class="dashicons dashicons-plus"></i>
                 </div>
@@ -47,7 +46,6 @@
 
         return $output;
     }
-
 
     // Load fold out content
     function b3_foldout_content( $box = [] ) {

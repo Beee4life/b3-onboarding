@@ -4,7 +4,7 @@ Tags: user management, registration, login, lost password, account
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 3.17.0
+Stable tag: 3.18.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -26,6 +26,19 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+
+3.18.0
+* add option to send test email
+
+3.17.0
+* added option to choose magic link or password
+* changed tab 'Template' to 'Styling'
+* added new input boxes
+  * magic link message
+  * magic link subject
+* added new filters
+  * b3_magic_link_message
+  * b3_magic_link_subject
 
 3.16.0
 * add email replacement vars filter, so you can add previews for your own emails

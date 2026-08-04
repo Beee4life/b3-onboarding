@@ -1,4 +1,5 @@
 <?php
+
     /**
      * Function to save a file
      *
@@ -16,6 +17,7 @@
             if ( file_exists( $file_name ) && is_readable( $file_name ) ) {
                 header( "Content-Type: application/octet-stream" );
                 header( "Content-Disposition: attachment; filename={$file_name}" );
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
                 readfile( $file_name );
             }
         }

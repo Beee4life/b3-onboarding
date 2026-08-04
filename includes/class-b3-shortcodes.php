@@ -27,7 +27,7 @@
                 $registration_type = get_option( 'b3_registration_type' );
 
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
-                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
                 if ( $admin_approval && 'user' == $registration_type ) {
@@ -144,17 +144,19 @@
                         ];
                     }
 
+                    // @TODO: check if can be replaced with attributes['errors']
                     B3Onboarding::b3_show_admin_notices();
 
                     $attributes = apply_filters( 'b3_attributes', $attributes );
 
-                    return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                    $template_html = $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                    return sprintf( '<div class="b3-form-container">%s</div>', $template_html );
                 }
             }
 
             public function b3_render_login_form( $shortcode_args ) {
                 if ( is_user_logged_in() ) {
-                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
                 $errors             = [];
@@ -180,11 +182,11 @@
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 183');
+                            error_log('class-b3-shortcodes.php line 185');
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 188');
+                                error_log('class-b3-shortcodes.php line 189');
                             } else {
                                 $error_codes = explode( ',', 'enter_code' );
                             }
@@ -253,7 +255,8 @@
 
                 $attributes = apply_filters( 'b3_attributes', $attributes );
 
-                return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                $template_html = $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                return sprintf( '<div class="b3-form-container">%s</div>', $template_html );
             }
 
             public function b3_render_lost_password_form( $shortcode_args ) {
@@ -265,7 +268,7 @@
                 $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
-                    return sprintf( '<p class="b3_message">%s</p>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 }
 
                 $attributes[ 'errors' ] = [];
@@ -291,7 +294,8 @@
 
                 $attributes = apply_filters( 'b3_attributes', $attributes );
 
-                return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                $template_html = $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                return sprintf( '<div class="b3-form-container">%s</div>', $template_html );
             }
 
             public function b3_render_reset_password_form( $shortcode_args ) {
@@ -303,7 +307,7 @@
                 $attributes         = shortcode_atts( $default_attributes, $shortcode_args );
 
                 if ( is_user_logged_in() ) {
-                    return '<p class="b3_message">' . esc_html__( 'You are already logged in.', 'b3-onboarding' ) . '</p>';
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
                 } else {
                     if ( isset( $_REQUEST[ 'login' ] ) && isset( $_REQUEST[ 'key' ] ) ) {
                         $attributes[ 'login' ] = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
@@ -320,7 +324,8 @@
 
                         $attributes = apply_filters( 'b3_attributes', $attributes );
 
-                        return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                        $template_html = $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                        return sprintf( '<div class="b3-form-container">%s</div>', $template_html );
 
                     } else {
                         // error message for password reset
@@ -331,7 +336,7 @@
                         /* translators: click here */
                         $message .= sprintf( esc_html__( "If you haven't received any email, please %s.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( b3_get_lostpassword_url() ), esc_html__( 'click here', 'b3-onboarding' ) ) );
 
-                        return $message;
+                        return sprintf( '<div class="b3-form-container">%s</div>', $message );
                     }
                 }
             }
@@ -368,7 +373,8 @@
 
                     $attributes = apply_filters( 'b3_attributes', $attributes );
 
-                    return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                    $template_html = $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                    return sprintf( '<div class="b3-form-container">%s</div>', $template_html );
                 }
 
                 return false;
@@ -418,7 +424,8 @@
 
                     $attributes = apply_filters( 'b3_attributes', $attributes );
 
-                    return $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                    $template_html = $this->b3_get_template_html( $attributes[ 'template' ], $attributes );
+                    return sprintf( '<div class="b3-form-container">%s</div>', $template_html );
                 }
 
                 return false;

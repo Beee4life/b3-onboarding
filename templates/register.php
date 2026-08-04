@@ -9,11 +9,12 @@
         exit;
     }
 
-    do_action( 'b3_add_form_messages', $attributes );
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     if ( ! isset( $_REQUEST[ 'registered' ] ) || isset( $_REQUEST[ 'registered' ] ) && 'access_requested' != sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) ) {
 ?>
     <div id="b3-register" class="b3_page b3_page--register">
+        <?php do_action( 'b3_add_form_messages', $attributes ); ?>
+
         <?php if ( ! empty( $attributes[ 'title' ] ) ) { ?>
             <?php echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) ); ?>
         <?php } ?>

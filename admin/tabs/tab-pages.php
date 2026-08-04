@@ -31,7 +31,8 @@
             <input name="b3_pages_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-pages-nonce' ) ); ?>" />
             <?php echo sprintf( '<h2>%s</h2>', esc_html__( 'Pages', 'b3-onboarding' ) ); ?>
             <?php if ( $current_language !== $default_lang ) { ?>
-                <?php echo sprintf( '<p>%s %s %s</p>', esc_html__( "Here you can see which pages are set for the various 'actions'.", 'b3-onboarding' ), sprintf( esc_html__( "Setting these pages is only possible in the default language (%s).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '#', $default_lang ) ), esc_html__( "We store 1 central page ID and get the localized pages from it.", 'b3-onboarding' ) ); ?>
+                <?php // translators: 3 different sentences ?>
+                <?php echo sprintf( '<p>%1$s %2$s %3$s</p>', esc_html__( "Here you can see which pages are set for the various 'actions'.", 'b3-onboarding' ), sprintf( esc_html__( "Setting these pages is only possible in the default language (%s).", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '#', esc_html( $default_lang ) ) ), esc_html__( "We store 1 central page ID and get the localized pages from it.", 'b3-onboarding' ) ); ?>
             <?php } else { ?>
                 <?php echo sprintf( '<p>%s</p>', esc_html__( "Here you can set which pages are assigned for the various 'actions'.", 'b3-onboarding' ) ); ?>
             <?php } ?>
@@ -61,7 +62,7 @@
                                     <option value=""><?php esc_attr_e( "Select a page", "b3-onboarding" ); ?></option>
                                     <?php
                                         foreach( $all_pages as $active_page ) {
-                                            echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected($active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
+                                            echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected( $active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
                                         }
                                     ?>
                                 </select>
@@ -74,14 +75,14 @@
                                     foreach( $all_pages as $active_page ) {
                                         if ( $current_language !== $default_lang ) {
                                             $translated_page_id = apply_filters( 'wpml_object_id', $active_page->ID, 'page', false, $current_language );
-                                            echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected($active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( get_the_title( $translated_page_id ) ) );
+                                            echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected( $active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( get_the_title( $translated_page_id ) ) );
                                         } else {
-                                            echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected($active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
+                                            echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected( $active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
                                         }
                                     }
                                 } else {
                                     foreach( $all_pages as $active_page ) {
-                                        echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected($active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
+                                        echo sprintf( '<option value="%d" %s>%s</option>', esc_attr( $active_page->ID ), selected( $active_page->ID, $b3_page[ 'page_id' ], false ), esc_attr( $active_page->post_title ) );
                                     }
                                 }
                             ?>
@@ -116,12 +117,12 @@
                         if ( isset( $page_id ) && get_post( (int) $page_id ) instanceof WP_Post ) {
                             ?>
                             <div class="b3_select-page__edit">
-                                <a href="<?php echo get_edit_post_link(  $page_id ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
+                                <a href="<?php echo esc_url( get_edit_post_link(  $page_id ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
                                     <?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>
                                 </a>
                             </div>
                             <div class="b3_select-page__link">
-                                <a href="<?php echo get_the_permalink( $page_id ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Visit', 'b3-onboarding' ); ?>">
+                                <a href="<?php echo esc_url( get_the_permalink( $page_id ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Visit', 'b3-onboarding' ); ?>">
                                     <?php esc_html_e( 'Visit', 'b3-onboarding' ); ?>
                                 </a>
                             </div>

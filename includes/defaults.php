@@ -440,7 +440,6 @@
             $message    .= '<br>' . "\n";
             $message    .= b3_default_greetings();
 
-            // @TODO: add filter
             return $message;
         }
 
@@ -470,6 +469,10 @@
 
     function b3_default_message_above_request_access() {
         return esc_html__( 'You have to request access for this website.', 'b3-onboarding' );
+    }
+
+    function b3_default_message_above_magic_link() {
+        return esc_html__( "Please enter your email address. If your email address exists in our database, you will receive an email with a link to login immediately.", 'b3-onboarding' );
     }
 
     function b3_default_terms_text() {

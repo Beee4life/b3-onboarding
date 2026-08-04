@@ -14,6 +14,7 @@
 
         public function widget( $args, $instance ) {
             $custom_links       = apply_filters( 'b3_widget_links', [] );
+            $login_page_id      = b3_get_login_url( true );
             $main_logo          = get_option( 'b3_main_logo' );
             $show_account       = ! empty( $instance[ 'show_account' ] ) ? $instance[ 'show_account' ] : false;
             $show_login         = ! empty( $instance[ 'show_login' ] ) ? $instance[ 'show_login' ] : false;
@@ -22,11 +23,15 @@
             $show_widget        = false;
             $show_register_link = false;
             $show_settings      = false;
-            $use_popup          = get_option( 'b3_use_popup' );
+            $use_popup          = get_option( 'b3_activate_login_popup' );
             $is_user_logged_in  = is_user_logged_in();
 
             if ( $show_account ) {
                 $account_url = b3_get_account_url();
+            }
+
+            if ( is_page( $login_page_id ) ) {
+                $show_login = false;
             }
 
             if ( $show_login ) {
