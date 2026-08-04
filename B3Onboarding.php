@@ -176,6 +176,7 @@
                     'login'           => esc_attr__( 'Login', 'b3-onboarding' ),
                     'login_nonce'     => wp_create_nonce( 'b3_login' ),
                     'magiclink_nonce' => wp_create_nonce( 'b3_magiclink' ),
+                    'login_message'   => apply_filters( 'b3_message_above_login', false ),
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
                     'use_both'        => get_option( 'b3_use_magic_link_password' ),
                 ] );

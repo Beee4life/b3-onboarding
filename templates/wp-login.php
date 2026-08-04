@@ -2,10 +2,6 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-
-    if ( ! empty( $attributes[ 'title' ] ) ) {
-        echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) );
-    }
 ?>
 
 <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">

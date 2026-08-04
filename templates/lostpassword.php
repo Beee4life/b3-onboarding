@@ -8,10 +8,10 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }
-
-    do_action( 'b3_add_form_messages', $attributes );
 ?>
 <div class="b3_page b3_page--lostpass">
+    <?php do_action( 'b3_add_form_messages', $attributes ); ?>
+
     <?php if ( ! empty( $attributes[ 'title' ] ) ) { ?>
         <?php echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) ); ?>
     <?php } ?>

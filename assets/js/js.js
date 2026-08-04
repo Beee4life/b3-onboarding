@@ -27,7 +27,12 @@ jQuery(function($){
         e.preventDefault();
         magiclink_form.hide();
         password_form.show();
-        $('.b3_message').hide();
+
+        const hide_login_message = (!(typeof ajax_vars !== 'undefined' && '' !== b3ob_vars.login_message));
+
+        if ( true === hide_login_message ) {
+            $('.b3_message').hide();
+        }
 
         var $active_submit = $('#loginform #b3-submit');
         $active_submit.val(b3ob_vars.login);
