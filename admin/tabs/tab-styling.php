@@ -74,18 +74,18 @@
                         <?php
                             $download_url = add_query_arg(
                                 [
-                                    'action' => 'b3_download_file',
+                                    'action' => 'b3_download',
                                     'file'   => $field[ 'file_name' ],
                                 ],
                                 admin_url( 'admin-post.php' )
                             );
+                            echo sprintf(
+                                '<a href="%s">%s</a> %s',
+                                esc_url( $download_url ),
+                                esc_html__( 'Click here', 'b3-onboarding' ),
+                                esc_html__( 'to download the default.', 'b3-onboarding' )
+                            );
                         ?>
-                        <?php echo sprintf(
-                            '<a href="%s">%s</a> %s',
-                            esc_url( $download_url ),
-                            esc_html__( 'Click here', 'b3-onboarding' ),
-                            esc_html__( 'to download the default.', 'b3-onboarding' )
-                        ); ?>
                     </p>
                 </div>
             <?php } ?>

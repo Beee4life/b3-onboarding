@@ -309,4 +309,4 @@
 
         wp_die( 'File not found.' );
     }
-    add_action( 'admin_post_b3_download_file', 'b3_handle_file_download' );
+    add_action( 'admin_post_b3_download', 'b3_handle_file_download' );
