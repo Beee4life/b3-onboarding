@@ -3,11 +3,17 @@
   display: none;
 }
 
+.b3-form-container {
+    margin:    0 auto;
+    width:     100%;
+    max-width: 500px;
+}
+
 /* Error message */
 .b3_message {
   border:        1px dashed black;
   box-sizing:    border-box;
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
   padding:       5px 10px;
   position:      relative;
   word-wrap:     initial;
@@ -199,8 +205,8 @@ ul.b3_form-links li {
   display:       inline-block;
   line-height:   1;
   margin-left:   0;
-  padding-left:  1em;
-  padding-right: 1em;
+  padding-left:  1rem;
+  padding-right: 1rem;
 }
 
 ul.b3_form-links li:first-child {
