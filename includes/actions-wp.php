@@ -282,7 +282,7 @@
             'default-email-template.html' => trailingslashit( B3OB_PLUGIN_PATH ) . 'includes/default-email-template.html',
         ];
 
-        $file_key = sanitize_text_field( $_GET['file'] );
+        $file_key = sanitize_text_field( $_GET[ 'file' ] );
 
         if ( ! isset( $allowed_files[ $file_key ] ) ) {
             wp_die( 'Invalid file selection.' );
@@ -291,7 +291,6 @@
         $file_path = $allowed_files[ $file_key ];
 
         if ( file_exists( $file_path ) && is_readable( $file_path ) ) {
-            // Clear any prior output buffers to prevent file corruption
             if ( ob_get_level() ) {
                 ob_end_clean();
             }
