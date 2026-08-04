@@ -621,7 +621,6 @@
     }
     add_action( 'b3_redirect', 'b3_redirect', 10, 2 );
 
-
     /**
      * Reset to default option
      *
