@@ -132,7 +132,7 @@
                         if ( 'access_requested' === $registered_var ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'access_requested' );
                         } elseif ( 'dummy' === $registered_var ) {
-                            // dummy is for demonstration setup
+                            // dummy is only used for demonstration setup on the plugin's website
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'dummy' );
                         }
                     }
