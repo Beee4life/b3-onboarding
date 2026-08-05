@@ -228,18 +228,27 @@
                         }
                     }
 
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'magic' === $_REQUEST[ 'activate' ] ) {
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
+
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success_approval' === $_REQUEST[ 'activate' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_approval' );
+
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === $_REQUEST[ 'activate' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
+
                 } elseif ( isset( $_REQUEST[ 'mu-activate' ] ) && 'success' === $_REQUEST[ 'mu-activate' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'mu_activate_success' );
+
                 } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' === $_REQUEST[ 'password' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'password_updated' );
+
                 } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' === $_REQUEST[ 'checkemail' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'lost_password_sent' );
+
                 } elseif ( isset( $_REQUEST[ 'logout' ] ) && 'true' === $_REQUEST[ 'logout' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'logged_out' );
+
                 } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' === $_REQUEST[ 'account' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
@@ -250,7 +259,7 @@
                     $attributes[ 'template' ]     = 'magiclink';
                     $use_magiclink_and_password   = get_option( 'b3_use_magic_link_password' );
 
-                    if ( $use_magiclink_and_password ) {
+                    if ( $use_magiclink_and_password && get_option( 'b3_activate_custom_passwords' ) ) {
                         $attributes[ 'button_modifier2' ] = esc_attr( 'use-password', 'b3-onboarding' );
                         $attributes[ 'button_value2' ]    = esc_attr__( 'Use password', 'b3-onboarding' );
                         $attributes[ 'template' ]         = 'magic-password';

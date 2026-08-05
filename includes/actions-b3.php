@@ -106,7 +106,7 @@
     add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
 
     /**
-     * Do stuff after user clicked activate link
+     * Do stuff after user clicked activate link, sending emails in this function (or not))
      *
      * @since 1.0.0
      *
@@ -133,7 +133,7 @@
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
             $subject = b3_get_account_activated_subject_user();
-            $message = b3_get_account_activated_message_user();
+            $message = b3_get_account_activated_message_user( $to );
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );

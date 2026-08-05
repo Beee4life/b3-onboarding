@@ -191,11 +191,11 @@
 
     // Get email message for account activated (user)
     // @TODO: maybe merge with welcome
-    function b3_get_account_activated_message_user() {
+    function b3_get_account_activated_message_user( $email = '' ) {
         $message = get_option( 'b3_account_activated_message' );
 
         if ( ! $message ) {
-            $message = b3_default_account_activated_message();
+            $message = b3_default_account_activated_message( $email );
         }
 
         return apply_filters( 'b3_account_activated_message_user', $message );

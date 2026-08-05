@@ -84,12 +84,29 @@
         return esc_html__( 'Account activated', 'b3-onboarding' );
     }
 
-    function b3_default_account_activated_message() {
+    function b3_default_account_activated_message( $email = '' ) {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
 
         if ( get_option( 'b3_needs_admin_approval' ) ) {
             $message .= esc_html__( 'you have confirmed your email address but the site owner choose to manually approve each account. You will be notified of the outcome.', 'b3-onboarding' );
+
+        } elseif ( get_option( 'b3_use_magic_link_password' ) || get_option( 'b3_use_magic_link' ) ) {
+            if ( $email ) {
+                $login_link = b3_get_login_url();
+                $magic_link = b3_get_magic_link_url( $email );
+                $magic_link = sprintf( '<a href="%s">%s</a>', esc_url( $magic_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+                $button     = sprintf( '<div class="big-link">%s</div>', $magic_link ) . "\n";
+
+                if ( get_option( 'b3_activate_custom_passwords' ) ) {
+                    $a_href  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), esc_html__( 'login page', 'b3-onboarding' ) );
+                    $message .= sprintf( esc_html__( 'you have confirmed your email address and login with your password through the %s.', 'b3-onboarding' ), $a_href );
+                    $message .= '<br><br>' . "\n";
+                    $message .= esc_html__( 'Or you can login immediately by clicking the button below.', 'b3-onboarding' );
+                } else {
+                    $message .= esc_html__( 'you have confirmed your email address and can now login immediately by clicking the button below.', 'b3-onboarding' );
+                }
+            }
 
         } elseif ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
             $lost_pass_link = '%lostpass_url%';
@@ -104,6 +121,7 @@
             $message    .= esc_html__( 'you have confirmed your email address and can now login through the link below.', 'b3-onboarding' );
         }
         $message .= '<br><br>' . "\n";
+
         if ( isset( $button ) ) {
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         }
