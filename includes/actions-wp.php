@@ -237,7 +237,7 @@
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
         $user_data = get_userdata( $user_id );
         $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
-        $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login );
+        $message   = b3_get_wpmu_activated_user_blog_message( $user_data->user_login, $user_data->user_email );
         $message   = b3_replace_template_styling( $message );
         $message   = strtr( $message, b3_get_replacement_vars( 'message', [
             'blog_id'       => $blog_id,

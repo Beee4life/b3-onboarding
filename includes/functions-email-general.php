@@ -325,12 +325,12 @@
     }
 
     // Get magic link email
-    function b3_get_magic_link_message( $password = false, $slug = false ) {
+    function b3_get_magic_link_message( $magic_link = false ) {
         $message = '';
 
-        if ( $password && $slug ) {
+        if ( $magic_link ) {
             // maybe add user input for this email
-            $message = b3_default_magic_link_message( $password, $slug );
+            $message = b3_default_magic_link_message( $magic_link );
         }
 
         return apply_filters( 'b3_magic_link_message', $message );
@@ -351,14 +351,59 @@
             $hashed_password = password_hash( $otp_password, PASSWORD_BCRYPT );
 
             if ( $hashed_password ) {
+                $email_hash     = md5( strtolower( trim( $user_email ) ) );
+                $transient_key  = sprintf( 'otp_%s', $email_hash );
                 $amount_minutes = apply_filters( 'b3_magic_link_time_out', 5 );
                 $slug           = sprintf( '%s:%s', $user_email, $hashed_password );
-                $hashed_slug    = base64_encode( $slug );
-                $transient_set  = set_transient( sprintf( 'otp_%s', $user_email ), $hashed_password, $amount_minutes * MINUTE_IN_SECONDS );
+                $hashed_slug    = standard_to_base64url( $slug );
+
+                if ( is_multisite() && ( doing_action( 'wpmu_activate_blog' ) || isset( $_GET[ 'activate' ] ) ) ) {
+                    global $wpdb;
+                    $meta_key    = '_site_transient_' . $transient_key;
+                    $timeout_key = '_site_transient_timeout_' . $transient_key;
+                    $expiration  = time() + ( $amount_minutes * MINUTE_IN_SECONDS );
+
+                    $wpdb->query( $wpdb->prepare(
+                        "INSERT INTO {$wpdb->sitemeta} (site_id, meta_key, meta_value) 
+                     VALUES (1, %s, %s) 
+                     ON DUPLICATE KEY UPDATE meta_value = VALUES(meta_value)",
+                        $meta_key,
+                        $hashed_password
+                    ) );
+
+                    $wpdb->query( $wpdb->prepare(
+                        "INSERT INTO {$wpdb->sitemeta} (site_id, meta_key, meta_value) 
+                     VALUES (1, %s, %s) 
+                     ON DUPLICATE KEY UPDATE meta_value = VALUES(meta_value)",
+                        $timeout_key,
+                        $expiration
+                    ) );
+
+                    return $hashed_slug;
+                }
+
+                $transient_set = set_site_transient( $transient_key, $hashed_password, $amount_minutes * MINUTE_IN_SECONDS );
 
                 if ( $transient_set ) {
                     return $hashed_slug;
                 }
+            }
+        }
+
+        return false;
+    }
+
+    function b3_get_magic_link_url( $user_email ) {
+        if ( $user_email ) {
+            $otp_password = b3_get_otp_password();
+            $hashed_slug  = b3_get_hashed_slug( $user_email, $otp_password );
+
+            if ( $hashed_slug ) {
+                $login_link = b3_get_login_url();
+                $login_link = add_query_arg( 'login', 'enter_code', $login_link );
+                $login_link = add_query_arg( 'otpcode', $hashed_slug, $login_link );
+
+                return $login_link;
             }
         }
 

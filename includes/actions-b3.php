@@ -668,7 +668,7 @@
                     $home_url  = get_home_url( $site_id );
                     $link      = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
 
-                    if ( false === $disallowed_roles ) {
+                    if ( current_user_can_for_blog( $site_id, 'manage_options' ) ) {
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
 
@@ -680,8 +680,7 @@
                     $label = sprintf( '<label class="b3_form-label" for="yoursites">%s</label>', esc_html__( 'Your site(s)', 'b3-onboarding' ) );
                     $list  = sprintf( '<ul class="site-links">%s</ul>', $links );
                     $links = sprintf( '<div class="site-links">%s</div>', $list );
-
-                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', esc_html( $label ), wp_kses_post( $links ) );
+                    echo sprintf( '<div class="b3_form-element b3_form-element-my-sites">%s%s</div>', wp_kses_post( $label ), wp_kses_post( $links ) );
                 }
             }
         }
@@ -710,20 +709,16 @@
      * @return void
      */
     function b3_remove_welcome_page_meta() {
-        $user_args = [
-            'fields'     => 'ids',
-            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-            'meta_query' => [
-                [
-                    'key'   => 'b3_welcome_page_seen',
-                    'value' => 'true',
-                ],
-            ],
-        ];
-        $users = get_users( $user_args );
-        if ( ! empty( $users ) ) {
-            foreach( $users as $user_id ) {
-                delete_user_meta( $user_id, 'b3_welcome_page_seen' );
+        global $wpdb;
+        $table = $wpdb->postmeta;
+        $query = $wpdb->prepare( "SELECT user_id FROM %i WHERE meta_key = 'b3_welcome_page_seen'", $table );
+        $results = $wpdb->get_results( $query );
+
+        if ( ! empty( $results ) ) {
+            foreach( $results as $user ) {
+                if ( isset( $user->user_id ) ) {
+                    delete_user_meta( $user->user_id, 'b3_welcome_page_seen' );
+                }
             }
         }
     }
@@ -769,9 +764,11 @@
         $redirect    = ! empty( $redirect ) ? $redirect : $account_url;
 
         if ( $user instanceof WP_User ) {
+            $email_hash    = md5( strtolower( trim( $user->user_email ) ) );
+            $transient_key = sprintf( 'otp_%s', $email_hash );
             wp_set_current_user( $user->ID, $user->user_login );
             wp_set_auth_cookie( $user->ID );
-            delete_transient( sprintf( 'otp_', $user->user_email ) );
+            delete_site_transient( $transient_key );
             do_action( 'wp_login', $user->user_login, $user );
 
             wp_safe_redirect( $redirect );

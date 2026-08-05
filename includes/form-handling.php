@@ -497,28 +497,30 @@
                     delete_option( 'b3_approval_page_id' );
                 }
 
-                if ( ! is_multisite() ) {
-                    if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == (int) $_POST[ 'b3_activate_welcome_page' ] ) {
-                        update_option( 'b3_activate_welcome_page', 1, false );
-                    } else {
-                        delete_option( 'b3_activate_welcome_page' );
-                    }
+                if ( isset( $_POST[ 'b3_activate_welcome_page' ] ) && 1 == (int) $_POST[ 'b3_activate_welcome_page' ] ) {
+                    update_option( 'b3_activate_welcome_page', 1, false );
+                } else {
+                    delete_option( 'b3_activate_welcome_page' );
+                }
 
-                    if ( isset( $_POST[ 'b3_activate_username_restriction' ] ) && 1 == (int) $_POST[ 'b3_activate_username_restriction' ] ) {
-                        update_option( 'b3_activate_username_restriction', 1, false );
+                if ( isset( $_POST[ 'b3_remove_user_meta_seen' ] ) && 1 == (int) $_POST[ 'b3_remove_user_meta_seen' ] ) {
+                    do_action( 'b3_remove_welcome_page_meta' );
+                }
 
-                        if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
-                            // @TODO: check for @
-                            $sanitized_value = str_replace( ' ', '', sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_usernames' ] ) ) );
-                            $new_value       = explode( ',', $sanitized_value );
-                            update_option( 'b3_disallowed_usernames', $new_value, false );
-                        } else {
-                            delete_option( 'b3_disallowed_usernames' );
-                        }
+                if ( isset( $_POST[ 'b3_activate_username_restriction' ] ) && 1 == (int) $_POST[ 'b3_activate_username_restriction' ] ) {
+                    update_option( 'b3_activate_username_restriction', 1, false );
+
+                    if ( isset( $_POST[ 'b3_disallowed_usernames' ] ) && ! empty( $_POST[ 'b3_disallowed_usernames' ] ) ) {
+                        // @TODO: check for @
+                        $sanitized_value = str_replace( ' ', '', sanitize_text_field( wp_unslash( $_POST[ 'b3_disallowed_usernames' ] ) ) );
+                        $new_value       = explode( ',', $sanitized_value );
+                        update_option( 'b3_disallowed_usernames', $new_value, false );
                     } else {
-                        delete_option( 'b3_activate_username_restriction' );
                         delete_option( 'b3_disallowed_usernames' );
                     }
+                } else {
+                    delete_option( 'b3_activate_username_restriction' );
+                    delete_option( 'b3_disallowed_usernames' );
                 }
 
                 // @TODO: check if this should be kept out of MS
@@ -649,10 +651,6 @@
                     delete_option( 'b3_disable_action_links' );
                 }
 
-                if ( isset( $_POST[ 'b3_remove_user_meta_seen' ] ) && 1 == (int) $_POST[ 'b3_remove_user_meta_seen' ] ) {
-                    do_action( 'b3_remove_welcome_page_meta' );
-                }
-
                 if ( isset( $_POST[ 'b3_activate_login_popup' ] ) && 1 == (int) $_POST[ 'b3_activate_login_popup' ] ) {
                     update_option( 'b3_activate_login_popup', 1, false );
                 } else {
@@ -779,6 +777,7 @@
             if ( ! current_user_can( 'edit_user', $current_user->ID ) ) {
                 wp_die( esc_html__( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
             }
+
             if ( isset( $_POST[ 'b3_delete_account' ] ) ) {
                 $redirect_url = b3_get_login_url();
                 if ( true == wp_delete_user( $current_user->ID ) ) {
@@ -788,7 +787,6 @@
                 exit;
 
             } else {
-
                 $errors = edit_user( $current_user->ID );
                 do_action( 'b3_after_save_profile', $current_user->ID );
 

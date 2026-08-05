@@ -590,7 +590,7 @@
                                     $user_email = $user->user_email;
                                     $register   = true;
 
-                                } elseif ( false != get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
+                                } elseif ( get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
                                     // Recaptcha check failed, display error
                                     $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
 
@@ -677,10 +677,10 @@
                                         $user->user_login = $user_login;
                                     }
 
-                                    $blog_name  = isset( $_POST[ 'blogname' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'blogname' ] ) ) : '';
-                                    $blog_title = isset( $_POST[ 'blog_title' ] ) && sanitize_text_field( wp_unslash( $_POST[ 'blog_title' ] ) );
+                                    $blog_name  = sanitize_text_field( wp_unslash( $_POST[ 'blogname' ] ?? '' ) );
+                                    $blog_title = sanitize_text_field( wp_unslash( $_POST[ 'blog_title' ] ?? '' ) );
+                                    $blog_info  = wpmu_validate_blog_signup( $blog_name, $blog_title, $user );
 
-                                    $blog_info   = wpmu_validate_blog_signup( $blog_name, $blog_title, $user );
                                     $domain      = $blog_info[ 'domain' ];
                                     $path        = $blog_info[ 'path' ];
                                     $blog_title  = $blog_info[ 'blog_title' ];
@@ -811,32 +811,25 @@
                         $existing_user = get_user_by( 'email', $user_email );
 
                         if ( $existing_user instanceof WP_User ) {
-                            $otp_password = b3_get_otp_password();
-                            $hashed_slug  = b3_get_hashed_slug( $user_email, $otp_password );
+                            $magic_link = b3_get_magic_link_url( $user_email );
+                            $message    = b3_get_magic_link_message( $magic_link );
+                            $subject    = b3_get_magic_link_subject();
+                            $subject    = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
+                            $vars       = []; // empty right now, but might be filled later on...
 
-                            if ( $hashed_slug ) {
-                                $vars    = []; // empty right now, but might be filled later on...
-                                $subject = b3_get_magic_link_subject();
-                                $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                $message = b3_get_magic_link_message( $otp_password, $hashed_slug );
+                            if ( ! empty( $message ) ) {
+                                $message      = b3_replace_template_styling( $message );
+                                $message      = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
+                                $message      = htmlspecialchars_decode( stripslashes( $message ) );
+                                $redirect_url = add_query_arg( 'login', 'code_sent', $redirect_url );
 
-                                if ( ! empty( $message ) ) {
-                                    $message      = b3_replace_template_styling( $message );
-                                    $message      = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
-                                    $message      = htmlspecialchars_decode( stripslashes( $message ) );
-                                    $redirect_url = add_query_arg( 'login', 'code_sent', $redirect_url );
+                                wp_mail( $user_email, $subject, $message );
+                                wp_safe_redirect( $redirect_url );
+                                exit;
 
-                                    wp_mail( $user_email, $subject, $message );
-                                    wp_safe_redirect( $redirect_url );
-                                    exit;
-
-                                } else {
-                                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                    error_log( 'Email message not set for magic link.' );
-                                }
                             } else {
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log( sprintf( 'Transient is not set when "%s" requested a magic link and thus email is not sent.', $user_email ) );
+                                error_log( 'Email message not set for magic link.' );
                             }
                         }
                     }

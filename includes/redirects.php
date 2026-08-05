@@ -234,9 +234,8 @@
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
                 $redirect_url      = b3_get_login_url();
                 $valid_error_codes = [ 'already_active', 'blog_taken' ];
-                // was [ $activate_path ] - @TODO: test in MS
                 $request_uri       = isset( $_SERVER[ 'REQUEST_URI' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) : '';
-                $activate_path     = explode( '?', $request_uri );
+                [ $activate_path ] = explode( '?', $request_uri );
                 $activate_cookie   = 'wp-activate-' . COOKIEHASH;
                 $key               = '';
                 $result            = null;

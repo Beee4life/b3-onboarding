@@ -377,7 +377,9 @@
                 $user = get_user_by( 'email', $user_email );
 
                 if ( $user instanceof WP_User ) {
-                    $transient       = get_transient( sprintf( 'otp_%s', $user_email ) );
+                    $email_hash      = md5( strtolower( trim( $user_email ) ) );
+                    $transient_key   = sprintf( 'otp_%s', $email_hash );
+                    $transient       = get_site_transient( $transient_key );
                     $hashed_password = password_hash( $transient, PASSWORD_BCRYPT );
 
                     if ( hash_equals( $hashed_password, crypt( $user_input, $hashed_password ) ) ) {
@@ -388,4 +390,8 @@
         }
 
         return false;
+    }
+
+    function standard_to_base64url( $data ) {
+        return rtrim( strtr( base64_encode( $data ), '+/', '-_' ), '=' );
     }

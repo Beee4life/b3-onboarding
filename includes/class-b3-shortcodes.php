@@ -227,6 +227,7 @@
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
+
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success_approval' === $_REQUEST[ 'activate' ] ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_approval' );
                 } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === $_REQUEST[ 'activate' ] ) {

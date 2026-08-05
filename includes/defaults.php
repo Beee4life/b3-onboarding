@@ -390,27 +390,49 @@
         return 'New %network_name% Site: %site_name%';
     }
 
-    function b3_default_message_welcome_wpmu_user_blog( $user_login = false ) {
-        $message = '';
+    function b3_default_message_welcome_wpmu_user_blog( $user_login = false, $user_email = false ) {
+        $login_link = b3_get_login_url();
+        $message    = '';
+
         if ( false != $user_login ) {
             $message .= 'Hi %user_login%' . ",\n";
             $message .= '<br><br>' . "\n";
         }
-        // @TODO: add optional magic link
+
         /* translators: home url */
         $message .= sprintf( esc_html__( 'Your new site has been successfully set up at %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', '%home_url%' ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
-        $message .= '<br>' . "\n";
-        $message .= esc_html__( 'Username', 'b3-onboarding' ) . ': ' . '%user_login%' . "\n";
-        $message .= '<br>' . "\n";
-        $message .= esc_html__( 'Password', 'b3-onboarding' ) . ': ' . '%user_password%' . "\n";
-        $message .= '<br><br>' . "\n";
-        /* translators: login link */
-        $message .= sprintf( esc_html__( 'Login here: %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%login_url%', '%login_url%' ) ) . "\n";
-        $message .= '<br><br>' . "\n";
+
+        if ( get_option( 'b3_use_magic_link_password' ) || ( ! get_option( 'b3_use_magic_link' ) && ! get_option( 'b3_use_magic_link_password' ) ) ) {
+            $message .= esc_html__( 'You can log in to the administrator account with the following information', 'b3-onboarding' ) . ":\n";
+            $message .= '<br>' . "\n";
+            $message .= esc_html__( 'Username', 'b3-onboarding' ) . ': ' . '%user_login%' . "\n";
+            $message .= '<br>' . "\n";
+            $message .= esc_html__( 'Password', 'b3-onboarding' ) . ': ' . '%user_password%' . "\n";
+            $message .= '<br><br>' . "\n";
+            /* translators: login link */
+            $message .= sprintf( esc_html__( 'Login here: %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', $login_link, $login_link ) ) . "\n";
+            $message .= '<br><br>' . "\n";
+        }
+
+        if ( get_option( 'b3_use_magic_link_password' ) ) {
+            $message .= esc_html__( 'Or you can login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+        } elseif ( get_option( 'b3_use_magic_link' ) ) {
+            $message .= esc_html__( 'You can login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+        }
+
+        if ( get_option( 'b3_use_magic_link' ) || get_option( 'b3_use_magic_link_password' ) ) {
+            $login_link = b3_get_magic_link_url( $user_email );
+            $a_href     = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+            $your_code  = sprintf( '<div class="big-link">%s</div>', $a_href ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= sprintf( '<div class="big-link-container">%s</div>', $your_code ) . "\n";
+            $message    .= '<br>' . "\n";
+        }
+
         $message .= esc_html__( 'Enjoy your new site.', 'b3-onboarding' );
         $message .= '<br>' . "\n";
+
         $message .= b3_default_greetings();
 
         return $message;
@@ -421,13 +443,10 @@
         return esc_html__( 'One time login link for %blog_name%', 'b3-onboarding' );
     }
 
-    function b3_default_magic_link_message( $password = '', $slug = '' ) {
-        if ( $password && $slug ) {
-            $login_link = b3_get_login_url();
-            $login_link = add_query_arg( 'login', 'enter_code', $login_link );
-            $login_link = add_query_arg( 'otpcode', $slug, $login_link );
-            $enter_url  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
-            $your_code  = sprintf( '<div class="big-link">%s</div>', $enter_url ) . "\n";
+    function b3_default_magic_link_message( $login_link = '' ) {
+        if ( ! empty( $login_link ) ) {
+            $a_href     = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+            $your_code  = sprintf( '<div class="big-link">%s</div>', $a_href ) . "\n";
             $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
             $message    .= '<br><br>' . "\n";
             $message    .= esc_html__( 'Someone requested a "one time login link" for the account using this email address.', 'b3-onboarding' ) . "\n";

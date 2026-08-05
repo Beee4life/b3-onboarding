@@ -213,7 +213,7 @@
     function b3_show_password_fields( $show, $current_user ) {
         if ( get_option( 'b3_use_magic_link' ) ) {
             if ( ! get_option( 'b3_use_magic_link_password' ) ) {
-                $message = esc_html__( "You don't need a password anymore, you can login with a 'magic link'.", 'b3-onboarding' );
+                $message = esc_html__( "The site owner has disabled passwords and uses a 'magic link'.", 'b3-onboarding' );
                 $show    = sprintf( '<div class="b3_message">%s</div>', $message );
             }
         }

@@ -77,10 +77,9 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php if ( ! is_multisite() ) { ?>
-                <?php b3_get_settings_field_open(); ?>
+            <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
-                <label for="b3_activate_welcome_page"><?php esc_html_e( 'Welcome page', 'b3-onboarding' ); ?></label>
+                    <label for="b3_activate_welcome_page"><?php esc_html_e( 'Welcome page', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/>
@@ -91,30 +90,29 @@
                         <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url('https://b3onboarding.berryplasman.com/filter/b3_welcome_page/'), esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
                     </div>
                 </div>
-                <?php b3_get_close(); ?>
+            <?php b3_get_close(); ?>
 
-                <?php if ( $activate_welcome_page ) { ?>
-                    <?php b3_get_settings_field_open(); ?>
+            <?php if ( $activate_welcome_page ) { ?>
+                <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
-                    <label for="b3_remove_user_meta_seen"><?php esc_html_e( "Remove 'welcome_page_seen' meta", 'b3-onboarding' ); ?></label>
+                        <label for="b3_remove_user_meta_seen"><?php esc_html_e( "Remove 'welcome_page_seen' meta", 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_remove_user_meta_seen" name="b3_remove_user_meta_seen" value="1"/>
                         <?php esc_html_e( "Clear the 'welcome_page_seen' meta for all users, so you can show a new page.", 'b3-onboarding' ); ?>
                     </div>
-                    <?php b3_get_close(); ?>
-                <?php } ?>
-
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php checked($hide_admin_bar); ?>/>
-                        <?php esc_html_e( "Hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
-                    </div>
                 <?php b3_get_close(); ?>
             <?php } ?>
+
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php checked($hide_admin_bar); ?>/>
+                    <?php esc_html_e( "Hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
 
             <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
                 <?php
@@ -134,8 +132,8 @@
                     <?php b3_get_close(); ?>
 
                     <?php b3_get_settings_field_open( $hide_username_restrictions, 'username-restrictions' ); ?>
-                    <?php if ( $disallowed_usernames_filter ) { $placeholder = sprintf( '%s (%s)', $disallowed_usernames_string, esc_html__( 'Set by filter', 'b3-onboarding' ) ); } else { $placeholder = esc_html__( 'Separate multiple usernames with a comma', 'b3-onboarding' ); } ?>
-                    <?php if ( $disallowed_usernames_filter ) { $value = ''; } else { $value = $disallowed_usernames_string; } ?>
+                        <?php if ( $disallowed_usernames_filter ) { $placeholder = sprintf( '%s (%s)', $disallowed_usernames_string, esc_html__( 'Set by filter', 'b3-onboarding' ) ); } else { $placeholder = esc_html__( 'Separate multiple usernames with a comma', 'b3-onboarding' ); } ?>
+                        <?php if ( $disallowed_usernames_filter ) { $value = ''; } else { $value = $disallowed_usernames_string; } ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_disallowed_usernames"><?php esc_html_e( 'User names', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
@@ -183,9 +181,8 @@
                         <?php esc_html_e( 'Allow the user to delete his/her account (through custom profile page).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
-
-                <?php b3_get_submit_button(); ?>
             <?php } ?>
+            <?php b3_get_submit_button(); ?>
         </form>
 
         <?php
