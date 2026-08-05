@@ -1,7 +1,9 @@
 ## CHANGELOG
 
 3.19.0
-* ??
+* improve download of default templates
+* improve message above login on magic link + password option
+* disable filtered input settings
 
 3.18.0
 * add option to send test email
