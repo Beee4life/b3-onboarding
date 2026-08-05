@@ -540,6 +540,7 @@
                                     $query_arg = 'confirm_email';
                                 } else {
                                     $query_arg      = 'success';
+                                    // @TODO: don't set if custom password are used
                                     $reset_password = get_option( 'b3_redirect_set_password' ) ? true : false;
                                 }
 
