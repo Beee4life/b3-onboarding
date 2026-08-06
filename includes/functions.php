@@ -155,7 +155,7 @@
                 ],
                 [
                     'value' => 'site',
-                    'label' => esc_html__( "Visitor may register user + site (must register site)", 'b3-onboarding' ),
+                    'label' => esc_html__( "Visitor must register user + site", 'b3-onboarding' ),
                 ],
             ];
         }
@@ -857,9 +857,9 @@
 
         update_option( 'b3_disable_admin_notification_password_change', 1, false );
         update_option( 'b3_activate_logo_in_email', 1, false );
+        update_option( 'b3_hide_admin_bar', 1, false );
 
         if ( ! is_multisite() ) {
-            update_option( 'b3_hide_admin_bar', 1, false );
             update_option( 'users_can_register', 0 );
 
             $restrict_admin = get_option( 'b3_restrict_admin' );
@@ -867,8 +867,15 @@
                 update_option( 'b3_restrict_admin', [ 'subscriber', 'b3_activation', 'b3_approval' ], false );
             }
 
-        } elseif ( is_main_site() && false == $blog_id ) {
-            update_site_option( 'registrationnotification', 'no' );
+        } else {
+            $restrict_admin = get_option( 'b3_restrict_admin' );
+            if ( false == $restrict_admin || is_array( $restrict_admin ) && empty( $restrict_admin ) ) {
+                update_option( 'b3_restrict_admin', [ 'subscriber' ], false );
+            }
+
+            if ( is_main_site() && false == $blog_id ) {
+                update_site_option( 'registrationnotification', 'no' );
+            }
         }
 
         if ( false == get_option( 'b3_link_color' ) ) {

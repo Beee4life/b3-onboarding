@@ -248,7 +248,7 @@
             $magic_link = sprintf( '<a href="%s">%s</a>', b3_get_magic_link_url( $user_email ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
             $button     = sprintf( '<div class="big-link">%s</div>', $magic_link ) . "\n";
             $message    .= '<br><br>' . "\n";
-            $message    .= __( 'You can set login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+            $message    .= __( 'You can login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
             $message    .= '<br><br>' . "\n";
             $message    .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
 
