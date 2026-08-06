@@ -1098,13 +1098,11 @@
                     'user_pass'  => time(),
                 ];
 
-                $admin_approval               = get_option( 'b3_needs_admin_approval' );
-                $errors                       = new WP_Error();
-                $registration_with_email_only = get_option( 'b3_register_email_only' );
-                $use_custom_passwords         = get_option( 'b3_activate_custom_passwords' );
-                $user_data                    = wp_parse_args( $args, $default_args );
+                $errors               = new WP_Error();
+                $use_custom_passwords = get_option( 'b3_activate_custom_passwords' );
+                $user_data            = wp_parse_args( $args, $default_args );
 
-                if ( false == $registration_with_email_only ) {
+                if ( ! get_option( 'b3_register_email_only' ) ) {
                     if ( username_exists( $user_data[ 'user_login' ] ) ) {
                         $errors->add( 'username_exists', $this->b3_get_return_message( 'username_exists' ) );
 
@@ -1187,7 +1185,7 @@
                     }
 
                     $inform = 'both';
-                    if ( 'email_activation' === $user_data[ 'registration_type' ] || ! $admin_approval ) {
+                    if ( 'email_activation' === $user_data[ 'registration_type' ] || ! get_option( 'b3_needs_admin_approval' ) ) {
                         // never notify an admin if a user hasn't confirmed email yet or no admin approval is needed
                         $inform = 'user';
                     }
