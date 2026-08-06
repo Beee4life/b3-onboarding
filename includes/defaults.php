@@ -106,6 +106,12 @@
                 } else {
                     $message .= esc_html__( 'you have confirmed your email address and can now login immediately by clicking the button below.', 'b3-onboarding' );
                 }
+
+            } else {
+                $lost_pass_link = '%lostpass_url%';
+                $lost_pass_link = sprintf( '<a href="%s">%s</a>', esc_url( $lost_pass_link ), strtoupper( esc_html__( 'Get magic link', 'b3-onboarding' ) ) );
+                $button         = sprintf( '<div class="big-link">%s</div>', $lost_pass_link ) . "\n";
+                $message        .= esc_html__( 'you have confirmed your email address and can get a magic login link through the link below.', 'b3-onboarding' );
             }
 
         } elseif ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
