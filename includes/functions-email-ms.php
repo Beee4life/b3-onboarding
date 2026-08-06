@@ -43,8 +43,8 @@
      *
      * @return string|void
      */
-    function b3_get_wpmu_user_activated_message() {
-        return apply_filters( 'b3_wpmu_user_activated_message', b3_default_wpmu_user_activated_message() );
+    function b3_get_wpmu_user_activated_message( $user_email = '' ) {
+        return apply_filters( 'b3_wpmu_user_activated_message', b3_default_wpmu_user_activated_message( $user_email ) );
     }
 
     /**

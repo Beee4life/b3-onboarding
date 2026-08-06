@@ -652,8 +652,6 @@
                                                 $redirect_url = add_query_arg( 'registered', 'access_requested', $redirect_url );
                                             } else {
                                                 $redirect_url = add_query_arg( 'registered', 'confirm_email', $redirect_url );
-                                                error_log($redirect_url);
-                                                error_log(get_option('b3_use_magic_link'));
                                             }
                                         } elseif ( is_wp_error( $result ) ) {
                                             $redirect_url = b3_get_register_url();

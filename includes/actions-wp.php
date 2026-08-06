@@ -87,7 +87,7 @@
             if ( is_multisite() && $admin_approval ) {
                 global $wpdb;
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                $approval_users = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE active = %d', $wpdb->users, 0 ) );
+                $approval_users = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE active = 0', $wpdb->signups ) );
 
             } elseif ( $admin_approval ) {
                 $approval_args  = [ 'role' => 'b3_approval' ];
@@ -147,16 +147,13 @@
                 $wpdb->update( $table, $data, $where );
 
             } else {
-                error_log('HIT');
                 $subject = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
                 $message = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
             }
-            error_log($message);
 
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars() );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
-            error_log($message);
             wp_mail( $user_email, $subject, $message, [] );
         }
     }
@@ -182,7 +179,7 @@
             error_log('@TODO: send magic link email');
         }
 
-        $message = sprintf( b3_get_wpmu_user_activated_message(), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        $message = sprintf( b3_get_wpmu_user_activated_message( $user->user_email ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_get_replacement_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );

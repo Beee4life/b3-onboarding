@@ -225,12 +225,12 @@
     // Remove admin bar for users who are not allowed to access admin
     function b3_remove_admin_bar( $show ) {
         $hide_admin_bar = get_option( 'b3_hide_admin_bar' );
-        if ( false != $hide_admin_bar ) {
+        if ( get_option( 'b3_hide_admin_bar' ) ) {
             $user             = wp_get_current_user();
             $restricted_roles = get_option( 'b3_restrict_admin' );
             $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
 
-            if ( true === $result ) {
+            if ( true === $result || empty( $user->roles ) ) {
                 $show = false;
             }
         }
