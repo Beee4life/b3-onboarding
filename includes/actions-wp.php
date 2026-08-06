@@ -365,7 +365,11 @@
                 }
 
                 if ( ! is_wp_error( $result ) ) {
-                    $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
+                    if ( get_option( 'b3_use_magic_link' ) ) {
+                        $redirect_url = add_query_arg( [ 'mu-activate' => 'magic' ], $redirect_url );
+                    } else {
+                        $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
+                    }
                     wp_safe_redirect( $redirect_url );
                     exit;
                 }

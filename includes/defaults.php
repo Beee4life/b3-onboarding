@@ -310,18 +310,23 @@
     }
 
     function b3_default_wpmu_activate_user_message() {
+        error_log(get_site_option( 'b3_use_magic_link' ));
         $link_element = sprintf( '<a href="%s">%s</a>', '%2$s', strtoupper( esc_html__( 'Activate account', 'b3-onboarding' ) ) );
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
         /* translators: 1. salutation, 2 . activate link */
         $message      = esc_html__( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
         $message      .= '<br><br>' . "\n";
-        $message      .= esc_html__( 'To activate your account, please click the link below.', 'b3-onboarding' ) . "\n";
+        $message      .= esc_html__( 'XTo activate your account, please click the link below.', 'b3-onboarding' ) . "\n";
         $message      .= '<br><br>' . "\n";
         $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         $message      .= '<br>' . "\n";
-        $message      .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
-        $message      .= '<br>' . "\n";
-        $message      .= b3_default_greetings();
+        if ( get_site_option( 'b3_use_magic_link' ) ) {
+            $message .= esc_html__( 'After you activate, you will receive *another email* with magic login link.', 'b3-onboarding' );
+        } else {
+            $message .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
+        }
+        $message .= '<br>' . "\n";
+        $message .= b3_default_greetings();
 
         return $message;
     }
@@ -332,22 +337,30 @@
     }
 
     function b3_default_wpmu_user_activated_message() {
-        $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
-        $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
         /* translators: salutation*/
         $message      = esc_html__( 'Howdy %1$s,', 'b3-onboarding' ) . "\n";
         $message      .= '<br><br>' . "\n";
         $message      .= esc_html__( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
-        $message      .= '<br><br>' . "\n";
-        $message      .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
-        $message      .= '<br>' . "\n";
-        /* translators: username */
-        $message      .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
-        $message      .= '<br>' . "\n";
-        /* translators: password */
-        $message      .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
-        $message      .= '<br>' . "\n";
-        $message      .= esc_html__( 'You can login through the link below.', 'b3-onboarding' );
+
+        if ( get_site_option( 'b3_use_magic_link' ) ) {
+            $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+            $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+            $message      .= esc_html__( 'You can log in immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+
+        } else {
+            $link_element = sprintf( '<a href="%s">%s</a>', b3_get_login_url(), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+            $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+            $message      .= '<br><br>' . "\n";
+            $message      .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
+            $message      .= '<br>' . "\n";
+            /* translators: username */
+            $message      .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
+            $message      .= '<br>' . "\n";
+            /* translators: password */
+            $message      .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
+            $message      .= '<br>' . "\n";
+            $message      .= esc_html__( 'You can login through the link below.', 'b3-onboarding' );
+        }
         $message      .= '<br><br>' . "\n";
         $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         $message      .= b3_default_greetings();

@@ -1012,6 +1012,9 @@
                     case 'mu_activate_success':
                         return esc_html__( 'You have successfully activated your account. Your password has been emailed to you.', 'b3-onboarding' );
 
+                    case 'mu_activate_magic':
+                        return esc_html__( 'You have successfully activated your account. Your magic login link has been emailed to you.', 'b3-onboarding' );
+
                     case 'invalid_key':
                         return esc_html__( 'The activation link you used is not valid.', 'b3-onboarding' );
 
