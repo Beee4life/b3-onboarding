@@ -21,7 +21,6 @@
             'suppress_filters' => false,
         ] );
 
-        // @TODO: check in Sandbox (also without WPML) & in MS
         $current_language = apply_filters( 'wpml_current_language', null );
         $default_lang     = apply_filters( 'wpml_default_language', null );
 

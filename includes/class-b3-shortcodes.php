@@ -147,7 +147,6 @@
                         ];
                     }
 
-                    // @TODO: check if can be replaced with attributes['errors']
                     B3Onboarding::b3_show_admin_notices();
 
                     $attributes = apply_filters( 'b3_attributes', $attributes );
@@ -181,7 +180,7 @@
                     $attributes[ 'redirect' ] = wp_validate_redirect( $redirect_to, $attributes[ 'redirect' ] );
                 }
 
-                // @TODO: create function for this
+                // @TODO: create function for this IF
                 if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
                         $login_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
@@ -427,7 +426,7 @@
                         if ( false === $results ) {
                             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
                             $attributes[ 'users' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups ) );
-                            wp_cache_set( $cache_key, $attributes['users'], $cache_group, 3600 );
+                            wp_cache_set( $cache_key, $attributes[ 'users' ], $cache_group, 3600 );
                             // @TODO: clear after any signup
                         }
                     } else {

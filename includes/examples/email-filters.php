@@ -332,10 +332,11 @@
      * @since 2.0.0
      *
      * @param $message
+     * @param $user_email
      *
      * @return string
      */
-    function b3_welcome_user_message_example( $message ) {
+    function b3_welcome_user_message_example( $message, $user_email = '' ) {
         return 'Filter message - welcome user';
     }
-    add_filter( 'b3_welcome_user_message', 'b3_welcome_user_message_example' );
+    add_filter( 'b3_welcome_user_message', 'b3_welcome_user_message_example', 10, 2 );

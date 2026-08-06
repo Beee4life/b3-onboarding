@@ -77,7 +77,7 @@
      *
      * @param $wp_admin_bar
      */
-    function b3_add_toolbar( $wp_admin_bar ) {
+    function b3_change_admin_bar( $wp_admin_bar ) {
         // @TODO: check in multisite
         if ( current_user_can( 'promote_users' ) ) {
             $approval_users = [];
@@ -119,7 +119,7 @@
             }
         }
     }
-    add_action( 'admin_bar_menu', 'b3_add_toolbar', 80 );
+    add_action( 'admin_bar_menu', 'b3_change_admin_bar', 80 );
 
     /**
      * Do stuff after signup WPMU user (only)
@@ -328,7 +328,6 @@
                 $key               = '';
                 $result            = null;
 
-                // @TODO: test this again
                 if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
                     wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.','b3-onboarding' ), esc_html__( 'An error occurred during the activation', 'b3-onboarding' ), 400 );
                 } elseif ( ! empty( $_GET[ 'key' ] ) ) {

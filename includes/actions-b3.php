@@ -428,7 +428,6 @@
                     $message_output .= sprintf( '<p>%s</p>', $message );
                 }
                 $message_output .= '</div>';
-                // @TODO: test this with a link
                 echo wp_kses_post( $message_output );
             }
         }

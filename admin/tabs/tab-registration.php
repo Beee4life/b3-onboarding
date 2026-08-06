@@ -5,11 +5,11 @@
 
     // Render registration tab
     function b3_render_registration_tab() {
-        $activate_recaptcha           = get_option( 'b3_activate_recaptcha' ); // @TODO: add filter
+        $activate_recaptcha           = get_option( 'b3_activate_recaptcha' );
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
-        $activate_honeypot            = get_option( 'b3_activate_honeypot' ); // @TODO: add filter
+        $activate_honeypot            = get_option( 'b3_activate_honeypot' );
         $activate_privacy_page        = get_option( 'b3_activate_privacy_page' );
         $activate_terms_page          = get_option( 'b3_activate_terms_page' );
         /* translators: click here link */

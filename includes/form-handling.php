@@ -204,7 +204,7 @@
 
                 if ( ! empty( $_POST[ 'b3_notification_sender_email' ] ) ) {
                     if ( ! is_email( wp_unslash( $_POST[ 'b3_notification_sender_email' ] ) ) ) {
-                        // @TODO: check this error message
+                        // just in case, emails are 'checked' at input as well
                         B3Onboarding::b3_errors()->add( 'error_invalid_email', esc_html__( 'That is not a valid email address.', 'b3-onboarding' ) );
 
                         return;
@@ -337,7 +337,6 @@
                             foreach( $email_array as $email ) {
                                 $email = trim( $email );
                                 if ( ! is_email( $email ) ) {
-                                    // @TODO: check this error message
                                     /* translators: email address */
                                     B3Onboarding::b3_errors()->add( 'error_invalid_email', sprintf( esc_html__( '"%s" is not a valid email address.', 'b3-onboarding' ), $email ) );
 
@@ -603,7 +602,6 @@
     add_action( 'init', 'b3_recaptcha_tab_form_handling' );
 
     function b3_pages_tab_form_handling() {
-        // @TODO: add warning if saved in non default lang
         if ( isset( $_POST[ 'b3_pages_nonce' ] ) ) {
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_pages_nonce' ] ) ), 'b3-pages-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );

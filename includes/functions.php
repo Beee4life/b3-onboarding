@@ -326,7 +326,6 @@
 
             if ( get_post( $register_page_id ) ) {
                 if ( false != $return_id ) {
-                    // @TODO: test this
                     if ( false != $blog_id && is_multisite() ) {
                         restore_current_blog();
                     }
@@ -336,7 +335,6 @@
 
                 $register_link = get_the_permalink( $register_page_id );
                 if ( false != $blog_id && is_multisite() ) {
-                    // @TODO: test this
                     restore_current_blog();
                 }
 
@@ -1218,7 +1216,7 @@
                     $subject = b3_get_request_access_subject_user();
                     break;
                 case 'welcome-user':
-                    $message = b3_get_welcome_user_message();
+                    $message = b3_get_welcome_user_message( 'dummy@example.com' );
                     $subject = b3_get_welcome_user_subject();
                     break;
                 case 'welcome-user-manual':

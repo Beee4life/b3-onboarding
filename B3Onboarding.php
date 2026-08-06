@@ -152,7 +152,6 @@
                     }
                 }
 
-                // @TODO: check if jquery is loaded
                 if ( get_option( 'b3_activate_login_popup' ) ) {
                     wp_enqueue_script(
                         'jquery-modal',
@@ -451,7 +450,7 @@
                         foreach( $codes as $code ) {
                             $message = B3Onboarding::b3_errors()->get_error_message( $code );
                             $message = ( true == $prefix ) ? sprintf( '<strong>%s:</strong> %s', esc_html( $prefix ), esc_html( $message ) ) : esc_html( $message );
-                            echo sprintf( '<p>%s</p>', esc_html( $message ) );
+                            echo sprintf( '<p>%s</p>', wp_kses_post( $message ) );
                         }
                         echo sprintf( '<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_attr__( 'Dismiss this notice', 'b3-onboarding' ) );
                         echo '</div>';
@@ -539,9 +538,11 @@
                                     $role      = 'b3_activation';
                                     $query_arg = 'confirm_email';
                                 } else {
-                                    $query_arg      = 'success';
-                                    // @TODO: don't set if custom password are used
-                                    $reset_password = get_option( 'b3_redirect_set_password' ) ? true : false;
+                                    $query_arg = 'success';
+
+                                    if ( ! get_option( 'b3_activate_custom_passwords' ) ) {
+                                        $reset_password = get_option( 'b3_redirect_set_password' ) ? true : false;
+                                    }
                                 }
 
                                 $register_args = [
@@ -744,7 +745,10 @@
             public function b3_reset_user_password() {
                 if ( isset( $_POST[ 'b3_resetpass_nonce' ] ) ) {
                     if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3_resetpass_nonce' ] ) ), 'b3_resetpass' ) ) {
-                        // @TODO: add notice
+                        $redirect_url = add_query_arg( 'error', 'unknown', $redirect_url );
+                        wp_safe_redirect( $redirect_url );
+                        exit;
+
                     } else {
                         // b3_resetpass
                         $rp_key   = ( isset( $_REQUEST[ 'rp_key' ] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'rp_key' ] ) ) : false;
@@ -1176,7 +1180,6 @@
                 $user_id = wp_insert_user( $user_data );
                 if ( ! is_wp_error( $user_id ) ) {
                     if ( true == $use_custom_passwords && isset( $user_data[ 'pass1' ] ) ) {
-                        // @TODO: check if still needed
                         wp_set_password( $user_data[ 'pass1' ], $user_id );
                     }
 

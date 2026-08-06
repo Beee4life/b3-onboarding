@@ -94,14 +94,14 @@
     }
 
     // Return welcome user message (user)
-    function b3_get_welcome_user_message() {
+    function b3_get_welcome_user_message( $user_email = '' ) {
         $message = get_option( 'b3_welcome_user_message' );
 
         if ( ! $message ) {
-            $message = b3_default_welcome_user_message();
+            $message = b3_default_welcome_user_message( $user_email );
         }
 
-        return apply_filters( 'b3_welcome_user_message', $message );
+        return apply_filters( 'b3_welcome_user_message', $message, $email );
     }
 
     // New site created message
@@ -364,16 +364,16 @@
                     $expiration  = time() + ( $amount_minutes * MINUTE_IN_SECONDS );
 
                     $wpdb->query( $wpdb->prepare(
-                        "INSERT INTO {$wpdb->sitemeta} (site_id, meta_key, meta_value) 
-                     VALUES (1, %s, %s) 
+                        "INSERT INTO {$wpdb->sitemeta} (site_id, meta_key, meta_value)
+                     VALUES (1, %s, %s)
                      ON DUPLICATE KEY UPDATE meta_value = VALUES(meta_value)",
                         $meta_key,
                         $hashed_password
                     ) );
 
                     $wpdb->query( $wpdb->prepare(
-                        "INSERT INTO {$wpdb->sitemeta} (site_id, meta_key, meta_value) 
-                     VALUES (1, %s, %s) 
+                        "INSERT INTO {$wpdb->sitemeta} (site_id, meta_key, meta_value)
+                     VALUES (1, %s, %s)
                      ON DUPLICATE KEY UPDATE meta_value = VALUES(meta_value)",
                         $timeout_key,
                         $expiration

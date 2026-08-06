@@ -169,7 +169,7 @@
 
             } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email           = b3_get_welcome_user_message();
+                $user_email           = b3_get_welcome_user_message( $user->user_email );
 
             } elseif ( 'none' === $registration_type ) {
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
@@ -228,7 +228,6 @@
      * @return mixed
      */
     function b3_new_site_email( $new_site_email, $site, $user ) {
-        // @TODO: add filter + (maybe) user input for message
         $user_email = b3_get_new_site_created_message();
         $user_email = b3_replace_template_styling( $user_email );
         $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [

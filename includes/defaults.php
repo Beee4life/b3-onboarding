@@ -224,27 +224,37 @@
 
     }
 
+    // welcome subject when user is immediately active
     function b3_default_welcome_user_subject() {
         /* translators: site name */
         return sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
+    // welcome message when user is immediately active
     function b3_default_welcome_user_message() {
         /* translators: 1. lost password url, 2. set password */
-        $activation_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
-        $button          = sprintf( '<div class="big-link">%s</div>', $activation_link ) . "\n";
-        $message         = b3_get_email_intro();
-        $message         .= '<br><br>' . "\n";
+        $message = b3_get_email_intro();
+        $message .= '<br><br>' . "\n";
         /* translators: site name */
-        $message         .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
+        $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
 
-        if ( true != get_option( 'b3_activate_custom_passwords' ) ) {
+        if ( get_option( 'b3_use_magic_link' ) ) {
+            $magic_link = sprintf( '<a href="%s">%s</a>', b3_get_magic_link_url( $user_email ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+            $button     = sprintf( '<div class="big-link">%s</div>', $magic_link ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= __( 'You can set login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+            $message    .= '<br><br>' . "\n";
+            $message    .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+
+        } elseif ( ! get_option( 'b3_activate_custom_passwords' ) ) {
+            $a_href  = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
+            $button  = sprintf( '<div class="big-link">%s</div>', $a_href ) . "\n";
             $message .= '<br><br>' . "\n";
             $message .= __( 'You can set your password by clicking the button below.', 'b3-onboarding' ) . "\n";
             $message .= '<br><br>' . "\n";
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+
         } else {
-            // @TODO: TEST
             $message .= '<br><br>' . "\n";
             $message .= __( 'You will get another email with a link to set your password.', 'b3-onboarding' ) . "\n";
             $message .= '<br>' . "\n";

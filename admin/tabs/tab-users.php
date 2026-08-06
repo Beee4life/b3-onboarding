@@ -12,7 +12,7 @@
         $disallowed_domains_string    = b3_get_disallowed_domain_names( 'string' );
         $disallowed_usernames_filter  = apply_filters( 'b3_disallowed_usernames', [] );
         $disallowed_usernames_string  = ! empty( $disallowed_usernames_filter ) ? implode( ',', $disallowed_usernames_filter ) : '';
-        $front_end_approval_page_id   = get_option( 'b3_approval_page_id' ); // @TODO: get from function
+        $front_end_approval_page_id   = b3_get_user_approval_url( true );
         $hide_admin_bar               = get_option( 'b3_hide_admin_bar' );
         $roles                        = get_editable_roles();
         $user_may_delete              = get_option( 'b3_user_may_delete' );
