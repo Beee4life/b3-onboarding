@@ -310,23 +310,36 @@
     }
 
     function b3_default_wpmu_activate_user_message() {
-        error_log(get_site_option( 'b3_use_magic_link' ));
+        if ( function_exists( 'opcache_invalidate' ) ) {
+            opcache_invalidate( __FILE__, true );
+        }
+        global $wpdb;
+        // Bypasses all WP Caching and Options API filters
+        $raw_value = $wpdb->get_var( $wpdb->prepare(
+            "SELECT option_value FROM {$wpdb->base_prefix}options WHERE option_name = %s",
+            'b3_use_amgic_link'
+        ) );
+        error_log('testje');
+        error_log($raw_value);
+        $my_setting = false;
+
         $link_element = sprintf( '<a href="%s">%s</a>', '%2$s', strtoupper( esc_html__( 'Activate account', 'b3-onboarding' ) ) );
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
         /* translators: 1. salutation, 2 . activate link */
         $message      = esc_html__( 'Dear %1$s,', 'b3-onboarding' ) . "\n";
         $message      .= '<br><br>' . "\n";
-        $message      .= esc_html__( 'XTo activate your account, please click the link below.', 'b3-onboarding' ) . "\n";
+        $message      .= esc_html__( 'To activate your account, please click the link below.', 'b3-onboarding' ) . "\n";
         $message      .= '<br><br>' . "\n";
         $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         $message      .= '<br>' . "\n";
-        if ( get_site_option( 'b3_use_magic_link' ) ) {
+        if ( $my_setting ) {
             $message .= esc_html__( 'After you activate, you will receive *another email* with magic login link.', 'b3-onboarding' );
         } else {
             $message .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
         }
         $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
+        error_log( $message );
 
         return $message;
     }
@@ -342,7 +355,7 @@
         $message      .= '<br><br>' . "\n";
         $message      .= esc_html__( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
 
-        if ( get_site_option( 'b3_use_magic_link' ) ) {
+        if ( get_option( 'b3_use_magic_link' ) ) {
             $link_element = sprintf( '<a href="%s">%s</a>', '%4$s', strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
             $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
             $message      .= esc_html__( 'You can log in immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
