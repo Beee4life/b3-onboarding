@@ -462,11 +462,17 @@
         $message .= '<br><br>' . "\n";
         $message .= sprintf( '<div class="big-link-container"><div class="big-link"><a href="%s" class="">%s</a></div></div>', '%activation_url%', esc_html__( 'Click to activate', 'b3-onboarding' ) );
         $message .= '<br>' . "\n";
-        $message .= esc_html__( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
-        $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'After you activate, you can visit your site here:', 'b3-onboarding' ) . "\n";
-        $message .= '<br>' . "\n";
-        $message .= '<a href="%home_url%">%home_url%</a>';
+
+        if ( get_option( 'b3_use_magic_link' ) ) {
+            if ( get_option( 'b3_use_magic_link_password' ) ) {
+                $message .= esc_html__( 'After you activate, you will receive *another email* with your login info and a one time login link.', 'b3-onboarding' ) . "\n";
+            } else {
+                $message .= esc_html__( 'After you activate, you will receive *another email* with a one time login link.', 'b3-onboarding' ) . "\n";
+            }
+        } else {
+            $message .= esc_html__( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
+        }
+
         $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
