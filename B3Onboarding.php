@@ -476,7 +476,7 @@
                 }
             }
 
-                public function b3_registration_form_handling() {
+            public function b3_registration_form_handling() {
                 if ( isset( $_POST[ 'b3_register_nonce' ] ) ) {
                     $redirect_url = b3_get_register_url();
 
