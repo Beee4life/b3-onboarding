@@ -488,7 +488,7 @@
                     } else {
                         $admin_approval    = get_option( 'b3_needs_admin_approval' );
                         $meta_data         = [];
-                        $registration_type = get_option( 'b3_registration_type' );
+                        $registration_type = $this->settings[ 'registration_type' ];
                         $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( wp_unslash( $_POST[ 'user_email' ] ) ) : false;
 
                         if ( get_option( 'b3_activate_honeypot' ) && isset( $_POST[ 'b3_pooh' ] ) ) {
@@ -515,11 +515,11 @@
                         // @TODO: verify other meta
 
                         if ( ! is_multisite() ) {
-                            $redirect_url = $this->b3_single_registration( $redirect_url );
+                            $redirect_url = $this->b3_single_registration( $redirect_url, $registration_type, $user_email );
 
                         } else {
                             // if is_multisite
-                            $redirect_url = $this->b3_multisite_registration( $redirect_url );
+                            $redirect_url = $this->b3_multisite_registration( $redirect_url, $registration_type, $user_email, $meta_data );
                         }
 
                         wp_safe_redirect( $redirect_url );
@@ -874,8 +874,8 @@
                 return esc_html__( 'An unknown error occurred. Please try again later.', 'b3-onboarding' );
             }
 
-            private function b3_single_registration( $redirect_url ) {
-                if ( $redirect_url ) {
+            private function b3_single_registration( $redirect_url, $registration_type, $user_email ) {
+                if ( $redirect_url && $registration_type ) {
                     $register   = true;
                     $role       = get_option( 'default_role', 'subscriber' );
                     $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( wp_unslash( $_POST[ 'user_login' ] ) ) : false;
@@ -903,7 +903,7 @@
                             $query_arg = 'success';
 
                             if ( ! get_option( 'b3_activate_custom_passwords' ) ) {
-                                $reset_password = get_option( 'b3_redirect_set_password' ) ? true : false;
+                                $reset_password = true;
                             }
                         }
 
@@ -925,7 +925,7 @@
                             $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
 
                         } else {
-                            // Success
+                            // Registration was successful
                             if ( isset( $reset_password ) && true == $reset_password ) {
                                 // @TODO: also add to MU register
                                 $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_lostpassword_url() );
@@ -1052,7 +1052,7 @@
                 return $user_id;
             }
 
-            private function b3_multisite_registration( $redirect_url ) {
+            private function b3_multisite_registration( $redirect_url, $registration_type, $user_email = '', $meta = [] ) {
                 $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( wp_unslash( $_POST[ 'user_name' ] ) ) : false;
                 $register   = false;
 
