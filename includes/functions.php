@@ -119,49 +119,48 @@
     // Return registration options
     function b3_get_registration_types() {
         $registration_options = [];
-        $closed_option        = [
+
+        $closed_option = [
             [
                 'value' => 'none',
                 'label' => esc_html__( 'Closed (for everyone)', 'b3-onboarding' ),
             ],
         ];
 
-        if ( ! is_multisite() ) {
-            $normal_options = [
-                [
-                    'value' => 'email_activation',
-                    'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
-                ],
-                [
-                    'value' => 'open',
-                    'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
-                ],
-            ];
-        }
+        $single_site_options = [
+            [
+                'value' => 'email_activation',
+                'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
+            ],
+            [
+                'value' => 'open',
+                'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
+            ],
+        ];
 
+        $multisite_options = [
+            [
+                'value' => 'user',
+                'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
+            ],
+            [
+                'value' => 'blog',
+                'label' => esc_html__( 'Logged in user may register a site (no public new user registration)', 'b3-onboarding' ),
+            ],
+            [
+                'value' => 'all',
+                'label' => esc_html__( 'Visitor may register user and/or site', 'b3-onboarding' ),
+            ],
+            [
+                'value' => 'site',
+                'label' => esc_html__( "Visitor must register user + site", 'b3-onboarding' ),
+            ],
+        ];
         if ( is_multisite() ) {
-            $multisite_options = [
-                [
-                    'value' => 'user',
-                    'label' => esc_html__( 'Visitor may register user', 'b3-onboarding' ),
-                ],
-                [
-                    'value' => 'blog',
-                    'label' => esc_html__( 'Logged in user may register a site (no public new user registration)', 'b3-onboarding' ),
-                ],
-                [
-                    'value' => 'all',
-                    'label' => esc_html__( 'Visitor may register user and/or site', 'b3-onboarding' ),
-                ],
-                [
-                    'value' => 'site',
-                    'label' => esc_html__( "Visitor must register user + site", 'b3-onboarding' ),
-                ],
-            ];
         }
 
         if ( ! is_multisite() ) {
-            $registration_options = array_merge( $closed_option, $registration_options, $normal_options );
+            $registration_options = array_merge( $closed_option, $single_site_options );
         } else {
             if ( is_main_site() ) {
                 $registration_options = array_merge( $closed_option, $multisite_options );
@@ -854,6 +853,7 @@
         if ( false != $blog_id ) {
             switch_to_blog( $blog_id );
         }
+        error_log('Blog ID: ' . $blog_id);
 
         update_option( 'b3_disable_admin_notification_password_change', 1, false );
         update_option( 'b3_activate_logo_in_email', 1, false );
