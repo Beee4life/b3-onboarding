@@ -934,6 +934,8 @@
                                 // redirect to login page
                                 $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_login_url() );
                             }
+
+                            $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                         }
                     }
                 }
