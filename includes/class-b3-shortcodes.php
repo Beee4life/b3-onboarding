@@ -28,6 +28,8 @@
 
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
+                } elseif ( ! is_user_logged_in() && is_multisite() && ! is_main_site() ) {
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( "You can't register for this site.", 'b3-onboarding' ) );
                 }
 
                 if ( $admin_approval && 'user' == $registration_type ) {
