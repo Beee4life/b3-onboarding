@@ -600,11 +600,17 @@
                         $existing_user = get_user_by( 'email', $user_email );
 
                         if ( $existing_user instanceof WP_User ) {
-                            $magic_link = b3_get_magic_link_url( $user_email );
-                            $message    = b3_get_magic_link_message( $magic_link );
-                            $subject    = b3_get_magic_link_subject();
-                            $subject    = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                            $vars       = []; // empty right now, but might be filled later on...
+                            if ( in_array( 'b3_activation', (array) $existing_user->roles ) ) {
+                                $redirect_url = add_query_arg( 'message', 'activation_needed', $redirect_url );
+                            } elseif ( in_array( 'b3_approval', (array) $existing_user->roles ) ) {
+                                $redirect_url = add_query_arg( 'message', 'approval_needed', $redirect_url );
+                            } else {
+                                $magic_link = b3_get_magic_link_url( $user_email );
+                                $message    = b3_get_magic_link_message( $magic_link );
+                                $subject    = b3_get_magic_link_subject();
+                                $subject    = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
+                                $vars       = []; // empty right now, but might be filled later on...
+                            }
 
                             if ( ! empty( $message ) ) {
                                 $message      = b3_replace_template_styling( $message );
@@ -613,12 +619,11 @@
                                 $redirect_url = add_query_arg( 'login', 'code_sent', $redirect_url );
 
                                 wp_mail( $user_email, $subject, $message );
+                            }
+
+                            if ( ! empty( $redirect_url ) ) {
                                 wp_safe_redirect( $redirect_url );
                                 exit;
-
-                            } else {
-                                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log( 'Email message not set for magic link.' );
                             }
                         }
                     }
@@ -779,6 +784,12 @@
                         return sprintf( esc_html__( 'You have successfully registered to %s. Enter your email address to set your password.', 'b3-onboarding' ), get_bloginfo( 'name' ) );
 
                     // Activation
+                    case 'activation_needed':
+                        return esc_html__( 'You must activate your account first. Please check your email.', 'b3-onboarding' );
+
+                    case 'approval_needed':
+                        return esc_html__( "Your account must be approved first. You'll be notified about the outcome.", 'b3-onboarding' );
+
                     case 'activate_success':
                         if ( get_option( 'b3_use_magic_link' ) ) {
                             return esc_html__( 'You have successfully activated your account. You can now login through the use of a magic link. Please enter your email address below.', 'b3-onboarding' );
@@ -894,19 +905,21 @@
 
                         if ( $user_login ) {
                             // Registration is open and user has valid login !
-                            if ( get_option( 'b3_needs_admin_approval' ) ) {
-                                $role      = 'b3_approval';
-                                $query_arg = 'access_requested';
-                            } elseif ( 'email_activation' === $registration_type ) {
+                            if ( 'email_activation' === $registration_type ) {
                                 $role      = 'b3_activation';
                                 $query_arg = 'confirm_email';
-                            } elseif ( get_option( 'b3_use_magic_link' ) ) {
-                                $query_arg = 'magic';
                             } else {
                                 $query_arg = 'success';
 
+                                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                                    $role      = 'b3_approval';
+                                    $query_arg = 'access_requested';
+                                }
+
                                 if ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
-                                    $reset_password = true;
+                                    if ( ! get_option( 'b3_needs_admin_approval' ) ) {
+                                        $reset_password = true;
+                                    }
                                 }
                             }
 
