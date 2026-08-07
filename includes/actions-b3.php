@@ -55,10 +55,6 @@
         global $wpdb;
         $meta_data = unserialize( $signup_info->meta );
 
-        if ( isset( $meta_data[ 'pending' ] ) ) {
-            unset( $meta_data[ 'pending' ] );
-        }
-
         // activate site and set to public
         $meta_data[ 'active' ]  = 1;
         $meta_data[ 'public' ]  = 1;

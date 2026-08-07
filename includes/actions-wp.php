@@ -140,7 +140,6 @@
                 do_action( 'b3_inform_admin', 'request_access' );
 
                 global $wpdb;
-                $meta[ 'pending' ] = '1';
                 $table             = $wpdb->signups;
                 $data[ 'meta' ]    = serialize( $meta );
                 $where             = [ 'user_login' => $user_login ];
@@ -176,7 +175,13 @@
         if ( get_option( 'b3_needs_admin_approval' ) ) {
             // @TODO: send magic link email
             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-            error_log('@TODO: send magic link email');
+            // error_log('@TODO: send magic link email');
+        }
+
+        if ( ! empty( $meta ) ) {
+            foreach( $meta as $meta_key => $meta_value ) {
+                update_user_meta( $user_id, $meta_key, $meta_value );
+            }
         }
 
         $message = sprintf( b3_get_wpmu_user_activated_message( $user->user_email ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
