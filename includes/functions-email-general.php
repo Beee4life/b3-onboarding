@@ -101,7 +101,7 @@
             $message = b3_default_welcome_user_message( $user_email );
         }
 
-        return apply_filters( 'b3_welcome_user_message', $message, $email );
+        return apply_filters( 'b3_welcome_user_message', $message, $user_email );
     }
 
     // New site created message
@@ -168,14 +168,14 @@
     }
 
     // Get email message for account approved
-    function b3_get_account_approved_message() {
+    function b3_get_account_approved_message( $user_email = '' ) {
         $message = get_option( 'b3_account_approved_message' );
 
         if ( ! $message ) {
-            $message = b3_default_account_approved_message();
+            $message = b3_default_account_approved_message( $user_email );
         }
 
-        return apply_filters( 'b3_account_approved_message', $message );
+        return apply_filters( 'b3_account_approved_message', $message, $user_email );
     }
 
     // Get email subject for account activated (user)
@@ -191,14 +191,14 @@
 
     // Get email message for account activated (user)
     // @TODO: maybe merge with welcome
-    function b3_get_account_activated_message_user( $email = '' ) {
+    function b3_get_account_activated_message_user( $user_email = '' ) {
         $message = get_option( 'b3_account_activated_message' );
 
         if ( ! $message ) {
-            $message = b3_default_account_activated_message( $email );
+            $message = b3_default_account_activated_message( $user_email );
         }
 
-        return apply_filters( 'b3_account_activated_message_user', $message );
+        return apply_filters( 'b3_account_activated_message_user', $message, $user_email );
     }
 
     // Get account rejected subject (user)

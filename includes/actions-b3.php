@@ -35,7 +35,7 @@
             $to      = $user_object->user_email;
             $subject = b3_get_account_approved_subject();
             $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-            $message = b3_get_account_approved_message();
+            $message = b3_get_account_approved_message( $to );
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -546,7 +546,7 @@
             $to      = $user->user_email;
             $subject = b3_get_account_approved_subject();
             $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-            $message = b3_get_account_approved_message();
+            $message = b3_get_account_approved_message( $to );
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );

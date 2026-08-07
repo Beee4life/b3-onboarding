@@ -14,6 +14,7 @@
         $activate_terms_page          = get_option( 'b3_activate_terms_page' );
         /* translators: click here link */
         $default_accept_placeholder   = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
+        $hide_custom_passwords        = false;
         $needs_admin_approval         = get_option( 'b3_needs_admin_approval' );
         $privacy_page                 = get_option( 'b3_privacy_page_id' );
         $privacy_placeholder          = apply_filters( 'b3_privacy_text', $default_accept_placeholder );
@@ -26,6 +27,10 @@
         $terms_text                   = apply_filters( 'b3_terms_text', '' ) ? '' : get_option( 'b3_terms_text' );
         $use_magic_link               = get_option( 'b3_use_magic_link' );
         $use_magic_link_password      = get_option( 'b3_use_magic_link_password' );
+
+        if ( in_array( $registration_type, [ 'none' ] ) || ( $use_magic_link && ! $use_magic_link_password ) ) {
+            $hide_custom_passwords = true;
+        }
 
         ob_start();
 
@@ -77,7 +82,7 @@
 
                 <?php } else { ?>
 
-                    <?php if ( in_array( $registration_type, [ 'user', 'all', 'site', 'email_activation' ] ) ) { ?>
+                    <?php if ( in_array( $registration_type, [ 'user', 'all', 'site', 'email_activation', 'open' ] ) ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_needs_admin_approval"><?php esc_html_e( 'Needs admin approval', 'b3-onboarding' ); ?></label>
@@ -100,7 +105,6 @@
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'none' ] ) ) ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>

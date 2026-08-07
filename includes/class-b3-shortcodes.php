@@ -218,11 +218,15 @@
                         if ( in_array( $_REQUEST[ 'registered' ], [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) );
 
+                        } elseif ( 'magic' === $_REQUEST[ 'registered' ] ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
+
                         } elseif ( 'success' === $_REQUEST[ 'registered' ] ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success' );
+
                         } else {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log( 'FIX ELSE - line 220 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 229 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }

@@ -55,10 +55,10 @@
             ];
         }
         if ( in_array( $registration_type, [ 'open', 'blog', 'all', 'site', 'none' ] ) ) {
-            $email_boxes[] = [
-                'id'    => 'welcome_user_manual',
-                'title' => esc_html__( 'Welcome email (user) - added by admin', 'b3-onboarding' ),
-            ];
+            // $email_boxes[] = [
+            //     'id'    => 'welcome_user_manual',
+            //     'title' => esc_html__( 'Welcome email (user) - added by admin', 'b3-onboarding' ),
+            // ];
         }
         if ( is_main_site() ) {
             if ( is_multisite() ) {
@@ -1182,7 +1182,7 @@
                     $subject = b3_get_new_wpmu_user_subject_admin();
                     break;
                 case 'account-approved':
-                    $message = b3_get_account_approved_message();
+                    $message = b3_get_account_approved_message( 'dummy@example.com' );
                     $subject = b3_get_account_approved_subject();
                     break;
                 case 'account-activated':

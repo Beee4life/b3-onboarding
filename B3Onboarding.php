@@ -486,7 +486,6 @@
                         exit;
 
                     } else {
-                        $admin_approval    = get_option( 'b3_needs_admin_approval' );
                         $meta_data         = [];
                         $registration_type = $this->settings[ 'registration_type' ];
                         $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( wp_unslash( $_POST[ 'user_email' ] ) ) : false;
@@ -878,7 +877,6 @@
                 if ( $redirect_url && $registration_type ) {
                     $register   = true;
                     $role       = get_option( 'default_role', 'subscriber' );
-                    $user_login = ( isset( $_POST[ 'user_login' ] ) ) ? sanitize_user( wp_unslash( $_POST[ 'user_login' ] ) ) : false;
 
                     if ( 'none' === $registration_type ) {
                         // Registration closed, display error
@@ -892,50 +890,56 @@
                     }
 
                     if ( true === $register && 'none' !== $registration_type ) {
-                        // Registration is open !
-                        if ( $admin_approval ) {
-                            $role      = 'b3_approval';
-                            $query_arg = 'access_requested';
-                        } elseif ( 'email_activation' === $registration_type ) {
-                            $role      = 'b3_activation';
-                            $query_arg = 'confirm_email';
-                        } else {
-                            $query_arg = 'success';
+                        $user_login = isset( $_POST[ 'user_login' ] ) ? sanitize_user( wp_unslash( $_POST[ 'user_login' ] ) ) : false;
 
-                            if ( ! get_option( 'b3_activate_custom_passwords' ) ) {
-                                $reset_password = true;
+                        if ( $user_login ) {
+                            // Registration is open and user has valid login !
+                            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                                $role      = 'b3_approval';
+                                $query_arg = 'access_requested';
+                            } elseif ( 'email_activation' === $registration_type ) {
+                                $role      = 'b3_activation';
+                                $query_arg = 'confirm_email';
+                            } elseif ( get_option( 'b3_use_magic_link' ) ) {
+                                $query_arg = 'magic';
+                            } else {
+                                $query_arg = 'success';
+
+                                if ( ! get_option( 'b3_activate_custom_passwords' ) && ! get_option( 'b3_use_magic_link' ) ) {
+                                    $reset_password = true;
+                                }
                             }
-                        }
 
-                        $register_args = [
-                            'registration_type' => $registration_type,
-                            'role'              => $role,
-                            'user_email'        => $user_email,
-                            'user_login'        => $user_login,
-                            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                            'pass1'             => isset( $_POST[ 'pass1' ] ) ? $_POST[ 'pass1' ] : '',
-                            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                            'pass2'             => isset( $_POST[ 'pass2' ] ) ? $_POST[ 'pass2' ] : '',
-                        ];
-                        $result = $this->b3_register_user( $register_args );
+                            $register_args = [
+                                'registration_type' => $registration_type,
+                                'role'              => $role,
+                                'user_email'        => $user_email,
+                                'user_login'        => $user_login,
+                                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                'pass1'             => isset( $_POST[ 'pass1' ] ) ? $_POST[ 'pass1' ] : '',
+                                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                'pass2'             => isset( $_POST[ 'pass2' ] ) ? $_POST[ 'pass2' ] : '',
+                            ];
+                            $result = $this->b3_register_user( $register_args );
 
-                        if ( is_wp_error( $result ) ) {
-                            // Parse errors into a string and append as parameter to redirect
-                            $errors       = join( ',', $result->get_error_codes() );
-                            $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
-
-                        } else {
-                            // Registration was successful
-                            if ( isset( $reset_password ) && true == $reset_password ) {
-                                // @TODO: also add to MU register
-                                $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_lostpassword_url() );
+                            if ( is_wp_error( $result ) ) {
+                                // Parse errors into a string and append as parameter to redirect
+                                $errors       = join( ',', $result->get_error_codes() );
+                                $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
 
                             } else {
-                                // redirect to login page
-                                $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_login_url() );
-                            }
+                                // Registration was successful
+                                if ( isset( $reset_password ) && true == $reset_password ) {
+                                    // @TODO: also add to MU register
+                                    $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_lostpassword_url() );
 
-                            $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
+                                } else {
+                                    // redirect to login page
+                                    $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_login_url() );
+                                }
+
+                                $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
+                            }
                         }
                     }
                 }

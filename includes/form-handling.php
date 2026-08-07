@@ -22,11 +22,13 @@
 
                 if ( 'none' === $registration_type ) {
                     delete_option( 'b3_activate_custom_passwords' );
+
                     if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
                         update_option( 'b3_registration_closed_message', sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_closed_message' ] ) ), false );
                     } else {
                         delete_option( 'b3_registration_closed_message' );
                     }
+
                 } else {
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == (int) $_POST[ 'b3_activate_recaptcha' ] ) {
                         update_option( 'b3_activate_recaptcha', 1 );
@@ -39,7 +41,7 @@
                     }
                 }
 
-                if ( in_array( $registration_type, [ 'user', 'all', 'email_activation', 'site' ] ) ) {
+                if ( in_array( $registration_type, [ 'user', 'all', 'email_activation', 'site', 'open' ] ) ) {
                     if ( isset( $_POST[ 'b3_needs_admin_approval' ] ) && 1 == (int) $_POST[ 'b3_needs_admin_approval' ] ) {
                         update_option( 'b3_needs_admin_approval', 1, false );
                     } else {
@@ -47,7 +49,7 @@
                     }
 
                 } else {
-                    // TODO: check in single site
+                    // not available in other registration options
                     delete_option( 'b3_needs_admin_approval' );
                 }
 
@@ -68,6 +70,10 @@
                 } else {
                     delete_option( 'b3_use_magic_link' );
                     delete_option( 'b3_use_magic_link_password' );
+                }
+
+                if ( get_option( 'b3_use_magic_link' ) && ! get_option( 'b3_use_magic_link_password' ) ) {
+                    delete_option( 'b3_activate_custom_passwords' );
                 }
 
                 if ( isset( $_POST[ 'b3_first_last_required' ] ) && 1 == (int) $_POST[ 'b3_first_last_required' ] ) {
