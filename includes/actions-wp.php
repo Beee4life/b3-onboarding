@@ -51,7 +51,7 @@
      *
      * @param $user_id
      */
-    function b3_do_stuff_after_wp_register( int $user_id, array $user_data ) {
+    function b3_set_role_after_register( int $user_id ) {
         if ( isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
             // user is manually added
         } elseif ( 0 < $user_id ) {
@@ -68,7 +68,7 @@
             }
         }
     }
-    add_action( 'user_register', 'b3_do_stuff_after_wp_register', 10, 2 );
+    add_action( 'user_register', 'b3_set_role_after_register' );
 
     /**
      * Add approval to admin bar
