@@ -1124,7 +1124,7 @@
 
                     } else {
                         if ( 'user' === $signup_for ) {
-                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, false, false, $meta_data );
+                            $result = $this->b3_register_wpmu_user( $user_login, $user_email, false, false, false, $meta );
 
                             if ( true == $result ) {
                                 // Success, redirect to login page.
