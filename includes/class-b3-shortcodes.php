@@ -58,7 +58,7 @@
                     }
                 }
 
-                if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
+                if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) ) {
                     // @TODO: Improve/DRY this
                     if ( ! empty( $_GET[ 'site_id' ] ) ) {
                         $site_id = (int) $_GET[ 'site_id' ];
@@ -188,11 +188,12 @@
                         $login_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
                         if ( 'enter_code' === $login_var ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 185');
+                            error_log('class-b3-shortcodes.php line 191');
+
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 189');
+                                error_log('class-b3-shortcodes.php line 196');
                             } else {
                                 $error_codes = explode( ',', 'enter_code' );
                             }
@@ -207,9 +208,20 @@
                         $errors[] = $this->b3_get_return_message( $code );
                     }
 
+                } elseif ( isset( $_REQUEST[ 'message' ] ) ) {
+                    $message_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'message' ] ) );
+
+                    if ( 'activation_needed' === $message_var ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activation_needed' );
+                    } elseif ( 'approval_needed' === $message_var ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'approval_needed' );
+                    }
+
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
+                    $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
+
                     if ( is_multisite() ) {
-                        if ( 'access_requested' === $_REQUEST[ 'registered' ] ) {
+                        if ( 'access_requested' === $registered_var ) {
                             // access_requested
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'access_requested' );
                         } else {
@@ -217,44 +229,48 @@
                             $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
                         }
                     } else {
-                        if ( in_array( $_REQUEST[ 'registered' ], [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) );
+                        if ( in_array( $registered_var, [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $registered_var );
 
-                        } elseif ( 'magic' === $_REQUEST[ 'registered' ] ) {
+                        } elseif ( 'magic' === $registered_var ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
 
-                        } elseif ( 'success' === $_REQUEST[ 'registered' ] ) {
+                        } elseif ( 'success' === $registered_var ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success' );
 
                         } else {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log( 'FIX ELSE - line 229 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 243 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
 
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'magic' === $_REQUEST[ 'activate' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) ) {
+                    $activate_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'activate' ] ) );
 
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success_approval' === $_REQUEST[ 'activate' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_approval' );
+                    if ( 'magic' === $activate_var ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
 
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === $_REQUEST[ 'activate' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
+                    } elseif ( 'success_approval' === $activate_var ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_approval' );
 
-                } elseif ( isset( $_REQUEST[ 'mu-activate' ] ) && 'success' === $_REQUEST[ 'mu-activate' ] ) {
+                    } elseif ( 'success' === $activate_var ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
+                    }
+
+                } elseif ( isset( $_REQUEST[ 'mu-activate' ] ) && 'success' === sanitize_text_field( wp_unslash( $_REQUEST[ 'mu-activate' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'mu_activate_success' );
 
-                } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' === $_REQUEST[ 'password' ] ) {
+                } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' === sanitize_text_field( wp_unslash( $_REQUEST[ 'password' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'password_updated' );
 
-                } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' === $_REQUEST[ 'checkemail' ] ) {
+                } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' === sanitize_text_field( wp_unslash( $_REQUEST[ 'checkemail' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'lost_password_sent' );
 
-                } elseif ( isset( $_REQUEST[ 'logout' ] ) && 'true' === $_REQUEST[ 'logout' ] ) {
+                } elseif ( isset( $_REQUEST[ 'logout' ] ) && 'true' === sanitize_text_field( wp_unslash( $_REQUEST[ 'logout' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'logged_out' );
 
-                } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' === $_REQUEST[ 'account' ] ) {
+                } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' === sanitize_text_field( wp_unslash( $_REQUEST[ 'account' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
 
@@ -297,11 +313,11 @@
                     foreach ( $error_codes as $error_code ) {
                         $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                     }
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === $_REQUEST[ 'activate' ] ) {
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === sanitize_text_field( wp_unslash($_REQUEST[ 'activate' ] ) ) ) {
                     // you can now log in... should this be here ?
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                    if ( 'success' === $_REQUEST[ 'registered' ] ) {
+                    if ( 'success' === sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) ) {
                         $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success_enter_password' );
                     }
                 }

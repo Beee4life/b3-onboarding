@@ -126,10 +126,17 @@
 
         // send 'account activated' email to user
         if ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
-            $user    = get_userdata( $user_id );
-            $to      = $user->user_email;
-            $subject = b3_get_account_activated_subject_user();
-            $message = b3_get_account_activated_message_user( $to );
+            $user = get_userdata( $user_id );
+            $to   = $user->user_email;
+
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                $subject = b3_get_request_access_subject_user();
+                $message = b3_get_request_access_message_user( true );
+            } else {
+                $subject = b3_get_account_activated_subject_user();
+                $message = b3_get_account_activated_message_user( $to );
+            }
+
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
