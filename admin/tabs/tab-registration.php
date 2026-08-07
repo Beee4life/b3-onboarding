@@ -157,19 +157,6 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php if ( 'open' === $registration_type ) { ?>
-                        <?php $hide_redirect_field = $custom_passwords ? true : false; ?>
-                        <?php b3_get_settings_field_open( $hide_redirect_field, 'redirect' ); ?>
-                            <?php b3_get_label_field_open(); ?>
-                                <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
-                            <?php b3_get_close(); ?>
-                            <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php checked($redirect_set_password); ?>/>
-                                <?php esc_html_e( 'Redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' ); ?>
-                            </div>
-                        <?php b3_get_close(); ?>
-                    <?php } ?>
-
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
