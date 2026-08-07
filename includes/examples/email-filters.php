@@ -7,7 +7,7 @@
 
     // Filters the sender email address
     function b3_notification_sender_email_example( $email ) {
-        $email = 'info@xx.cc';
+        $email = 'info@example.com';
 
         return $email;
     }
@@ -16,7 +16,7 @@
     // Filters the email address which will be notified
     function b3_new_user_notification_addresses_example( $recipients ) {
 
-        $email = 'info@address1.com, info@address1.com';
+        $email = 'email1@example.com, email2@example.com';
 
         return $email;
     }
