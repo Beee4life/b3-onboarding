@@ -853,7 +853,6 @@
         if ( false != $blog_id ) {
             switch_to_blog( $blog_id );
         }
-        error_log('Blog ID: ' . $blog_id);
 
         update_option( 'b3_disable_admin_notification_password_change', 1, false );
         update_option( 'b3_activate_logo_in_email', 1, false );
