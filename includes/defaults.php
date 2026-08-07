@@ -357,30 +357,46 @@
         $message .= '<br><br>' . "\n";
         $message .= esc_html__( 'Your new account is set up.', 'b3-onboarding' ) . "\n";
 
+        $password_message = $message;
+        $link_element     = sprintf( '<a href="%s">%s</a>', b3_get_login_url(), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
+        $button           = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+        $password_message .= '<br><br>' . "\n";
+        $password_message .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
+        $password_message .= '<br>' . "\n";
+        /* translators: username */
+        $password_message .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
+        $password_message .= '<br>' . "\n";
+        /* translators: password */
+        $password_message .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
+
         if ( get_option( 'b3_use_magic_link' ) ) {
-            if ( $user_email ) {
-                $link    = b3_get_magic_link_url( $user_email );
-                $message .= esc_html__( 'You can log in immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+            if ( get_option( 'b3_use_magic_link_password' ) ) {
+                if ( $user_email ) {
+                    $link    = b3_get_magic_link_url( $user_email );
+                    $message = $password_message;
+                    $message .= '<br><br>' . "\n";
+                    $message .= esc_html__( 'Or you can log in immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+                } else {
+                    $link    = b3_get_login_url();
+                    $message .= '<br><br>' . "\n";
+                    $message .= esc_html__( 'Or you can request a magic login link by clicking the button below.', 'b3-onboarding' ) . "\n";
+                }
             } else {
-                $link    = b3_get_login_url();
-                $message .= esc_html__( 'You can request a magic login link on the link below.', 'b3-onboarding' ) . "\n";
+                if ( $user_email ) {
+                    $link    = b3_get_magic_link_url( $user_email );
+                    $message .= esc_html__( 'You can log in immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+                } else {
+                    $link    = b3_get_login_url();
+                    $message .= esc_html__( 'You can request a magic login link on the link below.', 'b3-onboarding' ) . "\n";
+                }
             }
             $link_element = sprintf( '<a href="%s">%s</a>', $link, strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
             $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
 
         } else {
-            $link_element = sprintf( '<a href="%s">%s</a>', b3_get_login_url(), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
-            $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
-            $message      .= '<br><br>' . "\n";
-            $message      .= esc_html__( 'You can log in with the following information:', 'b3-onboarding' ) . "\n";
-            $message      .= '<br>' . "\n";
-            /* translators: username */
-            $message      .= esc_html__( 'Username: %2$s', 'b3-onboarding' ) . "\n";
-            $message      .= '<br>' . "\n";
-            /* translators: password */
-            $message      .= esc_html__( 'Password: %3$s', 'b3-onboarding' ) . "\n";
-            $message      .= '<br>' . "\n";
-            $message      .= esc_html__( 'You can login through the link below.', 'b3-onboarding' );
+            $message = $password_message;
+            $message .= '<br><br>' . "\n";
+            $message .= esc_html__( 'You can login through the link below.', 'b3-onboarding' );
         }
 
         if ( isset( $button ) ) {
