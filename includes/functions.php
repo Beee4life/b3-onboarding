@@ -1103,8 +1103,12 @@
             <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
             <?php if ( is_multisite() ) { ?>
                 <input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>"/>
+                <?php $existing_user = get_user_by( 'email', $user->user_email ); ?>
+                <?php if ( $existing_user instanceof WP_User ) { ?>
+                    <input name="b3_user_id" type="hidden" value="<?php echo (int) $existing_user->ID; ?>"/>
+                <?php } ?>
             <?php } else { ?>
-                <input name="b3_user_id" type="hidden" value="<?php echo esc_attr( $user->ID ); ?>"/>
+                <input name="b3_user_id" type="hidden" value="<?php echo (int) $user->ID; ?>"/>
             <?php } ?>
         </form>
         <?php

@@ -155,12 +155,14 @@
     }
 
     function b3_default_request_access_message_user( $activation = false ) {
+        $current_network = get_network();
+
         ob_start();
         /* translators: site name */
         if ( $activation ) {
-            echo sprintf( esc_html__( "You have successfully activated your account for %s but the owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( get_option( 'blogname' ) ) );
+            echo sprintf( esc_html__( "You have successfully activated your account for %s but the owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $current_network->site_name ) );
         } else {
-            echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( get_option( 'blogname' ) ) );
+            echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $current_network->site_name ) );
         }
         echo '<br>';
         echo wp_kses_post( b3_default_greetings() );
@@ -207,7 +209,7 @@
     }
 
     function b3_default_account_rejected_subject() {
-        return esc_html__( 'Account rejected', 'b3-onboarding' );
+        return sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
     function b3_default_account_rejected_message() {
@@ -349,13 +351,18 @@
         $message      .= esc_html__( 'To activate your account, please click the link below.', 'b3-onboarding' ) . "\n";
         $message      .= '<br><br>' . "\n";
         $message      .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
-        $message      .= '<br>' . "\n";
-        if ( get_option( 'b3_use_magic_link' ) ) {
+
+        if ( get_option( 'b3_needs_admin_approval' ) ) {
+            // no follow-up message
+        } elseif ( get_option( 'b3_use_magic_link' ) ) {
+            $message .= '<br>' . "\n";
             $message .= esc_html__( 'After you activate, you will receive *another email* with a magic login link.', 'b3-onboarding' );
+            $message .= '<br>' . "\n";
         } else {
+            $message .= '<br>' . "\n";
             $message .= esc_html__( 'After you activate, you will receive *another email* with your password.', 'b3-onboarding' );
+            $message .= '<br>' . "\n";
         }
-        $message .= '<br>' . "\n";
         $message .= b3_default_greetings();
 
         return $message;

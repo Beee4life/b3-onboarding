@@ -695,13 +695,45 @@
                 B3Onboarding::b3_errors()->add( 'error_nonce_mismatch', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
 
             } else {
-                $approve     = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? true : false;
-                $reject      = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? true : false;
-                $signup_id   = ( isset( $_POST[ 'b3_signup_id' ] ) ) ? (int) $_POST[ 'b3_signup_id' ] : false;
-                $user_id     = ( isset( $_POST[ 'b3_user_id' ] ) ) ? (int) $_POST[ 'b3_user_id' ] : false;
-                $user_object = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
+                $approve_user = ( isset( $_POST[ 'b3_approve_user' ] ) ) ? true : false;
+                $reject_user  = ( isset( $_POST[ 'b3_reject_user' ] ) ) ? true : false;
+                $signup_id    = ( isset( $_POST[ 'b3_signup_id' ] ) ) ? (int) $_POST[ 'b3_signup_id' ] : false;
+                $user_id      = ( isset( $_POST[ 'b3_user_id' ] ) ) ? (int) $_POST[ 'b3_user_id' ] : false;
+                $user_object  = ( isset( $_POST[ 'b3_user_id' ] ) ) ? new WP_User( $user_id ) : false;
 
-                if ( 0 < $signup_id ) {
+                if ( isset( $user_object->ID ) ) {
+                    if ( $approve_user ) {
+                        if ( ! is_multisite() ) {
+                            do_action( 'b3_approve_user', $user_id );
+                        } else {
+                            global $wpdb;
+                            $signup_info = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_email = %s', $wpdb->signups, $user_object->user_email ) );
+                            do_action( 'b3_approve_wpmu_signup', $signup_info );
+                            do_action( 'b3_approve_user', $user_id );
+                        }
+                        $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
+
+                    } elseif ( $reject_user ) {
+                        do_action( 'b3_before_reject_user', [ 'user_id' => $user_id ] );
+
+                        if ( ! is_multisite() ) {
+                            require_once( ABSPATH . 'wp-admin/includes/user.php' );
+                            if ( true == wp_delete_user( $user_id ) ) {
+                                $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                            } else {
+                                $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
+                            }
+                        } else {
+                            require_once( ABSPATH . 'wp-admin/includes/ms.php' );
+                            if ( true == wpmu_delete_user( $user_id ) ) {
+                                $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                            } else {
+                                $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
+                            }
+                        }
+                    }
+
+                } elseif ( 0 < $signup_id ) {
                     // multisite signup
                     global $wpdb;
                     $cache_group = 'b3ob';
@@ -714,10 +746,10 @@
                         wp_cache_set( $cache_key, $signup_info, $cache_group, 60 );
 
                         if ( $signup_info ) {
-                            if ( false != $approve ) {
+                            if ( $approve_user ) {
                                 do_action( 'b3_approve_wpmu_signup', $signup_info );
                                 $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
-                            } elseif ( false != $reject ) {
+                            } elseif ( $reject_user ) {
                                 do_action( 'b3_before_reject_user', [ 'user_email' => $signup_info->user_email ] );
                                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
                                 $wpdb->delete( $wpdb->signups, [ 'signup_id' => $signup_info->signup_id ] );
@@ -728,19 +760,6 @@
                     }
 
 
-                } elseif ( isset( $user_object->ID ) ) {
-                    if ( false != $approve ) {
-                        do_action( 'b3_approve_user', $user_id );
-                        $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
-                    } elseif ( false != $reject ) {
-                        do_action( 'b3_before_reject_user', [ 'user_id' => $user_id ] );
-                        require_once( ABSPATH . 'wp-admin/includes/user.php' );
-                        if ( true == wp_delete_user( $user_id ) ) {
-                            $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
-                        } else {
-                            $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
-                        }
-                    }
                 }
 
                 wp_safe_redirect( $redirect_url );

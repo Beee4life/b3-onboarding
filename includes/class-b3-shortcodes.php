@@ -209,25 +209,15 @@
                     }
 
                 } elseif ( isset( $_REQUEST[ 'message' ] ) ) {
-                    $message_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'message' ] ) );
-
-                    if ( 'activation_needed' === $message_var ) {
-                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activation_needed' );
-                    } elseif ( 'approval_needed' === $message_var ) {
-                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'approval_needed' );
-                    }
+                    $message_var                = sanitize_text_field( wp_unslash( $_REQUEST[ 'message' ] ) );
+                    $attributes[ 'messages' ][] = $this->b3_get_return_message( $message_var );
 
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
 
                     if ( is_multisite() ) {
-                        if ( 'access_requested' === $registered_var ) {
-                            // access_requested
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'access_requested' );
-                        } else {
-                            /* translators: site name */
-                            $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
-                        }
+                        $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
+
                     } else {
                         if ( in_array( $registered_var, [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( $registered_var );
@@ -240,7 +230,7 @@
 
                         } else {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log( 'FIX ELSE - line 243 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 233 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
@@ -447,7 +437,21 @@
 
                         if ( false === $results ) {
                             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                            $attributes[ 'users' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups ) );
+                            if ( is_multisite() ) {
+                                $site_id = ! is_main_site() ? get_current_blog_id() : 0;
+                                $meta_query = [
+                                    [
+                                        'key'   => 'pending',
+                                        'value' => '1',
+                                    ],
+                                ];
+                                $approval_args  = [ 'blog_id' => 0, 'meta_query' => $meta_query ];
+
+                            } else {
+                                $approval_args  = [ 'role' => 'b3_approval' ];
+                            }
+
+                            $attributes[ 'users' ] = get_users( $approval_args );
                             wp_cache_set( $cache_key, $attributes[ 'users' ], $cache_group, 3600 );
                             // @TODO: clear after any signup
                         }
