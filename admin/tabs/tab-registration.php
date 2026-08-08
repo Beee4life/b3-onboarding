@@ -101,7 +101,7 @@
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
                                 <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php checked($registration_with_email_only); ?>/>
-                                <?php esc_html_e( 'Register with only an email address.', 'b3-onboarding' ); ?>
+                                <?php esc_html_e( 'Register without a user login.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
 
@@ -116,8 +116,7 @@
                         <?php b3_get_close(); ?>
                     <?php } ?>
 
-                    <?php $hide_extended_fields = $registration_with_email_only ? ' hidden' : false; ?>
-                    <div class="b3-name-fields<?php echo esc_attr( $hide_extended_fields ); ?>">
+                    <div class="b3-name-fields">
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_first_last"><?php esc_html_e( 'First and last name', 'b3-onboarding' ); ?></label>

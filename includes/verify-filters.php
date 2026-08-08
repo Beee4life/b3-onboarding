@@ -7,6 +7,11 @@
      * @since 2.0.0
      */
     function b3_verify_filter_input() {
+        static $verify_filter_shown = false;
+
+        if ( $verify_filter_shown ) {
+            return;
+        }
 
         $error_messages = [];
         $custom_filters = [
@@ -102,6 +107,7 @@
         foreach( $custom_filters as $filter => $validation ) {
             $default       = ( in_array( $validation, [ 'array' ] ) ) ? [] : 'no_filter_defined';
             $filter_output = apply_filters( $filter, $default );
+
             if ( 'no_filter_defined' != $filter_output || is_array( $filter_output ) && empty( $filter_output ) ) {
                 if ( in_array( 'email', $validation ) ) {
                     if ( is_string( $filter_output ) ) {
@@ -240,9 +246,9 @@
 
         if ( ! empty( $error_messages ) ) {
             foreach( $error_messages as $message ) {
-                // TODO: test
                 echo sprintf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
             }
+            $verify_filter_shown = true;
         }
     }
     add_action( 'b3_verify_filter_input', 'b3_verify_filter_input' );

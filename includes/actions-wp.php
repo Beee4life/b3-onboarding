@@ -5,13 +5,7 @@
      * This file contains functions hooked to WordPress' hooks
      */
 
-    /**
-     * Update usermeta after user register
-     *
-     * @since 1.0.0
-     *
-     * @param $user_id
-     */
+    // Update usermeta after user register
     function b3_update_user_meta_after_register( $user_id ) {
         if ( isset( $_POST[ 'first_name' ] ) && ! empty( $_POST[ 'first_name' ] ) ) {
             update_user_meta( $user_id, 'first_name', sanitize_text_field( wp_unslash( $_POST[ 'first_name' ] ) ) );
@@ -44,13 +38,7 @@
     }
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
-    /**
-     * Do stuff after user registers.
-     *
-     * @since 1.0.0
-     *
-     * @param $user_id
-     */
+    // Do stuff after user registers.
     function b3_set_role_after_register( int $user_id ) {
         if ( isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
             // user is manually added
@@ -60,9 +48,7 @@
             $user              = new WP_User( $user_id );
 
             if ( $user instanceof WP_User ) {
-                if ( $admin_approval ) {
-                    $user->set_role( 'b3_approval' );
-                } elseif ( 'email_activation' === $registration_type ) {
+                if ( 'email_activation' === $registration_type ) {
                     $user->set_role( 'b3_activation' );
                 }
             }
@@ -70,13 +56,7 @@
     }
     add_action( 'user_register', 'b3_set_role_after_register' );
 
-    /**
-     * Add approval to admin bar
-     *
-     * @since 2.0.0
-     *
-     * @param $wp_admin_bar
-     */
+    // Add approval to admin bar
     function b3_change_admin_bar( $wp_admin_bar ) {
         // @TODO: check in multisite
         if ( current_user_can( 'promote_users' ) ) {
@@ -84,13 +64,21 @@
             $registration_type = get_option( 'b3_registration_type' );
             $admin_approval    = get_option( 'b3_needs_admin_approval' );
 
-            if ( is_multisite() && $admin_approval ) {
-                global $wpdb;
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                $approval_users = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE active = 0', $wpdb->signups ) );
+            if ( $admin_approval ) {
+                if ( is_multisite() ) {
+                    $site_id = ! is_main_site() ? get_current_blog_id() : 0;
 
-            } elseif ( $admin_approval ) {
-                $approval_args  = [ 'role' => 'b3_approval' ];
+                    $meta_query = [
+                        [
+                            'key'   => 'pending',
+                            'value' => '1',
+                        ],
+                    ];
+                    $approval_args  = [ 'blog_id' => 0, 'meta_query' => $meta_query ];
+
+                } else {
+                    $approval_args  = [ 'role' => 'b3_approval' ];
+                }
                 $approval_users = get_users( $approval_args );
             }
 
@@ -121,61 +109,38 @@
     }
     add_action( 'admin_bar_menu', 'b3_change_admin_bar', 80 );
 
-    /**
-     * Do stuff after signup WPMU user (only)
-     *
-     * @since 3.0
-     *
-     * @param       $user_login
-     * @param       $user_email
-     * @param       $key
-     * @param array $meta
-     */
+    // Do stuff after signup WPMU user (only)
     function b3_after_signup_user( $user_login, $user_email, $key, $meta = [] ) {
         if ( ! is_admin() ) {
             $current_network = get_network();
-            if ( get_option( 'b3_needs_admin_approval' ) ) {
-                $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );
-                $message = sprintf( b3_default_request_access_message_user(), $current_network->site_name );
-                do_action( 'b3_inform_admin', 'request_access' );
-
-                global $wpdb;
-                $table             = $wpdb->signups;
-                $data[ 'meta' ]    = serialize( $meta );
-                $where             = [ 'user_login' => $user_login ];
-                $wpdb->update( $table, $data, $where );
-
-            } else {
-                $subject = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
-                $message = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
-            }
-
-            $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_get_replacement_vars() );
-            $message = htmlspecialchars_decode( stripslashes( $message ) );
+            $subject         = sprintf( b3_get_wpmu_activate_user_subject(), $current_network->site_name );
+            $message         = sprintf( b3_get_wpmu_activate_user_message(), $user_login, b3_get_login_url() . "?activate=user&key={$key}" );
+            $message         = b3_replace_template_styling( $message );
+            $message         = strtr( $message, b3_get_replacement_vars() );
+            $message         = htmlspecialchars_decode( stripslashes( $message ) );
             wp_mail( $user_email, $subject, $message, [] );
         }
     }
     add_action( 'after_signup_user', 'b3_after_signup_user', 11, 4 );
 
-    /**
-     * Do stuff after activate wpmu user only
-     *
-     * @since 3.0
-     *
-     * @param       $user_id
-     * @param       $password
-     * @param array $meta
-     */
+    // Do stuff after activate wpmu user only
     function b3_after_activate_user( $user_id, $password, $meta = [] ) {
         $current_network = get_network();
         $user            = get_userdata( $user_id );
-        $subject         = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
 
         if ( get_option( 'b3_needs_admin_approval' ) ) {
-            // @TODO: send magic link email
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-            // error_log('@TODO: send magic link email');
+            $subject = sprintf( esc_html__( 'Account activated for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+            $message = b3_default_request_access_message_user( true );
+
+            global $wpdb;
+            $meta[ 'pending' ] = 1;
+            $data[ 'meta' ]    = serialize( $meta );
+            $table             = $wpdb->signups;
+            $where             = [ 'user_login' => $user->user_login ];
+            $wpdb->update( $table, $data, $where );
+
+        } else {
+            $subject = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
         }
 
         if ( ! empty( $meta ) ) {
@@ -184,7 +149,10 @@
             }
         }
 
-        $message = sprintf( b3_get_wpmu_user_activated_message( $user->user_email ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        if ( ! isset( $message ) ) {
+            $message = sprintf( b3_get_wpmu_user_activated_message( $user->user_email ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+        }
+
         $message = b3_replace_template_styling( $message );
         $message = strtr( $message, b3_get_replacement_vars() );
         $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -193,52 +161,26 @@
     }
     add_action( 'wpmu_activate_user', 'b3_after_activate_user', 10, 3 );
 
-    /**
-     * Override activate new wpmu user + blog message
-     *
-     * @param $domain
-     * @param $path
-     * @param $title
-     * @param $user_login
-     * @param $user_email
-     * @param $key
-     */
-    function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key ) {
-        $admin_approval    = get_option( 'b3_needs_admin_approval' );
+    // Override activate new wpmu user + blog message
+    function b3_override_new_mu_user_blog_email( $domain, $path, $title, $user_login, $user_email, $key, $meta ) {
         $current_network   = get_network();
         $registration_type = get_option( 'b3_registration_type' );
-
-        if ( $admin_approval ) {
-            $subject = sprintf( b3_default_request_access_subject_user(), $current_network->site_name );
-            $message = sprintf( b3_default_request_access_message_user(), $current_network->site_name );
-            do_action( 'b3_inform_admin', 'request_access' );
-
-        } else {
-            $blog_id = b3_get_signup_id( $domain );
-            $subject = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
-            $message = b3_get_wpmu_activate_user_blog_message();
-        }
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_get_replacement_vars( 'message', [
+        $blog_id           = b3_get_signup_id( $domain );
+        $subject           = strtr( b3_get_wpmu_activate_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
+        $message           = b3_get_wpmu_activate_user_blog_message();
+        $message           = b3_replace_template_styling( $message );
+        $message           = strtr( $message, b3_get_replacement_vars( 'message', [
             'domain' => $domain,
             'key'    => $key,
             'path'   => $path,
         ], true ) );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
+        $message           = htmlspecialchars_decode( stripslashes( $message ) );
 
         wp_mail( $user_email, $subject, $message, [] );
     }
-    add_action( 'after_signup_site', 'b3_override_new_mu_user_blog_email', 10, 6 );
+    add_action( 'after_signup_site', 'b3_override_new_mu_user_blog_email', 10, 7 );
 
-    /**
-     * Override welcome mu user email message
-     *
-     * @param $blog_id
-     * @param $user_id
-     * @param $password
-     * @param $title
-     * @param $meta
-     */
+    // Override welcome mu user email message
     function b3_override_welcome_mu_user_blog_message( $blog_id, $user_id, $password, $title, $meta ) {
         $user_data = get_userdata( $user_id );
         $subject   = strtr( b3_get_wpmu_activated_user_blog_subject(), b3_get_replacement_vars( 'message', [ 'blog_id' => $blog_id ] ) );
@@ -255,6 +197,7 @@
     }
     add_action( 'wpmu_activate_blog', 'b3_override_welcome_mu_user_blog_message', 10, 5 );
 
+    // add network admin notices
     function b3_network_admin_notices() {
         if ( 'settings-network' === get_current_screen()->id ) {
             // translators: 1. plugin name, 2. link to tab registration, 3. link to tab emails
@@ -277,6 +220,7 @@
     }
     add_action( 'network_admin_notices', 'b3_network_admin_notices' );
 
+    // ajax-handling of file download
     function b3_handle_file_download() {
         if ( ! isset( $_GET[ 'file' ] ) ) {
             wp_die( 'Missing file parameter.' );
@@ -316,12 +260,7 @@
     }
     add_action( 'admin_post_b3_download', 'b3_handle_file_download' );
 
-    /**
-     * Initiates email activation
-     *
-     * @since 1.0.6
-     * @since 3.0 wpmu user activation
-     */
+    // Initiates email activation
     function b3_do_user_activate() {
         if ( is_multisite() ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && isset( $_GET[ 'activate' ] ) && 'user' === $_GET[ 'activate' ] ) {
@@ -370,8 +309,12 @@
                 }
 
                 if ( ! is_wp_error( $result ) ) {
-                    if ( get_option( 'b3_use_magic_link' ) ) {
-                        $redirect_url = add_query_arg( [ 'mu-activate' => 'magic' ], $redirect_url );
+                    if ( get_option( 'b3_needs_admin_approval' ) ) {
+                        do_action( 'b3_set_approval_status', $result );
+                        $redirect_url = add_query_arg( [ 'message' => 'activate_approval_needed' ], $redirect_url );
+
+                    } elseif ( get_option( 'b3_use_magic_link' ) ) {
+                        $redirect_url = add_query_arg( [ 'message' => 'activate_success_magic' ], $redirect_url );
                     } else {
                         $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
                     }
@@ -419,15 +362,18 @@
                 // @TODO: test
                 wp_cache_delete( $cache_key, $cache_group );
 
+                $admin_approval = get_option( 'b3_needs_admin_approval' );
+                $use_magic_link = get_option( 'b3_use_magic_link' );
+
                 // activate user, change user role
                 $user_object = new WP_User( $user->ID );
-                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                if ( $admin_approval ) {
                     $user_object->set_role( 'b3_approval' );
                 } else {
                     $user_object->set_role( get_option( 'default_role' ) );
                 }
 
-                if ( get_option( 'b3_use_magic_link' ) ) {
+                if ( $admin_approval || $use_magic_link ) {
                     $redirect_url = b3_get_login_url();
                 } elseif ( false == get_option( 'b3_activate_custom_passwords' ) ) {
                     $redirect_url = b3_get_lostpassword_url();
@@ -435,9 +381,9 @@
                     $redirect_url = b3_get_login_url();
                 }
 
-                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                if ( $admin_approval ) {
                     $redirect_url = add_query_arg( [ 'activate' => 'success_approval' ], $redirect_url );
-                } elseif ( get_option( 'b3_use_magic_link' ) ) {
+                } elseif ( $use_magic_link ) {
                     $redirect_url = add_query_arg( [ 'activate' => 'magic' ], $redirect_url );
                 } else {
                     $redirect_url = add_query_arg( [ 'activate' => 'success' ], $redirect_url );

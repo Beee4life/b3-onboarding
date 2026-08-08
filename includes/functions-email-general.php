@@ -146,11 +146,11 @@
     }
 
     // Get email message for request access (user)
-    function b3_get_request_access_message_user() {
+    function b3_get_request_access_message_user( $activation = false ) {
         $message = get_option( 'b3_request_access_message_user' );
 
         if ( ! $message ) {
-            $message = b3_default_request_access_message_user();
+            $message = b3_default_request_access_message_user( $activation );
         }
 
         return apply_filters( 'b3_request_access_message_user', $message );

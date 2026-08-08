@@ -3,65 +3,62 @@
 
     // This file contains functions hooked to the plugin's own hooks
 
-    /**
-     * Approve a user
-     *
-     * @since 1.0.0
-     *
-     * @param $user_id
-     * @return void
-     */
+    // Approve a user
     function b3_do_stuff_after_new_user_approved_by_admin( $user_id ) {
-        /*
-         * This action is called within single site only, but just to prevent inadvertent 'calling', it's enclosed
-         * in '! is_multisite()'
-         */
-        if ( ! is_multisite() ) {
-            $custom_passwords  = get_option( 'b3_activate_custom_passwords' );
-            $user_object       = get_userdata( $user_id );
-            $user_login        = $user_object->user_login;
-            $user_object->set_role( get_option( 'default_role' ) );
+        $user_object = get_userdata( $user_id );
 
-            if ( false == $custom_passwords ) {
-                // user needs a password
-                $key                 = get_password_reset_key( $user_object );
-                $reset_pass_url      = b3_get_reset_password_url();
-                $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_login );
+        if ( $user_object instanceof WP_User ) {
+            $vars = [];
+            delete_user_meta( $user_id, 'pending' );
+
+            if ( ! is_multisite() ) {
+                $user_object->set_role( get_option( 'default_role' ) );
+
+                if ( ! get_option( 'b3_activate_custom_passwords' ) ) {
+                    // user needs a password
+                    $key                 = get_password_reset_key( $user_object );
+                    $reset_pass_url      = b3_get_reset_password_url();
+                    $user_login          = $user_object->user_login;
+                    $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_login );
+                }
             } else {
-                // user has set a custom password or requests access
-                $vars = [];
+                $blog_id = get_user_meta( $user_id, 'primary_blog', true );
+                if ( 0 < $blog_id ) {
+                    switch_to_blog( $blog_id );
+                    delete_option( 'site_awaiting_approval' );
+                    restore_current_blog();
+                }
             }
 
             $to      = $user_object->user_email;
             $subject = b3_get_account_approved_subject();
-            $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
             $message = b3_get_account_approved_message( $to );
-            $message = b3_replace_template_styling( $message );
-            $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
-            $message = htmlspecialchars_decode( stripslashes( $message ) );
 
-            wp_mail( $to, $subject, $message, [] );
+            if ( ! empty( $to ) && ! empty( $subject ) && ! empty( $message ) ) {
+                $subject = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
+                $message = b3_replace_template_styling( $message );
+                $message = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
+                $message = htmlspecialchars_decode( stripslashes( $message ) );
+                wp_mail( $to, $subject, $message, [] );
+            }
         }
     }
     add_action( 'b3_approve_user', 'b3_do_stuff_after_new_user_approved_by_admin' );
 
-    /**
-     * Approve new WPMU signup
-     *
-     * @param array $signup_info
-     */
+    // Approve new WPMU signup
     function b3_approve_new_wpmu_signup( $signup_info = [] ) {
         // update row
         global $wpdb;
         $meta_data = unserialize( $signup_info->meta );
 
-        // activate site and set to public
-        $meta_data[ 'active' ]  = 1;
-        $meta_data[ 'public' ]  = 1;
-        $signup_info->meta      = serialize( $meta_data );
-        $table                  = $wpdb->prefix . 'signups';
-        $data                   = [ 'meta' => $signup_info->meta ];
-        $where                  = [ 'signup_id' => $signup_info->signup_id ];
+        if ( isset( $meta_data[ 'pending' ] ) ) {
+            unset( $meta_data[ 'pending' ] );
+        }
+
+        $signup_info->meta = serialize( $meta_data );
+        $table             = $wpdb->prefix . 'signups';
+        $data              = [ 'meta' => $signup_info->meta ];
+        $where             = [ 'signup_id' => $signup_info->signup_id ];
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->update( $table, $data, $where, [ '%s' ] );
 
@@ -69,29 +66,23 @@
     }
     add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
 
-    /**
-     * Reject a user (by admin)
-     *
-     * @since 2.5.0
-     *
-     * @param $user_info
-     * @return void
-     */
+    // Send user email he/she is rejected (by admin)
     function b3_do_stuff_before_reject_user_by_admin( $user_info ) {
         if ( ! get_option( 'b3_disable_delete_user_email' ) ) {
-            $multisite = false;
-            $message   = b3_get_account_rejected_message();
-            $subject   = b3_get_account_rejected_subject();
+            $subject = b3_get_account_rejected_subject();
+            $message = b3_get_account_rejected_message();
 
             if ( isset( $user_info[ 'user_id' ] ) ) {
                 $user_object = get_userdata( $user_info[ 'user_id' ] );
-                $to          = $user_object->user_email;
+                if ( $user_object instanceof WP_User ) {
+                    $to = $user_object->user_email;
+                }
+
             } elseif ( isset( $user_info[ 'user_email' ] ) ) {
-                $multisite = true;
-                $to        = $user_info[ 'user_email' ];
+                $to = $user_info[ 'user_email' ];
             }
 
-            if ( $multisite || in_array( 'b3_approval', $user_object->roles ) || in_array( 'b3_activation', $user_object->roles ) ) {
+            if ( isset( $to ) ) {
                 $message = b3_replace_template_styling( $message );
                 $message = strtr( $message, b3_get_replacement_vars() );
                 $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -101,16 +92,9 @@
     }
     add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
 
-    /**
-     * Do stuff after user clicked activate link, sending emails in this function (or not))
-     *
-     * @since 1.0.0
-     *
-     * @param $user_id
-     * @return void
-     */
+    // Do stuff after user clicked activate link (single site), sending emails in this function (or not))
     function b3_do_stuff_after_user_activated( $user_id ) {
-        if ( 1 != get_option( 'b3_disable_admin_notification_new_user' ) ) {
+        if ( ! get_option( 'b3_disable_admin_notification_new_user' ) ) {
             // send 'new user' email to admin
             $user          = get_userdata( $user_id );
             $admin_to      = b3_get_notification_addresses( 'email_activation' );
@@ -125,11 +109,27 @@
         }
 
         // send 'account activated' email to user
-        if ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
+        if ( 'user' === get_option( 'b3_registration_type' ) ) {
+            $user = get_userdata( $user_id );
+            $to   = $user->user_email;
+
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                $subject = b3_get_request_access_subject_user();
+                $message = b3_get_request_access_message_user( true );
+            }
+
+        } elseif ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
             $user    = get_userdata( $user_id );
             $to      = $user->user_email;
             $subject = b3_get_account_activated_subject_user();
             $message = b3_get_account_activated_message_user( $to );
+
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                update_user_meta( $user_id, 'pending', true );
+            }
+        }
+
+        if ( ! empty( $to ) && ! empty( $subject ) && ! empty( $message ) ) {
             $message = b3_replace_template_styling( $message );
             $message = strtr( $message, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
             $message = htmlspecialchars_decode( stripslashes( $message ) );
@@ -139,14 +139,7 @@
     }
     add_action( 'b3_after_user_activated', 'b3_do_stuff_after_user_activated' );
 
-    /**
-     * Ouptuts default login/email field
-     *
-     * @since 1.0.0
-     *
-     * @param $registration_type
-     * @return void
-     */
+    // Ouptuts default login/email field
     function b3_add_username_email_fields( $registration_type ) {
         if ( 'blog' != $registration_type ) {
             ob_start();
@@ -177,13 +170,9 @@
     }
     add_action( 'b3_add_username_email_fields', 'b3_add_username_email_fields' );
 
-    /**
-     * Output for first/last name fields
-     *
-     * @since 0.8-beta
-     */
+    // Output for first/last name fields
     function b3_first_last_name_fields( $registration_type ) {
-        if ( get_option( 'b3_activate_first_last' ) && ! get_option( 'b3_register_email_only' ) && 'blog' != $registration_type ) {
+        if ( get_option( 'b3_activate_first_last' ) && 'blog' != $registration_type ) {
             do_action( 'b3_do_before_first_last_name' );
             ob_start();
             do_action( 'b3_render_form_element', 'register/first-name' );
@@ -196,11 +185,7 @@
     }
     add_action( 'b3_add_first_last_name_fields', 'b3_first_last_name_fields' );
 
-    /**
-     * Output the password fields
-     *
-     * @since 0.8-beta
-     */
+    // Output the password fields
     function b3_add_password_fields() {
         if ( ! is_multisite() && get_option( 'b3_activate_custom_passwords' ) && in_array( get_option( 'b3_registration_type' ), [ 'email_activation', 'open' ] ) ) {
             do_action( 'b3_do_before_passwords' );
@@ -224,14 +209,7 @@
     }
     add_action( 'b3_add_password_fields', 'b3_add_password_fields' );
 
-    /**
-     * Add field for subdomain when WPMU is active
-     *
-     * @since 1.0.0
-     *
-     * @param $registration_type
-     * @return void
-     */
+    // Add field for subdomain when WPMU is active
     function b3_add_site_fields( $registration_type ) {
         if ( is_multisite() && is_main_site() ) {
             if ( in_array( $registration_type, [
@@ -260,11 +238,7 @@
     }
     add_action( 'b3_add_site_fields', 'b3_add_site_fields' );
 
-    /**
-     * Function to output any custom fields
-     *
-     * @since 2.0.0
-     */
+    // Function to output any custom fields
     function b3_add_extra_fields_registration() {
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
         if ( ! empty( $extra_field_values ) ) {
@@ -276,22 +250,14 @@
     }
     add_action( 'b3_add_extra_fields_registration', 'b3_add_extra_fields_registration' );
 
-    /**
-     * Output any hidden fields
-     *
-     * @since 2.0.0
-     */
+    // Output any hidden fields
     function b3_add_hidden_fields_registration( $attributes ) {
         do_action( 'b3_render_form_element', 'general/nonce-fields', $attributes );
         do_action( 'b3_render_form_element', 'general/hidden-fields', $attributes );
     }
     add_action( 'b3_add_hidden_fields_registration', 'b3_add_hidden_fields_registration' );
 
-    /**
-     * Add reCAPTCHA check
-     *
-     * @since 2.0.0
-     */
+    // Add reCAPTCHA check
     function b3_add_recaptcha_fields() {
         if ( false != get_option( 'b3_activate_recaptcha' ) ) {
             $recaptcha_public = apply_filters( 'b3_recaptcha_public', get_option( 'b3_recaptcha_public' ) );
@@ -322,9 +288,7 @@
     }
     add_action( 'b3_add_recaptcha_fields', 'b3_add_recaptcha_fields' );
 
-    /**
-     * Function to output a terms checkbox
-     */
+    // Function to output a terms checkbox
     function b3_add_terms_checkbox() {
         if ( get_option( 'b3_activate_terms_page' ) ) {
             do_action( 'b3_render_form_element', 'register/terms' );
@@ -332,9 +296,7 @@
     }
     add_action( 'b3_add_terms_checkbox', 'b3_add_terms_checkbox' );
 
-    /**
-     * Function to output a privacy checkbox
-     */
+    // Function to output a privacy checkbox
     function b3_add_privacy_checkbox() {
         if ( get_option( 'b3_activate_privacy_page' ) ) {
             do_action( 'b3_render_form_element', 'register/privacy' );
@@ -342,13 +304,7 @@
     }
     add_action( 'b3_add_privacy_checkbox', 'b3_add_privacy_checkbox' );
 
-    /**
-     * Echo error/info message above a (custom) form
-     *
-     * @param $attributes
-     *
-     * @return void
-     */
+    // Echo error/info message above a (custom) form
     function b3_render_form_messages( $attributes = [] ) {
         if ( ! empty( $attributes ) ) {
             $messages          = [];
@@ -370,20 +326,30 @@
 
                     if ( 'login' === $attributes[ 'template' ] ) {
                         $login_form_message = b3_get_message_above_login();
+
                         if ( is_string( $login_form_message ) && ! empty( $login_form_message ) ) {
                             $messages[] = $login_form_message;
                         }
+
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( get_option( 'b3_needs_admin_approval' ) ) {
-                            $request_access_message = b3_get_message_above_request_access();
-                            if ( is_string( $request_access_message ) && ! empty( $request_access_message ) ) {
-                                $messages[] = $request_access_message;
+                            $message = apply_filters( 'b3_message_above_request_access', false );
+
+                            if ( ! $message ) {
+                                $message = b3_get_message_above_registration();
                             }
+
+                            if ( is_string( $message ) && ! empty( $message ) ) {
+                                $messages[] = $message;
+                            }
+
                         } elseif ( 'email_activation' === $registration_type ) {
                             $registration_message = b3_get_message_above_registration();
+
                             if ( is_string( $registration_message ) && ! empty( $registration_message ) ) {
                                 $messages[] = $registration_message;
                             }
+
                         } elseif ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
                             $registration_message = 'closed' === $registration_type ? b3_get_registration_closed_message() : b3_get_message_above_registration();
 
@@ -397,6 +363,7 @@
                         } else {
                             $message_above = b3_get_message_above_lost_password();
                         }
+
                         if ( is_string( $message_above ) && ! empty( $message_above ) ) {
                             $messages[] = esc_html( $message_above );
                         }
@@ -430,11 +397,7 @@
     }
     add_action( 'b3_add_form_messages', 'b3_render_form_messages' );
 
-    /**
-     * Action links on custom forms
-     *
-     * @param string $form_type
-     */
+    // Action links on custom forms
     function b3_add_action_links( $form_type = 'login' ) {
         if ( ! apply_filters( 'b3_disable_action_links', get_option( 'b3_disable_action_links' ) ) ) {
             $links = [];
@@ -504,15 +467,8 @@
     }
     add_action( 'b3_add_action_links', 'b3_add_action_links' );
 
-    /**
-     * Resend user activation mail
-     *
-     * @since 2.5.0
-     *
-     * @TODO: add if to determine if user's registration type (still) matches current, otherwise incorrect email could be sent
-     *
-     * @param $user_id
-     */
+    // Resend user activation mail
+    // @TODO: add if to determine if user's registration type (still) matches current, otherwise incorrect email could be sent
     function b3_send_user_activation( $user_id ) {
         if ( $user_id ) {
             $user_data    = get_userdata( $user_id );
@@ -528,13 +484,7 @@
     }
     add_action( 'b3_resend_user_activation', 'b3_send_user_activation' );
 
-    /**
-     * Manually activate a user
-     *
-     * @since 2.5.0
-     *
-     * @param $user_id
-     */
+    // Manually activate a user
     function b3_manually_activate_user( $user_id ) {
         if ( $user_id ) {
             $user    = get_userdata( $user_id );
@@ -552,13 +502,7 @@
     }
     add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
 
-    /**
-     * Inform admin about something
-     *
-     * @param $type
-     *
-     * @return void
-     */
+    // Inform admin about something
     function b3_inform_admin( $type ) {
         if ( $type ) {
             switch( $type ) {
@@ -583,14 +527,7 @@
     }
     add_action( 'b3_inform_admin', 'b3_inform_admin' );
 
-    /**
-     * Redirect a user
-     *
-     * @param $redirect_type
-     * @param $redirect_to
-     *
-     * @return void
-     */
+    // Redirect a user
     function b3_redirect( $redirect_type, $redirect_to = null ) {
         if ( 'logged_in' === $redirect_type ) {
             $current_user = wp_get_current_user();
@@ -616,11 +553,7 @@
     }
     add_action( 'b3_redirect', 'b3_redirect', 10, 2 );
 
-    /**
-     * Reset to default option
-     *
-     * @since 3.2.0
-     */
+    // Reset to default option
     function b3_reset_to_default() {
         if ( function_exists( 'b3_get_all_custom_meta_keys' ) ) {
             $meta_keys   = b3_get_all_custom_meta_keys();
@@ -638,16 +571,7 @@
     }
     add_action( 'b3_reset_to_default', 'b3_reset_to_default' );
 
-    /**
-     * Add before account page output
-     *
-     * @since 3.2.0
-     *
-     * @param $attributes
-     * @param $current_user
-     *
-     * @return void
-     */
+    // Add before account page output
     function b3_do_before_account( $attributes, $current_user ) {
         if ( is_multisite() ) {
             $user_sites = get_blogs_of_user( $current_user->ID );
@@ -682,27 +606,13 @@
     }
     add_action( 'b3_do_before_account', 'b3_do_before_account', 10, 2 );
 
-    /**
-     * Render a form element
-     *
-     * @since 3.2.0
-     *
-     * @param $element
-     * @param array $attributes
-     * @param false $current_user
-     */
+    // Render a form element
     function b3_render_form_element( $element, $attributes = [], $current_user = false ) {
         b3_get_template( $element, $attributes, $current_user);
     }
     add_action( 'b3_render_form_element', 'b3_render_form_element', 10, 3 );
 
-    /**
-     * Remove welcome page meta
-     *
-     * @since 3.4.0
-     *
-     * @return void
-     */
+    // Remove welcome page meta
     function b3_remove_welcome_page_meta() {
         global $wpdb;
         $table = $wpdb->postmeta;
@@ -719,15 +629,7 @@
     }
     add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );
 
-    /**
-     * Add custom fields to register form hook
-     *
-     * @param $attributes
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
+    // Add custom fields to register form hook
     function b3_add_registration_fields( $attributes ) {
         do_action( 'b3_add_hidden_fields_registration', $attributes );
         do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
@@ -743,16 +645,7 @@
     }
     add_action( 'b3_register_form', 'b3_add_registration_fields' );
 
-    /**
-     * Log a user in after magic link verification
-     *
-     * @param $user
-     * @param $redirect
-     *
-     * @return void
-     *
-     * @since 3.11.0
-     */
+    // Log a user in after magic link verification
     function b3_log_user_in( $user, $redirect = '' ) {
         $account_url = b3_get_account_url();
         $account_url = add_query_arg( 'message', 'logged_in', $account_url );
@@ -771,3 +664,17 @@
         }
     }
     add_action( 'b3_log_user_in', 'b3_log_user_in' );
+
+    function b3_set_approval_status( $result ) {
+        if ( ! empty( $result[ 'blog_id' ] ) ) {
+            switch_to_blog( $result[ 'blog_id' ] );
+            update_option( 'site_awaiting_approval', true );
+            restore_current_blog();
+        }
+        if ( ! empty( $result[ 'user_id' ] ) ) {
+            update_user_meta( $result[ 'user_id' ], 'pending', true );
+        }
+
+        do_action( 'b3_inform_admin', 'request_access' );
+    }
+    add_action( 'b3_set_approval_status', 'b3_set_approval_status' );
