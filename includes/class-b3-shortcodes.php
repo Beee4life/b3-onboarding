@@ -32,31 +32,15 @@
                     return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( "You can't register for this site.", 'b3-onboarding' ) );
                 }
 
-                if ( $admin_approval && 'user' == $registration_type ) {
-                    $button_value = esc_attr__( 'Request user', 'b3-onboarding' );
-                } elseif ( $admin_approval ) {
-                    $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
-                } else {
-                    $button_value = esc_attr__( 'Register', 'b3-onboarding' );
-                }
-
                 $default_attributes = [
                     'button_modifier'   => 'register',
-                    'button_value'      => $button_value,
+                    'button_value'      => esc_attr__( 'Register', 'b3-onboarding' ),
                     'template'          => 'register',
                     'title'             => false,
                 ];
 
                 $attributes                        = shortcode_atts( $default_attributes, $shortcode_args );
                 $attributes[ 'registration_type' ] = $registration_type;
-
-                if ( $admin_approval && ! isset( $_GET[ 'registered' ] ) ) {
-                    if ( 'user' === $registration_type ) {
-                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user.', 'b3-onboarding' ) );
-                    } elseif ( 'all' === $registration_type ) {
-                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user or site.', 'b3-onboarding' ) );
-                    }
-                }
 
                 if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) ) {
                     // @TODO: Improve/DRY this
@@ -131,13 +115,7 @@
 
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                         $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
-                        if ( 'activate_approval_needed' === $registered_var ) {
-                            return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( 'activate_approval_needed' ) );
-
-                        } elseif ( 'dummy' === $registered_var ) {
-                            // dummy is only used for demonstration setup on the plugin's website
-                            return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( 'dummy' ) );
-                        }
+                        return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( $registered_var ) );
                     }
 
                     if ( get_option( 'b3_activate_recaptcha' ) && 'register' === $attributes[ 'template' ] ) {
