@@ -133,10 +133,9 @@
         if ( get_option( 'b3_needs_admin_approval' ) ) {
             $subject = sprintf( esc_html__( 'Account activated for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
             $message = b3_default_request_access_message_user( true );
-            do_action( 'b3_inform_admin', 'request_access' );
 
             global $wpdb;
-            $meta[ 'pending' ] = '1';
+            $meta[ 'pending' ] = 1;
             $data[ 'meta' ]    = serialize( $meta );
             $table             = $wpdb->signups;
             $where             = [ 'user_login' => $user->user_login ];

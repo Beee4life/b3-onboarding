@@ -666,6 +666,6 @@
             update_user_meta( $result[ 'user_id' ], 'pending', true );
         }
 
-        b3_inform_admin( 'request_access' );
+        do_action( 'b3_inform_admin', 'request_access' );
     }
     add_action( 'b3_set_approval_status', 'b3_set_approval_status' );
