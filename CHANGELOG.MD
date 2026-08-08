@@ -6,6 +6,7 @@
 * disable filtered input settings
 * add admin users tab for multisite
 * fix magic link for multisite
+* added a lot of improvements for WPMU and user approval
 
 3.18.0
 * add option to send test email
