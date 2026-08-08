@@ -304,7 +304,7 @@
                     foreach ( $error_codes as $error_code ) {
                         $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                     }
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === sanitize_text_field( wp_unslash($_REQUEST[ 'activate' ] ) ) ) {
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === sanitize_text_field( wp_unslash( $_REQUEST[ 'activate' ] ) ) ) {
                     // you can now log in... should this be here ?
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
