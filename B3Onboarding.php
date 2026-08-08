@@ -1332,9 +1332,10 @@
             }
 
             public function b3_admin_notices() {
+                static $dev_message_shown = false;
+                static $membership_notice_shown = false;
                 static $no_frontend_approval_shown = false;
                 static $no_registration_page_shown = false;
-                static $dev_message_shown = false;
 
                 $screen_ids = [
                     'toplevel_page_b3-onboarding',
@@ -1383,7 +1384,6 @@
                 }
 
                 global $pagenow;
-                static $membership_notice_shown = false;
                 if ( ! $membership_notice_shown && is_blog_admin() && $pagenow === 'options-general.php' && ! isset ( $_GET[ 'page' ] ) && ! is_multisite() ) {
                     /* translators: 1 Plugin name 2. here */
                     echo sprintf( '<div class="notice notice-info"><p>' . esc_html__( '%1$s takes control over the \'Membership\' option. You can change this %2$s.', 'b3-onboarding' ) . '</p></div>', 'B3 OnBoarding', sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ) );
