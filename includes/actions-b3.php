@@ -119,16 +119,13 @@
             }
 
         } elseif ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
-            $user = get_userdata( $user_id );
-            $to   = $user->user_email;
+            $user    = get_userdata( $user_id );
+            $to      = $user->user_email;
+            $subject = b3_get_account_activated_subject_user();
+            $message = b3_get_account_activated_message_user( $to );
 
             if ( get_option( 'b3_needs_admin_approval' ) ) {
                 update_user_meta( $user_id, 'pending', true );
-                $subject = b3_get_request_access_subject_user();
-                $message = b3_get_request_access_message_user( true );
-            } else {
-                $subject = b3_get_account_activated_subject_user();
-                $message = b3_get_account_activated_message_user( $to );
             }
         }
 
@@ -175,7 +172,7 @@
 
     // Output for first/last name fields
     function b3_first_last_name_fields( $registration_type ) {
-        if ( get_option( 'b3_activate_first_last' ) && ! get_option( 'b3_register_email_only' ) && 'blog' != $registration_type ) {
+        if ( get_option( 'b3_activate_first_last' ) && 'blog' != $registration_type ) {
             do_action( 'b3_do_before_first_last_name' );
             ob_start();
             do_action( 'b3_render_form_element', 'register/first-name' );

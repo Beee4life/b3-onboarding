@@ -362,15 +362,18 @@
                 // @TODO: test
                 wp_cache_delete( $cache_key, $cache_group );
 
+                $admin_approval = get_option( 'b3_needs_admin_approval' );
+                $use_magic_link = get_option( 'b3_use_magic_link' );
+
                 // activate user, change user role
                 $user_object = new WP_User( $user->ID );
-                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                if ( $admin_approval ) {
                     $user_object->set_role( 'b3_approval' );
                 } else {
                     $user_object->set_role( get_option( 'default_role' ) );
                 }
 
-                if ( get_option( 'b3_use_magic_link' ) ) {
+                if ( $admin_approval || $use_magic_link ) {
                     $redirect_url = b3_get_login_url();
                 } elseif ( false == get_option( 'b3_activate_custom_passwords' ) ) {
                     $redirect_url = b3_get_lostpassword_url();
@@ -378,9 +381,9 @@
                     $redirect_url = b3_get_login_url();
                 }
 
-                if ( get_option( 'b3_needs_admin_approval' ) ) {
+                if ( $admin_approval ) {
                     $redirect_url = add_query_arg( [ 'activate' => 'success_approval' ], $redirect_url );
-                } elseif ( get_option( 'b3_use_magic_link' ) ) {
+                } elseif ( $use_magic_link ) {
                     $redirect_url = add_query_arg( [ 'activate' => 'magic' ], $redirect_url );
                 } else {
                     $redirect_url = add_query_arg( [ 'activate' => 'success' ], $redirect_url );

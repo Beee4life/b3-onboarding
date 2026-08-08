@@ -91,8 +91,6 @@
 
                 if ( isset( $_POST[ 'b3_register_email_only' ] ) && 1 == (int) $_POST[ 'b3_register_email_only' ] ) {
                     update_option( 'b3_register_email_only', 1, false );
-                    delete_option( 'b3_activate_first_last' );
-                    delete_option( 'b3_first_last_required' );
                 } else {
                     delete_option( 'b3_register_email_only' );
                 }

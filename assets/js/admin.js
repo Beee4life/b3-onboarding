@@ -41,10 +41,6 @@
             $('.b3_settings-input-description--validation').toggle();
         });
 
-        $('#b3_register_email_only').change(function() {
-            $('.b3-name-fields').toggle();
-        });
-
         $('#b3_activate_custom_passwords').change(function() {
             $('.b3_settings-field--redirect').toggle();
         });

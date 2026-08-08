@@ -81,7 +81,7 @@
     }
 
     function b3_default_account_activated_subject() {
-        return esc_html__( 'Account activated', 'b3-onboarding' );
+        return sprintf( esc_html__( 'Account activated on %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
     function b3_default_account_activated_message( $email = '' ) {
@@ -90,6 +90,7 @@
 
         if ( get_option( 'b3_needs_admin_approval' ) ) {
             $message .= esc_html__( 'you have confirmed your email address but the site owner choose to manually approve each account. You will be notified of the outcome.', 'b3-onboarding' );
+            $message .= '<br>' . "\n";
 
         } elseif ( get_option( 'b3_use_magic_link_password' ) || get_option( 'b3_use_magic_link' ) ) {
             if ( $email ) {
@@ -126,7 +127,9 @@
             $button     = sprintf( '<div class="big-link">%s</div>', $login_link ) . "\n";
             $message    .= esc_html__( 'you have confirmed your email address and can now login through the link below.', 'b3-onboarding' );
         }
-        $message .= '<br><br>' . "\n";
+        if ( ! get_option( 'b3_needs_admin_approval' ) ) {
+            $message .= '<br><br>' . "\n";
+        }
 
         if ( isset( $button ) ) {
             $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
