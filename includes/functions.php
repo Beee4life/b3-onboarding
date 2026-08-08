@@ -130,7 +130,7 @@
         $single_site_options = [
             [
                 'value' => 'email_activation',
-                'label' => esc_html__( 'Email activation (user needs to confirm email)', 'b3-onboarding' ),
+                'label' => esc_html__( 'Open (user needs to confirm email)', 'b3-onboarding' ),
             ],
             // [
             //     'value' => 'open',
