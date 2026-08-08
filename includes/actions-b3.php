@@ -123,6 +123,7 @@
             $to   = $user->user_email;
 
             if ( get_option( 'b3_needs_admin_approval' ) ) {
+                update_user_meta( $user_id, 'pending', true );
                 $subject = b3_get_request_access_subject_user();
                 $message = b3_get_request_access_message_user( true );
             } else {
@@ -328,20 +329,30 @@
 
                     if ( 'login' === $attributes[ 'template' ] ) {
                         $login_form_message = b3_get_message_above_login();
+
                         if ( is_string( $login_form_message ) && ! empty( $login_form_message ) ) {
                             $messages[] = $login_form_message;
                         }
+
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( get_option( 'b3_needs_admin_approval' ) ) {
-                            $request_access_message = b3_get_message_above_request_access();
-                            if ( is_string( $request_access_message ) && ! empty( $request_access_message ) ) {
-                                $messages[] = $request_access_message;
+                            $message = apply_filters( 'b3_message_above_request_access', false );
+
+                            if ( ! $message ) {
+                                $message = b3_get_message_above_registration();
                             }
+
+                            if ( is_string( $message ) && ! empty( $message ) ) {
+                                $messages[] = $message;
+                            }
+
                         } elseif ( 'email_activation' === $registration_type ) {
                             $registration_message = b3_get_message_above_registration();
+
                             if ( is_string( $registration_message ) && ! empty( $registration_message ) ) {
                                 $messages[] = $registration_message;
                             }
+
                         } elseif ( ! is_admin() && ! current_user_can( 'manage_network' ) ) {
                             $registration_message = 'closed' === $registration_type ? b3_get_registration_closed_message() : b3_get_message_above_registration();
 
@@ -355,6 +366,7 @@
                         } else {
                             $message_above = b3_get_message_above_lost_password();
                         }
+
                         if ( is_string( $message_above ) && ! empty( $message_above ) ) {
                             $messages[] = esc_html( $message_above );
                         }

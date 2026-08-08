@@ -221,7 +221,7 @@
 
                     } else {
                         if ( in_array( $registered_var, [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( $registered_var );
+                            return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( $registered_var ) );
 
                         } elseif ( 'magic' === $registered_var ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
@@ -243,7 +243,7 @@
                         $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
 
                     } elseif ( 'success_approval' === $activate_var ) {
-                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_approval' );
+                        return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( 'activate_success_approval' ) );
 
                     } elseif ( 'success' === $activate_var ) {
                         $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );

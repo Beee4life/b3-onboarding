@@ -48,9 +48,7 @@
             $user              = new WP_User( $user_id );
 
             if ( $user instanceof WP_User ) {
-                if ( $admin_approval ) {
-                    $user->set_role( 'b3_approval' );
-                } elseif ( 'email_activation' === $registration_type ) {
+                if ( 'email_activation' === $registration_type ) {
                     $user->set_role( 'b3_activation' );
                 }
             }
