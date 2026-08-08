@@ -101,7 +101,7 @@
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
                                 <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php checked($registration_with_email_only); ?>/>
-                                <?php esc_html_e( 'Register with only an email address.', 'b3-onboarding' ); ?>
+                                <?php esc_html_e( 'Register without a user login.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
 
