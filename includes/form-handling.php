@@ -708,10 +708,16 @@
                         } else {
                             global $wpdb;
                             $signup_info = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_email = %s', $wpdb->signups, $user_object->user_email ) );
-                            do_action( 'b3_approve_wpmu_signup', $signup_info );
-                            do_action( 'b3_approve_user', $user_id );
+                            if ( $signup_info ) {
+                                do_action( 'b3_approve_wpmu_signup', $signup_info );
+                                do_action( 'b3_approve_user', $user_id );
+                            }
                         }
-                        $redirect_url = add_query_arg( 'user', 'approved', $redirect_url );
+                        if ( isset( $signup_info ) ) {
+                            $redirect_url = add_query_arg( 'user', 'user_site_approved', $redirect_url );
+                        } else {
+                            $redirect_url = add_query_arg( 'user', 'user_approved', $redirect_url );
+                        }
 
                     } elseif ( $reject_user ) {
                         do_action( 'b3_before_reject_user', [ 'user_id' => $user_id ] );
@@ -725,8 +731,19 @@
                             }
                         } else {
                             require_once( ABSPATH . 'wp-admin/includes/ms.php' );
+                            $primary_blog = get_user_meta( $user_id, 'primary_blog', true );
                             if ( true == wpmu_delete_user( $user_id ) ) {
-                                $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                                if ( 0 < $primary_blog ) {
+                                    $site_deleted = wp_delete_site( $primary_blog );
+                                    if ( is_wp_error( $site_deleted ) ) {
+                                        $redirect_url = add_query_arg( 'user', 'user_rejected_not_site', $redirect_url );
+                                    } else {
+                                        $redirect_url = add_query_arg( 'user', 'user_site_rejected', $redirect_url );
+                                    }
+
+                                } else {
+                                    $redirect_url = add_query_arg( 'user', 'rejected', $redirect_url );
+                                }
                             } else {
                                 $redirect_url = add_query_arg( 'user', 'not-deleted', $redirect_url );
                             }
@@ -758,8 +775,6 @@
                             wp_cache_delete( $cache_key, $cache_group );
                         }
                     }
-
-
                 }
 
                 wp_safe_redirect( $redirect_url );

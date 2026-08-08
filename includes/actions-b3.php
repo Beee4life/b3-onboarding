@@ -21,6 +21,13 @@
                     $user_login          = $user_object->user_login;
                     $vars[ 'reset_url' ] = $reset_pass_url . '?action=rp&key=' . $key . '&login=' . rawurlencode( $user_login );
                 }
+            } else {
+                $blog_id = get_user_meta( $user_id, 'primary_blog', true );
+                if ( 0 < $blog_id ) {
+                    switch_to_blog( $blog_id );
+                    delete_option( 'site_awaiting_approval' );
+                    restore_current_blog();
+                }
             }
 
             $to      = $user_object->user_email;
@@ -48,13 +55,10 @@
             unset( $meta_data[ 'pending' ] );
         }
 
-        // activate site and set to public
-        // $meta_data[ 'active' ]  = 1;
-        // $meta_data[ 'public' ]  = 1;
-        $signup_info->meta      = serialize( $meta_data );
-        $table                  = $wpdb->prefix . 'signups';
-        $data                   = [ 'meta' => $signup_info->meta ];
-        $where                  = [ 'signup_id' => $signup_info->signup_id ];
+        $signup_info->meta = serialize( $meta_data );
+        $table             = $wpdb->prefix . 'signups';
+        $data              = [ 'meta' => $signup_info->meta ];
+        $where             = [ 'signup_id' => $signup_info->signup_id ];
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->update( $table, $data, $where, [ '%s' ] );
 
@@ -62,7 +66,7 @@
     }
     add_action( 'b3_approve_wpmu_signup', 'b3_approve_new_wpmu_signup' );
 
-    // Reject a user (by admin)
+    // Send user email he/she is rejected (by admin)
     function b3_do_stuff_before_reject_user_by_admin( $user_info ) {
         if ( ! get_option( 'b3_disable_delete_user_email' ) ) {
             $subject = b3_get_account_rejected_subject();
@@ -88,7 +92,7 @@
     }
     add_action( 'b3_before_reject_user', 'b3_do_stuff_before_reject_user_by_admin' );
 
-    // Do stuff after user clicked activate link, sending emails in this function (or not))
+    // Do stuff after user clicked activate link (single site), sending emails in this function (or not))
     function b3_do_stuff_after_user_activated( $user_id ) {
         if ( ! get_option( 'b3_disable_admin_notification_new_user' ) ) {
             // send 'new user' email to admin
@@ -651,3 +655,17 @@
         }
     }
     add_action( 'b3_log_user_in', 'b3_log_user_in' );
+
+    function b3_set_approval_status( $result ) {
+        if ( ! empty( $result[ 'blog_id' ] ) ) {
+            switch_to_blog( $result[ 'blog_id' ] );
+            update_option( 'site_awaiting_approval', true );
+            restore_current_blog();
+        }
+        if ( ! empty( $result[ 'user_id' ] ) ) {
+            update_user_meta( $result[ 'user_id' ], 'pending', true );
+        }
+
+        b3_inform_admin( 'request_access' );
+    }
+    add_action( 'b3_set_approval_status', 'b3_set_approval_status' );

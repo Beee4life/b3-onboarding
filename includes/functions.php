@@ -1070,53 +1070,59 @@
 
     // Render approvement table row
     function b3_render_approvement_table_row( $user, $attributes ) {
-        ob_start();
-        echo '<tr>';
-        echo sprintf( '<td>%s</td>', ( is_multisite() ) ? esc_html( $user->signup_id ) : esc_html( $user->ID ) );
+        if ( $user instanceof WP_User ) {
+            ob_start();
+            echo '<tr>';
+            echo sprintf( '<td>%s</td>', esc_html( $user->ID ) );
 
-        if ( false == $attributes[ 'register_email_only' ] ) {
-            echo sprintf( '<td>%s</td>', esc_html( $user->user_login ) );
-        }
-
-        if ( false != $attributes[ 'show_first_last_name' ] ) {
-            if ( is_multisite() ) {
-                $meta       = unserialize( $user->meta );
-                $first_name = ( isset( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : '';
-                $last_name  = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
-                echo sprintf( '<td>%s</td>', esc_html( $first_name ) );
-                echo sprintf( '<td>%s</td>', esc_html( $last_name ) );
-            } else {
-                echo sprintf( '<td>%s</td>', esc_html( $user->first_name ) );
-                echo sprintf( '<td>%s</td>', esc_html( $user->last_name ) );
+            if ( false == $attributes[ 'register_email_only' ] ) {
+                echo sprintf( '<td>%s</td>', esc_html( $user->user_login ) );
             }
-        }
-        echo sprintf( '<td>%s</td>', esc_html( $user->user_email ) );
-        if ( is_multisite() ) {
-            echo sprintf( '<td>%s</td>', esc_html( $user->domain ) );
-            echo sprintf( '<td>%s</td>', esc_html( $user->title ) );
-        }
-        echo '<td>';
-        ?>
-        <form name="b3_user_management" method="post">
-            <input name="b3_manage_users_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-manage-users-nonce' ) ); ?>"/>
-            <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>"/>
-            <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
-            <?php if ( is_multisite() ) { ?>
-                <input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>"/>
-                <?php $existing_user = get_user_by( 'email', $user->user_email ); ?>
-                <?php if ( $existing_user instanceof WP_User ) { ?>
-                    <input name="b3_user_id" type="hidden" value="<?php echo (int) $existing_user->ID; ?>"/>
-                <?php } ?>
-            <?php } else { ?>
-                <input name="b3_user_id" type="hidden" value="<?php echo (int) $user->ID; ?>"/>
-            <?php } ?>
-        </form>
-        <?php
-        echo '</td>';
-        echo '</tr>';
-        $output = ob_get_clean();
 
-        return $output;
+            if ( false != $attributes[ 'show_first_last_name' ] ) {
+                if ( is_multisite() ) {
+                    $meta       = unserialize( $user->meta );
+                    $first_name = ( isset( $meta[ 'first_name' ] ) ) ? $meta[ 'first_name' ] : '';
+                    $last_name  = ( isset( $meta[ 'last_name' ] ) ) ? $meta[ 'last_name' ] : '';
+                    echo sprintf( '<td>%s</td>', esc_html( $first_name ) );
+                    echo sprintf( '<td>%s</td>', esc_html( $last_name ) );
+                } else {
+                    echo sprintf( '<td>%s</td>', esc_html( $user->first_name ) );
+                    echo sprintf( '<td>%s</td>', esc_html( $user->last_name ) );
+                }
+            }
+            echo sprintf( '<td>%s</td>', esc_html( $user->user_email ) );
+            if ( is_multisite() ) {
+                global $wpdb;
+                $signup_info = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE user_email = %s', $wpdb->signups, $user->user_email ) );
+                echo sprintf( '<td>%s</td>', ! empty( $signup_info->domain ) ? esc_html( $signup_info->domain ) : '' );
+                echo sprintf( '<td>%s</td>', ! empty( $signup_info->title ) ? esc_html( $signup_info->title ) : '' );
+            }
+            echo '<td>';
+            ?>
+            <form name="b3_user_management" method="post">
+                <input name="b3_manage_users_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'b3-manage-users-nonce' ) ); ?>"/>
+                <input name="b3_approve_user" class="button" type="submit" value="<?php echo esc_attr__( 'Approve', 'b3-onboarding' ); ?>"/>
+                <input name="b3_reject_user" class="button" type="submit" value="<?php echo esc_attr__( 'Reject', 'b3-onboarding' ); ?>"/>
+                <?php if ( is_multisite() ) { ?>
+                    <input name="b3_signup_id" type="hidden" value="<?php echo esc_attr( $user->signup_id ); ?>"/>
+                    <?php $existing_user = get_user_by( 'email', $user->user_email ); ?>
+                    <?php if ( $existing_user instanceof WP_User ) { ?>
+                        <input name="b3_user_id" type="hidden" value="<?php echo (int) $existing_user->ID; ?>"/>
+                    <?php } ?>
+                <?php } else { ?>
+                    <input name="b3_user_id" type="hidden" value="<?php echo (int) $user->ID; ?>"/>
+                <?php } ?>
+            </form>
+            <?php
+            echo '</td>';
+            echo '</tr>';
+            $output = ob_get_clean();
+
+            return $output;
+        }
+
+        return '';
     }
 
     // Get user IP

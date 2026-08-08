@@ -131,11 +131,12 @@
 
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                         $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
-                        if ( 'access_requested' === $registered_var ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'access_requested' );
+                        if ( 'activate_approval_needed' === $registered_var ) {
+                            return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( 'activate_approval_needed' ) );
+
                         } elseif ( 'dummy' === $registered_var ) {
                             // dummy is only used for demonstration setup on the plugin's website
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'dummy' );
+                            return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( 'dummy' ) );
                         }
                     }
 
@@ -188,12 +189,12 @@
                         $login_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
                         if ( 'enter_code' === $login_var ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 191');
+                            error_log('class-b3-shortcodes.php line 192');
 
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 196');
+                                error_log('class-b3-shortcodes.php line 197');
                             } else {
                                 $error_codes = explode( ',', 'enter_code' );
                             }
@@ -209,14 +210,14 @@
                     }
 
                 } elseif ( isset( $_REQUEST[ 'message' ] ) ) {
-                    $message_var                = sanitize_text_field( wp_unslash( $_REQUEST[ 'message' ] ) );
-                    $attributes[ 'messages' ][] = $this->b3_get_return_message( $message_var );
+                    $message_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'message' ] ) );
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( $message_var ) );
 
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
                     $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
 
                     if ( is_multisite() ) {
-                        $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
+                        return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) ) );
 
                     } else {
                         if ( in_array( $registered_var, [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
@@ -230,7 +231,7 @@
 
                         } else {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log( 'FIX ELSE - line 233 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 234 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
