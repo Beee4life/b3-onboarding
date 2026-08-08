@@ -155,14 +155,19 @@
     }
 
     function b3_default_request_access_message_user( $activation = false ) {
-        $current_network = get_network();
+        if ( is_multisite() ) {
+            $current_network = get_network();
+            $site_name       = $current_network->site_name;
+        } else {
+            $site_name = get_bloginfo( 'name' );
+        }
 
         ob_start();
         /* translators: site name */
         if ( $activation ) {
-            echo sprintf( esc_html__( "You have successfully activated your account for %s but the owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $current_network->site_name ) );
+            echo sprintf( esc_html__( "You have successfully activated your account for %s but the owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $site_name ) );
         } else {
-            echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $current_network->site_name ) );
+            echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $site_name ) );
         }
         echo '<br>';
         echo wp_kses_post( b3_default_greetings() );
