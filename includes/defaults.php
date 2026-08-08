@@ -165,7 +165,7 @@
         ob_start();
         /* translators: site name */
         if ( $activation ) {
-            echo sprintf( esc_html__( "You have successfully activated your account for %s but the owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $site_name ) );
+            echo sprintf( esc_html__( "You have successfully activated your account for %s but the site owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $site_name ) );
         } else {
             echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $site_name ) );
         }
@@ -528,7 +528,7 @@
         }
 
         if ( get_option( 'b3_needs_admin_approval' ) ) {
-            $message .= sprintf( esc_html__( "You have activated your account at %s but the site owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', '%home_url%' ) ) . "\n";
+            $message .= sprintf( esc_html__( "You have successfully activated your account for %s but the site owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', '%home_url%' ) ) . "\n";
             $message .= '<br>' . "\n";
         } else {
             /* translators: home url */
