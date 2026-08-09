@@ -815,7 +815,6 @@
             define( 'IS_PROFILE_PAGE', true );
         }
 
-        // @TODO: check this
         if ( ! empty( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'profile' ) {
             $current_user = wp_get_current_user();
             check_admin_referer( 'update-user_' . $current_user->ID );
@@ -823,6 +822,19 @@
 
             if ( ! current_user_can( 'edit_user', $current_user->ID ) ) {
                 wp_die( esc_html__( 'You do not have permission to edit this user.', 'b3-onboarding' ) );
+            }
+
+            if ( isset( $_POST[ 'nickname' ] ) ) {
+                $nickname = sanitize_text_field( wp_unslash( $_POST[ 'nickname' ] ) );
+
+                if ( $current_user->nickname !== $nickname ) {
+                    $user_args = [
+                        'ID'           => $current_user->ID,
+                        'nickname'     => $nickname,
+                        'display_name' => $nickname,
+                    ];
+                    $result = wp_update_user( $user_args );
+                }
             }
 
             if ( isset( $_POST[ 'b3_delete_account' ] ) ) {
