@@ -159,7 +159,7 @@
                 <?php } ?>
                 <?php if ( in_array( $input_type, [ 'text', 'number', 'url' ] ) ) { ?>
                     <?php $field_value =  ( false != $value && is_string( $value ) ) ? $value : false; ?>
-                    <?php if ( in_array( $input_type, [ 'number' ] ) ) { ?>
+                    <?php if ( 'number' === $input_type ) { ?>
                         <?php $negatives_allowed = ( isset( $extra_field[ 'negatives' ] ) && true == $extra_field[ 'negatives' ] ) ? true : false; ?>
                         <?php $validation = true; ?>
                         <?php if ( false === $negatives_allowed ) { ?>
@@ -173,7 +173,7 @@
                 <?php } elseif ( 'textarea' === $input_type ) { ?>
                     <textarea name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo esc_textarea( $field_value ); ?></textarea>
 
-                <?php } elseif ( in_array( $input_type, [ 'true_false' ] ) ) { ?>
+                <?php } elseif ( 'true_false' === $input_type ) { ?>
                     <label for="<?php echo esc_attr( $input_id ); ?>" class="screen-reader-text"><?php echo esc_attr( $input_label ); ?></label>
                     <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>" /> <?php echo esc_attr( $input_description ); ?>
 
@@ -184,9 +184,9 @@
                             <?php foreach( $input_options as $option ) { ?>
                                 <div class="b3_input-option b3_input-option--<?php echo esc_attr( $input_type ); ?>">
                                     <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
-                                    <?php if ( in_array( $input_type, [ 'radio' ] ) ) { ?>
+                                    <?php if ( 'radio' === $input_type ) { ?>
                                         <?php $checked = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
-                                    <?php } elseif ( in_array( $input_type, [ 'checkbox' ] ) ) { ?>
+                                    <?php } elseif ( 'checkbox' === $input_type ) { ?>
                                         <?php
                                             $checked = false;
                                             if ( isset( $value ) && is_array( $value ) && in_array( $option[ 'value' ], $value ) ) {

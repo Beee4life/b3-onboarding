@@ -149,7 +149,7 @@
 
                 if ( 'all' === $registration_type ) {
                     do_action( 'b3_render_form_element', 'register/register-for' );
-                } elseif ( in_array( $registration_type, [ 'site' ] ) ) { ?>
+                } elseif ( 'site' === $registration_type ) { ?>
                     <input type="hidden" name="signup_for" value="blog" />
                 <?php } elseif ( 'user' === $registration_type ) { ?>
                     <input type="hidden" name="signup_for" value="user" />

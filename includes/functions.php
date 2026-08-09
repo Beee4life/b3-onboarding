@@ -37,7 +37,7 @@
                     'title' => esc_html__( 'Account rejected email (user)', 'b3-onboarding' ),
                 ];
             }
-            if ( in_array( $registration_type, [ 'email_activation' ] ) ) {
+            if ( 'email_activation' === $registration_type ) {
                 $email_boxes[] = [
                     'id'    => 'email_activation',
                     'title' => esc_html__( 'Email activation (user)', 'b3-onboarding' ),
@@ -62,7 +62,7 @@
         }
         if ( is_main_site() ) {
             if ( is_multisite() ) {
-                if ( in_array( $registration_type, [ 'user' ] ) ) {
+                if ( 'user' === $registration_type ) {
                     $email_boxes[] = [
                         'id'    => 'confirm_user_email',
                         'title' => esc_html__( 'Confirm email (user only)', 'b3-onboarding' ),
@@ -71,7 +71,7 @@
                         'id'    => 'activated_user_email',
                         'title' => esc_html__( 'User activated (user only)', 'b3-onboarding' ),
                     ];
-                } elseif ( in_array( $registration_type, [ 'site' ] ) ) {
+                } elseif ( 'site' === $registration_type ) {
                     $email_boxes[] = [
                         'id'    => 'confirm_user_site_email',
                         'title' => esc_html__( 'Confirm email (user + site)', 'b3-onboarding' ),
