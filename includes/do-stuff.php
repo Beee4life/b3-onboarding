@@ -136,20 +136,29 @@
      *
      * @return bool|false|string
      */
-    function b3_render_extra_field( $extra_field = [], $value = false ) {
+    function b3_render_extra_field( $extra_field = [], $value = false, $page = 'register' ) {
 
-        $container_class   = ( isset( $extra_field[ 'container_class' ] ) && ! empty( $extra_field[ 'container_class' ] ) ) ? $extra_field[ 'container_class' ] : false;
-        $input_id          = ( isset( $extra_field[ 'id' ] ) && ! empty( $extra_field[ 'id' ] ) ) ? $extra_field[ 'id' ] : false;
-        $input_class       = ( isset( $extra_field[ 'input_class' ] ) && ! empty( $extra_field[ 'input_class' ] ) ) ? '' . $extra_field[ 'input_class' ] : false;
-        $input_description = ( isset( $extra_field[ 'input_description' ] ) && ! empty( $extra_field[ 'input_description' ] ) ) ? '' . $extra_field[ 'input_description' ] : false;
-        $input_label       = ( isset( $extra_field[ 'label' ] ) && ! empty( $extra_field[ 'label' ] ) ) ? $extra_field[ 'label' ] : false;
-        $input_placeholder = ( isset( $extra_field[ 'placeholder' ] ) && ! empty( $extra_field[ 'placeholder' ] ) ) ? $extra_field[ 'placeholder' ] : false;
-        $input_required    = ( isset( $extra_field[ 'required' ] ) && false != $extra_field[ 'required' ] ) ? ' <span class="b3__required"><strong>*</strong></span>' : false;
-        $input_type        = ( isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ) ? $extra_field[ 'type' ] : false;
-        $input_options     = ( isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ) ? $extra_field[ 'options' ] : [];
-        $field_value       = ( isset( $_POST[ $input_id ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $input_id ] ) ) : '';
+        $container_class      = isset( $extra_field[ 'container_class' ] ) && ! empty( $extra_field[ 'container_class' ] ) ? $extra_field[ 'container_class' ] : false;
+        $input_id             = isset( $extra_field[ 'id' ] ) && ! empty( $extra_field[ 'id' ] ) ? $extra_field[ 'id' ] : false;
+        $input_class          = isset( $extra_field[ 'input_class' ] ) && ! empty( $extra_field[ 'input_class' ] ) ? '' . $extra_field[ 'input_class' ] : false;
+        $input_description    = isset( $extra_field[ 'input_description' ] ) && ! empty( $extra_field[ 'input_description' ] ) ? '' . $extra_field[ 'input_description' ] : false;
+        $input_label          = isset( $extra_field[ 'label' ] ) && ! empty( $extra_field[ 'label' ] ) ? $extra_field[ 'label' ] : false;
+        $input_placeholder    = isset( $extra_field[ 'placeholder' ] ) && ! empty( $extra_field[ 'placeholder' ] ) ? $extra_field[ 'placeholder' ] : false;
+        $input_required       = isset( $extra_field[ 'required' ] ) && false != $extra_field[ 'required' ] ? ' <span class="b3__required"><strong>*</strong></span>' : false;
+        $input_type           = isset( $extra_field[ 'type' ] ) && ! empty( $extra_field[ 'type' ] ) ? $extra_field[ 'type' ] : false;
+        $input_options        = isset( $extra_field[ 'options' ] ) && ! empty( $extra_field[ 'options' ] ) ? $extra_field[ 'options' ] : [];
+        $show_on_account      = isset( $extra_field[ 'show_on_account' ] ) && true == $extra_field[ 'show_on_account' ] ? true : false;
+        $show_on_registration = ! isset( $extra_field[ 'show_on_registration' ] ) ? true : false;
+        $show_on_registration = isset( $extra_field[ 'show_on_registration' ] ) && false == $extra_field[ 'show_on_registration' ] ? false : true;
+        $field_value          = isset( $_POST[ $input_id ] ) ? sanitize_text_field( wp_unslash( $_POST[ $input_id ] ) ) : '';
 
-        if ( isset( $extra_field[ 'id' ] ) && isset( $extra_field[ 'label' ] ) && isset( $extra_field[ 'type' ] ) ) {
+        if ( $input_id && $input_label && $input_type ) {
+            if ( 'account' === $page && ! $show_on_account ) {
+                return false;
+            }
+            if ( 'register' === $page && ! $show_on_registration ) {
+                return false;
+            }
             ob_start();
             ?>
             <div class="b3_form-element b3_form-element--<?php echo esc_attr( $input_type ); ?><?php if ( $container_class ) { ?> b3_form-element--<?php echo esc_attr( $container_class ); ?> <?php echo esc_attr( $container_class ); } ?>">

@@ -239,17 +239,20 @@
     add_action( 'b3_add_site_fields', 'b3_add_site_fields' );
 
     // Function to output any custom fields
-    function b3_add_extra_fields_registration() {
+    function b3_add_extra_fields() {
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-        // echo '<pre>'; var_dump($extra_field_values); echo '</pre>'; exit;
+        $is_account_page    = is_page( b3_get_account_url( true ) );
+        $page               = $is_account_page ? 'account' : 'register';
+
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
+                $value = isset( $extra_field[ 'value' ] ) ? $extra_field[ 'value' ] : false;
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                echo b3_render_extra_field( $extra_field );
+                echo b3_render_extra_field( $extra_field, $value, $page );
             }
         }
     }
-    add_action( 'b3_add_extra_fields_registration', 'b3_add_extra_fields_registration' );
+    add_action( 'b3_add_extra_fields', 'b3_add_extra_fields' );
 
     // Output any hidden fields
     function b3_add_hidden_fields_registration( $attributes ) {
