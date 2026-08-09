@@ -28,7 +28,7 @@
         $use_magic_link               = get_option( 'b3_use_magic_link' );
         $use_magic_link_password      = get_option( 'b3_use_magic_link_password' );
 
-        if ( in_array( $registration_type, [ 'none' ] ) || ( $use_magic_link && ! $use_magic_link_password ) ) {
+        if ( 'none' === $registration_type || ( $use_magic_link && ! $use_magic_link_password ) ) {
             $hide_custom_passwords = true;
         }
 

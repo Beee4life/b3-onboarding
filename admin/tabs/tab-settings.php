@@ -181,11 +181,8 @@
                     <?php } ?>
 
                     <?php $hide_message_above_lost_password = false; ?>
-                    <?php if ( is_multisite() ) { ?>
-                        <?php if ( get_option( 'b3_use_magic_link' ) && ! get_option( 'b3_use_magic_link_password' ) ) { ?>
-                            <?php $hide_message_above_lost_password = true; ?>
-                        <?php } ?>
-                    <?php } else { ?>
+                    <?php if ( get_option( 'b3_use_magic_link' ) && ! get_option( 'b3_use_magic_link_password' ) ) { ?>
+                        <?php $hide_message_above_lost_password = true; ?>
                     <?php } ?>
                     <?php b3_get_settings_field_open( $hide_message_above_lost_password, 'message-above-lost-password' ); ?>
                         <?php b3_get_label_field_open(); ?>
