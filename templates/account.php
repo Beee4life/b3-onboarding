@@ -21,6 +21,8 @@
         <?php do_action( 'b3_render_form_element', 'account/user-id', $attributes, $current_user ); ?>
         <?php do_action( 'b3_render_form_element', 'account/email', $attributes, $current_user ); ?>
         <?php do_action( 'b3_render_form_element', 'account/first-last', $attributes, $current_user ); ?>
+        <?php do_action( 'b3_render_form_element', 'account/extra-fields', $attributes, $current_user ); ?>
+        <?php do_action( 'b3_add_extra_fields_registration' ); ?>
         <?php do_action( 'b3_render_form_element', 'account/password', $attributes, $current_user ); ?>
         <?php do_action( 'b3_render_form_element', 'general/button', $attributes, $current_user ); ?>
         <?php do_action( 'b3_render_form_element', 'account/user-delete', $attributes, $current_user ); ?>

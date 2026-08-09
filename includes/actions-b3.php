@@ -241,6 +241,7 @@
     // Function to output any custom fields
     function b3_add_extra_fields_registration() {
         $extra_field_values = apply_filters( 'b3_extra_fields', [] );
+        // echo '<pre>'; var_dump($extra_field_values); echo '</pre>'; exit;
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $extra_field ) {
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
