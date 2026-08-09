@@ -78,7 +78,7 @@
 
                 <?php } else { ?>
 
-                    <?php if ( in_array( $registration_type, [ 'user', 'all', 'site', 'email_activation', 'open' ] ) ) { ?>
+                    <?php if ( in_array( $registration_type, [ 'user', 'all', 'site', 'email_activation' ] ) ) { ?>
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_needs_admin_approval"><?php esc_html_e( 'Needs admin approval', 'b3-onboarding' ); ?></label>

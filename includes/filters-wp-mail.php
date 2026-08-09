@@ -41,16 +41,11 @@
                 $wp_mail[ 'subject' ] = b3_get_request_access_subject_admin();
                 $admin_email          = b3_get_request_access_message_admin();
 
-            } elseif ( false != get_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
+            } elseif ( false != get_option( 'b3_disable_admin_notification_new_user' ) || 'email_activation' === $registration_type ) {
                 // we don't want the email when a user registers, but only when he/she activates
                 $wp_mail[ 'to' ] = '';
 
-            } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
-                $wp_mail[ 'to' ]      = b3_get_notification_addresses( $registration_type );
-                $wp_mail[ 'subject' ] = b3_get_new_user_subject();
-                $admin_email          = b3_get_new_user_message();
-
-            } elseif ( in_array( $registration_type, [ 'blog' ] ) ) {
+            } elseif ( 'blog' === $registration_type ) {
                 $wp_mail[ 'to' ]      = b3_get_notification_addresses( $registration_type );
                 $wp_mail[ 'subject' ] = b3_get_new_wpmu_user_subject_admin();
                 $admin_email          = b3_get_new_wpmu_user_message_admin();
@@ -96,7 +91,7 @@
                 $wp_mail[ 'subject' ] = b3_get_email_activation_subject_user();
                 $user_email           = b3_get_email_activation_message_user();
 
-            } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
+            } elseif ( 'blog' === $registration_type ) {
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
                 $user_email           = b3_get_welcome_user_message( $user->user_email );
 

@@ -48,13 +48,13 @@
                 ];
             }
         }
-        if ( in_array( $registration_type, [ 'open', 'blog', 'all', 'site' ] ) ) {
+        if ( in_array( $registration_type, [ 'blog', 'all', 'site' ] ) ) {
             $email_boxes[] = [
                 'id'    => 'welcome_user',
                 'title' => esc_html__( 'Welcome email (user)', 'b3-onboarding' ),
             ];
         }
-        if ( in_array( $registration_type, [ 'open', 'blog', 'all', 'site', 'none' ] ) ) {
+        if ( in_array( $registration_type, [ 'blog', 'all', 'site', 'none' ] ) ) {
             // $email_boxes[] = [
             //     'id'    => 'welcome_user_manual',
             //     'title' => esc_html__( 'Welcome email (user) - added by admin', 'b3-onboarding' ),
@@ -81,14 +81,14 @@
                         'title' => esc_html__( 'User activated (user + site)', 'b3-onboarding' ),
                     ];
                 }
-                if ( ! in_array( $registration_type, [ 'none' ] ) ) {
+                if ( 'none' !== $registration_type ) {
                     $email_boxes[] = [
                         'id'    => 'new_wpmu_user_admin',
                         'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),
                     ];
                 }
             }
-            if ( in_array( $registration_type, [ 'open', 'email_activation' ] ) ) {
+            if ( 'email_activation' == $registration_type ) {
                 $email_boxes[] = [
                     'id'    => 'new_user_admin',
                     'title' => esc_html__( 'New user (admin)', 'b3-onboarding' ),

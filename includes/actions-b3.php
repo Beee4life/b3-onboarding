@@ -187,7 +187,7 @@
 
     // Output the password fields
     function b3_add_password_fields() {
-        if ( ! is_multisite() && get_option( 'b3_activate_custom_passwords' ) && in_array( get_option( 'b3_registration_type' ), [ 'email_activation', 'open' ] ) ) {
+        if ( ! is_multisite() && get_option( 'b3_activate_custom_passwords' ) && 'email_activation' == get_option( 'b3_registration_type' ) ) {
             do_action( 'b3_do_before_passwords' );
             ob_start();
             ?>

@@ -47,14 +47,8 @@
         $email_addresses = get_site_option( 'admin_email' );
         $admin_approval  = get_option( 'b3_needs_admin_approval' );
 
-        if ( $admin_approval ) {
-            if ( false != get_option( 'b3_request_access_notification_addresses' ) ) {
-                $email_addresses = get_option( 'b3_request_access_notification_addresses' );
-            }
-        } elseif ( 'open' === $registration_type ) {
-            if ( false != get_option( 'b3_new_user_notification_addresses' ) ) {
-                $email_addresses = get_option( 'b3_new_user_notification_addresses' );
-            }
+        if ( $admin_approval && false != get_option( 'b3_request_access_notification_addresses' ) ) {
+            $email_addresses = get_option( 'b3_request_access_notification_addresses' );
         }
 
         return apply_filters( 'b3_new_user_notification_addresses', $email_addresses );
