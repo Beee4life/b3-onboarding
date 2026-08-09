@@ -629,22 +629,6 @@
     }
     add_action( 'b3_remove_welcome_page_meta', 'b3_remove_welcome_page_meta', 10, 3 );
 
-    // Add custom fields to register form hook
-    function b3_add_registration_fields( $attributes ) {
-        do_action( 'b3_add_hidden_fields_registration', $attributes );
-        do_action( 'b3_add_username_email_fields', $attributes[ 'registration_type' ] );
-        do_action( 'b3_add_first_last_name_fields', $attributes[ 'registration_type' ] );
-        do_action( 'b3_add_password_fields' );
-        do_action( 'b3_add_site_fields', $attributes[ 'registration_type' ] ); // MS
-        do_action( 'b3_add_extra_fields_registration' );
-        do_action( 'b3_add_terms_checkbox' );
-        do_action( 'b3_add_privacy_checkbox' );
-        do_action( 'b3_add_recaptcha_fields' );
-        do_action( 'b3_render_form_element', 'general/button', $attributes );
-        do_action( 'b3_add_action_links', $attributes[ 'template' ] );
-    }
-    add_action( 'b3_register_form', 'b3_add_registration_fields' );
-
     // Log a user in after magic link verification
     function b3_log_user_in( $user, $redirect = '' ) {
         $account_url = b3_get_account_url();
