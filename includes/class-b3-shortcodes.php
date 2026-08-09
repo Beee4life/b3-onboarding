@@ -248,7 +248,7 @@
                     $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';
 
-                    if ( get_option( 'b3_use_magic_link_password' ) && get_option( 'b3_activate_custom_passwords' ) ) {
+                    if ( get_option( 'b3_use_magic_link_password' ) && ( is_multisite() || get_option( 'b3_activate_custom_passwords' ) ) ) {
                         $attributes[ 'button_modifier2' ] = esc_attr( 'use-password', 'b3-onboarding' );
                         $attributes[ 'button_value2' ]    = esc_attr__( 'Use password', 'b3-onboarding' );
                         $attributes[ 'template' ]         = 'magic-password';
