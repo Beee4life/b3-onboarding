@@ -132,10 +132,6 @@
                 'value' => 'email_activation',
                 'label' => esc_html__( 'Open (user needs to confirm email)', 'b3-onboarding' ),
             ],
-            // [
-            //     'value' => 'open',
-            //     'label' => esc_html__( 'Open (user is instantly active)', 'b3-onboarding' ),
-            // ],
         ];
 
         $multisite_options = [
