@@ -23,13 +23,9 @@
                 if ( 'none' === $registration_type ) {
                     delete_option( 'b3_activate_custom_passwords' );
 
-                    if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
-                        update_option( 'b3_registration_closed_message', sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_closed_message' ] ) ), false );
-                    } else {
-                        delete_option( 'b3_registration_closed_message' );
-                    }
-
                 } else {
+                    delete_option( 'b3_registration_closed_message' );
+
                     if ( isset( $_POST[ 'b3_activate_recaptcha' ] ) && 1 == (int) $_POST[ 'b3_activate_recaptcha' ] ) {
                         update_option( 'b3_activate_recaptcha', 1 );
                     } else {
@@ -631,7 +627,8 @@
             if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ 'b3ob_settings_nonce' ] ) ), 'b3ob-settings-nonce' ) ) {
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
-                $reset = false;
+                $registration_type = get_option( 'b3_registration_type' );
+                $reset             = false;
 
                 if ( isset( $_POST[ 'b3_disable_action_links' ] ) && 1 == (int) $_POST[ 'b3_disable_action_links' ] ) {
                     update_option( 'b3_disable_action_links', 1, false );
@@ -666,6 +663,36 @@
                 if ( isset( $_POST[ 'b3_reset_default' ] ) && 1 == (int) $_POST[ 'b3_reset_default' ] ) {
                     $reset = true;
                     do_action( 'b3_reset_to_default' );
+                }
+
+                if ( 'none' === $registration_type ) {
+                    if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) && current_user_can( 'unfiltered_html' ) ) {
+                        update_option( 'b3_registration_closed_message', $_POST[ 'b3_registration_closed_message' ] );
+                    } else {
+                        delete_option( 'b3_registration_closed_message' );
+                    }
+                } else {
+                    // other form messages
+                    if ( isset( $_POST[ 'b3_message_above_registration' ] ) && ! empty( $_POST[ 'b3_message_above_registration' ] ) && current_user_can( 'unfiltered_html' ) ) {
+                        update_option( 'b3_message_above_registration', $_POST[ 'b3_message_above_registration' ] );
+                    } else {
+                        delete_option( 'b3_message_above_registration' );
+                    }
+                    if ( isset( $_POST[ 'b3_message_above_login' ] ) && ! empty( $_POST[ 'b3_message_above_login' ] ) && current_user_can( 'unfiltered_html' ) ) {
+                        update_option( 'b3_message_above_login', $_POST[ 'b3_message_above_login' ] );
+                    } else {
+                        delete_option( 'b3_message_above_login' );
+                    }
+                    if ( isset( $_POST[ 'b3_message_above_magic_link' ] ) && ! empty( $_POST[ 'b3_message_above_magic_link' ] ) && current_user_can( 'unfiltered_html' ) ) {
+                        update_option( 'b3_message_above_magic_link', $_POST[ 'b3_message_above_magic_link' ] );
+                    } else {
+                        delete_option( 'b3_message_above_magic_link' );
+                    }
+                    if ( isset( $_POST[ 'b3_message_above_lost_password' ] ) && ! empty( $_POST[ 'b3_message_above_lost_password' ] ) && current_user_can( 'unfiltered_html' ) ) {
+                        update_option( 'b3_message_above_lost_password', $_POST[ 'b3_message_above_lost_password' ] );
+                    } else {
+                        delete_option( 'b3_message_above_lost_password' );
+                    }
                 }
 
                 if ( true === $reset ) {

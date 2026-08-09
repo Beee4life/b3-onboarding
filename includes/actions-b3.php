@@ -357,12 +357,9 @@
                                 $messages[] = $registration_message;
                             }
                         }
+
                     } elseif ( 'lostpassword' === $attributes[ 'template' ] ) {
-                        if ( get_option( 'b3_use_magic_link' ) ) {
-                            $message_above = b3_get_message_above_magiclink_form();
-                        } else {
-                            $message_above = b3_get_message_above_lost_password();
-                        }
+                        $message_above = b3_get_message_above_lost_password();
 
                         if ( is_string( $message_above ) && ! empty( $message_above ) ) {
                             $messages[] = esc_html( $message_above );
@@ -374,7 +371,7 @@
                     } elseif ( 'magiclink' === $attributes[ 'template' ] ) {
                         $message_above = b3_get_message_above_magiclink_form();
 
-                        if ( is_string($message_above ) && ! empty( $message_above ) ) {
+                        if ( is_string( $message_above ) && ! empty( $message_above ) ) {
                             $messages[] = esc_html( $message_above );
                         }
                     }

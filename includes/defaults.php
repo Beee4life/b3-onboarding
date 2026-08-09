@@ -622,12 +622,11 @@
         }
     }
 
-    function b3_default_message_above_request_access() {
-        return esc_html__( 'You have to request access for this website.', 'b3-onboarding' );
-    }
-
     function b3_default_message_above_magic_link() {
-        return esc_html__( "Please enter your email address. If your email address exists in our database, you will receive an email with a link to login immediately.", 'b3-onboarding' );
+        $enter_email = __( 'Please enter your email address.','sexdates' );
+        $if_exists = __( 'If an account exists with that email, you will receive an email with a link to login immediately.','sexdates' );
+
+        return sprintf( '%s %s', $enter_email, $if_exists );
     }
 
     function b3_default_terms_text() {

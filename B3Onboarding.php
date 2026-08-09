@@ -173,9 +173,10 @@
                 wp_localize_script( 'b3ob', 'b3ob_vars', [
                     'use_magic_link'  => esc_attr__( 'Use magic link', 'b3-onboarding' ),
                     'login'           => esc_attr__( 'Login', 'b3-onboarding' ),
+                    'login_url'       => b3_get_login_url(),
                     'login_nonce'     => wp_create_nonce( 'b3_login' ),
                     'magiclink_nonce' => wp_create_nonce( 'b3_magiclink' ),
-                    'login_message'   => apply_filters( 'b3_message_above_login', false ),
+                    'login_message'   => b3_get_message_above_login(),
                     'recaptcha_theme' => get_option( 'b3_recaptcha_theme', 'light' ),
                     'use_both'        => get_option( 'b3_use_magic_link_password' ),
                 ] );
@@ -826,10 +827,10 @@
                         return esc_html__( 'You must activate your account first. Please check your email.', 'b3-onboarding' );
 
                     case 'activate_approval_needed':
-                        return esc_html__( "You have successfully activated your account, but it must be approved first. You'll be notified about the outcome.", 'b3-onboarding' );
+                        return esc_html__( "You have successfully activated your account, but the site owner chose to manually approve each regstration. You'll be notified about the outcome.", 'b3-onboarding' );
 
                     case 'approval_needed':
-                        return esc_html__( "Your account must be approved first. You'll be notified about the outcome.", 'b3-onboarding' );
+                        return esc_html__( "You can't request a magic link yet, because your account must be approved first. You'll be notified about the outcome.", 'b3-onboarding' );
 
                     case 'activate_success':
                         if ( get_option( 'b3_use_magic_link' ) ) {

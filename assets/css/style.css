@@ -10,7 +10,7 @@
   margin-bottom: 1rem;
   padding:       5px 10px;
   position:      relative;
-  word-wrap:     initial;
+  word-wrap:     normal;
 }
 
 .b3_message p {

@@ -606,34 +606,42 @@
 
     // Get the message above registration form
     function b3_get_message_above_registration() {
-        $message = b3_default_message_above_registration();
+        $message = get_option( 'b3_message_above_registration' );
+
+        if ( ! $message ) {
+            $message = b3_default_message_above_registration();
+        }
 
         return apply_filters( 'b3_message_above_registration', $message );
     }
 
     // Get the message above login form
     function b3_get_message_above_login() {
-        return apply_filters( 'b3_message_above_login', '' );
+        $message = get_option( 'b3_message_above_login' );
+
+        return apply_filters( 'b3_message_above_login', $message );
     }
 
     // Get the message above lost password form
     function b3_get_message_above_lost_password() {
-        $message = b3_default_message_above_lost_password();
+        $message = get_option( 'b3_message_above_lost_password' );
+
+        if ( ! $message ) {
+            $message = b3_default_message_above_lost_password();
+        }
 
         return apply_filters( 'b3_message_above_lost_password', $message );
     }
 
-    // Get the message above request access form
-    function b3_get_message_above_request_access() {
-        $message = b3_default_message_above_request_access();
-
-        return apply_filters( 'b3_message_above_request_access', $message );
-    }
-
     // Get the message above magic link form
     function b3_get_message_above_magiclink_form() {
-        $default_message = b3_default_message_above_magic_link();
-        $message         = apply_filters( 'b3_message_above_magic_link', $default_message );
+        $message = get_option( 'b3_message_above_magic_link' );
+
+        if ( ! $message ) {
+            $message = b3_default_message_above_magic_link();
+        }
+
+        return apply_filters( 'b3_message_above_magic_link', $message );
 
         return $message;
     }

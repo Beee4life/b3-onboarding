@@ -6,7 +6,7 @@
     $button_modifier = isset( $attributes[ 'button_modifier' ] ) ? $attributes[ 'button_modifier' ] : false;
     $button_value    = isset( $attributes[ 'button_value' ] ) ? $attributes[ 'button_value' ] : esc_attr__( 'Save', 'b3-onboarding' );
 
-    if ( 'magic-password' == $attributes[ 'template' ] ) {
+    if ( in_array( $attributes[ 'template' ], [ 'magic-password', 'lostpassword' ] ) ) {
         $button_modifier2 = isset( $attributes[ 'button_modifier2' ] ) ? $attributes[ 'button_modifier2' ] : false;
         $button_value2    = isset( $attributes[ 'button_value2' ] ) ? $attributes[ 'button_value2' ] : '';
     }
@@ -15,7 +15,7 @@
     <?php
         b3_get_submit_button( $button_value, $button_modifier, $attributes );
 
-        if ( 'magic-password' == $attributes[ 'template'] ) {
+        if ( isset( $button_modifier2 ) && isset( $button_value2 ) ) {
             b3_get_submit_button( $button_value2, $button_modifier2, $attributes, 'button2' );
         }
     ?>
