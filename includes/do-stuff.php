@@ -140,8 +140,8 @@
 
         $container_class      = isset( $extra_field[ 'container_class' ] ) && ! empty( $extra_field[ 'container_class' ] ) ? $extra_field[ 'container_class' ] : false;
         $input_id             = isset( $extra_field[ 'id' ] ) && ! empty( $extra_field[ 'id' ] ) ? $extra_field[ 'id' ] : false;
-        $input_class          = isset( $extra_field[ 'input_class' ] ) && ! empty( $extra_field[ 'input_class' ] ) ? '' . $extra_field[ 'input_class' ] : false;
-        $input_description    = isset( $extra_field[ 'input_description' ] ) && ! empty( $extra_field[ 'input_description' ] ) ? '' . $extra_field[ 'input_description' ] : false;
+        $input_class          = isset( $extra_field[ 'input_class' ] ) && ! empty( $extra_field[ 'input_class' ] ) ? $extra_field[ 'input_class' ] : false;
+        $input_description    = isset( $extra_field[ 'input_description' ] ) && ! empty( $extra_field[ 'input_description' ] ) ? $extra_field[ 'input_description' ] : false;
         $input_label          = isset( $extra_field[ 'label' ] ) && ! empty( $extra_field[ 'label' ] ) ? $extra_field[ 'label' ] : false;
         $input_placeholder    = isset( $extra_field[ 'placeholder' ] ) && ! empty( $extra_field[ 'placeholder' ] ) ? $extra_field[ 'placeholder' ] : false;
         $input_required       = isset( $extra_field[ 'required' ] ) && false != $extra_field[ 'required' ] ? ' <span class="b3__required"><strong>*</strong></span>' : false;
@@ -174,17 +174,17 @@
                         <?php if ( false === $negatives_allowed ) { ?>
                             <?php $validation = " min=0 oninput=\"validity.valid||(value='');\""; ?>
                         <?php } ?>
-                        <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php echo esc_attr( $validation ); ?> value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
+                        <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $input_class ) { ?> b3_form-input--<?php echo esc_attr( $input_class ); } ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php echo esc_attr( $validation ); ?> value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php } else { ?>
-                        <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?>value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
+                        <input type="<?php echo esc_attr( $input_type ); ?>" name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $input_class ) { ?> b3_form-input--<?php echo esc_attr( $input_class ); } ?>"<?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?>value="<?php echo esc_attr( $field_value ); ?>"<?php if ( $input_required ) { echo ' required'; }; ?>>
                     <?php }  ?>
 
                 <?php } elseif ( 'textarea' === $input_type ) { ?>
-                    <textarea name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--textarea b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo esc_textarea( $field_value ); ?></textarea>
+                    <textarea name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--textarea<?php if ( $input_class ) { ?> b3_form-input--<?php echo esc_attr( $input_class ); } ?>" <?php if ( $input_placeholder ) { echo ' placeholder="' . esc_attr( $extra_field[ 'placeholder' ] ) . '"'; } ?><?php if ( $input_required ) { echo ' required'; }; ?>><?php echo esc_textarea( $field_value ); ?></textarea>
 
                 <?php } elseif ( 'true_false' === $input_type ) { ?>
                     <label for="<?php echo esc_attr( $input_id ); ?>" class="screen-reader-text"><?php echo esc_attr( $input_label ); ?></label>
-                    <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?> b3_form-input--<?php echo esc_attr( $input_class ); ?> <?php echo esc_attr( $input_class ); ?>" /> <?php echo esc_attr( $input_description ); ?>
+                    <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $input_class ) { ?> b3_form-input--<?php echo esc_attr( $input_class ); } ?>" /> <?php echo esc_attr( $input_description ); ?>
 
                 <?php } elseif ( in_array( $input_type, [ 'radio', 'checkbox' ] ) ) { ?>
                     <?php if ( $input_options ) { ?>
@@ -192,7 +192,7 @@
                         <div class="b3_input-options">
                             <?php foreach( $input_options as $option ) { ?>
                                 <div class="b3_input-option b3_input-option--<?php echo esc_attr( $input_type ); ?>">
-                                    <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ]: false; ?>
+                                    <?php $option_class = ( isset( $option[ 'input_class' ] ) ) ? $option[ 'input_class' ] : false; ?>
                                     <?php if ( 'radio' === $input_type ) { ?>
                                         <?php $checked = ( isset( $value ) && $option[ 'value' ] == $value || isset( $option[ 'checked' ] ) && true == $option[ 'checked' ] ) ? ' checked="checked"' : false; ?>
                                     <?php } elseif ( 'checkbox' === $input_type ) { ?>
@@ -210,7 +210,7 @@
                                         <label for="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); ?>" class="screen-reader-text"><?php echo esc_html( $option[ 'label' ] ); ?></label>
                                     <?php } ?>
                                     <?php if ( isset( $option[ 'name' ] ) && isset( $option[ 'label' ] ) ) { ?>
-                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); ?><?php } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' === $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo wp_kses_post( $checked ); ?>> <?php echo esc_attr( $option[ 'label' ] ); ?>
+                                        <input class="b3_form-input b3_form-input--<?php echo esc_attr( $input_type ); ?><?php if ( $option_class ) { ?> b3_form-input--<?php echo esc_attr( $option_class ); echo esc_attr( $option_class ); } ?>"<?php if ( isset( $option[ 'name' ] ) ) { ?> id="<?php echo esc_attr( $option[ 'name' ] . '_' . $counter ); } ?>" name="<?php echo esc_attr( $option[ 'name' ] ); if ( 'checkbox' === $input_type ) { echo '[]'; } ?>" type="<?php echo esc_attr( $input_type ); ?>" value="<?php echo ( isset( $option[ 'value' ] ) ? esc_attr($option[ 'value' ]) : '' ); ?>"<?php echo wp_kses_post( $checked ); ?>> <?php echo esc_attr( $option[ 'label' ] ); ?>
                                     <?php } ?>
                                 </div>
                                 <?php $counter++; ?>
@@ -219,7 +219,7 @@
                     <?php } ?>
 
                 <?php } elseif ( 'select' === $input_type ) { ?>
-                    <select name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="<?php echo esc_attr( $input_class ); ?>">
+                    <select name="<?php echo esc_attr( $input_id ); ?>" id="<?php echo esc_attr( $input_id ); ?>" class="b3_form-input--select<?php if ( $input_class ) { ?> b3_form-input--<?php echo esc_attr( $input_class ); } ?>">
                         <?php if ( $input_options ) { ?>
                             <?php $input_placeholder_select = ( $input_placeholder ) ? $input_placeholder : esc_attr__( 'Select an option', 'b3-onboarding' ); ?>
                             <option value=""><?php echo esc_attr( $input_placeholder_select ); ?></option>
