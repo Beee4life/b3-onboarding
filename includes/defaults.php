@@ -112,10 +112,10 @@
                     $message .= sprintf( esc_html__( 'you have confirmed your email address and login with your password through the %s.', 'b3-onboarding' ), $a_href );
                     $message .= '<br><br>' . "\n";
                     $message .= esc_html__( 'Or you can login immediately by clicking the button below.', 'b3-onboarding' );
+                    $message .= '<br><br>' . "\n";
                 } else {
                     $message .= esc_html__( 'you have confirmed your email address and can now login immediately by clicking the button below.', 'b3-onboarding' );
                 }
-                $message .= '<br><br>' . "\n";
 
             } else {
                 $lost_pass_link = '%lostpass_url%';
