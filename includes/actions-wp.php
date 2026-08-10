@@ -309,13 +309,19 @@
                 }
 
                 if ( ! is_wp_error( $result ) ) {
+                    // @TODO: ignore when manually added
                     if ( get_option( 'b3_needs_admin_approval' ) ) {
                         do_action( 'b3_set_approval_status', $result );
+                        do_action( 'b3_inform_admin', 'request_access', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'message' => 'activate_approval_needed' ], $redirect_url );
 
                     } elseif ( get_option( 'b3_use_magic_link' ) ) {
+                        // error_log(print_r( $result, true ));
+                        do_action( 'b3_inform_admin', 'new_user', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'message' => 'activate_success_magic' ], $redirect_url );
                     } else {
+                        error_log(print_r( $result, true ));
+                        do_action( 'b3_inform_admin', 'new_user', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
                     }
                     wp_safe_redirect( $redirect_url );

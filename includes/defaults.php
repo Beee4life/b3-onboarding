@@ -59,7 +59,7 @@
 
     function b3_get_default_new_user_subject_admin() {
         /* translators: site name */
-        return sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+        return sprintf( esc_html__( 'A new user registered at %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
     function b3_get_default_new_user_message_admin() {

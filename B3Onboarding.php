@@ -626,18 +626,18 @@
                             } elseif ( in_array( 'b3_approval', (array) $existing_user->roles ) ) {
                                 $redirect_url = add_query_arg( 'message', 'approval_needed', $redirect_url );
 
-                            } elseif ( empty( $existing_user->roles ) ) {
-                                // user not approved yet
-                                if ( get_option( 'b3_needs_admin_approval' ) && get_user_meta( $existing_user->ID, 'pending', true ) ) {
-                                    $redirect_url = add_query_arg( 'message', 'approval_needed', $redirect_url );
-                                }
-
                             } else {
-                                $magic_link = b3_get_magic_link_url( $user_email );
-                                $message    = b3_get_magic_link_message( $magic_link );
-                                $subject    = b3_get_magic_link_subject();
-                                $subject    = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
-                                $vars       = []; // empty right now, but might be filled later on...
+                                if ( get_option( 'b3_needs_admin_approval' ) && get_user_meta( $existing_user->ID, 'pending', true ) ) {
+                                    // user not approved yet
+                                    $redirect_url = add_query_arg( 'message', 'approval_needed', $redirect_url );
+
+                                } else {
+                                    $magic_link = b3_get_magic_link_url( $user_email );
+                                    $message    = b3_get_magic_link_message( $magic_link );
+                                    $subject    = b3_get_magic_link_subject();
+                                    $subject    = strtr( $subject, b3_get_replacement_vars( 'subject' ) );
+                                    $vars       = []; // empty right now, but might be filled later on...
+                                }
                             }
 
                             if ( ! empty( $message ) ) {
@@ -1257,7 +1257,7 @@
                                     // Success, redirect to message.
                                     $redirect_url = add_query_arg( 'registered', 'new_blog', $redirect_url );
                                     $redirect_url = add_query_arg( 'site_id', $result, $redirect_url );
-                                } elseif ( true == $result ) {
+                                } else {
                                     // Success, redirect to login page.
                                     $redirect_url = b3_get_login_url();
                                     $redirect_url = add_query_arg( 'registered', 'wpmu_confirm_email', $redirect_url );

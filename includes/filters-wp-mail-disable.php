@@ -40,9 +40,12 @@
 
     // Disable WPMU user signup email to take it over
     function b3_disable_wpmu_user_signup_notification( $user_login, $user_email, $key, $meta = [] ) {
+        if ( is_admin() && isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
+            return true;
+        }
         return false;
     }
-    add_filter( 'wpmu_signup_user_notification', 'b3_disable_wpmu_user_signup_notification', 10, 5 );
+    add_filter( 'wpmu_signup_user_notification', 'b3_disable_wpmu_user_signup_notification', 10, 4 );
 
     // Disable WPMU user welcome email to take it over
     function b3_disable_welcome_mu_user_email( $user_id, $password, $meta ) {

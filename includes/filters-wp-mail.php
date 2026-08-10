@@ -63,7 +63,7 @@
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
-    // Override new user notification email for user
+    // Override new user notification email for user (single site)
     function b3_new_user_notification_email( $wp_mail, $user, $blogname ) {
         $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $registration_type = get_option( 'b3_registration_type' );
@@ -118,6 +118,21 @@
 
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
+
+    function b3_new_user_notification_email_mu( $email_message, $user_login, $user_email, $key, $meta ) {
+        $link_element  = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Activate account', 'b3-onboarding' ) ) );
+        $button        = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+        $big_link      = sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $email_message = nl2br( $email_message );
+        $email_message = str_replace( '%s', '<br>' . $big_link, $email_message );
+        $email_message .= b3_get_default_greetings();
+        $email_message = b3_replace_template_styling( $email_message );
+        $email_message = strtr( $email_message, b3_get_replacement_vars( 'message', [ 'key' => $key ], true ) );
+        $email_message = str_replace( '%', '%%', $email_message );
+
+        return $email_message;
+    }
+    add_filter( 'wpmu_signup_user_notification_email', 'b3_new_user_notification_email_mu', 20, 5 );
 
     // Filter to override new site email (New Site Created)
     function b3_new_site_email( $new_site_email, $site, $user ) {
@@ -321,6 +336,7 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
 
     // Override 'invited user' email
     function b3_override_email( $new_user_email, $user_id, $role, $newuser_key ) {
+        error_log('Override: ' . $new_user_email);
         $new_user_email = b3_replace_template_styling( $new_user_email[ 'message' ] );
 
         return $new_user_email;

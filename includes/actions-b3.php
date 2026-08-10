@@ -505,9 +505,13 @@
     add_action( 'b3_manual_user_activate', 'b3_manually_activate_user' );
 
     // Inform admin about something
-    function b3_inform_admin( $type ) {
+    function b3_inform_admin( $type, $user_id = false ) {
         if ( $type ) {
             switch( $type ) {
+                case 'new_user':
+                    $subject = b3_get_new_user_subject();
+                    $message = b3_get_new_user_message();
+                    break;
                 case 'request_access':
                     $subject = b3_get_request_access_subject_admin();
                     $message = b3_get_request_access_message_admin();
@@ -518,16 +522,23 @@
             }
 
             if ( ! empty( $subject ) && ! empty( $message ) ) {
+                $vars = [];
+                if ( $user_id ) {
+                    $user = get_userdata( $user_id );
+                    if ( $user instanceof WP_User ) {
+                        $vars[ 'user_data' ] = $user;
+                    }
+                }
                 $admin_to = b3_get_notification_addresses( $type );
                 $message  = b3_replace_template_styling( $message );
-                $message  = strtr( $message, b3_get_replacement_vars() );
+                $message  = strtr( $message, b3_get_replacement_vars( 'message', $vars ) );
                 $message  = htmlspecialchars_decode( stripslashes( $message ) );
 
                 wp_mail( $admin_to, $subject, $message, [] );
             }
         }
     }
-    add_action( 'b3_inform_admin', 'b3_inform_admin' );
+    add_action( 'b3_inform_admin', 'b3_inform_admin', 10, 2 );
 
     // Redirect a user
     function b3_redirect( $redirect_type, $redirect_to = null ) {
@@ -660,7 +671,5 @@
         if ( ! empty( $result[ 'user_id' ] ) ) {
             update_user_meta( $result[ 'user_id' ], 'pending', true );
         }
-
-        do_action( 'b3_inform_admin', 'request_access' );
     }
     add_action( 'b3_set_approval_status', 'b3_set_approval_status' );

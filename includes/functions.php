@@ -964,6 +964,8 @@
 
         if ( '1' == get_option( 'b3_register_email_only' ) && isset( $user_data->user_login ) ) {
             $user_login = $user_data->user_login;
+        } elseif ( isset( $user_data->user_login ) ) {
+            $user_login = $user_data->user_login;
         } elseif ( isset( $user_data->data->user_login ) ) {
             $user_login = $user_data->data->user_login;
         }
