@@ -38,19 +38,23 @@
     }
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
-    // Do stuff after user registers.
+    // Do stuff after user registers (single site).
     function b3_set_role_after_register( int $user_id ) {
-        if ( isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
-            // user is manually added
-        } elseif ( 0 < $user_id ) {
+        global $pagenow;
+        error_log('Hit');
+        // Check if the user is being manually created via WP Admin
+        $is_manual_admin_add = is_admin() && 'user-new.php' === $pagenow;
+
+        if ( $is_manual_admin_add ) {
+            update_user_meta( $user_id, 'manually_added', true );
+
+        } elseif ( $user_id > 0 ) {
             $admin_approval    = get_option( 'b3_needs_admin_approval' );
             $registration_type = get_option( 'b3_registration_type' );
             $user              = new WP_User( $user_id );
 
-            if ( $user instanceof WP_User ) {
-                if ( 'email_activation' === $registration_type ) {
-                    $user->set_role( 'b3_activation' );
-                }
+            if ( $user instanceof WP_User && 'email_activation' === $registration_type ) {
+                $user->set_role( 'b3_activation' );
             }
         }
     }
@@ -309,14 +313,12 @@
                 }
 
                 if ( ! is_wp_error( $result ) ) {
-                    // @TODO: ignore when manually added
                     if ( get_option( 'b3_needs_admin_approval' ) ) {
                         do_action( 'b3_set_approval_status', $result );
                         do_action( 'b3_inform_admin', 'request_access', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'message' => 'activate_approval_needed' ], $redirect_url );
 
                     } elseif ( get_option( 'b3_use_magic_link' ) ) {
-                        // error_log(print_r( $result, true ));
                         do_action( 'b3_inform_admin', 'new_user', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'message' => 'activate_success_magic' ], $redirect_url );
                     } else {

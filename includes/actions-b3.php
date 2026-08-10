@@ -506,7 +506,9 @@
 
     // Inform admin about something
     function b3_inform_admin( $type, $user_id = false ) {
-        if ( $type ) {
+        $manually_added = get_user_meta( $user_id, 'manually_added', true );
+
+        if ( $type && ! $manually_added ) {
             switch( $type ) {
                 case 'new_user':
                     $subject = b3_get_new_user_subject();
