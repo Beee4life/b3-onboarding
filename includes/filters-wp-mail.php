@@ -63,7 +63,7 @@
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
-    // Override new user notification email for user (single site)
+    // Override new user notification email for user (single site or MS add to network)
     function b3_new_user_notification_email( $wp_mail, $user, $blogname ) {
         $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $registration_type = get_option( 'b3_registration_type' );
@@ -72,12 +72,15 @@
             // user is manually added
             if ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false ) {
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
-                    // user must get AN email, from WP or custom
+                    // user must get AN email, from WP or custom (single site)
                     // @TODO: check confirm email
                     $wp_mail[ 'to' ]      = $user->user_email;
                     $wp_mail[ 'headers' ] = [];
                     $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
                     $user_email           = b3_get_manual_welcome_user_message( $user->user_email );
+                } else {
+                    // @TODO: reformat links
+                    $user_email = nl2br( $wp_mail[ 'message' ] );
                 }
 
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
@@ -117,8 +120,8 @@
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
 
+    // user is manually added from within a site
     function b3_new_user_notification_email_mu( $original_message, $user_login, $user_email, $key, $meta ) {
-        // invited to join
         $link_element  = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Activate account', 'b3-onboarding' ) ) );
         $button        = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
         $big_link      = sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";

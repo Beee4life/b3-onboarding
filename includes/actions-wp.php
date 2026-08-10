@@ -38,10 +38,9 @@
     }
     add_action( 'user_register', 'b3_update_user_meta_after_register' );
 
-    // Do stuff after user registers (single site).
+    // Do stuff after user registers (single site or MS add to network).
     function b3_set_role_after_register( int $user_id ) {
         global $pagenow;
-        error_log('Hit');
         // Check if the user is being manually created via WP Admin
         $is_manual_admin_add = is_admin() && 'user-new.php' === $pagenow;
 
