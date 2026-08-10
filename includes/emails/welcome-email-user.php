@@ -1,0 +1,49 @@
+<?php
+    if ( ! defined( 'ABSPATH' ) ) exit;
+
+    /*
+     * Input fields for 'Welcome user' email
+     *
+     * @since 1.0.0
+     */
+
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
+    $welcome_user_email_subject = get_option( 'b3_welcome_user_subject' );
+    $welcome_user_email_message = get_option( 'b3_welcome_user_message' );
+?>
+<table class="b3_table b3_table--emails">
+    <tbody>
+    <tr>
+        <td colspan="2" class="b3__intro">
+            <?php esc_html_e( 'If a field is left empty the default value will be used.', 'b3-onboarding' ); ?>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="b3__input--welcome-user"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
+        </th>
+        <td>
+            <input id="b3__input--welcome-user" name="b3_welcome_user_subject" placeholder="<?php echo esc_attr( b3_default_welcome_user_subject() ); ?>" type="text" value="<?php echo esc_attr( $welcome_user_email_subject ); ?>" />
+        </td>
+    </tr>
+    <tr>
+        <th class="align-top">
+            <label for="b3__input--new-user"><?php esc_html_e( 'Email message', 'b3-onboarding' ); ?></label>
+            <br>
+            <?php echo wp_kses_post( b3_get_preview_link( 'welcome-user' ) ); ?>
+        </th>
+        <td>
+            <textarea id="b3__input--new-user" name="b3_welcome_user_message" placeholder="<?php echo esc_attr( b3_default_welcome_user_message( 'dummy@example.com' ) ); ?>" rows="6"><?php echo esc_textarea( $welcome_user_email_message ); ?></textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>&nbsp;</th>
+        <td>
+            <input class="button button-primary" type="submit" value="<?php esc_attr_e( 'Save settings', 'b3-onboarding' ); ?>" />
+        </td>
+    </tr>
+    </tbody>
+</table>
