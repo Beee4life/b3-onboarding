@@ -252,13 +252,15 @@
 
     }
 
-    // welcome subject when user is immediately active
+    // welcome subject when user is manually added (or immediately active)
+    // @TODO: test in MS
     function b3_get_default_welcome_user_subject() {
         /* translators: site name */
         return sprintf( esc_html__( 'Welcome to %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
     // welcome message when user is immediately active
+    // @TODO: test in MS
     function b3_get_default_welcome_user_message( $user_email = '' ) {
         /* translators: 1. lost password url, 2. set password */
         $message = b3_get_email_intro();
@@ -311,15 +313,19 @@
         return $message;
     }
 
+    // used when adding manually
     function b3_get_default_manual_welcome_user_message() {
+        $reset_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
+        $button     = sprintf( '<div class="big-link">%s</div>', $reset_link ) . "\n";
+
         $message = b3_get_email_intro();
         $message .= '<br><br>' . "\n";
         /* translators: site name */
         $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        /* translators: here */
-        $message .= sprintf( esc_html__( 'You can (re)set your password %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), esc_html__( 'here', 'b3-onboarding' ) ) );
-        $message .= '<br>' . "\n";
+        $message .= esc_html__( 'You can set your password by clicking the button below.', 'b3-onboarding' );
+        $message .= '<br><br>' . "\n";
+        $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         $message .= b3_get_default_greetings();
 
         return $message;
