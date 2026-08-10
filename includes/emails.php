@@ -55,9 +55,6 @@
                 case 'email_settings':
                     include 'emails/email-settings.php';
                     break;
-                case 'welcome_email_user':
-                    include 'emails/welcome-email-user.php';
-                    break;
                 case 'new_user_admin':
                     include 'emails/new-user-admin.php';
                     break;
