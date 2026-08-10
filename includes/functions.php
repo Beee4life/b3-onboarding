@@ -237,7 +237,7 @@
         }
 
         // Generate an activation key
-        $key = wp_generate_password( 20, false );
+        $key = strtolower( wp_generate_password( 20, false ) );
 
         global $wpdb;
         // Set the activation key for the user

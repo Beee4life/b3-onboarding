@@ -63,7 +63,7 @@
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
-    // Override new user notification email for user (single site or MS add to network)
+    // Override new user notification email for user (single site or MS add user to network or add site + user)
     function b3_new_user_notification_email( $wp_mail, $user, $blogname ) {
         $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $registration_type = get_option( 'b3_registration_type' );
@@ -84,7 +84,11 @@
                 }
 
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
-                error_log('FIX site-new in ' . __METHOD__ );
+                // @TODO: reformat links
+                // $user_email = nl2br( $wp_mail[ 'message' ] );
+                $wp_mail[ 'headers' ] = [];
+                $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
+                $user_email           = b3_get_manual_welcome_user_message( $user->user_email );
             }
 
         } else {

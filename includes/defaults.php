@@ -327,9 +327,15 @@
         $follow_up = esc_html__( 'You can set your password by clicking the button below.', 'b3-onboarding' );
 
         if ( ! apply_filters( 'b3_skip_manual_confirmation', false ) ) {
-            $activate_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Click to activate', 'b3-onboarding' ) ) );
-            $button        = sprintf( '<div class="big-link">%s</div>', $activate_link );
-            $follow_up     = esc_html__( 'You need to confirm your email by clicking the button below.', 'b3-onboarding' );
+            if ( isset( $_POST[ '_wp_http_referer' ] ) && strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false && ! empty( $user_email ) ) {
+                $user_data      = get_user_by( 'email', $user_email );
+                $activation_url = b3_get_activation_url( $user_data );
+                $activate_link  = sprintf( '<a href="%s">%s</a>', $activation_url, strtoupper( esc_html__( 'Click to activate', 'b3-onboarding' ) ) );
+            } else {
+                $activate_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Click to activate', 'b3-onboarding' ) ) );
+            }
+            $button    = sprintf( '<div class="big-link">%s</div>', $activate_link );
+            $follow_up = esc_html__( 'You need to confirm your email by clicking the button below.', 'b3-onboarding' );
 
         } else {
             if ( get_option( 'b3_use_magic_link' ) && ! empty( $user_email ) ) {
