@@ -71,7 +71,6 @@
         if ( isset( $_POST[ '_wp_http_referer' ] ) ) {
             // user is manually added
             if ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false ) {
-                // @TODO: check if this goes for MS as well
                 update_user_meta( $user->ID, 'manually_added', true );
 
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
@@ -119,11 +118,11 @@
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
 
-    function b3_new_user_notification_email_mu( $email_message, $user_login, $user_email, $key, $meta ) {
+    function b3_new_user_notification_email_mu( $default_wordpress_message, $user_login, $user_email, $key, $meta ) {
         $link_element  = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Activate account', 'b3-onboarding' ) ) );
         $button        = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
         $big_link      = sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
-        $email_message = nl2br( $email_message );
+        $email_message = nl2br( $default_wordpress_message );
         $email_message = str_replace( '%s', '<br>' . $big_link, $email_message );
         $email_message .= b3_get_default_greetings();
         $email_message = b3_replace_template_styling( $email_message );
