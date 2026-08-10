@@ -110,6 +110,7 @@
 
         // send 'account activated' email to user
         if ( 'user' === get_option( 'b3_registration_type' ) ) {
+            // @TODO: test if this is used/hit in MS.
             $user = get_userdata( $user_id );
             $to   = $user->user_email;
 

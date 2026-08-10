@@ -76,7 +76,7 @@
         return apply_filters( 'b3_email_activation_message_user', $message );
     }
 
-    // Return welcome user subject (user)
+    // Return welcome user subject (user/blog/none)
     function b3_get_welcome_user_subject() {
         $subject = get_option( 'b3_welcome_user_subject' );
 
@@ -233,7 +233,7 @@
         $subject = get_option( 'b3_new_user_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_new_user_admin_subject() . "\n";
+            $subject = b3_default_new_user_admin_subject();
         }
 
         return apply_filters( 'b3_new_user_subject', $subject );

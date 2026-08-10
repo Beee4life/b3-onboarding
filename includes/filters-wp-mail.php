@@ -79,6 +79,7 @@
                     $user_email           = b3_get_manual_welcome_user_message();
                 }
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
+                // user added without site ??
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
                 $user_email           = b3_get_manual_welcome_user_message();
             }
