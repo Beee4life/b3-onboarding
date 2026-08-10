@@ -8,8 +8,8 @@
      */
     $new_wpmu_user_subject = get_option( 'b3_confirm_wpmu_user_subject' );
     $new_wpmu_user_message = get_option( 'b3_confirm_wpmu_user_message' );
-    $placeholder_subject   = esc_attr( b3_default_wpmu_activate_user_subject() );
-    $placeholder_message   = esc_attr( b3_default_wpmu_activate_user_message() );
+    $placeholder_subject   = esc_attr( b3_get_default_wpmu_activate_user_subject() );
+    $placeholder_message   = esc_attr( b3_get_default_wpmu_activate_user_message() );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

@@ -17,7 +17,7 @@
         $new_message               .= '<br><br>';
         $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###.';
         $new_message               .= "\n<br>";
-        $new_message               .= b3_default_greetings();
+        $new_message               .= b3_get_default_greetings();
         $new_message               = b3_replace_template_styling( $new_message );
         $new_message               = strtr( $new_message, b3_get_replacement_vars() );
         $change_email[ 'message' ] = $new_message;
@@ -257,7 +257,7 @@
         $email_content = str_replace( "\n###SITEURL###", '', $email_content );
         $email_content = str_replace( "\n", '<br>', $email_content );
         $email_content .= "\n<br>";
-        $email_content .= b3_default_greetings();
+        $email_content .= b3_get_default_greetings();
         $email_content = b3_replace_template_styling( $email_content );
         $email_content = strtr( $email_content, b3_get_replacement_vars() );
         $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
@@ -269,7 +269,7 @@
 
     function b3_after_change_email( $email_array, $old_email, $new_email ) {
         $email_array[ 'message' ] .= "\n<br>";
-        $email_array[ 'message' ] .= b3_default_greetings();
+        $email_array[ 'message' ] .= b3_get_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
         $email_array[ 'message' ] = strtr( $email_array[ 'message' ], b3_get_replacement_vars() );
         $email_array[ 'message' ] = htmlspecialchars_decode( stripslashes( $email_array[ 'message' ] ) );
@@ -280,7 +280,7 @@
 
     function b3_after_change_network_email( $email_array, $old_email, $new_email, $network_id ) {
         $email_array[ 'message' ] .= "\n<br>";
-        $email_array[ 'message' ] .= b3_default_greetings();
+        $email_array[ 'message' ] .= b3_get_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
         $email_array[ 'message' ] = strtr( $email_array[ 'message' ], b3_get_replacement_vars() );
         $email_array[ 'message' ] = htmlspecialchars_decode( stripslashes( $email_array[ 'message' ] ) );
@@ -308,7 +308,7 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
         );
         $email_text = str_replace( "\n", '<br>', $email_text );
         $email_text .= "<br>";
-        $email_text .= b3_default_greetings();
+        $email_text .= b3_get_default_greetings();
         $admin_change_link = sprintf( '<a href="%s">%s</a>', '###ADMIN_URL###', '###ADMIN_URL###' );
         $email_text = str_replace( "###ADMIN_URL###", $admin_change_link, $email_text );
         $email_text = b3_replace_template_styling( $email_text );

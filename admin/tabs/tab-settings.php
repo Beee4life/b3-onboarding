@@ -5,20 +5,20 @@
 
     // Render settings tab
     function b3_render_settings_tab() {
-        $above_registration_placeholder  = b3_default_message_above_registration();
+        $above_registration_placeholder  = b3_get_default_message_above_registration();
         $above_registration_filter       = apply_filters( 'b3_message_above_registration', false );
         $above_registration_option       = wp_unslash( get_option( 'b3_message_above_registration' ) );
         $above_registration_value        = $above_registration_filter ? $above_registration_filter : $above_registration_option;
-        $above_magic_link_placeholder    = b3_default_message_above_magic_link();
+        $above_magic_link_placeholder    = b3_get_default_message_above_magic_link();
         $above_magic_link_filter         = apply_filters( 'b3_message_above_magic_link', false );
         $above_magic_link_option         = wp_unslash( get_option( 'b3_message_above_magic_link' ) );
         $above_magic_link_value          = $above_magic_link_filter ? $above_magic_link_filter : $above_magic_link_option;
         $use_magic_link                  = get_option( 'b3_use_magic_link' );
-        $above_login_placeholder         = $use_magic_link ? b3_default_message_above_magic_link() : '';
+        $above_login_placeholder         = $use_magic_link ? b3_get_default_message_above_magic_link() : '';
         $above_login_filter              = apply_filters( 'b3_message_above_login', '' );
         $above_login_option              = wp_unslash( get_option( 'b3_message_above_login' ) );
         $above_login_value               = $above_login_filter ? $above_login_filter : $above_login_option;
-        $above_lost_password_placeholder = b3_default_message_above_lost_password();
+        $above_lost_password_placeholder = b3_get_default_message_above_lost_password();
         $above_lost_password_filter      = apply_filters( 'b3_message_above_lost_password', false );
         $above_lost_password_option      = wp_unslash( get_option( 'b3_message_above_lost_password' ) );
         $above_lost_password_value       = $above_lost_password_filter ? $above_lost_password_filter : $above_lost_password_option;
@@ -129,7 +129,7 @@
 
                 <?php if ( 'none' === $registration_type ) { ?>
                     <?php
-                        $placeholder_registration_closed = b3_default_registration_closed_message();
+                        $placeholder_registration_closed = b3_get_default_registration_closed_message();
                         $filter_registration_closed      = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) );
                         $registration_closed_message     = htmlspecialchars( wp_unslash( get_option( 'b3_registration_closed_message' ) ) );
                         $registration_closed_message     = $filter_registration_closed ? $filter_registration_closed : $registration_closed_message;

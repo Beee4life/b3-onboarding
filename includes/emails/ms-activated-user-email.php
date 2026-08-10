@@ -8,8 +8,8 @@
      */
     $activated_wpmu_user_subject = get_option( 'b3_activated_wpmu_user_subject' );
     $activated_wpmu_user_message = get_option( 'b3_activated_wpmu_user_message' );
-    $placeholder_subject         = sprintf( esc_attr( b3_default_wpmu_user_activated_subject() ), get_site_option( 'site_name' ) );
-    $placeholder_message         = esc_attr( b3_default_wpmu_user_activated_message() );
+    $placeholder_subject         = sprintf( esc_attr( b3_get_default_wpmu_user_activated_subject() ), get_site_option( 'site_name' ) );
+    $placeholder_message         = esc_attr( b3_get_default_wpmu_user_activated_message() );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

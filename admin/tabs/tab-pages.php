@@ -5,7 +5,7 @@
 
     // Render pages tab
     function b3_render_pages_tab() {
-        $b3_pages = b3_default_admin_pages();
+        $b3_pages = b3_get_default_admin_pages();
 
         foreach( $b3_pages as $b3_page ) {
             $b3_page_ids[] = (int) $b3_page[ 'page_id' ];

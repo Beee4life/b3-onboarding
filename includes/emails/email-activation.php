@@ -26,7 +26,7 @@
             <label for="b3__input--email-activation__subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--email-activation__subject" name="b3_email_activation_subject" placeholder="<?php echo esc_attr( b3_default_email_activation_subject() ); ?>" type="text" value="<?php echo esc_attr( $email_activation_subject ); ?>" />
+            <input id="b3__input--email-activation__subject" name="b3_email_activation_subject" placeholder="<?php echo esc_attr( b3_get_default_email_activation_subject() ); ?>" type="text" value="<?php echo esc_attr( $email_activation_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -36,7 +36,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'email-activation' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_attr( b3_default_email_activation_message() ); ?>" rows="6"><?php echo esc_textarea( $email_activation_message ); ?></textarea>
+            <textarea id="b3__input--email-activation__message" name="b3_email_activation_message" placeholder="<?php echo esc_attr( b3_get_default_email_activation_message() ); ?>" rows="6"><?php echo esc_textarea( $email_activation_message ); ?></textarea>
         </td>
     </tr>
     <tr>

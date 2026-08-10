@@ -15,7 +15,7 @@
             $fields[] = [
                 'id'          => 'email_template',
                 'title'       => __( 'Email template', 'b3-onboarding' ),
-                'placeholder' => b3_default_email_template(),
+                'placeholder' => b3_get_default_email_template(),
                 'preview'     => 'template',
                 'value'       => $stored_email_template,
                 'file_name'   => 'default-email-template.html',
@@ -24,7 +24,7 @@
             $fields[] = [
                 'id'          => 'email_styling',
                 'title'       => __( 'Email styling', 'b3-onboarding' ),
-                'placeholder' => b3_default_email_styling( b3_get_link_color() ),
+                'placeholder' => b3_get_default_email_styling( b3_get_link_color() ),
                 'preview'     => 'styling',
                 'value'       => $stored_email_styling,
                 'file_name'   => 'default-email-styling.css',

@@ -8,7 +8,7 @@
         $email_styling = get_option( 'b3_email_styling' );
 
         if ( ! $email_styling ) {
-            $email_styling = b3_default_email_styling( $link_color );
+            $email_styling = b3_get_default_email_styling( $link_color );
         }
 
         return apply_filters( 'b3_email_styling', $email_styling );
@@ -19,7 +19,7 @@
         $link_color = get_option( 'b3_link_color' );
 
         if ( ! $link_color ) {
-            $link_color = b3_default_link_color();
+            $link_color = b3_get_default_link_color();
         }
 
         return apply_filters( 'b3_link_color', $link_color );
@@ -30,7 +30,7 @@
         $email_template = get_option( 'b3_email_template' );
 
         if ( ! $email_template ) {
-            $email_template = b3_default_email_template( $hide_logo );
+            $email_template = b3_get_default_email_template( $hide_logo );
         }
 
         return apply_filters( 'b3_email_template', $email_template );
@@ -39,7 +39,7 @@
     // Return default email footer
     // @TODO: maybe add user input option
     function b3_get_email_footer() {
-        return apply_filters( 'b3_email_footer_text', b3_default_email_footer() );
+        return apply_filters( 'b3_email_footer_text', b3_get_default_email_footer() );
     }
 
     // Get notification addresses
@@ -59,7 +59,7 @@
         $subject = get_option( 'b3_email_activation_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_email_activation_subject();
+            $subject = b3_get_default_email_activation_subject();
         }
 
         return apply_filters( 'b3_email_activation_subject_user', $subject );
@@ -70,7 +70,7 @@
         $message = get_option( 'b3_email_activation_message' );
 
         if ( ! $message ) {
-            $message = b3_default_email_activation_message();
+            $message = b3_get_default_email_activation_message();
         }
 
         return apply_filters( 'b3_email_activation_message_user', $message );
@@ -81,7 +81,7 @@
         $subject = get_option( 'b3_welcome_user_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_welcome_user_subject();
+            $subject = b3_get_default_welcome_user_subject();
         }
 
         return apply_filters( 'b3_welcome_user_subject', $subject );
@@ -92,7 +92,7 @@
         $message = get_option( 'b3_welcome_user_message' );
 
         if ( ! $message ) {
-            $message = b3_default_welcome_user_message( $user_email );
+            $message = b3_get_default_welcome_user_message( $user_email );
         }
 
         return apply_filters( 'b3_welcome_user_message', $message, $user_email );
@@ -101,7 +101,7 @@
     // New site created message
     function b3_get_new_site_created_message() {
         // @TODO: maybe add user input option
-        $message = b3_default_message_new_site_created();
+        $message = b3_get_default_message_new_site_created();
 
         return apply_filters( 'b3_new_site_created_message', $message );
     }
@@ -111,7 +111,7 @@
         $subject = get_option( 'b3_request_access_subject_admin' );
 
         if ( ! $subject ) {
-            $subject = b3_default_request_access_subject_admin();
+            $subject = b3_get_default_request_access_subject_admin();
         }
 
         return apply_filters( 'b3_request_access_subject_admin', $subject );
@@ -122,7 +122,7 @@
         $message = get_option( 'b3_request_access_message_admin' );
 
         if ( ! $message ) {
-            $message = b3_default_request_access_message_admin();
+            $message = b3_get_default_request_access_message_admin();
         }
 
         return apply_filters( 'b3_request_access_message_admin', $message );
@@ -133,7 +133,7 @@
         $subject = get_option( 'b3_request_access_subject_user' );
 
         if ( ! $subject ) {
-            $subject = b3_default_request_access_subject_user();
+            $subject = b3_get_default_request_access_subject_user();
         }
 
         return apply_filters( 'b3_request_access_subject_user', $subject );
@@ -144,7 +144,7 @@
         $message = get_option( 'b3_request_access_message_user' );
 
         if ( ! $message ) {
-            $message = b3_default_request_access_message_user( $activation );
+            $message = b3_get_default_request_access_message_user( $activation );
         }
 
         return apply_filters( 'b3_request_access_message_user', $message );
@@ -155,7 +155,7 @@
         $subject = get_option( 'b3_account_approved_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_account_approved_subject();
+            $subject = b3_get_default_account_approved_subject();
         }
 
         return apply_filters( 'b3_account_approved_subject', $subject );
@@ -166,7 +166,7 @@
         $message = get_option( 'b3_account_approved_message' );
 
         if ( ! $message ) {
-            $message = b3_default_account_approved_message( $user_email );
+            $message = b3_get_default_account_approved_message( $user_email );
         }
 
         return apply_filters( 'b3_account_approved_message', $message, $user_email );
@@ -177,7 +177,7 @@
         $subject = get_option( 'b3_account_activated_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_account_activated_subject();
+            $subject = b3_get_default_account_activated_subject();
         }
 
         return apply_filters( 'b3_account_activated_subject_user', $subject );
@@ -189,7 +189,7 @@
         $message = get_option( 'b3_account_activated_message' );
 
         if ( ! $message ) {
-            $message = b3_default_account_activated_message( $user_email );
+            $message = b3_get_default_account_activated_message( $user_email );
         }
 
         return apply_filters( 'b3_account_activated_message_user', $message, $user_email );
@@ -200,7 +200,7 @@
         $subject = get_option( 'b3_account_rejected_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_account_rejected_subject() . "\n";
+            $subject = b3_get_default_account_rejected_subject();
         }
 
         return apply_filters( 'b3_account_rejected_subject', $subject );
@@ -211,7 +211,7 @@
         $message = get_option( 'b3_account_rejected_message' );
 
         if ( ! $message ) {
-            $message = b3_default_account_rejected_message() . "\n";
+            $message = b3_get_default_account_rejected_message();
         }
 
         return apply_filters( 'b3_account_rejected_message', $message );
@@ -222,7 +222,7 @@
         $message = get_option( 'b3_lost_password_message' );
 
         if ( ! $message ) {
-            $message = b3_default_lost_password_message() . "\n";
+            $message = b3_get_default_lost_password_message();
         }
 
         return apply_filters( 'b3_lost_password_message', $message );
@@ -233,7 +233,7 @@
         $subject = get_option( 'b3_new_user_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_new_user_admin_subject();
+            $subject = b3_get_default_new_user_admin_subject();
         }
 
         return apply_filters( 'b3_new_user_subject', $subject );
@@ -244,7 +244,7 @@
         $message = get_option( 'b3_new_user_message' );
 
         if ( ! $message ) {
-            $message = b3_default_new_user_admin_message();
+            $message = b3_get_default_new_user_admin_message();
         }
 
         return apply_filters( 'b3_new_user_message', $message );
@@ -255,7 +255,7 @@
         $subject = get_option( 'b3_lost_password_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_lost_password_subject();
+            $subject = b3_get_default_lost_password_subject();
         }
 
         return apply_filters( 'b3_lost_password_subject', $subject );
@@ -288,7 +288,7 @@
         $manual_welcome_message = get_option( 'b3_welcome_user_message_manual' );
 
         if ( ! $manual_welcome_message ) {
-            $manual_welcome_message = b3_default_manual_welcome_user_message();
+            $manual_welcome_message = b3_get_default_manual_welcome_user_message();
         }
 
         return apply_filters( 'b3_welcome_user_message_manual', $manual_welcome_message );
@@ -312,7 +312,7 @@
         $subject = get_option( 'b3_magic_link_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_default_magic_link_subject();
+            $subject = b3_get_default_magic_link_subject();
         }
 
         return apply_filters( 'b3_magic_link_subject', $subject );
@@ -324,7 +324,7 @@
 
         if ( $magic_link ) {
             // maybe add user input for this email
-            $message = b3_default_magic_link_message( $magic_link );
+            $message = b3_get_default_magic_link_message( $magic_link );
         }
 
         return apply_filters( 'b3_magic_link_message', $message );

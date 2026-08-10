@@ -26,7 +26,7 @@
             <label for="b3__input--account-approved__subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--account-approved__subject" name="b3_account_approved_subject" placeholder="<?php echo esc_attr( b3_default_account_approved_subject() ); ?>" type="text" value="<?php echo esc_attr( $account_approved_email_subject ); ?>" />
+            <input id="b3__input--account-approved__subject" name="b3_account_approved_subject" placeholder="<?php echo esc_attr( b3_get_default_account_approved_subject() ); ?>" type="text" value="<?php echo esc_attr( $account_approved_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -36,7 +36,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'account-approved' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_attr( b3_default_account_approved_message( 'dummy@example.com' ) ); ?>" rows="6"><?php echo esc_textarea( $account_approved_email_message ); ?></textarea>
+            <textarea id="b3__input--account-approved__message" name="b3_account_approved_message" placeholder="<?php echo esc_attr( b3_get_default_account_approved_message( 'dummy@example.com' ) ); ?>" rows="6"><?php echo esc_textarea( $account_approved_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

@@ -13,9 +13,9 @@
 
     $activated_wpmu_user_site_subject = get_option( 'b3_activated_wpmu_user_site_subject' );
     $activated_wpmu_user_site_message = get_option( 'b3_activated_wpmu_user_site_message' );
-    $placeholder_subject              = b3_default_subject_welcome_wpmu_user_blog();
+    $placeholder_subject              = b3_get_default_subject_welcome_wpmu_user_blog();
     $placeholder_subject              = strtr( $placeholder_subject, b3_get_replacement_vars( 'subject' ) );
-    $placeholder_message              = esc_attr( b3_default_message_welcome_wpmu_user_blog() );
+    $placeholder_message              = esc_attr( b3_get_default_message_welcome_wpmu_user_blog() );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

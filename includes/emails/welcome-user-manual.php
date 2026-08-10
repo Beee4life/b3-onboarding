@@ -14,13 +14,8 @@
     // @TODO: check if user is manually added through site
     $new_user_subject    = get_option( 'b3_welcome_user_subject' );
     $new_user_message    = get_option( 'b3_welcome_user_message_manual' );
-    $placeholder_subject = esc_attr( b3_default_welcome_user_subject() );
-
-    if ( 'none' == get_option( 'b3_registration_type' ) ) {
-        $placeholder_message = esc_attr( b3_default_manual_welcome_user_message() );
-    } else {
-        $placeholder_message = esc_attr( b3_default_manual_welcome_user_message() );
-    }
+    $placeholder_subject = esc_attr( b3_get_default_welcome_user_subject() );
+    $placeholder_message = esc_attr( b3_get_default_manual_welcome_user_message() );
 ?>
 <table class="b3_table b3_table--emails">
     <tbody>

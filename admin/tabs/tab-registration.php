@@ -64,7 +64,7 @@
                 <?php if ( 'none' === $registration_type ) { ?>
                     <?php $filter_message = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) ); ?>
                     <?php $closed_message = htmlspecialchars( get_option( 'b3_registration_closed_message' ) ); ?>
-                    <?php $default_closed_message = b3_default_registration_closed_message(); ?>
+                    <?php $default_closed_message = b3_get_default_registration_closed_message(); ?>
                     <?php $placeholder_registration_closed = $filter_message ? $filter_message : $default_closed_message; ?>
 
                     <?php b3_get_settings_field_open(); ?>

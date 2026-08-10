@@ -172,7 +172,7 @@
         $main_logo = get_option( 'b3_main_logo' );
 
         if ( ! $main_logo ) {
-            $main_logo = b3_default_main_logo();
+            $main_logo = b3_get_default_main_logo();
         }
 
         return apply_filters( 'b3_main_logo', $main_logo );
@@ -185,7 +185,7 @@
         if ( $user_input ) {
             $registration_closed_message = htmlspecialchars_decode( $user_input );
         } else {
-            $registration_closed_message = b3_default_registration_closed_message();
+            $registration_closed_message = b3_get_default_registration_closed_message();
         }
 
         return apply_filters( 'b3_registration_closed_message', $registration_closed_message );
@@ -198,7 +198,7 @@
         if ( $user_input ) {
             $logged_in_registration_only_message = htmlspecialchars_decode( $user_input );
         } else {
-            $logged_in_registration_only_message = b3_default_logged_in_registration_only_message();
+            $logged_in_registration_only_message = b3_get_default_logged_in_registration_only_message();
         }
 
         return apply_filters( 'b3_logged_in_registration_only_message', $logged_in_registration_only_message );
@@ -211,7 +211,7 @@
         if ( false != $terms_text ) {
             $message = stripslashes( $terms_text );
         } else {
-            $message = b3_default_terms_text();
+            $message = b3_get_default_terms_text();
         }
 
         return $message;
@@ -224,7 +224,7 @@
         if ( false != $privacy_text ) {
             $message = stripslashes( $privacy_text );
         } else {
-            $message = b3_default_privacy_text();
+            $message = b3_get_default_privacy_text();
         }
 
         return $message;
@@ -605,7 +605,7 @@
         $message = get_option( 'b3_message_above_registration' );
 
         if ( ! $message ) {
-            $message = b3_default_message_above_registration();
+            $message = b3_get_default_message_above_registration();
         }
 
         return apply_filters( 'b3_message_above_registration', $message );
@@ -623,7 +623,7 @@
         $message = get_option( 'b3_message_above_lost_password' );
 
         if ( ! $message ) {
-            $message = b3_default_message_above_lost_password();
+            $message = b3_get_default_message_above_lost_password();
         }
 
         return apply_filters( 'b3_message_above_lost_password', $message );
@@ -634,7 +634,7 @@
         $message = get_option( 'b3_message_above_magic_link' );
 
         if ( ! $message ) {
-            $message = b3_default_message_above_magic_link();
+            $message = b3_get_default_message_above_magic_link();
         }
 
         return apply_filters( 'b3_message_above_magic_link', $message );

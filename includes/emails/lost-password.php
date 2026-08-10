@@ -23,7 +23,7 @@
             <label for="b3__input--lost-password-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--lost-password-subject" name="b3_lost_password_subject" type="text" placeholder="<?php echo esc_attr( b3_default_lost_password_subject() ); ?>" value="<?php echo esc_attr( $lost_password_subject ); ?>" />
+            <input id="b3__input--lost-password-subject" name="b3_lost_password_subject" type="text" placeholder="<?php echo esc_attr( b3_get_default_lost_password_subject() ); ?>" value="<?php echo esc_attr( $lost_password_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -35,7 +35,7 @@
         <td>
             <?php esc_html_e( "Be sure to include %reset_url% in your email, otherwise the user can't reset his/her password.", "b3-onboarding" ); ?>
             <br>
-            <textarea id="b3__input--lost-password-message" name="b3_lost_password_message" placeholder="<?php echo esc_attr( b3_default_lost_password_message() ); ?>" rows="6"><?php echo esc_textarea( $lost_password_message ); ?></textarea>
+            <textarea id="b3__input--lost-password-message" name="b3_lost_password_message" placeholder="<?php echo esc_attr( b3_get_default_lost_password_message() ); ?>" rows="6"><?php echo esc_textarea( $lost_password_message ); ?></textarea>
         </td>
     </tr>
     <tr>
