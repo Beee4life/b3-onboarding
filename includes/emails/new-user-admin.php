@@ -48,7 +48,7 @@
             <label for="b3__input--new-user-subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo esc_attr( b3_get_default_new_user_admin_subject() ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_subject ); ?>" />
+            <input id="b3__input--new-user-subject" name="b3_new_user_subject" placeholder="<?php echo esc_attr( b3_get_default_new_user_subject_admin() ); ?>" type="text" value="<?php echo esc_attr( $new_user_email_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -58,7 +58,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'new-user-admin' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_get_default_new_user_admin_message() ); ?>" rows="6"><?php echo esc_textarea( $new_user_email_message ); ?></textarea>
+            <textarea id="b3__input--new-user-message" name="b3_new_user_message" placeholder="<?php echo esc_attr( b3_get_default_new_user_message_admin() ); ?>" rows="6"><?php echo esc_textarea( $new_user_email_message ); ?></textarea>
         </td>
     </tr>
     <tr>

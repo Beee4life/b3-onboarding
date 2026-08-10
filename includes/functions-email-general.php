@@ -233,7 +233,7 @@
         $subject = get_option( 'b3_new_user_subject' );
 
         if ( ! $subject ) {
-            $subject = b3_get_default_new_user_admin_subject();
+            $subject = b3_get_default_new_user_subject_admin();
         }
 
         return apply_filters( 'b3_new_user_subject', $subject );
@@ -244,7 +244,7 @@
         $message = get_option( 'b3_new_user_message' );
 
         if ( ! $message ) {
-            $message = b3_get_default_new_user_admin_message();
+            $message = b3_get_default_new_user_message_admin();
         }
 
         return apply_filters( 'b3_new_user_message', $message );

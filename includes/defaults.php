@@ -57,12 +57,12 @@
         return B3OB_PLUGIN_URL . 'assets/images/logo-b3onboarding.png';
     }
 
-    function b3_get_default_new_user_admin_subject() {
+    function b3_get_default_new_user_subject_admin() {
         /* translators: site name */
         return sprintf( esc_html__( 'New user at %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
-    function b3_get_default_new_user_admin_message() {
+    function b3_get_default_new_user_message_admin() {
         /* translators: 1. site name, 2. registration date/time */
         $admin_message = sprintf( esc_html__( 'A new user registered at %1$s on %2$s.', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\n";
         $admin_message .= '<br><br>' . "\n";
