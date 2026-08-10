@@ -64,3 +64,9 @@
         return false;
     }
     add_filter( 'wpmu_welcome_notification', 'b3_disable_welcome_mu_user_blog_email', 10, 5 );
+
+    function b3_disable_admin_notification_manually_added( $value, $site, $user ) {
+        error_log(print_r($_POST,true));
+        return false;
+    }
+    add_filter( 'send_new_site_email', 'b3_disable_admin_notification_manually_added', 15, 3 );

@@ -26,7 +26,7 @@
     }
     add_filter( 'email_change_email', 'b3_email_changed_email_user', 5, 3 );
 
-    // Override new user notification for admin
+    // Override new user notification for admin (single site)
     function b3_new_user_notification_email_admin( $wp_mail, $user, $blogname ) {
         if ( isset( $_POST[ '_wp_http_referer' ] ) && ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false || strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) ) {
             $wp_mail[ 'to' ] = '';
@@ -84,10 +84,7 @@
                 }
 
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
-                // user added without site ??
-                // @TODO: test
-                $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email           = b3_get_manual_welcome_user_message( $user->user_email );
+                error_log('FIX site-new in ' . __METHOD__ );
             }
 
         } else {

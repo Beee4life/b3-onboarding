@@ -89,6 +89,7 @@
             'b3_show_first_last_name_account'          => [ 'bool' ],
             'b3_signup_for_site'                       => [ 'string' ],
             'b3_signup_for_user'                       => [ 'string' ],
+            'b3_skip_manual_confirmation'              => [ 'bool' ],
             'b3_terms_text'                            => [ 'string' ],
             'b3_user_cap'                              => [ 'string' ],
             'b3_welcome_page'                          => [ 'string' ],

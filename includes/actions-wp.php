@@ -59,6 +59,11 @@
     }
     add_action( 'user_register', 'b3_set_role_after_register' );
 
+    function b3_after_network_create_user( int $user_id ) {
+        error_log( print_r( $_POST, true ) );
+    }
+    add_action( 'network_site_new_created_user', 'b3_after_network_create_user' );
+
     // Add approval to admin bar
     function b3_change_admin_bar( $wp_admin_bar ) {
         // @TODO: check in multisite
