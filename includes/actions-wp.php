@@ -271,8 +271,7 @@
                 define( 'WP_INSTALLING', true );
                 $redirect_url      = b3_get_login_url();
                 $valid_error_codes = [ 'already_active', 'blog_taken' ];
-                $request_uri       = isset( $_SERVER[ 'REQUEST_URI' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) : '';
-                [ $activate_path ] = explode( '?', $request_uri );
+                [ $activate_path ] = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
                 $activate_cookie   = 'wp-activate-' . COOKIEHASH;
                 $key               = '';
                 $result            = null;
@@ -286,8 +285,8 @@
                 }
 
                 if ( $key ) {
-                    error_log($key);
                     $redirect_url = remove_query_arg( 'key' );
+                    error_log($redirect_url);
 
                     if ( remove_query_arg( false ) !== $redirect_url ) {
                         setcookie( $activate_cookie, $key, 0, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
@@ -330,8 +329,6 @@
                     wp_safe_redirect( $redirect_url );
                     exit;
                 }
-            }
-            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] ) {
             }
 
         } elseif ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {

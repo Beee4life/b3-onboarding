@@ -85,6 +85,9 @@
 
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
                 // @TODO: reformat links
+                // default WP: /wp/wp-activate.php?key=5bda578bd64d07fa (by user)
+                // set password: /wp/wp-login.php?login=abcd&key={$key}&action=rp
+                // error_log(nl2br( $wp_mail[ 'message' ] ));
                 // $user_email = nl2br( $wp_mail[ 'message' ] );
                 $wp_mail[ 'headers' ] = [];
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();

@@ -251,6 +251,21 @@
             'key'        => $key,
             'user_login' => rawurlencode( $user_data->user_login ),
         ];
+
+        global $pagenow;
+        if ( 'site-new.php' === $pagenow ) {
+            $query_args     = [
+                'key' => $key,
+            ];
+
+        } else {
+            $query_args     = [
+                'action'     => 'activate',
+                'key'        => $key,
+                'user_login' => rawurlencode( $user_data->user_login ),
+            ];
+        }
+
         $login_url      = b3_get_login_url();
         $activation_url = add_query_arg( $query_args, $login_url );
 
