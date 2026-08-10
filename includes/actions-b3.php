@@ -94,7 +94,7 @@
 
     // Do stuff after user clicked activate link (single site), sending emails in this function (or not))
     function b3_do_stuff_after_user_activated( $user_id ) {
-        if ( ! get_option( 'b3_disable_admin_notification_new_user' ) ) {
+        if ( ! get_option( 'b3_disable_admin_notification_new_user' ) && ! get_user_meta( $user_id, 'manually_added', true ) ) {
             // send 'new user' email to admin
             $user          = get_userdata( $user_id );
             $admin_to      = b3_get_notification_addresses( 'email_activation' );
@@ -125,7 +125,7 @@
             $subject = b3_get_account_activated_subject_user();
             $message = b3_get_account_activated_message_user( $to );
 
-            if ( get_option( 'b3_needs_admin_approval' ) ) {
+            if ( get_option( 'b3_needs_admin_approval' ) && ! get_user_meta( $user_id, 'manually_added', true ) ) {
                 update_user_meta( $user_id, 'pending', true );
             }
         }

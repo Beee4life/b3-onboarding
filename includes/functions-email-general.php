@@ -87,7 +87,7 @@
         return apply_filters( 'b3_welcome_user_subject', $subject );
     }
 
-    // Return welcome user message (user)
+    // Return welcome user message (ms: blog)
     function b3_get_welcome_user_message( $user_email = '' ) {
         $message = get_option( 'b3_welcome_user_message' );
 
@@ -284,11 +284,11 @@
     }
 
     // Get manually added welcome message user
-    function b3_get_manual_welcome_user_message() {
+    function b3_get_manual_welcome_user_message( $user_email = '' ) {
         $manual_welcome_message = get_option( 'b3_welcome_user_message_manual' );
 
         if ( ! $manual_welcome_message ) {
-            $manual_welcome_message = b3_get_default_manual_welcome_user_message();
+            $manual_welcome_message = b3_get_default_manual_welcome_user_message( $user_email );
         }
 
         return apply_filters( 'b3_welcome_user_message_manual', $manual_welcome_message );

@@ -71,17 +71,22 @@
         if ( isset( $_POST[ '_wp_http_referer' ] ) ) {
             // user is manually added
             if ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false ) {
+                // @TODO: check if this goes for MS as well
+                update_user_meta( $user->ID, 'manually_added', true );
+
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
                     // user must get AN email, from WP or custom
+                    // @TODO: check confirm email
                     $wp_mail[ 'to' ]      = $user->user_email;
                     $wp_mail[ 'headers' ] = [];
                     $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                    $user_email           = b3_get_manual_welcome_user_message();
+                    $user_email           = b3_get_manual_welcome_user_message( $user->user_email );
                 }
+
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
                 // user added without site ??
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email           = b3_get_manual_welcome_user_message();
+                $user_email           = b3_get_manual_welcome_user_message( $user->user_email );
             }
 
         } else {
@@ -95,10 +100,6 @@
             } elseif ( 'blog' === $registration_type ) {
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
                 $user_email           = b3_get_welcome_user_message( $user->user_email );
-
-            } elseif ( 'none' === $registration_type ) {
-                $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email           = b3_get_manual_welcome_user_message();
             }
         }
 
@@ -115,7 +116,6 @@
         }
 
         return $wp_mail;
-
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
 
@@ -336,7 +336,6 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
 
     // Override 'invited user' email
     function b3_override_email( $new_user_email, $user_id, $role, $newuser_key ) {
-        error_log('Override: ' . $new_user_email);
         $new_user_email = b3_replace_template_styling( $new_user_email[ 'message' ] );
 
         return $new_user_email;

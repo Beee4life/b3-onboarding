@@ -320,7 +320,6 @@
                         do_action( 'b3_inform_admin', 'new_user', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'message' => 'activate_success_magic' ], $redirect_url );
                     } else {
-                        error_log(print_r( $result, true ));
                         do_action( 'b3_inform_admin', 'new_user', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );
                     }
@@ -329,7 +328,7 @@
                 }
             }
 
-        } elseif ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === $_GET[ 'action' ] && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
+        } elseif ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && 'GET' === $_SERVER[ 'REQUEST_METHOD' ] && ! empty( $_GET[ 'action' ] ) && 'activate' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) && ! empty( $_GET[ 'key' ] ) && ! empty( $_GET[ 'user_login' ] ) ) {
             global $wpdb;
             $errors     = false;
             $key        = preg_replace( '/[^a-zA-Z0-9]/i', '', sanitize_key( $_GET[ 'key' ] ) );
@@ -368,7 +367,7 @@
                 // @TODO: test
                 wp_cache_delete( $cache_key, $cache_group );
 
-                $admin_approval = get_option( 'b3_needs_admin_approval' );
+                $admin_approval = get_option( 'b3_needs_admin_approval' ) && ! get_user_meta( $user->ID, 'manually_added', true );
                 $use_magic_link = get_option( 'b3_use_magic_link' );
 
                 // activate user, change user role

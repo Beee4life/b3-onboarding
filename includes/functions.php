@@ -232,6 +232,10 @@
 
     // Get a unique activation url for a user
     function b3_get_activation_url( $user_data ) {
+        if ( ! isset( $user_data->user_login ) ) {
+            return false;
+        }
+
         // Generate an activation key
         $key = wp_generate_password( 20, false );
 

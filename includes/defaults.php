@@ -87,8 +87,16 @@
     function b3_get_default_account_activated_message( $email = '' ) {
         $message = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
         $message .= '<br><br>' . "\n";
+        $user_id = false;
 
-        if ( get_option( 'b3_needs_admin_approval' ) ) {
+        if ( $email ) {
+            $user_data = get_user_by( 'email', $email );
+            if ( $user_data instanceof WP_User ) {
+                $user_id = $user_data->ID;
+            }
+        }
+
+        if ( get_option( 'b3_needs_admin_approval' ) && ! get_user_meta( $user_id, 'manually_added', true ) ) {
             $message .= esc_html__( 'you have confirmed your email address but the site owner choose to manually approve each account. You will be notified of the outcome.', 'b3-onboarding' );
             $message .= '<br>' . "\n";
 
@@ -99,7 +107,7 @@
                 $magic_link = sprintf( '<a href="%s">%s</a>', esc_url( $magic_link ), strtoupper( esc_html__( 'Login', 'b3-onboarding' ) ) );
                 $button     = sprintf( '<div class="big-link">%s</div>', $magic_link ) . "\n";
 
-                if ( get_option( 'b3_activate_custom_passwords' ) ) {
+                if ( get_option( 'b3_activate_custom_passwords' ) && ! get_user_meta( $user_id, 'manually_added', true ) ) {
                     $a_href  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), esc_html__( 'login page', 'b3-onboarding' ) );
                     $message .= sprintf( esc_html__( 'you have confirmed your email address and login with your password through the %s.', 'b3-onboarding' ), $a_href );
                     $message .= '<br><br>' . "\n";
@@ -107,6 +115,7 @@
                 } else {
                     $message .= esc_html__( 'you have confirmed your email address and can now login immediately by clicking the button below.', 'b3-onboarding' );
                 }
+                $message .= '<br><br>' . "\n";
 
             } else {
                 $lost_pass_link = '%lostpass_url%';
@@ -314,16 +323,30 @@
     }
 
     // used when adding manually
-    function b3_get_default_manual_welcome_user_message() {
-        $reset_link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
-        $button     = sprintf( '<div class="big-link">%s</div>', $reset_link ) . "\n";
+    function b3_get_default_manual_welcome_user_message( $user_email = '' ) {
+        $follow_up = esc_html__( 'You can set your password by clicking the button below.', 'b3-onboarding' );
+
+        if ( ! apply_filters( 'b3_skip_manual_confirmation', false ) ) {
+            $activate_link = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Click to activate', 'b3-onboarding' ) ) );
+            $button        = sprintf( '<div class="big-link">%s</div>', $activate_link );
+            $follow_up     = esc_html__( 'You need to confirm your email by clicking the button below.', 'b3-onboarding' );
+
+        } else {
+            if ( get_option( 'b3_use_magic_link' ) && ! empty( $user_email ) ) {
+                $link      = sprintf( '<a href="%s">%s</a>', b3_get_magic_link_url( $user_email ), strtoupper( esc_html__( 'Log in', 'b3-onboarding' ) ) );
+                $follow_up = esc_html__( 'You can login immediately by clicking the button below.', 'b3-onboarding' );
+            } else {
+                $link = sprintf( '<a href="%s">%s</a>', b3_get_lostpassword_url(), strtoupper( esc_html__( 'Set password', 'b3-onboarding' ) ) );
+            }
+            $button = sprintf( '<div class="big-link">%s</div>', $link ) . "\n";
+        }
 
         $message = b3_get_email_intro();
         $message .= '<br><br>' . "\n";
         /* translators: site name */
         $message .= sprintf( esc_html__( 'your account on %s has been created.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         $message .= '<br><br>' . "\n";
-        $message .= esc_html__( 'You can set your password by clicking the button below.', 'b3-onboarding' );
+        $message .= $follow_up . "\n";
         $message .= '<br><br>' . "\n";
         $message .= sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
         $message .= b3_get_default_greetings();
