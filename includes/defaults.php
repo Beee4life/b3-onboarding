@@ -523,7 +523,7 @@
             $message .= 'Hi %user_login%' . ",\n";
             $message .= '<br><br>' . "\n";
         }
-        error_log('HIT ' . __METHOD__);
+
         /* translators: 1. link to activate */
         $message .= sprintf( esc_html__( 'To activate your registration, please click %s or the button below.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%activation_url%', esc_html__( 'here', 'b3-onboarding' ) ) ) . "\n";
         $message .= '<br><br>' . "\n";

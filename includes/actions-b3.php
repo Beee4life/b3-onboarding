@@ -350,11 +350,7 @@
 
                     } elseif ( 'register' === $attributes[ 'template' ] ) {
                         if ( get_option( 'b3_needs_admin_approval' ) ) {
-                            $message = apply_filters( 'b3_message_above_request_access', false );
-
-                            if ( ! $message ) {
-                                $message = b3_get_message_above_registration();
-                            }
+                            $message = b3_get_message_above_registration();
 
                             if ( is_string( $message ) && ! empty( $message ) ) {
                                 $messages[] = $message;

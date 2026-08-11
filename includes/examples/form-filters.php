@@ -132,12 +132,6 @@
     }
     add_filter( 'b3_extra_fields', 'b3_extra_fields_example' );
 
-    // Filters message before request access form (filter only)
-    function b3_message_above_request_access_example( $message ) {
-        return 'Click here';
-    }
-    add_filter( 'b3_message_above_request_access', 'b3_message_above_request_access_example' );
-
     // Filters message before password reset form (filter only)
     function b3_message_above_lost_password_example( $message ) {
         return 'Your message';
