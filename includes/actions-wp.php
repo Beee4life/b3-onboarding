@@ -135,6 +135,7 @@
 
         if ( ! $is_admin_added ) {
             if ( get_option( 'b3_needs_admin_approval' ) ) {
+                /* translators: site name */
                 $subject        = sprintf( esc_html__( 'Account activated for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
                 $message        = b3_get_default_request_access_message_user( true );
 
@@ -240,7 +241,7 @@
             'default-email-template.html' => trailingslashit( B3OB_PLUGIN_PATH ) . 'includes/default-email-template.html',
         ];
 
-        $file_key = sanitize_text_field( $_GET[ 'file' ] );
+        $file_key = sanitize_text_field( sanitize_text_field( wp_unslash( $_GET[ 'file' ] ) ) );
 
         if ( ! isset( $allowed_files[ $file_key ] ) ) {
             wp_die( 'Invalid file selection.' );
@@ -248,7 +249,13 @@
 
         $file_path = $allowed_files[ $file_key ];
 
-        if ( file_exists( $file_path ) && is_readable( $file_path ) ) {
+        global $wp_filesystem;
+        if ( empty( $wp_filesystem ) ) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+
+        if ( $wp_filesystem->exists( $file_path ) && $wp_filesystem->is_readable( $file_path ) ) {
             if ( ob_get_level() ) {
                 ob_end_clean();
             }
@@ -259,9 +266,10 @@
             header( 'Expires: 0' );
             header( 'Cache-Control: must-revalidate' );
             header( 'Pragma: public' );
-            header( 'Content-Length: ' . filesize( $file_path ) );
+            header( 'Content-Length: ' . $wp_filesystem->size( $file_path ) );
 
-            readfile( $file_path );
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- File content for direct binary download.
+            echo $wp_filesystem->get_contents( $file_path );
             exit;
         }
 
@@ -274,7 +282,8 @@
         if ( is_multisite() ) {
             if ( ( isset( $_GET[ 'activate' ] ) && 'user' === sanitize_text_field( wp_unslash( $_GET[ 'activate' ] ) ) ) || ( isset( $_GET[ 'action' ] ) && 'confirm_email' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) ) ) {
                 define( 'WP_INSTALLING', true );
-                [ $activate_path ] = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
+                $request_uri = isset( $_SERVER[ 'REQUEST_URI' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) : '';
+                [ $activate_path ] = explode( '?', $request_uri );
                 $activate_cookie   = 'wp-activate-' . COOKIEHASH;
                 $key               = '';
                 $redirect_url      = b3_get_login_url();
@@ -285,9 +294,9 @@
                 if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
                     wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.','b3-onboarding' ), esc_html__( 'An error occurred during the activation', 'b3-onboarding' ), 400 );
                 } elseif ( ! empty( $_GET[ 'key' ] ) ) {
-                    $key = sanitize_text_field( $_GET[ 'key' ] );
+                    $key = sanitize_text_field( wp_unslash( $_GET[ 'key' ] ) );
                 } elseif ( ! empty( $_POST[ 'key' ] ) ) {
-                    $key = sanitize_text_field( $_POST[ 'key' ] );
+                    $key = sanitize_text_field( wp_unslash( $_POST[ 'key' ] ) );
                 }
 
                 if ( 0 < $user_id ) {

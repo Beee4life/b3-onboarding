@@ -303,10 +303,11 @@
                         header( 'Retry-After: 3600' );
                         $message = esc_html__( 'This site is not approved (yet) and therefore not (yet) available.', 'b3-onboarding' );
                         $message .= ' ';
+                        /* translators: link to return to homepage */
                         $message .= sprintf( esc_html__( 'Click %s for the homepage.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( network_home_url() ), esc_html__( 'here', 'b3-onboarding' ) ) );
 
                         wp_die(
-                            $message,
+                            wp_kses_post( $message ),
                             esc_html__( 'Site awaiting approval', 'b3-onboarding' ),
                             array( 'response' => 503 )
                         );

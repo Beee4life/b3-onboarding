@@ -195,6 +195,7 @@
                     $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
 
                     if ( is_multisite() ) {
+                        /* translators: site name */
                         return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) ) );
 
                     } else {

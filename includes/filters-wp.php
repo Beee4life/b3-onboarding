@@ -234,7 +234,7 @@
 
     // add custom meta for manually added users in MU
     function b3_add_admin_created_signup_meta( $meta ) {
-        $is_admin_form = is_admin() || ( isset( $_POST[ '_wp_http_referer' ] ) && false !== strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) );
+        $is_admin_form = is_admin() || ( isset( $_POST[ '_wp_http_referer' ] ) && false !== strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) );
 
         if ( $is_admin_form ) {
             $meta[ 'manually_added' ] = true;

@@ -177,7 +177,7 @@
                 do_action( 'b3_render_form_element', 'register/user-email' );
             }
             $output = ob_get_clean();
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped - output set by plugin or admin
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $output;
         }
     }
@@ -610,7 +610,7 @@
                     $home_url  = get_home_url( $site_id );
                     $link      = sprintf( '<a href="%s">%s</a>', esc_url( $home_url ), $site_info->blogname );
 
-                    if ( current_user_can_for_blog( $site_id, 'manage_options' ) ) {
+                    if ( current_user_can_for_site( $site_id, 'manage_options' ) ) {
                         $link .= sprintf( ' | <a href="%s">%s</a>', $admin_url, 'Admin' );
                     }
 
@@ -638,9 +638,8 @@
     // Remove welcome page meta
     function b3_remove_welcome_page_meta() {
         global $wpdb;
-        $table = $wpdb->postmeta;
-        $query = $wpdb->prepare( "SELECT user_id FROM %i WHERE meta_key = 'b3_welcome_page_seen'", $table );
-        $results = $wpdb->get_results( $query );
+        $table   = $wpdb->postmeta;
+        $results = $wpdb->get_results( $wpdb->prepare( "SELECT user_id FROM %i WHERE meta_key = 'b3_welcome_page_seen'", $table ) );
 
         if ( ! empty( $results ) ) {
             foreach( $results as $user ) {
