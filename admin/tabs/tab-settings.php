@@ -153,7 +153,7 @@
                             <label for="b3_message_above_registration"><?php esc_html_e( 'Message above registration', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <input type="text" id="b3_message_above_registration" name="b3_message_above_registration" placeholder="<?php echo esc_attr( $above_registration_placeholder ); ?>" value="<?php echo $above_registration_value; ?>"<?php if ( apply_filters( 'b3_message_above_registration', '' ) ) { ?> disabled<?php } ?>/>
+                            <input type="text" id="b3_message_above_registration" name="b3_message_above_registration" placeholder="<?php echo esc_attr( $above_registration_placeholder ); ?>" value="<?php echo wp_kses_post( $above_registration_value ); ?>"<?php if ( apply_filters( 'b3_message_above_registration', '' ) ) { ?> disabled<?php } ?>/>
                             <?php if ( $above_registration_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                         </div>
                     <?php b3_get_close(); ?>
@@ -174,7 +174,7 @@
                                 <label for="b3_message_above_magic_link"><?php esc_html_e( 'Message above magic link', 'b3-onboarding' ); ?></label>
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--text">
-                                <input type="text" id="b3_message_above_magic_link" name="b3_message_above_magic_link" placeholder="<?php echo esc_attr( $above_magic_link_placeholder ); ?>" value="<?php echo $above_magic_link_value; ?>"<?php if ( apply_filters( 'b3_message_above_magic_link', '' ) ) { ?> disabled<?php } ?>/>
+                                <input type="text" id="b3_message_above_magic_link" name="b3_message_above_magic_link" placeholder="<?php echo esc_attr( $above_magic_link_placeholder ); ?>" value="<?php echo wp_kses_post( $above_magic_link_value ); ?>"<?php if ( apply_filters( 'b3_message_above_magic_link', '' ) ) { ?> disabled<?php } ?>/>
                                 <?php if ( $above_magic_link_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                             </div>
                         <?php b3_get_close(); ?>
@@ -189,7 +189,7 @@
                             <label for="b3_message_above_lost_password"><?php esc_html_e( 'Message above lost password', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <input type="text" id="b3_message_above_lost_password" name="b3_message_above_lost_password" placeholder="<?php echo esc_attr( $above_lost_password_placeholder ); ?>" value="<?php echo $above_lost_password_value; ?>"<?php if ( apply_filters( 'b3_message_above_lost_password', '' ) ) { ?> disabled<?php } ?>/>
+                            <input type="text" id="b3_message_above_lost_password" name="b3_message_above_lost_password" placeholder="<?php echo esc_attr( $above_lost_password_placeholder ); ?>" value="<?php echo wp_kses_post( $above_lost_password_value ); ?>"<?php if ( apply_filters( 'b3_message_above_lost_password', '' ) ) { ?> disabled<?php } ?>/>
                             <?php if ( $above_registration_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                         </div>
                     <?php b3_get_close(); ?>

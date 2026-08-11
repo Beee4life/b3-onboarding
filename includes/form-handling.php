@@ -447,6 +447,7 @@
             } else {
                 if ( isset( $_POST[ 'b3_email_styling' ] ) && ! empty( $_POST[ 'b3_email_styling' ] ) ) {
                     if ( current_user_can( 'unfiltered_html' ) ) {
+                        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- only done by users who 'can unfiltered_html'
                         update_option( 'b3_email_styling', wp_unslash( $_POST[ 'b3_email_styling' ] ), false );
                     }
                 } else {
@@ -455,6 +456,7 @@
 
                 if ( isset( $_POST[ 'b3_email_template' ] ) && ! empty( $_POST[ 'b3_email_template' ] ) ) {
                     if ( current_user_can( 'unfiltered_html' ) ) {
+                        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- only done by users who 'can unfiltered_html'
                         update_option( 'b3_email_template', wp_unslash( $_POST[ 'b3_email_template' ] ), false );
                     }
                 } else {
@@ -663,30 +665,30 @@
                 }
 
                 if ( 'none' === $registration_type ) {
-                    if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) && current_user_can( 'unfiltered_html' ) ) {
-                        update_option( 'b3_registration_closed_message', $_POST[ 'b3_registration_closed_message' ] );
+                    if ( isset( $_POST[ 'b3_registration_closed_message' ] ) && ! empty( $_POST[ 'b3_registration_closed_message' ] ) ) {
+                        update_option( 'b3_registration_closed_message', wp_kses_post( wp_unslash( $_POST[ 'b3_registration_closed_message' ] ) ) );
                     } else {
                         delete_option( 'b3_registration_closed_message' );
                     }
                 } else {
                     // other form messages
-                    if ( isset( $_POST[ 'b3_message_above_registration' ] ) && ! empty( $_POST[ 'b3_message_above_registration' ] ) && current_user_can( 'unfiltered_html' ) ) {
-                        update_option( 'b3_message_above_registration', $_POST[ 'b3_message_above_registration' ] );
+                    if ( isset( $_POST[ 'b3_message_above_registration' ] ) && ! empty( $_POST[ 'b3_message_above_registration' ] ) ) {
+                        update_option( 'b3_message_above_registration', wp_kses_post( wp_unslash( $_POST[ 'b3_message_above_registration' ] ) ) );
                     } else {
                         delete_option( 'b3_message_above_registration' );
                     }
-                    if ( isset( $_POST[ 'b3_message_above_login' ] ) && ! empty( $_POST[ 'b3_message_above_login' ] ) && current_user_can( 'unfiltered_html' ) ) {
-                        update_option( 'b3_message_above_login', $_POST[ 'b3_message_above_login' ] );
+                    if ( isset( $_POST[ 'b3_message_above_login' ] ) && ! empty( $_POST[ 'b3_message_above_login' ] ) ) {
+                        update_option( 'b3_message_above_login', wp_kses_post( wp_unslash( $_POST[ 'b3_message_above_login' ] ) ) );
                     } else {
                         delete_option( 'b3_message_above_login' );
                     }
-                    if ( isset( $_POST[ 'b3_message_above_magic_link' ] ) && ! empty( $_POST[ 'b3_message_above_magic_link' ] ) && current_user_can( 'unfiltered_html' ) ) {
-                        update_option( 'b3_message_above_magic_link', $_POST[ 'b3_message_above_magic_link' ] );
+                    if ( isset( $_POST[ 'b3_message_above_magic_link' ] ) && ! empty( $_POST[ 'b3_message_above_magic_link' ] ) ) {
+                        update_option( 'b3_message_above_magic_link', wp_kses_post( wp_unslash( $_POST[ 'b3_message_above_magic_link' ] ) ) );
                     } else {
                         delete_option( 'b3_message_above_magic_link' );
                     }
-                    if ( isset( $_POST[ 'b3_message_above_lost_password' ] ) && ! empty( $_POST[ 'b3_message_above_lost_password' ] ) && current_user_can( 'unfiltered_html' ) ) {
-                        update_option( 'b3_message_above_lost_password', $_POST[ 'b3_message_above_lost_password' ] );
+                    if ( isset( $_POST[ 'b3_message_above_lost_password' ] ) && ! empty( $_POST[ 'b3_message_above_lost_password' ] ) ) {
+                        update_option( 'b3_message_above_lost_password', wp_kses_post( wp_unslash( $_POST[ 'b3_message_above_lost_password' ] ) ) );
                     } else {
                         delete_option( 'b3_message_above_lost_password' );
                     }

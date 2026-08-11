@@ -102,6 +102,12 @@
 
             if ( $admin_approval && in_array( 'b3_approval', (array) $user_object->roles ) ) {
                 unset( $actions[ 'resetpassword' ] );
+                $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
+                    add_query_arg( 'wp_http_referer', $request_uri,
+                        wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
+                    ),
+                    esc_attr__( 'Activate', 'b3-onboarding' )
+                );
 
             } elseif ( 'email_activation' === $registration_type ) {
                 if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
@@ -234,7 +240,7 @@
 
     // add custom meta for manually added users in MU
     function b3_add_admin_created_signup_meta( $meta ) {
-        $is_admin_form = is_admin() || ( isset( $_POST[ '_wp_http_referer' ] ) && false !== strpos( $_POST[ '_wp_http_referer' ], 'user-new.php' ) );
+        $is_admin_form = is_admin() || ( isset( $_POST[ '_wp_http_referer' ] ) && false !== strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) );
 
         if ( $is_admin_form ) {
             $meta[ 'manually_added' ] = true;

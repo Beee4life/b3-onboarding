@@ -31,8 +31,6 @@
             } else {
                 wp_send_json_error( [ 'message' => __( 'Failed to send email.', 'b3-onboarding' ) ] );
             }
-        } else {
-            error_log( __( 'No subject and email.', 'b3-onboarding' ) );
         }
     }
     add_action( 'wp_ajax_b3_send_test_email', 'b3_handle_send_test_email' );

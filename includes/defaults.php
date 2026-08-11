@@ -81,6 +81,7 @@
     }
 
     function b3_get_default_account_activated_subject() {
+        /* translators: site name */
         return sprintf( esc_html__( 'Account activated on %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
@@ -109,6 +110,7 @@
 
                 if ( get_option( 'b3_activate_custom_passwords' ) && ! get_user_meta( $user_id, 'manually_added', true ) ) {
                     $a_href  = sprintf( '<a href="%s">%s</a>', esc_url( $login_link ), esc_html__( 'login page', 'b3-onboarding' ) );
+                    /* translators: link to login page */
                     $message .= sprintf( esc_html__( 'you have confirmed your email address and login with your password through the %s.', 'b3-onboarding' ), $a_href );
                     $message .= '<br><br>' . "\n";
                     $message .= esc_html__( 'Or you can login immediately by clicking the button below.', 'b3-onboarding' );
@@ -176,10 +178,11 @@
         }
 
         ob_start();
-        /* translators: site name */
         if ( $activation ) {
+            /* translators: site name */
             echo sprintf( esc_html__( "You have successfully activated your account for %s but the site owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $site_name ) );
         } else {
+            /* translators: site name */
             echo sprintf( esc_html__( "You have successfully requested access for %s. We'll inform you about the outcome.", 'b3-onboarding' ), esc_html( $site_name ) );
         }
         echo '<br>';
@@ -210,6 +213,7 @@
         $button       = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
 
         if ( get_option( 'b3_use_magic_link' ) ) {
+            /* translators: site name */
             $message = sprintf( esc_html__( 'Welcome to %s. Your account has been approved and you can now login immediately by clicking the button below.', 'b3-onboarding' ), get_option( 'blogname' ) );
 
         } elseif ( get_option( 'b3_activate_custom_passwords' ) ) {
@@ -227,6 +231,7 @@
     }
 
     function b3_get_default_account_rejected_subject() {
+        /* translators: site name */
         return sprintf( esc_html__( 'Account rejected for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
@@ -278,8 +283,10 @@
         /* translators: site name */
 
         if ( get_option( 'b3_needs_admin_approval' ) ) {
+            /* translators: site name */
             $message .= sprintf( esc_html__( "your registration to %s was successful but the site owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         } else {
+            /* translators: site name */
             $message .= sprintf( esc_html__( 'your registration to %s was successful.', 'b3-onboarding' ), get_option( 'blogname' ) ) . "\n";
         }
 
@@ -297,6 +304,7 @@
             $message .= '<br><br>' . "\n";
 
             if ( get_option( 'b3_use_magic_link_password' ) ) {
+                /* translators: link to login page */
                 $message .= sprintf( esc_html__( 'You can login immediately by clicking the button below or use your password on the %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', b3_get_login_url(), esc_html__( 'login page', 'b3-onboarding' ) ) ) . "\n";
             } else {
                 $message .= esc_html__( 'You can login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
@@ -554,6 +562,7 @@
         if ( get_option( 'b3_needs_admin_approval' ) ) {
             return esc_html__( 'Activation successful for %network_name%', 'b3-onboarding' );
         } else {
+            /* translators: site name */
             return esc_html__( 'New %network_name% Site: %site_name%', 'b3-onboarding' );
         }
     }
@@ -568,6 +577,7 @@
         }
 
         if ( get_option( 'b3_needs_admin_approval' ) ) {
+            /* translators: site name */
             $message .= sprintf( esc_html__( "You have successfully activated your account for %s but the site owner chose to manually approve each registration. We'll inform you about the outcome.", 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', '%home_url%', '%home_url%' ) ) . "\n";
             $message .= '<br>' . "\n";
         } else {
@@ -660,8 +670,8 @@
     }
 
     function b3_get_default_message_above_magic_link() {
-        $enter_email = __( 'Please enter your email address.','sexdates' );
-        $if_exists = __( 'If an account exists with that email, you will receive an email with a link to login immediately.','sexdates' );
+        $enter_email = __( 'Please enter your email address.','b3-onboarding' );
+        $if_exists = __( 'If an account exists with that email, you will receive an email with a link to login immediately.','b3-onboarding' );
 
         return sprintf( '%s %s', $enter_email, $if_exists );
     }

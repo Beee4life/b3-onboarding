@@ -72,7 +72,8 @@
                             <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <?php echo sprintf( esc_html__( 'You can set a message for a closed registration on the "%s" tab.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=b3-onboarding&tab=settings' ), 'Settings' ) ); ?>
+                            <?php /* translators: link to settings tab */ ?>
+                            <?php echo sprintf( esc_html__( 'You can set a message for a closed registration on the "%s" tab.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=settings' ) ), 'Settings' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
