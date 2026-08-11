@@ -12,12 +12,15 @@
         $disallowed_domains_string    = b3_get_disallowed_domain_names( 'string' );
         $disallowed_usernames_filter  = apply_filters( 'b3_disallowed_usernames', [] );
         $disallowed_usernames_string  = ! empty( $disallowed_usernames_filter ) ? implode( ',', $disallowed_usernames_filter ) : '';
+        $email_only                   = get_option( 'b3_register_email_only' );
         $front_end_approval_page_id   = b3_get_user_approval_url( true );
         $hide_admin_bar               = get_option( 'b3_hide_admin_bar' );
         $roles                        = get_editable_roles();
         $user_may_delete              = get_option( 'b3_user_may_delete' );
         $restrict_admin               = get_option( 'b3_restrict_admin' );
         $registration_type            = get_option( 'b3_registration_type' );
+        $username_restrictions        = get_option( 'b3_activate_username_restriction' );
+        $hide_username_restrictions   = $username_restrictions ? false : true;
         asort( $roles );
 
         ob_start();
@@ -114,11 +117,8 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
+            <?php if ( 'none' != $registration_type ) { ?>
                 <?php
-                    $email_only                 = get_option( 'b3_register_email_only' );
-                    $username_restrictions      = get_option( 'b3_activate_username_restriction' );
-                    $hide_username_restrictions = $username_restrictions ? false : true;
                 ?>
                 <?php if ( ! $email_only ) { ?>
                     <?php b3_get_settings_field_open(); ?>
