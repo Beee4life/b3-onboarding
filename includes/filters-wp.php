@@ -148,10 +148,10 @@
             $verify_domain = b3_verify_email_domain( $email );
 
             if ( false === $verify_domain ) {
-                $new_errors = new WP_Error();
-                $new_errors->add( 'error_banned_domain', esc_html__( "We're sorry, that domain is blocked from registering.", 'b3-onboarding' ) );
-
-                $result[ 'errors' ][] = $new_errors;
+                $result[ 'errors' ]->add(
+                    'error_banned_domain',
+                    esc_html__( "We're sorry, that domain is blocked from registering.", 'b3-onboarding' )
+                );
             }
         }
 
