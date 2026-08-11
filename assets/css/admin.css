@@ -430,6 +430,8 @@ input.b3_recaptcha_input {
   max-width: 500px;
 }
 
+input#b3_disallowed_usernames,
+input#b3_disallowed_domains,
 input#b3_registration_closed_message,
 input#b3_message_above_registration,
 input#b3_message_above_login,
