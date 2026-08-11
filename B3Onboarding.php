@@ -845,7 +845,7 @@
                         return esc_html__( 'You have successfully activated your account but the site owner choose to manually approve each account. You will be notified of the outcome.', 'b3-onboarding' );
 
                     case 'activate_success_magic':
-                        return esc_html__( 'You have successfully activated your account and you can find a magic login link in your email or request a new one here.', 'b3-onboarding' );
+                        return esc_html__( 'You have successfully activated your account and you can find a magic login link in your email or request a new one.', 'b3-onboarding' );
 
                     case 'mu_activate_success':
                         return esc_html__( 'You have successfully activated your account. Your password has been emailed to you.', 'b3-onboarding' );

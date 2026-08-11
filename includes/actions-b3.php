@@ -94,9 +94,12 @@
 
     // Do stuff after user clicked activate link (single site), sending emails in this function (or not))
     function b3_do_stuff_after_user_activated( $user_id ) {
-        if ( ! get_option( 'b3_disable_admin_notification_new_user' ) && ! get_user_meta( $user_id, 'manually_added', true ) ) {
+        $manually_added = get_user_meta( $user_id, 'manually_added', true );
+        $user           = get_userdata( $user_id );
+        $to             = $user->user_email;
+
+        if ( ! get_option( 'b3_disable_admin_notification_new_user' ) && ! $manually_added ) {
             // send 'new user' email to admin
-            $user          = get_userdata( $user_id );
             $admin_to      = b3_get_notification_addresses( 'email_activation' );
             $admin_subject = b3_get_new_user_subject();
             $admin_email   = b3_get_new_user_message();
@@ -108,20 +111,29 @@
             wp_mail( $admin_to, $admin_subject, $admin_message, [] );
         }
 
-        // send 'account activated' email to user
-        if ( 'user' === get_option( 'b3_registration_type' ) ) {
-            // @TODO: test if this is used/hit in MS.
-            $user = get_userdata( $user_id );
-            $to   = $user->user_email;
+        if ( is_multisite() ) {
+            if ( $manually_added ) {
+                $subject = b3_get_account_activated_subject_user();
+                $message = b3_get_account_activated_message_user( $to );
 
-            if ( get_option( 'b3_needs_admin_approval' ) ) {
-                $subject = b3_get_request_access_subject_user();
-                $message = b3_get_request_access_message_user( true );
+            } else {
+                if ( 'user' === get_option( 'b3_registration_type' ) ) {
+                    if ( get_option( 'b3_needs_admin_approval' ) ) {
+                        $subject = b3_get_request_access_subject_user();
+                        $message = b3_get_request_access_message_user( true );
+
+                    } else {
+                        $subject = b3_get_account_activated_subject_user();
+                        $message = b3_get_account_activated_message_user( $to );
+                    }
+
+                } else {
+                    $subject = b3_get_account_activated_subject_user();
+                    $message = b3_get_account_activated_message_user( $to );
+                }
             }
 
-        } elseif ( 'email_activation' === get_option( 'b3_registration_type' ) ) {
-            $user    = get_userdata( $user_id );
-            $to      = $user->user_email;
+        } else {
             $subject = b3_get_account_activated_subject_user();
             $message = b3_get_account_activated_message_user( $to );
 

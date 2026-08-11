@@ -231,7 +231,7 @@
     }
 
     // Get a unique activation url for a user
-    function b3_get_activation_url( $user_data ) {
+    function b3_get_activation_url( $user_data, $manual = false ) {
         if ( ! isset( $user_data->user_login ) ) {
             return false;
         }
@@ -239,26 +239,24 @@
         // Generate an activation key
         $key = wp_generate_password( 20, false );
 
-        global $wpdb;
-        // Set the activation key for the user
-        $data  = [ 'user_activation_key' => $key ];
-        $where = [ 'user_login' => $user_data->user_login ];
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $wpdb->update( $wpdb->users, $data, $where );
-
-        $query_args     = [
-            'action'     => 'activate',
-            'key'        => $key,
-            'user_login' => rawurlencode( $user_data->user_login ),
-        ];
-
         global $pagenow;
         if ( 'site-new.php' === $pagenow ) {
+            update_user_meta( $user_data->ID, 'b3_email_verification_key', $key );
+
             $query_args     = [
-                'key' => $key,
+                'action' => 'confirm_email',
+                'key'    => $key,
+                'user'   => $user_data->ID,
             ];
 
         } else {
+            global $wpdb;
+            // Set the activation key for the user
+            $data  = [ 'user_activation_key' => $key ];
+            $where = [ 'user_login' => $user_data->user_login ];
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+            $wpdb->update( $wpdb->users, $data, $where );
+
             $query_args     = [
                 'action'     => 'activate',
                 'key'        => $key,

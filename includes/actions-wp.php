@@ -46,7 +46,7 @@
 
         if ( $is_manual_admin_add ) {
             update_user_meta( $user_id, 'manually_added', true );
-            update_user_meta( $user_id, 'pending', true );
+            update_user_meta( $user_id, 'activation_needed', true );
 
         } elseif ( $user_id > 0 ) {
             $admin_approval    = get_option( 'b3_needs_admin_approval' );
@@ -131,37 +131,42 @@
     function b3_after_activate_user( $user_id, $password, $meta = [] ) {
         $current_network = get_network();
         $user            = get_userdata( $user_id );
+        $is_admin_added  = get_user_meta( $user_id, 'manually_added', true );
 
-        if ( get_option( 'b3_needs_admin_approval' ) ) {
-            $subject = sprintf( esc_html__( 'Account activated for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
-            $message = b3_get_default_request_access_message_user( true );
+        if ( ! $is_admin_added ) {
+            if ( get_option( 'b3_needs_admin_approval' ) ) {
+                $subject        = sprintf( esc_html__( 'Account activated for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+                $message        = b3_get_default_request_access_message_user( true );
 
-            global $wpdb;
-            $meta[ 'pending' ] = 1;
-            $data[ 'meta' ]    = serialize( $meta );
-            $table             = $wpdb->signups;
-            $where             = [ 'user_login' => $user->user_login ];
-            $wpdb->update( $table, $data, $where );
+                global $wpdb;
+                $meta[ 'pending' ] = 1;
+                $data[ 'meta' ]    = serialize( $meta );
+                $table             = $wpdb->signups;
+                $where             = [ 'user_login' => $user->user_login ];
+                $wpdb->update( $table, $data, $where );
 
-        } else {
-            $subject = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
-        }
+            } else {
+                $subject = sprintf( b3_get_wpmu_user_activated_subject(), $current_network->site_name, $user->user_login );
+            }
 
-        if ( ! empty( $meta ) ) {
-            foreach( $meta as $meta_key => $meta_value ) {
-                update_user_meta( $user_id, $meta_key, $meta_value );
+            if ( ! empty( $meta ) ) {
+                foreach( $meta as $meta_key => $meta_value ) {
+                    update_user_meta( $user_id, $meta_key, $meta_value );
+                }
+            }
+
+            if ( ! isset( $message ) ) {
+                $message = sprintf( b3_get_wpmu_user_activated_message( $user->user_email ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
+            }
+
+            if ( isset( $message ) ) {
+                $message = b3_replace_template_styling( $message );
+                $message = strtr( $message, b3_get_replacement_vars() );
+                $message = htmlspecialchars_decode( stripslashes( $message ) );
+
+                wp_mail( $user->user_email, $subject, $message, [] );
             }
         }
-
-        if ( ! isset( $message ) ) {
-            $message = sprintf( b3_get_wpmu_user_activated_message( $user->user_email ), $user->user_login, $user->user_login, $password, b3_get_login_url(), $current_network->site_name );
-        }
-
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_get_replacement_vars() );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
-
-        wp_mail( $user->user_email, $subject, $message, [] );
     }
     add_action( 'wpmu_activate_user', 'b3_after_activate_user', 10, 3 );
 
@@ -267,14 +272,15 @@
     // Initiates email activation
     function b3_do_user_activate() {
         if ( is_multisite() ) {
-            if ( ( isset( $_GET[ 'activate' ] ) && 'user' === sanitize_text_field( wp_unslash( $_GET[ 'activate' ] ) ) ) || ( isset( $_GET[ 'action' ] ) && 'activate' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) ) ) {
+            if ( ( isset( $_GET[ 'activate' ] ) && 'user' === sanitize_text_field( wp_unslash( $_GET[ 'activate' ] ) ) ) || ( isset( $_GET[ 'action' ] ) && 'confirm_email' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) ) ) {
                 define( 'WP_INSTALLING', true );
-                $redirect_url      = b3_get_login_url();
-                $valid_error_codes = [ 'already_active', 'blog_taken' ];
                 [ $activate_path ] = explode( '?', wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) );
                 $activate_cookie   = 'wp-activate-' . COOKIEHASH;
                 $key               = '';
+                $redirect_url      = b3_get_login_url();
                 $result            = null;
+                $valid_error_codes = [ 'already_active', 'blog_taken' ];
+                $user_id           = isset( $_GET[ 'user' ] ) ? absint( $_GET[ 'user' ] ) : 0;
 
                 if ( isset( $_GET[ 'key' ] ) && isset( $_POST[ 'key' ] ) && $_GET[ 'key' ] !== $_POST[ 'key' ] ) {
                     wp_die( esc_html__( 'A key value mismatch has been detected. Please follow the link provided in your activation email.','b3-onboarding' ), esc_html__( 'An error occurred during the activation', 'b3-onboarding' ), 400 );
@@ -284,9 +290,22 @@
                     $key = sanitize_text_field( $_POST[ 'key' ] );
                 }
 
-                if ( $key ) {
+                if ( 0 < $user_id ) {
+                    $url_key    = $key;
+                    $stored_key = get_user_meta( $user_id, 'b3_email_verification_key', true );
+
+                    if ( $stored_key && $url_key && hash_equals( $stored_key, $url_key ) ) {
+                        delete_user_meta( $user_id, 'b3_email_verification_key' );
+                        delete_user_meta( $user_id, 'activation_needed' );
+                        $result = [ 'user_id' => $user_id ];
+
+                    } else {
+                        $result = new WP_Error( 'invalid_key', __( 'Invalid activation key.', 'b3-onboarding' ) );
+                    }
+                }
+
+                if ( $key && 0 === $user_id ) {
                     $redirect_url = remove_query_arg( 'key' );
-                    error_log($redirect_url);
 
                     if ( remove_query_arg( false ) !== $redirect_url ) {
                         setcookie( $activate_cookie, $key, 0, $activate_path, COOKIE_DOMAIN, is_ssl(), true );
@@ -314,7 +333,11 @@
                 }
 
                 if ( ! is_wp_error( $result ) ) {
-                    if ( get_option( 'b3_needs_admin_approval' ) ) {
+                    if ( 0 < $user_id ) {
+                        do_action( 'b3_after_user_activated', $user_id );
+                    }
+
+                    if ( get_option( 'b3_needs_admin_approval' ) && 0 == $user_id ) {
                         do_action( 'b3_set_approval_status', $result );
                         do_action( 'b3_inform_admin', 'request_access', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'message' => 'activate_approval_needed' ], $redirect_url );
@@ -322,6 +345,7 @@
                     } elseif ( get_option( 'b3_use_magic_link' ) ) {
                         do_action( 'b3_inform_admin', 'new_user', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'message' => 'activate_success_magic' ], $redirect_url );
+
                     } else {
                         do_action( 'b3_inform_admin', 'new_user', $result[ 'user_id' ] );
                         $redirect_url = add_query_arg( [ 'mu-activate' => 'success' ], $redirect_url );

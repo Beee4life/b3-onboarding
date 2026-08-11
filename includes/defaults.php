@@ -115,6 +115,7 @@
                     $message .= '<br><br>' . "\n";
                 } else {
                     $message .= esc_html__( 'you have confirmed your email address and can now login immediately by clicking the button below.', 'b3-onboarding' );
+                    $message .= '<br><br>' . "\n";
                 }
 
             } else {
