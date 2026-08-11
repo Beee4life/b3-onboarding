@@ -506,7 +506,6 @@
                     delete_option( 'b3_disallowed_usernames' );
                 }
 
-                // @TODO: check if this should be kept out of MS
                 if ( isset( $_POST[ 'b3_activate_domain_restriction' ] ) && 1 == (int) $_POST[ 'b3_activate_domain_restriction' ] ) {
                     update_option( 'b3_activate_domain_restriction', 1, false );
 
