@@ -3,13 +3,7 @@
         exit;
     }
 
-    /**
-     * Create initial pages upon activation
-     *
-     * @since 1.0.6
-     *
-     * @param bool $site_id
-     */
+    // Create initial pages upon activation
     function b3_setup_initial_pages( $site_id = false ) {
         // @TODO: check all subsites, set pages + meta
 
@@ -57,13 +51,7 @@
         }
     }
 
-    /**
-     * Create pages
-     *
-     * @since 1.0.6
-     *
-     * @param array $page_definitions
-     */
+    // Create pages
     function b3_create_pages( $page_definitions = [] ) {
         foreach( $page_definitions as $slug => $page ) {
             // Check if there's a page assigned already
@@ -126,15 +114,9 @@
         }
     }
 
-    /**
+    /*
      * Render any extra fields
      * Options are: text, textarea, number, url, radio, checkbox, select
-     *
-     * @since 1.0.6
-     *
-     * @param bool $extra_field
-     *
-     * @return bool|false|string
      */
     function b3_render_extra_field( $extra_field = [], $value = false, $page = 'register' ) {
 
@@ -240,15 +222,7 @@
         return false;
     }
 
-    /**
-     * Replace vars in email template
-     *
-     * @since 2.0.0
-     *
-     * @param bool $message
-     *
-     * @return bool|string
-     */
+    // Replace vars in email template
     function b3_replace_template_styling( $message = false ) {
         if ( false != $message ) {
             $email_footer = b3_get_email_footer();
@@ -270,13 +244,7 @@
         return $message;
     }
 
-    /**
-     * Verify if privacy checkbox is clicked (when activated)
-     *
-     * @since 2.0.0
-     *
-     * @return bool
-     */
+    // Verify if privacy checkbox is clicked (when activated)
     function b3_verify_terms() {
         if ( get_option( 'b3_activate_terms_page' ) && ! isset( $_POST[ 'b3_terms_accept' ] ) ) {
             return false;
@@ -285,13 +253,7 @@
         return true;
     }
 
-    /**
-     * Verify if privacy checkbox is clicked (when activated)
-     *
-     * @since 2.0.0
-     *
-     * @return bool
-     */
+    // Verify if privacy checkbox is clicked (when activated)
     function b3_verify_privacy() {
         if ( get_option( 'b3_activate_privacy_page' ) && ! isset( $_POST[ 'b3_privacy_accept' ] ) ) {
             return false;
@@ -300,16 +262,9 @@
         return true;
     }
 
-    /**
+    /*
      * Check if a remote file exists
-     *
-     * @since 2.0.0
-     *
      * @link: https://stackoverflow.com/a/7051633/8275339
-     *
-     * @param $url
-     *
-     * @return bool
      */
     function b3_check_remote_file( $url ) {
         if ( 200 == wp_remote_retrieve_response_code( wp_remote_get( $url ) ) ) {
@@ -319,11 +274,7 @@
         }
     }
 
-    /**
-     * Generate user login
-     *
-     * @return string
-     */
+    // Generate user login
     function b3_generate_user_login() {
         $now        = gmdate( 'U', time() );
         $now_min_50 = $now - ( 50 * YEAR_IN_SECONDS );
@@ -332,13 +283,7 @@
         return $user_login;
     }
 
-    /**
-     * Verify domain in email (single site)
-     *
-     * @param $email
-     *
-     * @return bool
-     */
+    // Verify domain in email (single site)
     function b3_verify_email_domain( $email ) {
         $disallowed_domains = b3_get_disallowed_domain_names();
 
@@ -353,13 +298,7 @@
         return true;
     }
 
-    /**
-     * Verify magic link
-     *
-     * @param $code
-     *
-     * @return false|WP_User
-     */
+    // Verify magic link
     function b3_verify_otp( $code ) {
         if ( $code ) {
             if ( 8 == strlen( $code ) ) {
