@@ -1142,13 +1142,6 @@
                     $user_valid     = wpmu_validate_user_signup( $user_login, $user_email );
                     $errors         = $user_valid[ 'errors' ];
 
-                    if ( is_wp_error( $errors ) ) {
-                        error_log('Errors found for ' . $user_email );
-                    } else {
-                        error_log('No errors found for ' . $user_email );
-                    }
-                    echo '<pre>'; var_dump($user_valid); echo '</pre>'; exit;
-
                     if ( $errors->has_errors() ) {
                         if ( 'blog' != $registration_type ) {
                             $error_message_user_name  = $errors->get_error_message( 'user_name' );
@@ -1163,6 +1156,7 @@
                                     $error_codes[] = 'wpmu_user_reserved';
                                 }
                             }
+
                             if ( ! empty( $error_message_user_email ) ) {
                                 if ( 'Sorry, that email address is already used!' === $error_message_user_email ) {
                                     $error_codes[] = 'email_exists';
@@ -1170,6 +1164,7 @@
                                     $error_codes[] = 'wpmu_email_in_use';
                                 }
                             }
+
                             if ( empty( $error_message_user_name ) && empty( $error_message_user_email ) ) {
                                 // unknown error
                                 $redirect_url = add_query_arg( 'registration-error', 'unknown', $redirect_url );
