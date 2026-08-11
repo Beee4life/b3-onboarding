@@ -659,6 +659,11 @@
         return $message;
     }
 
+    // Get 'easy' passwords
+    function b3_get_easy_passwords() {
+        return apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
+    }
+
     // Disallowed usernames
     function b3_get_disallowed_usernames( $return = 'array' ) {
         $default_user_names = b3_get_default_reserved_user_names();
@@ -677,11 +682,6 @@
         }
 
         return $user_name_array;
-    }
-
-    // Get 'easy' passwords
-    function b3_get_easy_passwords() {
-        return apply_filters( 'b3_easy_passwords', b3_get_default_easy_passwords() );
     }
 
     // Get disallowed domain names
