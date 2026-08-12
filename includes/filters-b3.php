@@ -34,15 +34,17 @@
         if ( ! empty( $extra_field_values ) ) {
             foreach( $extra_field_values as $field ) {
                 if ( ! empty( $field[ 'id' ] ) ) {
-                    $field_id   = $field[ 'id' ];
-                    $field_type = $field[ 'type' ];
-                    if ( true == $field[ 'required' ] ) {
+                    $field_id   = sanitize_text_field( $field[ 'id' ] );
+                    $field_type = sanitize_text_field( $field[ 'type' ] );
+
+                    if ( isset( $field[ 'required' ] ) && true == $field[ 'required' ] ) {
                         if ( in_array( $field_type, [ 'radio', 'checkbox', 'select' ] ) ) {
                             // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
                             if ( ! isset( $_POST[ $field_id ] ) || ( isset( $_POST[ $field_id ] ) && empty( $_POST[ $field_id ] ) ) ) {
                                 $error_code = 'empty_field';
                             }
                         }
+
                         if ( isset( $error_code ) ) {
                             $error_array[] = [
                                 'error_code'    => $error_code,

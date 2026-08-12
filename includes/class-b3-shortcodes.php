@@ -86,22 +86,21 @@
                     $attributes[ 'errors' ] = [];
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'registration-error' ] ) ) );
-                        $error_count = 1;
 
                         foreach ( $error_codes as $error_code ) {
-                            if ( strpos( $error_code, 'field_' ) !== false ) {
-                                // @TODO: test his
-                                // 2 errors only occurs with extra fields
-                                $field_id           = substr( $error_code, 6 );
+                            if ( strpos( $error_code, 'empty_field' ) !== false ) {
+                                $field_id           = substr( $error_code, 12 );
+                                $error_code         = 'empty_field';
                                 $extra_field_values = apply_filters( 'b3_extra_fields', [] );
                                 $column             = array_column( $extra_field_values, 'id' );
                                 $key                = array_search( $field_id, $column );
 
-                                if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
-                                    $label                    = $extra_field_values[ $key ][ 'label' ];
-                                    $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $label );
+                                if ( false !== $key ) {
+                                    if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
+                                        $label                    = sanitize_text_field( wp_unslash( $extra_field_values[ $key ][ 'label' ] ) );
+                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, $label );
+                                    }
                                 }
-                                $error_count++;
 
                             } else {
                                 $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );

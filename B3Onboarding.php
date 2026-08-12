@@ -697,7 +697,7 @@
                         $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
                         $register     = false;
 
-                    } elseif ( false != get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
+                    } elseif ( get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
                         // Recaptcha check failed, display error
                         $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
                         $register     = false;
@@ -846,8 +846,7 @@
                 $extra_field_errors = apply_filters( 'b3_extra_fields_validation', [] );
                 if ( ! empty( $extra_field_errors ) ) {
                     foreach( $extra_field_errors as $extra_field_error ) {
-                        $errors->add( $extra_field_error[ 'error_code' ], $extra_field_error[ 'error_message' ] );
-                        $errors->add( 'field_' . $extra_field_error[ 'id' ], '' );
+                        $errors->add( $extra_field_error[ 'error_code' ] . '_' . $extra_field_error[ 'id' ], $extra_field_error[ 'error_message' ] );
                     }
 
                     return $errors;
