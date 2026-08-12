@@ -89,28 +89,23 @@
                         $error_count = 1;
 
                         foreach ( $error_codes as $error_code ) {
-                            if ( 1 === count( $error_codes ) ) {
-                                $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
-                            } else {
-                                if ( 1 < $error_count ) {
-                                    // 2 errors only occurs with extra fields
-                                    if ( strpos( $error_code, 'field_' ) !== false ) {
-                                        $field_id           = substr( $error_code, 6 );
-                                        $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-                                        $column             = array_column( $extra_field_values, 'id' );
-                                        $key                = array_search( $field_id, $column );
+                            if ( strpos( $error_code, 'field_' ) !== false ) {
+                                // @TODO: test his
+                                // 2 errors only occurs with extra fields
+                                $field_id           = substr( $error_code, 6 );
+                                $extra_field_values = apply_filters( 'b3_extra_fields', [] );
+                                $column             = array_column( $extra_field_values, 'id' );
+                                $key                = array_search( $field_id, $column );
 
-                                        if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
-                                            $label                    = $extra_field_values[ $key ][ 'label' ];
-                                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $label );
-                                        }
-
-                                    } else {
-                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
-                                    }
+                                if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
+                                    $label                    = $extra_field_values[ $key ][ 'label' ];
+                                    $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $label );
                                 }
+                                $error_count++;
+
+                            } else {
+                                $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                             }
-                            $error_count++;
                         }
 
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
@@ -170,7 +165,6 @@
                             error_log('class-b3-shortcodes.php line 170');
 
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
-                                // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                                 error_log('class-b3-shortcodes.php line 175');
                             } else {
