@@ -438,3 +438,32 @@
         }
     }
     add_action( 'init', 'b3_do_user_activate' );
+
+    /**
+     * Disable the banned_email_domains field in Network Settings UI.
+     */
+    add_action( 'admin_enqueue_scripts', function( $hook_suffix ) {
+        // Target only the Multisite Network Settings page
+        if ( 'settings.php' !== $hook_suffix || ! is_network_admin() ) {
+            return;
+        }
+
+        $inline_js = "
+        document.addEventListener('DOMContentLoaded', function() {
+            var field = document.getElementById('banned_email_domains');
+            if (field) {
+                field.disabled = true;
+                field.setAttribute('readonly', 'readonly');
+                
+                // Optional: Append an explanatory notice below the textarea
+                var notice = document.createElement('p');
+                notice.className = 'description';
+                notice.style.color = '#d63638';
+                notice.textContent = 'This setting is currently disabled and bypassed by [Your Plugin Name].';
+                field.parentNode.appendChild(notice);
+            }
+        });
+    ";
+
+        wp_add_inline_script( 'common', $inline_js );
+    } );
