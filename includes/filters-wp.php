@@ -250,3 +250,16 @@
     }
     add_filter( 'signup_user_meta', 'b3_add_admin_created_signup_meta', 20 );
 
+    // Override the (old) WordPress Multisite banned domain error message.
+    function b3_wpmu_banned_domain_message( $translated_text, $text, $domain ) {
+        $texts = [
+            'We&#039;re sorry, that domain is blocked from registering.',
+            'You cannot use that email address to signup. There are problems with them blocking some emails from WordPress. Please use another email provider.',
+        ];
+        if ( 'default' === $domain && 'You cannot use that email address to signup. There are problems with them blocking some emails from WordPress. Please use another email provider.' === $text ) {
+            return __( 'Sorry, this domain is not allowed to register.', 'b3-onboarding' );
+        }
+
+        return $translated_text;
+    }
+    add_filter( 'gettext', 'b3_wpmu_banned_domain_message', 20, 3 );
