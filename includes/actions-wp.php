@@ -209,20 +209,34 @@
 
     // add network admin notices
     function b3_network_admin_notices() {
+        $plugin = get_plugin_data( B3OB_PLUGIN_PATH . '/B3Onboarding.php' );
         if ( 'settings-network' === get_current_screen()->id ) {
-            // translators: 1. plugin name, 2. link to tab registration, 3. link to tab emails
-            echo sprintf( '<div class="notice notice-info"><p>'. esc_html__( '%1$s overrides the \'Registration\' option and the \'Registration notification\'. You can change the registration type %2$s and the registration notification %3$s.', 'b3-onboarding' ) . '</p></div>',
-                'B3 OnBoarding',
-                sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=registration' ) ), esc_html__( 'here', 'b3-onboarding' ) ),
-                sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=emails' ) ), esc_html__( 'here', 'b3-onboarding' ) )
+            // translators: plugin name
+            $message = sprintf( esc_html__( '%s overrides several options, such as the \'Registration\' option and the \'Registration notification\'.', 'b3-onboarding' ), $plugin[ 'Name' ] );
+            $message .= '<br>';
+            $message .= '<ul>';
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'the registration type', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'the registration notification', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'banned usernames', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'banned email domains', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'welcome email', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'welcome user email', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= '</ul>';
+
+            // translators: link to admin page
+            $message .= sprintf( esc_html__( 'You can change change these settings on the %s.', 'b3-onboarding' ),
+                sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), esc_html__( 'admin page', 'b3-onboarding' ) )
             );
+
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- admin message
+            echo sprintf( '<div class="notice notice-info"><p>%s</p></div>', $message );
         }
 
-        $plugin = get_plugin_data( B3OB_PLUGIN_PATH . '/B3Onboarding.php' );
         if ( strpos( $plugin[ 'Version' ], 'dev' ) !== false || strpos( $plugin[ 'Version' ], 'beta' ) !== false ) {
             // translators: plugin name
             $warning_message = sprintf( esc_html__( "You're using a development version of %s, which has not been released yet and can give some unexpected results.", 'b3-onboarding' ), 'B3 OnBoarding' );
             $notice          = sprintf( '<div class="notice notice-warning"><p>%s</p></div>', $warning_message );
+
             if ( false === apply_filters( 'b3_hide_development_notice', false ) ) {
                 echo wp_kses_post( $notice );
             }
@@ -442,28 +456,27 @@
     /**
      * Disable the banned_email_domains field in Network Settings UI.
      */
-    add_action( 'admin_enqueue_scripts', function( $hook_suffix ) {
+    function b3_disable_banned_domains( $hook_suffix ) {
         // Target only the Multisite Network Settings page
         if ( 'settings.php' !== $hook_suffix || ! is_network_admin() ) {
             return;
         }
 
         $inline_js = "
-        document.addEventListener('DOMContentLoaded', function() {
-            var field = document.getElementById('banned_email_domains');
-            if (field) {
-                field.disabled = true;
-                field.setAttribute('readonly', 'readonly');
-                
-                // Optional: Append an explanatory notice below the textarea
-                var notice = document.createElement('p');
-                notice.className = 'description';
-                notice.style.color = '#d63638';
-                notice.textContent = 'This setting is currently disabled and bypassed by [Your Plugin Name].';
-                field.parentNode.appendChild(notice);
-            }
-        });
-    ";
+            document.addEventListener('DOMContentLoaded', function() {
+                var usernames_field = document.getElementById('illegal_names');
+                var domains_field = document.getElementById('banned_email_domains');
+                if (usernames_field) {
+                    usernames_field.disabled = true;
+                    usernames_field.setAttribute('readonly', 'readonly');
+                }
+                if (domains_field) {
+                    domains_field.disabled = true;
+                    domains_field.setAttribute('readonly', 'readonly');
+                }
+            });
+        ";
 
         wp_add_inline_script( 'common', $inline_js );
-    } );
+    }
+    add_action( 'admin_enqueue_scripts', 'b3_disable_banned_domains' );

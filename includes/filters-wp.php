@@ -142,7 +142,19 @@
     add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );
 
     // Filter for banned domains in email validation MU signup
-    function b3_check_domain_user_email( $result ) {
+    function b3_validate_user_signup( $result ) {
+        if ( get_option( 'b3_activate_username_restriction' ) ) {
+            $user_name   = $result[ 'user_name' ];
+            $verify_user = b3_verify_user_name( $user_name );
+
+            if ( false === $verify_user ) {
+                $result[ 'errors' ]->add(
+                    'error_banned_username',
+                    esc_html__( "We're sorry, that username is blocked from registering.", 'b3-onboarding' )
+                );
+            }
+        }
+
         if ( get_option( 'b3_activate_domain_restriction' ) ) {
             $email         = $result[ 'user_email' ];
             $verify_domain = b3_verify_email_domain( $email );
@@ -157,7 +169,22 @@
 
         return $result;
     }
-    add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
+    add_filter( 'wpmu_validate_user_signup', 'b3_validate_user_signup' );
+
+    // Validates allowed usernames during ADMIN creation only
+    function b3_check_username( $valid, $user_name ) {
+        $disallowed_names = b3_get_disallowed_usernames();
+
+        foreach( $disallowed_names as $name ) {
+            // If any disallowed string is in the user_name, mark $valid as false.
+            if ( $valid && false !== strpos( $user_name, $name ) ) {
+                $valid = false;
+            }
+        }
+
+        return $valid;
+    }
+    add_filter( 'validate_username', 'b3_check_username', 10, 2 );
 
     // Filters out any menu items for registered users/visitors
     function b3_filter_nav_menus( $items, $menu, $args ) {
@@ -192,21 +219,6 @@
         return $items;
     }
     add_filter( 'wp_get_nav_menu_items', 'b3_filter_nav_menus', 5, 3 );
-
-    // Validates allowed usernames
-    function b3_check_username( $valid, $user_name ) {
-        $disallowed_names = b3_get_disallowed_usernames();
-
-        foreach( $disallowed_names as $name ) {
-            // If any disallowed string is in the user_name, mark $valid as false.
-            if ( $valid && false !== strpos( $user_name, $name ) ) {
-                $valid = false;
-            }
-        }
-
-        return $valid;
-    }
-    add_filter( 'validate_username', 'b3_check_username', 10, 2 );
 
     // Hide password fields (if only magic link is active)
     function b3_show_password_fields( $show, $current_user ) {
@@ -249,17 +261,3 @@
         return $meta;
     }
     add_filter( 'signup_user_meta', 'b3_add_admin_created_signup_meta', 20 );
-
-    // Override the (old) WordPress Multisite banned domain error message.
-    function b3_wpmu_banned_domain_message( $translated_text, $text, $domain ) {
-        $texts = [
-            'We&#039;re sorry, that domain is blocked from registering.',
-            'You cannot use that email address to signup. There are problems with them blocking some emails from WordPress. Please use another email provider.',
-        ];
-        if ( 'default' === $domain && 'You cannot use that email address to signup. There are problems with them blocking some emails from WordPress. Please use another email provider.' === $text ) {
-            return __( 'Sorry, this domain is not allowed to register.', 'b3-onboarding' );
-        }
-
-        return $translated_text;
-    }
-    add_filter( 'gettext', 'b3_wpmu_banned_domain_message', 20, 3 );

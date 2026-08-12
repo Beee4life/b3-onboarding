@@ -283,7 +283,7 @@
         return $user_login;
     }
 
-    // Verify domain in email (single site)
+    // Verify domain in email
     function b3_verify_email_domain( $email ) {
         $disallowed_domains = b3_get_disallowed_domain_names();
 
@@ -293,6 +293,17 @@
             if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    // Verify username
+    function b3_verify_user_name( $username ) {
+        $disallowed_usernames = b3_get_disallowed_usernames();
+
+        if ( in_array( $username, $disallowed_usernames ) ) {
+            return false;
         }
 
         return true;
