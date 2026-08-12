@@ -212,19 +212,19 @@
         $plugin = get_plugin_data( B3OB_PLUGIN_PATH . '/B3Onboarding.php' );
         if ( 'settings-network' === get_current_screen()->id ) {
             // translators: plugin name
-            $message = sprintf( esc_html__( '%s overrides several options, such as the \'Registration option\' and the \'Registration notification\'.', 'b3-onboarding' ), $plugin[ 'Name' ] );
+            $message = sprintf( esc_html__( '%s overrides the following options:', 'b3-onboarding' ), $plugin[ 'Name' ] );
             $message .= '<br>';
             $message .= '<ul>';
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'the registration type', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'the registration notification', 'overtaken registration option', 'b3-onboarding' ) );
-            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'banned usernames', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'banned names', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'banned email domains', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'welcome email', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'welcome user email', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= '</ul>';
 
             // translators: link to admin page
-            $message .= sprintf( esc_html__( 'You can change these settings on the %s.', 'b3-onboarding' ),
+            $message .= sprintf( esc_html__( "You can change these settings on the plugin's %s.", 'b3-onboarding' ),
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), esc_html__( 'admin page', 'b3-onboarding' ) )
             );
 

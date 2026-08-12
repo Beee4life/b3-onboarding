@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
-"POT-Creation-Date: 2026-08-12 22:59+0200\n"
-"PO-Revision-Date: 2026-08-12 22:59+0200\n"
+"POT-Creation-Date: 2026-08-12 23:09+0200\n"
+"PO-Revision-Date: 2026-08-12 23:09+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1112,18 +1112,9 @@ msgid "Account activated for %s"
 msgstr "Konto aktiviert"
 
 #: includes/actions-wp.php:215
-#, fuzzy, php-format
-#| msgid ""
-#| "%1$s overrides the 'Registration' option and the 'Registration "
-#| "notification'. You can change the registration type %2$s and the "
-#| "registration notification %3$s."
-msgid ""
-"%s overrides several options, such as the 'Registration option' and the "
-"'Registration notification'."
+#, php-format
+msgid "%s overrides the following options:"
 msgstr ""
-"%1$s überschreibt die Option 'Registrierung' und die 'Registrierungs-"
-"Benachrichtigung'. Du kannst den Registrierungstyp %2$s und die "
-"Benachrichtigung %3$s ändern."
 
 #: includes/actions-wp.php:218
 #, fuzzy
@@ -1138,7 +1129,7 @@ msgstr ""
 #: includes/actions-wp.php:220
 #, fuzzy
 #| msgid "Please enter a username."
-msgid "banned usernames"
+msgid "banned names"
 msgstr "Bitte gib einen Benutzernamen ein."
 
 #: includes/actions-wp.php:221
@@ -1160,7 +1151,7 @@ msgstr "Willkommen (Benutzer)"
 #: includes/actions-wp.php:227
 #, fuzzy, php-format
 #| msgid "You can manage your new site %s."
-msgid "You can change these settings on the %s."
+msgid "You can change these settings on the plugin's %s."
 msgstr "Du kannst deine neue Website %s verwalten."
 
 #: includes/actions-wp.php:228
@@ -2613,6 +2604,19 @@ msgstr "Hier kannst du deine neue Website registrieren."
 #: templates/user-management.php:33
 msgid "No (more) users to approve."
 msgstr "Keine (weiteren) Benutzer zur Freigabe."
+
+#, fuzzy, php-format
+#~| msgid ""
+#~| "%1$s overrides the 'Registration' option and the 'Registration "
+#~| "notification'. You can change the registration type %2$s and the "
+#~| "registration notification %3$s."
+#~ msgid ""
+#~ "%s overrides several options, such as the 'Registration option' and the "
+#~ "'Registration notification'."
+#~ msgstr ""
+#~ "%1$s überschreibt die Option 'Registrierung' und die 'Registrierungs-"
+#~ "Benachrichtigung'. Du kannst den Registrierungstyp %2$s und die "
+#~ "Benachrichtigung %3$s ändern."
 
 #, fuzzy
 #~| msgid "Lost password email"

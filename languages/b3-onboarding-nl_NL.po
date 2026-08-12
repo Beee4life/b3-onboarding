@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-08-12 22:59+0200\n"
-"PO-Revision-Date: 2026-08-12 22:59+0200\n"
+"POT-Creation-Date: 2026-08-12 23:08+0200\n"
+"PO-Revision-Date: 2026-08-12 23:08+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -1551,13 +1551,9 @@ msgstr "Account geactiveerd voor %s"
 
 #. translators: plugin name
 #: includes/actions-wp.php:215
-#, fuzzy, php-format
-msgid ""
-"%s overrides several options, such as the 'Registration option' and the "
-"'Registration notification'."
-msgstr ""
-"%s beheert meerdere opties zoals de 'Registratie optie' en de 'Registratie "
-"notificatie'."
+#, php-format
+msgid "%s overrides the following options:"
+msgstr "%s overschrijft de volgende opties:"
 
 #: includes/actions-wp.php:218
 msgctxt "overtaken registration option"
@@ -1570,16 +1566,14 @@ msgid "the registration notification"
 msgstr "de registratie notificatie"
 
 #: includes/actions-wp.php:220
-#, fuzzy
 msgctxt "overtaken registration option"
-msgid "banned usernames"
-msgstr "geblokkeerde gebruikersnamen"
+msgid "banned names"
+msgstr "verbande namen"
 
 #: includes/actions-wp.php:221
-#, fuzzy
 msgctxt "overtaken registration option"
 msgid "banned email domains"
-msgstr "geblokkeerde email domeinen"
+msgstr "verboden e-mail domeinnamen"
 
 #: includes/actions-wp.php:222
 msgctxt "overtaken registration option"
@@ -1593,10 +1587,9 @@ msgstr "welkom gebruiker email"
 
 #. translators: link to admin page
 #: includes/actions-wp.php:227
-#, fuzzy, php-format
-#| msgid "You can change change these settings on the %s."
-msgid "You can change these settings on the %s."
-msgstr "Je kan deze instellingen wijzigen op de %s."
+#, php-format
+msgid "You can change these settings on the plugin's %s."
+msgstr "Je kan deze instellingen wijzigen op de plugin's %s."
 
 #: includes/actions-wp.php:228
 msgid "admin page"
@@ -3236,6 +3229,14 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#, php-format
+#~ msgid ""
+#~ "%s overrides several options, such as the 'Registration option' and the "
+#~ "'Registration notification'."
+#~ msgstr ""
+#~ "%s beheert meerdere opties zoals het 'Registratie type' en de "
+#~ "'Registratie notificatie'."
 
 #~ msgid "No subject and email."
 #~ msgstr "Geen onderwerp en email."

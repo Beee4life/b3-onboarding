@@ -923,7 +923,7 @@ msgstr ""
 
 #: includes/actions-wp.php:215
 #, php-format
-msgid "%s overrides several options, such as the 'Registration option' and the 'Registration notification'."
+msgid "%s overrides the following options:"
 msgstr ""
 
 #: includes/actions-wp.php:218
@@ -935,7 +935,7 @@ msgid "the registration notification"
 msgstr ""
 
 #: includes/actions-wp.php:220
-msgid "banned usernames"
+msgid "banned names"
 msgstr ""
 
 #: includes/actions-wp.php:221
@@ -952,7 +952,7 @@ msgstr ""
 
 #: includes/actions-wp.php:227
 #, php-format
-msgid "You can change these settings on the %s."
+msgid "You can change these settings on the plugin's %s."
 msgstr ""
 
 #: includes/actions-wp.php:228
