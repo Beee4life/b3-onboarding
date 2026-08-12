@@ -900,6 +900,9 @@
                     case 'wpmu_email_in_use':
                         return esc_html__( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.', 'b3-onboarding' );
 
+                    case 'email_domain_banned':
+                        return esc_html__( 'This domain is not allowed to register.', 'b3-onboarding' );
+
                     // Account
                     case 'account_remove':
                         return esc_html__( 'Your account has been deleted.', 'b3-onboarding' );
@@ -1142,41 +1145,46 @@
                     $user_valid     = wpmu_validate_user_signup( $user_login, $user_email );
                     $errors         = $user_valid[ 'errors' ];
 
-                    if ( $errors->has_errors() ) {
-                        if ( 'blog' != $registration_type ) {
-                            $error_message_user_name  = $errors->get_error_message( 'user_name' );
-                            $error_message_user_email = $errors->get_error_message( 'user_email' );
+                    if ( $errors->has_errors() && 'blog' !== $registration_type ) {
+                        $error_codes    = [];
 
-                            if ( ! empty( $error_message_user_name ) ) {
-                                if ( 'Sorry, that username already exists!' === $error_message_user_name ) {
+                        $all_messages = array_merge(
+                            $errors->get_error_messages( 'user_name' ),
+                            $errors->get_error_messages( 'user_email' )
+                        );
+
+                        foreach ( $all_messages as $message ) {
+                            switch ( $message ) {
+                                // Username errors
+                                case __( 'Sorry, that username already exists!' ):
                                     $error_codes[] = 'username_exists';
-                                } elseif ( 'Usernames can only contain lowercase letters (a-z) and numbers.' === $error_message_user_name ) {
+                                    break;
+                                case __( 'Usernames can only contain lowercase letters (a-z) and numbers.' ):
                                     $error_codes[] = 'username_no_uppercase';
-                                } elseif ( 'That username is currently reserved but may be available in a couple of days.' === $error_message_user_name ) {
+                                    break;
+                                case __( 'That username is currently reserved but may be available in a couple of days.' ):
                                     $error_codes[] = 'wpmu_user_reserved';
-                                }
-                            }
+                                    break;
 
-                            if ( ! empty( $error_message_user_email ) ) {
-                                if ( 'Sorry, that email address is already used!' === $error_message_user_email ) {
+                                // Email errors
+                                case __( 'Sorry, that email address is already used!' ):
                                     $error_codes[] = 'email_exists';
-                                } elseif ( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' === $error_message_user_email ) {
+                                    break;
+                                case __( 'Sorry, this domain is not allowed to register.' ):
+                                    $error_codes[] = 'email_domain_banned';
+                                    break;
+                                case __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.' ):
                                     $error_codes[] = 'wpmu_email_in_use';
-                                }
-                            }
+                                    break;
 
-                            if ( empty( $error_message_user_name ) && empty( $error_message_user_email ) ) {
-                                // unknown error
-                                $redirect_url = add_query_arg( 'registration-error', 'unknown', $redirect_url );
-                                wp_safe_redirect( $redirect_url );
-                                exit;
+                                default:
+                                    $error_codes[] = 'unknown';
+                                    break;
                             }
                         }
-                    }
 
-                    if ( isset( $error_codes ) && ! empty( $error_codes ) ) {
-                        $errors       = join( ',', $error_codes );
-                        $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
+                        $error_string = implode( ',', array_unique( $error_codes ) );
+                        $redirect_url = add_query_arg( 'registration-error', $error_string, $redirect_url );
                         wp_safe_redirect( $redirect_url );
                         exit;
                     }
