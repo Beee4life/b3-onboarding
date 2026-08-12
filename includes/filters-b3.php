@@ -46,12 +46,16 @@
                         }
 
                         if ( isset( $error_code ) ) {
-                            $error_array[] = [
-                                'error_code'    => $error_code,
-                                'error_message' => $b3_onboarding->b3_get_return_message( $error_code ),
-                                'id'            => $field_id,
-                                'label'         => $field[ 'label' ],
-                            ];
+                            if ( is_multisite() ) {
+                                $error_array->add( $error_code, $b3_onboarding->b3_get_return_message( $error_code ) );
+                            } else {
+                                $error_array[] = [
+                                    'error_code'    => $error_code,
+                                    'error_message' => $b3_onboarding->b3_get_return_message( $error_code ),
+                                    'id'            => $field_id,
+                                    'label'         => $field[ 'label' ],
+                                ];
+                            }
                         }
                     }
                 }

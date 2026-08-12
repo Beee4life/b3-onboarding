@@ -141,7 +141,7 @@
     }
     add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );
 
-    // Filter for banned domains in email validation MU signup
+    // Filter for user validation MU signup
     function b3_validate_user_signup( $result ) {
         if ( get_option( 'b3_activate_username_restriction' ) ) {
             $user_name   = $result[ 'user_name' ];

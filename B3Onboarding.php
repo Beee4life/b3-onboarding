@@ -875,12 +875,9 @@
                 $user_login = ( isset( $_POST[ 'user_name' ] ) ) ? sanitize_user( wp_unslash( $_POST[ 'user_name' ] ) ) : false;
                 $register   = false;
 
+                // @TODO: also check this on subsites
                 if ( is_main_site() ) {
-                    if ( 'none' === $registration_type ) {
-                        // Registration closed, display error
-                        $redirect_url = add_query_arg( 'registration-error', 'closed', $redirect_url );
-
-                    } elseif ( 'blog' === $registration_type ) {
+                    if ( 'blog' === $registration_type ) {
                         $user = wp_get_current_user();
 
                         if ( $user && $user->exists() ) {
@@ -912,12 +909,11 @@
                     $signup_for     = ( isset( $_POST[ 'signup_for' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'signup_for' ] ) ) : false;
                     $user_valid     = wpmu_validate_user_signup( $user_login, $user_email );
                     $errors         = $user_valid[ 'errors' ];
-
+                    $extra_fields   = apply_filters( 'b3_extra_fields_validation', $errors );
                     remove_filter( 'gettext', $gettext_callback, 10 );
 
                     if ( $errors->has_errors() && 'blog' !== $registration_type ) {
                         $error_codes = [];
-
                         foreach ( $errors->get_error_messages() as $message ) {
                             $english_text = $untranslated_map[ $message ] ?? $message;
                             $clean_text   = wp_strip_all_tags( $english_text );
@@ -948,6 +944,11 @@
                                     break;
                                 case 'that_email_address_is_pending_activation_and_is_not_available_for_new_registration_if_you_made_a_previous_attempt_with_this_email_address_please_check_your_inbox_for_an_activation_email_if_left_unconfirmed_it_will_become_available_in_a_couple_of_days':
                                     $error_codes[] = 'wpmu_email_in_use';
+                                    break;
+
+                                // custom errors
+                                case 'you_didnt_select_an_option':
+                                    $error_codes[] = 'empty_field';
                                     break;
 
                                 default:
