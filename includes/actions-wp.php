@@ -215,8 +215,8 @@
             $message = sprintf( esc_html__( '%s overrides the following options:', 'b3-onboarding' ), $plugin[ 'Name' ] );
             $message .= '<br>';
             $message .= '<ul>';
-            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'the registration type', 'overtaken registration option', 'b3-onboarding' ) );
-            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'the registration notification', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'allow new registrations', 'overtaken registration option', 'b3-onboarding' ) );
+            $message .= sprintf( '<li>- %s</li>', esc_html_x( 'registration notification', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'banned names', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'banned email domains', 'overtaken registration option', 'b3-onboarding' ) );
             $message .= sprintf( '<li>- %s</li>', esc_html_x( 'welcome email', 'overtaken registration option', 'b3-onboarding' ) );
