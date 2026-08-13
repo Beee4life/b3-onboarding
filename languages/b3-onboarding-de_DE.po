@@ -4,17 +4,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
-"POT-Creation-Date: 2026-08-13 16:18+0200\n"
-"PO-Revision-Date: 2026-08-13 16:18+0200\n"
+"POT-Creation-Date: 2026-08-13 16:50+0200\n"
+"PO-Revision-Date: 2026-08-13 16:51+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-KeywordsList: "
-"__;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;_ngettext_noop\n"
+"__;_n:1,2;_x:1,2c;esc_attr__;esc_attr_e;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: languages\n"
@@ -207,7 +208,7 @@ msgstr "Dein Code scheint ungültig zu sein. Bitte versuche es erneut."
 msgid "An unkown error has occured. Please try again."
 msgstr "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut."
 
-#: B3Onboarding.php:1291 includes/form-handling.php:875
+#: B3Onboarding.php:1291 includes/form-handling.php:884
 msgid "Unlawful form entry, try again."
 msgstr "Illegale Formulareingabe, versuche es erneut."
 
@@ -512,7 +513,7 @@ msgstr "Dein Konto wurde gelöscht."
 msgid "Profile saved"
 msgstr "Profil gespeichert"
 
-#: B3Onboarding.php:1486 includes/form-handling.php:700
+#: B3Onboarding.php:1486 includes/form-handling.php:709
 msgid "Settings saved"
 msgstr "Einstellungen gespeichert"
 
@@ -629,13 +630,21 @@ msgstr ""
 
 #: admin/dashboard-widget-users.php:48 admin/dashboard-widget-users.php:56
 #: admin/dashboard-widget-users.php:63
+#, fuzzy
+#| msgid "is"
 msgid "is"
-msgstr "gibt"
+msgid_plural "are"
+msgstr[0] "gibt"
+msgstr[1] "gibt"
 
 #: admin/dashboard-widget-users.php:50 admin/dashboard-widget-users.php:58
 #: admin/dashboard-widget-users.php:63
+#, fuzzy
+#| msgid "user"
 msgid "user"
-msgstr "Benutzer"
+msgid_plural "users"
+msgstr[0] "Benutzer"
+msgstr[1] "Benutzer"
 
 #: admin/dashboard-widget-users.php:51 admin/tabs/tab-registration.php:16
 #: admin/tabs/tab-settings.php:122 admin/tabs/tab-styling.php:83
@@ -643,8 +652,12 @@ msgid "Click here"
 msgstr "Hier klicken"
 
 #: admin/dashboard-widget-users.php:52
+#, fuzzy
+#| msgid "this user"
 msgid "this user"
-msgstr "diesen Benutzer"
+msgid_plural "these users"
+msgstr[0] "diesen Benutzer"
+msgstr[1] "diesen Benutzer"
 
 #: admin/dashboard-widget-users.php:55
 #, php-format
@@ -1017,7 +1030,7 @@ msgstr ""
 "zugewiesen sind."
 
 #: admin/tabs/tab-pages.php:61 admin/tabs/tab-pages.php:71
-#: admin/tabs/tab-registration.php:245 admin/tabs/tab-registration.php:292
+#: admin/tabs/tab-registration.php:245 admin/tabs/tab-registration.php:307
 msgid "Select a page"
 msgstr "Seite auswählen"
 
@@ -1244,7 +1257,7 @@ msgstr "Links sind erlaubt."
 msgid "Terms page"
 msgstr "Seite auswählen"
 
-#: admin/tabs/tab-registration.php:239
+#: admin/tabs/tab-registration.php:239 admin/tabs/tab-registration.php:301
 #, fuzzy
 #| msgid "Select a page"
 msgid "Set page"
@@ -1607,29 +1620,41 @@ msgstr ""
 #: includes/actions-wp.php:218
 #, fuzzy
 #| msgid "New User Registration: %s"
+msgctxt "overtaken registration option"
 msgid "allow new registrations"
 msgstr "Neue Benutzerregistrierung: %s"
 
 #: includes/actions-wp.php:219
 #, fuzzy
 #| msgid "Registration settings saved"
+msgctxt "overtaken registration option"
 msgid "registration notification"
 msgstr "Registrierungseinstellungen gespeichert"
 
 #: includes/actions-wp.php:220
+#, fuzzy
+#| msgid "banned names"
+msgctxt "overtaken registration option"
 msgid "banned names"
 msgstr "blockierte namen"
 
 #: includes/actions-wp.php:221
+#, fuzzy
+#| msgid "banned names"
+msgctxt "overtaken registration option"
 msgid "banned email domains"
-msgstr ""
+msgstr "blockierte namen"
 
 #: includes/actions-wp.php:222
 #, fuzzy
+msgctxt "overtaken registration option"
 msgid "welcome email"
 msgstr "Willkommens-E-Mail"
 
 #: includes/actions-wp.php:223
+#, fuzzy
+#| msgid "welcome user email"
+msgctxt "overtaken registration option"
 msgid "welcome user email"
 msgstr "Willkommen Benutzer email"
 
@@ -2194,6 +2219,9 @@ msgid "Site name: %blog_name%"
 msgstr "Website-Name: %blog_name%"
 
 #: includes/defaults.php:522
+#, fuzzy
+#| msgid "[%network_name%] Activate your account"
+msgctxt "New site notification email subject"
 msgid "[%network_name%] Activate your account"
 msgstr "[%network_name%] Aktiviere dein Konto"
 
@@ -2383,26 +2411,44 @@ msgid "Approval page"
 msgstr "Freigabeseite"
 
 #: includes/do-stuff.php:11
+#, fuzzy
+#| msgid "account"
+msgctxt "slug"
 msgid "account"
 msgstr "konto"
 
 #: includes/do-stuff.php:16
+#, fuzzy
+#| msgid "lostpassword"
+msgctxt "slug"
 msgid "lostpassword"
 msgstr "passwort-vergessen"
 
 #: includes/do-stuff.php:21
+#, fuzzy
+#| msgid "login"
+msgctxt "slug"
 msgid "login"
 msgstr "login"
 
 #: includes/do-stuff.php:26
+#, fuzzy
+#| msgid "logout"
+msgctxt "slug"
 msgid "logout"
 msgstr "logout"
 
 #: includes/do-stuff.php:31
+#, fuzzy
+#| msgid "register"
+msgctxt "slug"
 msgid "register"
 msgstr "registrieren"
 
 #: includes/do-stuff.php:36
+#, fuzzy
+#| msgid "reset-password"
+msgctxt "slug"
 msgid "reset-password"
 msgstr "passwort-zuruecksetzen"
 
@@ -2680,47 +2726,47 @@ msgstr ""
 msgid "The site owner has disabled passwords and uses a 'magic link'."
 msgstr ""
 
-#: includes/form-handling.php:7 includes/form-handling.php:151
-#: includes/form-handling.php:445 includes/form-handling.php:475
-#: includes/form-handling.php:556 includes/form-handling.php:592
-#: includes/form-handling.php:627 includes/form-handling.php:719
+#: includes/form-handling.php:7 includes/form-handling.php:160
+#: includes/form-handling.php:454 includes/form-handling.php:484
+#: includes/form-handling.php:565 includes/form-handling.php:601
+#: includes/form-handling.php:636 includes/form-handling.php:728
 msgid "Something went wrong, please try again."
 msgstr "Etwas ist schiefgelaufen, bitte versuche es erneut."
 
-#: includes/form-handling.php:142
+#: includes/form-handling.php:151
 msgid "Registration settings saved"
 msgstr "Registrierungseinstellungen gespeichert"
 
-#: includes/form-handling.php:194
+#: includes/form-handling.php:203
 msgid "That is not a valid email address."
 msgstr "Das ist keine gültige E-Mail-Adresse."
 
-#: includes/form-handling.php:325
+#: includes/form-handling.php:334
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr "\"%s\" ist keine gültige E-Mail-Adresse."
 
-#: includes/form-handling.php:436
+#: includes/form-handling.php:445
 msgid "Email settings saved"
 msgstr "E-Mail-Einstellungen gespeichert"
 
-#: includes/form-handling.php:466
+#: includes/form-handling.php:475
 msgid "Template settings saved"
 msgstr "Template-Einstellungen gespeichert"
 
-#: includes/form-handling.php:547
+#: includes/form-handling.php:556
 msgid "User settings saved"
 msgstr "Benutzereinstellungen gespeichert"
 
-#: includes/form-handling.php:583
+#: includes/form-handling.php:592
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha-Einstellungen gespeichert"
 
-#: includes/form-handling.php:618
+#: includes/form-handling.php:627
 msgid "Pages settings saved"
 msgstr "Seiteneinstellungen gespeichert"
 
-#: includes/form-handling.php:698
+#: includes/form-handling.php:707
 msgid ""
 "You have successfully resetted all settings. Remember to set your pages "
 "again, before you log out !"
@@ -2728,7 +2774,7 @@ msgstr ""
 "Du hast erfolgreich alle Einstellungen zurückgesetzt. Denke daran, deine "
 "Seiten neu zuzuweisen, bevor du dich ausloggst!"
 
-#: includes/form-handling.php:825
+#: includes/form-handling.php:834
 msgid "You do not have permission to edit this user."
 msgstr "Du hast keine Berechtigung, diesen Benutzer zu bearbeiten."
 

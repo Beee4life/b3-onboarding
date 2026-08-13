@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-08-13 16:16+0200\n"
-"PO-Revision-Date: 2026-08-13 16:16+0200\n"
+"POT-Creation-Date: 2026-08-13 16:49+0200\n"
+"PO-Revision-Date: 2026-08-13 16:49+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-WPHeader: B3Onboarding.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: "
-"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"__;_n:1,2;_x:1,2c;esc_attr__;esc_attr_e;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
@@ -215,7 +215,7 @@ msgstr "Je code lijkt ongeldig te zijn. Probeer het aub nog een keer."
 msgid "An unkown error has occured. Please try again."
 msgstr "Er is een onbekende fout opgetreden. Probeer later nog eens."
 
-#: B3Onboarding.php:1291 includes/form-handling.php:875
+#: B3Onboarding.php:1291 includes/form-handling.php:884
 msgid "Unlawful form entry, try again."
 msgstr "Illegaal form verzoek, probeer opnieuw."
 
@@ -510,7 +510,7 @@ msgstr "Je account is verwijderd."
 msgid "Profile saved"
 msgstr "Profiel opgeslagen"
 
-#: B3Onboarding.php:1486 includes/form-handling.php:700
+#: B3Onboarding.php:1486 includes/form-handling.php:709
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
@@ -1017,7 +1017,7 @@ msgstr ""
 "'acties'."
 
 #: admin/tabs/tab-pages.php:61 admin/tabs/tab-pages.php:71
-#: admin/tabs/tab-registration.php:245 admin/tabs/tab-registration.php:292
+#: admin/tabs/tab-registration.php:245 admin/tabs/tab-registration.php:307
 msgid "Select a page"
 msgstr "Selecteer een pagina"
 
@@ -1211,7 +1211,7 @@ msgstr "Links zijn toegestaan."
 msgid "Terms page"
 msgstr "Voorwaarden pagina"
 
-#: admin/tabs/tab-registration.php:239
+#: admin/tabs/tab-registration.php:239 admin/tabs/tab-registration.php:301
 msgid "Set page"
 msgstr "Ingestelde pagina"
 
@@ -2652,48 +2652,48 @@ msgstr ""
 "De site eigenaar heeft wachtwoorden uitgeschakeld en gebruikt een 'magic "
 "link'."
 
-#: includes/form-handling.php:7 includes/form-handling.php:151
-#: includes/form-handling.php:445 includes/form-handling.php:475
-#: includes/form-handling.php:556 includes/form-handling.php:592
-#: includes/form-handling.php:627 includes/form-handling.php:719
+#: includes/form-handling.php:7 includes/form-handling.php:160
+#: includes/form-handling.php:454 includes/form-handling.php:484
+#: includes/form-handling.php:565 includes/form-handling.php:601
+#: includes/form-handling.php:636 includes/form-handling.php:728
 msgid "Something went wrong, please try again."
 msgstr "Er is iets verkeerd gegaan, probeer het aub opnieuw."
 
-#: includes/form-handling.php:142
+#: includes/form-handling.php:151
 msgid "Registration settings saved"
 msgstr "Registratie instellingen opgeslagen"
 
-#: includes/form-handling.php:194
+#: includes/form-handling.php:203
 msgid "That is not a valid email address."
 msgstr "Dit is geen geldig email adres."
 
 #. translators: email address
-#: includes/form-handling.php:325
+#: includes/form-handling.php:334
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr "\"%s\" is geen geldig email adres."
 
-#: includes/form-handling.php:436
+#: includes/form-handling.php:445
 msgid "Email settings saved"
 msgstr "Email instellingen opgeslagen"
 
-#: includes/form-handling.php:466
+#: includes/form-handling.php:475
 msgid "Template settings saved"
 msgstr "Template instellingen opgeslagen"
 
-#: includes/form-handling.php:547
+#: includes/form-handling.php:556
 msgid "User settings saved"
 msgstr "Gebruikersinstellingen opgeslagen"
 
-#: includes/form-handling.php:583
+#: includes/form-handling.php:592
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha instellingen opgeslagen"
 
-#: includes/form-handling.php:618
+#: includes/form-handling.php:627
 msgid "Pages settings saved"
 msgstr "Pagina instellingen opgeslagen"
 
-#: includes/form-handling.php:698
+#: includes/form-handling.php:707
 msgid ""
 "You have successfully resetted all settings. Remember to set your pages "
 "again, before you log out !"
@@ -2701,7 +2701,7 @@ msgstr ""
 "Je hebt je succesvol alle instellingen gereset. Vergeet niet je pagina's "
 "opnieuw in te stellen voordat je uitlogt !"
 
-#: includes/form-handling.php:825
+#: includes/form-handling.php:834
 msgid "You do not have permission to edit this user."
 msgstr "Je hebt niet voldoende rechten om deze gebruiker te bewerken."
 
