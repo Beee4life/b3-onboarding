@@ -126,11 +126,10 @@
                             </div>
                     <?php } ?>
                 </div>
-            <?php } // end foreach b3_pages ?>
+            <?php } // end foreach b3_pages
 
-            <?php echo sprintf( '<p><small>%s</small></p>', esc_html__( 'Links open in new tab/window.', 'b3-onboarding' ) ); ?>
+                echo sprintf( '<p><small>%s</small></p>', esc_html__( 'Links open in new tab/window.', 'b3-onboarding' ) );
 
-            <?php
                 // Note: don't show button otherwise page ids would be overwritten
                 if ( $current_language === $default_lang ) {
                     b3_get_submit_button();
