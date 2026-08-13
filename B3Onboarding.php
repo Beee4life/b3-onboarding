@@ -863,6 +863,7 @@
                     }
 
                     return $user_id;
+
                 } else {
                     $errors = new WP_Error();
                     $errors->add( 'error', $this->b3_get_return_message( 'unknown' ) );
