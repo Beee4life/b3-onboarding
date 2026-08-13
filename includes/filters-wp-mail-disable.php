@@ -3,6 +3,9 @@
         exit;
     }
 
+    // Force WordPress to treat the banned email domains list (in network settings) as empty, so we can use ours.
+    add_filter( 'pre_site_option_banned_email_domains', '__return_empty_array' );
+
     // Disable/filter password change notification mail (admin)
     function b3_password_changed_email_admin( $wp_mail, $user, $blogname ) {
         /* translators: username */

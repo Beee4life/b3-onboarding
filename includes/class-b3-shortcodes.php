@@ -86,31 +86,25 @@
                     $attributes[ 'errors' ] = [];
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'registration-error' ] ) ) );
-                        $error_count = 1;
 
                         foreach ( $error_codes as $error_code ) {
-                            if ( 1 === count( $error_codes ) ) {
-                                $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
-                            } else {
-                                if ( 1 < $error_count ) {
-                                    // 2 errors only occurs with extra fields
-                                    if ( strpos( $error_code, 'field_' ) !== false ) {
-                                        $field_id           = substr( $error_code, 6 );
-                                        $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-                                        $column             = array_column( $extra_field_values, 'id' );
-                                        $key                = array_search( $field_id, $column );
+                            if ( strpos( $error_code, 'empty_field' ) !== false ) {
+                                $field_id           = substr( $error_code, 12 );
+                                $error_code         = 'empty_field';
+                                $extra_field_values = apply_filters( 'b3_extra_fields', [] );
+                                $column             = array_column( $extra_field_values, 'id' );
+                                $key                = array_search( $field_id, $column );
 
-                                        if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
-                                            $label                    = $extra_field_values[ $key ][ 'label' ];
-                                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $label );
-                                        }
-
-                                    } else {
-                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
+                                if ( false !== $key ) {
+                                    if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
+                                        $label                    = sanitize_text_field( wp_unslash( $extra_field_values[ $key ][ 'label' ] ) );
+                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, $label );
                                     }
                                 }
+
+                            } else {
+                                $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                             }
-                            $error_count++;
                         }
 
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
@@ -167,12 +161,11 @@
                         $login_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
                         if ( 'enter_code' === $login_var ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 170');
+                            error_log('class-b3-shortcodes.php line 164');
 
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
-                                // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 175');
+                                error_log('class-b3-shortcodes.php line 168');
                             } else {
                                 $error_codes = explode( ',', 'enter_code' );
                             }
@@ -210,7 +203,7 @@
 
                         } else {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log( 'FIX ELSE - line 213 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 206 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }

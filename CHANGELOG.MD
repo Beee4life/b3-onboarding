@@ -7,6 +7,8 @@
 * add admin users tab for multisite
 * fix magic link for multisite
 * added a lot of improvements for WPMU and user approval
+* improved error messaging for WPMU
+* do single site user validation in one function 
 
 3.18.0
 * add option to send test email
