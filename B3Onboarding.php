@@ -646,7 +646,6 @@
                         exit;
 
                     } else {
-                        $meta_data         = [];
                         $registration_type = $this->settings[ 'registration_type' ];
                         $user_email        = ( isset( $_POST[ 'user_email' ] ) ) ? sanitize_email( wp_unslash( $_POST[ 'user_email' ] ) ) : false;
 
@@ -654,6 +653,7 @@
                             $redirect_url = $this->b3_single_registration( $redirect_url, $registration_type, $user_email );
 
                         } else {
+                            $meta_data = [];
                             if ( isset( $_POST[ 'first_name' ] ) ) {
                                 $meta_data[ 'first_name' ] = sanitize_text_field( wp_unslash( $_POST[ 'first_name' ] ) );
                             }
