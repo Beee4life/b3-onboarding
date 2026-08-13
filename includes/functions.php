@@ -666,15 +666,20 @@
 
     // Disallowed usernames
     function b3_get_disallowed_usernames( $return = 'array' ) {
-        $default_user_names = b3_get_default_reserved_user_names();
-        $stored_names       = get_option( 'b3_disallowed_usernames' );
+        $default_user_names   = b3_get_default_reserved_user_names();
+        $activate_restriction = get_option( 'b3_activate_username_restriction' );
 
-        if ( is_array( $stored_names ) && ! empty( $stored_names ) ) {
-            $disallowed_names = array_merge( $default_user_names, $stored_names );
+        if ( $activate_restriction ) {
+            $stored_names = get_option( 'b3_disallowed_usernames' );
+
+            if ( is_array( $stored_names ) && ! empty( $stored_names ) ) {
+                $disallowed_names = array_merge( $default_user_names, $stored_names );
+            } else {
+                $disallowed_names = $default_user_names;
+            }
         } else {
             $disallowed_names = $default_user_names;
         }
-
         $user_name_array = apply_filters( 'b3_disallowed_usernames', $disallowed_names );
 
         if ( 'string' == $return ) {

@@ -285,13 +285,15 @@
 
     // Verify domain in email
     function b3_verify_email_domain( $email ) {
-        $disallowed_domains = b3_get_disallowed_domain_names();
+        if ( get_option( 'b3_activate_domain_restriction' ) ) {
+            $disallowed_domains = b3_get_disallowed_domain_names();
 
-        if ( ! empty( $disallowed_domains ) ) {
-            $domain_name = substr( strrchr( $email, '@' ), 1 );
+            if ( ! empty( $disallowed_domains ) ) {
+                $domain_name = substr( strrchr( $email, '@' ), 1 );
 
-            if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
-                return false;
+                if ( $domain_name && in_array( $domain_name, $disallowed_domains ) ) {
+                    return false;
+                }
             }
         }
 
@@ -300,10 +302,12 @@
 
     // Verify username
     function b3_verify_user_name( $username ) {
-        $disallowed_usernames = b3_get_disallowed_usernames();
+        if ( get_option( 'b3_activate_username_restriction' ) ) {
+            $disallowed_usernames = b3_get_disallowed_usernames();
 
-        if ( in_array( $username, $disallowed_usernames ) ) {
-            return false;
+            if ( in_array( $username, $disallowed_usernames ) ) {
+                return false;
+            }
         }
 
         return true;
