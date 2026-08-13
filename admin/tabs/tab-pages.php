@@ -102,7 +102,7 @@
                             if ( $current_language !== $default_lang ) {
                                 $local_page_id = apply_filters( 'wpml_object_id', $stored_page_id, 'page', false, $current_language );
                                 if ( $local_page_id ) {
-                                    $page_id = $stored_page_id;
+                                    $page_id = $local_page_id;
                                 } else {
                                     $page_id = 0;
                                 }
@@ -116,7 +116,7 @@
                         if ( isset( $page_id ) && get_post( (int) $page_id ) instanceof WP_Post ) {
                             ?>
                             <div class="b3_select-page__edit">
-                                <a href="<?php echo esc_url( get_edit_post_link(  $page_id ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
+                                <a href="<?php echo esc_url( get_edit_post_link( $page_id ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
                                     <?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>
                                 </a>
                             </div>
