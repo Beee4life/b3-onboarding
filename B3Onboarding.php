@@ -739,7 +739,7 @@
                             } elseif ( is_int( $result ) ) {
                                 // Registration was successful
                                 if ( isset( $reset_password ) && true == $reset_password ) {
-                                    // @TODO: also add to MU register
+                                    // @TODO: maybe also add to MU register ?
                                     $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_lostpassword_url() );
 
                                 } else {
