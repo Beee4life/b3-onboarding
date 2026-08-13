@@ -59,12 +59,12 @@
 
     function b3_get_default_new_user_subject_admin() {
         /* translators: site name */
-        return sprintf( esc_html__( 'A new user registered at %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+        return sprintf( esc_html__( 'A new user registered on %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
     function b3_get_default_new_user_message_admin() {
         /* translators: 1. site name, 2. registration date/time */
-        $admin_message = sprintf( esc_html__( 'A new user registered at %1$s on %2$s.', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\n";
+        $admin_message = sprintf( esc_html__( 'A new user registered on %1$s on %2$s.', 'b3-onboarding' ), get_option( 'blogname' ), '%registration_date%' ) . "\n";
         $admin_message .= '<br><br>' . "\n";
         if ( true == get_option( 'b3_activate_custom_passwords' ) ) {
             /* translators: user id */
@@ -82,7 +82,7 @@
 
     function b3_get_default_account_activated_subject() {
         /* translators: site name */
-        return sprintf( esc_html__( 'Account activated on %s', 'b3-onboarding' ), get_option( 'blogname' ) );
+        return sprintf( esc_html__( 'Account activated for %s', 'b3-onboarding' ), get_option( 'blogname' ) );
     }
 
     function b3_get_default_account_activated_message( $email = '' ) {
@@ -449,7 +449,7 @@
                     $link    = b3_get_magic_link_url( $user_email );
                     $message = $password_message;
                     $message .= '<br><br>' . "\n";
-                    $message .= esc_html__( 'Or you can log in immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+                    $message .= esc_html__( 'Or you can login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
                 } else {
                     $link    = b3_get_login_url();
                     $message .= '<br><br>' . "\n";
@@ -458,7 +458,7 @@
             } else {
                 if ( $user_email ) {
                     $link    = b3_get_magic_link_url( $user_email );
-                    $message .= esc_html__( 'You can log in immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
+                    $message .= esc_html__( 'You can login immediately by clicking the button below.', 'b3-onboarding' ) . "\n";
                 } else {
                     $link    = b3_get_login_url();
                     $message .= esc_html__( 'You can request a magic login link on the link below.', 'b3-onboarding' ) . "\n";

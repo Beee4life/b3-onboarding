@@ -916,7 +916,7 @@ msgstr ""
 msgid "Filter verification active"
 msgstr ""
 
-#: includes/actions-wp.php:139
+#: includes/actions-wp.php:139 includes/defaults.php:85
 #, php-format
 msgid "Account activated for %s"
 msgstr ""
@@ -1095,12 +1095,12 @@ msgstr ""
 
 #: includes/defaults.php:62
 #, php-format
-msgid "A new user registered at %s"
+msgid "A new user registered on %s"
 msgstr ""
 
 #: includes/defaults.php:67
 #, php-format
-msgid "A new user registered at %1$s on %2$s."
+msgid "A new user registered on %1$s on %2$s."
 msgstr ""
 
 #: includes/defaults.php:71
@@ -1116,11 +1116,6 @@ msgstr ""
 #: includes/defaults.php:78
 #, php-format
 msgid "IP: %s"
-msgstr ""
-
-#: includes/defaults.php:85
-#, php-format
-msgid "Account activated on %s"
 msgstr ""
 
 #: includes/defaults.php:89 includes/defaults.php:255 includes/defaults.php:633
@@ -1140,7 +1135,8 @@ msgstr ""
 msgid "you have confirmed your email address and login with your password through the %s."
 msgstr ""
 
-#: includes/defaults.php:116 includes/defaults.php:601
+#: includes/defaults.php:116 includes/defaults.php:452
+#: includes/defaults.php:601
 msgid "Or you can login immediately by clicking the button below."
 msgstr ""
 
@@ -1255,7 +1251,7 @@ msgid "You can login immediately by clicking the button below or use your passwo
 msgstr ""
 
 #: includes/defaults.php:310 includes/defaults.php:352
-#: includes/defaults.php:603
+#: includes/defaults.php:461 includes/defaults.php:603
 msgid "You can login immediately by clicking the button below."
 msgstr ""
 
@@ -1351,16 +1347,8 @@ msgstr ""
 msgid "Password: %3$s"
 msgstr ""
 
-#: includes/defaults.php:452
-msgid "Or you can log in immediately by clicking the button below."
-msgstr ""
-
 #: includes/defaults.php:456
 msgid "Or you can request a magic login link by clicking the button below."
-msgstr ""
-
-#: includes/defaults.php:461
-msgid "You can log in immediately by clicking the button below."
 msgstr ""
 
 #: includes/defaults.php:464

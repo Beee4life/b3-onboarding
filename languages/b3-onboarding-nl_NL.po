@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-08-12 23:08+0200\n"
-"PO-Revision-Date: 2026-08-12 23:08+0200\n"
+"POT-Creation-Date: 2026-08-13 11:06+0200\n"
+"PO-Revision-Date: 2026-08-13 11:11+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -1544,7 +1544,7 @@ msgid "Filter verification active"
 msgstr "Filter controle actief"
 
 #. translators: site name
-#: includes/actions-wp.php:139
+#: includes/actions-wp.php:139 includes/defaults.php:85
 #, php-format
 msgid "Account activated for %s"
 msgstr "Account geactiveerd voor %s"
@@ -1756,13 +1756,13 @@ msgstr "Dit is een geautomatiseerde email van de website %s."
 #. translators: site name
 #: includes/defaults.php:62
 #, php-format
-msgid "A new user registered at %s"
+msgid "A new user registered on %s"
 msgstr "Een nieuwe gebruiker registreerde op %s"
 
 #. translators: 1. site name, 2. registration date/time
 #: includes/defaults.php:67
 #, php-format
-msgid "A new user registered at %1$s on %2$s."
+msgid "A new user registered on %1$s on %2$s."
 msgstr "Een nieuwe gebruiker heeft zich geregistreerd op %1$s op %2$s."
 
 #. translators: user id
@@ -1783,12 +1783,6 @@ msgstr "Gebruikersnaam: %s"
 #, php-format
 msgid "IP: %s"
 msgstr "IP: %s"
-
-#. translators: site name
-#: includes/defaults.php:85
-#, php-format
-msgid "Account activated on %s"
-msgstr "Account geactiveerd op %s"
 
 #: includes/defaults.php:89 includes/defaults.php:255 includes/defaults.php:633
 msgid "Hi"
@@ -1816,7 +1810,8 @@ msgstr ""
 "je hebt je email adres bevestigd en kunt nu inloggen met je wachtwoord via "
 "de %s."
 
-#: includes/defaults.php:116 includes/defaults.php:601
+#: includes/defaults.php:116 includes/defaults.php:452
+#: includes/defaults.php:601
 msgid "Or you can login immediately by clicking the button below."
 msgstr "Of je kan direct inloggen door op onderstaande button te klikken."
 
@@ -2004,7 +1999,7 @@ msgstr ""
 "wachtwoord gebruiken op de %s."
 
 #: includes/defaults.php:310 includes/defaults.php:352
-#: includes/defaults.php:603
+#: includes/defaults.php:461 includes/defaults.php:603
 msgid "You can login immediately by clicking the button below."
 msgstr "Je kan direct inloggen door op onderstaande button te klikken."
 
@@ -2113,17 +2108,9 @@ msgstr "Gebruikersnaam: %2$s"
 msgid "Password: %3$s"
 msgstr "Wachtwoord: %3$s"
 
-#: includes/defaults.php:452
-msgid "Or you can log in immediately by clicking the button below."
-msgstr "Of je kan direct inloggen door op onderstaande button te klikken."
-
 #: includes/defaults.php:456
 msgid "Or you can request a magic login link by clicking the button below."
 msgstr "Je kan een eenmalige login link aanvragen via onderstaande link."
-
-#: includes/defaults.php:461
-msgid "You can log in immediately by clicking the button below."
-msgstr "Je kan direct inloggen door op onderstaande button te klikken."
 
 #: includes/defaults.php:464
 msgid "You can request a magic login link on the link below."
@@ -3229,6 +3216,16 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "You can log in immediately by clicking the button below."
+#~ msgstr "Je kan direct inloggen door op onderstaande button te klikken."
+
+#~ msgid "Or you can log in immediately by clicking the button below."
+#~ msgstr "Of je kan direct inloggen door op onderstaande button te klikken."
+
+#, php-format
+#~ msgid "Account activated on %s"
+#~ msgstr "Account geactiveerd op %s"
 
 #, php-format
 #~ msgid ""
