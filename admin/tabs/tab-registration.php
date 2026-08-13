@@ -16,13 +16,13 @@
         $default_accept_placeholder   = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
         $hide_custom_passwords        = false;
         $needs_admin_approval         = get_option( 'b3_needs_admin_approval' );
-        $privacy_page                 = get_option( 'b3_privacy_page_id' );
+        $privacy_page                 = get_option( 'b3_privacy_page_id' ); // @TODO: add filter
         $privacy_placeholder          = apply_filters( 'b3_privacy_text', $default_accept_placeholder );
         $privacy_text                 = apply_filters( 'b3_privacy_text', '' ) ? '' : get_option( 'b3_privacy_text' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
-        $terms_page                   = get_option( 'b3_terms_page_id' );
+        $terms_page                   = get_option( 'b3_terms_page_id' ); // @TODO: add filter
         $terms_placeholder            = apply_filters( 'b3_terms_text', $default_accept_placeholder );
         $terms_text                   = apply_filters( 'b3_terms_text', '' ) ? '' : get_option( 'b3_terms_text' );
         $use_magic_link               = get_option( 'b3_use_magic_link' );
@@ -31,6 +31,11 @@
         if ( 'none' === $registration_type || ( $use_magic_link && ! $use_magic_link_password ) ) {
             $hide_custom_passwords = true;
         }
+
+        $current_language = apply_filters( 'wpml_current_language', null );
+        // echo '<pre>'; var_dump($current_language); echo '</pre>'; exit;
+        $default_lang     = apply_filters( 'wpml_default_language', null );
+        // echo '<pre>'; var_dump($default_lang); echo '</pre>'; exit;
 
         ob_start();
 
@@ -210,7 +215,7 @@
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_terms_page_id"><?php esc_html_e( 'Terms page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--text">
+                        <div class="b3_settings-input b3_settings-input--select">
                             <?php
                                 $page_args = [
                                     'post_type'        => 'page',
@@ -220,13 +225,29 @@
                                     'suppress_filters' => false,
                                 ];
                                 $all_pages = get_posts( $page_args );
-                            ?>
-                            <select name="b3_terms_page_id" id="b3_terms_page_id">
-                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
-                                <?php foreach( $all_pages as $page ) { ?>
-                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($terms_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
-                                <?php } ?>
-                            </select>
+
+                                foreach( $all_pages as $b3_page ) {
+                                    $b3_page_ids[] = (int) $b3_page->ID;
+                                }
+
+                                if ( $current_language !== $default_lang ) {
+                                    // show what's set in default language with localized items
+                                    foreach( $all_pages as $active_page ) {
+                                        $translated_id = apply_filters( 'wpml_object_id', $active_page->ID, 'page', true, $default_lang );
+
+                                        if ( $translated_id == $terms_page ) {
+                                            echo esc_html__( 'Set page', 'b3-onboarding' ) . ' => ' . sprintf( '<a href="%s">%s</a>', esc_url( get_edit_post_link( $active_page->ID ) ), esc_attr( $active_page->post_title ) );
+                                        }
+                                    }
+                                } else {
+                                    ?>
+                                    <select name="b3_terms_page_id" id="b3_terms_page_id">
+                                        <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                                        <?php foreach( $all_pages as $page ) { ?>
+                                            <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($terms_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
+                                        <?php } ?>
+                                    </select>
+                            <?php } ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -266,13 +287,29 @@
                                     'suppress_filters' => false,
                                 ];
                                 $all_pages = get_posts( $page_args );
-                            ?>
-                            <select name="b3_privacy_page_id" id="b3_privacy_page_id">
-                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
-                                <?php foreach( $all_pages as $page ) { ?>
-                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($privacy_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
-                                <?php } ?>
-                            </select>
+
+                                foreach( $all_pages as $b3_page ) {
+                                    $b3_page_ids[] = (int) $b3_page->ID;
+                                }
+
+                                if ( $current_language !== $default_lang ) {
+                                    // show what's set in default language with localized items
+                                    foreach( $all_pages as $active_page ) {
+                                        $translated_id = apply_filters( 'wpml_object_id', $active_page->ID, 'page', true, $default_lang );
+
+                                        if ( $translated_id == $privacy_page ) {
+                                            echo esc_html__( 'Set page', 'b3-onboarding' ) . ' => ' . sprintf( '<a href="%s">%s</a>', esc_url( get_edit_post_link( $active_page->ID ) ), esc_attr( $active_page->post_title ) );
+                                        }
+                                    }
+                                } else {
+                                    ?>
+                                    <select name="b3_privacy_page_id" id="b3_privacy_page_id">
+                                        <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                                        <?php foreach( $all_pages as $page ) { ?>
+                                            <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($privacy_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
+                                        <?php } ?>
+                                    </select>
+                            <?php } ?>
                         </div>
                     <?php b3_get_close(); ?>
 

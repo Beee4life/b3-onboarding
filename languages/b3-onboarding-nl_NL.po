@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-08-13 12:59+0200\n"
-"PO-Revision-Date: 2026-08-13 13:00+0200\n"
+"POT-Creation-Date: 2026-08-13 16:16+0200\n"
+"PO-Revision-Date: 2026-08-13 16:16+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -711,7 +711,7 @@ msgid "not set"
 msgstr "niet ingesteld"
 
 #: admin/help-tabs.php:27 admin/help-tabs.php:42
-#: admin/tabs/tab-registration.php:37 includes/functions.php:748
+#: admin/tabs/tab-registration.php:42 includes/functions.php:748
 msgid "Registration"
 msgstr "Registratie"
 
@@ -964,8 +964,8 @@ msgid "Link color"
 msgstr "Link kleur"
 
 #: admin/tabs/tab-emails.php:31 admin/tabs/tab-recaptcha.php:45
-#: admin/tabs/tab-recaptcha.php:55 admin/tabs/tab-registration.php:204
-#: admin/tabs/tab-registration.php:250 admin/tabs/tab-settings.php:144
+#: admin/tabs/tab-recaptcha.php:55 admin/tabs/tab-registration.php:209
+#: admin/tabs/tab-registration.php:271 admin/tabs/tab-settings.php:144
 #: admin/tabs/tab-settings.php:157 admin/tabs/tab-settings.php:167
 #: admin/tabs/tab-settings.php:178 admin/tabs/tab-settings.php:193
 #: admin/tabs/tab-users.php:144 admin/tabs/tab-users.php:171
@@ -1017,7 +1017,7 @@ msgstr ""
 "'acties'."
 
 #: admin/tabs/tab-pages.php:61 admin/tabs/tab-pages.php:71
-#: admin/tabs/tab-registration.php:225 admin/tabs/tab-registration.php:271
+#: admin/tabs/tab-registration.php:245 admin/tabs/tab-registration.php:292
 msgid "Select a page"
 msgstr "Selecteer een pagina"
 
@@ -1089,141 +1089,145 @@ msgstr "ReCaptcha opslaan"
 msgid "%s for more info."
 msgstr "%s voor meer informatie."
 
-#: admin/tabs/tab-registration.php:46
+#: admin/tabs/tab-registration.php:51
 msgid "Registration type"
 msgstr "Registratie type"
 
 #. translators: link to settings page
-#: admin/tabs/tab-registration.php:51
+#: admin/tabs/tab-registration.php:56
 #, php-format
 msgid "This setting 'controls' the Registration type on the %s."
 msgstr "Deze instellingen 'beheren' de waardes op de %s pagina."
 
-#: admin/tabs/tab-registration.php:51
+#: admin/tabs/tab-registration.php:56
 msgid "Settings page"
 msgstr "Instellingen pagina"
 
-#: admin/tabs/tab-registration.php:72 admin/tabs/tab-settings.php:140
+#: admin/tabs/tab-registration.php:77 admin/tabs/tab-settings.php:140
 msgid "Registration closed message"
 msgstr "Registratie gesloten bericht"
 
 #. translators: link to settings tab
-#: admin/tabs/tab-registration.php:76
+#: admin/tabs/tab-registration.php:81
 #, php-format
 msgid "You can set a message for a closed registration on the \"%s\" tab."
 msgstr ""
 "Je kan een pagina instellen voor gesloten registratie op de \"%s\" tab."
 
-#: admin/tabs/tab-registration.php:85
+#: admin/tabs/tab-registration.php:90
 msgid "Needs admin approval"
 msgstr "Admin goedkeuring vereist"
 
-#: admin/tabs/tab-registration.php:89
+#: admin/tabs/tab-registration.php:94
 msgid "An administrator must approve each registration."
 msgstr "Een administrator moet elke registratie goedkeuren."
 
-#: admin/tabs/tab-registration.php:97
+#: admin/tabs/tab-registration.php:102
 msgid "Email address only"
 msgstr "Alleen email adres"
 
-#: admin/tabs/tab-registration.php:101
+#: admin/tabs/tab-registration.php:106
 msgid "Register without a user login."
 msgstr "Registreer zonder een user login."
 
-#: admin/tabs/tab-registration.php:107
+#: admin/tabs/tab-registration.php:112
 msgid "Custom passwords"
 msgstr "Custom wachtwoorden"
 
-#: admin/tabs/tab-registration.php:111
+#: admin/tabs/tab-registration.php:116
 msgid "Activate custom passwords on the registration form."
 msgstr "Activeer eigen wachtwoorden op het registratie formulier."
 
-#: admin/tabs/tab-registration.php:119
+#: admin/tabs/tab-registration.php:124
 msgid "First and last name"
 msgstr "Voor- en achternaam"
 
-#: admin/tabs/tab-registration.php:123
+#: admin/tabs/tab-registration.php:128
 msgid "Activate the first and last name during registration."
 msgstr "Activeer voor- en achternaam tijdens registratie."
 
-#: admin/tabs/tab-registration.php:130
+#: admin/tabs/tab-registration.php:135
 msgid "Make first and last name required"
 msgstr "Maak voor- en achternaam verplicht"
 
-#: admin/tabs/tab-registration.php:134
+#: admin/tabs/tab-registration.php:139
 msgid "Make first and last name required on the registration form."
 msgstr "Maak voor- en achternaam verplicht op het registratieformulier."
 
-#: admin/tabs/tab-registration.php:141
+#: admin/tabs/tab-registration.php:146
 msgid "Magic link"
 msgstr "Magische link"
 
-#: admin/tabs/tab-registration.php:145
+#: admin/tabs/tab-registration.php:150
 msgid "Activate magic link login."
 msgstr "Activeer de 'magic link' optie."
 
-#: admin/tabs/tab-registration.php:152
+#: admin/tabs/tab-registration.php:157
 msgid "Use password and magic link"
 msgstr "Gebruik wachtwoord en magic link"
 
-#: admin/tabs/tab-registration.php:156
+#: admin/tabs/tab-registration.php:161
 msgid "Use both magic link and password login."
 msgstr "Gebruik wachtwoord en magic link login."
 
-#: admin/tabs/tab-registration.php:162
+#: admin/tabs/tab-registration.php:167
 msgid "reCAPTCHA"
 msgstr "reCAPTCHA"
 
-#: admin/tabs/tab-registration.php:166
+#: admin/tabs/tab-registration.php:171
 msgid "Activate reCAPTCHA."
 msgstr "Activeer reCaptcha."
 
-#: admin/tabs/tab-registration.php:171
+#: admin/tabs/tab-registration.php:176
 msgid "See tab reCaptcha (after saving)"
 msgstr "Zie reCaptcha tab (na opslaan)"
 
-#: admin/tabs/tab-registration.php:179
+#: admin/tabs/tab-registration.php:184
 msgid "Honeypot"
 msgstr "Honeypot"
 
-#: admin/tabs/tab-registration.php:183
+#: admin/tabs/tab-registration.php:188
 msgid "Activate a honeypot option."
 msgstr "Activeer een honeypot optie."
 
-#: admin/tabs/tab-registration.php:189
+#: admin/tabs/tab-registration.php:194
 msgid "General terms"
 msgstr "Algemene voorwaarden"
 
-#: admin/tabs/tab-registration.php:193
+#: admin/tabs/tab-registration.php:198
 msgid "Activate an 'Accept terms' checkbox."
 msgstr "Activeer een 'Accepteer voorwaarden' checkbox."
 
-#: admin/tabs/tab-registration.php:200
+#: admin/tabs/tab-registration.php:205
 msgid "Terms text"
 msgstr "Voorwaarden tekst"
 
-#: admin/tabs/tab-registration.php:205 admin/tabs/tab-registration.php:251
+#: admin/tabs/tab-registration.php:210 admin/tabs/tab-registration.php:272
 #: admin/tabs/tab-settings.php:145 admin/tabs/tab-settings.php:197
 msgid "Links are allowed."
 msgstr "Links zijn toegestaan."
 
-#: admin/tabs/tab-registration.php:211
+#: admin/tabs/tab-registration.php:216
 msgid "Terms page"
 msgstr "Voorwaarden pagina"
 
-#: admin/tabs/tab-registration.php:235
+#: admin/tabs/tab-registration.php:239
+msgid "Set page"
+msgstr "Ingestelde pagina"
+
+#: admin/tabs/tab-registration.php:256
 msgid "Privacy"
 msgstr "Privacy"
 
-#: admin/tabs/tab-registration.php:239
+#: admin/tabs/tab-registration.php:260
 msgid "Activate an 'Accept privacy policy' checkbox."
 msgstr "Activeer een 'Accepteer privacy beleid' checkbox."
 
-#: admin/tabs/tab-registration.php:246
+#: admin/tabs/tab-registration.php:267
 msgid "Privacy text"
 msgstr "Privacy tekst"
 
-#: admin/tabs/tab-registration.php:257
+#: admin/tabs/tab-registration.php:278
 msgid "Privacy page"
 msgstr "Privacy pagina"
 

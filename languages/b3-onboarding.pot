@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.9\n"
-"X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;esc_html__;esc_html_x;_n_noop;_nx_noop;_ngettext_noop\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;_ngettext_noop\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: languages\n"
@@ -584,7 +584,7 @@ msgid "not set"
 msgstr ""
 
 #: admin/help-tabs.php:27 admin/help-tabs.php:42
-#: admin/tabs/tab-registration.php:37 includes/functions.php:748
+#: admin/tabs/tab-registration.php:42 includes/functions.php:748
 msgid "Registration"
 msgstr ""
 
@@ -767,7 +767,7 @@ msgid "Here you can set which pages are assigned for the various 'actions'."
 msgstr ""
 
 #: admin/tabs/tab-pages.php:61 admin/tabs/tab-pages.php:71
-#: admin/tabs/tab-registration.php:225 admin/tabs/tab-registration.php:271
+#: admin/tabs/tab-registration.php:245 admin/tabs/tab-registration.php:292
 msgid "Select a page"
 msgstr ""
 
@@ -805,23 +805,27 @@ msgstr ""
 msgid "%s for more info."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:51
+#: admin/tabs/tab-registration.php:56
 #, php-format
 msgid "This setting 'controls' the Registration type on the %s."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:51
+#: admin/tabs/tab-registration.php:56
 msgid "Settings page"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:76
+#: admin/tabs/tab-registration.php:81
 #, php-format
 msgid "You can set a message for a closed registration on the \"%s\" tab."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:205 admin/tabs/tab-registration.php:251
+#: admin/tabs/tab-registration.php:210 admin/tabs/tab-registration.php:272
 #: admin/tabs/tab-settings.php:145 admin/tabs/tab-settings.php:197
 msgid "Links are allowed."
+msgstr ""
+
+#: admin/tabs/tab-registration.php:239
+msgid "Set page "
 msgstr ""
 
 #: admin/tabs/tab-settings.php:122
