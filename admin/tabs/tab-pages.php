@@ -97,6 +97,7 @@
                     <?php } ?>
 
                     <?php
+                        $page_id        = 0;
                         $stored_page_id = get_option( 'b3_' . $b3_page[ 'id' ] . '_id' );
                         if ( class_exists( 'SitePress' ) ) {
                             if ( $current_language !== $default_lang ) {
@@ -113,7 +114,7 @@
                             $page_id = $active_page->ID;
                         }
 
-                        if ( isset( $page_id ) && get_post( (int) $page_id ) instanceof WP_Post ) {
+                        if ( get_post( (int) $page_id ) instanceof WP_Post ) {
                             ?>
                             <div class="b3_select-page__edit">
                                 <a href="<?php echo esc_url( get_edit_post_link( $page_id ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
