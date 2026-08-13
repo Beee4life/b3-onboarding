@@ -104,8 +104,6 @@
                                 $local_page_id = apply_filters( 'wpml_object_id', $stored_page_id, 'page', false, $current_language );
                                 if ( $local_page_id ) {
                                     $page_id = $local_page_id;
-                                } else {
-                                    $page_id = 0;
                                 }
                             } else {
                                 $page_id = $stored_page_id;
