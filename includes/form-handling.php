@@ -612,6 +612,7 @@
                 if ( isset( $_POST[ 'b3_approval_page_id' ] ) ) {
                     $page_ids[] = 'b3_approval_page_id';
                 }
+
                 foreach( $page_ids as $option_name ) {
                     $current_id = get_option( $option_name );
                     if ( isset( $_POST[ $option_name ] ) ) {
