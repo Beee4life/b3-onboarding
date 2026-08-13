@@ -689,16 +689,8 @@
 
             private function b3_single_registration( $redirect_url, $registration_type, $user_email ) {
                 if ( $redirect_url && $registration_type ) {
-                    $register   = true;
-                    $role       = get_option( 'default_role', 'subscriber' );
-
-                    if ( get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
-                        // Recaptcha check failed, display error
-                        $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
-                        $register     = false;
-                    }
-
-                    if ( true === $register && 'none' !== $registration_type ) {
+                    if ( 'none' !== $registration_type ) {
+                        $role       = get_option( 'default_role', 'subscriber' );
                         $user_login = isset( $_POST[ 'user_login' ] ) ? sanitize_user( wp_unslash( $_POST[ 'user_login' ] ) ) : false;
 
                         if ( $user_login ) {
@@ -729,25 +721,34 @@
                                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                                 'pass2'             => isset( $_POST[ 'pass2' ] ) ? $_POST[ 'pass2' ] : '',
                             ];
-                            $result = $this->b3_register_user( $register_args );
+                            $register_args = $this->b3_validate_user_signup( $register_args );
 
-                            if ( is_wp_error( $result ) ) {
+                            if ( is_wp_error( $register_args ) ) {
                                 // Parse errors into a string and append as parameter to redirect
-                                $errors       = join( ',', $result->get_error_codes() );
+                                $errors       = join( ',', $register_args->get_error_codes() );
                                 $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
 
-                            } elseif ( is_int( $result ) ) {
-                                // Registration was successful
-                                if ( isset( $reset_password ) && true == $reset_password ) {
-                                    // @TODO: maybe also add to MU register ?
-                                    $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_lostpassword_url() );
+                            } else {
+                                $new_user_id = $this->b3_register_user( $register_args );
 
-                                } else {
-                                    // redirect to login page
-                                    $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_login_url() );
+                                if ( is_wp_error( $new_user_id ) ) {
+                                    // Parse errors into a string and append as parameter to redirect
+                                    $errors       = join( ',', $new_user_id->get_error_codes() );
+                                    $redirect_url = add_query_arg( 'registration-error', $errors, $redirect_url );
+
+                                } elseif ( is_int( $new_user_id ) ) {
+                                    // Registration was successful
+                                    if ( isset( $reset_password ) && true == $reset_password ) {
+                                        // @TODO: maybe also add to MU register ?
+                                        $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_lostpassword_url() );
+
+                                    } else {
+                                        // redirect to login page
+                                        $redirect_url = add_query_arg( 'registered', $query_arg, b3_get_login_url() );
+                                    }
+
+                                    $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                                 }
-
-                                $redirect_url = apply_filters( 'b3_redirect_after_register', $redirect_url );
                             }
                         }
                     }
@@ -756,22 +757,8 @@
                 return $redirect_url;
             }
 
-            private function b3_register_user( $args = [] ) {
-                $default_args = [
-                    'pass1'      => '',
-                    'pass2'      => '',
-                    'role'       => 'subscriber',
-                    'user_email' => '',
-                    'user_login' => '',
-                    'user_pass'  => time(),
-                ];
-
-                $user_data  = wp_parse_args( $args, $default_args );
-                $user_valid = $this->b3_validate_user_signup( $user_data );
-
-                if ( $user_valid instanceof WP_Error ) {
-                    return $user_valid;
-                } else {
+            private function b3_register_user( $user_data = [] ) {
+                if ( ! empty( $user_data ) ) {
                     $user_id = wp_insert_user( $user_data );
                     if ( ! is_wp_error( $user_id ) ) {
                         if ( true == $use_custom_passwords && isset( $user_data[ 'pass1' ] ) ) {
@@ -789,15 +776,35 @@
                     }
 
                     return $user_id;
+                } else {
+                    $errors = new WP_Error();
+                    $errors->add( 'error', $this->b3_get_return_message( 'unknown' ) );
+                    return $errors;
                 }
+
+                return false;
             }
 
             private function b3_validate_user_signup( $user_data ) {
+                $default_args = [
+                    'pass1'      => '',
+                    'pass2'      => '',
+                    'role'       => 'subscriber',
+                    'user_email' => '',
+                    'user_login' => '',
+                    'user_pass'  => time(),
+                ];
+                $user_data  = wp_parse_args( $user_data, $default_args );
+
                 $errors = new WP_Error();
 
+                if ( get_option( 'b3_activate_honeypot' ) && isset( $_POST[ 'b3_pooh' ] ) ) {
+                    $errors->add( 'honeypot', $this->b3_get_return_message( 'no_robots' ) );
+
+                    return $errors;
+                }
+
                 if ( get_option( 'b3_activate_recaptcha' ) && ! b3_verify_recaptcha() ) {
-                    // Recaptcha check failed, display error
-                    $redirect_url = add_query_arg( 'registration-error', 'recaptcha_failed', $redirect_url );
                     $errors->add( 'recaptcha_failed', $this->b3_get_return_message( 'recaptcha_failed' ) );
 
                     return $errors;
@@ -844,7 +851,6 @@
                         }
 
                         if ( $user_data[ 'pass1' ] != $user_data[ 'pass2' ] || empty( $user_data[ 'pass1' ] ) ) {
-                            // Password is empty or doesn't match
                             $errors->add( 'password_mismatch', $this->b3_get_return_message( 'password_mismatch' ) );
 
                             return $errors;
@@ -877,7 +883,7 @@
                     return $errors;
                 }
 
-                return true;
+                return $user_data;
             }
 
             private function b3_multisite_registration( $redirect_url, $registration_type, $user_email = '', $meta = [] ) {
