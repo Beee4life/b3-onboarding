@@ -454,10 +454,9 @@
     add_action( 'init', 'b3_do_user_activate' );
 
     /**
-     * Disable the banned_email_domains field in Network Settings UI.
+     * Disable the banner_usernames and banned_email_domains field in Network Settings UI.
      */
     function b3_disable_banned_domains( $hook_suffix ) {
-        // Target only the Multisite Network Settings page
         if ( 'settings.php' !== $hook_suffix || ! is_network_admin() ) {
             return;
         }

@@ -161,11 +161,11 @@
                         $login_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
                         if ( 'enter_code' === $login_var ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 170');
+                            error_log('class-b3-shortcodes.php line 164');
 
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 175');
+                                error_log('class-b3-shortcodes.php line 168');
                             } else {
                                 $error_codes = explode( ',', 'enter_code' );
                             }
@@ -203,7 +203,7 @@
 
                         } else {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log( 'FIX ELSE - line 213 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 206 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
