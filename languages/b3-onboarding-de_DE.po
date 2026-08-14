@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
-"POT-Creation-Date: 2026-08-13 16:50+0200\n"
-"PO-Revision-Date: 2026-08-13 16:51+0200\n"
+"POT-Creation-Date: 2026-08-14 11:35+0200\n"
+"PO-Revision-Date: 2026-08-14 11:35+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -208,7 +208,7 @@ msgstr "Dein Code scheint ungültig zu sein. Bitte versuche es erneut."
 msgid "An unkown error has occured. Please try again."
 msgstr "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut."
 
-#: B3Onboarding.php:1291 includes/form-handling.php:884
+#: B3Onboarding.php:1291 includes/form-handling.php:885
 msgid "Unlawful form entry, try again."
 msgstr "Illegale Formulareingabe, versuche es erneut."
 
@@ -513,7 +513,7 @@ msgstr "Dein Konto wurde gelöscht."
 msgid "Profile saved"
 msgstr "Profil gespeichert"
 
-#: B3Onboarding.php:1486 includes/form-handling.php:709
+#: B3Onboarding.php:1486 includes/form-handling.php:710
 msgid "Settings saved"
 msgstr "Einstellungen gespeichert"
 
@@ -1038,15 +1038,15 @@ msgstr "Seite auswählen"
 msgid "Add new"
 msgstr "Neu hinzufügen"
 
-#: admin/tabs/tab-pages.php:119 admin/tabs/tab-pages.php:120
+#: admin/tabs/tab-pages.php:118 admin/tabs/tab-pages.php:119
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: admin/tabs/tab-pages.php:124 admin/tabs/tab-pages.php:125
+#: admin/tabs/tab-pages.php:123 admin/tabs/tab-pages.php:124
 msgid "Visit"
 msgstr "Besuchen"
 
-#: admin/tabs/tab-pages.php:132
+#: admin/tabs/tab-pages.php:131
 msgid "Links open in new tab/window."
 msgstr "Links öffnen sich in einem neuen Tab/Fenster."
 
@@ -2253,7 +2253,11 @@ msgstr ""
 "login link."
 
 #: includes/defaults.php:552
-msgid "After you activate, you will receive *another email* with your login."
+#, fuzzy
+#| msgid ""
+#| "After you activate, you will receive *another email* with your login."
+msgid ""
+"After you activate, you will receive *another email* with your login info."
 msgstr ""
 "Nach der Aktivierung erhältst du *eine weitere E-Mail* mit deinen Login-"
 "Daten."
@@ -2729,7 +2733,7 @@ msgstr ""
 #: includes/form-handling.php:7 includes/form-handling.php:160
 #: includes/form-handling.php:454 includes/form-handling.php:484
 #: includes/form-handling.php:565 includes/form-handling.php:601
-#: includes/form-handling.php:636 includes/form-handling.php:728
+#: includes/form-handling.php:637 includes/form-handling.php:729
 msgid "Something went wrong, please try again."
 msgstr "Etwas ist schiefgelaufen, bitte versuche es erneut."
 
@@ -2762,11 +2766,11 @@ msgstr "Benutzereinstellungen gespeichert"
 msgid "reCaptcha settings saved"
 msgstr "reCaptcha-Einstellungen gespeichert"
 
-#: includes/form-handling.php:627
+#: includes/form-handling.php:628
 msgid "Pages settings saved"
 msgstr "Seiteneinstellungen gespeichert"
 
-#: includes/form-handling.php:707
+#: includes/form-handling.php:708
 msgid ""
 "You have successfully resetted all settings. Remember to set your pages "
 "again, before you log out !"
@@ -2774,7 +2778,7 @@ msgstr ""
 "Du hast erfolgreich alle Einstellungen zurückgesetzt. Denke daran, deine "
 "Seiten neu zuzuweisen, bevor du dich ausloggst!"
 
-#: includes/form-handling.php:834
+#: includes/form-handling.php:835
 msgid "You do not have permission to edit this user."
 msgstr "Du hast keine Berechtigung, diesen Benutzer zu bearbeiten."
 
@@ -2907,12 +2911,12 @@ msgstr "Ablehnen"
 msgid "English"
 msgstr "Englisch"
 
-#: includes/functions.php:1275
+#: includes/functions.php:1276
 #, php-format
 msgid "No email message found for '%s'"
 msgstr "Keine E-Mail Nachricht gefunden für '%s'"
 
-#: includes/functions.php:1277
+#: includes/functions.php:1278
 #, php-format
 msgid "No email subject found for '%s'"
 msgstr "Kein E-Mail Betreff gefunden für '%s'"
@@ -2996,7 +3000,7 @@ msgid ""
 "User is successfully rejected and the user account and site are deleted."
 msgstr "Benutzer wurde abgelehnt und das Konto gelöscht."
 
-#: includes/verify-filters.php:116 includes/verify-filters.php:122
+#: includes/verify-filters.php:115 includes/verify-filters.php:121
 #, php-format
 msgid ""
 "The email address \"%1$s\", which you set in the filter \"%2$s\", is invalid."
@@ -3004,105 +3008,105 @@ msgstr ""
 "Die E-Mail-Adresse \"%1$s\", die im Filter \"%2$s\" gesetzt wurde, ist "
 "ungültig."
 
-#: includes/verify-filters.php:127
+#: includes/verify-filters.php:126
 #, php-format
 msgid ""
 "The value, which you set in the filter \"%s\", is not a string or an array."
 msgstr "Der Wert im Filter \"%s\" ist weder ein String noch ein Array."
 
-#: includes/verify-filters.php:133
+#: includes/verify-filters.php:132
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not an integer."
 msgstr "Der Wert im Filter \"%s\" ist keine Ganzzahl (Integer)."
 
-#: includes/verify-filters.php:138
+#: includes/verify-filters.php:137
 #, php-format
 msgid "The url, which you set in the filter \"%s\", is not a valid url."
 msgstr "Die URL im Filter \"%s\" ist keine gültige URL."
 
-#: includes/verify-filters.php:143
+#: includes/verify-filters.php:142
 #, php-format
 msgid ""
 "The url, which you set in the filter \"%s\", does not exist or is "
 "unreachable."
 msgstr "Die URL im Filter \"%s\" existiert nicht oder ist nicht erreichbar."
 
-#: includes/verify-filters.php:151
+#: includes/verify-filters.php:150
 #, php-format
 msgid "The color, which you set in the filter \"%s\", is not invalid."
 msgstr "Die Farbe im Filter \"%s\" ist nicht ungültig."
 
-#: includes/verify-filters.php:154
+#: includes/verify-filters.php:153
 #, php-format
 msgid ""
 "The color (%1$s), which you set in the filter \"%2$s\", is not a string."
 msgstr "Die Farbe (%1$s) im Filter \"%2$s\" ist kein String."
 
-#: includes/verify-filters.php:157
+#: includes/verify-filters.php:156
 #, php-format
 msgid "The color (%1$s), which you set in the filter \"%2$s\", is invalid."
 msgstr "Die Farbe (%1$s) im Filter \"%2$s\" ist ungültig."
 
-#: includes/verify-filters.php:166 includes/verify-filters.php:175
+#: includes/verify-filters.php:165 includes/verify-filters.php:174
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not an array."
 msgstr "Der Wert im Filter \"%s\" ist kein Array."
 
-#: includes/verify-filters.php:169
+#: includes/verify-filters.php:168
 #, php-format
 msgid "There are 1 or more errors in the filter \"%s\"."
 msgstr "Es gibt einen oder mehrere Fehler im Filter \"%s\"."
 
-#: includes/verify-filters.php:178
+#: includes/verify-filters.php:177
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is an empty array."
 msgstr "Der Wert im Filter \"%s\" ist ein leeres Array."
 
-#: includes/verify-filters.php:184
+#: includes/verify-filters.php:183
 #, php-format
 msgid ""
 "The field ID \"%1$s\", which you set in the filter \"%2$s\", is not a string."
 msgstr "Die Feld-ID \"%1$s\" im Filter \"%2$s\" ist kein String."
 
-#: includes/verify-filters.php:188
+#: includes/verify-filters.php:187
 #, php-format
 msgid ""
 "The field value \"%1$s\", which you set in the filter \"%2$s\", is not a "
 "string."
 msgstr "Der Feldwert \"%1$s\" im Filter \"%2$s\" ist kein String."
 
-#: includes/verify-filters.php:201
+#: includes/verify-filters.php:200
 #, php-format
 msgid "You didn't set a field type for \"%s\"."
 msgstr "Du hast keinen Feldtyp für \"%s\" festgelegt."
 
-#: includes/verify-filters.php:203 includes/verify-filters.php:229
+#: includes/verify-filters.php:202 includes/verify-filters.php:228
 msgid "You didn't set a field type for one of your fields."
 msgstr "Du hast für eines deiner Felder keinen Feldtyp festgelegt."
 
-#: includes/verify-filters.php:208
+#: includes/verify-filters.php:207
 #, php-format
 msgid "A label for the field \"%1$s\" in the filter \"%2$s\" is required."
 msgstr ""
 "Für das Feld „%1$s“ im Filter „%2$s“ ist eine Bezeichnung erforderlich."
 
-#: includes/verify-filters.php:212
+#: includes/verify-filters.php:211
 #, php-format
 msgid "An ID for the field \"%1$s\" in the filter \"%2$s\" is required."
 msgstr "Eine ID für das Feld \"%1$s\" im Filter \"%2$s\" ist erforderlich."
 
-#: includes/verify-filters.php:216
+#: includes/verify-filters.php:215
 #, php-format
 msgid "An ID and label for your option in the filter \"%s\" is required."
 msgstr ""
 "Eine ID und ein Label für deine Option im Filter \"%s\" sind erforderlich."
 
-#: includes/verify-filters.php:227
+#: includes/verify-filters.php:226
 #, php-format
 msgid "You didn't set any options for the field \"%s\"."
 msgstr "Du hast keine Optionen für das Feld \"%s\" festgelegt."
 
-#: includes/verify-filters.php:241
+#: includes/verify-filters.php:240
 #, php-format
 msgid "The value, which you set in the filter \"%s\", is not a string."
 msgstr "Der Wert im Filter \"%s\" ist kein String."

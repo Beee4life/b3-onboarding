@@ -549,7 +549,7 @@
             $message .= '<br>' . "\n";
         } else {
             $message .= '<br>' . "\n";
-            $message .= esc_html__( 'After you activate, you will receive *another email* with your login.', 'b3-onboarding' ) . "\n";
+            $message .= esc_html__( 'After you activate, you will receive *another email* with your login info.', 'b3-onboarding' ) . "\n";
             $message .= '<br>' . "\n";
         }
 
