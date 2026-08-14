@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
 "POT-Creation-Date: 2026-08-04 21:11+0200\n"
-"PO-Revision-Date: 2026-08-04 21:11+0200\n"
+"PO-Revision-Date: 2026-08-15 00:01+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -28,10 +28,8 @@ msgid "Awaiting approval"
 msgstr "Wartet auf Genehmigung"
 
 #: B3Onboarding.php:175
-#, fuzzy
-#| msgid "Get magic link"
 msgid "Use magic link"
-msgstr "Magischen Link anfordern"
+msgstr "Magischen Link verwenden"
 
 #: B3Onboarding.php:176 includes/actions-b3.php:449
 #: includes/class-b3-shortcodes.php:165 includes/class-b3-sidebar-widget.php:74
@@ -43,19 +41,15 @@ msgstr "Login"
 
 #: B3Onboarding.php:200
 msgid "Sending..."
-msgstr ""
+msgstr "Senden..."
 
 #: B3Onboarding.php:201
-#, fuzzy
-#| msgid "Emails"
 msgid "Email sent"
-msgstr "E-Mails"
+msgstr "E-Mail gesendet"
 
 #: B3Onboarding.php:202
-#, fuzzy
-#| msgid "Your code seems to be invalid. Please try again."
 msgid "Failed to send email. Please try again."
-msgstr "Dein Code scheint ungültig zu sein. Bitte versuche es erneut."
+msgstr "E-Mail konnte nicht gesendet werden. Versuche es bitte erneut."
 
 #: B3Onboarding.php:221
 msgid "Upload or choose your custom logo"
@@ -203,10 +197,8 @@ msgid "You have to accept the privacy statement."
 msgstr "Du musst der Datenschutzerklärung zustimmen."
 
 #: B3Onboarding.php:944
-#, fuzzy
-#| msgid "You have to accept the privacy statement."
 msgid "You have to accept the general terms."
-msgstr "Du musst der Datenschutzerklärung zustimmen."
+msgstr "Du musst die allgemeinen Vereinbarungen akzeptieren."
 
 #: B3Onboarding.php:949
 #, php-format
@@ -462,24 +454,20 @@ msgstr ""
 "dies %2$s ändern."
 
 #: admin/admin-ajax.php:10
-#, fuzzy
-#| msgid "Invalid user"
 msgid "Unauthorized user."
-msgstr "Ungültiger Benutzer"
+msgstr "Ungültiger Benutzer."
 
 #: admin/admin-ajax.php:30
 msgid "Test email sent successfully!"
-msgstr ""
+msgstr "Test E-Mail erfolgreich versendet!"
 
 #: admin/admin-ajax.php:32
 msgid "Failed to send email."
-msgstr ""
+msgstr "E-Mail konnte nicht gespeichert werden."
 
 #: admin/admin-ajax.php:35
-#, fuzzy
-#| msgid "Lost password email"
 msgid "No subject and email."
-msgstr "Passwort-vergessen E-Mail"
+msgstr "Kein Betreff und E-Mail"
 
 #: admin/admin-page.php:10 admin/debug-page.php:14
 #: admin/user-approval-page.php:15
@@ -843,7 +831,7 @@ msgstr "Offizielle Website"
 
 #: admin/preview.php:46
 msgid "Send test email"
-msgstr ""
+msgstr "Test E-Mail senden"
 
 #: admin/tabs/tab-pages.php:35
 msgid "Here you can see which pages are set for the various 'actions'."
@@ -945,6 +933,8 @@ msgid ""
 "We don't recommend overriding the css here, but rather add css at the end of "
 "the file, after line %1$d by using the filter %2$s."
 msgstr ""
+"Wer empfehlen nicht, CSS hier zu überschreiben, sondern CSS am Ende der "
+"Datei, auf Zeile %1$d durch die Verwendung des Filters %2$s."
 
 #: admin/tabs/tab-styling.php:66
 #, php-format
@@ -952,6 +942,9 @@ msgid ""
 "It's easer to override the styling to achieve your wishes, but if you really "
 "want to change the template we recommend using the filter %s."
 msgstr ""
+"Es ist einfach das Styling zu überschreiben um dein Ziel zu erreichen, wenn "
+"du aber wirklich das Template bearbeiten willst, empfehlen wir, dass du "
+"diesen Filter verwendest: %s."
 
 #: admin/tabs/tab-styling.php:74
 msgid "to download the default."
@@ -1087,10 +1080,8 @@ msgid "Get magic link"
 msgstr "Magischen Link anfordern"
 
 #: includes/class-b3-shortcodes.php:249
-#, fuzzy
-#| msgid "Reset password"
 msgid "Use password"
-msgstr "Passwort zurücksetzen"
+msgstr "Passwort verwenden"
 
 #: includes/class-b3-shortcodes.php:264 includes/defaults.php:192
 msgid "Reset password"
@@ -1502,16 +1493,10 @@ msgid "Enjoy your new site."
 msgstr "Viel Spaß mit deiner neuen Website."
 
 #: includes/defaults.php:421
-#, fuzzy
-#| msgid "Magic login link for %blog_name%"
 msgid "One time login link for %blog_name%"
-msgstr "Magischer Login-Link für %blog_name%"
+msgstr "EInmal-Login Link für %blog_name%"
 
 #: includes/defaults.php:433
-#, fuzzy
-#| msgid ""
-#| "Someone requested a \"magic login link\" for the account using this email "
-#| "address."
 msgid ""
 "Someone requested a \"one time login link\" for the account using this email "
 "address."
@@ -1527,10 +1512,6 @@ msgstr ""
 "um dich einzuloggen."
 
 #: includes/defaults.php:439
-#, fuzzy
-#| msgid ""
-#| "If this was a mistake, or you didn't ask for a 'magic link', just ignore "
-#| "this email and nothing will happen."
 msgid ""
 "If this was a mistake, or you didn't ask for a 'one time login link', just "
 "ignore this email and nothing will happen."
@@ -1573,22 +1554,17 @@ msgid "You have to request access for this website."
 msgstr "Du musst Zugang für diese Website anfordern."
 
 #: includes/defaults.php:475
-#, fuzzy
-#| msgid ""
-#| "Please enter your email address. You will receive an email with a link to "
-#| "login with a magic link."
 msgid ""
 "Please enter your email address. If your email address exists in our "
 "database, you will receive an email with a link to login immediately."
 msgstr ""
-"Bitte gib deine E-Mail-Adresse ein. Du erhältst eine E-Mail mit einem "
-"magischen Login-Link."
+"Bitte gib deine E-Mail-Adresse ein. Wenn deine E-Mail in unserer Datenbank "
+"existiert, wirst du eine E-Mail mit einem Link erhalten um dich sofort "
+"anmelden zu können."
 
 #: includes/defaults.php:479
-#, fuzzy
-#| msgid "Accept %s"
 msgid "Accept terms"
-msgstr "%s akzeptieren"
+msgstr "Vereinbarungen akzeptieren"
 
 #: includes/defaults.php:490 includes/defaults.php:509
 #, php-format
@@ -1597,7 +1573,7 @@ msgstr "%s akzeptieren"
 
 #: includes/defaults.php:490
 msgid "terms"
-msgstr ""
+msgstr "Vereinbarungen"
 
 #: includes/defaults.php:498
 msgid "Accept privacy settings"
@@ -1805,6 +1781,8 @@ msgstr ""
 #: includes/filters-wp.php:216
 msgid "You don't need a password anymore, you can login with a 'magic link'."
 msgstr ""
+"Du benötigst kein Passwort mehr, du kannst dich mit einem 'Magic Link' "
+"anmelden."
 
 #: includes/form-handling.php:7 includes/form-handling.php:157
 #: includes/form-handling.php:454 includes/form-handling.php:482
@@ -1911,10 +1889,8 @@ msgid "Lost password email"
 msgstr "Passwort-vergessen E-Mail"
 
 #: includes/functions.php:109
-#, fuzzy
-#| msgid "Get magic link"
 msgid "Magic link email"
-msgstr "Magischen Link anfordern"
+msgstr "Magic Link E-Mail"
 
 #: includes/functions.php:114
 msgid "Logo"
