@@ -1055,6 +1055,7 @@
             if ( isset( $vars[ 'user_password' ] ) ) {
                 $replacements[ '%user_password%' ] = $vars[ 'user_password' ];
             }
+            // @TODO: remove
             $replacements[ 'network_name' ] = get_option( 'name' );
         }
 
