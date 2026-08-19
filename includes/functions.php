@@ -1188,6 +1188,7 @@
         return $language_array;
     }
 
+    // used for test send email
     function b3_get_subject_message( $preview = '' ) {
         if ( ! empty( $preview ) ) {
             switch( $preview ) {

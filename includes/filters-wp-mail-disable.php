@@ -31,16 +31,6 @@
     }
     add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
 
-    // Disable admin email when registration is closed
-    function b3_disable_admin_email( $status, $site, $user ) {
-        if ( 'none' === get_option( 'b3_registration_type' ) ) {
-            return false;
-        }
-
-        return $status;
-    }
-    add_filter( 'send_new_site_email', 'b3_disable_admin_email', 10, 3 );
-
     // Disable WPMU user signup email to take it over
     function b3_disable_wpmu_user_signup_notification( $user_login, $user_email, $key, $meta = [] ) {
         if ( is_admin() && isset( $_POST[ 'action' ] ) && 'createuser' === $_POST[ 'action' ] ) {
