@@ -779,7 +779,7 @@
             if ( true == get_option( 'b3_activate_recaptcha' ) ) {
                 $tabs[] = [
                     'id'      => 'recaptcha',
-                    'title'   => esc_html__( 'reCaptcha', 'b3-onboarding' ),
+                    'title'   => 'reCaptcha',
                     'content' => b3_render_tab_content( 'recaptcha' ),
                     'icon'    => 'plus-alt',
                 ];

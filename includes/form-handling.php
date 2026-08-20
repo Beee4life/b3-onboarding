@@ -589,7 +589,7 @@
                     delete_option( 'b3_recaptcha_theme' );
                 }
 
-                B3Onboarding::b3_errors()->add( 'success_settings_saved', esc_html__( 'reCaptcha settings saved', 'b3-onboarding' ) );
+                B3Onboarding::b3_errors()->add( 'success_settings_saved', sprintf( esc_html__( '%s settings saved', 'b3-onboarding' ), 'reCaptcha' ) );
             }
         }
     }

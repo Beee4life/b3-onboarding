@@ -624,7 +624,8 @@ msgid "make first/last name required"
 msgstr ""
 
 #: admin/help-tabs.php:34
-msgid "activate recaptcha"
+#, php-format
+msgid "activate %s"
 msgstr ""
 
 #: admin/help-tabs.php:35
@@ -870,10 +871,6 @@ msgstr ""
 msgid "Links open in new tab/window."
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:16 includes/functions.php:782
-msgid "reCaptcha"
-msgstr ""
-
 #: admin/tabs/tab-recaptcha.php:19
 msgid "Here you can set the reCaptcha settings."
 msgstr ""
@@ -883,7 +880,8 @@ msgid "Both keys must be entered, for reCaptcha to work."
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:29
-msgid "reCaptcha version"
+#, php-format
+msgid "%s version"
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:33
@@ -908,11 +906,13 @@ msgid "Get your (free) reCaptcha keys %s."
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:64
-msgid "reCaptcha theme"
+#, php-format
+msgid "%s theme"
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:74
-msgid "Save reCaptcha"
+#, php-format
+msgid "Save %s"
 msgstr ""
 
 #: admin/tabs/tab-registration.php:16
@@ -998,16 +998,14 @@ msgstr ""
 msgid "Use both magic link and password login."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:167
-msgid "reCAPTCHA"
-msgstr ""
-
 #: admin/tabs/tab-registration.php:171
-msgid "Activate reCAPTCHA."
+#, php-format
+msgid "Activate %s."
 msgstr ""
 
 #: admin/tabs/tab-registration.php:176
-msgid "See tab reCaptcha (after saving)"
+#, php-format
+msgid "See tab %s (after saving)"
 msgstr ""
 
 #: admin/tabs/tab-registration.php:184
@@ -2243,7 +2241,8 @@ msgid "User settings saved"
 msgstr ""
 
 #: includes/form-handling.php:592
-msgid "reCaptcha settings saved"
+#, php-format
+msgid "%s settings saved"
 msgstr ""
 
 #: includes/form-handling.php:628

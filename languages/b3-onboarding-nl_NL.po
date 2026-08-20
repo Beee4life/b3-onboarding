@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-08-20 17:22+0200\n"
-"PO-Revision-Date: 2026-08-20 17:22+0200\n"
+"POT-Creation-Date: 2026-08-20 17:34+0200\n"
+"PO-Revision-Date: 2026-08-20 17:34+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -743,8 +743,9 @@ msgid "make first/last name required"
 msgstr "maak voor- en achternaam verplicht"
 
 #: admin/help-tabs.php:34
-msgid "activate recaptcha"
-msgstr "activeer recaptcha"
+#, php-format
+msgid "activate %s"
+msgstr "activeer %s"
 
 #: admin/help-tabs.php:35
 msgid "activate honeypot"
@@ -1037,10 +1038,6 @@ msgstr "Bezoek"
 msgid "Links open in new tab/window."
 msgstr "Links openen in een nieuwe tab/venster."
 
-#: admin/tabs/tab-recaptcha.php:16 includes/functions.php:782
-msgid "reCaptcha"
-msgstr "reCaptcha"
-
 #: admin/tabs/tab-recaptcha.php:19
 msgid "Here you can set the reCaptcha settings."
 msgstr "Hier kan je reCaptcha opties instellen."
@@ -1050,8 +1047,9 @@ msgid "Both keys must be entered, for reCaptcha to work."
 msgstr "Beide sleutels moeten worden ingevuld, om reCaptcha te laten werken."
 
 #: admin/tabs/tab-recaptcha.php:29
-msgid "reCaptcha version"
-msgstr "reCaptcha versie"
+#, php-format
+msgid "%s version"
+msgstr "%s versie"
 
 #: admin/tabs/tab-recaptcha.php:33
 msgid "With challenges"
@@ -1076,12 +1074,14 @@ msgid "Get your (free) reCaptcha keys %s."
 msgstr "Haal je (gratis) reCaptcha sleutels %s."
 
 #: admin/tabs/tab-recaptcha.php:64
-msgid "reCaptcha theme"
-msgstr "reCaptcha thema"
+#, php-format
+msgid "%s theme"
+msgstr "%s stijl"
 
 #: admin/tabs/tab-recaptcha.php:74
-msgid "Save reCaptcha"
-msgstr "ReCaptcha opslaan"
+#, php-format
+msgid "Save %s"
+msgstr "Sla %s op"
 
 #. translators: click here link
 #: admin/tabs/tab-registration.php:16
@@ -1170,17 +1170,15 @@ msgstr "Gebruik wachtwoord en magic link"
 msgid "Use both magic link and password login."
 msgstr "Gebruik wachtwoord en magic link login."
 
-#: admin/tabs/tab-registration.php:167
-msgid "reCAPTCHA"
-msgstr "reCAPTCHA"
-
 #: admin/tabs/tab-registration.php:171
-msgid "Activate reCAPTCHA."
-msgstr "Activeer reCaptcha."
+#, php-format
+msgid "Activate %s."
+msgstr "Activeer %s."
 
 #: admin/tabs/tab-registration.php:176
-msgid "See tab reCaptcha (after saving)"
-msgstr "Zie reCaptcha tab (na opslaan)"
+#, php-format
+msgid "See tab %s (after saving)"
+msgstr "Zie tab %s (na opslaan)"
 
 #: admin/tabs/tab-registration.php:184
 msgid "Honeypot"
@@ -2687,8 +2685,9 @@ msgid "User settings saved"
 msgstr "Gebruikersinstellingen opgeslagen"
 
 #: includes/form-handling.php:592
-msgid "reCaptcha settings saved"
-msgstr "reCaptcha instellingen opgeslagen"
+#, php-format
+msgid "%s settings saved"
+msgstr "%s instellingen opgeslagen"
 
 #: includes/form-handling.php:628
 msgid "Pages settings saved"
@@ -3221,6 +3220,33 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid "Save reCaptcha"
+#~ msgstr "ReCaptcha opslaan"
+
+#~ msgid "activate recaptcha"
+#~ msgstr "activeer recaptcha"
+
+#~ msgid "reCaptcha"
+#~ msgstr "reCaptcha"
+
+#~ msgid "reCaptcha version"
+#~ msgstr "reCaptcha versie"
+
+#~ msgid "reCaptcha theme"
+#~ msgstr "reCaptcha thema"
+
+#~ msgid "reCAPTCHA"
+#~ msgstr "reCAPTCHA"
+
+#~ msgid "Activate reCAPTCHA."
+#~ msgstr "Activeer reCaptcha."
+
+#~ msgid "See tab reCaptcha (after saving)"
+#~ msgstr "Zie reCaptcha tab (na opslaan)"
+
+#~ msgid "reCaptcha settings saved"
+#~ msgstr "reCaptcha instellingen opgeslagen"
 
 #~ msgctxt "overtaken registration option"
 #~ msgid "the registration type"
@@ -3922,9 +3948,6 @@ msgstr "https://berryplasman.com"
 #~ msgstr ""
 #~ "Als je deze setting handmatig hebt ingeschakeld, weet dan dat deze "
 #~ "functie nog niet werkt."
-
-#~ msgid "See tab Wordpress (after saving)"
-#~ msgstr "Zie tab Wordpress (na opslaan)"
 
 #~ msgid "Feedback"
 #~ msgstr "Reacties"

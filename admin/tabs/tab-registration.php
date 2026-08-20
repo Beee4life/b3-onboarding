@@ -164,16 +164,16 @@
 
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_recaptcha">reCaptcha</label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php checked($activate_recaptcha); ?>/>
-                            <?php esc_html_e( 'Activate reCAPTCHA.', 'b3-onboarding' ); ?>
+                            <?php echo sprintf( esc_html__( 'Activate %s.', 'b3-onboarding' ), 'reCaptcha' ); ?>
                             <?php $show_note = $activate_recaptcha ? false : true; ?>
                             <?php $hide_recaptcha_note = $activate_recaptcha ? false : ' hidden'; ?>
                             <?php if ( $show_note ) { ?>
                                 <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo esc_attr( $hide_recaptcha_note ); ?>">
-                                    <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                                    <?php echo sprintf( esc_html__( 'See tab %s (after saving)', 'b3-onboarding' ), 'reCaptcha' ); ?>
                                 </div>
                             <?php } ?>
                         </div>

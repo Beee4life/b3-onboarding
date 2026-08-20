@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
-"POT-Creation-Date: 2026-08-20 17:22+0200\n"
-"PO-Revision-Date: 2026-08-20 17:22+0200\n"
+"POT-Creation-Date: 2026-08-20 17:33+0200\n"
+"PO-Revision-Date: 2026-08-20 17:45+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -739,8 +739,9 @@ msgid "make first/last name required"
 msgstr "Vor-/Nachnamen als Pflichtfeld markieren"
 
 #: admin/help-tabs.php:34
-msgid "activate recaptcha"
-msgstr "reCaptcha aktivieren"
+#, php-format
+msgid "activate %s"
+msgstr "aktiviere %s"
 
 #: admin/help-tabs.php:35
 msgid "activate honeypot"
@@ -1031,10 +1032,6 @@ msgstr "Besuchen"
 msgid "Links open in new tab/window."
 msgstr "Links öffnen sich in einem neuen Tab/Fenster."
 
-#: admin/tabs/tab-recaptcha.php:16 includes/functions.php:782
-msgid "reCaptcha"
-msgstr "reCaptcha"
-
 #: admin/tabs/tab-recaptcha.php:19
 msgid "Here you can set the reCaptcha settings."
 msgstr "Hier kannst du die reCaptcha Einstellungen konfigurieren."
@@ -1045,8 +1042,9 @@ msgstr ""
 "Es müssen beide Schlüssel verwendet werden, damit reCaptcha funktioniert."
 
 #: admin/tabs/tab-recaptcha.php:29
-msgid "reCaptcha version"
-msgstr "reCaptcha Version"
+#, php-format
+msgid "%s version"
+msgstr "%s Version"
 
 #: admin/tabs/tab-recaptcha.php:33
 msgid "With challenges"
@@ -1070,12 +1068,14 @@ msgid "Get your (free) reCaptcha keys %s."
 msgstr "Hole dir deine (kostenlosen) reCaptcha-Keys %s."
 
 #: admin/tabs/tab-recaptcha.php:64
-msgid "reCaptcha theme"
-msgstr "reCaptcha Theme"
+#, php-format
+msgid "%s theme"
+msgstr "%s Thema"
 
 #: admin/tabs/tab-recaptcha.php:74
-msgid "Save reCaptcha"
-msgstr "reCaptcha speichern"
+#, php-format
+msgid "Save %s"
+msgstr "Speicher %s"
 
 #: admin/tabs/tab-registration.php:16
 #, php-format
@@ -1162,17 +1162,15 @@ msgstr "Nutz Passwort und Magischen Link"
 msgid "Use both magic link and password login."
 msgstr "Benutze beides, Magic Link und Passwort Login."
 
-#: admin/tabs/tab-registration.php:167
-msgid "reCAPTCHA"
-msgstr "reCAPTCHA"
-
 #: admin/tabs/tab-registration.php:171
-msgid "Activate reCAPTCHA."
-msgstr "Aktiviere reCAPTCHA."
+#, php-format
+msgid "Activate %s."
+msgstr "Aktiviere %s."
 
 #: admin/tabs/tab-registration.php:176
-msgid "See tab reCaptcha (after saving)"
-msgstr "Siehe reCaptcha Tab (nach dem Speichern)"
+#, php-format
+msgid "See tab %s (after saving)"
+msgstr "Siehe %s Tab (nach dem Speichern)"
 
 #: admin/tabs/tab-registration.php:184
 msgid "Honeypot"
@@ -2644,8 +2642,9 @@ msgid "User settings saved"
 msgstr "Benutzereinstellungen gespeichert"
 
 #: includes/form-handling.php:592
-msgid "reCaptcha settings saved"
-msgstr "reCaptcha-Einstellungen gespeichert"
+#, php-format
+msgid "%s settings saved"
+msgstr "%s Einstellungen gespeichert"
 
 #: includes/form-handling.php:628
 msgid "Pages settings saved"
@@ -3122,6 +3121,30 @@ msgstr "Erlaube Suchmaschinen diese Website zu indexieren."
 #: templates/user-management.php:33
 msgid "No (more) users to approve."
 msgstr "Keine (weiteren) Benutzer zur Freigabe."
+
+#~ msgid "Save reCaptcha"
+#~ msgstr "reCaptcha speichern"
+
+#~ msgid "activate recaptcha"
+#~ msgstr "reCaptcha aktivieren"
+
+#~ msgid "reCaptcha"
+#~ msgstr "reCaptcha"
+
+#~ msgid "reCaptcha version"
+#~ msgstr "reCaptcha Version"
+
+#~ msgid "reCaptcha theme"
+#~ msgstr "reCaptcha Theme"
+
+#~ msgid "reCAPTCHA"
+#~ msgstr "reCAPTCHA"
+
+#~ msgid "Activate reCAPTCHA."
+#~ msgstr "Aktiviere reCAPTCHA."
+
+#~ msgid "reCaptcha settings saved"
+#~ msgstr "reCaptcha-Einstellungen gespeichert"
 
 #, fuzzy
 #~ msgid "You can log in immediately by clicking the button below."
