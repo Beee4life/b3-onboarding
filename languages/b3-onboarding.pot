@@ -1735,7 +1735,7 @@ msgstr ""
 msgid "To activate your account, please click the link below."
 msgstr ""
 
-#: includes/defaults.php:411
+#: includes/defaults.php:411 includes/defaults.php:547
 msgid "After you activate, you will receive *another email* with a magic login link."
 msgstr ""
 
@@ -1824,11 +1824,7 @@ msgid "To activate your registration, please click %s or the button below."
 msgstr ""
 
 #: includes/defaults.php:545
-msgid "After you activate, you will receive *another email* with your login info and a one time login link."
-msgstr ""
-
-#: includes/defaults.php:547
-msgid "After you activate, you will receive *another email* with a one time login link."
+msgid "After you activate, you will receive *another email* with your login info and a magic login link."
 msgstr ""
 
 #: includes/defaults.php:552
@@ -1866,11 +1862,11 @@ msgid "Enjoy your new site."
 msgstr ""
 
 #: includes/defaults.php:626
-msgid "One time login link for %blog_name%"
+msgid "Magic login link for %blog_name%"
 msgstr ""
 
 #: includes/defaults.php:635
-msgid "Someone requested a \"one time login link\" for the account using this email address."
+msgid "Someone requested a magic login link for the account using this email address."
 msgstr ""
 
 #: includes/defaults.php:637
@@ -1878,7 +1874,7 @@ msgid "If this request was made by you, you can click the following link to logi
 msgstr ""
 
 #: includes/defaults.php:641
-msgid "If this was a mistake, or you didn't ask for a 'one time login link', just ignore this email and nothing will happen."
+msgid "If this was a mistake, or you didn't ask for a magic login link, just ignore this email and nothing will happen."
 msgstr ""
 
 #: includes/defaults.php:652

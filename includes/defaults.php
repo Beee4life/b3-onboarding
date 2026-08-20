@@ -542,9 +542,9 @@
         } elseif ( get_option( 'b3_use_magic_link' ) ) {
             $message .= '<br>' . "\n";
             if ( get_option( 'b3_use_magic_link_password' ) ) {
-                $message .= esc_html__( 'After you activate, you will receive *another email* with your login info and a one time login link.', 'b3-onboarding' ) . "\n";
+                $message .= esc_html__( 'After you activate, you will receive *another email* with your login info and a magic login link.', 'b3-onboarding' ) . "\n";
             } else {
-                $message .= esc_html__( 'After you activate, you will receive *another email* with a one time login link.', 'b3-onboarding' ) . "\n";
+                $message .= esc_html__( 'After you activate, you will receive *another email* with a magic login link.', 'b3-onboarding' ) . "\n";
             }
             $message .= '<br>' . "\n";
         } else {
@@ -623,7 +623,7 @@
 
     function b3_get_default_magic_link_subject() {
         /* translators: Blog name */
-        return esc_html__( 'One time login link for %blog_name%', 'b3-onboarding' );
+        return esc_html__( 'Magic login link for %blog_name%', 'b3-onboarding' );
     }
 
     function b3_get_default_magic_link_message( $login_link = '' ) {
@@ -632,13 +632,13 @@
             $your_code  = sprintf( '<div class="big-link">%s</div>', $a_href ) . "\n";
             $message    = b3_get_email_intro( esc_html__( 'Hi', 'b3-onboarding' ) );
             $message    .= '<br><br>' . "\n";
-            $message    .= esc_html__( 'Someone requested a "one time login link" for the account using this email address.', 'b3-onboarding' ) . "\n";
+            $message    .= esc_html__( 'Someone requested a magic login link for the account using this email address.', 'b3-onboarding' ) . "\n";
             $message    .= '<br><br>' . "\n";
             $message    .= esc_html__( 'If this request was made by you, you can click the following link to login.', 'b3-onboarding' ) . "\n";
             $message    .= '<br><br>' . "\n";
             $message    .= sprintf( '<div class="big-link-container">%s</div>', $your_code ) . "\n";
             $message    .= '<br>' . "\n";
-            $message    .= esc_html__( "If this was a mistake, or you didn't ask for a 'one time login link', just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
+            $message    .= esc_html__( "If this was a mistake, or you didn't ask for a magic login link, just ignore this email and nothing will happen.", 'b3-onboarding' ) . "\n";
             $message    .= '<br>' . "\n";
             $message    .= b3_get_default_greetings();
 

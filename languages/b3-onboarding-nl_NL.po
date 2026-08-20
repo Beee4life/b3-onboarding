@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 - Onboarding\n"
-"POT-Creation-Date: 2026-08-20 17:34+0200\n"
-"PO-Revision-Date: 2026-08-20 17:34+0200\n"
+"POT-Creation-Date: 2026-08-20 17:49+0200\n"
+"PO-Revision-Date: 2026-08-20 17:50+0200\n"
 "Last-Translator: Beee\n"
 "Language-Team: Beee\n"
 "Language: nl_NL\n"
@@ -2066,7 +2066,7 @@ msgstr "Beste %1$s,"
 msgid "To activate your account, please click the link below."
 msgstr "Om je account te activeren, klik aub op onderstaande link."
 
-#: includes/defaults.php:411
+#: includes/defaults.php:411 includes/defaults.php:547
 msgid ""
 "After you activate, you will receive *another email* with a magic login link."
 msgstr ""
@@ -2173,18 +2173,10 @@ msgstr "Om je registratie te activeren, klik aub %s of op onderstaande button."
 #: includes/defaults.php:545
 msgid ""
 "After you activate, you will receive *another email* with your login info "
-"and a one time login link."
+"and a magic login link."
 msgstr ""
 "Nadat je geactiveerd heb, krijg je *nog een email* met je login info en een "
-"eenmalige login link."
-
-#: includes/defaults.php:547
-msgid ""
-"After you activate, you will receive *another email* with a one time login "
-"link."
-msgstr ""
-"Nadat je geactiveerd heb, krijg je *nog een email* met een eenmalige login "
-"link."
+"éénmalige login link."
 
 #: includes/defaults.php:552
 msgid ""
@@ -2228,16 +2220,16 @@ msgstr "Veel plezier met je nieuwe site."
 
 #. translators: Blog name
 #: includes/defaults.php:626
-msgid "One time login link for %blog_name%"
+msgid "Magic login link for %blog_name%"
 msgstr "Eenmalige login link voor %blog_name%"
 
 #: includes/defaults.php:635
 msgid ""
-"Someone requested a \"one time login link\" for the account using this email "
+"Someone requested a magic login link for the account using this email "
 "address."
 msgstr ""
-"Iemand heeft een \"eenmalige login link\" aangevraagd voor de account die "
-"dit email adres gebruikt."
+"Iemand heeft een eenmalige login link aangevraagd voor de account die dit "
+"email adres gebruikt."
 
 #: includes/defaults.php:637
 msgid ""
@@ -2247,11 +2239,11 @@ msgstr ""
 
 #: includes/defaults.php:641
 msgid ""
-"If this was a mistake, or you didn't ask for a 'one time login link', just "
-"ignore this email and nothing will happen."
+"If this was a mistake, or you didn't ask for a magic login link, just ignore "
+"this email and nothing will happen."
 msgstr ""
-"Als dit per ongeluk was of je hebt niet gevraagd om een \"eenmalige login "
-"link\", dan kan je deze email negeren en gebeurt er niks."
+"Als dit per ongeluk was of je hebt niet gevraagd om een éénmalige login "
+"link, dan kan je deze email negeren en gebeurt er niks."
 
 #: includes/defaults.php:652
 msgid "Register For This Site"
@@ -3220,6 +3212,13 @@ msgstr "Beee"
 #. Author URI of the plugin/theme
 msgid "https://berryplasman.com"
 msgstr "https://berryplasman.com"
+
+#~ msgid ""
+#~ "After you activate, you will receive *another email* with a one time "
+#~ "login link."
+#~ msgstr ""
+#~ "Nadat je geactiveerd heb, krijg je *nog een email* met een eenmalige "
+#~ "login link."
 
 #~ msgid "Save reCaptcha"
 #~ msgstr "ReCaptcha opslaan"

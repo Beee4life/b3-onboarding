@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
-"POT-Creation-Date: 2026-08-20 17:33+0200\n"
-"PO-Revision-Date: 2026-08-20 17:45+0200\n"
+"POT-Creation-Date: 2026-08-20 17:50+0200\n"
+"PO-Revision-Date: 2026-08-20 17:51+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -2031,7 +2031,7 @@ msgid "To activate your account, please click the link below."
 msgstr ""
 "Um dein Konto zu aktivieren, klicke bitte auf den unten stehenden Link."
 
-#: includes/defaults.php:411
+#: includes/defaults.php:411 includes/defaults.php:547
 msgid ""
 "After you activate, you will receive *another email* with a magic login link."
 msgstr ""
@@ -2132,18 +2132,10 @@ msgstr ""
 #: includes/defaults.php:545
 msgid ""
 "After you activate, you will receive *another email* with your login info "
-"and a one time login link."
+"and a magic login link."
 msgstr ""
 "Nach der Aktivierung erhältst du *eine weitere E-Mail* mit deinen Login-"
 "Daten und einem Einmal-Login Link."
-
-#: includes/defaults.php:547
-msgid ""
-"After you activate, you will receive *another email* with a one time login "
-"link."
-msgstr ""
-"Nach der Aktivierung erhältst du *eine weitere E-Mail* mit einem Einmal-"
-"Login Link."
 
 #: includes/defaults.php:552
 msgid ""
@@ -2186,15 +2178,15 @@ msgid "Enjoy your new site."
 msgstr "Viel Spaß mit deiner neuen Website."
 
 #: includes/defaults.php:626
-msgid "One time login link for %blog_name%"
-msgstr "EInmal Login Link für %blog_name%"
+msgid "Magic login link for %blog_name%"
+msgstr "Einmal Login Link für %blog_name%"
 
 #: includes/defaults.php:635
 msgid ""
-"Someone requested a \"one time login link\" for the account using this email "
+"Someone requested a magic login link for the account using this email "
 "address."
 msgstr ""
-"Jemand hat einen „magischen Login-Link“ für das Konto mit dieser E-Mail-"
+"Jemand hat einen magischen Login-Link für das Konto mit dieser E-Mail-"
 "Adresse angefordert."
 
 #: includes/defaults.php:637
@@ -2206,10 +2198,10 @@ msgstr ""
 
 #: includes/defaults.php:641
 msgid ""
-"If this was a mistake, or you didn't ask for a 'one time login link', just "
-"ignore this email and nothing will happen."
+"If this was a mistake, or you didn't ask for a magic login link, just ignore "
+"this email and nothing will happen."
 msgstr ""
-"Falls dies ein Fehler war oder du keinen 'magischen Link' angefordert hast, "
+"Falls dies ein Fehler war oder du keinen magischen Link angefordert hast, "
 "ignoriere diese E-Mail einfach und nichts will passieren."
 
 #: includes/defaults.php:652
@@ -3121,6 +3113,13 @@ msgstr "Erlaube Suchmaschinen diese Website zu indexieren."
 #: templates/user-management.php:33
 msgid "No (more) users to approve."
 msgstr "Keine (weiteren) Benutzer zur Freigabe."
+
+#~ msgid ""
+#~ "After you activate, you will receive *another email* with a one time "
+#~ "login link."
+#~ msgstr ""
+#~ "Nach der Aktivierung erhältst du *eine weitere E-Mail* mit einem Einmal-"
+#~ "Login Link."
 
 #~ msgid "Save reCaptcha"
 #~ msgstr "reCaptcha speichern"
