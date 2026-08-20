@@ -560,7 +560,7 @@ msgstr ""
 msgid "There %1$s %2$d %3$s pending email activation."
 msgstr ""
 
-#: admin/dashboard-widget-users.php:71 includes/functions.php:1081
+#: admin/dashboard-widget-users.php:71 includes/functions.php:1082
 #: templates/register/user-login.php:9
 msgid "User name"
 msgstr ""
@@ -1316,7 +1316,7 @@ msgstr ""
 msgid "Your site(s)"
 msgstr ""
 
-#: includes/actions-wp.php:93 includes/functions.php:1133
+#: includes/actions-wp.php:93 includes/functions.php:1134
 msgid "Approve"
 msgstr ""
 
@@ -2342,54 +2342,54 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: includes/functions.php:1077
+#: includes/functions.php:1078
 msgid "Signup ID"
 msgstr ""
 
-#: includes/functions.php:1077
+#: includes/functions.php:1078
 msgid "User ID"
 msgstr ""
 
-#: includes/functions.php:1084 templates/account/first-last.php:13
+#: includes/functions.php:1085 templates/account/first-last.php:13
 #: templates/register/first-name.php:12
 msgid "First name"
 msgstr ""
 
-#: includes/functions.php:1085 templates/account/first-last.php:21
+#: includes/functions.php:1086 templates/account/first-last.php:21
 #: templates/register/last-name.php:12
 msgid "Last name"
 msgstr ""
 
-#: includes/functions.php:1088 templates/register/user-email.php:8
+#: includes/functions.php:1089 templates/register/user-email.php:8
 msgid "Email"
 msgstr ""
 
-#: includes/functions.php:1091
+#: includes/functions.php:1092
 msgid "Domain"
 msgstr ""
 
-#: includes/functions.php:1092
+#: includes/functions.php:1093
 msgid "Site name"
 msgstr ""
 
-#: includes/functions.php:1094
+#: includes/functions.php:1095
 msgid "Actions"
 msgstr ""
 
-#: includes/functions.php:1134
+#: includes/functions.php:1135
 msgid "Reject"
 msgstr ""
 
-#: includes/functions.php:1174
+#: includes/functions.php:1175
 msgid "English"
 msgstr ""
 
-#: includes/functions.php:1276
+#: includes/functions.php:1277
 #, php-format
 msgid "No email message found for '%s'"
 msgstr ""
 
-#: includes/functions.php:1278
+#: includes/functions.php:1279
 #, php-format
 msgid "No email subject found for '%s'"
 msgstr ""
