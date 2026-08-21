@@ -33,9 +33,7 @@
         }
 
         $current_language = apply_filters( 'wpml_current_language', null );
-        // echo '<pre>'; var_dump($current_language); echo '</pre>'; exit;
         $default_lang     = apply_filters( 'wpml_default_language', null );
-        // echo '<pre>'; var_dump($default_lang); echo '</pre>'; exit;
 
         ob_start();
 
