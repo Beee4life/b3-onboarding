@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: B3 Onboarding\n"
-"POT-Creation-Date: 2026-08-14 11:35+0200\n"
-"PO-Revision-Date: 2026-08-20 13:34+0200\n"
+"POT-Creation-Date: 2026-08-20 17:50+0200\n"
+"PO-Revision-Date: 2026-08-20 17:51+0200\n"
 "Last-Translator: Gemini\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -663,7 +663,7 @@ msgstr ""
 msgid "There %1$s %2$d %3$s pending email activation."
 msgstr "Es %1$s %2$d %3$s mit ausstehender E-Mail-Aktivierung."
 
-#: admin/dashboard-widget-users.php:71 includes/functions.php:1081
+#: admin/dashboard-widget-users.php:71 includes/functions.php:1082
 #: templates/register/user-login.php:9
 msgid "User name"
 msgstr "Benutzername"
@@ -739,8 +739,9 @@ msgid "make first/last name required"
 msgstr "Vor-/Nachnamen als Pflichtfeld markieren"
 
 #: admin/help-tabs.php:34
-msgid "activate recaptcha"
-msgstr "reCaptcha aktivieren"
+#, php-format
+msgid "activate %s"
+msgstr "aktiviere %s"
 
 #: admin/help-tabs.php:35
 msgid "activate honeypot"
@@ -1031,10 +1032,6 @@ msgstr "Besuchen"
 msgid "Links open in new tab/window."
 msgstr "Links öffnen sich in einem neuen Tab/Fenster."
 
-#: admin/tabs/tab-recaptcha.php:16 includes/functions.php:782
-msgid "reCaptcha"
-msgstr "reCaptcha"
-
 #: admin/tabs/tab-recaptcha.php:19
 msgid "Here you can set the reCaptcha settings."
 msgstr "Hier kannst du die reCaptcha Einstellungen konfigurieren."
@@ -1045,8 +1042,9 @@ msgstr ""
 "Es müssen beide Schlüssel verwendet werden, damit reCaptcha funktioniert."
 
 #: admin/tabs/tab-recaptcha.php:29
-msgid "reCaptcha version"
-msgstr "reCaptcha Version"
+#, php-format
+msgid "%s version"
+msgstr "%s Version"
 
 #: admin/tabs/tab-recaptcha.php:33
 msgid "With challenges"
@@ -1070,12 +1068,14 @@ msgid "Get your (free) reCaptcha keys %s."
 msgstr "Hole dir deine (kostenlosen) reCaptcha-Keys %s."
 
 #: admin/tabs/tab-recaptcha.php:64
-msgid "reCaptcha theme"
-msgstr "reCaptcha Theme"
+#, php-format
+msgid "%s theme"
+msgstr "%s Thema"
 
 #: admin/tabs/tab-recaptcha.php:74
-msgid "Save reCaptcha"
-msgstr "reCaptcha speichern"
+#, php-format
+msgid "Save %s"
+msgstr "Speicher %s"
 
 #: admin/tabs/tab-registration.php:16
 #, php-format
@@ -1162,17 +1162,15 @@ msgstr "Nutz Passwort und Magischen Link"
 msgid "Use both magic link and password login."
 msgstr "Benutze beides, Magic Link und Passwort Login."
 
-#: admin/tabs/tab-registration.php:167
-msgid "reCAPTCHA"
-msgstr "reCAPTCHA"
-
 #: admin/tabs/tab-registration.php:171
-msgid "Activate reCAPTCHA."
-msgstr "Aktiviere reCAPTCHA."
+#, php-format
+msgid "Activate %s."
+msgstr "Aktiviere %s."
 
 #: admin/tabs/tab-registration.php:176
-msgid "See tab reCaptcha (after saving)"
-msgstr "Siehe reCaptcha Tab (nach dem Speichern)"
+#, php-format
+msgid "See tab %s (after saving)"
+msgstr "Siehe %s Tab (nach dem Speichern)"
 
 #: admin/tabs/tab-registration.php:184
 msgid "Honeypot"
@@ -1527,7 +1525,7 @@ msgstr "Registrieren"
 msgid "Your site(s)"
 msgstr "Deine Website(s)"
 
-#: includes/actions-wp.php:93 includes/functions.php:1133
+#: includes/actions-wp.php:93 includes/functions.php:1134
 msgid "Approve"
 msgstr "Genehmigen"
 
@@ -2033,7 +2031,7 @@ msgid "To activate your account, please click the link below."
 msgstr ""
 "Um dein Konto zu aktivieren, klicke bitte auf den unten stehenden Link."
 
-#: includes/defaults.php:411
+#: includes/defaults.php:411 includes/defaults.php:547
 msgid ""
 "After you activate, you will receive *another email* with a magic login link."
 msgstr ""
@@ -2134,18 +2132,10 @@ msgstr ""
 #: includes/defaults.php:545
 msgid ""
 "After you activate, you will receive *another email* with your login info "
-"and a one time login link."
+"and a magic login link."
 msgstr ""
 "Nach der Aktivierung erhältst du *eine weitere E-Mail* mit deinen Login-"
 "Daten und einem Einmal-Login Link."
-
-#: includes/defaults.php:547
-msgid ""
-"After you activate, you will receive *another email* with a one time login "
-"link."
-msgstr ""
-"Nach der Aktivierung erhältst du *eine weitere E-Mail* mit einem Einmal-"
-"Login Link."
 
 #: includes/defaults.php:552
 msgid ""
@@ -2188,15 +2178,15 @@ msgid "Enjoy your new site."
 msgstr "Viel Spaß mit deiner neuen Website."
 
 #: includes/defaults.php:626
-msgid "One time login link for %blog_name%"
-msgstr "EInmal Login Link für %blog_name%"
+msgid "Magic login link for %blog_name%"
+msgstr "Einmal Login Link für %blog_name%"
 
 #: includes/defaults.php:635
 msgid ""
-"Someone requested a \"one time login link\" for the account using this email "
+"Someone requested a magic login link for the account using this email "
 "address."
 msgstr ""
-"Jemand hat einen „magischen Login-Link“ für das Konto mit dieser E-Mail-"
+"Jemand hat einen magischen Login-Link für das Konto mit dieser E-Mail-"
 "Adresse angefordert."
 
 #: includes/defaults.php:637
@@ -2208,10 +2198,10 @@ msgstr ""
 
 #: includes/defaults.php:641
 msgid ""
-"If this was a mistake, or you didn't ask for a 'one time login link', just "
-"ignore this email and nothing will happen."
+"If this was a mistake, or you didn't ask for a magic login link, just ignore "
+"this email and nothing will happen."
 msgstr ""
-"Falls dies ein Fehler war oder du keinen 'magischen Link' angefordert hast, "
+"Falls dies ein Fehler war oder du keinen magischen Link angefordert hast, "
 "ignoriere diese E-Mail einfach und nichts will passieren."
 
 #: includes/defaults.php:652
@@ -2644,8 +2634,9 @@ msgid "User settings saved"
 msgstr "Benutzereinstellungen gespeichert"
 
 #: includes/form-handling.php:592
-msgid "reCaptcha settings saved"
-msgstr "reCaptcha-Einstellungen gespeichert"
+#, php-format
+msgid "%s settings saved"
+msgstr "%s Einstellungen gespeichert"
 
 #: includes/form-handling.php:628
 msgid "Pages settings saved"
@@ -2749,54 +2740,54 @@ msgstr "Besucher muss Benutzer und Website registrieren"
 msgid "Preview"
 msgstr "Vorschau"
 
-#: includes/functions.php:1077
+#: includes/functions.php:1078
 msgid "Signup ID"
 msgstr "Anmelde-ID"
 
-#: includes/functions.php:1077
+#: includes/functions.php:1078
 msgid "User ID"
 msgstr "Benutzer-ID"
 
-#: includes/functions.php:1084 templates/account/first-last.php:13
+#: includes/functions.php:1085 templates/account/first-last.php:13
 #: templates/register/first-name.php:12
 msgid "First name"
 msgstr "Vorname"
 
-#: includes/functions.php:1085 templates/account/first-last.php:21
+#: includes/functions.php:1086 templates/account/first-last.php:21
 #: templates/register/last-name.php:12
 msgid "Last name"
 msgstr "Nachname"
 
-#: includes/functions.php:1088 templates/register/user-email.php:8
+#: includes/functions.php:1089 templates/register/user-email.php:8
 msgid "Email"
 msgstr "E-Mail"
 
-#: includes/functions.php:1091
+#: includes/functions.php:1092
 msgid "Domain"
 msgstr "Domain"
 
-#: includes/functions.php:1092
+#: includes/functions.php:1093
 msgid "Site name"
 msgstr "Website-Name"
 
-#: includes/functions.php:1094
+#: includes/functions.php:1095
 msgid "Actions"
 msgstr "Aktionen"
 
-#: includes/functions.php:1134
+#: includes/functions.php:1135
 msgid "Reject"
 msgstr "Ablehnen"
 
-#: includes/functions.php:1174
+#: includes/functions.php:1175
 msgid "English"
 msgstr "Englisch"
 
-#: includes/functions.php:1276
+#: includes/functions.php:1277
 #, php-format
 msgid "No email message found for '%s'"
 msgstr "Keine E-Mail Nachricht gefunden für '%s'"
 
-#: includes/functions.php:1278
+#: includes/functions.php:1279
 #, php-format
 msgid "No email subject found for '%s'"
 msgstr "Kein E-Mail Betreff gefunden für '%s'"
@@ -3122,6 +3113,37 @@ msgstr "Erlaube Suchmaschinen diese Website zu indexieren."
 #: templates/user-management.php:33
 msgid "No (more) users to approve."
 msgstr "Keine (weiteren) Benutzer zur Freigabe."
+
+#~ msgid ""
+#~ "After you activate, you will receive *another email* with a one time "
+#~ "login link."
+#~ msgstr ""
+#~ "Nach der Aktivierung erhältst du *eine weitere E-Mail* mit einem Einmal-"
+#~ "Login Link."
+
+#~ msgid "Save reCaptcha"
+#~ msgstr "reCaptcha speichern"
+
+#~ msgid "activate recaptcha"
+#~ msgstr "reCaptcha aktivieren"
+
+#~ msgid "reCaptcha"
+#~ msgstr "reCaptcha"
+
+#~ msgid "reCaptcha version"
+#~ msgstr "reCaptcha Version"
+
+#~ msgid "reCaptcha theme"
+#~ msgstr "reCaptcha Theme"
+
+#~ msgid "reCAPTCHA"
+#~ msgstr "reCAPTCHA"
+
+#~ msgid "Activate reCAPTCHA."
+#~ msgstr "Aktiviere reCAPTCHA."
+
+#~ msgid "reCaptcha settings saved"
+#~ msgstr "reCaptcha-Einstellungen gespeichert"
 
 #, fuzzy
 #~ msgid "You can log in immediately by clicking the button below."

@@ -560,7 +560,7 @@ msgstr ""
 msgid "There %1$s %2$d %3$s pending email activation."
 msgstr ""
 
-#: admin/dashboard-widget-users.php:71 includes/functions.php:1081
+#: admin/dashboard-widget-users.php:71 includes/functions.php:1082
 #: templates/register/user-login.php:9
 msgid "User name"
 msgstr ""
@@ -624,7 +624,8 @@ msgid "make first/last name required"
 msgstr ""
 
 #: admin/help-tabs.php:34
-msgid "activate recaptcha"
+#, php-format
+msgid "activate %s"
 msgstr ""
 
 #: admin/help-tabs.php:35
@@ -870,10 +871,6 @@ msgstr ""
 msgid "Links open in new tab/window."
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:16 includes/functions.php:782
-msgid "reCaptcha"
-msgstr ""
-
 #: admin/tabs/tab-recaptcha.php:19
 msgid "Here you can set the reCaptcha settings."
 msgstr ""
@@ -883,7 +880,8 @@ msgid "Both keys must be entered, for reCaptcha to work."
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:29
-msgid "reCaptcha version"
+#, php-format
+msgid "%s version"
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:33
@@ -908,11 +906,13 @@ msgid "Get your (free) reCaptcha keys %s."
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:64
-msgid "reCaptcha theme"
+#, php-format
+msgid "%s theme"
 msgstr ""
 
 #: admin/tabs/tab-recaptcha.php:74
-msgid "Save reCaptcha"
+#, php-format
+msgid "Save %s"
 msgstr ""
 
 #: admin/tabs/tab-registration.php:16
@@ -998,16 +998,14 @@ msgstr ""
 msgid "Use both magic link and password login."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:167
-msgid "reCAPTCHA"
-msgstr ""
-
 #: admin/tabs/tab-registration.php:171
-msgid "Activate reCAPTCHA."
+#, php-format
+msgid "Activate %s."
 msgstr ""
 
 #: admin/tabs/tab-registration.php:176
-msgid "See tab reCaptcha (after saving)"
+#, php-format
+msgid "See tab %s (after saving)"
 msgstr ""
 
 #: admin/tabs/tab-registration.php:184
@@ -1316,7 +1314,7 @@ msgstr ""
 msgid "Your site(s)"
 msgstr ""
 
-#: includes/actions-wp.php:93 includes/functions.php:1133
+#: includes/actions-wp.php:93 includes/functions.php:1134
 msgid "Approve"
 msgstr ""
 
@@ -1737,7 +1735,7 @@ msgstr ""
 msgid "To activate your account, please click the link below."
 msgstr ""
 
-#: includes/defaults.php:411
+#: includes/defaults.php:411 includes/defaults.php:547
 msgid "After you activate, you will receive *another email* with a magic login link."
 msgstr ""
 
@@ -1826,11 +1824,7 @@ msgid "To activate your registration, please click %s or the button below."
 msgstr ""
 
 #: includes/defaults.php:545
-msgid "After you activate, you will receive *another email* with your login info and a one time login link."
-msgstr ""
-
-#: includes/defaults.php:547
-msgid "After you activate, you will receive *another email* with a one time login link."
+msgid "After you activate, you will receive *another email* with your login info and a magic login link."
 msgstr ""
 
 #: includes/defaults.php:552
@@ -1868,11 +1862,11 @@ msgid "Enjoy your new site."
 msgstr ""
 
 #: includes/defaults.php:626
-msgid "One time login link for %blog_name%"
+msgid "Magic login link for %blog_name%"
 msgstr ""
 
 #: includes/defaults.php:635
-msgid "Someone requested a \"one time login link\" for the account using this email address."
+msgid "Someone requested a magic login link for the account using this email address."
 msgstr ""
 
 #: includes/defaults.php:637
@@ -1880,7 +1874,7 @@ msgid "If this request was made by you, you can click the following link to logi
 msgstr ""
 
 #: includes/defaults.php:641
-msgid "If this was a mistake, or you didn't ask for a 'one time login link', just ignore this email and nothing will happen."
+msgid "If this was a mistake, or you didn't ask for a magic login link, just ignore this email and nothing will happen."
 msgstr ""
 
 #: includes/defaults.php:652
@@ -2243,7 +2237,8 @@ msgid "User settings saved"
 msgstr ""
 
 #: includes/form-handling.php:592
-msgid "reCaptcha settings saved"
+#, php-format
+msgid "%s settings saved"
 msgstr ""
 
 #: includes/form-handling.php:628
@@ -2342,54 +2337,54 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: includes/functions.php:1077
+#: includes/functions.php:1078
 msgid "Signup ID"
 msgstr ""
 
-#: includes/functions.php:1077
+#: includes/functions.php:1078
 msgid "User ID"
 msgstr ""
 
-#: includes/functions.php:1084 templates/account/first-last.php:13
+#: includes/functions.php:1085 templates/account/first-last.php:13
 #: templates/register/first-name.php:12
 msgid "First name"
 msgstr ""
 
-#: includes/functions.php:1085 templates/account/first-last.php:21
+#: includes/functions.php:1086 templates/account/first-last.php:21
 #: templates/register/last-name.php:12
 msgid "Last name"
 msgstr ""
 
-#: includes/functions.php:1088 templates/register/user-email.php:8
+#: includes/functions.php:1089 templates/register/user-email.php:8
 msgid "Email"
 msgstr ""
 
-#: includes/functions.php:1091
+#: includes/functions.php:1092
 msgid "Domain"
 msgstr ""
 
-#: includes/functions.php:1092
+#: includes/functions.php:1093
 msgid "Site name"
 msgstr ""
 
-#: includes/functions.php:1094
+#: includes/functions.php:1095
 msgid "Actions"
 msgstr ""
 
-#: includes/functions.php:1134
+#: includes/functions.php:1135
 msgid "Reject"
 msgstr ""
 
-#: includes/functions.php:1174
+#: includes/functions.php:1175
 msgid "English"
 msgstr ""
 
-#: includes/functions.php:1276
+#: includes/functions.php:1277
 #, php-format
 msgid "No email message found for '%s'"
 msgstr ""
 
-#: includes/functions.php:1278
+#: includes/functions.php:1279
 #, php-format
 msgid "No email subject found for '%s'"
 msgstr ""
