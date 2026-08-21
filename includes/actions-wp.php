@@ -228,7 +228,7 @@
                 sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding' ) ), esc_html__( 'admin page', 'b3-onboarding' ) )
             );
 
-            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- admin message
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- admin message
             echo sprintf( '<div class="notice notice-info"><p>%s</p></div>', $message );
         }
 

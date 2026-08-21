@@ -26,7 +26,8 @@
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
-                    <label for="b3_recaptcha_version"><?php echo sprintf( esc_html__( '%s version', 'b3-onboarding' ), 'reCaptcha' ); ?></label>
+                    <?php /* translators: brand name (no translation) */ ?>
+                    <label for="b3_recaptcha_version"><?php echo sprintf( esc_html__( '%s version', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
@@ -61,7 +62,8 @@
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
-                    <label for="b3_recaptcha_theme"><?php echo sprintf( esc_html__( '%s theme', 'b3-onboarding' ), 'reCaptcha' ); ?></label>
+                    <?php /* translators: brand name (no translation) */ ?>
+                    <label for="b3_recaptcha_theme"><?php echo sprintf( esc_html__( '%s theme', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
@@ -71,7 +73,8 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_submit_button( sprintf( esc_attr__( 'Save %s', 'b3-onboarding' ), 'reCaptcha' ) ); ?>
+            <?php /* translators: brand name (no translation) */ ?>
+            <?php b3_get_submit_button( sprintf( esc_attr__( 'Save %s', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ) ); ?>
         </form>
 
         <?php

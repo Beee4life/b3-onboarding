@@ -7,15 +7,9 @@
                 B3Onboarding::b3_errors()->add( 'error_no_nonce_match', esc_html__( 'Something went wrong, please try again.', 'b3-onboarding' ) );
             } else {
 
-                if ( class_exists( 'SitePress' ) ) {
-                    $current_language = apply_filters( 'wpml_current_language', null );
-                    $default_language = apply_filters( 'wpml_default_language', null );
+                $current_language = apply_filters( 'wpml_current_language', null );
+                $default_language = apply_filters( 'wpml_default_language', null );
 
-                } else {
-                    $language         = substr( get_bloginfo( 'language' ), 0, 2 );
-                    $current_language = $language;
-                    $default_language = $language;
-                }
                 if ( isset( $_POST[ 'b3_registration_type' ] ) ) {
                     $registration_type = sanitize_text_field( wp_unslash( $_POST[ 'b3_registration_type' ] ) );
                     update_option( 'b3_registration_type', $registration_type, false );
@@ -127,18 +121,18 @@
                     delete_option( 'b3_terms_text' );
                 }
 
-                if ( isset( $_POST[ 'b3_activate_privacy_page' ] ) && 1 == (int) $_POST[ 'b3_activate_privacy_page' ] ) {
+                if ( isset( $_POST[ 'b3_activate_privacy_page' ] ) && 1 === (int) $_POST[ 'b3_activate_privacy_page' ] ) {
                     update_option( 'b3_activate_privacy_page', 1, false );
 
                     if ( isset( $_POST[ 'b3_privacy_page_id' ] ) && ! empty( $_POST[ 'b3_privacy_page_id' ] ) ) {
                         update_option( 'b3_privacy_page_id', (int) $_POST[ 'b3_privacy_page_id' ], false );
-                    } elseif ( $current_language == $default_language) {
+                    } elseif ( $current_language === $default_language ) {
                         delete_option( 'b3_privacy_page_id' );
                     }
 
                     if ( isset( $_POST[ 'b3_privacy_text' ] ) && ! empty( $_POST[ 'b3_privacy_text' ] ) ) {
                         update_option( 'b3_privacy_text', wp_kses_post( wp_unslash( $_POST[ 'b3_privacy_text' ] ) ), false );
-                    } elseif ( $current_language == $default_language) {
+                    } elseif ( $current_language === $default_language ) {
                         delete_option( 'b3_privacy_text' );
                     }
 
@@ -589,7 +583,8 @@
                     delete_option( 'b3_recaptcha_theme' );
                 }
 
-                B3Onboarding::b3_errors()->add( 'success_settings_saved', sprintf( esc_html__( '%s settings saved', 'b3-onboarding' ), 'reCaptcha' ) );
+                /* translators: recaptcha (brand name, so translation) */
+                B3Onboarding::b3_errors()->add( 'success_settings_saved', sprintf( esc_html__( '%s settings saved', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ) );
             }
         }
     }

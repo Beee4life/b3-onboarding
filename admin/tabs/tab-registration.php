@@ -166,12 +166,14 @@
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php checked($activate_recaptcha); ?>/>
-                            <?php echo sprintf( esc_html__( 'Activate %s.', 'b3-onboarding' ), 'reCaptcha' ); ?>
+                            <?php /* translators: brand name (no translation) */ ?>
+                            <?php echo sprintf( esc_html__( 'Activate %s.', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?>
                             <?php $show_note = $activate_recaptcha ? false : true; ?>
                             <?php $hide_recaptcha_note = $activate_recaptcha ? false : ' hidden'; ?>
                             <?php if ( $show_note ) { ?>
                                 <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo esc_attr( $hide_recaptcha_note ); ?>">
-                                    <?php echo sprintf( esc_html__( 'See tab %s (after saving)', 'b3-onboarding' ), 'reCaptcha' ); ?>
+                                    <?php /* translators: brand name (no translation) */ ?>
+                                    <?php echo sprintf( esc_html__( 'See tab %s (after saving)', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?>
                                 </div>
                             <?php } ?>
                         </div>
