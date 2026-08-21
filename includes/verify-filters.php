@@ -7,6 +7,11 @@
      * @since 2.0.0
      */
     function b3_verify_filter_input() {
+        static $verify_filter_shown = false;
+
+        if ( $verify_filter_shown ) {
+            return;
+        }
 
         $error_messages = [];
         $custom_filters = [
@@ -44,15 +49,15 @@
             'b3_logged_in_registration_only_message'   => [ 'string' ],
             'b3_lost_password_message'                 => [ 'string' ],
             'b3_lost_password_subject'                 => [ 'string' ],
-            'b3_magic_link_message'                    => [ 'string' ], // @TODO: document on site
-            'b3_magic_link_subject'                    => [ 'string' ], // @TODO: document on site
+            'b3_magic_link_message'                    => [ 'string' ],
+            'b3_magic_link_subject'                    => [ 'string' ],
+            'b3_magic_link_time_out'                   => [ 'int' ],
             'b3_main_logo'                             => [ 'url', 'file' ],
             'b3_message_above_login'                   => [ 'string' ],
             'b3_message_above_lost_password'           => [ 'string' ],
             'b3_message_above_magic_link'              => [ 'string' ],
             'b3_message_above_new_blog'                => [ 'string' ],
             'b3_message_above_registration'            => [ 'string' ],
-            'b3_message_above_request_access'          => [ 'string' ],
             'b3_message_above_request_site'            => [ 'string' ],
             'b3_new_site_created_message'              => [ 'string' ],
             'b3_new_user_message'                      => [ 'string' ],
@@ -62,8 +67,6 @@
             'b3_new_wpmu_user_subject_admin'           => [ 'string' ],
             'b3_notification_sender_email'             => [ 'email' ],
             'b3_notification_sender_name'              => [ 'string' ],
-            'b3_magic_link_email'                      => [ 'string' ],
-            'b3_magic_link_time_out'                   => [ 'int' ],
             'b3_password_special_chars'                => [ 'bool' ],
             'b3_password_extra_special_chars'          => [ 'bool' ],
             'b3_preview_email_message'                 => [ 'string' ],
@@ -84,6 +87,7 @@
             'b3_show_first_last_name_account'          => [ 'bool' ],
             'b3_signup_for_site'                       => [ 'string' ],
             'b3_signup_for_user'                       => [ 'string' ],
+            'b3_skip_manual_confirmation'              => [ 'bool' ],
             'b3_terms_text'                            => [ 'string' ],
             'b3_user_cap'                              => [ 'string' ],
             'b3_welcome_page'                          => [ 'string' ],
@@ -102,6 +106,7 @@
         foreach( $custom_filters as $filter => $validation ) {
             $default       = ( in_array( $validation, [ 'array' ] ) ) ? [] : 'no_filter_defined';
             $filter_output = apply_filters( $filter, $default );
+
             if ( 'no_filter_defined' != $filter_output || is_array( $filter_output ) && empty( $filter_output ) ) {
                 if ( in_array( 'email', $validation ) ) {
                     if ( is_string( $filter_output ) ) {
@@ -240,9 +245,9 @@
 
         if ( ! empty( $error_messages ) ) {
             foreach( $error_messages as $message ) {
-                // TODO: test
                 echo sprintf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
             }
+            $verify_filter_shown = true;
         }
     }
     add_action( 'b3_verify_filter_input', 'b3_verify_filter_input' );

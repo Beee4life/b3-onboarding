@@ -31,7 +31,8 @@
             echo sprintf( '<li>%s</li>', esc_html__( 'registering with email address only', 'b3-onboarding' ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'use first/last name', 'b3-onboarding' ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'make first/last name required', 'b3-onboarding' ) );
-            echo sprintf( '<li>%s</li>', esc_html__( 'activate recaptcha', 'b3-onboarding' ) );
+            /* translators: brand name (no translation) */
+            echo sprintf( '<li>%s</li>', sprintf( esc_html__( 'activate %s', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'activate honeypot', 'b3-onboarding' ) );
             echo sprintf( '<li>%s</li>', esc_html__( 'activate privacy checkbox', 'b3-onboarding' ) );
             echo '</ul>';

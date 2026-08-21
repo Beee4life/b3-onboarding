@@ -12,12 +12,15 @@
         $disallowed_domains_string    = b3_get_disallowed_domain_names( 'string' );
         $disallowed_usernames_filter  = apply_filters( 'b3_disallowed_usernames', [] );
         $disallowed_usernames_string  = ! empty( $disallowed_usernames_filter ) ? implode( ',', $disallowed_usernames_filter ) : '';
-        $front_end_approval_page_id   = get_option( 'b3_approval_page_id' ); // @TODO: get from function
+        $email_only                   = get_option( 'b3_register_email_only' );
+        $front_end_approval_page_id   = b3_get_user_approval_url( true );
         $hide_admin_bar               = get_option( 'b3_hide_admin_bar' );
         $roles                        = get_editable_roles();
         $user_may_delete              = get_option( 'b3_user_may_delete' );
         $restrict_admin               = get_option( 'b3_restrict_admin' );
         $registration_type            = get_option( 'b3_registration_type' );
+        $username_restrictions        = get_option( 'b3_activate_username_restriction' );
+        $hide_username_restrictions   = $username_restrictions ? false : true;
         asort( $roles );
 
         ob_start();
@@ -77,10 +80,9 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php if ( ! is_multisite() ) { ?>
-                <?php b3_get_settings_field_open(); ?>
+            <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
-                <label for="b3_activate_welcome_page"><?php esc_html_e( 'Welcome page', 'b3-onboarding' ); ?></label>
+                    <label for="b3_activate_welcome_page"><?php esc_html_e( 'Welcome page', 'b3-onboarding' ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--checkbox">
                     <input type="checkbox" id="b3_activate_welcome_page" name="b3_activate_welcome_page" value="1" <?php checked($activate_welcome_page); ?>/>
@@ -91,36 +93,32 @@
                         <?php echo sprintf( esc_html__( 'This page can only be set with a filter (for now). See %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url('https://b3onboarding.berryplasman.com/filter/b3_welcome_page/'), esc_html__( 'here', 'b3-onboarding' ) ) ); ?>
                     </div>
                 </div>
-                <?php b3_get_close(); ?>
+            <?php b3_get_close(); ?>
 
-                <?php if ( $activate_welcome_page ) { ?>
-                    <?php b3_get_settings_field_open(); ?>
+            <?php if ( $activate_welcome_page ) { ?>
+                <?php b3_get_settings_field_open(); ?>
                     <?php b3_get_label_field_open(); ?>
-                    <label for="b3_remove_user_meta_seen"><?php esc_html_e( "Remove 'welcome_page_seen' meta", 'b3-onboarding' ); ?></label>
+                        <label for="b3_remove_user_meta_seen"><?php esc_html_e( "Remove 'welcome_page_seen' meta", 'b3-onboarding' ); ?></label>
                     <?php b3_get_close(); ?>
                     <div class="b3_settings-input b3_settings-input--checkbox">
                         <input type="checkbox" id="b3_remove_user_meta_seen" name="b3_remove_user_meta_seen" value="1"/>
                         <?php esc_html_e( "Clear the 'welcome_page_seen' meta for all users, so you can show a new page.", 'b3-onboarding' ); ?>
                     </div>
-                    <?php b3_get_close(); ?>
-                <?php } ?>
-
-                <?php b3_get_settings_field_open(); ?>
-                    <?php b3_get_label_field_open(); ?>
-                        <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
-                    <?php b3_get_close(); ?>
-                    <div class="b3_settings-input b3_settings-input--checkbox">
-                        <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php checked($hide_admin_bar); ?>/>
-                        <?php esc_html_e( "Hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
-                    </div>
                 <?php b3_get_close(); ?>
             <?php } ?>
 
-            <?php if ( ! is_multisite() && 'none' != $registration_type ) { ?>
+            <?php b3_get_settings_field_open(); ?>
+                <?php b3_get_label_field_open(); ?>
+                    <label for="b3_hide_admin_bar"><?php esc_html_e( 'Hide admin bar', 'b3-onboarding' ); ?></label>
+                <?php b3_get_close(); ?>
+                <div class="b3_settings-input b3_settings-input--checkbox">
+                    <input type="checkbox" id="b3_hide_admin_bar" name="b3_hide_admin_bar" value="1" <?php checked($hide_admin_bar); ?>/>
+                    <?php esc_html_e( "Hide the admin bar for user roles which don't have admin access.", 'b3-onboarding' ); ?>
+                </div>
+            <?php b3_get_close(); ?>
+
+            <?php if ( 'none' != $registration_type ) { ?>
                 <?php
-                    $email_only                 = get_option( 'b3_register_email_only' );
-                    $username_restrictions      = get_option( 'b3_activate_username_restriction' );
-                    $hide_username_restrictions = $username_restrictions ? false : true;
                 ?>
                 <?php if ( ! $email_only ) { ?>
                     <?php b3_get_settings_field_open(); ?>
@@ -134,8 +132,8 @@
                     <?php b3_get_close(); ?>
 
                     <?php b3_get_settings_field_open( $hide_username_restrictions, 'username-restrictions' ); ?>
-                    <?php if ( $disallowed_usernames_filter ) { $placeholder = sprintf( '%s (%s)', $disallowed_usernames_string, esc_html__( 'Set by filter', 'b3-onboarding' ) ); } else { $placeholder = esc_html__( 'Separate multiple usernames with a comma', 'b3-onboarding' ); } ?>
-                    <?php if ( $disallowed_usernames_filter ) { $value = ''; } else { $value = $disallowed_usernames_string; } ?>
+                        <?php if ( $disallowed_usernames_filter ) { $placeholder = $disallowed_usernames_string; } else { $placeholder = esc_html__( 'Separate multiple usernames with a comma', 'b3-onboarding' ); } ?>
+                        <?php if ( $disallowed_usernames_filter ) { $value = ''; } else { $value = $disallowed_usernames_string; } ?>
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_disallowed_usernames"><?php esc_html_e( 'User names', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
@@ -143,6 +141,7 @@
                             <?php // translators: link to function for 'default reserved usernames' ?>
                             <div class="b3_above_input"><?php echo sprintf( esc_html__( 'Some usernames are excluded already by default, see them %s.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', sprintf( '%s/function/b3_get_default_reserved_user_names/', esc_url( B3OB_PLUGIN_SITE ) ), esc_html__( 'here', 'b3-onboarding' ) ) ); ?></div>
                             <input type="text" id="b3_disallowed_usernames" name="b3_disallowed_usernames" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>"<?php if ( ! empty( $disallowed_usernames_filter ) && is_array( $disallowed_usernames_filter ) ) { ?> disabled<?php }?> />
+                            <?php if ( $disallowed_usernames_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                         </div>
                     <?php b3_get_close(); ?>
                 <?php } ?>
@@ -159,7 +158,7 @@
                 <?php b3_get_close(); ?>
 
                 <?php b3_get_settings_field_open( $hide_domain_settings, 'domain-restrictions' ); ?>
-                    <?php if ( $disallowed_domains_filter ) { $placeholder = sprintf( '%s (%s)', $disallowed_domains_string, esc_html__( 'Set by filter', 'b3-onboarding' ) ); } else { $placeholder = esc_html__( 'Separate multiple domain names with a comma', 'b3-onboarding' ); } ?>
+                    <?php if ( $disallowed_domains_filter ) { $placeholder = $disallowed_domains_string; } else { $placeholder = esc_html__( 'Separate multiple domain names with a comma', 'b3-onboarding' ); } ?>
                     <?php if ( $disallowed_domains_filter ) { $value = ''; } else { $value = $disallowed_domains_string; } ?>
 
                     <?php b3_get_label_field_open(); ?>
@@ -169,6 +168,7 @@
                     <div class="b3_settings-input b3_settings-input--text">
                         <?php echo sprintf( '<div>%s</div>', esc_html__( 'Email addresses from these domains are not allowed to register.', 'b3-onboarding' )); ?>
                         <input type="text" id="b3_disallowed_domains" name="b3_disallowed_domains" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>"<?php if ( ! empty( $disallowed_domains_filter ) && is_array( $disallowed_domains_filter ) ) { ?> disabled<?php } ?> />
+                        <?php if ( $disallowed_domains_filter ) { esc_html_e( 'Set by filter', 'b3-onboarding' ); } ?>
                     </div>
                 <?php b3_get_close(); ?>
             <?php } ?>
@@ -183,9 +183,8 @@
                         <?php esc_html_e( 'Allow the user to delete his/her account (through custom profile page).', 'b3-onboarding' ); ?>
                     </div>
                 <?php b3_get_close(); ?>
-
-                <?php b3_get_submit_button(); ?>
             <?php } ?>
+            <?php b3_get_submit_button(); ?>
         </form>
 
         <?php

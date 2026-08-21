@@ -32,7 +32,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
 
 <a name="version"></a>
 ### Version
-3.18.0 - released 04.08.26
+3.19.0 - released xx.08.26
 
 <a name="features"></a>
 ### Features
@@ -44,6 +44,7 @@ This plugin gives you all the freedom to change registration forms/emails. Also 
   * lost password
   * reset password
   * account
+* use magic link login
 * easily add custom fields to registration form
 * change various settings on the fly with the use of hooks/filters
 * (mostly) styled using [BEM](https://en.bem.info) methodology

@@ -15,7 +15,7 @@
             $fields[] = [
                 'id'          => 'email_template',
                 'title'       => __( 'Email template', 'b3-onboarding' ),
-                'placeholder' => b3_default_email_template(),
+                'placeholder' => b3_get_default_email_template(),
                 'preview'     => 'template',
                 'value'       => $stored_email_template,
                 'file_name'   => 'default-email-template.html',
@@ -24,7 +24,7 @@
             $fields[] = [
                 'id'          => 'email_styling',
                 'title'       => __( 'Email styling', 'b3-onboarding' ),
-                'placeholder' => b3_default_email_styling( b3_get_link_color() ),
+                'placeholder' => b3_get_default_email_styling( b3_get_link_color() ),
                 'preview'     => 'styling',
                 'value'       => $stored_email_styling,
                 'file_name'   => 'default-email-styling.css',
@@ -71,7 +71,19 @@
                         <?php echo wp_kses_post( b3_get_preview_link( $field[ 'preview' ] ) ); ?>
                         <small>(<?php esc_html_e( 'opens in new window', 'b3-onboarding' ); ?>)</small>
                         |
-                        <?php echo sprintf( '<a href="%s">%s</a> %s', esc_url( B3OB_PLUGIN_URL . 'includes/download.php?file=' . $field[ 'file_name' ] . '&sentby=b3' ), esc_html__( 'Click here', 'b3-onboarding' ), esc_html__( 'to download the default.', 'b3-onboarding' ) ); ?>
+                        <?php
+                            $query_args = [
+                                'action' => 'b3_download',
+                                'file'   => $field[ 'file_name' ],
+                            ];
+                            $download_url = add_query_arg( $query_args, admin_url( 'admin-post.php' ) );
+                            echo sprintf(
+                                '<a href="%s">%s</a> %s',
+                                esc_url( $download_url ),
+                                esc_html__( 'Click here', 'b3-onboarding' ),
+                                esc_html__( 'to download the default.', 'b3-onboarding' )
+                            );
+                        ?>
                     </p>
                 </div>
             <?php } ?>

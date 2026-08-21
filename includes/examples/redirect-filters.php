@@ -5,15 +5,7 @@
     ## Redirect filters ##
     ######################
 
-    /**
-     * Redirect after user register
-     *
-     * @since 2.0.0
-     *
-     * @param $url
-     *
-     * @return string
-     */
+    // Redirect after user register -must be full url
     function b3_redirect_after_register_example( $url ) {
         $login_url = b3_get_login_url();
         if ( false != $login_url ) {

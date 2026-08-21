@@ -28,19 +28,13 @@
 
                 if ( is_user_logged_in() && 'blog' != $registration_type ) {
                     return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( 'You are already logged in.', 'b3-onboarding' ) );
-                }
-
-                if ( $admin_approval && 'user' == $registration_type ) {
-                    $button_value = esc_attr__( 'Request user', 'b3-onboarding' );
-                } elseif ( $admin_approval ) {
-                    $button_value = esc_attr__( 'Request access', 'b3-onboarding' );
-                } else {
-                    $button_value = esc_attr__( 'Register', 'b3-onboarding' );
+                } elseif ( ! is_user_logged_in() && is_multisite() && ! is_main_site() ) {
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', esc_html__( "You can't register for this site.", 'b3-onboarding' ) );
                 }
 
                 $default_attributes = [
                     'button_modifier'   => 'register',
-                    'button_value'      => $button_value,
+                    'button_value'      => esc_attr__( 'Register', 'b3-onboarding' ),
                     'template'          => 'register',
                     'title'             => false,
                 ];
@@ -48,20 +42,13 @@
                 $attributes                        = shortcode_atts( $default_attributes, $shortcode_args );
                 $attributes[ 'registration_type' ] = $registration_type;
 
-                if ( $admin_approval && ! isset( $_GET[ 'registered' ] ) ) {
-                    if ( 'user' === $registration_type ) {
-                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user.', 'b3-onboarding' ) );
-                    } elseif ( 'all' === $registration_type ) {
-                        $attributes[ 'messages' ][] = apply_filters( 'b3_message_above_request_site', esc_html__( 'You have to request access to register a user or site.', 'b3-onboarding' ) );
-                    }
-                }
-
-                if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === $_REQUEST[ 'registered' ] ) {
+                if ( isset( $_REQUEST[ 'registered' ] ) && 'new_blog' === sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) ) {
                     // @TODO: Improve/DRY this
                     if ( ! empty( $_GET[ 'site_id' ] ) ) {
-                        switch_to_blog( (int) $_GET[ 'site_id' ] );
+                        $site_id = (int) $_GET[ 'site_id' ];
+                        switch_to_blog( $site_id );
                         $home_url  = home_url( '/' );
-                        $site_info = get_site( (int) $_GET[ 'site_id' ] );
+                        $site_info = get_site( $site_id );
                         $admin_url = apply_filters( 'b3_dashboard_url', admin_url( '/' ), $site_info );
                         restore_current_blog();
 
@@ -99,39 +86,30 @@
                     $attributes[ 'errors' ] = [];
                     if ( isset( $_REQUEST[ 'registration-error' ] ) ) {
                         $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'registration-error' ] ) ) );
-                        $error_count = 1;
+
                         foreach ( $error_codes as $error_code ) {
-                            if ( 1 === count( $error_codes ) ) {
-                                $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, false );
-                            } else {
-                                if ( 1 < $error_count ) {
-                                    // 2 errors only occurs with extra fields
-                                    if ( strpos( $error_code, 'field_' ) !== false ) {
-                                        $field_id           = substr( $error_code, 6 );
-                                        $extra_field_values = apply_filters( 'b3_extra_fields', [] );
-                                        $column             = array_column( $extra_field_values, 'id' );
-                                        $key                = array_search( $field_id, $column );
+                            if ( strpos( $error_code, 'empty_field' ) !== false ) {
+                                $field_id           = substr( $error_code, 12 );
+                                $error_code         = 'empty_field';
+                                $extra_field_values = apply_filters( 'b3_extra_fields', [] );
+                                $column             = array_column( $extra_field_values, 'id' );
+                                $key                = array_search( $field_id, $column );
 
-                                        if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
-                                            $label                    = $extra_field_values[ $key ][ 'label' ];
-                                            $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_codes[ 0 ], $label );
-                                        }
-
-                                    } else {
-                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
+                                if ( false !== $key ) {
+                                    if ( isset( $extra_field_values[ $key ][ 'label' ] ) ) {
+                                        $label                    = sanitize_text_field( wp_unslash( $extra_field_values[ $key ][ 'label' ] ) );
+                                        $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code, $label );
                                     }
                                 }
+
+                            } else {
+                                $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                             }
-                            $error_count++;
                         }
 
                     } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                        if ( 'access_requested' === $_REQUEST[ 'registered' ] ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'access_requested' );
-                        } elseif ( 'dummy' === $_REQUEST[ 'registered' ] ) {
-                            // dummy is for demonstration setup
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'dummy' );
-                        }
+                        $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
+                        return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( $registered_var ) );
                     }
 
                     if ( get_option( 'b3_activate_recaptcha' ) && 'register' === $attributes[ 'template' ] ) {
@@ -144,7 +122,6 @@
                         ];
                     }
 
-                    // @TODO: check if can be replaced with attributes['errors']
                     B3Onboarding::b3_show_admin_notices();
 
                     $attributes = apply_filters( 'b3_attributes', $attributes );
@@ -174,24 +151,26 @@
                 $attributes[ 'redirect' ]          = false;
 
                 if ( isset( $_REQUEST[ 'redirect_to' ] ) ) {
-                    $attributes[ 'redirect' ] = wp_validate_redirect( sanitize_text_field( wp_unslash( $_REQUEST[ 'redirect_to' ] ) ), $attributes[ 'redirect' ] );
+                    $redirect_to              = sanitize_text_field( wp_unslash( $_REQUEST[ 'redirect_to' ] ) );
+                    $attributes[ 'redirect' ] = wp_validate_redirect( $redirect_to, $attributes[ 'redirect' ] );
                 }
 
-                // @TODO: create function for this
+                // @TODO: create function for this IF
                 if ( isset( $_REQUEST[ 'login' ] ) || isset( $_REQUEST[ 'error' ] ) ) {
                     if ( isset( $_REQUEST[ 'login' ] ) ) {
-                        if ( 'enter_code' === $_REQUEST[ 'login' ] ) {
+                        $login_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) );
+                        if ( 'enter_code' === $login_var ) {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log('class-b3-shortcodes.php line 185');
+                            error_log('class-b3-shortcodes.php line 164');
+
                             if ( isset( $_REQUEST[ 'otpcode' ] ) ) {
-                                // enter code
                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                                error_log('class-b3-shortcodes.php line 189');
+                                error_log('class-b3-shortcodes.php line 168');
                             } else {
                                 $error_codes = explode( ',', 'enter_code' );
                             }
                         } else {
-                            $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'login' ] ) ) );
+                            $error_codes = explode( ',', $login_var );
                         }
                     } elseif ( isset( $_REQUEST[ 'error' ] ) ) {
                         $error_codes = explode( ',', sanitize_text_field( wp_unslash( $_REQUEST[ 'error' ] ) ) );
@@ -201,40 +180,60 @@
                         $errors[] = $this->b3_get_return_message( $code );
                     }
 
-                } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                    if ( is_multisite() ) {
-                        if ( 'access_requested' === $_REQUEST[ 'registered' ] ) {
-                            // access_requested
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'access_requested' );
-                        } else {
-                            /* translators: site name */
-                            $attributes[ 'messages' ][] = sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) );
-                        }
-                    } else {
-                        if ( in_array( $_REQUEST[ 'registered' ], [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
-                            $attributes[ 'messages' ][] = $this->b3_get_return_message( sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) );
+                } elseif ( isset( $_REQUEST[ 'message' ] ) ) {
+                    $message_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'message' ] ) );
+                    return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( $message_var ) );
 
-                        } elseif ( 'success' === $_REQUEST[ 'registered' ] ) {
+                } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
+                    $registered_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) );
+
+                    if ( is_multisite() ) {
+                        /* translators: site name */
+                        return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', sprintf( esc_html__( 'You have successfully registered to %s. We have emailed you an activation link.', 'b3-onboarding' ), sprintf( '<strong>%s</strong>', get_site_option( 'site_name' ) ) ) );
+
+                    } else {
+                        if ( in_array( $registered_var, [ 'access_requested', 'confirm_email', 'dummy' ] ) ) {
+                            return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( $registered_var ) );
+
+                        } elseif ( 'magic' === $registered_var ) {
+                            $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
+
+                        } elseif ( 'success' === $registered_var ) {
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success' );
+
                         } else {
                             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log( 'FIX ELSE - line 220 class-b3-shortcodes.php' );
+                            error_log( 'FIX ELSE - line 206 class-b3-shortcodes.php' );
                             $attributes[ 'messages' ][] = $this->b3_get_return_message( '' );
                         }
                     }
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success_approval' === $_REQUEST[ 'activate' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_approval' );
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === $_REQUEST[ 'activate' ] ) {
-                    $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
-                } elseif ( isset( $_REQUEST[ 'mu-activate' ] ) && 'success' === $_REQUEST[ 'mu-activate' ] ) {
+
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) ) {
+                    $activate_var = sanitize_text_field( wp_unslash( $_REQUEST[ 'activate' ] ) );
+
+                    if ( 'magic' === $activate_var ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success_magic' );
+
+                    } elseif ( 'success_approval' === $activate_var ) {
+                        return sprintf( '<div class="b3-form-container"><p class="b3_message">%s</p></div>', $this->b3_get_return_message( 'activate_success_approval' ) );
+
+                    } elseif ( 'success' === $activate_var ) {
+                        $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
+                    }
+
+                } elseif ( isset( $_REQUEST[ 'mu-activate' ] ) && 'success' === sanitize_text_field( wp_unslash( $_REQUEST[ 'mu-activate' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'mu_activate_success' );
-                } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' === $_REQUEST[ 'password' ] ) {
+
+                } elseif ( isset( $_REQUEST[ 'password' ] ) && 'changed' === sanitize_text_field( wp_unslash( $_REQUEST[ 'password' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'password_updated' );
-                } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' === $_REQUEST[ 'checkemail' ] ) {
+
+                } elseif ( isset( $_REQUEST[ 'checkemail' ] ) && 'confirm' === sanitize_text_field( wp_unslash( $_REQUEST[ 'checkemail' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'lost_password_sent' );
-                } elseif ( isset( $_REQUEST[ 'logout' ] ) && 'true' === $_REQUEST[ 'logout' ] ) {
+
+                } elseif ( isset( $_REQUEST[ 'logout' ] ) && 'true' === sanitize_text_field( wp_unslash( $_REQUEST[ 'logout' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'logged_out' );
-                } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' === $_REQUEST[ 'account' ] ) {
+
+                } elseif ( isset( $_REQUEST[ 'account' ] ) && 'removed' === sanitize_text_field( wp_unslash( $_REQUEST[ 'account' ] ) ) ) {
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'account_remove' );
                 }
 
@@ -242,9 +241,8 @@
                     $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
                     $attributes[ 'form_action' ]  = b3_get_login_url();
                     $attributes[ 'template' ]     = 'magiclink';
-                    $use_magiclink_and_password   = get_option( 'b3_use_magic_link_password' );
 
-                    if ( $use_magiclink_and_password ) {
+                    if ( get_option( 'b3_use_magic_link_password' ) && ( is_multisite() || get_option( 'b3_activate_custom_passwords' ) ) ) {
                         $attributes[ 'button_modifier2' ] = esc_attr( 'use-password', 'b3-onboarding' );
                         $attributes[ 'button_value2' ]    = esc_attr__( 'Use password', 'b3-onboarding' );
                         $attributes[ 'template' ]         = 'magic-password';
@@ -277,19 +275,19 @@
                     foreach ( $error_codes as $error_code ) {
                         $attributes[ 'errors' ][] = $this->b3_get_return_message( $error_code );
                     }
-                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === $_REQUEST[ 'activate' ] ) {
+                } elseif ( isset( $_REQUEST[ 'activate' ] ) && 'success' === sanitize_text_field( wp_unslash( $_REQUEST[ 'activate' ] ) ) ) {
                     // you can now log in... should this be here ?
                     $attributes[ 'messages' ][] = $this->b3_get_return_message( 'activate_success' );
                 } elseif ( isset( $_REQUEST[ 'registered' ] ) ) {
-                    if ( 'success' === $_REQUEST[ 'registered' ] ) {
+                    if ( 'success' === sanitize_text_field( wp_unslash( $_REQUEST[ 'registered' ] ) ) ) {
                         $attributes[ 'messages' ][] = $this->b3_get_return_message( 'registration_success_enter_password' );
                     }
                 }
 
                 if ( get_option( 'b3_use_magic_link' ) ) {
-                    $attributes[ 'button_value' ] = esc_attr__( 'Get magic link', 'b3-onboarding' );
-                    $attributes[ 'form_action' ]  = b3_get_login_url();
-                    // $attributes[ 'template' ]     = 'magiclink';
+                    $attributes[ 'button_modifier2' ] = esc_attr( 'use-magic', 'b3-onboarding' );
+                    $attributes[ 'button_value2' ]    = esc_attr__( 'Use magic link', 'b3-onboarding' );
+                    $attributes[ 'form_action' ]      = b3_get_login_url();
                 }
 
                 $attributes = apply_filters( 'b3_attributes', $attributes );
@@ -411,8 +409,22 @@
 
                         if ( false === $results ) {
                             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-                            $attributes[ 'users' ] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %i WHERE active = '0'", $wpdb->signups ) );
-                            wp_cache_set( $cache_key, $attributes['users'], $cache_group, 3600 );
+                            if ( is_multisite() ) {
+                                $site_id = ! is_main_site() ? get_current_blog_id() : 0;
+                                $meta_query = [
+                                    [
+                                        'key'   => 'pending',
+                                        'value' => '1',
+                                    ],
+                                ];
+                                $approval_args  = [ 'blog_id' => 0, 'meta_query' => $meta_query ];
+
+                            } else {
+                                $approval_args  = [ 'role' => 'b3_approval' ];
+                            }
+
+                            $attributes[ 'users' ] = get_users( $approval_args );
+                            wp_cache_set( $cache_key, $attributes[ 'users' ], $cache_group, 3600 );
                             // @TODO: clear after any signup
                         }
                     } else {

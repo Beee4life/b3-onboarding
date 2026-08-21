@@ -24,7 +24,7 @@
             <label for="b3__input--magic-link__subject"><?php esc_html_e( 'Email subject', 'b3-onboarding' ); ?></label>
         </th>
         <td>
-            <input id="b3__input--magic-link__subject" name="b3_magic_link_subject" placeholder="<?php echo esc_attr( b3_default_magic_link_subject() ); ?>" type="text" value="<?php echo esc_attr( $magic_link_subject ); ?>" />
+            <input id="b3__input--magic-link__subject" name="b3_magic_link_subject" placeholder="<?php echo esc_attr( b3_get_default_magic_link_subject() ); ?>" type="text" value="<?php echo esc_attr( $magic_link_subject ); ?>" />
         </td>
     </tr>
     <tr>
@@ -34,7 +34,7 @@
             <?php echo wp_kses_post( b3_get_preview_link( 'magiclink' ) ); ?>
         </th>
         <td>
-            <textarea id="b3__input--magic-link__message" name="b3_magic_link_message" placeholder="<?php echo esc_attr( b3_default_magic_link_message( '123', '%s' ) ); ?>" rows="6"><?php echo esc_textarea( $magic_link_message ); ?></textarea>
+            <textarea id="b3__input--magic-link__message" name="b3_magic_link_message" placeholder="<?php echo esc_attr( b3_get_default_magic_link_message( '123', '%s' ) ); ?>" rows="6"><?php echo esc_textarea( $magic_link_message ); ?></textarea>
         </td>
     </tr>
     <tr>

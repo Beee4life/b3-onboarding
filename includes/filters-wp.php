@@ -99,16 +99,15 @@
 
         if ( $current_user->ID != $user_object->ID && isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
             $request_uri = urlencode( esc_url( sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) ) );
-            if ( $admin_approval ) {
-                if ( in_array( 'b3_approval', (array) $user_object->roles ) ) {
-                    unset( $actions[ 'resetpassword' ] );
-                    $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
-                        add_query_arg( 'wp_http_referer', $request_uri,
-                            wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
-                        ),
-                        esc_attr__( 'Activate', 'b3-onboarding' )
-                    );
-                }
+
+            if ( $admin_approval && in_array( 'b3_approval', (array) $user_object->roles ) ) {
+                unset( $actions[ 'resetpassword' ] );
+                $actions[ 'activate' ] = sprintf( '<a href="%1$s">%2$s</a>',
+                    add_query_arg( 'wp_http_referer', $request_uri,
+                        wp_nonce_url( 'users.php?action=activate&amp;user_id=' . $user_object->ID, 'manual-activation' )
+                    ),
+                    esc_attr__( 'Activate', 'b3-onboarding' )
+                );
 
             } elseif ( 'email_activation' === $registration_type ) {
                 if ( in_array( 'b3_activation', (array) $user_object->roles ) ) {
@@ -142,23 +141,50 @@
     }
     add_filter( 'authenticate', 'b3_maybe_redirect_at_authenticate', 101, 3 );
 
-    // Filter for banned domains in email validation MU signup
-    function b3_check_domain_user_email( $result ) {
+    // Filter for user validation MU signup
+    function b3_validate_user_signup( $result ) {
+        if ( get_option( 'b3_activate_username_restriction' ) ) {
+            $user_name   = $result[ 'user_name' ];
+            $verify_user = b3_verify_user_name( $user_name );
+
+            if ( false === $verify_user ) {
+                $result[ 'errors' ]->add(
+                    'error_banned_username',
+                    esc_html__( "We're sorry, that username is blocked from registering.", 'b3-onboarding' )
+                );
+            }
+        }
+
         if ( get_option( 'b3_activate_domain_restriction' ) ) {
             $email         = $result[ 'user_email' ];
             $verify_domain = b3_verify_email_domain( $email );
 
             if ( false === $verify_domain ) {
-                $new_errors = new WP_Error();
-                $new_errors->add( 'error_banned_domain', esc_html__( "We're sorry, that domain is blocked from registering.", 'b3-onboarding' ) );
-
-                $result[ 'errors' ][] = $new_errors;
+                $result[ 'errors' ]->add(
+                    'error_banned_domain',
+                    esc_html__( "We're sorry, that domain is blocked from registering.", 'b3-onboarding' )
+                );
             }
         }
 
         return $result;
     }
-    add_filter( 'wpmu_validate_user_signup', 'b3_check_domain_user_email' );
+    add_filter( 'wpmu_validate_user_signup', 'b3_validate_user_signup' );
+
+    // Validates allowed usernames during ADMIN creation only
+    function b3_check_username( $valid, $user_name ) {
+        $disallowed_names = b3_get_disallowed_usernames();
+
+        foreach( $disallowed_names as $name ) {
+            // If any disallowed string is in the user_name, mark $valid as false.
+            if ( $valid && false !== strpos( $user_name, $name ) ) {
+                $valid = false;
+            }
+        }
+
+        return $valid;
+    }
+    add_filter( 'validate_username', 'b3_check_username', 10, 2 );
 
     // Filters out any menu items for registered users/visitors
     function b3_filter_nav_menus( $items, $menu, $args ) {
@@ -194,26 +220,11 @@
     }
     add_filter( 'wp_get_nav_menu_items', 'b3_filter_nav_menus', 5, 3 );
 
-    // Validates allowed usernames
-    function b3_check_username( $valid, $user_name ) {
-        $disallowed_names = b3_get_disallowed_usernames();
-
-        foreach( $disallowed_names as $name ) {
-            // If any disallowed string is in the user_name, mark $valid as false.
-            if ( $valid && false !== strpos( $user_name, $name ) ) {
-                $valid = false;
-            }
-        }
-
-        return $valid;
-    }
-    add_filter( 'validate_username', 'b3_check_username', 10, 2 );
-
     // Hide password fields (if only magic link is active)
     function b3_show_password_fields( $show, $current_user ) {
         if ( get_option( 'b3_use_magic_link' ) ) {
             if ( ! get_option( 'b3_use_magic_link_password' ) ) {
-                $message = esc_html__( "You don't need a password anymore, you can login with a 'magic link'.", 'b3-onboarding' );
+                $message = esc_html__( "The site owner has disabled passwords and uses a 'magic link'.", 'b3-onboarding' );
                 $show    = sprintf( '<div class="b3_message">%s</div>', $message );
             }
         }
@@ -225,12 +236,12 @@
     // Remove admin bar for users who are not allowed to access admin
     function b3_remove_admin_bar( $show ) {
         $hide_admin_bar = get_option( 'b3_hide_admin_bar' );
-        if ( false != $hide_admin_bar ) {
+        if ( get_option( 'b3_hide_admin_bar' ) ) {
             $user             = wp_get_current_user();
             $restricted_roles = get_option( 'b3_restrict_admin' );
             $result           = ! empty( array_intersect( $restricted_roles, $user->roles ) );
 
-            if ( true === $result ) {
+            if ( true === $result || empty( $user->roles ) ) {
                 $show = false;
             }
         }
@@ -238,3 +249,15 @@
         return $show;
     }
     add_filter( 'show_admin_bar', 'b3_remove_admin_bar' );
+
+    // add custom meta for manually added users in MU
+    function b3_add_admin_created_signup_meta( $meta ) {
+        $is_admin_form = is_admin() || ( isset( $_POST[ '_wp_http_referer' ] ) && false !== strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) );
+
+        if ( $is_admin_form ) {
+            $meta[ 'manually_added' ] = true;
+        }
+
+        return $meta;
+    }
+    add_filter( 'signup_user_meta', 'b3_add_admin_created_signup_meta', 20 );

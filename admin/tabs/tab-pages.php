@@ -5,7 +5,7 @@
 
     // Render pages tab
     function b3_render_pages_tab() {
-        $b3_pages = b3_default_admin_pages();
+        $b3_pages = b3_get_default_admin_pages();
 
         foreach( $b3_pages as $b3_page ) {
             $b3_page_ids[] = (int) $b3_page[ 'page_id' ];
@@ -21,7 +21,6 @@
             'suppress_filters' => false,
         ] );
 
-        // @TODO: check in Sandbox (also without WPML) & in MS
         $current_language = apply_filters( 'wpml_current_language', null );
         $default_lang     = apply_filters( 'wpml_default_language', null );
 
@@ -98,14 +97,13 @@
                     <?php } ?>
 
                     <?php
+                        $page_id        = 0;
                         $stored_page_id = get_option( 'b3_' . $b3_page[ 'id' ] . '_id' );
                         if ( class_exists( 'SitePress' ) ) {
                             if ( $current_language !== $default_lang ) {
                                 $local_page_id = apply_filters( 'wpml_object_id', $stored_page_id, 'page', false, $current_language );
                                 if ( $local_page_id ) {
-                                    $page_id = $stored_page_id;
-                                } else {
-                                    $page_id = 0;
+                                    $page_id = $local_page_id;
                                 }
                             } else {
                                 $page_id = $stored_page_id;
@@ -114,10 +112,10 @@
                             $page_id = $active_page->ID;
                         }
 
-                        if ( isset( $page_id ) && get_post( (int) $page_id ) instanceof WP_Post ) {
+                        if ( get_post( (int) $page_id ) instanceof WP_Post ) {
                             ?>
                             <div class="b3_select-page__edit">
-                                <a href="<?php echo esc_url( get_edit_post_link(  $page_id ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
+                                <a href="<?php echo esc_url( get_edit_post_link( $page_id ) ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Edit', 'b3-onboarding' ); ?>">
                                     <?php esc_html_e( 'Edit', 'b3-onboarding' ); ?>
                                 </a>
                             </div>
@@ -128,11 +126,10 @@
                             </div>
                     <?php } ?>
                 </div>
-            <?php } // end foreach b3_pages ?>
+            <?php } // end foreach b3_pages
 
-            <?php echo sprintf( '<p><small>%s</small></p>', esc_html__( 'Links open in new tab/window.', 'b3-onboarding' ) ); ?>
+                echo sprintf( '<p><small>%s</small></p>', esc_html__( 'Links open in new tab/window.', 'b3-onboarding' ) );
 
-            <?php
                 // Note: don't show button otherwise page ids would be overwritten
                 if ( $current_language === $default_lang ) {
                     b3_get_submit_button();

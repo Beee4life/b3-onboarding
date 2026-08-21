@@ -13,7 +13,7 @@
         $secret_key_option = get_option( 'b3_recaptcha_secret' );
 
         ob_start();
-        echo sprintf( '<h2>%s</h2>', esc_html__( 'reCaptcha', 'b3-onboarding' ) );
+        echo '<h2>reCaptcha</h2>';
         ?>
         <p>
             <?php esc_html_e( 'Here you can set the reCaptcha settings.', 'b3-onboarding' ); ?>
@@ -26,7 +26,8 @@
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
-                    <label for="b3_recaptcha_version"><?php esc_html_e( 'reCaptcha version', 'b3-onboarding' ); ?></label>
+                    <?php /* translators: brand name (no translation) */ ?>
+                    <label for="b3_recaptcha_version"><?php echo sprintf( esc_html__( '%s version', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
@@ -61,7 +62,8 @@
 
             <?php b3_get_settings_field_open(); ?>
                 <?php b3_get_label_field_open(); ?>
-                    <label for="b3_recaptcha_theme"><?php esc_html_e( 'reCaptcha theme', 'b3-onboarding' ); ?></label>
+                    <?php /* translators: brand name (no translation) */ ?>
+                    <label for="b3_recaptcha_theme"><?php echo sprintf( esc_html__( '%s theme', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?></label>
                 <?php b3_get_close(); ?>
                 <div class="b3_settings-input b3_settings-input--radio">
                     <label>
@@ -71,7 +73,8 @@
                 </div>
             <?php b3_get_close(); ?>
 
-            <?php b3_get_submit_button( esc_attr__( 'Save reCaptcha', 'b3-onboarding' ) ); ?>
+            <?php /* translators: brand name (no translation) */ ?>
+            <?php b3_get_submit_button( sprintf( esc_attr__( 'Save %s', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ) ); ?>
         </form>
 
         <?php

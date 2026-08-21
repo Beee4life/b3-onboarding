@@ -23,14 +23,23 @@ jQuery(function($){
             .attr('id', 'b3_login_nonce');
     });
 
+    $(document).on('click', '.button-submit--use-magic', function (e) {
+        e.preventDefault();
+        window.location.href = b3ob_vars.login_url;
+    });
+
     $(document).on('click', '.button-submit--use-password', function (e) {
         e.preventDefault();
         magiclink_form.hide();
         password_form.show();
 
-        const hide_login_message = (!(typeof ajax_vars !== 'undefined' && '' !== b3ob_vars.login_message));
+        let hide_login_message = true;
 
-        if ( true === hide_login_message ) {
+        if ('' !== b3ob_vars.login_message) {
+            hide_login_message = false;
+        }
+
+        if ( hide_login_message ) {
             $('.b3_message').hide();
         }
 

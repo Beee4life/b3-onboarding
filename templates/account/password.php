@@ -54,7 +54,7 @@
         </div>
     <?php } elseif ( is_string( $show_password_fields ) ) { ?>
         <div class="b3_form-element b3_form-element--password">
-            <?php echo esc_html( $show_password_fields ); ?>
+            <?php echo wp_kses_post( $show_password_fields ); ?>
         </div>
     <?php } ?>
 

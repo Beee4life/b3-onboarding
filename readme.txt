@@ -1,10 +1,10 @@
 === B3 OnBoarding ===
 Contributors: Beee, mrjohnmc
 Tags: user management, registration, login, lost password, account
-Requires at least: 6.2
-Tested up to: 7.0
+Requires at least: 6.7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.18.0
+Stable tag: 3.19.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -27,8 +27,25 @@ There are a ton of things, which you can set through the admin pages or with the
 
 == Changelog ==
 
+3.19.0
+* improve download of default template/css
+* improve message above login on magic link + password option
+* disable filtered input settings
+* add admin users tab for multisite
+* fix magic link for multisite
+* added a lot of improvements for WPMU and user approval
+* improved error messaging for WPMU
+* do single site user validation in one function
+
 3.18.0
 * add option to send test email
+* re-activated login in popup option
+* improved form messages
+* added new filters
+  * b3_message_above_magic_link
+  * b3_show_first_last_name_account
+* changed meta keys to reflect their function better
+  * b3_activate_login_popup
 
 3.17.0
 * added option to choose magic link or password
@@ -186,7 +203,7 @@ There are a ton of things, which you can set through the admin pages or with the
 * added option to request access to create a site (multisite)
 * added reCaptcha v3
 * added user input for disallowed usernames
-* alot of MU stuff
+* a lot of MU stuff
 
 For older changelogs see the [website](https://b3onboarding.berryplasman.com).
 

@@ -5,27 +5,35 @@
 
     // Render registration tab
     function b3_render_registration_tab() {
-        $activate_recaptcha           = get_option( 'b3_activate_recaptcha' ); // @TODO: add filter
+        $activate_recaptcha           = get_option( 'b3_activate_recaptcha' );
         $custom_passwords             = get_option( 'b3_activate_custom_passwords' );
         $first_last                   = get_option( 'b3_activate_first_last' );
         $first_last_required          = get_option( 'b3_first_last_required' );
-        $activate_honeypot            = get_option( 'b3_activate_honeypot' ); // @TODO: add filter
+        $activate_honeypot            = get_option( 'b3_activate_honeypot' );
         $activate_privacy_page        = get_option( 'b3_activate_privacy_page' );
         $activate_terms_page          = get_option( 'b3_activate_terms_page' );
         /* translators: click here link */
         $default_accept_placeholder   = sprintf( esc_attr__( '%s for more info.', 'b3-onboarding' ), sprintf( '<a href="">%s</a>', esc_attr__( 'Click here', 'b3-onboarding' ) ) );
+        $hide_custom_passwords        = false;
         $needs_admin_approval         = get_option( 'b3_needs_admin_approval' );
-        $privacy_page                 = get_option( 'b3_privacy_page_id' );
+        $privacy_page                 = get_option( 'b3_privacy_page_id' ); // @TODO: add filter
         $privacy_placeholder          = apply_filters( 'b3_privacy_text', $default_accept_placeholder );
         $privacy_text                 = apply_filters( 'b3_privacy_text', '' ) ? '' : get_option( 'b3_privacy_text' );
         $redirect_set_password        = get_option( 'b3_redirect_set_password' );
         $registration_type            = get_option( 'b3_registration_type' );
         $registration_with_email_only = get_option( 'b3_register_email_only' );
-        $terms_page                   = get_option( 'b3_terms_page_id' );
+        $terms_page                   = get_option( 'b3_terms_page_id' ); // @TODO: add filter
         $terms_placeholder            = apply_filters( 'b3_terms_text', $default_accept_placeholder );
         $terms_text                   = apply_filters( 'b3_terms_text', '' ) ? '' : get_option( 'b3_terms_text' );
         $use_magic_link               = get_option( 'b3_use_magic_link' );
         $use_magic_link_password      = get_option( 'b3_use_magic_link_password' );
+
+        if ( 'none' === $registration_type || ( $use_magic_link && ! $use_magic_link_password ) ) {
+            $hide_custom_passwords = true;
+        }
+
+        $current_language = apply_filters( 'wpml_current_language', null );
+        $default_lang     = apply_filters( 'wpml_default_language', null );
 
         ob_start();
 
@@ -59,7 +67,7 @@
                 <?php if ( 'none' === $registration_type ) { ?>
                     <?php $filter_message = htmlspecialchars( apply_filters( 'b3_registration_closed_message', false ) ); ?>
                     <?php $closed_message = htmlspecialchars( get_option( 'b3_registration_closed_message' ) ); ?>
-                    <?php $default_closed_message = b3_default_registration_closed_message(); ?>
+                    <?php $default_closed_message = b3_get_default_registration_closed_message(); ?>
                     <?php $placeholder_registration_closed = $filter_message ? $filter_message : $default_closed_message; ?>
 
                     <?php b3_get_settings_field_open(); ?>
@@ -67,11 +75,8 @@
                             <label for="b3_registration_closed_message"><?php esc_html_e( 'Registration closed message', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--text">
-                            <?php if ( false != $filter_message ) { ?>
-                                <?php echo sprintf( '<div class="filter-override">%s</div>', esc_html__( 'You have set a filter to override this setting', 'b3-onboarding' ) ); ?>
-                            <?php } ?>
-                            <input type="text" id="b3_registration_closed_message" name="b3_registration_closed_message" placeholder="<?php echo esc_attr( $placeholder_registration_closed ); ?>" value="<?php if ( $closed_message ) { echo wp_kses_post( $closed_message ); } ?>"/>
-                            <?php echo sprintf( '<div class="b3_settings-input-description">%s</div>', esc_html__( 'Links are allowed.','b3-onboarding' ) ); ?>
+                            <?php /* translators: link to settings tab */ ?>
+                            <?php echo sprintf( esc_html__( 'You can set a message for a closed registration on the "%s" tab.', 'b3-onboarding' ), sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=b3-onboarding&tab=settings' ) ), 'Settings' ) ); ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -96,11 +101,10 @@
                             <?php b3_get_close(); ?>
                             <div class="b3_settings-input b3_settings-input--checkbox">
                                 <input type="checkbox" id="b3_register_email_only" name="b3_register_email_only" value="1" <?php checked($registration_with_email_only); ?>/>
-                                <?php esc_html_e( 'Register with only an email address.', 'b3-onboarding' ); ?>
+                                <?php esc_html_e( 'Register without a user login.', 'b3-onboarding' ); ?>
                             </div>
                         <?php b3_get_close(); ?>
 
-                        <?php $hide_custom_passwords = ( in_array( $registration_type, [ 'none' ] ) ) ? true : false; ?>
                         <?php b3_get_settings_field_open( $hide_custom_passwords, 'custom-passwords' ); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_custom_passwords"><?php esc_html_e( 'Custom passwords', 'b3-onboarding' ); ?></label>
@@ -112,8 +116,7 @@
                         <?php b3_get_close(); ?>
                     <?php } ?>
 
-                    <?php $hide_extended_fields = $registration_with_email_only ? ' hidden' : false; ?>
-                    <div class="b3-name-fields<?php echo esc_attr( $hide_extended_fields ); ?>">
+                    <div class="b3-name-fields">
                         <?php b3_get_settings_field_open(); ?>
                             <?php b3_get_label_field_open(); ?>
                                 <label for="b3_activate_first_last"><?php esc_html_e( 'First and last name', 'b3-onboarding' ); ?></label>
@@ -157,31 +160,20 @@
                         </div>
                     <?php b3_get_close(); ?>
 
-                    <?php if ( 'open' === $registration_type ) { ?>
-                        <?php $hide_redirect_field = $custom_passwords ? true : false; ?>
-                        <?php b3_get_settings_field_open( $hide_redirect_field, 'redirect' ); ?>
-                            <?php b3_get_label_field_open(); ?>
-                                <label for="b3_redirect_set_password"><?php esc_html_e( 'Redirect after register', 'b3-onboarding' ); ?></label>
-                            <?php b3_get_close(); ?>
-                            <div class="b3_settings-input b3_settings-input--checkbox">
-                                <input type="checkbox" id="b3_redirect_set_password" name="b3_redirect_set_password" value="1" <?php checked($redirect_set_password); ?>/>
-                                <?php esc_html_e( 'Redirect to the (re)set password page, immediately after registration.', 'b3-onboarding' ); ?>
-                            </div>
-                        <?php b3_get_close(); ?>
-                    <?php } ?>
-
                     <?php b3_get_settings_field_open(); ?>
                         <?php b3_get_label_field_open(); ?>
-                            <label for="b3_activate_recaptcha"><?php esc_html_e( 'reCAPTCHA', 'b3-onboarding' ); ?></label>
+                            <label for="b3_activate_recaptcha">reCaptcha</label>
                         <?php b3_get_close(); ?>
                         <div class="b3_settings-input b3_settings-input--checkbox">
                             <input type="checkbox" id="b3_activate_recaptcha" name="b3_activate_recaptcha" value="1" <?php checked($activate_recaptcha); ?>/>
-                            <?php esc_html_e( 'Activate reCAPTCHA.', 'b3-onboarding' ); ?>
+                            <?php /* translators: brand name (no translation) */ ?>
+                            <?php echo sprintf( esc_html__( 'Activate %s.', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?>
                             <?php $show_note = $activate_recaptcha ? false : true; ?>
                             <?php $hide_recaptcha_note = $activate_recaptcha ? false : ' hidden'; ?>
                             <?php if ( $show_note ) { ?>
                                 <div class="b3_settings-input-description b3_settings-input-description--recaptcha<?php echo esc_attr( $hide_recaptcha_note ); ?>">
-                                    <?php esc_html_e( 'See tab reCaptcha (after saving)', 'b3-onboarding' ); ?>
+                                    <?php /* translators: brand name (no translation) */ ?>
+                                    <?php echo sprintf( esc_html__( 'See tab %s (after saving)', 'b3-onboarding' ), esc_html( 'reCaptcha' ) ); ?>
                                 </div>
                             <?php } ?>
                         </div>
@@ -223,7 +215,7 @@
                         <?php b3_get_label_field_open(); ?>
                             <label for="b3_terms_page_id"><?php esc_html_e( 'Terms page', 'b3-onboarding' ); ?></label>
                         <?php b3_get_close(); ?>
-                        <div class="b3_settings-input b3_settings-input--text">
+                        <div class="b3_settings-input b3_settings-input--select">
                             <?php
                                 $page_args = [
                                     'post_type'        => 'page',
@@ -233,13 +225,29 @@
                                     'suppress_filters' => false,
                                 ];
                                 $all_pages = get_posts( $page_args );
-                            ?>
-                            <select name="b3_terms_page_id" id="b3_terms_page_id">
-                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
-                                <?php foreach( $all_pages as $page ) { ?>
-                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($terms_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
-                                <?php } ?>
-                            </select>
+
+                                foreach( $all_pages as $b3_page ) {
+                                    $b3_page_ids[] = (int) $b3_page->ID;
+                                }
+
+                                if ( $current_language !== $default_lang ) {
+                                    // show what's set in default language with localized items
+                                    foreach( $all_pages as $active_page ) {
+                                        $translated_id = apply_filters( 'wpml_object_id', $active_page->ID, 'page', true, $default_lang );
+
+                                        if ( $translated_id == $terms_page ) {
+                                            echo esc_html__( 'Set page', 'b3-onboarding' ) . ' => ' . sprintf( '<a href="%s">%s</a>', esc_url( get_edit_post_link( $active_page->ID ) ), esc_attr( $active_page->post_title ) );
+                                        }
+                                    }
+                                } else {
+                                    ?>
+                                    <select name="b3_terms_page_id" id="b3_terms_page_id">
+                                        <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                                        <?php foreach( $all_pages as $page ) { ?>
+                                            <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($terms_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
+                                        <?php } ?>
+                                    </select>
+                            <?php } ?>
                         </div>
                     <?php b3_get_close(); ?>
 
@@ -279,13 +287,29 @@
                                     'suppress_filters' => false,
                                 ];
                                 $all_pages = get_posts( $page_args );
-                            ?>
-                            <select name="b3_privacy_page_id" id="b3_privacy_page_id">
-                                <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
-                                <?php foreach( $all_pages as $page ) { ?>
-                                    <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($privacy_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
-                                <?php } ?>
-                            </select>
+
+                                foreach( $all_pages as $b3_page ) {
+                                    $b3_page_ids[] = (int) $b3_page->ID;
+                                }
+
+                                if ( $current_language !== $default_lang ) {
+                                    // show what's set in default language with localized items
+                                    foreach( $all_pages as $active_page ) {
+                                        $translated_id = apply_filters( 'wpml_object_id', $active_page->ID, 'page', true, $default_lang );
+
+                                        if ( $translated_id == $privacy_page ) {
+                                            echo esc_html__( 'Set page', 'b3-onboarding' ) . ' => ' . sprintf( '<a href="%s">%s</a>', esc_url( get_edit_post_link( $active_page->ID ) ), esc_attr( $active_page->post_title ) );
+                                        }
+                                    }
+                                } else {
+                                    ?>
+                                    <select name="b3_privacy_page_id" id="b3_privacy_page_id">
+                                        <option value=""><?php esc_attr_e( 'Select a page', 'b3-onboarding' ); ?></option>
+                                        <?php foreach( $all_pages as $page ) { ?>
+                                            <option value="<?php echo esc_attr( $page->ID ); ?>"<?php echo selected($privacy_page, $page->ID); ?>><?php echo esc_attr( $page->post_title ); ?></option>
+                                        <?php } ?>
+                                    </select>
+                            <?php } ?>
                         </div>
                     <?php b3_get_close(); ?>
 

@@ -10,7 +10,7 @@
   margin-bottom: 1rem;
   padding:       5px 10px;
   position:      relative;
-  word-wrap:     initial;
+  word-wrap:     normal;
 }
 
 .b3_message p {
@@ -50,6 +50,14 @@
   padding:       0.375rem;
 }
 
+/* override specifically for password button */
+.b3_page form button {
+  border:    0;
+  font-size: 11px;
+  color:  #7c7c7c;
+  padding: 0.428571429rem 0.714285714rem;
+}
+
 .b3_page form .site-links,
 .b3_page form input[type="text"],
 .b3_page form input[type="email"],
@@ -85,8 +93,7 @@
 }
 
 .b3_page form .password-input {
-  display:    flex;
-  margin-top: 1rem;
+  display: flex;
 }
 
 .b3_page form .password-input .b3_form-label {

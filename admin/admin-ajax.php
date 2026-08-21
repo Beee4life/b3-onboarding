@@ -10,7 +10,7 @@
             wp_send_json_error( [ 'message' => __( 'Unauthorized user.', 'b3-onboarding' ) ] );
         }
 
-        $preview         = isset( $_POST[ 'preview' ] ) ? sanitize_text_field( $_POST[ 'preview' ] ) : '';
+        $preview         = isset( $_POST[ 'preview' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'preview' ] ) ) : '';
         $subject_message = b3_get_subject_message( $preview );
 
         if ( ! empty( $subject_message ) ) {
@@ -31,8 +31,6 @@
             } else {
                 wp_send_json_error( [ 'message' => __( 'Failed to send email.', 'b3-onboarding' ) ] );
             }
-        } else {
-            error_log( __( 'No subject and email.', 'b3-onboarding' ) );
         }
     }
     add_action( 'wp_ajax_b3_send_test_email', 'b3_handle_send_test_email' );

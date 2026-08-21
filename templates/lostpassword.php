@@ -16,7 +16,7 @@
         <?php echo sprintf( '<h3>%s</h3>', esc_html( $attributes[ 'title' ] ) ); ?>
     <?php } ?>
 
-    <?php if ( get_option( 'b3_use_magic_link' ) ) { ?>
+    <?php if ( get_option( 'b3_use_magic_link' ) && ! get_option( 'b3_use_magic_link_password' )  ) { ?>
         <?php $attributes[ 'template' ] = 'magiclink'; ?>
         <?php include 'magiclink/magiclink-form.php'; ?>
     <?php } else { ?>

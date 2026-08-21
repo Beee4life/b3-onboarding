@@ -3,52 +3,9 @@
         exit;
     }
 
-    /**
-     * Disable/filter password change notification mail (admin)
-     *
-     * @since 2.0.0
-     *
-     * @param $wp_mail
-     * @param $user
-     * @param $blogname
-     *
-     * @return mixed
-     */
-    function b3_password_changed_email_admin( $wp_mail, $user, $blogname ) {
-        /* translators: username */
-        $message = sprintf( esc_html__( 'Password changed for user: %s', 'b3-onboarding' ), $user->user_login );
-        $message = b3_replace_template_styling( $message );
-        $message = strtr( $message, b3_get_replacement_vars() );
-        $message = htmlspecialchars_decode( stripslashes( $message ) );
-        $subject = __( 'User changed password', 'b3-onboarding' ); // default: [blog name] Password changed
+    include 'filters-wp-mail-disable.php';
 
-        $wp_mail[ 'subject' ] = $subject;
-        $wp_mail[ 'message' ] = $message;
-
-        if ( get_option( 'b3_disable_admin_notification_password_change' ) ) {
-            $wp_mail = [
-                'to'      => false,
-                'subject' => false,
-                'message' => false,
-                'headers' => false,
-            ];
-        }
-
-        return $wp_mail;
-    }
-    add_filter( 'wp_password_change_notification_email', 'b3_password_changed_email_admin', 10, 3 );
-
-    /**
-     * Filter email change notification mail (user)
-     *
-     * @since 2.3.0
-     *
-     * @param $change_email
-     * @param $user
-     * @param $userdata
-     *
-     * @return mixed
-     */
+    // Filter email change notification mail (user)
     function b3_email_changed_email_user( $change_email, $user, $userdata ) {
         if ( get_option( 'b3_register_email_only' ) ) {
             $new_message = 'Hi,';
@@ -60,7 +17,7 @@
         $new_message               .= '<br><br>';
         $new_message               .= 'If you did not change your email, please contact the site administrator at ###ADMIN_EMAIL###.';
         $new_message               .= "\n<br>";
-        $new_message               .= b3_default_greetings();
+        $new_message               .= b3_get_default_greetings();
         $new_message               = b3_replace_template_styling( $new_message );
         $new_message               = strtr( $new_message, b3_get_replacement_vars() );
         $change_email[ 'message' ] = $new_message;
@@ -69,19 +26,7 @@
     }
     add_filter( 'email_change_email', 'b3_email_changed_email_user', 5, 3 );
 
-    /**
-     * Override new user notification for admin
-     *
-     * Filter: wp_new_user_notification_email_admin
-     *
-     * @since 1.0.6
-     *
-     * @param $wp_mail
-     * @param $user
-     * @param $blogname
-     *
-     * @return mixed
-     */
+    // Override new user notification for admin (single site)
     function b3_new_user_notification_email_admin( $wp_mail, $user, $blogname ) {
         if ( isset( $_POST[ '_wp_http_referer' ] ) && ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false || strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) ) {
             $wp_mail[ 'to' ] = '';
@@ -96,16 +41,11 @@
                 $wp_mail[ 'subject' ] = b3_get_request_access_subject_admin();
                 $admin_email          = b3_get_request_access_message_admin();
 
-            } elseif ( false != get_option( 'b3_disable_admin_notification_new_user' ) || in_array( $registration_type, [ 'email_activation' ] ) ) {
+            } elseif ( false != get_option( 'b3_disable_admin_notification_new_user' ) || 'email_activation' === $registration_type ) {
                 // we don't want the email when a user registers, but only when he/she activates
                 $wp_mail[ 'to' ] = '';
 
-            } elseif ( in_array( $registration_type, [ 'open' ] ) ) {
-                $wp_mail[ 'to' ]      = b3_get_notification_addresses( $registration_type );
-                $wp_mail[ 'subject' ] = b3_get_new_user_subject();
-                $admin_email          = b3_get_new_user_message();
-
-            } elseif ( in_array( $registration_type, [ 'blog' ] ) ) {
+            } elseif ( 'blog' === $registration_type ) {
                 $wp_mail[ 'to' ]      = b3_get_notification_addresses( $registration_type );
                 $wp_mail[ 'subject' ] = b3_get_new_wpmu_user_subject_admin();
                 $admin_email          = b3_get_new_wpmu_user_message_admin();
@@ -123,19 +63,7 @@
     }
     add_filter( 'wp_new_user_notification_email_admin', 'b3_new_user_notification_email_admin', 9, 3 );
 
-    /**
-     * Override new user notification email for user
-     *
-     * Filter: wp_new_user_notification_email
-     *
-     * @since 1.0.6
-     *
-     * @param $wp_mail
-     * @param $user
-     * @param $blogname
-     *
-     * @return mixed
-     */
+    // Override new user notification email for user (single site or MS add user to network or add site + user)
     function b3_new_user_notification_email( $wp_mail, $user, $blogname ) {
         $admin_approval    = get_option( 'b3_needs_admin_approval' );
         $registration_type = get_option( 'b3_registration_type' );
@@ -144,44 +72,40 @@
             // user is manually added
             if ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'user-new.php' ) !== false ) {
                 if ( isset( $_POST[ 'send_user_notification' ] ) && 1 == $_POST[ 'send_user_notification' ] ) {
-                    // user must get AN email, from WP or custom
+                    // user must get AN email, from WP or custom (single site)
+                    // @TODO: check confirm email
                     $wp_mail[ 'to' ]      = $user->user_email;
                     $wp_mail[ 'headers' ] = [];
                     $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                    $user_email           = b3_get_manual_welcome_user_message();
+                    $user_email           = b3_get_manual_welcome_user_message( $user->user_email );
+                } else {
+                    // @TODO: reformat links
+                    $user_email = nl2br( $wp_mail[ 'message' ] );
                 }
+
             } elseif ( strpos( sanitize_text_field( wp_unslash( $_POST[ '_wp_http_referer' ] ) ), 'site-new.php' ) !== false ) {
+                $wp_mail[ 'headers' ] = [];
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email           = b3_get_manual_welcome_user_message();
+                $user_email           = b3_get_manual_welcome_user_message( $user->user_email );
             }
 
         } else {
             $wp_mail[ 'to' ]      = $user->user_email;
             $wp_mail[ 'headers' ] = [];
 
-            if ( $admin_approval ) {
-                $wp_mail[ 'subject' ] = b3_get_request_access_subject_user();
-                $user_email           = b3_get_request_access_message_user();
-
-            } elseif ( 'email_activation' === $registration_type ) {
+            if ( 'email_activation' === $registration_type ) {
                 $wp_mail[ 'subject' ] = b3_get_email_activation_subject_user();
                 $user_email           = b3_get_email_activation_message_user();
 
-            } elseif ( in_array( $registration_type, [ 'open', 'blog' ] ) ) {
+            } elseif ( 'blog' === $registration_type ) {
                 $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email           = b3_get_welcome_user_message();
-
-            } elseif ( 'none' === $registration_type ) {
-                $wp_mail[ 'subject' ] = b3_get_welcome_user_subject();
-                $user_email           = b3_get_manual_welcome_user_message();
+                $user_email           = b3_get_welcome_user_message( $user->user_email );
             }
         }
 
         if ( isset( $user_email ) ) {
             $user_email = b3_replace_template_styling( $user_email );
-            if ( $admin_approval ) {
-                $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
-            } elseif ( 'email_activation' === $registration_type ) {
+            if ( 'email_activation' === $registration_type ) {
                 $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ], true ) );
             } else {
                 $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [ 'user_data' => $user ] ) );
@@ -192,43 +116,27 @@
         }
 
         return $wp_mail;
-
     }
     add_filter( 'wp_new_user_notification_email', 'b3_new_user_notification_email', 10, 3 );
 
-    /**
-     * Disable admin email when registration is closed
-     *
-     * @param $status
-     * @param $site
-     * @param $user
-     *
-     * @since 3.1.0
-     *
-     * @return false|mixed
-     */
-    function b3_disable_admin_email( $status, $site, $user ) {
-        if ( 'none' === get_option( 'b3_registration_type' ) ) {
-            return false;
-        }
+    // user is manually added from within a site
+    function b3_new_user_notification_email_mu( $original_message, $user_login, $user_email, $key, $meta ) {
+        $link_element  = sprintf( '<a href="%s">%s</a>', '%activation_url%', strtoupper( esc_html__( 'Activate account', 'b3-onboarding' ) ) );
+        $button        = sprintf( '<div class="big-link">%s</div>', $link_element ) . "\n";
+        $big_link      = sprintf( '<div class="big-link-container">%s</div>', $button ) . "\n";
+        $email_message = nl2br( $original_message );
+        $email_message = str_replace( '%s', '<br>' . $big_link, $email_message );
+        $email_message .= b3_get_default_greetings();
+        $email_message = b3_replace_template_styling( $email_message );
+        $email_message = strtr( $email_message, b3_get_replacement_vars( 'message', [ 'key' => $key ], true ) );
+        $email_message = str_replace( '%', '%%', $email_message );
 
-        return $status;
+        return $email_message;
     }
-    add_filter( 'send_new_site_email', 'b3_disable_admin_email', 10, 3 );
+    add_filter( 'wpmu_signup_user_notification_email', 'b3_new_user_notification_email_mu', 20, 5 );
 
-    /**
-     * Filter to override new site email (New Site Created)
-     *
-     * @param $new_site_email
-     * @param $site
-     * @param $user
-     *
-     * @since 3.1.0
-     *
-     * @return mixed
-     */
+    // Filter to override new site email (New Site Created)
     function b3_new_site_email( $new_site_email, $site, $user ) {
-        // @TODO: add filter + (maybe) user input for message
         $user_email = b3_get_new_site_created_message();
         $user_email = b3_replace_template_styling( $user_email );
         $user_email = strtr( $user_email, b3_get_replacement_vars( 'message', [
@@ -242,17 +150,7 @@
     }
     add_filter( 'new_site_email', 'b3_new_site_email', 10, 3 );
 
-    /**
-     * Returns the message subject for the password reset mail.
-     *
-     * @since 1.0.6
-     *
-     * @param $subject
-     * @param $user_login
-     * @param $user_data
-     *
-     * @return mixed
-     */
+    // Returns the message subject for the password reset mail.
     function b3_replace_retrieve_password_subject( $subject, $user_login, $user_data ) {
         $b3_lost_password_subject = b3_get_lost_password_subject();
 
@@ -264,18 +162,7 @@
     }
     add_filter( 'retrieve_password_title', 'b3_replace_retrieve_password_subject', 10, 3 );
 
-    /**
-     * Returns the message body for the password reset mail.
-     *
-     * @since 1.0.6
-     *
-     * @param string  $message    Default mail message.
-     * @param string  $key        The activation key.
-     * @param string  $user_login The username for the user.
-     * @param WP_User $user_data  WP_User object.
-     *
-     * @return string   The mail message to send.
-     */
+    // Returns the message body for the password reset mail.
     function b3_replace_retrieve_password_message( $message, $key, $user_login, $user_data ) {
         $lost_password_message = b3_get_lost_password_message();
 
@@ -293,15 +180,7 @@
     }
     add_filter( 'retrieve_password_message', 'b3_replace_retrieve_password_message', 10, 4 );
 
-    /**
-     * Change content of password changed email (when user changed, when logged in)
-     *
-     * @param $pass_change_email
-     * @param $user
-     * @param $userdata
-     *
-     * @return array|bool
-     */
+    // Change content of password changed email (when user changed, when logged in)
     function b3_content_password_change_notification( $pass_change_email, $user, $userdata ) {
         // if admin disabled user notification option
         if ( get_option( 'b3_disable_user_notification_password_change' ) ) {
@@ -350,68 +229,7 @@
     }
     add_filter( 'password_change_email', 'b3_content_password_change_notification', 10, 3 );
 
-    /**
-     * Disable WPMU user signup email to take it over
-     *
-     * @param       $user_login
-     * @param       $user_email
-     * @param       $key
-     * @param array $meta
-     *
-     * @return false
-     */
-    function b3_disable_wpmu_user_signup_notification( $user_login, $user_email, $key, $meta = [] ) {
-        return false;
-    }
-    add_filter( 'wpmu_signup_user_notification', 'b3_disable_wpmu_user_signup_notification', 10, 5 );
-
-    /**
-     * Disable WPMU user welcome email to take it over
-     *
-     * @param $user_id
-     * @param $password
-     * @param $meta
-     *
-     * @return false
-     */
-    function b3_disable_welcome_mu_user_email( $user_id, $password, $meta ) {
-        return false;
-    }
-    add_filter( 'wpmu_welcome_user_notification', 'b3_disable_welcome_mu_user_email', 10, 3 );
-
-
-    /**
-     * Disable email for register site + user
-     *
-     * @return false
-     */
-    function b3_disable_signup_mu_user_blog_email() {
-        return false;
-    }
-    add_filter( 'wpmu_signup_blog_notification', 'b3_disable_signup_mu_user_blog_email' );
-
-    /**
-     * Disable new user mail with login credentials
-     *
-     * @param $blog_id
-     * @param $user_id
-     * @param $password
-     * @param $title
-     * @param $meta
-     *
-     * @return false
-     */
-    function b3_disable_welcome_mu_user_blog_email( $blog_id, $user_id, $password, $title, $meta ) {
-        return false;
-    }
-    add_filter( 'wpmu_welcome_notification', 'b3_disable_welcome_mu_user_blog_email', 10, 5 );
-
-    /**
-     * For filter 'wp_mail_from', returns a proper from-address when sending e-mails
-     *
-     * @param   string $original_email_address
-     * @return  string
-     */
+    // For filter 'wp_mail_from', returns a proper from-address when sending e-mails
     function b3_email_from( $original_email_address ) {
         // Make sure the email adress is from the same domain as your website to avoid being marked as spam.
         $from_email = b3_get_notification_sender_email();
@@ -424,12 +242,7 @@
     }
     add_filter( 'wp_mail_from', 'b3_email_from' );
 
-    /**
-     * For filter 'wp_mail_from_name', returns a proper from-name when sending e-mails
-     *
-     * @param   string $original_email_from
-     * @return  string
-     */
+    // For filter 'wp_mail_from_name', returns a proper from-name when sending e-mails
     function b3_email_from_name( $original_from_name ) {
         $sender_name = b3_get_notification_sender_name();
 
@@ -441,27 +254,13 @@
     }
     add_filter( 'wp_mail_from_name', 'b3_email_from_name' );
 
-    /**
-     * For filter 'wp_mail_content_type', overrides content-type
-     * Always return HTML
-     *
-     * @return  string
-     */
+    // For filter 'wp_mail_content_type', overrides content-type, always return HTML
     function b3_email_content_type( $content_type ) {
         return 'text/html';
     }
     add_filter( 'wp_mail_content_type', 'b3_email_content_type' );
 
-    /**
-     * Filter to change styling for multiple emails
-     *
-     * @param $email_content
-     * @param $new_email
-     *
-     * @return string
-     *
-     * @since 3.7.0
-     */
+    // Filter to change styling for multiple emails
     function b3_confirm_change_email( $email_content, $new_email ) {
         $search  = 'If this is correct, please click on the following link to change it:';
         $replace = 'If this is correct, please click ###HERE### to change it.';
@@ -474,7 +273,7 @@
         $email_content = str_replace( "\n###SITEURL###", '', $email_content );
         $email_content = str_replace( "\n", '<br>', $email_content );
         $email_content .= "\n<br>";
-        $email_content .= b3_default_greetings();
+        $email_content .= b3_get_default_greetings();
         $email_content = b3_replace_template_styling( $email_content );
         $email_content = strtr( $email_content, b3_get_replacement_vars() );
         $email_content = htmlspecialchars_decode( stripslashes( $email_content ) );
@@ -486,7 +285,7 @@
 
     function b3_after_change_email( $email_array, $old_email, $new_email ) {
         $email_array[ 'message' ] .= "\n<br>";
-        $email_array[ 'message' ] .= b3_default_greetings();
+        $email_array[ 'message' ] .= b3_get_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
         $email_array[ 'message' ] = strtr( $email_array[ 'message' ], b3_get_replacement_vars() );
         $email_array[ 'message' ] = htmlspecialchars_decode( stripslashes( $email_array[ 'message' ] ) );
@@ -497,7 +296,7 @@
 
     function b3_after_change_network_email( $email_array, $old_email, $new_email, $network_id ) {
         $email_array[ 'message' ] .= "\n<br>";
-        $email_array[ 'message' ] .= b3_default_greetings();
+        $email_array[ 'message' ] .= b3_get_default_greetings();
         $email_array[ 'message' ] = b3_replace_template_styling( $email_array[ 'message' ] );
         $email_array[ 'message' ] = strtr( $email_array[ 'message' ], b3_get_replacement_vars() );
         $email_array[ 'message' ] = htmlspecialchars_decode( stripslashes( $email_array[ 'message' ] ) );
@@ -506,17 +305,7 @@
     }
     add_filter( 'network_admin_email_change_email', 'b3_after_change_network_email', 10, 4 ); // after network admin email change
 
-    /**
-     * Filter to change styling for new admin email
-     *
-     * @param $email_content
-     * @param $new_email_address
-     *
-     * @return string
-     * @throws Exception
-     *
-     * @since 3.14.0
-     */
+    // Filter to change styling for new admin email
     function b3_filter_new_admin_email_content( $email_content, $new_email_address ) {
         $email_text = __(
             'Hi ###USERNAME###,
@@ -535,7 +324,7 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
         );
         $email_text = str_replace( "\n", '<br>', $email_text );
         $email_text .= "<br>";
-        $email_text .= b3_default_greetings();
+        $email_text .= b3_get_default_greetings();
         $admin_change_link = sprintf( '<a href="%s">%s</a>', '###ADMIN_URL###', '###ADMIN_URL###' );
         $email_text = str_replace( "###ADMIN_URL###", $admin_change_link, $email_text );
         $email_text = b3_replace_template_styling( $email_text );
@@ -546,16 +335,7 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
     }
     add_filter( 'new_admin_email_content', 'b3_filter_new_admin_email_content', 10, 2 ); // attempt change site admin email
 
-    /**
-     * Override 'invited user' email
-     *
-     * @param $new_user_email
-     * @param $user_id
-     * @param $role
-     * @param $newuser_key
-     *
-     * @return bool|string
-     */
+    // Override 'invited user' email
     function b3_override_email( $new_user_email, $user_id, $role, $newuser_key ) {
         $new_user_email = b3_replace_template_styling( $new_user_email[ 'message' ] );
 
@@ -563,13 +343,7 @@ This email has been sent to ###EMAIL###.', 'b3-onboarding'
     }
     add_filter( 'invited_user_email', 'b3_override_email', 10, 4 );
 
-    /**
-     * Just override email content/styling
-     *
-     * @param $content
-     *
-     * @return mixed
-     */
+    // Just override email content/styling
     function b3_override_styling( $content ) {
         $content = b3_replace_template_styling( $content );
         $content = htmlspecialchars_decode( stripslashes( $content ) );
