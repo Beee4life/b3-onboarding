@@ -28,7 +28,7 @@ There are a ton of things, which you can set through the admin pages or with the
 == Changelog ==
 
 3.20.0
-* ?
+* updated help tabs
 
 3.19.0
 * improve download of default template/css

@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 3.20.0
-* ?
+* updated help tabs
 
 3.19.0
 * improve download of default template/css
