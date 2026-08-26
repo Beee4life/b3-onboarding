@@ -3,7 +3,7 @@
     Plugin Name:        B3 OnBoarding
     Plugin URI:         https://b3onboarding.berryplasman.com
     Description:        This plugin styles the default WordPress pages into your own design. It gives you full control over the registration/login process (aka onboarding).
-    Version:            3.19.0
+    Version:            3.20.0-dev
     Requires at least:  6.7.0
     Tested up to:       7.1
     Requires PHP:       7.4
@@ -33,7 +33,7 @@
                 $this->settings = [
                     'path'              => trailingslashit( dirname( __FILE__ ) ),
                     'registration_type' => get_option( 'b3_registration_type', 'closed' ),
-                    'version'           => '3.19.0',
+                    'version'           => '3.20.0-dev',
                 ];
 
                 if ( ! defined( 'B3OB_PLUGIN_URL' ) ) {

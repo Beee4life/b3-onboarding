@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+3.20.0
+* updated help tabs
+
 3.19.0
 * improve download of default template/css
 * improve message above login on magic link + password option
@@ -8,7 +11,7 @@
 * fix magic link for multisite
 * added a lot of improvements for WPMU and user approval
 * improved error messaging for WPMU
-* do single site user validation in one function 
+* do single site user validation in one function
 
 3.18.0
 * add option to send test email

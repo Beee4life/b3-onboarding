@@ -79,8 +79,8 @@ msgstr ""
 
 #: B3Onboarding.php:307 B3Onboarding.php:1147 B3Onboarding.php:1157
 #: B3Onboarding.php:1178 admin/dashboard-widget-users.php:59
-#: admin/dashboard-widget-users.php:93 admin/help-tabs.php:105
-#: admin/tabs/tab-recaptcha.php:60 admin/tabs/tab-users.php:93
+#: admin/dashboard-widget-users.php:93 admin/help-tabs.php:141
+#: admin/tabs/tab-recaptcha.php:61 admin/tabs/tab-users.php:93
 #: admin/tabs/tab-users.php:142 includes/actions-b3.php:299
 #: includes/class-b3-shortcodes.php:62 includes/defaults.php:498
 #: includes/defaults.php:536
@@ -91,7 +91,7 @@ msgstr ""
 msgid "Site awaiting approval"
 msgstr ""
 
-#: B3Onboarding.php:387 admin/help-tabs.php:115 admin/help-tabs.php:130
+#: B3Onboarding.php:387 admin/help-tabs.php:112 admin/help-tabs.php:125
 #: admin/tabs/tab-settings.php:36 includes/class-b3-sidebar-widget.php:91
 #: includes/functions.php:799
 msgid "Settings"
@@ -195,7 +195,7 @@ msgstr ""
 msgid "An unkown error has occured. Please try again."
 msgstr ""
 
-#: B3Onboarding.php:1291 includes/form-handling.php:885
+#: B3Onboarding.php:1291 includes/form-handling.php:880
 msgid "Unlawful form entry, try again."
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "Profile saved"
 msgstr ""
 
-#: B3Onboarding.php:1486 includes/form-handling.php:710
+#: B3Onboarding.php:1486 includes/form-handling.php:705
 msgid "Settings saved"
 msgstr ""
 
@@ -598,8 +598,8 @@ msgstr ""
 msgid "not set"
 msgstr ""
 
-#: admin/help-tabs.php:27 admin/help-tabs.php:42
-#: admin/tabs/tab-registration.php:42 includes/functions.php:748
+#: admin/help-tabs.php:27 admin/help-tabs.php:46
+#: admin/tabs/tab-registration.php:40 includes/functions.php:748
 msgid "Registration"
 msgstr ""
 
@@ -612,152 +612,201 @@ msgid "The \"Registration\" tab has several options to change registration setti
 msgstr ""
 
 #: admin/help-tabs.php:31
-msgid "registering with email address only"
+msgid "activate admin approval"
 msgstr ""
 
 #: admin/help-tabs.php:32
-msgid "use first/last name"
+msgid "registering with email address only"
 msgstr ""
 
 #: admin/help-tabs.php:33
-msgid "make first/last name required"
+msgid "use first/last name"
 msgstr ""
 
 #: admin/help-tabs.php:34
+msgid "make first/last name required"
+msgstr ""
+
+#: admin/help-tabs.php:35
+msgid "activate magic link"
+msgstr ""
+
+#: admin/help-tabs.php:37
 #, php-format
 msgid "activate %s"
 msgstr ""
 
-#: admin/help-tabs.php:35
+#: admin/help-tabs.php:38
 msgid "activate honeypot"
 msgstr ""
 
-#: admin/help-tabs.php:36
+#: admin/help-tabs.php:39
+msgid "activate terms checkbox"
+msgstr ""
+
+#: admin/help-tabs.php:40
 msgid "activate privacy checkbox"
 msgstr ""
 
-#: admin/help-tabs.php:47 admin/help-tabs.php:56 admin/tabs/tab-pages.php:31
-#: includes/functions.php:791
-msgid "Pages"
-msgstr ""
-
-#: admin/help-tabs.php:48
-msgid "The \"Pages\" tab shows which pages are used for which action. The plugin relies on this, so make sure every action has a page set for it."
-msgstr ""
-
-#: admin/help-tabs.php:50
-msgid "Choose a page in your default language."
-msgstr ""
-
-#: admin/help-tabs.php:61 admin/help-tabs.php:90 admin/tabs/tab-emails.php:18
+#: admin/help-tabs.php:51 admin/help-tabs.php:60 admin/tabs/tab-emails.php:18
 #: includes/functions.php:756
 msgid "Emails"
 msgstr ""
 
-#: admin/help-tabs.php:62
+#: admin/help-tabs.php:52
+msgid "You can set the link color for the emails here, the logo and select whether to use our template or use your own."
+msgstr ""
+
+#: admin/help-tabs.php:53
 msgid "You can add any HTML you want in the email messages. Be sure to use the preview mode, before using it."
 msgstr ""
 
-#: admin/help-tabs.php:63
+#: admin/help-tabs.php:54
 msgid "Save yourself a lot of work per email and use the template option. This is then wrapped around each message."
 msgstr ""
 
-#: admin/help-tabs.php:64
-msgid "These are the available variables in emails."
-msgstr ""
-
-#: admin/help-tabs.php:66
-msgid "only in user activation email"
-msgstr ""
-
-#: admin/help-tabs.php:80
-msgid "available in every email"
-msgstr ""
-
-#: admin/help-tabs.php:82
-msgid "only available in password reset email"
-msgstr ""
-
-#: admin/help-tabs.php:83
+#: admin/help-tabs.php:55
 msgid "on our website"
 msgstr ""
 
-#: admin/help-tabs.php:95 admin/help-tabs.php:110
-msgid "Shortcodes"
+#: admin/help-tabs.php:65 admin/help-tabs.php:81 admin/tabs/tab-users.php:27
+#: includes/functions.php:774
+msgid "Users"
 msgstr ""
 
-#: admin/help-tabs.php:97
-msgid "This renders the registration page."
+#: admin/help-tabs.php:66
+msgid "The \"Users\" tab shows various user settings."
 msgstr ""
 
-#: admin/help-tabs.php:98
-msgid "This renders the login page."
+#: admin/help-tabs.php:68
+msgid "restrict admin access"
 msgstr ""
 
-#: admin/help-tabs.php:99
-msgid "This renders the lost password page."
+#: admin/help-tabs.php:69
+msgid "activate a welcome page"
 msgstr ""
 
-#: admin/help-tabs.php:100
-msgid "This renders the reset password page."
+#: admin/help-tabs.php:70
+msgid "hide admin bar for users"
 msgstr ""
 
-#: admin/help-tabs.php:101
-msgid "This renders the account page."
+#: admin/help-tabs.php:71
+msgid "disallow domains"
 msgstr ""
 
-#: admin/help-tabs.php:102
-msgid "This renders the user management page."
+#: admin/help-tabs.php:72
+msgid "disallow usernames"
 msgstr ""
 
-#: admin/help-tabs.php:105
-#, php-format
-msgid "More info about the use of shortcodes and their variables, please see %s."
+#: admin/help-tabs.php:73
+msgid "if a user can delete his account"
 msgstr ""
 
-#: admin/help-tabs.php:117
-msgid "This page has various global settings, such as:"
-msgstr ""
-
-#: admin/help-tabs.php:120
-msgid "disable the links below the form button on login/registration forms"
-msgstr ""
-
-#: admin/help-tabs.php:121
-msgid "use a popup for the login form, when using the B3 sidebar widget"
-msgstr ""
-
-#: admin/help-tabs.php:122
-msgid "activate the debug page"
-msgstr ""
-
-#: admin/help-tabs.php:125
+#: admin/help-tabs.php:76
 #, php-format
 msgid "If you select a logo, it will be loaded (but not shown) on full size ! So select a properly sized logo. Or you can use the filter %s to use a perfectly cropped image."
 msgstr ""
 
-#: admin/help-tabs.php:135 admin/help-tabs.php:143
-msgid "Developers"
+#: admin/help-tabs.php:88
+msgid "And of course you can set your public and private key here."
+msgstr ""
+
+#: admin/help-tabs.php:98 admin/help-tabs.php:107 admin/tabs/tab-pages.php:31
+#: includes/functions.php:791
+msgid "Pages"
+msgstr ""
+
+#: admin/help-tabs.php:99
+msgid "The \"Pages\" tab shows which pages are used for which action. The plugin relies on this, so make sure every action has a page set for it."
+msgstr ""
+
+#: admin/help-tabs.php:101
+msgid "Choose a page in your default language."
+msgstr ""
+
+#: admin/help-tabs.php:113
+msgid "The \"Settings\" tab holds has various global settings, such as:"
+msgstr ""
+
+#: admin/help-tabs.php:115
+msgid "disable the links below the form button on login/registration forms"
+msgstr ""
+
+#: admin/help-tabs.php:116
+msgid "use a popup for the login form, when using the B3 sidebar widget"
+msgstr ""
+
+#: admin/help-tabs.php:117
+msgid "activate filter validation"
+msgstr ""
+
+#: admin/help-tabs.php:118
+msgid "activate the debug page"
+msgstr ""
+
+#: admin/help-tabs.php:119
+msgid "set various messages above forms"
+msgstr ""
+
+#: admin/help-tabs.php:130 admin/help-tabs.php:146
+msgid "Shortcodes"
+msgstr ""
+
+#: admin/help-tabs.php:131
+msgid "These are the available shortcodes."
+msgstr ""
+
+#: admin/help-tabs.php:133
+msgid "This renders the registration page."
+msgstr ""
+
+#: admin/help-tabs.php:134
+msgid "This renders the login page."
+msgstr ""
+
+#: admin/help-tabs.php:135
+msgid "This renders the lost password page."
+msgstr ""
+
+#: admin/help-tabs.php:136
+msgid "This renders the reset password page."
 msgstr ""
 
 #: admin/help-tabs.php:137
+msgid "This renders the account page."
+msgstr ""
+
+#: admin/help-tabs.php:138
+msgid "This renders the user management page."
+msgstr ""
+
+#: admin/help-tabs.php:141
+#, php-format
+msgid "More info about the use of shortcodes and their variables, please see %s."
+msgstr ""
+
+#: admin/help-tabs.php:151 admin/help-tabs.php:159
+msgid "Developers"
+msgstr ""
+
+#: admin/help-tabs.php:153
 #, php-format
 msgid "If you're a developer, you might want to check out %s (if you haven't already)."
 msgstr ""
 
-#: admin/help-tabs.php:137
+#: admin/help-tabs.php:153
 msgid "this FAQ topic"
 msgstr ""
 
-#: admin/help-tabs.php:138
+#: admin/help-tabs.php:154
 msgid "It has some explanantion about how you can more easily test, when developing locally."
 msgstr ""
 
-#: admin/help-tabs.php:156
+#: admin/help-tabs.php:172
 msgid "More info"
 msgstr ""
 
-#: admin/help-tabs.php:159 admin/help-tabs.php:161
+#: admin/help-tabs.php:175 admin/help-tabs.php:177
 msgid "Official site"
 msgstr ""
 
@@ -803,8 +852,8 @@ msgstr ""
 msgid "Link color"
 msgstr ""
 
-#: admin/tabs/tab-emails.php:31 admin/tabs/tab-recaptcha.php:45
-#: admin/tabs/tab-recaptcha.php:55 admin/tabs/tab-registration.php:209
+#: admin/tabs/tab-emails.php:31 admin/tabs/tab-recaptcha.php:46
+#: admin/tabs/tab-recaptcha.php:56 admin/tabs/tab-registration.php:209
 #: admin/tabs/tab-registration.php:271 admin/tabs/tab-settings.php:144
 #: admin/tabs/tab-settings.php:157 admin/tabs/tab-settings.php:167
 #: admin/tabs/tab-settings.php:178 admin/tabs/tab-settings.php:193
@@ -879,38 +928,38 @@ msgstr ""
 msgid "Both keys must be entered, for reCaptcha to work."
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:29
+#: admin/tabs/tab-recaptcha.php:30
 #, php-format
 msgid "%s version"
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:33
+#: admin/tabs/tab-recaptcha.php:34
 msgid "With challenges"
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:34
+#: admin/tabs/tab-recaptcha.php:35
 msgid "Silent"
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:41
+#: admin/tabs/tab-recaptcha.php:42
 msgid "Public key"
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:51
+#: admin/tabs/tab-recaptcha.php:52
 msgid "Secret key"
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:60
+#: admin/tabs/tab-recaptcha.php:61
 #, php-format
 msgid "Get your (free) reCaptcha keys %s."
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:64
+#: admin/tabs/tab-recaptcha.php:66
 #, php-format
 msgid "%s theme"
 msgstr ""
 
-#: admin/tabs/tab-recaptcha.php:74
+#: admin/tabs/tab-recaptcha.php:77
 #, php-format
 msgid "Save %s"
 msgstr ""
@@ -920,85 +969,85 @@ msgstr ""
 msgid "%s for more info."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:51
+#: admin/tabs/tab-registration.php:49
 msgid "Registration type"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:56
+#: admin/tabs/tab-registration.php:54
 #, php-format
 msgid "This setting 'controls' the Registration type on the %s."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:56
+#: admin/tabs/tab-registration.php:54
 msgid "Settings page"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:77 admin/tabs/tab-settings.php:140
+#: admin/tabs/tab-registration.php:75 admin/tabs/tab-settings.php:140
 msgid "Registration closed message"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:81
+#: admin/tabs/tab-registration.php:79
 #, php-format
 msgid "You can set a message for a closed registration on the \"%s\" tab."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:90
+#: admin/tabs/tab-registration.php:88
 msgid "Needs admin approval"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:94
+#: admin/tabs/tab-registration.php:92
 msgid "An administrator must approve each registration."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:102
+#: admin/tabs/tab-registration.php:100
 msgid "Email address only"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:106
+#: admin/tabs/tab-registration.php:104
 msgid "Register without a user login."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:112
+#: admin/tabs/tab-registration.php:110
 msgid "Custom passwords"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:116
+#: admin/tabs/tab-registration.php:114
 msgid "Activate custom passwords on the registration form."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:124
+#: admin/tabs/tab-registration.php:122
 msgid "First and last name"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:128
+#: admin/tabs/tab-registration.php:126
 msgid "Activate the first and last name during registration."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:135
+#: admin/tabs/tab-registration.php:133
 msgid "Make first and last name required"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:139
+#: admin/tabs/tab-registration.php:137
 msgid "Make first and last name required on the registration form."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:146
+#: admin/tabs/tab-registration.php:144
 msgid "Magic link"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:150
+#: admin/tabs/tab-registration.php:148
 msgid "Activate magic link login."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:157
+#: admin/tabs/tab-registration.php:155
 msgid "Use password and magic link"
 msgstr ""
 
-#: admin/tabs/tab-registration.php:161
+#: admin/tabs/tab-registration.php:159
 msgid "Use both magic link and password login."
 msgstr ""
 
-#: admin/tabs/tab-registration.php:171
+#: admin/tabs/tab-registration.php:170
 #, php-format
 msgid "Activate %s."
 msgstr ""
@@ -1182,10 +1231,6 @@ msgstr ""
 
 #: admin/tabs/tab-styling.php:84
 msgid "to download the default."
-msgstr ""
-
-#: admin/tabs/tab-users.php:27 includes/functions.php:774
-msgid "Users"
 msgstr ""
 
 #: admin/tabs/tab-users.php:36
@@ -2204,52 +2249,52 @@ msgstr ""
 msgid "The site owner has disabled passwords and uses a 'magic link'."
 msgstr ""
 
-#: includes/form-handling.php:7 includes/form-handling.php:160
-#: includes/form-handling.php:454 includes/form-handling.php:484
-#: includes/form-handling.php:565 includes/form-handling.php:601
-#: includes/form-handling.php:637 includes/form-handling.php:729
+#: includes/form-handling.php:7 includes/form-handling.php:154
+#: includes/form-handling.php:448 includes/form-handling.php:478
+#: includes/form-handling.php:559 includes/form-handling.php:596
+#: includes/form-handling.php:632 includes/form-handling.php:724
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: includes/form-handling.php:151
+#: includes/form-handling.php:145
 msgid "Registration settings saved"
 msgstr ""
 
-#: includes/form-handling.php:203
+#: includes/form-handling.php:197
 msgid "That is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:334
+#: includes/form-handling.php:328
 #, php-format
 msgid "\"%s\" is not a valid email address."
 msgstr ""
 
-#: includes/form-handling.php:445
+#: includes/form-handling.php:439
 msgid "Email settings saved"
 msgstr ""
 
-#: includes/form-handling.php:475
+#: includes/form-handling.php:469
 msgid "Template settings saved"
 msgstr ""
 
-#: includes/form-handling.php:556
+#: includes/form-handling.php:550
 msgid "User settings saved"
 msgstr ""
 
-#: includes/form-handling.php:592
+#: includes/form-handling.php:587
 #, php-format
 msgid "%s settings saved"
 msgstr ""
 
-#: includes/form-handling.php:628
+#: includes/form-handling.php:623
 msgid "Pages settings saved"
 msgstr ""
 
-#: includes/form-handling.php:708
+#: includes/form-handling.php:703
 msgid "You have successfully resetted all settings. Remember to set your pages again, before you log out !"
 msgstr ""
 
-#: includes/form-handling.php:835
+#: includes/form-handling.php:830
 msgid "You do not have permission to edit this user."
 msgstr ""
 

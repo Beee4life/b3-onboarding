@@ -4,7 +4,7 @@ Tags: user management, registration, login, lost password, account
 Requires at least: 6.7.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.19.0
+Stable tag: 3.20.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -26,6 +26,9 @@ There are a ton of things, which you can set through the admin pages or with the
 1. (optional) Change any setting you want.
 
 == Changelog ==
+
+3.20.0
+* updated help tabs
 
 3.19.0
 * improve download of default template/css
